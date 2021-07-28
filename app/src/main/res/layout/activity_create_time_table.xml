@@ -39,10 +39,10 @@
         android:layout_height="0dp"
         android:text="년"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="@+id/yearSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/majorSpinner"
         app:layout_constraintHeight_percent="0.04"
-        app:layout_constraintStart_toEndOf="@+id/yearSpinner"
-        app:layout_constraintTop_toTopOf="@+id/yearSpinner"
+        app:layout_constraintStart_toEndOf="@+id/majorSpinner"
+        app:layout_constraintTop_toTopOf="@+id/majorSpinner"
         app:layout_constraintWidth_percent="0.1" />
 
     <Spinner
@@ -68,7 +68,7 @@
         app:layout_constraintWidth_percent="0.1" />
 
     <com.autofit.et.lib.AutoFitEditText
-        android:id="@+id/search"
+        android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="60dp"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yearSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/majorSpinner" />
 
     <View
         android:id="@+id/view"
@@ -93,7 +93,7 @@
         android:background="#7F7F7F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
