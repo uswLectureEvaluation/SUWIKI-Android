@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     tools:context=".ClassInfoActivity">
 
     <TextView
@@ -35,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/text11">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/con"
+            android:id="@+id/timeTableEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -62,6 +63,7 @@
                 android:layout_marginEnd="16dp"
                 android:focusableInTouchMode="true"
                 android:hint="과목 이름 입력"
+                android:textColor="#8F8F8F"
                 android:textSize="50sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.06"
@@ -92,6 +94,7 @@
                 android:layout_marginEnd="16dp"
                 android:focusableInTouchMode="true"
                 android:hint="교수님 성함 입력"
+                android:textColor="#8F8F8F"
                 android:textSize="50sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.06"
@@ -274,7 +277,7 @@
                 app:layout_constraintWidth_percent="0.2" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imgColor"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView11"
@@ -293,7 +296,7 @@
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.08"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/imgColor"
                 app:layout_constraintWidth_percent="0.25">
 
                 <TextView

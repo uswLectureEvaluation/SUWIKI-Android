@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -105,8 +106,12 @@ class AddClassActivity : AppCompatActivity() {
         }
 
         searchAdapter.setItemClickListener(object : ClassSearchAdapter.ItemClickListener {
-            override fun onClick(view: View, position: Int) {
-                //여기에서 거래 액티비티 실행
+            override fun onClick(view: View, data: TimeTableData) {
+                val intent = Intent(this@AddClassActivity, ClassInfoActivity::class.java)
+                intent.putExtra("className",data.className)
+                intent.putExtra("professor",data.professor)
+                intent.putExtra("time",data.time)
+                startActivity(intent)
             }
         })
     }

@@ -39,10 +39,10 @@
         android:layout_height="0dp"
         android:text="년"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="@+id/majorSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/yearSpinner"
         app:layout_constraintHeight_percent="0.04"
-        app:layout_constraintStart_toEndOf="@+id/majorSpinner"
-        app:layout_constraintTop_toTopOf="@+id/majorSpinner"
+        app:layout_constraintStart_toEndOf="@+id/yearSpinner"
+        app:layout_constraintTop_toTopOf="@+id/yearSpinner"
         app:layout_constraintWidth_percent="0.1" />
 
     <Spinner
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="60dp"
         android:focusableInTouchMode="true"
         android:hint="시간표 이름"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/majorSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <View
         android:id="@+id/view"
