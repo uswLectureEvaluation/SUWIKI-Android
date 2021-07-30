@@ -1,6 +1,7 @@
-package com.kunize.uswtimetable.model
+package com.kunize.uswtimetable.dao_database
 
 import androidx.room.*
+import com.kunize.uswtimetable.dataclass.TimeTableList
 
 @Dao
 interface TimeTableListDao {

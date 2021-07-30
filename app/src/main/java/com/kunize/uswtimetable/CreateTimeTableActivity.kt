@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.kunize.uswtimetable.databinding.ActivityCreateTimeTableBinding
-import com.kunize.uswtimetable.model.TimeTableList
-import com.kunize.uswtimetable.model.TimeTableListDatabase
+import com.kunize.uswtimetable.dataclass.TimeTableList
+import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -33,12 +33,10 @@ class CreateTimeTableActivity : AppCompatActivity() {
             }
             CoroutineScope(IO).launch {
                 val currentTime = System.currentTimeMillis()
+                TimeTableSelPref.prefs.setLong("timetableSel",currentTime)
                 val tempData = TimeTableList(currentTime,yearList[binding.yearSpinner.selectedItemPosition],
                     semesterList[binding.semesterSpinner.selectedItemPosition],binding.editName.text.toString())
                 db.timetableListDao().insert(tempData)
-                val returnIntent = Intent()
-                returnIntent.putExtra("createTime",tempData.createTime)
-                setResult(5,returnIntent)
                 finish()
             }
         }

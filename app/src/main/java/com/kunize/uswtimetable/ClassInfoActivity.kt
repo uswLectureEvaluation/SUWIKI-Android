@@ -1,14 +1,27 @@
 package com.kunize.uswtimetable
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
+import com.google.gson.JsonArray
+import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
+import com.kunize.uswtimetable.dataclass.TimeData
 import com.kunize.uswtimetable.dialog.EditTimeDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 class ClassInfoActivity : AppCompatActivity() {
@@ -23,6 +36,7 @@ class ClassInfoActivity : AppCompatActivity() {
         "Navy" to Color.rgb(67, 87, 150) //남색
         )
     }
+    var colorSel: Int = Color.rgb(255, 193, 82)
     private val binding by lazy { ActivityClassInfoBinding.inflate(layoutInflater)}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +50,105 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editClassName.setText(className)
         binding.editProfessorName.setText(professor)
 
+        val randomNum = Random().nextInt(8)
+        val randomColor = colorMap.values.toIntArray()[randomNum]
+        colorSel = randomColor
+        binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
+
         setVisibilityTime2(View.GONE)
         setVisibilityTime3(View.GONE)
+
+        binding.finishButton.setOnClickListener {
+            Log.d("jsonTest","클릭됨")
+            CoroutineScope(IO).launch {
+                //TODO 1. 해당 시간에 맞는 TimeTableList DB 불러옴
+                val db = TimeTableListDatabase.getInstance(applicationContext)
+                val tempTimetableList = db!!.timetableListDao().getAll()
+                var timetableSel = tempTimetableList[0]
+                val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
+                for (empty in tempTimetableList) {
+                    if (empty.createTime == createTime)
+                        timetableSel = empty
+                }
+                //TODO 2. DB의 Json String 불러옴
+                val jsonStr = timetableSel.timeTableJsonData
+
+                var tempTimeData = mutableListOf<TimeData>()
+                var jsonArray: JSONArray
+
+                //TODO 3. Json을 Array로 변환
+                if (jsonStr != "") {
+                    jsonArray = JSONArray(jsonStr)
+                    for (idx in 0 until jsonArray.length()) {
+                        var jsonObj = jsonArray.getJSONObject(idx)
+                        var location = jsonObj.getString("location")
+                        var day = jsonObj.getString("day")
+                        var startTime = jsonObj.getString("startTime")
+                        var endTime = jsonObj.getString("endTime")
+                        var color = jsonObj.getInt("color")
+
+                        tempTimeData.add(TimeData(location, day, startTime, endTime, color))
+                    }
+                } else {
+                    jsonArray = JSONArray()
+                }
+                //TODO 3.5 UI에서 정보 추출
+                val extractionList = listOf<TextView>(binding.time1, binding.time2, binding.time3)
+                val addTimeData = mutableListOf<TimeData>()
+                for (extraction in extractionList) {
+                    var tempSplit: List<String>
+                    if (extraction.text.toString() != "") {
+                        tempSplit = extraction.text.toString().split("(")
+                        val location = tempSplit[0]
+                        val day = tempSplit[1][0].toString()
+                        val startTime = tempSplit[1][1].toString()
+                        val endTime = tempSplit[1][tempSplit[1].length - 2].toString()
+                        addTimeData.add(TimeData(location, day, startTime, endTime, colorSel))
+                    }
+                }
+                //TODO 4. 추가하려는 요일의 Array를 추출
+                //TODO 5. 겹치는 시간이 있는지 확인 -> 있으면 return
+                for (newTime in addTimeData) {
+                    for (oldTime in tempTimeData) {
+                        if (newTime.day == oldTime.day) {
+                            if ((newTime.startTime <= oldTime.endTime && newTime.startTime >= oldTime.startTime) ||
+                                (newTime.endTime <= oldTime.endTime && newTime.endTime >= oldTime.startTime)
+                            ) {
+                                withContext(Main) {
+                                    Toast.makeText(
+                                        this@ClassInfoActivity,
+                                        "겹치는 시간이 있어요!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                return@launch
+                            }
+                        }
+                    }
+                    tempTimeData.add(newTime)
+                    //에러 발생 시 여기 수정 addTime내에서도 겹치는지 확인하고 tempTimeDAta.add부분을 밖으로 빼면 될듯?
+                }
+                //TODO 6. 없을 경우 Array에 추가
+                //TODO 7. Array를 Json형식으로 변환
+                var newJsonArray = JSONArray()
+                for (addData in tempTimeData) {
+                    val addJsonObj = JSONObject()
+                    addJsonObj.put("location", addData.location)
+                    addJsonObj.put("day", addData.day)
+                    addJsonObj.put("startTime", addData.startTime)
+                    addJsonObj.put("endTime", addData.endTime)
+                    addJsonObj.put("color", addData.color)
+                    Log.d("jsonAdd", "추가 될 데이터 ${addJsonObj.toString()}")
+                    newJsonArray.put(addJsonObj)
+                }
+                //TODO 8. DB 업데이트
+                timetableSel.timeTableJsonData = newJsonArray.toString()
+                db.timetableListDao().update(timetableSel)
+                //TODO 9. 시간표 화면으로 이동
+                val intent = Intent(this@ClassInfoActivity, MainActivity::class.java)
+                startActivity(intent)
+            }
+        } //끝
 
         if(className!!.contains("이러닝")) {
             if(time == "None")
@@ -136,16 +247,13 @@ class ClassInfoActivity : AppCompatActivity() {
             }
         }
 
-        val randomNum = Random().nextInt(8)
-        val randomColor = colorMap.values.toIntArray()[randomNum]
-        binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
-
         binding.imgColor.setOnClickListener {
             val dlg = EditColorDialog(this)
             Log.d("color","클릭함")
             dlg.setOnOKClickedListener(object : EditColorDialog.OKClickedListener {
-                override fun onOKClicked(color: ColorStateList?) {
-                    binding.imgColor.imageTintList = color
+                override fun onOKClicked(color: Int?) {
+                    binding.imgColor.imageTintList = ColorStateList.valueOf(color!!)
+                    colorSel = color
                     Log.d("color","$color")
                 }
 

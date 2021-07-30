@@ -8,7 +8,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.HangulUtils
 import com.kunize.uswtimetable.databinding.ItemRecyclerClassInfoBinding
-import com.kunize.uswtimetable.model.TimeTableData
+import com.kunize.uswtimetable.dataclass.TimeTableData
 import java.util.*
 
 class ClassSearchAdapter : RecyclerView.Adapter<SearchHolder>(), Filterable {

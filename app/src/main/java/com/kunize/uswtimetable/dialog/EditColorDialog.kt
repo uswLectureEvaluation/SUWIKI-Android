@@ -68,12 +68,22 @@ class EditColorDialog(context: Context) : View.OnClickListener {
     }
 
     interface OKClickedListener {
-        fun onOKClicked(color: ColorStateList?)
+        fun onOKClicked(color: Int?)
     }
 
     override fun onClick(v: View?) {
-        val img = v as ImageView
-        val color = img.imageTintList
+        var color = colorMap["Orange"]
+        when(v?.id) {
+            R.id.imgGray -> color = colorMap["Gray"]
+            R.id.imgBrown -> color = colorMap["Brown"]
+            R.id.imgGreen -> color = colorMap["Green"]
+            R.id.imgSky -> color = colorMap["Sky"]
+            R.id.imgPurple -> color = colorMap["Purple"]
+            R.id.imgOrange -> color = colorMap["Orange"]
+            R.id.imgNavy -> color = colorMap["Navy"]
+            R.id.imgPink -> color = colorMap["Pink"]
+
+        }
         okClickedListener.onOKClicked(color)
         dlg.dismiss()
     }

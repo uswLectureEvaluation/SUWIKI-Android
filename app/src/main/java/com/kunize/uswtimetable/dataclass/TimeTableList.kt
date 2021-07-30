@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.model
+package com.kunize.uswtimetable.dataclass
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,6 +8,6 @@ data class TimeTableList(
     @PrimaryKey val createTime: Long,
     val year: String,
     val semester: String,
-    val timeTableName: String,
-    val timeTableJsonData: String = ""
+    var timeTableName: String,
+    var timeTableJsonData: String = ""
 )

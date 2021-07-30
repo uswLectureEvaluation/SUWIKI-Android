@@ -8,8 +8,8 @@ import android.util.Log
 import androidx.core.content.edit
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.kunize.uswtimetable.model.TimeTableData
-import com.kunize.uswtimetable.model.TimeTableDatabase
+import com.kunize.uswtimetable.dataclass.TimeTableData
+import com.kunize.uswtimetable.dao_database.TimeTableDatabase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 

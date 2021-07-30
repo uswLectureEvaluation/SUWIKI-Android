@@ -1,25 +1,23 @@
 package com.kunize.uswtimetable
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
+import androidx.core.view.ViewCompat.getDisplay
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
-import com.kunize.uswtimetable.model.TimeTableData
-import com.kunize.uswtimetable.model.TimeTableDatabase
-import com.kunize.uswtimetable.model.TimeTableList
-import com.kunize.uswtimetable.model.TimeTableListDatabase
+import com.kunize.uswtimetable.dataclass.TimeTableList
+import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -36,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //TODO 선택된 시간표가 무엇인지 sharedRef 만들어야함
-
         db = TimeTableListDatabase.getInstance(applicationContext)!!
 
         binding.createTimeTable.setOnClickListener {
@@ -46,15 +42,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.addClass.setOnClickListener{
+            if(timeTableSel == null) {
+                Toast.makeText(this,"시간표를 생성해주세요",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val intent = Intent(this, AddClassActivity::class.java)
+            startActivity(intent)
+
+        }
+
+        binding.showTimeTableList.setOnClickListener {
+            val intent = Intent(this, TimeTableListActivity::class.java)
             startActivity(intent)
         }
 
 
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         CoroutineScope(IO).launch {
             timeTableList = db.timetableListDao().getAll()
             if(timeTableList.isEmpty()) {
@@ -64,9 +70,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             else {
+                val createTime = TimeTableSelPref.prefs.getLong("timetableSel",0)
+                timeTableSel = timeTableList[0]
+                for (empty in timeTableList) {
+                    if (empty.createTime == createTime)
+                        timeTableSel = empty
+                }
                 withContext(Main) {
                     binding.timeTableExist.visibility = View.VISIBLE
                     binding.timeTableEmpty.visibility = View.GONE
+                    binding.textTitle.text = timeTableSel?.timeTableName
                 }
             }
         }
@@ -74,32 +87,37 @@ class MainActivity : AppCompatActivity() {
 
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == 5) {
-                CoroutineScope(IO).launch {
-                    timeTableList = db.timetableListDao().getAll()
-                    val createTime = result.data?.getLongExtra("createTime", 0)
-                    if (createTime == 0L)
-                        return@launch
-                    for (empty in timeTableList) {
-                        if (empty.createTime == createTime)
-                            timeTableSel = empty
-                    }
-                    binding.textTitle.text = timeTableSel?.timeTableName
-                }
-            }
+//            if (result.resultCode == 5) {
+//                CoroutineScope(IO).launch {
+//                    timeTableList = db.timetableListDao().getAll()
+//                    val createTime = result.data?.getLongExtra("createTime", 0)
+//                    if (createTime == 0L)
+//                        return@launch
+//                    for (empty in timeTableList) {
+//                        if (empty.createTime == createTime)
+//                            timeTableSel = empty
+//                    }
+//                    binding.textTitle.text = timeTableSel?.timeTableName
+//                }
+//            }
         }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
+        val display = windowManager.defaultDisplay // in case of Activity
+        val size = Point()
+        display.getRealSize(size) // or getSize(size)
+        val width = size.x
 
-        var location = IntArray(2)
+        val widthOne = (width - 70.dp)/5
+        val heightOne = 45.dp
+
         var iv = TextView(this)
-        val r = Rect()
-        val bot = binding.button4.bottom
-        val x = binding.button4.left
-        var params = RelativeLayout.LayoutParams(binding.timeTable.width / 5, 300)
-        params.leftMargin = 0
-        params.topMargin = 0
+        var params = RelativeLayout.LayoutParams(widthOne, 90.dp)
+        Log.d("Test","너비 = ${binding.timeTable.width.dp} 너비 나누기 5 = ${(binding.timeTable.width / 5).dp}")
+
+        params.leftMargin = widthOne * 3
+        params.topMargin = heightOne * 5
         iv.text = "${params.leftMargin}\n${params.topMargin}"
         iv.setTextColor(Color.WHITE)
         iv.setBackgroundColor(Color.BLACK)
@@ -108,4 +126,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.timeTable.addView(iv, params)
     }
+
+    val Int.dp: Int
+        get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
+    val Float.dp: Int
+        get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 }

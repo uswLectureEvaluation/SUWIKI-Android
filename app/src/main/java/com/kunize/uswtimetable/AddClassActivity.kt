@@ -11,8 +11,8 @@ import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.adapter.ClassSearchAdapter
 import com.kunize.uswtimetable.databinding.ActivityAddClassBinding
-import com.kunize.uswtimetable.model.TimeTableData
-import com.kunize.uswtimetable.model.TimeTableDatabase
+import com.kunize.uswtimetable.dataclass.TimeTableData
+import com.kunize.uswtimetable.dao_database.TimeTableDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
