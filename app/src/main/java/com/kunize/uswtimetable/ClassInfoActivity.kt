@@ -138,7 +138,7 @@ class ClassInfoActivity : AppCompatActivity() {
                                 withContext(Main) {
                                     Toast.makeText(
                                         this@ClassInfoActivity,
-                                        "겹치는 시간이 있어요! $oldTime",
+                                        "겹치는 시간이 있어요! $oldTime.name",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -175,11 +175,9 @@ class ClassInfoActivity : AppCompatActivity() {
             }
         } //끝
 
-        if(className!! == "이러닝") {
+        if(time!! == "None") {
             if(time == "None")
                 binding.time1.text = "이러닝"
-            else
-                binding.time1.text = "이러닝 " + time
         } else if(time!!.contains("),")) {
             timeSplit = time.split("),")
             binding.time1.text = timeSplit[0] + ")"
@@ -198,19 +196,23 @@ class ClassInfoActivity : AppCompatActivity() {
                 setVisibilityTime3(View.VISIBLE)
             }
         } else {
-            timeSplit = time.split("(")
-            val location = timeSplit[0]
-            val day = timeSplit[1][0]
-            val checkTime = checkSeq(timeSplit[1].replace(")","").substring(1))
-            binding.time1.text = location+"("+day + checkTime[0]+")"
+            try {
+                timeSplit = time.split("(")
+                val location = timeSplit[0]
+                val day = timeSplit[1][0]
+                val checkTime = checkSeq(timeSplit[1].replace(")", "").substring(1))
+                binding.time1.text = location + "(" + day + checkTime[0] + ")"
 
-            if(checkTime.size == 2) {
-                binding.time2.text = location+"("+ day +checkTime[1]+")"
-                setVisibilityTime2(View.VISIBLE)
-            }
-            if(checkTime.size == 3) {
-                binding.time3.text = location+"("+ day +checkTime[2]+")"
-                setVisibilityTime3(View.VISIBLE)
+                if (checkTime.size == 2) {
+                    binding.time2.text = location + "(" + day + checkTime[1] + ")"
+                    setVisibilityTime2(View.VISIBLE)
+                }
+                if (checkTime.size == 3) {
+                    binding.time3.text = location + "(" + day + checkTime[2] + ")"
+                    setVisibilityTime3(View.VISIBLE)
+                }
+            } catch (e: Exception) {
+                binding.time1.text = "이러닝"
             }
         }
 

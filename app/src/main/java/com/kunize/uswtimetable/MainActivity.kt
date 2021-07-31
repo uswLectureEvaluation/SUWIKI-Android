@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                     binding.timeTableEmpty.visibility = View.VISIBLE
                     binding.timeTableExist.visibility = View.GONE
                     binding.textTitle.text = ""
+                    binding.eLearning.text = ""
                 }
             } else {
                 val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
@@ -135,12 +136,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 for (data in tempTimeData) {
-                    if (data.location == "이러닝" || data.day == "토") {
+                    if (data.location == "이러닝" || data.day == "토" ||data.location == "") {
                         binding.eLearning.text =
                             data.name + " (" + data.day + " " + data.startTime + "~" + data.endTime + ")"
                         withContext(Main) {
                             binding.eLearning.setOnClickListener {
-                                showBottomSheet(data, tempTimeData, null)
+                                if(binding.eLearning.text.toString() != "")
+                                    showBottomSheet(data, tempTimeData, null)
                             }
                         }
                         continue
