@@ -72,6 +72,8 @@ class AddClassActivity : AppCompatActivity() {
         searchAdapter = ClassSearchAdapter()
         val db = TimeTableDatabase.getInstance(applicationContext)
 
+        binding.searchClass.visibility = View.INVISIBLE
+
 
         CoroutineScope(IO).launch {
             timetableData = db!!.timetableDao().getAll().toMutableList()
@@ -92,6 +94,7 @@ class AddClassActivity : AppCompatActivity() {
                 binding.gradeSpinner.adapter = gradeSpinnerAdapter
                 binding.recyclerClass.adapter = searchAdapter
                 binding.recyclerClass.layoutManager = LinearLayoutManager(this@AddClassActivity)
+                binding.searchClass.visibility = View.VISIBLE
             }
         }
 

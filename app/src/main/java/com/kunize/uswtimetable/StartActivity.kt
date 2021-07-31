@@ -12,19 +12,27 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.kunize.uswtimetable.dataclass.TimeTableData
 import com.kunize.uswtimetable.dao_database.TimeTableDatabase
+import com.kunize.uswtimetable.databinding.ActivityStartBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 
 class StartActivity : AppCompatActivity() {
 
+    val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
+        setContentView(binding.root)
+
+        binding.showProgress.text = "시간표 DB 버전 확인 중"
 
         //firebase 설정
         val database: FirebaseDatabase?
@@ -56,6 +64,7 @@ class StartActivity : AppCompatActivity() {
             update = it.value.toString().toLong() > version!!.toLong()
             version = it.value.toString()
             Log.d("firebase", "$update ${it.value.toString().toLong()} // ${version!!.toLong()}")
+            binding.showProgress.text = "시간표 DB 버전 확인 완료"
         }
 
         firebaseTimetableData = database.getReference("timetable")
@@ -69,6 +78,9 @@ class StartActivity : AppCompatActivity() {
             } //update 값이 입력될 때 까지 무한 루프
             if (update == true) {
                 Log.d("firebase", "업데이트 실행 $version")
+                withContext(Main){
+                    binding.showProgress.text = "서버로부터 시간표 DB 불러오는 중"
+                }
                 firebaseTimetableData.get().addOnSuccessListener {
                     originData = it.value.toString()
                     Log.d("firebase", "공백 제거 전" + originData)
@@ -77,25 +89,29 @@ class StartActivity : AppCompatActivity() {
                     val tempData = originData.split("^ ")
                     var i = 1L
                     for (data in tempData) {
-                        val specificData = data.split("!")
-                        val emptyData = TimeTableData()
-                        Log.d("testinin", "$specificData")
                         try {
-                            emptyData.number = specificData[0].toLong()
-                        } catch (e: Exception) {
-                            emptyData.number = i
+                            val specificData = data.split("!")
+                            val emptyData = TimeTableData()
+                            Log.d("testinin", "$specificData")
+                            try {
+                                emptyData.number = specificData[0].toLong()
+                            } catch (e: Exception) {
+                                emptyData.number = i
+                            }
+                            emptyData.major = specificData[1]
+                            emptyData.grade = specificData[2]
+                            emptyData.classNumber = specificData[3]
+                            emptyData.classDivideNumber = specificData[4]
+                            emptyData.className = specificData[5]
+                            emptyData.classification = specificData[6]
+                            emptyData.professor = specificData[7]
+                            emptyData.time = specificData[8]
+                            i++
+                            Log.d("arrayTest", "$emptyData")
+                            localDataList.add(emptyData)
+                        }catch (e: Exception) {
+                            Log.d("firebase","에러 발생 $data $e")
                         }
-                        emptyData.major = specificData[1]
-                        emptyData.grade = specificData[2]
-                        emptyData.classNumber = specificData[3]
-                        emptyData.classDivideNumber = specificData[4]
-                        emptyData.className = specificData[5]
-                        emptyData.classification = specificData[6]
-                        emptyData.professor = specificData[7]
-                        emptyData.time = specificData[8]
-                        i++
-                        Log.d("arrayTest", "$emptyData")
-                        localDataList.add(emptyData)
                     }
                     done = true
                     Log.d("firebase", "추가 완료")
@@ -105,6 +121,9 @@ class StartActivity : AppCompatActivity() {
 
                 while (true) {
                     if (done) {
+                        withContext(Main){
+                            binding.showProgress.text = "시간표 DB 저장 중"
+                        }
                         for (i in localDataList) {
                             db.timetableDao().insert(i)
                         }
