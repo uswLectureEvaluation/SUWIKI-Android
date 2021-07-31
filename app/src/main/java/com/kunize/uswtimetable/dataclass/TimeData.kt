@@ -3,6 +3,8 @@ package com.kunize.uswtimetable.dataclass
 import android.graphics.Color
 
 data class TimeData(
+    var name: String = "",
+    var professor: String = "",
     var location: String = "",
     var day: String = "",
     var startTime: String = "",

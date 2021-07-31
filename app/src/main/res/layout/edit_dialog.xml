@@ -60,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/Monday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -70,7 +70,7 @@
 
                 <TextView
                     android:id="@+id/Tuesday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -80,7 +80,7 @@
 
                 <TextView
                     android:id="@+id/Wednesday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -90,7 +90,7 @@
 
                 <TextView
                     android:id="@+id/Thursday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -100,7 +100,7 @@
 
                 <TextView
                     android:id="@+id/Friday"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"

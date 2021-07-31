@@ -47,10 +47,10 @@ class EditTimeDialog(context: Context) {
 
         when(inputDay) {
             "월" -> Mon.setTextColor(customRed)
-            "화" -> Mon.setTextColor(customRed)
-            "수" -> Mon.setTextColor(customRed)
-            "목" -> Mon.setTextColor(customRed)
-            "금" -> Mon.setTextColor(customRed)
+            "화" -> Tue.setTextColor(customRed)
+            "수" -> Wed.setTextColor(customRed)
+            "목" -> Thu.setTextColor(customRed)
+            "금" -> Fri.setTextColor(customRed)
         }
 
         day = inputDay

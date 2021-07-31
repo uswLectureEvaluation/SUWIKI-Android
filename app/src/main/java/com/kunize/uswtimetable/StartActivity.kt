@@ -1,10 +1,16 @@
 package com.kunize.uswtimetable
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -114,7 +120,6 @@ class StartActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
 
     }
 }

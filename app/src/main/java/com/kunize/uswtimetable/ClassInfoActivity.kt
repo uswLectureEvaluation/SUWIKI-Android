@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import com.google.gson.JsonArray
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.dataclass.TimeData
@@ -51,7 +50,7 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editProfessorName.setText(professor)
 
         val randomNum = Random().nextInt(8)
-        val randomColor = colorMap.values.toIntArray()[randomNum]
+        val randomColor = intent.getIntExtra("color",colorMap.values.toIntArray()[randomNum])
         colorSel = randomColor
         binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
 
@@ -60,6 +59,8 @@ class ClassInfoActivity : AppCompatActivity() {
 
         binding.finishButton.setOnClickListener {
             Log.d("jsonTest","클릭됨")
+            val inputClassName = binding.editClassName.text.toString()
+            val inputProfessor = binding.editProfessorName.text.toString()
             CoroutineScope(IO).launch {
                 //TODO 1. 해당 시간에 맞는 TimeTableList DB 불러옴
                 val db = TimeTableListDatabase.getInstance(applicationContext)
@@ -80,30 +81,50 @@ class ClassInfoActivity : AppCompatActivity() {
                 if (jsonStr != "") {
                     jsonArray = JSONArray(jsonStr)
                     for (idx in 0 until jsonArray.length()) {
-                        var jsonObj = jsonArray.getJSONObject(idx)
-                        var location = jsonObj.getString("location")
-                        var day = jsonObj.getString("day")
-                        var startTime = jsonObj.getString("startTime")
-                        var endTime = jsonObj.getString("endTime")
-                        var color = jsonObj.getInt("color")
+                        val jsonObj = jsonArray.getJSONObject(idx)
+                        val name = jsonObj.getString("name")
+                        val professor = jsonObj.getString("professor")
+                        val location = jsonObj.getString("location")
+                        val day = jsonObj.getString("day")
+                        val startTime = jsonObj.getString("startTime")
+                        val endTime = jsonObj.getString("endTime")
+                        val color = jsonObj.getInt("color")
 
-                        tempTimeData.add(TimeData(location, day, startTime, endTime, color))
+                        tempTimeData.add(TimeData(name,professor,location, day, startTime, endTime, color))
                     }
-                } else {
-                    jsonArray = JSONArray()
                 }
+                val deleteIdx = intent.getIntExtra("deleteIdx",-1)
+                if(deleteIdx != -1)
+                    tempTimeData.removeAt(deleteIdx)
                 //TODO 3.5 UI에서 정보 추출
                 val extractionList = listOf<TextView>(binding.time1, binding.time2, binding.time3)
                 val addTimeData = mutableListOf<TimeData>()
                 for (extraction in extractionList) {
                     var tempSplit: List<String>
-                    if (extraction.text.toString() != "") {
+                    if(extraction.text.toString() == "이러닝") {
+                        addTimeData.add(TimeData(inputClassName,inputProfessor,"", "", "", "", colorSel))
+                    }
+                    else if (extraction.text.toString() != "") {
                         tempSplit = extraction.text.toString().split("(")
                         val location = tempSplit[0]
                         val day = tempSplit[1][0].toString()
-                        val startTime = tempSplit[1][1].toString()
-                        val endTime = tempSplit[1][tempSplit[1].length - 2].toString()
-                        addTimeData.add(TimeData(location, day, startTime, endTime, colorSel))
+                        val onlyTime = tempSplit[1].substring(1).replace(")","").split(",")
+                        val startTime = onlyTime[0]
+                        val endTime = onlyTime.last()
+                        addTimeData.add(TimeData(inputClassName,inputProfessor,location, day, startTime, endTime, colorSel))
+                    }
+                }
+                //TODO 3.7 이러닝 여부 확인
+                for(newTime in addTimeData) {
+                    if(newTime.name.contains("이러닝") && jsonStr.contains("이러닝") && deleteIdx == -1) {
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@ClassInfoActivity,
+                                "이러닝은 하나만 들을 수 있어요!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        return@launch
                     }
                 }
                 //TODO 4. 추가하려는 요일의 Array를 추출
@@ -117,7 +138,7 @@ class ClassInfoActivity : AppCompatActivity() {
                                 withContext(Main) {
                                     Toast.makeText(
                                         this@ClassInfoActivity,
-                                        "겹치는 시간이 있어요!",
+                                        "겹치는 시간이 있어요! $oldTime",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -133,6 +154,8 @@ class ClassInfoActivity : AppCompatActivity() {
                 var newJsonArray = JSONArray()
                 for (addData in tempTimeData) {
                     val addJsonObj = JSONObject()
+                    addJsonObj.put("name",addData.name)
+                    addJsonObj.put("professor",addData.professor)
                     addJsonObj.put("location", addData.location)
                     addJsonObj.put("day", addData.day)
                     addJsonObj.put("startTime", addData.startTime)
@@ -146,11 +169,13 @@ class ClassInfoActivity : AppCompatActivity() {
                 db.timetableListDao().update(timetableSel)
                 //TODO 9. 시간표 화면으로 이동
                 val intent = Intent(this@ClassInfoActivity, MainActivity::class.java)
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
                 startActivity(intent)
             }
         } //끝
 
-        if(className!!.contains("이러닝")) {
+        if(className!! == "이러닝") {
             if(time == "None")
                 binding.time1.text = "이러닝"
             else
@@ -268,8 +293,9 @@ class ClassInfoActivity : AppCompatActivity() {
     ) {
         val location = tempSplit[0]
         val day = tempSplit[1][0].toString()
-        val startTime = tempSplit[1][1].toString()
-        val endTime = tempSplit[1][tempSplit[1].length - 2].toString()
+        val onlyTime = tempSplit[1].substring(1).replace(")","").split(",")
+        val startTime = onlyTime[0]
+        val endTime = onlyTime.last()
         dlg.start(location, day, startTime, endTime)
     }
 

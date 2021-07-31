@@ -16,10 +16,11 @@
         android:textColor="#402B04"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
+        app:layout_constraintDimensionRatio="8.9"
         app:layout_constraintEnd_toStartOf="@+id/addClass"
-        app:layout_constraintHeight_percent="0.07"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_optimizationLevel="ratio" />
 
     <ImageView
         android:id="@+id/addClass"

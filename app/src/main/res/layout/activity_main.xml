@@ -333,64 +333,34 @@
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="앱 바로가기"
+        android:text="이러닝"
         android:textColor="#402B04"
-        android:textStyle="bold"
+        android:textStyle="normal|bold"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintWidth_percent="0.21" />
 
-    <ImageView
-        android:id="@+id/addApp1"
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintDimensionRatio="1.1"
-        app:layout_constraintEnd_toStartOf="@+id/addApp2"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_optimizationLevel="ratio"
-        app:srcCompat="@drawable/ic_baseline_library_add_24" />
-
-    <ImageView
-        android:id="@+id/addApp2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintDimensionRatio="1.1"
-        app:layout_constraintEnd_toStartOf="@+id/addApp3"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toEndOf="@+id/addApp1"
-        app:layout_constraintTop_toTopOf="@+id/addApp1"
-        app:layout_optimizationLevel="ratio"
-        app:srcCompat="@drawable/ic_baseline_library_add_24" />
-
-    <ImageView
-        android:id="@+id/addApp3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1.1"
-        app:layout_constraintEnd_toStartOf="@+id/addApp4"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toEndOf="@+id/addApp2"
-        app:layout_constraintTop_toTopOf="@+id/addApp2"
-        app:layout_optimizationLevel="ratio"
-        app:srcCompat="@drawable/ic_baseline_library_add_24" />
-
-    <ImageView
-        android:id="@+id/addApp4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1.1"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.08"
-        app:layout_constraintStart_toEndOf="@+id/addApp3"
-        app:layout_constraintTop_toTopOf="@+id/addApp3"
-        app:layout_optimizationLevel="ratio"
-        app:srcCompat="@drawable/ic_baseline_library_add_24" />
+        app:layout_constraintHeight_percent="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <TextView
+            android:id="@+id/eLearning"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:textColor="#402B04"
+            app:autoSizeTextType="uniform" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
