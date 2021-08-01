@@ -138,7 +138,7 @@ class ClassInfoActivity : AppCompatActivity() {
                                 withContext(Main) {
                                     Toast.makeText(
                                         this@ClassInfoActivity,
-                                        "겹치는 시간이 있어요! $oldTime.name",
+                                        "겹치는 시간이 있어요! ${oldTime.name}",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }

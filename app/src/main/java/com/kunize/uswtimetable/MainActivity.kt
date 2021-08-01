@@ -12,6 +12,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.kakao.adfit.ads.AdListener
+import com.kakao.adfit.ads.ba.BannerAdView
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
 import com.kunize.uswtimetable.dataclass.TimeTableList
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
@@ -36,11 +38,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
+        binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
+
+            override fun onAdLoaded() {
+                // 배너 광고 노출 완료 시 호출
+            }
+
+            override fun onAdFailed(errorCode: Int) {
+                // 배너 광고 노출 실패 시 호출
+            }
+
+            override fun onAdClicked() {
+                // 배너 광고 클릭 시 호출
+            }
+
+        })
+
+        binding.bannerAdView.loadAd()
+
         db = TimeTableListDatabase.getInstance(applicationContext)!!
 
         binding.createTimeTable.setOnClickListener {
             val intent = Intent(this, CreateTimeTableActivity::class.java)
-            resultLauncher.launch(intent)
+            startActivity(intent)
         }
 
         binding.addClass.setOnClickListener {
@@ -61,8 +82,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("AddView","멈춤")
+        binding.bannerAdView.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.bannerAdView.destroy()
+    }
+
+
+
     override fun onResume() {
         super.onResume()
+        Log.d("AddView","재개")
+        binding.bannerAdView.resume()
         CoroutineScope(IO).launch {
             timeTableList = db.timetableListDao().getAll()
             if (timeTableList.isEmpty()) {
@@ -208,28 +244,6 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == 5) {
-//                CoroutineScope(IO).launch {
-//                    timeTableList = db.timetableListDao().getAll()
-//                    val createTime = result.data?.getLongExtra("createTime", 0)
-//                    if (createTime == 0L)
-//                        return@launch
-//                    for (empty in timeTableList) {
-//                        if (empty.createTime == createTime)
-//                            timeTableSel = empty
-//                    }
-//                    binding.textTitle.text = timeTableSel?.timeTableName
-//                }
-//            }
-        }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-
-
-    }
 
     val Int.dp: Int
         get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()

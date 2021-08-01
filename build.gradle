@@ -20,6 +20,7 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
         jcenter() // Warning: this repository is going to shut down soon
     }
 }

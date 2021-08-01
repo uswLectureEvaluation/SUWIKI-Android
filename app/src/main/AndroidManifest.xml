@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:name=".TimeTableSelPref"
         android:allowBackup="true"
         android:icon="@mipmap/ic_main"

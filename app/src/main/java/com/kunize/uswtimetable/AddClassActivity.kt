@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kakao.adfit.ads.AdListener
+import com.kakao.adfit.ads.ba.BannerAdView
 import com.kunize.uswtimetable.adapter.ClassSearchAdapter
 import com.kunize.uswtimetable.databinding.ActivityAddClassBinding
 import com.kunize.uswtimetable.dataclass.TimeTableData
@@ -68,6 +70,22 @@ class AddClassActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
+        binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
+            override fun onAdLoaded() {
+                // 배너 광고 노출 완료 시 호출
+            }
+
+            override fun onAdFailed(errorCode: Int) {
+                // 배너 광고 노출 실패 시 호출
+            }
+
+            override fun onAdClicked() {
+                // 배너 광고 클릭 시 호출
+            }
+        })
+        binding.bannerAdView.loadAd()
 
         searchAdapter = ClassSearchAdapter()
         val db = TimeTableDatabase.getInstance(applicationContext)
@@ -185,6 +203,22 @@ class AddClassActivity : AppCompatActivity() {
         }
         searchAdapter.notifyDataSetChanged()
         binding.searchClass.setText("")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.bannerAdView.resume()
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        binding.bannerAdView.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.bannerAdView.destroy()
     }
 
 }
