@@ -12,8 +12,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
+import androidx.room.Update
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -26,11 +30,32 @@ import kotlinx.coroutines.Dispatchers.Main
 
 class StartActivity : AppCompatActivity() {
 
-    val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
+    private lateinit var appUpdateManager: AppUpdateManager
+
+    companion object {
+        const val MY_REQUEST_CODE = 700
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+        appUpdateInfoTask.addOnSuccessListener {
+            appUpdateInfo ->
+            if(appUpdateInfo.updateAvailability() ==
+                    UpdateAvailability.UPDATE_AVAILABLE) {
+                appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo,
+                    IMMEDIATE,
+                    this,
+                    MY_REQUEST_CODE
+                )
+            }
+        }
 
         binding.showProgress.text = "시간표 DB 버전 확인 중"
 
@@ -139,6 +164,40 @@ class StartActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener {
+                appUpdateInfo->
+                if(appUpdateInfo.updateAvailability() ==
+                        UpdateAvailability
+                            .DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        IMMEDIATE,
+                        this,
+                        MY_REQUEST_CODE
+                    )
+                }
+            }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == MY_REQUEST_CODE) {
+            if(resultCode != RESULT_OK) {
+                MaterialAlertDialogBuilder(this)
+                    .setPositiveButton("확인") {
+                        _,_ ->
+                    }
+                    .setMessage("원활한 앱 사용을 위해 업데이트를 권장합니다.")
+                    .show()
+            }
+        }
     }
 }
