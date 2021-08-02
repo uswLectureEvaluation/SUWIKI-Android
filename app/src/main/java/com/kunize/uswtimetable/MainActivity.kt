@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.kakao.adfit.ads.AdListener
 import com.kakao.adfit.ads.ba.BannerAdView
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
@@ -23,6 +25,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import org.json.JSONArray
+import org.w3c.dom.Text
 import java.lang.Exception
 
 
@@ -30,13 +33,26 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var db: TimeTableListDatabase
     lateinit var timeTableList: List<TimeTableList>
-    var timeTableSel: TimeTableList? = null
-    val timeWidthMap = mapOf("월" to 0, "화" to 1, "수" to 2, "목" to 3, "금" to 4)
+    private var timeTableSel: TimeTableList? = null
+    private val timeWidthMap = mapOf("월" to 0, "화" to 1, "수" to 2, "목" to 3, "금" to 4)
+    private val tempTimeData = mutableListOf<TimeData>()
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private lateinit var edgeList: List<TextView>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        edgeList = listOf(
+            binding.edge9,
+            binding.edge10,
+            binding.edge11,
+            binding.edge12,
+            binding.edge13,
+            binding.edge14,
+            binding.edge15
+        )
 
         binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
         binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
@@ -84,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        Log.d("AddView","멈춤")
+        Log.d("AddView", "멈춤")
         binding.bannerAdView.pause()
     }
 
@@ -94,10 +110,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onResume() {
         super.onResume()
-        Log.d("AddView","재개")
+        Log.d("AddView", "재개")
         binding.bannerAdView.resume()
         CoroutineScope(IO).launch {
             timeTableList = db.timetableListDao().getAll()
@@ -137,11 +152,11 @@ class MainActivity : AppCompatActivity() {
 
                 val width = outMetrics.widthPixels
                 val widthOne = (width - 70.dp) / 5
-                val heightOne = 45.dp
+                val heightOne = 50.dp
 
                 val jsonStr = timeTableSel?.timeTableJsonData
 
-                val tempTimeData = mutableListOf<TimeData>()
+
                 val jsonArray: JSONArray
 
                 //TODO 3. Json을 Array로 변환
@@ -170,14 +185,18 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                 }
+                withContext(Main) {
+                    reDrawTimeTable()
+                }
+
 
                 for (data in tempTimeData) {
-                    if (data.location == "이러닝" || data.day == "토" ||data.location == "") {
+                    if (data.location == "이러닝" || data.day == "토" || data.location == "") {
                         binding.eLearning.text =
                             data.name + " (" + data.day + " " + data.startTime + "~" + data.endTime + ")"
                         withContext(Main) {
                             binding.eLearning.setOnClickListener {
-                                if(binding.eLearning.text.toString() != "")
+                                if (binding.eLearning.text.toString() != "")
                                     showBottomSheet(data, tempTimeData, null)
                             }
                         }
@@ -207,6 +226,30 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun reDrawTimeTable() {
+        var maxTime = try {
+            tempTimeData.maxOf { it ->
+                if (it.endTime.isEmpty())
+                    0
+                else
+                    it.endTime.toInt()
+            }
+        } catch (e: Exception) {
+            0
+        }
+        for (idx in 0..6) {
+            edgeList[idx].visibility = View.GONE
+        }
+        for (idx in 0..(maxTime - 8)) {
+            try {
+                edgeList[idx].visibility = View.VISIBLE
+            } catch (e: Exception) {
+                Log.d("Buggg", "$e")
+                edgeList[idx - 1].visibility = View.VISIBLE
+            }
+        }
+    }
+
     private fun showBottomSheet(
         data: TimeData,
         tempTimeData: MutableList<TimeData>,
@@ -229,13 +272,18 @@ class MainActivity : AppCompatActivity() {
                         comma += data.endTime
                         intent.putExtra("time", "${data.location}(${data.day}$comma)")
                     } catch (e: Exception) {
-                        intent.putExtra("time", "${data.location}(${data.day}$comma)".replace("이러닝",""))
+                        intent.putExtra(
+                            "time",
+                            "${data.location}(${data.day}$comma)".replace("이러닝", "")
+                        )
                     }
                     startActivity(intent)
                 }
                 2 -> runOnUiThread {
                     if (v != null) {
                         binding.timeTable.removeView(v)
+                        tempTimeData.remove(data)
+                        reDrawTimeTable()
                     } else
                         binding.eLearning.text = ""
                 }

@@ -132,8 +132,8 @@ class ClassInfoActivity : AppCompatActivity() {
                 for (newTime in addTimeData) {
                     for (oldTime in tempTimeData) {
                         if (newTime.day == oldTime.day) {
-                            if ((newTime.startTime <= oldTime.endTime && newTime.startTime >= oldTime.startTime) ||
-                                (newTime.endTime <= oldTime.endTime && newTime.endTime >= oldTime.startTime)
+                            if ((newTime.startTime.toInt() <= oldTime.endTime.toInt() && newTime.startTime.toInt() >= oldTime.startTime.toInt()) ||
+                                (newTime.endTime.toInt() <= oldTime.endTime.toInt() && newTime.endTime.toInt() >= oldTime.startTime.toInt())
                             ) {
                                 withContext(Main) {
                                     Toast.makeText(
