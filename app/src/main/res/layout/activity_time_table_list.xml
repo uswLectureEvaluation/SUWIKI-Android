@@ -36,11 +36,24 @@
         app:layout_optimizationLevel="ratio"
         app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
+    <TextView
+        android:id="@+id/btnOpenSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="오픈소스 라이선스 보기"
+        android:textColor="#3F8CFD"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/timetableList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.android.gms.oss-licenses-plugin'
 }
 apply plugin: 'com.google.gms.google-services'
 
@@ -43,6 +44,9 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-ads-identifier:17.0.1"
     implementation "com.kakao.adfit:ads-base:3.7.1"
+    implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
+
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     implementation 'com.google.android.play:core:1.10.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
@@ -54,8 +58,7 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.3.0'
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'

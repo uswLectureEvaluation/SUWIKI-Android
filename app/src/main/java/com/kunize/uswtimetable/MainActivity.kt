@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         binding.bannerAdView.resume()
         CoroutineScope(IO).launch {
             timeTableList = db.timetableListDao().getAll()
+            tempTimeData.clear()
             if (timeTableList.isEmpty()) {
                 timeTableSel = null
                 withContext(Main) {
@@ -230,6 +231,8 @@ class MainActivity : AppCompatActivity() {
         var maxTime = try {
             tempTimeData.maxOf { it ->
                 if (it.endTime.isEmpty())
+                    0
+                else if (it.day == "토")
                     0
                 else
                     it.endTime.toInt()

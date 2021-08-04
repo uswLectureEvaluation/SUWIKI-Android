@@ -25,18 +25,20 @@ import java.util.*
 
 class ClassInfoActivity : AppCompatActivity() {
     companion object {
-        val colorMap = mapOf<String, Int>("Pink" to Color.rgb(254, 136, 136), //핑크
+        val colorMap = mapOf<String, Int>(
+            "Pink" to Color.rgb(254, 136, 136), //핑크
             "Orange" to Color.rgb(255, 193, 82), //주황
             "Purple" to Color.rgb(204, 154, 243), //보라
-        "Sky" to Color.rgb(137, 200, 254), //하늘
-        "Green" to Color.rgb(165, 220, 129), //연두
-        "Brown" to Color.rgb(194, 143, 98), //갈색
-        "Gray" to Color.rgb(194, 193, 189), //회색
-        "Navy" to Color.rgb(67, 87, 150) //남색
+            "Sky" to Color.rgb(137, 200, 254), //하늘
+            "Green" to Color.rgb(165, 220, 129), //연두
+            "Brown" to Color.rgb(194, 143, 98), //갈색
+            "Gray" to Color.rgb(194, 193, 189), //회색
+            "Navy" to Color.rgb(67, 87, 150) //남색
         )
     }
+
     var colorSel: Int = Color.rgb(255, 193, 82)
-    private val binding by lazy { ActivityClassInfoBinding.inflate(layoutInflater)}
+    private val binding by lazy { ActivityClassInfoBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -50,7 +52,7 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editProfessorName.setText(professor)
 
         val randomNum = Random().nextInt(8)
-        val randomColor = intent.getIntExtra("color",colorMap.values.toIntArray()[randomNum])
+        val randomColor = intent.getIntExtra("color", colorMap.values.toIntArray()[randomNum])
         colorSel = randomColor
         binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
 
@@ -58,7 +60,7 @@ class ClassInfoActivity : AppCompatActivity() {
         setVisibilityTime3(View.GONE)
 
         binding.finishButton.setOnClickListener {
-            Log.d("jsonTest","클릭됨")
+            Log.d("jsonTest", "클릭됨")
             val inputClassName = binding.editClassName.text.toString()
             val inputProfessor = binding.editProfessorName.text.toString()
             CoroutineScope(IO).launch {
@@ -90,33 +92,62 @@ class ClassInfoActivity : AppCompatActivity() {
                         val endTime = jsonObj.getString("endTime")
                         val color = jsonObj.getInt("color")
 
-                        tempTimeData.add(TimeData(name,professor,location, day, startTime, endTime, color))
+                        tempTimeData.add(
+                            TimeData(
+                                name,
+                                professor,
+                                location,
+                                day,
+                                startTime,
+                                endTime,
+                                color
+                            )
+                        )
                     }
                 }
-                val deleteIdx = intent.getIntExtra("deleteIdx",-1)
-                if(deleteIdx != -1)
+                val deleteIdx = intent.getIntExtra("deleteIdx", -1)
+                if (deleteIdx != -1)
                     tempTimeData.removeAt(deleteIdx)
                 //TODO 3.5 UI에서 정보 추출
                 val extractionList = listOf<TextView>(binding.time1, binding.time2, binding.time3)
                 val addTimeData = mutableListOf<TimeData>()
                 for (extraction in extractionList) {
                     var tempSplit: List<String>
-                    if(extraction.text.toString() == "이러닝") {
-                        addTimeData.add(TimeData(inputClassName,inputProfessor,"", "", "", "", colorSel))
-                    }
-                    else if (extraction.text.toString() != "") {
+                    if (extraction.text.toString() == "이러닝") {
+                        addTimeData.add(
+                            TimeData(
+                                inputClassName,
+                                inputProfessor,
+                                "",
+                                "",
+                                "",
+                                "",
+                                colorSel
+                            )
+                        )
+                    } else if (extraction.text.toString() != "") {
                         tempSplit = extraction.text.toString().split("(")
                         val location = tempSplit[0]
                         val day = tempSplit[1][0].toString()
-                        val onlyTime = tempSplit[1].substring(1).replace(")","").split(",")
+                        val onlyTime = tempSplit[1].substring(1).replace(")", "").split(",")
                         val startTime = onlyTime[0]
                         val endTime = onlyTime.last()
-                        addTimeData.add(TimeData(inputClassName,inputProfessor,location, day, startTime, endTime, colorSel))
+                        addTimeData.add(
+                            TimeData(
+                                inputClassName,
+                                inputProfessor,
+                                location,
+                                day,
+                                startTime,
+                                endTime,
+                                colorSel
+                            )
+                        )
                     }
                 }
                 //TODO 3.7 이러닝 여부 확인
-                for(newTime in addTimeData) {
-                    if(newTime.name.contains("이러닝") && jsonStr.contains("이러닝") && deleteIdx == -1) {
+                for (newTime in addTimeData) {
+                    if (newTime.name.contains("이러닝") && jsonStr.contains("이러닝") && deleteIdx == -1) {
                         withContext(Main) {
                             Toast.makeText(
                                 this@ClassInfoActivity,
@@ -132,13 +163,16 @@ class ClassInfoActivity : AppCompatActivity() {
                 for (newTime in addTimeData) {
                     for (oldTime in tempTimeData) {
                         if (newTime.day == oldTime.day) {
-                            if ((newTime.startTime.toInt() <= oldTime.endTime.toInt() && newTime.startTime.toInt() >= oldTime.startTime.toInt()) ||
-                                (newTime.endTime.toInt() <= oldTime.endTime.toInt() && newTime.endTime.toInt() >= oldTime.startTime.toInt())
+                            if (
+                                (newTime.startTime.toInt() <= oldTime.endTime.toInt() && newTime.startTime.toInt() >= oldTime.startTime.toInt()) ||
+                                (newTime.endTime.toInt() <= oldTime.endTime.toInt() && newTime.endTime.toInt() >= oldTime.startTime.toInt()) ||
+                                (oldTime.startTime.toInt() <= newTime.endTime.toInt() && oldTime.startTime.toInt() >= newTime.startTime.toInt()) ||
+                                (oldTime.endTime.toInt() <= newTime.endTime.toInt() && oldTime.endTime.toInt() >= newTime.startTime.toInt())
                             ) {
                                 withContext(Main) {
                                     Toast.makeText(
                                         this@ClassInfoActivity,
-                                        "겹치는 시간이 있어요! ${oldTime.name}",
+                                        "겹치는 시간이 있어요!\n${oldTime.name} (${oldTime.day}${oldTime.startTime} ~ ${oldTime.endTime})",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -154,8 +188,8 @@ class ClassInfoActivity : AppCompatActivity() {
                 var newJsonArray = JSONArray()
                 for (addData in tempTimeData) {
                     val addJsonObj = JSONObject()
-                    addJsonObj.put("name",addData.name)
-                    addJsonObj.put("professor",addData.professor)
+                    addJsonObj.put("name", addData.name)
+                    addJsonObj.put("professor", addData.professor)
                     addJsonObj.put("location", addData.location)
                     addJsonObj.put("day", addData.day)
                     addJsonObj.put("startTime", addData.startTime)
@@ -175,23 +209,23 @@ class ClassInfoActivity : AppCompatActivity() {
             }
         } //끝
 
-        if(time!! == "None") {
-            if(time == "None")
+        if (time!! == "None") {
+            if (time == "None")
                 binding.time1.text = "이러닝"
-        } else if(time!!.contains("),")) {
+        } else if (time!!.contains("),")) {
             timeSplit = time.split("),")
             binding.time1.text = timeSplit[0] + ")"
             binding.time2.text = timeSplit[1]
             setVisibilityTime2(View.VISIBLE)
             //TODO 미래421(화1,2,3),(목7,8) 예외처리 필요
-        } else if(time!!.contains(" ")){
+        } else if (time!!.contains(" ")) {
             timeSplit = time.split("(")
             val location = timeSplit[0]
-            val daySplit = timeSplit[1].replace("(","").replace(")","").split(" ")
+            val daySplit = timeSplit[1].replace("(", "").replace(")", "").split(" ")
             binding.time1.text = location + "(" + daySplit[0] + ")"
             binding.time2.text = location + "(" + daySplit[1] + ")"
             setVisibilityTime2(View.VISIBLE)
-            if(daySplit.size > 2) {
+            if (daySplit.size > 2) {
                 binding.time3.text = location + "(" + daySplit[2] + ")"
                 setVisibilityTime3(View.VISIBLE)
             }
@@ -217,11 +251,11 @@ class ClassInfoActivity : AppCompatActivity() {
         }
 
         binding.addTime.setOnClickListener {
-            if(!binding.time1.isVisible)
+            if (!binding.time1.isVisible)
                 setVisibilityTime1(View.VISIBLE)
-            else if(!binding.time2.isVisible)
+            else if (!binding.time2.isVisible)
                 setVisibilityTime2(View.VISIBLE)
-            else if(!binding.time3.isVisible)
+            else if (!binding.time3.isVisible)
                 setVisibilityTime3(View.VISIBLE)
         }
 
@@ -238,7 +272,7 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editTime1.setOnClickListener {
             val dlg = EditTimeDialog(this)
             dlg.setOnOKClickedListener { className, day, time ->
-                binding.time1.text = className+"("+day+time+")"
+                binding.time1.text = className + "(" + day + time + ")"
             }
             try {
                 val tempSplit = binding.time1.text.toString().split("(")
@@ -251,7 +285,7 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editTime2.setOnClickListener {
             val dlg = EditTimeDialog(this)
             dlg.setOnOKClickedListener { className, day, time ->
-                binding.time2.text = className+"("+day+time+")"
+                binding.time2.text = className + "(" + day + time + ")"
             }
             try {
                 val tempSplit = binding.time2.text.toString().split("(")
@@ -264,7 +298,7 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editTime3.setOnClickListener {
             val dlg = EditTimeDialog(this)
             dlg.setOnOKClickedListener { className, day, time ->
-                binding.time3.text = className+"("+day+time+")"
+                binding.time3.text = className + "(" + day + time + ")"
             }
             try {
                 val tempSplit = binding.time3.text.toString().split("(")
@@ -276,12 +310,12 @@ class ClassInfoActivity : AppCompatActivity() {
 
         binding.imgColor.setOnClickListener {
             val dlg = EditColorDialog(this)
-            Log.d("color","클릭함")
+            Log.d("color", "클릭함")
             dlg.setOnOKClickedListener(object : EditColorDialog.OKClickedListener {
                 override fun onOKClicked(color: Int?) {
                     binding.imgColor.imageTintList = ColorStateList.valueOf(color!!)
                     colorSel = color
-                    Log.d("color","$color")
+                    Log.d("color", "$color")
                 }
 
             })
@@ -295,27 +329,26 @@ class ClassInfoActivity : AppCompatActivity() {
     ) {
         val location = tempSplit[0]
         val day = tempSplit[1][0].toString()
-        val onlyTime = tempSplit[1].substring(1).replace(")","").split(",")
+        val onlyTime = tempSplit[1].substring(1).replace(")", "").split(",")
         val startTime = onlyTime[0]
         val endTime = onlyTime.last()
         dlg.start(location, day, startTime, endTime)
     }
 
 
-    private fun checkSeq(str: String) : List<String> {
+    private fun checkSeq(str: String): List<String> {
         val onlyNumList = str.split(",")
         var tempNumString = ""
-        for(idx in 0 until onlyNumList.size) {
+        for (idx in 0 until onlyNumList.size) {
             try {
                 if ((onlyNumList[idx].toInt() - onlyNumList[idx + 1].toInt()) == -1) {
                     tempNumString = tempNumString + onlyNumList[idx] + ","
-                    Log.d("divide"," $tempNumString $idx")
-                }
-                else {
+                    Log.d("divide", " $tempNumString $idx")
+                } else {
                     tempNumString = tempNumString + onlyNumList[idx] + "!"
-                    Log.d("divide"," $tempNumString $idx")
+                    Log.d("divide", " $tempNumString $idx")
                 }
-            } catch( e: Exception) {
+            } catch (e: Exception) {
                 tempNumString += onlyNumList[idx]
             }
         }
@@ -323,7 +356,7 @@ class ClassInfoActivity : AppCompatActivity() {
     }
 
     private fun setVisibilityTime1(set: Int) {
-        if(set == View.GONE) {
+        if (set == View.GONE) {
             binding.time1.text = ""
         }
         binding.time1.visibility = set
@@ -332,7 +365,7 @@ class ClassInfoActivity : AppCompatActivity() {
     }
 
     private fun setVisibilityTime2(set: Int) {
-        if(set == View.GONE) {
+        if (set == View.GONE) {
             binding.time2.text = ""
         }
         binding.time2.visibility = set
@@ -341,7 +374,7 @@ class ClassInfoActivity : AppCompatActivity() {
     }
 
     private fun setVisibilityTime3(set: Int) {
-        if(set == View.GONE) {
+        if (set == View.GONE) {
             binding.time3.text = ""
         }
         binding.time3.visibility = set

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.kunize.uswtimetable.adapter.TimeTableListAdapter
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityTimeTableListBinding
@@ -26,6 +27,10 @@ class TimeTableListActivity : AppCompatActivity() {
 
 
         db = TimeTableListDatabase.getInstance(applicationContext)!!
+
+        binding.btnOpenSource.setOnClickListener {
+            startActivity(Intent(this,OpenSourceActivity::class.java))
+        }
 
 
         binding.addClass.setOnClickListener {
