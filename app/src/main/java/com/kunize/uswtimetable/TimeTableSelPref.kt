@@ -25,4 +25,12 @@ class PrefsManager(context: Context) {
     fun setLong(key: String, value: Long) {
         prefs.edit().putLong(key, value).apply()
     }
+
+    fun getString(key: String, defValue: String) : String {
+        return prefs.getString(key, defValue)!!
+    }
+
+    fun setString(key: String, value: String) {
+        prefs.edit().putString(key, value).apply()
+    }
 }

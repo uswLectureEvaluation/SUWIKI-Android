@@ -2,20 +2,20 @@ package com.kunize.uswtimetable
 
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.kakao.adfit.ads.AdListener
-import com.kakao.adfit.ads.ba.BannerAdView
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
 import com.kunize.uswtimetable.dataclass.TimeTableList
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
@@ -25,7 +25,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import org.json.JSONArray
-import org.w3c.dom.Text
+import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
 
@@ -222,6 +222,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            withContext(Main) {
+                delay(1000L)
+                val strBit = BitmapToString(viewToBitmap(binding.nestedScrollView))
+                TimeTableSelPref.prefs.setString("image",strBit)
+                binding.imageView.setImageBitmap(viewToBitmap(binding.nestedScrollView))
+            }
         }
 
 
@@ -295,6 +301,32 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 
+    fun viewToBitmap(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+
+        return bitmap
+    }
+
+    companion object {
+        fun BitmapToString(bitmap: Bitmap): String {
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+            val byte = baos.toByteArray()
+            return Base64.encodeToString(byte, Base64.DEFAULT)
+        }
+
+        fun StringToBitmap(encodedString: String): Bitmap? {
+            try {
+                val byte = Base64.decode(encodedString, Base64.DEFAULT)
+                return BitmapFactory.decodeByteArray(byte, 0, byte.size)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return null
+            }
+        }
+    }
 
     val Int.dp: Int
         get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
