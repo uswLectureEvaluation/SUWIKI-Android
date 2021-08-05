@@ -44,19 +44,6 @@ class StartActivity : AppCompatActivity() {
         appUpdateManager = AppUpdateManagerFactory.create(this)
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
-        appUpdateInfoTask.addOnSuccessListener {
-            appUpdateInfo ->
-            if(appUpdateInfo.updateAvailability() ==
-                    UpdateAvailability.UPDATE_AVAILABLE) {
-                appUpdateManager.startUpdateFlowForResult(
-                    appUpdateInfo,
-                    IMMEDIATE,
-                    this,
-                    MY_REQUEST_CODE
-                )
-            }
-        }
-
         binding.showProgress.text = "시간표 DB 버전 확인 중"
 
         //firebase 설정
@@ -76,11 +63,33 @@ class StartActivity : AppCompatActivity() {
         var originData: String
         var done = false
         var update: Boolean? = null
+        var appVersion: Boolean = false
+        var toUpdate = false
 
         //intent 설정
         val intent = Intent(this@StartActivity, MainActivity::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
+
+        appUpdateInfoTask.addOnSuccessListener {
+                appUpdateInfo ->
+            Log.d("update123","${appUpdateInfo.updateAvailability() ==
+                    UpdateAvailability.UPDATE_AVAILABLE}")
+            if(appUpdateInfo.updateAvailability() ==
+                UpdateAvailability.UPDATE_AVAILABLE) {
+                appUpdateManager.startUpdateFlowForResult(
+                    appUpdateInfo,
+                    IMMEDIATE,
+                    this,
+                    MY_REQUEST_CODE
+                )
+                toUpdate = true
+            }
+            appVersion = true
+        }.addOnFailureListener {
+            Log.d("update123","실패!, $it")
+            appVersion = true
+        }
 
         database = FirebaseDatabase.getInstance()
         firebaseVersion = database.getReference("version")
@@ -97,9 +106,10 @@ class StartActivity : AppCompatActivity() {
 
         CoroutineScope(IO).launch {
             while (true) {
-                if (update != null)
+                if (update != null && appVersion && !toUpdate)
                     break
                 delay(500L)
+                Log.d("update123","$update $appVersion")
             } //update 값이 입력될 때 까지 무한 루프
             if (update == true) {
                 Log.d("firebase", "업데이트 실행 $version")

@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepattributes Signature
+
+# This rule will properly ProGuard all the model classes in
+# the package com.yourcompany.models.
+# Modify this rule to fit the structure of your app.
+-keepclassmembers class com.kunize.models.** {
+  *;
+}

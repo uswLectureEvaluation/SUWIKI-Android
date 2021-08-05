@@ -2,10 +2,7 @@ package com.kunize.uswtimetable
 
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Color
+import android.graphics.*
 import android.os.Bundle
 import android.util.Base64
 import android.util.DisplayMetrics
@@ -16,17 +13,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.adfit.ads.AdListener
-import com.kunize.uswtimetable.databinding.ActivityMainBinding
-import com.kunize.uswtimetable.dataclass.TimeTableList
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
+import com.kunize.uswtimetable.databinding.ActivityMainBinding
 import com.kunize.uswtimetable.dataclass.TimeData
+import com.kunize.uswtimetable.dataclass.TimeTableList
 import com.kunize.uswtimetable.dialog.BottomSheet
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import org.json.JSONArray
 import java.io.ByteArrayOutputStream
-import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -224,9 +220,12 @@ class MainActivity : AppCompatActivity() {
             }
             withContext(Main) {
                 delay(1000L)
-                val strBit = BitmapToString(viewToBitmap(binding.nestedScrollView))
+                val timetableBitmap = viewToBitmap(binding.timeTableCard)
+                val eLearningBitmap = viewToBitmap(binding.eLearningLayout)
+                val totalBitmap = combineImage(timetableBitmap,eLearningBitmap,true)
+                val strBit = BitmapToString(totalBitmap!!)
                 TimeTableSelPref.prefs.setString("image",strBit)
-                binding.imageView.setImageBitmap(viewToBitmap(binding.nestedScrollView))
+                binding.imageView.setImageBitmap(totalBitmap)
             }
         }
 
@@ -306,6 +305,29 @@ class MainActivity : AppCompatActivity() {
         val canvas = Canvas(bitmap)
         view.draw(canvas)
 
+        return bitmap
+    }
+
+    private fun combineImage(first: Bitmap, second: Bitmap, isVerticalMode: Boolean): Bitmap? {
+        var bitmap: Bitmap? = null
+        bitmap = if (isVerticalMode) Bitmap.createBitmap(
+            first.width,
+            first.height + second.height,
+            Bitmap.Config.ARGB_8888
+        ) else Bitmap.createScaledBitmap(first, first.width + second.width, first.height, true)
+        val p = Paint()
+        p.isDither = true
+        p.flags = Paint.ANTI_ALIAS_FLAG
+        val c = Canvas(bitmap)
+        c.drawBitmap(first, 0f, 0f, p)
+        if (isVerticalMode) c.drawBitmap(second, 0f, first.height.toFloat(), p) else c.drawBitmap(
+            second,
+            first.width.toFloat(),
+            0f,
+            p
+        )
+        first.recycle()
+        second.recycle()
         return bitmap
     }
 
