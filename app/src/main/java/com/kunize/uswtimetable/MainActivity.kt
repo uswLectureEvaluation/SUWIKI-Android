@@ -1,5 +1,7 @@
 package com.kunize.uswtimetable
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.*
@@ -219,17 +221,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             withContext(Main) {
-                delay(1000L)
-                val timetableBitmap = viewToBitmap(binding.timeTableCard)
-                val eLearningBitmap = viewToBitmap(binding.eLearningLayout)
-                val totalBitmap = combineImage(timetableBitmap,eLearningBitmap,true)
-                val strBit = BitmapToString(totalBitmap!!)
-                TimeTableSelPref.prefs.setString("image",strBit)
-                binding.imageView.setImageBitmap(totalBitmap)
+                delay(200L)
+                widgetUpdate()
             }
         }
 
 
+    }
+
+    private fun widgetUpdate() {
+        val timetableBitmap = viewToBitmap(binding.timeTableCard)
+        val eLearningBitmap = viewToBitmap(binding.eLearningLayout)
+        val totalBitmap = combineImage(timetableBitmap, eLearningBitmap, true)
+        val strBit = BitmapToString(totalBitmap!!)
+        TimeTableSelPref.prefs.setString("image", strBit)
+        val intentAction = Intent(this@MainActivity, TimeTableWidget::class.java)
+        intentAction.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        val ids = AppWidgetManager.getInstance(this@MainActivity)
+            .getAppWidgetIds(ComponentName(this@MainActivity, TimeTableWidget::class.java))
+        intentAction.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        this@MainActivity.sendBroadcast(intentAction)
     }
 
     private fun reDrawTimeTable() {
@@ -287,13 +298,15 @@ class MainActivity : AppCompatActivity() {
                     }
                     startActivity(intent)
                 }
-                2 -> runOnUiThread {
+                2 -> CoroutineScope(Main).launch {
                     if (v != null) {
                         binding.timeTable.removeView(v)
                         tempTimeData.remove(data)
                         reDrawTimeTable()
                     } else
                         binding.eLearning.text = ""
+                    delay(200L)
+                    widgetUpdate()
                 }
             }
         })

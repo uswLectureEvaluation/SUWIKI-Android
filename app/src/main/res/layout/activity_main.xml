@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <com.kakao.adfit.ads.ba.BannerAdView
+        tools:visibility="gone"
         android:id="@+id/bannerAdView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -419,15 +420,6 @@
 
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="300dp"
-                android:layout_height="500dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eLearningLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
