@@ -32,6 +32,7 @@ class StartActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
     private lateinit var appUpdateManager: AppUpdateManager
+    var toUpdate = false
 
     companion object {
         const val MY_REQUEST_CODE = 700
@@ -42,7 +43,6 @@ class StartActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         appUpdateManager = AppUpdateManagerFactory.create(this)
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
         binding.showProgress.text = "시간표 DB 버전 확인 중"
 
@@ -64,31 +64,35 @@ class StartActivity : AppCompatActivity() {
         var done = false
         var update: Boolean? = null
         var appVersion: Boolean = false
-        var toUpdate = false
 
         //intent 설정
         val intent = Intent(this@StartActivity, MainActivity::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
 
-        appUpdateInfoTask.addOnSuccessListener {
-                appUpdateInfo ->
-            Log.d("update123","${appUpdateInfo.updateAvailability() ==
-                    UpdateAvailability.UPDATE_AVAILABLE}")
-            if(appUpdateInfo.updateAvailability() ==
-                UpdateAvailability.UPDATE_AVAILABLE) {
-                appUpdateManager.startUpdateFlowForResult(
-                    appUpdateInfo,
-                    IMMEDIATE,
-                    this,
-                    MY_REQUEST_CODE
-                )
-                toUpdate = true
+        appUpdateManager?.let {
+            it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                Log.d(
+                    "update123", "${
+                        appUpdateInfo.updateAvailability() ==
+                                UpdateAvailability.UPDATE_AVAILABLE
+                    } ${appUpdateInfo.updateAvailability()}")
+                if (appUpdateInfo.updateAvailability() ==
+                    UpdateAvailability.UPDATE_AVAILABLE
+                ) {
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        IMMEDIATE,
+                        this,
+                        MY_REQUEST_CODE
+                    )
+                    toUpdate = true
+                }
+                appVersion = true
+            }.addOnFailureListener {
+                Log.d("update123", "실패!, $it")
+                appVersion = true
             }
-            appVersion = true
-        }.addOnFailureListener {
-            Log.d("update123","실패!, $it")
-            appVersion = true
         }
 
         database = FirebaseDatabase.getInstance()
@@ -207,6 +211,7 @@ class StartActivity : AppCompatActivity() {
                     }
                     .setMessage("원활한 앱 사용을 위해 업데이트를 권장합니다.")
                     .show()
+                toUpdate = false
             }
         }
     }

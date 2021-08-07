@@ -332,6 +332,7 @@ class MainActivity : AppCompatActivity() {
         p.isDither = true
         p.flags = Paint.ANTI_ALIAS_FLAG
         val c = Canvas(bitmap)
+        c.drawColor(Color.rgb(250,250,250))
         c.drawBitmap(first, 0f, 0f, p)
         if (isVerticalMode) c.drawBitmap(second, 0f, first.height.toFloat(), p) else c.drawBitmap(
             second,
