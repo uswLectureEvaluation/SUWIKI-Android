@@ -43,6 +43,8 @@ class ClassInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val deleteIdx = intent.getIntExtra("deleteIdx", -1)
+
         val className = intent.getStringExtra("className")
         val professor = intent.getStringExtra("professor")
         val time = intent.getStringExtra("time")
@@ -106,12 +108,23 @@ class ClassInfoActivity : AppCompatActivity() {
                             )
                         }
                     }
-                    val deleteIdx = intent.getIntExtra("deleteIdx", -1)
                     if (deleteIdx != -1)
                         tempTimeData.removeAt(deleteIdx)
                     //TODO 3.5 UI에서 정보 추출
                     val extractionList =
                         listOf<TextView>(binding.time1, binding.time2, binding.time3)
+                    if (binding.time1.text.toString().isEmpty() && binding.time2.text.toString()
+                            .isEmpty() && binding.time3.text.toString().isEmpty()
+                    ) {
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@ClassInfoActivity,
+                                "시간 및 장소를 입력해주세요!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        return@launch
+                    }
                     val addTimeData = mutableListOf<TimeData>()
                     for (extraction in extractionList) {
                         var tempSplit: List<String>
@@ -149,7 +162,10 @@ class ClassInfoActivity : AppCompatActivity() {
                     }
                     //TODO 3.7 이러닝 여부 확인
                     for (newTime in addTimeData) {
-                        if ((newTime.name.contains("이러닝") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) && jsonStr.contains("이러닝") && deleteIdx == -1) {
+                        if ((newTime.name.contains("이러닝") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) && jsonStr.contains(
+                                "이러닝"
+                            ) && deleteIdx == -1
+                        ) {
                             withContext(Main) {
                                 Toast.makeText(
                                     this@ClassInfoActivity,
@@ -221,8 +237,15 @@ class ClassInfoActivity : AppCompatActivity() {
             }  //Coroutine 끝
         } //끝
 
+        //TODO deleteIdx != -1 일 경우 로직 수정해야함 (장소에 띄어쓰기가 있을 경우 장소명이 "이러닝"으로 변함)
         try {
-            if (time!! == "None") {
+            Log.d("eLearningTest", "$time")
+            if (deleteIdx != -1) {
+                if (time!! == "" || time == "()")
+                    binding.time1.text = "이러닝"
+                else
+                    binding.time1.text = time
+            } else if (time!! == "None") {
                 binding.time1.text = "이러닝"
             } else if (time!!.contains("),")) {
                 timeSplit = time.split("),")

@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 for (data in tempTimeData) {
-                    if (data.location == "이러닝" || data.day == "토" || data.location == "") {
+                    if ((data.location == "이러닝" && data.day == "") || data.day == "토" || data.location == "") {
                         binding.eLearning.text =
                             data.name + " (" + data.day + " " + data.startTime + "~" + data.endTime + ")"
                         withContext(Main) {
