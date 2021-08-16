@@ -153,6 +153,8 @@ class MainActivity : AppCompatActivity() {
                 val widthOne = (width - 70.dp) / 5
                 val heightOne = 50.dp
 
+                Log.d("timetable","Main $widthOne")
+
                 val jsonStr = timeTableSel?.timeTableJsonData
 
 
@@ -346,6 +348,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        val Int.dp: Int
+            get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
+        val Float.dp: Int
+            get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
         fun BitmapToString(bitmap: Bitmap): String {
             val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
@@ -363,10 +371,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    val Int.dp: Int
-        get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-
-    val Float.dp: Int
-        get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 }

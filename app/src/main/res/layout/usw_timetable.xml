@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentBottom="true">
+
+    <TextView
+        android:id="@+id/timeColumn"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/edge_end" />
+
+    <TextView
+        android:id="@+id/mon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/timeColumn"
+        android:background="@drawable/edge_end"
+        android:text="월" />
+
+    <TextView
+        android:id="@+id/tue"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/mon"
+        android:background="@drawable/edge_end"
+        android:text="화" />
+
+    <TextView
+        android:id="@+id/wed"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/tue"
+        android:background="@drawable/edge_end"
+        android:text="수" />
+
+    <TextView
+        android:id="@+id/thu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/wed"
+        android:background="@drawable/edge_end"
+        android:text="목" />
+
+    <TextView
+        android:id="@+id/fri"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/thu"
+        android:text="금" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/edge_bottom" />
+
+    <TextView
+        android:id="@+id/one"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/edge_bottom"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/two"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/edge_bottom"
+        android:text="2" />
+
+    <TextView
+        android:id="@+id/three"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="130dp"
+        android:background="@drawable/edge_bottom"
+        android:text="3" />
+
+    <TextView
+        android:id="@+id/four"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/edge_bottom"
+        android:text="4" />
+
+    <TextView
+        android:id="@+id/five"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/edge_bottom"
+        android:text="5" />
+
+    <TextView
+        android:id="@+id/six"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="280dp"
+        android:background="@drawable/edge_bottom"
+        android:text="6" />
+
+    <TextView
+        android:id="@+id/seven"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="330dp"
+        android:background="@drawable/edge_bottom"
+        android:text="7" />
+
+    <TextView
+        android:id="@+id/eight"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="380dp"
+        android:background="@drawable/edge_bottom"
+        android:text="8" />
+
+    <TextView
+        android:id="@+id/nine"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="430dp"
+        android:background="@drawable/edge_bottom"
+        android:text="9" />
+
+    <TextView
+        android:id="@+id/ten"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="480dp"
+        android:background="@drawable/edge_bottom"
+        android:text="10" />
+
+    <TextView
+        android:id="@+id/eleven"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="530dp"
+        android:background="@drawable/edge_bottom"
+        android:text="11" />
+
+    <TextView
+        android:id="@+id/twelve"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="580dp"
+        android:background="@drawable/edge_bottom"
+        android:text="12" />
+
+    <TextView
+        android:id="@+id/thirteen"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="630dp"
+        android:background="@drawable/edge_bottom"
+        android:text="13" />
+
+    <TextView
+        android:id="@+id/fourteen"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="680dp"
+        android:background="@drawable/edge_bottom"
+        android:text="14" />
+
+    <TextView
+        android:id="@+id/fifteen"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="730dp"
+        android:background="@drawable/edge_bottom"
+        android:text="15" />
+
+</RelativeLayout>
