@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.RemoteViews
-import com.kunize.uswtimetable.MainActivity.Companion.StringToBitmap
+import com.kunize.uswtimetable.MainActivity.Companion.stringToBitmap
 import java.lang.Exception
 
 /**
@@ -35,9 +35,10 @@ class TimeTableWidget : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, TimeTableWidget::class.java))
+        val ids = AppWidgetManager.getInstance(context)
+            .getAppWidgetIds(ComponentName(context, TimeTableWidget::class.java))
         val myWidget = TimeTableWidget()
-        Log.d("widget","업데이트 실행")
+        Log.d("widget", "업데이트 실행")
         myWidget.onUpdate(context, AppWidgetManager.getInstance(context), ids)
     }
 }
@@ -48,9 +49,10 @@ internal fun updateAppWidget(
     appWidgetId: Int
 ) {
     val views = RemoteViews(context.packageName, R.layout.time_table_widget)
-    val strBit = TimeTableSelPref.prefs.getString("image","")
+
+    val strBit = TimeTableSelPref.prefs.getString("image", "")
     try {
-        val bitmap = StringToBitmap(strBit)
+        val bitmap = stringToBitmap(strBit)
         views.setImageViewBitmap(R.id.widgetImage, bitmap)
     } catch (e: Exception) {
 
@@ -59,6 +61,8 @@ internal fun updateAppWidget(
     val intent = Intent(context, StartActivity::class.java) //실행할 액티비티의 클래스
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
     views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
+
+    //TODO 위젯 크기 변경 시 새로운 UswTimeTable 객체 생성 후 view를 image로 바꿈 -> 다시 setImageViewBitmap 사용하기
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

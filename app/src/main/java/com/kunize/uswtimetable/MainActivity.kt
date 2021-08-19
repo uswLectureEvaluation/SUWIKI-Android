@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var timeTableList: List<TimeTableList>
     private var timeTableSel: TimeTableList? = null
     private val timeWidthMap = mapOf("월" to 0, "화" to 1, "수" to 2, "목" to 3, "금" to 4)
-    private val tempTimeData = mutableListOf<TimeData>()
+    private var tempTimeData = mutableListOf<TimeData>()
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var edgeList: List<TextView>
@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.uswTimeTable.drawTable()
 
         edgeList = listOf(
             binding.edge9,
@@ -115,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(IO).launch {
             timeTableList = db.timetableListDao().getAll()
             tempTimeData.clear()
-            if (timeTableList.isEmpty()) {
+            if (timeTableList.isEmpty()) { //시간표가 없을 경우
                 timeTableSel = null
                 withContext(Main) {
                     binding.timeTableEmpty.visibility = View.VISIBLE
@@ -123,7 +125,7 @@ class MainActivity : AppCompatActivity() {
                     binding.textTitle.text = ""
                     binding.eLearning.text = ""
                 }
-            } else {
+            } else { //시간표가 있을 경우
                 val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
                 timeTableSel = timeTableList[0]
                 for (empty in timeTableList) {
@@ -153,43 +155,12 @@ class MainActivity : AppCompatActivity() {
                 val widthOne = (width - 70.dp) / 5
                 val heightOne = 50.dp
 
-                Log.d("timetable","Main $widthOne")
-
                 val jsonStr = timeTableSel?.timeTableJsonData
-
-
-                val jsonArray: JSONArray
-
-                //TODO 3. Json을 Array로 변환
-                if (jsonStr != "") {
-                    jsonArray = JSONArray(jsonStr)
-                    for (idx in 0 until jsonArray.length()) {
-                        val jsonObj = jsonArray.getJSONObject(idx)
-                        val className = jsonObj.getString("name")
-                        val professor = jsonObj.getString("professor")
-                        val location = jsonObj.getString("location")
-                        val day = jsonObj.getString("day")
-                        val startTime = jsonObj.getString("startTime")
-                        val endTime = jsonObj.getString("endTime")
-                        val color = jsonObj.getInt("color")
-
-                        tempTimeData.add(
-                            TimeData(
-                                className,
-                                professor,
-                                location,
-                                day,
-                                startTime,
-                                endTime,
-                                color
-                            )
-                        )
-                    }
-                }
+                //3. Json을 Array로 변환
+                tempTimeData = jsonToArray(jsonStr)
                 withContext(Main) {
                     reDrawTimeTable()
                 }
-
 
                 for (data in tempTimeData) {
                     if ((data.location == "이러닝" && data.day == "") || data.day == "토" || data.location == "") {
@@ -203,6 +174,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         continue
                     }
+
                     val timeRect = TextView(this@MainActivity)
                     val drawStart = (data.startTime.toInt() - 1) * heightOne
                     val timeHeight = (data.endTime.toInt() - data.startTime.toInt() + 1) * heightOne
@@ -218,6 +190,7 @@ class MainActivity : AppCompatActivity() {
                         showBottomSheet(data, tempTimeData, v)
                     }
                     withContext(Main) {
+                        //binding.uswTimeTable.drawTable()
                         binding.timeTable.addView(timeRect, params)
                     }
                 }
@@ -231,11 +204,41 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun jsonToArray(jsonStr: String?): MutableList<TimeData> {
+        val returnTimeData = mutableListOf<TimeData>()
+        if (jsonStr != "") {
+            val jsonArray = JSONArray(jsonStr)
+            for (idx in 0 until jsonArray.length()) {
+                val jsonObj = jsonArray.getJSONObject(idx)
+                val className = jsonObj.getString("name")
+                val professor = jsonObj.getString("professor")
+                val location = jsonObj.getString("location")
+                val day = jsonObj.getString("day")
+                val startTime = jsonObj.getString("startTime")
+                val endTime = jsonObj.getString("endTime")
+                val color = jsonObj.getInt("color")
+
+                returnTimeData.add(
+                    TimeData(
+                        className,
+                        professor,
+                        location,
+                        day,
+                        startTime,
+                        endTime,
+                        color
+                    )
+                )
+            }
+        }
+        return returnTimeData
+    }
+
     private fun widgetUpdate() {
         val timetableBitmap = viewToBitmap(binding.timeTableCard)
         val eLearningBitmap = viewToBitmap(binding.eLearningLayout)
         val totalBitmap = combineImage(timetableBitmap, eLearningBitmap, true)
-        val strBit = BitmapToString(totalBitmap!!)
+        val strBit = bitmapToString(totalBitmap!!)
         TimeTableSelPref.prefs.setString("image", strBit)
         val intentAction = Intent(this@MainActivity, TimeTableWidget::class.java)
         intentAction.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
@@ -265,7 +268,6 @@ class MainActivity : AppCompatActivity() {
             try {
                 edgeList[idx].visibility = View.VISIBLE
             } catch (e: Exception) {
-                Log.d("Buggg", "$e")
                 edgeList[idx - 1].visibility = View.VISIBLE
             }
         }
@@ -315,7 +317,7 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 
-    fun viewToBitmap(view: View): Bitmap {
+    private fun viewToBitmap(view: View): Bitmap {
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         view.draw(canvas)
@@ -354,20 +356,20 @@ class MainActivity : AppCompatActivity() {
         val Float.dp: Int
             get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
-        fun BitmapToString(bitmap: Bitmap): String {
+        fun bitmapToString(bitmap: Bitmap): String {
             val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
             val byte = baos.toByteArray()
             return Base64.encodeToString(byte, Base64.DEFAULT)
         }
 
-        fun StringToBitmap(encodedString: String): Bitmap? {
-            try {
+        fun stringToBitmap(encodedString: String): Bitmap? {
+            return try {
                 val byte = Base64.decode(encodedString, Base64.DEFAULT)
-                return BitmapFactory.decodeByteArray(byte, 0, byte.size)
+                BitmapFactory.decodeByteArray(byte, 0, byte.size)
             } catch (e: Exception) {
                 e.printStackTrace()
-                return null
+                null
             }
         }
     }

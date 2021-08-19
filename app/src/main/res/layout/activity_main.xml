@@ -74,6 +74,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.kunize.uswtimetable.UswTimeTable
+                android:id="@+id/uswTimeTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/timeTableCard"
                 android:layout_width="0dp"
@@ -83,15 +94,11 @@
                 android:layout_marginEnd="20dp"
                 android:background="#FAFAFA"
                 android:minHeight="430dp"
-                app:cardCornerRadius="15dp"
+                android:visibility="gone"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <com.kunize.uswtimetable.UswTimeTable
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/timeTableExist"
@@ -368,6 +375,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/timeTableCard">
