@@ -4,14 +4,10 @@ import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import com.autofit.et.lib.AutoFitEditText
 import com.kunize.uswtimetable.ClassInfoActivity.Companion.colorMap
 
 class EditColorDialog(context: Context) : View.OnClickListener {
@@ -24,6 +20,10 @@ class EditColorDialog(context: Context) : View.OnClickListener {
     private lateinit var Brown: ImageView
     private lateinit var Gray: ImageView
     private lateinit var Navy: ImageView
+    private lateinit var darkGreen : ImageView
+    private lateinit var lightBrown : ImageView
+    private lateinit var darkPurple : ImageView
+    private lateinit var darkGray : ImageView
 
     private lateinit var okClickedListener: OKClickedListener
 
@@ -40,6 +40,10 @@ class EditColorDialog(context: Context) : View.OnClickListener {
         Green = dlg.findViewById(R.id.imgGreen)
         Brown = dlg.findViewById(R.id.imgBrown)
         Gray = dlg.findViewById(R.id.imgGray)
+        darkGreen = dlg.findViewById(R.id.imgDarkGreen)
+        lightBrown = dlg.findViewById(R.id.imgLightBrown)
+        darkPurple = dlg.findViewById(R.id.imgDarkPurple)
+        darkGray = dlg.findViewById(R.id.imgDarkGray)
 
         Navy.imageTintList = ColorStateList.valueOf(colorMap["Navy"]!!)
         Pink.imageTintList = ColorStateList.valueOf(colorMap["Pink"]!!)
@@ -49,6 +53,10 @@ class EditColorDialog(context: Context) : View.OnClickListener {
         Green.imageTintList = ColorStateList.valueOf(colorMap["Green"]!!)
         Brown.imageTintList = ColorStateList.valueOf(colorMap["Brown"]!!)
         Gray.imageTintList = ColorStateList.valueOf(colorMap["Gray"]!!)
+        darkGreen.imageTintList = ColorStateList.valueOf(colorMap["darkGreen"]!!)
+        lightBrown.imageTintList = ColorStateList.valueOf(colorMap["lightBrown"]!!)
+        darkPurple.imageTintList = ColorStateList.valueOf(colorMap["darkPurple"]!!)
+        darkGray.imageTintList = ColorStateList.valueOf(colorMap["darkGray"]!!)
 
 
         Navy.setOnClickListener(this)
@@ -59,6 +67,10 @@ class EditColorDialog(context: Context) : View.OnClickListener {
         Green.setOnClickListener(this)
         Brown.setOnClickListener(this)
         Gray.setOnClickListener(this)
+        darkGreen.setOnClickListener(this)
+        lightBrown.setOnClickListener(this)
+        darkPurple.setOnClickListener(this)
+        darkGray.setOnClickListener(this)
 
         dlg.show()
     }
@@ -74,14 +86,18 @@ class EditColorDialog(context: Context) : View.OnClickListener {
     override fun onClick(v: View?) {
         var color = colorMap["Orange"]
         when(v?.id) {
+            R.id.imgLightBrown -> color = colorMap["lightBrown"]
             R.id.imgGray -> color = colorMap["Gray"]
-            R.id.imgBrown -> color = colorMap["Brown"]
             R.id.imgGreen -> color = colorMap["Green"]
-            R.id.imgSky -> color = colorMap["Sky"]
-            R.id.imgPurple -> color = colorMap["Purple"]
-            R.id.imgOrange -> color = colorMap["Orange"]
             R.id.imgNavy -> color = colorMap["Navy"]
+            R.id.imgSky -> color = colorMap["Sky"]
+            R.id.imgOrange -> color = colorMap["Orange"]
+            R.id.imgPurple -> color = colorMap["Purple"]
             R.id.imgPink -> color = colorMap["Pink"]
+            R.id.imgDarkPurple -> color = colorMap["darkPurple"]
+            R.id.imgDarkGray -> color = colorMap["darkGray"]
+            R.id.imgBrown -> color = colorMap["Brown"]
+            R.id.imgDarkGreen -> color = colorMap["darkGreen"]
 
         }
         okClickedListener.onOKClicked(color)

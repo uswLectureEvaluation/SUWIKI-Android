@@ -10,9 +10,11 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import com.kunize.uswtimetable.MainActivity.Companion.jsonToArray
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.dataclass.TimeData
+import com.kunize.uswtimetable.dataclass.TimeTableList
 import com.kunize.uswtimetable.dialog.EditTimeDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -33,12 +35,20 @@ class ClassInfoActivity : AppCompatActivity() {
             "Green" to Color.rgb(165, 220, 129), //연두
             "Brown" to Color.rgb(194, 143, 98), //갈색
             "Gray" to Color.rgb(194, 193, 189), //회색
-            "Navy" to Color.rgb(67, 87, 150) //남색
+            "Navy" to Color.rgb(67, 87, 150), //남색
+            "darkGreen" to Color.rgb(107, 143, 84), //진녹색
+            "lightBrown" to Color.rgb(255, 187, 128), //연갈색
+            "darkPurple" to Color.rgb(161, 121, 192), //진보라색
+            "darkGray" to Color.rgb(143, 142, 139) //진회색
         )
     }
 
     var colorSel: Int = Color.rgb(255, 193, 82)
     private val binding by lazy { ActivityClassInfoBinding.inflate(layoutInflater) }
+    private lateinit var jsonStr: String
+    private lateinit var db: TimeTableListDatabase
+    private lateinit var timetableSel: TimeTableList
+    private var tempTimeData = mutableListOf<TimeData>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -53,10 +63,35 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editClassName.setText(className)
         binding.editProfessorName.setText(professor)
 
-        val randomNum = Random().nextInt(8)
-        val randomColor = intent.getIntExtra("color", colorMap.values.toIntArray()[randomNum])
-        colorSel = randomColor
-        binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
+        CoroutineScope(IO).launch {
+            //TODO 1. 해당 시간에 맞는 TimeTableList DB 불러옴
+            db = TimeTableListDatabase.getInstance(applicationContext)!!
+            val tempTimetableList = db.timetableListDao().getAll()
+            timetableSel = tempTimetableList[0]
+            val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
+            for (empty in tempTimetableList) {
+                if (empty.createTime == createTime)
+                    timetableSel = empty
+            }
+            //TODO 2. DB의 Json String 불러옴
+            jsonStr = timetableSel.timeTableJsonData
+
+            tempTimeData = jsonToArray(jsonStr)
+
+            var randomColor = intent.getIntExtra("color", -1)
+
+            if (randomColor == -1)
+                do {
+                    val randomNum = Random().nextInt(12)
+                    randomColor = colorMap.values.toIntArray()[randomNum]
+                } while (jsonStr.contains("$randomColor") && (tempTimeData.size < 12))
+
+            colorSel = randomColor
+
+            withContext(Main) {
+                binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
+            }
+        }
 
         setVisibilityTime2(View.GONE)
         setVisibilityTime3(View.GONE)
@@ -67,47 +102,6 @@ class ClassInfoActivity : AppCompatActivity() {
             val inputProfessor = binding.editProfessorName.text.toString()
             CoroutineScope(IO).launch {
                 try {
-                    //TODO 1. 해당 시간에 맞는 TimeTableList DB 불러옴
-                    val db = TimeTableListDatabase.getInstance(applicationContext)
-                    val tempTimetableList = db!!.timetableListDao().getAll()
-                    var timetableSel = tempTimetableList[0]
-                    val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
-                    for (empty in tempTimetableList) {
-                        if (empty.createTime == createTime)
-                            timetableSel = empty
-                    }
-                    //TODO 2. DB의 Json String 불러옴
-                    val jsonStr = timetableSel.timeTableJsonData
-
-                    var tempTimeData = mutableListOf<TimeData>()
-                    var jsonArray: JSONArray
-
-                    //TODO 3. Json을 Array로 변환
-                    if (jsonStr != "") {
-                        jsonArray = JSONArray(jsonStr)
-                        for (idx in 0 until jsonArray.length()) {
-                            val jsonObj = jsonArray.getJSONObject(idx)
-                            val name = jsonObj.getString("name")
-                            val professor = jsonObj.getString("professor")
-                            val location = jsonObj.getString("location")
-                            val day = jsonObj.getString("day")
-                            val startTime = jsonObj.getString("startTime")
-                            val endTime = jsonObj.getString("endTime")
-                            val color = jsonObj.getInt("color")
-
-                            tempTimeData.add(
-                                TimeData(
-                                    name,
-                                    professor,
-                                    location,
-                                    day,
-                                    startTime,
-                                    endTime,
-                                    color
-                                )
-                            )
-                        }
-                    }
                     if (deleteIdx != -1)
                         tempTimeData.removeAt(deleteIdx)
                     //TODO 3.5 UI에서 정보 추출
@@ -252,7 +246,6 @@ class ClassInfoActivity : AppCompatActivity() {
                 binding.time1.text = timeSplit[0] + ")"
                 binding.time2.text = timeSplit[1]
                 setVisibilityTime2(View.VISIBLE)
-                //TODO 미래421(화1,2,3),(목7,8) 예외처리 필요
             } else if (time!!.contains(" ")) {
                 timeSplit = time.split("(")
                 val location = timeSplit[0]
@@ -373,7 +366,7 @@ class ClassInfoActivity : AppCompatActivity() {
     private fun checkSeq(str: String): List<String> {
         val onlyNumList = str.split(",")
         var tempNumString = ""
-        for (idx in 0 until onlyNumList.size) {
+        for (idx in onlyNumList.indices) {
             try {
                 if ((onlyNumList[idx].toInt() - onlyNumList[idx + 1].toInt()) == -1) {
                     tempNumString = tempNumString + onlyNumList[idx] + ","

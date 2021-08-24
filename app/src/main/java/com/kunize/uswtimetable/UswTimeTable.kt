@@ -3,11 +3,14 @@ package com.kunize.uswtimetable
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +23,6 @@ import com.kunize.uswtimetable.dialog.BottomSheet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -139,7 +141,6 @@ class UswTimeTable @JvmOverloads constructor(
                             reDrawColumn()
                         } else
                             eLearningText.text = ""
-                        //widgetUpdate()
                     }
             }
         })
@@ -213,7 +214,11 @@ class UswTimeTable @JvmOverloads constructor(
                     params.leftMargin = timeWidth * timeWidthMap[data.day]!! + 30.dp
                     params.topMargin = drawStart + 30.dp
 
-                    timeRect.text = "${data.name}\n${data.location}"
+                    val tempText = "${data.name}\n${data.location}"
+                    val timeText = SpannableString(tempText)
+                    timeText.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0,data.name.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    timeText.setSpan(AbsoluteSizeSpan(12,true),data.name.length,tempText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    timeRect.text = timeText
                     timeRect.setTextColor(Color.WHITE)
                     timeRect.setBackgroundColor(data.color)
                     timeRect.setOnClickListener { v ->
@@ -227,6 +232,4 @@ class UswTimeTable @JvmOverloads constructor(
             }
         }
     }
-
-
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="200dp">
+    android:layout_height="250dp">
 
 
     <androidx.cardview.widget.CardView
@@ -14,7 +14,7 @@
         app:layout_constraintCircleRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,100 +22,128 @@
 
             <ImageView
                 android:id="@+id/imgOrange"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:layout_constraintBottom_toTopOf="@+id/imgGreen"
-                app:layout_constraintDimensionRatio="1.1"
                 app:layout_constraintEnd_toStartOf="@+id/imgPink"
-                app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_optimizationLevel="ratio"
                 app:srcCompat="@drawable/clrcle" />
 
             <ImageView
-                android:id="@+id/imgSky"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1.1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.25"
-                app:layout_constraintStart_toEndOf="@+id/imgPurple"
-                app:layout_constraintTop_toTopOf="@+id/imgPurple"
-                app:layout_optimizationLevel="ratio"
-                app:srcCompat="@drawable/clrcle" />
-
-            <ImageView
-                android:id="@+id/imgPurple"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:id="@+id/imgPink"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:layout_constraintDimensionRatio="1.1"
                 app:layout_constraintEnd_toStartOf="@+id/imgSky"
-                app:layout_constraintHeight_percent="0.25"
-                app:layout_constraintStart_toEndOf="@+id/imgPink"
-                app:layout_constraintTop_toTopOf="@+id/imgPink"
-                app:layout_optimizationLevel="ratio"
-                app:srcCompat="@drawable/clrcle" />
-
-            <ImageView
-                android:id="@+id/imgGreen"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="26dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1.1"
-                app:layout_constraintEnd_toStartOf="@+id/imgGray"
-                app:layout_constraintHeight_percent="0.25"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgOrange"
-                app:layout_optimizationLevel="ratio"
-                app:srcCompat="@drawable/clrcle" />
-
-            <ImageView
-                android:id="@+id/imgPink"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1.1"
-                app:layout_constraintEnd_toStartOf="@+id/imgPurple"
-                app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintStart_toEndOf="@+id/imgOrange"
                 app:layout_constraintTop_toTopOf="@+id/imgOrange"
                 app:layout_optimizationLevel="ratio"
                 app:srcCompat="@drawable/clrcle" />
 
             <ImageView
-                android:id="@+id/imgGray"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imgGreen"
-                app:layout_constraintDimensionRatio="1.1"
-                app:layout_constraintEnd_toStartOf="@+id/imgBrown"
-                app:layout_constraintHeight_percent="0.25"
-                app:layout_constraintStart_toEndOf="@+id/imgGreen"
+                android:id="@+id/imgSky"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toStartOf="@+id/imgNavy"
+                app:layout_constraintStart_toEndOf="@+id/imgPink"
+                app:layout_constraintTop_toTopOf="@+id/imgPink"
                 app:layout_optimizationLevel="ratio"
                 app:srcCompat="@drawable/clrcle" />
 
             <ImageView
-                android:id="@+id/imgBrown"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1.1"
-                app:layout_constraintEnd_toStartOf="@+id/imgNavy"
-                app:layout_constraintHeight_percent="0.25"
+                android:id="@+id/imgNavy"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgSky"
+                app:layout_constraintTop_toTopOf="@+id/imgSky"
+                app:layout_optimizationLevel="ratio"
+                app:srcCompat="@drawable/clrcle" />
+
+            <ImageView
+                android:id="@+id/imgPurple"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imgGray"
                 app:layout_constraintTop_toTopOf="@+id/imgGray"
                 app:layout_optimizationLevel="ratio"
                 app:srcCompat="@drawable/clrcle" />
 
             <ImageView
-                android:id="@+id/imgNavy"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1.1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.25"
+                android:id="@+id/imgGreen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/imgDarkGreen"
+                app:layout_constraintEnd_toStartOf="@+id/imgLightBrown"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgOrange"
+                app:layout_optimizationLevel="ratio"
+                app:srcCompat="@drawable/clrcle" />
+
+            <ImageView
+                android:id="@+id/imgDarkGreen"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imgBrown"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgGreen"
+                app:layout_optimizationLevel="ratio"
+                app:srcCompat="@drawable/clrcle" />
+
+            <ImageView
+                android:id="@+id/imgBrown"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDarkGreen"
+                app:layout_constraintEnd_toStartOf="@+id/imgDarkGray"
+                app:layout_constraintStart_toEndOf="@+id/imgDarkGreen"
+                app:layout_constraintTop_toTopOf="@+id/imgDarkGreen"
+                app:layout_optimizationLevel="ratio"
+                app:srcCompat="@drawable/clrcle" />
+
+            <ImageView
+                android:id="@+id/imgDarkGray"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgBrown"
+                app:layout_constraintEnd_toStartOf="@+id/imgDarkPurple"
                 app:layout_constraintStart_toEndOf="@+id/imgBrown"
                 app:layout_constraintTop_toTopOf="@+id/imgBrown"
+                app:layout_optimizationLevel="ratio"
+                app:srcCompat="@drawable/clrcle" />
+
+            <ImageView
+                android:id="@+id/imgDarkPurple"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgDarkGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgDarkGray"
+                app:layout_constraintTop_toTopOf="@+id/imgDarkGray"
+                app:layout_optimizationLevel="ratio"
+                app:srcCompat="@drawable/clrcle" />
+
+            <ImageView
+                android:id="@+id/imgLightBrown"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgGreen"
+                app:layout_constraintEnd_toStartOf="@+id/imgGray"
+                app:layout_constraintStart_toEndOf="@+id/imgGreen"
+                app:layout_optimizationLevel="ratio"
+                app:srcCompat="@drawable/clrcle" />
+
+            <ImageView
+                android:id="@+id/imgGray"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toStartOf="@+id/imgPurple"
+                app:layout_constraintStart_toEndOf="@+id/imgLightBrown"
+                app:layout_constraintTop_toTopOf="@+id/imgLightBrown"
                 app:layout_optimizationLevel="ratio"
                 app:srcCompat="@drawable/clrcle" />
 
