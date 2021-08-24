@@ -42,18 +42,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.uswTimeTable.drawTable()
-
-        edgeList = listOf(
-            binding.edge9,
-            binding.edge10,
-            binding.edge11,
-            binding.edge12,
-            binding.edge13,
-            binding.edge14,
-            binding.edge15
-        )
-
         binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
         binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
 
@@ -74,11 +62,6 @@ class MainActivity : AppCompatActivity() {
         binding.bannerAdView.loadAd()
 
         db = TimeTableListDatabase.getInstance(applicationContext)!!
-
-        binding.createTimeTable.setOnClickListener {
-            val intent = Intent(this, CreateTimeTableActivity::class.java)
-            startActivity(intent)
-        }
 
         binding.addClass.setOnClickListener {
             if (timeTableSel == null) {
@@ -119,11 +102,10 @@ class MainActivity : AppCompatActivity() {
             tempTimeData.clear()
             if (timeTableList.isEmpty()) { //시간표가 없을 경우
                 timeTableSel = null
+                binding.uswTimeTable.isEmpty = true
                 withContext(Main) {
-                    binding.timeTableEmpty.visibility = View.VISIBLE
-                    binding.timeTableExist.visibility = View.GONE
                     binding.textTitle.text = ""
-                    binding.eLearning.text = ""
+                    binding.uswTimeTable.drawTable()
                 }
             } else { //시간표가 있을 경우
                 val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
@@ -133,66 +115,17 @@ class MainActivity : AppCompatActivity() {
                         timeTableSel = empty
                 }
                 Log.d("change", "바뀐 데이터 : $timeTableSel")
+                binding.uswTimeTable.isEmpty = false
                 withContext(Main) {
-                    binding.timeTable.removeAllViews()
-                    binding.eLearning.text = ""
-                    binding.timeTableExist.visibility = View.VISIBLE
-                    binding.timeTableEmpty.visibility = View.GONE
                     binding.textTitle.text = timeTableSel?.timeTableName
                 }
-                val outMetrics = DisplayMetrics()
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    val display = this@MainActivity.display
-                    display?.getRealMetrics(outMetrics)
-                } else {
-                    @Suppress("DEPRECATION")
-                    val display = this@MainActivity.windowManager.defaultDisplay
-                    @Suppress("DEPRECATION")
-                    display.getMetrics(outMetrics)
-                }
-
-                val width = outMetrics.widthPixels
-                val widthOne = (width - 70.dp) / 5
-                val heightOne = 50.dp
 
                 val jsonStr = timeTableSel?.timeTableJsonData
                 //3. Json을 Array로 변환
                 tempTimeData = jsonToArray(jsonStr)
                 withContext(Main) {
-                    reDrawTimeTable()
-                }
-
-                for (data in tempTimeData) {
-                    if ((data.location == "이러닝" && data.day == "") || data.day == "토" || data.location == "") {
-                        binding.eLearning.text =
-                            data.name + " (" + data.day + " " + data.startTime + "~" + data.endTime + ")"
-                        withContext(Main) {
-                            binding.eLearning.setOnClickListener {
-                                if (binding.eLearning.text.toString() != "")
-                                    showBottomSheet(data, tempTimeData, null)
-                            }
-                        }
-                        continue
-                    }
-
-                    val timeRect = TextView(this@MainActivity)
-                    val drawStart = (data.startTime.toInt() - 1) * heightOne
-                    val timeHeight = (data.endTime.toInt() - data.startTime.toInt() + 1) * heightOne
-                    val params = RelativeLayout.LayoutParams(widthOne, timeHeight)
-                    params.leftMargin = widthOne * timeWidthMap[data.day]!!
-                    params.topMargin = drawStart
-
-                    timeRect.text = "${data.name}\n${data.location}"
-                    timeRect.setTextColor(Color.WHITE)
-                    timeRect.setBackgroundColor(data.color)
-                    timeRect.setOnClickListener { v ->
-                        Log.d("Test", "클릭")
-                        showBottomSheet(data, tempTimeData, v)
-                    }
-                    withContext(Main) {
-                        //binding.uswTimeTable.drawTable()
-                        binding.timeTable.addView(timeRect, params)
-                    }
+                    binding.uswTimeTable.timeTableData = tempTimeData
+                    binding.uswTimeTable.drawTable()
                 }
             }
             withContext(Main) {
@@ -200,8 +133,6 @@ class MainActivity : AppCompatActivity() {
                 widgetUpdate()
             }
         }
-
-
     }
 
     private fun jsonToArray(jsonStr: String?): MutableList<TimeData> {
@@ -235,86 +166,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun widgetUpdate() {
-        val timetableBitmap = viewToBitmap(binding.timeTableCard)
-        val eLearningBitmap = viewToBitmap(binding.eLearningLayout)
-        val totalBitmap = combineImage(timetableBitmap, eLearningBitmap, true)
-        val strBit = bitmapToString(totalBitmap!!)
+        val timetableBitmap = viewToBitmap(binding.uswTimeTable)
+        val strBit = bitmapToString(timetableBitmap)
         TimeTableSelPref.prefs.setString("image", strBit)
         val intentAction = Intent(this@MainActivity, TimeTableWidget::class.java)
-        intentAction.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        intentAction.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         val ids = AppWidgetManager.getInstance(this@MainActivity)
             .getAppWidgetIds(ComponentName(this@MainActivity, TimeTableWidget::class.java))
         intentAction.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         this@MainActivity.sendBroadcast(intentAction)
-    }
-
-    private fun reDrawTimeTable() {
-        var maxTime = try {
-            tempTimeData.maxOf { it ->
-                if (it.endTime.isEmpty())
-                    0
-                else if (it.day == "토")
-                    0
-                else
-                    it.endTime.toInt()
-            }
-        } catch (e: Exception) {
-            0
-        }
-        for (idx in 0..6) {
-            edgeList[idx].visibility = View.GONE
-        }
-        for (idx in 0..(maxTime - 8)) {
-            try {
-                edgeList[idx].visibility = View.VISIBLE
-            } catch (e: Exception) {
-                edgeList[idx - 1].visibility = View.VISIBLE
-            }
-        }
-    }
-
-    private fun showBottomSheet(
-        data: TimeData,
-        tempTimeData: MutableList<TimeData>,
-        v: View?
-    ) {
-        val bottomSheet: BottomSheet = BottomSheet(data, callback = {
-            when (it) {
-                1 -> {
-                    val deleteIdx = tempTimeData.indexOf(data)
-                    val intent = Intent(this@MainActivity, ClassInfoActivity::class.java)
-                    intent.putExtra("deleteIdx", deleteIdx)
-                    intent.putExtra("className", data.name)
-                    intent.putExtra("professor", data.professor)
-                    intent.putExtra("color", data.color)
-                    var comma = ""
-                    try {
-                        for (add in data.startTime.toInt() until data.endTime.toInt()) {
-                            comma = comma + "$add" + ","
-                        }
-                        comma += data.endTime
-                        intent.putExtra("time", "${data.location}(${data.day}$comma)")
-                    } catch (e: Exception) {
-                        intent.putExtra(
-                            "time",
-                            "${data.location}(${data.day}$comma)".replace("이러닝", "")
-                        )
-                    }
-                    startActivity(intent)
-                }
-                2 -> CoroutineScope(Main).launch {
-                    if (v != null) {
-                        binding.timeTable.removeView(v)
-                        tempTimeData.remove(data)
-                        reDrawTimeTable()
-                    } else
-                        binding.eLearning.text = ""
-                    delay(200L)
-                    widgetUpdate()
-                }
-            }
-        })
-        bottomSheet.show(supportFragmentManager, bottomSheet.tag)
     }
 
     private fun viewToBitmap(view: View): Bitmap {
@@ -322,30 +182,6 @@ class MainActivity : AppCompatActivity() {
         val canvas = Canvas(bitmap)
         view.draw(canvas)
 
-        return bitmap
-    }
-
-    private fun combineImage(first: Bitmap, second: Bitmap, isVerticalMode: Boolean): Bitmap? {
-        var bitmap: Bitmap? = null
-        bitmap = if (isVerticalMode) Bitmap.createBitmap(
-            first.width,
-            first.height + second.height,
-            Bitmap.Config.ARGB_8888
-        ) else Bitmap.createScaledBitmap(first, first.width + second.width, first.height, true)
-        val p = Paint()
-        p.isDither = true
-        p.flags = Paint.ANTI_ALIAS_FLAG
-        val c = Canvas(bitmap)
-        c.drawColor(Color.rgb(250,250,250))
-        c.drawBitmap(first, 0f, 0f, p)
-        if (isVerticalMode) c.drawBitmap(second, 0f, first.height.toFloat(), p) else c.drawBitmap(
-            second,
-            first.width.toFloat(),
-            0f,
-            p
-        )
-        first.recycle()
-        second.recycle()
         return bitmap
     }
 
