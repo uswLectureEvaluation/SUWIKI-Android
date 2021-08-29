@@ -7,19 +7,19 @@ import android.content.res.Resources
 import android.graphics.*
 import android.os.Bundle
 import android.util.Base64
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.adfit.ads.AdListener
+import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_LOCATION
+import com.kunize.uswtimetable.UswTimeTable.Companion.PERIOD
+import com.kunize.uswtimetable.UswTimeTable.Companion.TIME
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
 import com.kunize.uswtimetable.dataclass.TimeData
 import com.kunize.uswtimetable.dataclass.TimeTableList
-import com.kunize.uswtimetable.dialog.BottomSheet
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -32,11 +32,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var db: TimeTableListDatabase
     lateinit var timeTableList: List<TimeTableList>
     private var timeTableSel: TimeTableList? = null
-    private val timeWidthMap = mapOf("월" to 0, "화" to 1, "수" to 2, "목" to 3, "금" to 4)
     private var tempTimeData = mutableListOf<TimeData>()
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private lateinit var edgeList: List<TextView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +60,15 @@ class MainActivity : AppCompatActivity() {
         binding.bannerAdView.loadAd()
 
         db = TimeTableListDatabase.getInstance(applicationContext)!!
+
+        binding.settingBtn.setOnClickListener {
+            if (timeTableSel == null) {
+                Toast.makeText(this, "시간표를 생성해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.addClass.setOnClickListener {
             if (timeTableSel == null) {
@@ -125,6 +132,10 @@ class MainActivity : AppCompatActivity() {
                 tempTimeData = jsonToArray(jsonStr)
                 withContext(Main) {
                     binding.uswTimeTable.timeTableData = tempTimeData
+                    binding.uswTimeTable.infoFormat = TimeTableSelPref.prefs.getInt("infoFormat",
+                        CLASSNAME_LOCATION)
+                    binding.uswTimeTable.yaxisType = TimeTableSelPref.prefs.getInt("yaxisType",
+                        TIME)
                     binding.uswTimeTable.drawTable()
                 }
             }

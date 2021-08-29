@@ -6,8 +6,8 @@
 
     <declare-styleable name="UswTimeTable">
         <attr name="isEmpty" format="boolean" />
-        <attr name="showProfessor" format="boolean" />
-        <attr name="yaxisType" format="string" />
+        <attr name="infoFormat" format="integer" />
+        <attr name="yaxisType" format="integer" />
         <!-- ... -->
     </declare-styleable>
 </resources>

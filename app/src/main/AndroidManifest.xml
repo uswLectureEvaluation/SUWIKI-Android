@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Uswtimetable">
+        <activity android:name=".SettingActivity"></activity>
+
         <receiver android:name=".TimeTableWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

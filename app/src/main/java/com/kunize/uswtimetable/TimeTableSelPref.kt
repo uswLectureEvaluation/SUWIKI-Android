@@ -18,6 +18,13 @@ class TimeTableSelPref : Application() {
 class PrefsManager(context: Context) {
     private val prefs = context.getSharedPreferences("timetableSel", Context.MODE_PRIVATE)
 
+    fun getInt(key: String, defValue: Int) : Int {
+        return prefs.getInt(key, defValue)
+    }
+
+    fun setInt(key: String, value: Int) {
+        prefs.edit().putInt(key, value).apply()
+    }
     fun getLong(key: String, defValue: Long) : Long {
         return prefs.getLong(key, defValue)
     }
