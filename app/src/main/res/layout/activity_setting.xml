@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     tools:context=".SettingActivity">
 
     <TextView
@@ -24,7 +25,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
@@ -46,10 +47,10 @@
                 android:textColor="#000"
                 android:textSize="20sp"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/textView8"
-                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintBottom_toBottomOf="@+id/timeFormatBtn"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/timeFormatBtn"
                 app:layout_constraintWidth_percent="0.4"
                 app:layout_optimizationLevel="ratio" />
 
@@ -62,10 +63,25 @@
                 android:textColor="#000"
                 android:textSize="20sp"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintBottom_toBottomOf="@+id/classInfoBtn"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7"
+                app:layout_constraintTop_toTopOf="@+id/classInfoBtn"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:text="시간표"
+                android:textColor="#000"
+                android:textSize="20sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="@+id/shareKakaoBtn"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/shareKakaoBtn"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
@@ -79,7 +95,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/classInfoBtn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.5" />
@@ -93,11 +109,26 @@
                 android:text="수업명, 장소"
                 android:textSize="20sp"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/shareKakaoBtn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toBottomOf="@+id/timeFormatBtn"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <TextView
+                android:id="@+id/shareKakaoBtn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="카카오톡으로 공유"
+                android:textSize="20sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/classInfoBtn"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintStart_toStartOf="@+id/classInfoBtn"
+                app:layout_constraintTop_toBottomOf="@+id/classInfoBtn"
                 app:layout_constraintWidth_percent="0.5" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -220,7 +220,7 @@ class UswTimeTable @JvmOverloads constructor(
                 }
 
                 for (data in timeTableData) {
-                    if ((data.location == "이러닝" && data.day == "") || data.day == "토" || data.location == "") {
+                    if ((data.location == "이러닝" && data.day == "") || data.day == "토") {
                         eLearningText.text =
                             data.name + " (" + data.day + " " + data.startTime + "~" + data.endTime + ")"
                         withContext(Main) {
@@ -255,7 +255,6 @@ class UswTimeTable @JvmOverloads constructor(
                     timeRect.setTextColor(Color.WHITE)
                     timeRect.setBackgroundColor(data.color)
                     timeRect.setOnClickListener { v ->
-                        Log.d("Test", "클릭")
                         showBottomSheet(data, timeTableData, v)
                     }
                     withContext(Main) {

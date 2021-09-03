@@ -1,8 +1,12 @@
 package com.kunize.uswtimetable
 
-import android.R.id.button1
-import android.content.DialogInterface
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +18,7 @@ import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR_LOCATI
 import com.kunize.uswtimetable.UswTimeTable.Companion.PERIOD
 import com.kunize.uswtimetable.UswTimeTable.Companion.TIME
 import com.kunize.uswtimetable.databinding.ActivitySettingBinding
+import java.io.*
 
 
 class SettingActivity : AppCompatActivity() {
@@ -21,6 +26,19 @@ class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.shareKakaoBtn.setOnClickListener {
+            val strBit = TimeTableSelPref.prefs.getString("image", "")
+            val bitmap = MainActivity.stringToBitmap(strBit)
+
+            val dir = getImageUri(this, bitmap!!)
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_STREAM, dir)
+            intent.`package` = "com.kakao.talk"
+            startActivity(intent)
+        }
 
         binding.classInfoBtn.apply {
             setOnClickListener {
@@ -68,5 +86,17 @@ class SettingActivity : AppCompatActivity() {
             TimeTableSelPref.prefs.setInt(setType, temp)
         }
         dlg.show()
+    }
+
+    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            context.contentResolver,
+            inImage,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
     }
 }
