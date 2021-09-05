@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="150dp"
+    android:layout_width="350dp"
+    android:layout_height="200dp"
     android:background="@android:color/transparent">
 
     <androidx.cardview.widget.CardView
@@ -32,23 +32,22 @@
             <com.autofit.et.lib.AutoFitEditText
                 android:id="@+id/editTimeTableName"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="40dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="시간표 이름"
                 android:textSize="200sp"
                 app:layout_constraintBottom_toTopOf="@+id/timetableOk"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/timetableCancel"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="175dp"
+                android:layout_height="40dp"
                 android:background="#CFCFCF"
                 android:gravity="center"
                 android:padding="8dp"
@@ -56,14 +55,12 @@
                 android:textColor="#fff"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_percent="0.3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/timetableOk"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="175dp"
+                android:layout_height="40dp"
                 android:background="#EA515F"
                 android:gravity="center"
                 android:padding="8dp"
@@ -71,9 +68,49 @@
                 android:textColor="#fff"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Spinner
+                android:id="@+id/editYearSpinner"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="년"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editYearSpinner"
+                app:layout_constraintStart_toEndOf="@+id/editYearSpinner"
+                app:layout_constraintTop_toTopOf="@+id/editYearSpinner" />
+
+            <Spinner
+                android:id="@+id/editSemesterSpinner"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="40dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toStartOf="@+id/textView17"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="학기"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/editSemesterSpinner"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.3"
-                app:layout_constraintWidth_percent="0.5" />
+                app:layout_constraintTop_toTopOf="@+id/editSemesterSpinner" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

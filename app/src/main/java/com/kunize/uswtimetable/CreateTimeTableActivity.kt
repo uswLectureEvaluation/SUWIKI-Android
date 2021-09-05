@@ -14,8 +14,10 @@ import kotlinx.coroutines.launch
 
 class CreateTimeTableActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCreateTimeTableBinding.inflate(layoutInflater)}
-    private val yearList = listOf("2021","2022","2023")
-    private val semesterList = listOf("1","2")
+    companion object {
+        val yearList = listOf("2021", "2022", "2023")
+        val semesterList = listOf("1", "2")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

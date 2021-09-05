@@ -58,10 +58,12 @@ class TimeTableListAdapter : RecyclerView.Adapter<TimeTableListAdapter.Holder>()
             binding.btnEdit.setOnClickListener {
                 Log.d("test","클릭됨")
                 val dlg = EditTimetableDialog(binding.root.context)
-                dlg.setOnOKClickedListener { name ->
+                dlg.setOnOKClickedListener { name, year, semester ->
                     binding.timeTableName.text = name
                     CoroutineScope(IO).launch {
                         data.timeTableName = name
+                        data.year = year
+                        data.semester = semester
                         val db = TimeTableListDatabase.getInstance(binding.root.context)!!
                         db.timetableListDao().update(data)
                         withContext(Main) {
@@ -69,7 +71,7 @@ class TimeTableListAdapter : RecyclerView.Adapter<TimeTableListAdapter.Holder>()
                         }
                     }
                 }
-                dlg.start()
+                dlg.start(data)
             }
             binding.btnDelete.setOnClickListener {
                 val builder = AlertDialog.Builder(binding.root.context)
