@@ -24,44 +24,7 @@ import kotlinx.coroutines.withContext
 class AddClassActivity : AppCompatActivity() {
     private val binding by lazy { ActivityAddClassBinding.inflate(layoutInflater) }
     private lateinit var timetableData: MutableList<TimeTableData>
-    private var spinnerData = listOf(
-        "전부",
-        "간호학과",
-        "건설환경에너지공학부",
-        "건축도시부동산학부",
-        "경영학부",
-        "경제학부",
-        "관현악과",
-        "교양",
-        "국악과",
-        "데이터과학부",
-        "디자인학부",
-        "문화예술학부",
-        "미디어커뮤니케이션학과",
-        "바이오화학산업학부",
-        "법·행정학부",
-        "산업및기계공학부",
-        "성악과",
-        "소방행정학과",
-        "스포츠과학부",
-        "식품영양학과",
-        "아동가족복지학과",
-        "외국어학부",
-        "의류학과",
-        "인문학부",
-        "자유전공학부",
-        "작곡과",
-        "전기전자공학부",
-        "전자재료공학부",
-        "정보통신학부",
-        "조형예술학부",
-        "컴퓨터학부",
-        "클라우드융복합전공",
-        "피아노과",
-        "행정학과",
-        "호텔관광학부",
-        "화학공학·신소재공학부"
-    )
+    private lateinit var spinnerData: MutableList<String>
     private lateinit var searchAdapter: ClassSearchAdapter
     private val gradeList = listOf("전부", "1학년", "2학년", "3학년", "4학년")
     var majorSel = "전부"
@@ -97,6 +60,12 @@ class AddClassActivity : AppCompatActivity() {
             timetableData = db!!.timetableDao().getAll().toMutableList()
             searchAdapter.filteredData = timetableData
             searchAdapter.unfilteredData = timetableData
+
+            val tempSpinnerData = mutableSetOf<String>()
+            for(data in timetableData)
+                tempSpinnerData.add(data.major)
+            spinnerData = tempSpinnerData.sorted().toMutableList()
+            spinnerData.add(0, "전부")
 
             val majorSpinnerAdapter = ArrayAdapter<String>(
                 this@AddClassActivity, R.layout.item_spinner_major,
