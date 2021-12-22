@@ -11,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.autofit.et.lib.AutoFitEditText
 import com.kunize.uswtimetable.CreateTimeTableActivity.Companion.semesterList
-import com.kunize.uswtimetable.CreateTimeTableActivity.Companion.yearList
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.DateUtil.Companion.getYearList
 import com.kunize.uswtimetable.dataclass.TimeTableList
 
 class EditTimetableDialog(context: Context) {
@@ -24,7 +24,9 @@ class EditTimetableDialog(context: Context) {
     private lateinit var listener: OKClickedListener
     private lateinit var semester: Spinner
     private lateinit var year: Spinner
-    private val yearAdapter = ArrayAdapter(context,R.layout.item_spinner,yearList)
+
+    private val yearList = getYearList()
+    private val yearAdapter = ArrayAdapter(context,R.layout.item_spinner, yearList)
     private val semesterAdapter = ArrayAdapter(context,R.layout.item_spinner,semesterList)
 
     fun start(data: TimeTableList) {
@@ -36,12 +38,17 @@ class EditTimetableDialog(context: Context) {
         year = dlg.findViewById(R.id.editYearSpinner)
         semester =  dlg.findViewById(R.id.editSemesterSpinner)
 
-        val yearSel = when(data.year) {
-            "2021" -> 0
-            "2022" -> 1
-            "2023" -> 2
-            else -> 0
-        }
+        val yearList = getYearList()
+        val yearIdx = yearList.indexOf(data.year)
+        val yearSel = if (yearIdx == -1) 0 else yearIdx
+
+//        val yearSel = when(data.year) {
+//            "2021" -> 0
+//            "2022" -> 1
+//            "2023" -> 2
+//            else -> 0
+//        }
+
 
         val semesterSel = when(data.semester) {
             "1" -> 0
