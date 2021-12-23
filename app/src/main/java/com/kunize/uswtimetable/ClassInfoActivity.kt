@@ -64,7 +64,7 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editProfessorName.setText(professor)
 
         CoroutineScope(IO).launch {
-            //TODO 1. 해당 시간에 맞는 TimeTableList DB 불러옴
+            //1. 해당 시간에 맞는 TimeTableList DB 불러옴
             db = TimeTableListDatabase.getInstance(applicationContext)!!
             val tempTimetableList = db.timetableListDao().getAll()
             timetableSel = tempTimetableList[0]
@@ -73,18 +73,19 @@ class ClassInfoActivity : AppCompatActivity() {
                 if (empty.createTime == createTime)
                     timetableSel = empty
             }
-            //TODO 2. DB의 Json String 불러옴
+            //2. DB의 Json String 불러옴
             jsonStr = timetableSel.timeTableJsonData
 
             tempTimeData = jsonToArray(jsonStr)
 
             var randomColor = intent.getIntExtra("color", -1)
 
-            if (randomColor == -1)
+            if (randomColor == -1) {
+                val randomNum = MutableList(12) { i -> i }.shuffled().toMutableList()
                 do {
-                    val randomNum = Random().nextInt(12)
-                    randomColor = colorMap.values.toIntArray()[randomNum]
+                    randomColor = colorMap.values.toIntArray()[randomNum.removeLast()]
                 } while (jsonStr.contains("$randomColor") && (tempTimeData.size < 12))
+            }
 
             colorSel = randomColor
 
@@ -104,7 +105,7 @@ class ClassInfoActivity : AppCompatActivity() {
                 try {
                     if (deleteIdx != -1)
                         tempTimeData.removeAt(deleteIdx)
-                    //TODO 3.5 UI에서 정보 추출
+                    //3.5 UI에서 정보 추출
                     val extractionList =
                         listOf<TextView>(binding.time1, binding.time2, binding.time3)
                     if (binding.time1.text.toString().isEmpty() && binding.time2.text.toString()
@@ -154,7 +155,7 @@ class ClassInfoActivity : AppCompatActivity() {
                             )
                         }
                     }
-                    //TODO 3.7 이러닝 여부 확인
+                    //3.7 이러닝 여부 확인
                     for (newTime in addTimeData) {
                         if ((newTime.name.contains("이러닝") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) && jsonStr.contains(
                                 "이러닝"
@@ -170,8 +171,8 @@ class ClassInfoActivity : AppCompatActivity() {
                             return@launch
                         }
                     }
-                    //TODO 4. 추가하려는 요일의 Array를 추출
-                    //TODO 5. 겹치는 시간이 있는지 확인 -> 있으면 return
+                    //4. 추가하려는 요일의 Array를 추출
+                    //5. 겹치는 시간이 있는지 확인 -> 있으면 return
                     for (newTime in addTimeData) {
                         for (oldTime in tempTimeData) {
                             if (newTime.day == oldTime.day) {
@@ -195,8 +196,8 @@ class ClassInfoActivity : AppCompatActivity() {
                         tempTimeData.add(newTime)
                         //에러 발생 시 여기 수정 addTime내에서도 겹치는지 확인하고 tempTimeDAta.add부분을 밖으로 빼면 될듯?
                     }
-                    //TODO 6. 없을 경우 Array에 추가
-                    //TODO 7. Array를 Json형식으로 변환
+                    //6. 없을 경우 Array에 추가
+                    //7. Array를 Json형식으로 변환
                     var newJsonArray = JSONArray()
                     for (addData in tempTimeData) {
                         val addJsonObj = JSONObject()
@@ -210,10 +211,10 @@ class ClassInfoActivity : AppCompatActivity() {
                         Log.d("jsonAdd", "추가 될 데이터 ${addJsonObj.toString()}")
                         newJsonArray.put(addJsonObj)
                     }
-                    //TODO 8. DB 업데이트
+                    //8. DB 업데이트
                     timetableSel.timeTableJsonData = newJsonArray.toString()
                     db.timetableListDao().update(timetableSel)
-                    //TODO 9. 시간표 화면으로 이동
+                    //9. 시간표 화면으로 이동
                     val intent = Intent(this@ClassInfoActivity, MainActivity::class.java)
                     intent.flags =
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
