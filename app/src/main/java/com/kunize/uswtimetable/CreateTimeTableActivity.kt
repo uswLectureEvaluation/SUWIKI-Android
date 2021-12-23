@@ -16,9 +16,8 @@ import kotlinx.coroutines.launch
 
 class CreateTimeTableActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCreateTimeTableBinding.inflate(layoutInflater)}
-    //TODO 시간표 추가 시 년도, 학기 자동으로 설정되게 수정하기
+
     companion object {
-//        val yearList = listOf("2021", "2022", "2023")
         val semesterList = listOf("1", "2")
     }
     override fun onCreate(savedInstanceState: Bundle?) {

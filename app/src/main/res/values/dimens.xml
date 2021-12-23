@@ -10,4 +10,13 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- Card View -->
+    <dimen name="cardview_corner_radius">8dp</dimen>
+    <dimen name="cardview_title_size">16sp</dimen>
+    <dimen name="cardview_elevation">2dp</dimen>
+    <dimen name="cardview_padding">16dp</dimen>
+
+    <!-- Page (Activity / Fragment) -->
+    <dimen name="page_title_size">32sp</dimen>
+    <dimen name="page_padding">16dp</dimen>
 </resources>

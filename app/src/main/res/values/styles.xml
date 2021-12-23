@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="title_textview_style" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/page_title_size</item>
+    </style>
+
+    <style name="subtitle_textview_style" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/cardview_title_size</item>
+    </style>
+
+    <style name="cardview_style" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">@dimen/cardview_corner_radius</item>
+        <item name="cardElevation">@dimen/cardview_elevation</item>
+        <item name="background">@color/white</item>
+    </style>
+
+</resources>
