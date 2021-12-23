@@ -21,12 +21,15 @@ import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.JsonArray
 import com.kunize.uswtimetable.dataclass.TimeTableData
 import com.kunize.uswtimetable.dao_database.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import org.json.JSONArray
+import java.lang.Exception
 
 class StartActivity : AppCompatActivity() {
 
@@ -73,7 +76,7 @@ class StartActivity : AppCompatActivity() {
         appUpdateManager?.let {
             it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
                 Log.d(
-                    "update123", "${
+                    "appUpdate", "${
                         appUpdateInfo.updateAvailability() ==
                                 UpdateAvailability.UPDATE_AVAILABLE
                     } ${appUpdateInfo.updateAvailability()}")
@@ -90,12 +93,13 @@ class StartActivity : AppCompatActivity() {
                 }
                 appVersion = true
             }.addOnFailureListener {
-                Log.d("update123", "실패!, $it")
+                Log.d("appUpdate", "실패!, $it")
                 appVersion = true
             }
         }
 
         database = FirebaseDatabase.getInstance()
+
         firebaseVersion = database.getReference("version")
 
         firebaseVersion.get().addOnSuccessListener {
@@ -105,8 +109,7 @@ class StartActivity : AppCompatActivity() {
             binding.showProgress.text = "시간표 DB 버전 확인 완료"
         }
 
-        firebaseTimetableData = database.getReference("timetable")
-
+        firebaseTimetableData = database.getReference("uswTimetable")
 
         CoroutineScope(IO).launch {
             while (true) {
@@ -121,36 +124,23 @@ class StartActivity : AppCompatActivity() {
                     binding.showProgress.text = "서버로부터 시간표 DB 불러오는 중"
                 }
                 firebaseTimetableData.get().addOnSuccessListener {
-                    originData = it.value.toString()
-                    Log.d("firebase", "공백 제거 전" + originData)
-                    originData = originData.replace("\t", "")
-                    Log.d("firebase", "공백 제거 후" + originData)
-                    val tempData = originData.split("^ ")
-                    var i = 1L
-                    for (data in tempData) {
-                        try {
-                            val specificData = data.split("!")
-                            val emptyData = TimeTableData()
-                            Log.d("testinin", "$specificData")
-                            try {
-                                emptyData.number = specificData[0].toLong()
-                            } catch (e: Exception) {
-                                emptyData.number = i
-                            }
-                            emptyData.major = specificData[1]
-                            emptyData.grade = specificData[2]
-                            emptyData.classNumber = specificData[3]
-                            emptyData.classDivideNumber = specificData[4]
-                            emptyData.className = specificData[5]
-                            emptyData.classification = specificData[6]
-                            emptyData.professor = specificData[7]
-                            emptyData.time = specificData[8]
-                            i++
-                            Log.d("arrayTest", "$emptyData")
-                            localDataList.add(emptyData)
-                        }catch (e: Exception) {
-                            Log.d("firebase","에러 발생 $data $e")
-                        }
+                    var index = 1L
+                    for(data in it.children) {
+                        val emptyData = TimeTableData()
+                        val tempData = data.value as HashMap<*, *>
+                        emptyData.number = index
+                        emptyData.major = tempData["estbDpmjNm"].toString()
+                        emptyData.grade = tempData["trgtGrdeCd"].toString() + "학년"
+                        emptyData.classNumber = tempData["subjtCd"].toString()
+                        emptyData.classDivideNumber = tempData["diclNo"].toString()
+                        emptyData.className = tempData["subjtNm"].toString()
+                        emptyData.classification = tempData["facDvnm"].toString()
+                        emptyData.professor = tempData["reprPrfsEnoNm"]?.toString() ?: "None"
+                        emptyData.time = tempData["timtSmryCn"]?.toString() ?: "None"
+                        emptyData.credit = tempData["point"].toString()
+                        index++
+                        Log.d("arrayTest", "$emptyData")
+                        localDataList.add(emptyData)
                     }
                     done = true
                     Log.d("firebase", "추가 완료")
