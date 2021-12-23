@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -79,6 +80,8 @@ class AddClassActivity : AppCompatActivity() {
             withContext(Main) {
                 binding.majorSpinner.adapter = majorSpinnerAdapter
                 binding.gradeSpinner.adapter = gradeSpinnerAdapter
+                binding.majorSpinner.setSelection(TimeTableSelPref.prefs.getInt("majorSel", 0))
+                binding.gradeSpinner.setSelection(TimeTableSelPref.prefs.getInt("gradeSel", 0))
                 binding.recyclerClass.adapter = searchAdapter
                 binding.recyclerClass.layoutManager = LinearLayoutManager(this@AddClassActivity)
                 binding.searchClass.visibility = View.VISIBLE
@@ -108,6 +111,7 @@ class AddClassActivity : AppCompatActivity() {
                 id: Long
             ) {
                 majorSel = spinnerData[position]
+                TimeTableSelPref.prefs.setInt("majorSel", position)
                 filterData()
             }
 
@@ -124,6 +128,7 @@ class AddClassActivity : AppCompatActivity() {
                 id: Long
             ) {
                 gradeSel = gradeList[position]
+                TimeTableSelPref.prefs.setInt("gradeSel", position)
                 filterData()
             }
 

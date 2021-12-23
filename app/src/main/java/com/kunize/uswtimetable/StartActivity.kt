@@ -57,6 +57,8 @@ class StartActivity : AppCompatActivity() {
         //Preferences 설정
         val versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
         var version = versionPreferences.getString("version", "202107271830")
+        TimeTableSelPref.prefs.setInt("majorSel", 0)
+        TimeTableSelPref.prefs.setInt("gradeSel", 0)
 
         //Room 설정
         val db = TimeTableDatabase.getInstance(applicationContext)
