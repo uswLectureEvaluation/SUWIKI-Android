@@ -1,16 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5FDA8"
+    android:background="#FAFAFA"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="48sp"
-        android:text="홈 화면" />
+    <ImageView
+        android:id="@+id/addClass"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textTitle"
+        app:layout_constraintDimensionRatio="1.1"
+        app:layout_constraintEnd_toStartOf="@+id/settingBtn"
+        app:layout_constraintTop_toTopOf="@+id/textTitle"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_optimizationLevel="ratio"
+        app:srcCompat="@drawable/ic_baseline_add_box_24" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/settingBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addClass"
+        app:layout_constraintDimensionRatio="1.1"
+        app:layout_constraintEnd_toStartOf="@+id/showTimeTableList"
+        app:layout_constraintTop_toTopOf="@+id/addClass"
+        app:layout_constraintWidth_percent="0.1"
+        custom:srcCompat="@drawable/ic_baseline_settings_24" />
+
+    <ImageView
+        android:id="@+id/showTimeTableList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="20dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="@+id/settingBtn"
+        app:layout_constraintDimensionRatio="1.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/settingBtn"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_optimizationLevel="ratio"
+        app:srcCompat="@drawable/ic_baseline_format_list_bulleted_24" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#402B04"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintDimensionRatio="6.1"
+        app:layout_constraintEnd_toStartOf="@+id/addClass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_optimizationLevel="ratio"
+        tools:text="시간표1" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="70dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <com.kunize.uswtimetable.UswTimeTable
+                android:id="@+id/uswTimeTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                custom:infoFormat="1"
+                custom:yaxisType="4"
+                custom:isEmpty="false" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
