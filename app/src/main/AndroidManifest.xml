@@ -13,16 +13,6 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Uswtimetable">
-        <activity
-            android:name=".BaseActivity"
-            android:exported="true"
-            android:label="@string/title_activity_base" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".SettingActivity" />
 
         <receiver android:name=".TimeTableWidget"
@@ -39,11 +29,11 @@
         <activity android:name=".OpenSourceActivity" />
         <activity android:name=".StartActivity"
             android:exported="true">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".TimeTableListActivity" />
         <activity
