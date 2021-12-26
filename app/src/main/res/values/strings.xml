@@ -13,4 +13,6 @@
     <string name="school_email">학교 인증 메일</string>
     <string name="my_post">내가 쓴 글</string>
     <string name="my_point">보유 포인트</string>
+    <string name="search_evaluation_hint">과목명, 교수명으로 원하는 강의평가를 찾아보세요!</string>
+    <string name="see_more"><u>더보기 ></u></string>
 </resources>

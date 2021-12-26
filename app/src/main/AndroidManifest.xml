@@ -45,7 +45,9 @@
         <activity
             android:name=".CreateTimeTableActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
