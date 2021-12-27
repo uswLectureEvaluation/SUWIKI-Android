@@ -11,8 +11,8 @@ import android.widget.TextView
 
 class CustomSpinnerAdapter(
     var mContext: Context,
-    var spinnerNames: List<String>,
-    var spinnerImages: List<Int>
+    private var spinnerNames: List<String>,
+    private var spinnerImages: List<Int>
 ) : ArrayAdapter<String?>(
     mContext, R.layout.item_spinner_evaluation
 ) {
