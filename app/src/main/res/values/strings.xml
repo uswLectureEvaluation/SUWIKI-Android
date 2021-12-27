@@ -11,8 +11,26 @@
     <string name="my_information">내 정보</string>
     <string name="login_id">로그인 아이디</string>
     <string name="school_email">학교 인증 메일</string>
-    <string name="my_post">내가 쓴 글</string>
+    <string name="my_evaluate">내가 쓴 글</string>
     <string name="my_point">보유 포인트</string>
     <string name="search_evaluation_hint">과목명, 교수명으로 원하는 강의평가를 찾아보세요!</string>
     <string name="see_more"><u>더보기 ></u></string>
+
+    <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
+    <string name="need_login">로그인이 필요합니다</string>
+    <string name="login_button_text">로그인하기</string>
+    <string name="notice">공지사항</string>
+    <string name="send_feedback">피드백 전송</string>
+    <string name="question">문의하기</string>
+    <string name="change_password">비밀번호 변경</string>
+    <string name="terms_of_use">이용 약관</string>
+    <string name="privacy_policy">개인정보 처리 방침</string>
+    <string name="sign_out">회원 탈퇴</string>
+    <string name="opensource_licence">오픈소스 라이선스</string>
+
+    <!-- Data binding -->
+    <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
+    <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
+    <string name="opened_exam_count">시험 정보 열람 : %d개</string>
+    <string name="total_point">%d P</string>
 </resources>
