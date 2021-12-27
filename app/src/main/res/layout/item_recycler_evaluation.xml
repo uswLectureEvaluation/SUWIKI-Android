@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="@+id/lectureAver" />
 
     <TextView
-        android:id="@+id/textView31"
+        android:id="@+id/seeDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -94,12 +94,110 @@
         app:layout_constraintStart_toEndOf="@+id/averScore" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+        android:id="@+id/seeDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/averScore">
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="배움 지수"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/learningScore"
+            app:layout_constraintStart_toEndOf="@+id/textView34"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="꿀강 지수"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textView32"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="만족도"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/satisfactionScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="5"
+            android:textColor="#4b89dc"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView28"
+            app:layout_constraintStart_toEndOf="@+id/textView28" />
+
+        <TextView
+            android:id="@+id/honeyScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="5"
+            android:textColor="#4b89dc"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView27"
+            app:layout_constraintStart_toEndOf="@+id/textView27" />
+
+        <TextView
+            android:id="@+id/learningScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="5"
+            android:textColor="#4b89dc"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView20"
+            app:layout_constraintStart_toEndOf="@+id/textView20" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/5"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/satisfactionScore"
+            app:layout_constraintStart_toEndOf="@+id/satisfactionScore" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/5"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/honeyScore"
+            app:layout_constraintStart_toEndOf="@+id/honeyScore" />
+
+        <TextView
+            android:id="@+id/textView35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/5"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/learningScore"
+            app:layout_constraintStart_toEndOf="@+id/learningScore" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
