@@ -27,6 +27,9 @@
     <string name="privacy_policy">개인정보 처리 방침</string>
     <string name="sign_out">회원 탈퇴</string>
     <string name="opensource_licence">오픈소스 라이선스</string>
+    <string name="see_detail"><u>자세히 보기></u></string>
+    <string name="average_index">평균 지수</string>
+    <string name="see_short"><u>간략하게 보기></u></string>
 
     <!-- Data binding -->
     <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
