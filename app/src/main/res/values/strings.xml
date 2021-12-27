@@ -36,4 +36,5 @@
     <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
     <string name="opened_exam_count">시험 정보 열람 : %d개</string>
     <string name="total_point">%d P</string>
+    <string name="password">패스워드</string>
 </resources>

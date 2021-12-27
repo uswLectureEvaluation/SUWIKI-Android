@@ -13,9 +13,13 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Uswtimetable">
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="false" />
         <activity android:name=".SettingActivity" />
 
-        <receiver android:name=".TimeTableWidget"
+        <receiver
+            android:name=".TimeTableWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -27,7 +31,8 @@
         </receiver>
 
         <activity android:name=".OpenSourceActivity" />
-        <activity android:name=".StartActivity"
+        <activity
+            android:name=".StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +52,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

@@ -1,8 +1,11 @@
 package com.kunize.uswtimetable.ui.more
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kunize.uswtimetable.StartActivity
+import com.kunize.uswtimetable.login.LoginActivity
 
 class MoreViewModel : ViewModel() {
     private var _loggedIn = MutableLiveData<Boolean>()
@@ -33,7 +36,7 @@ class MoreViewModel : ViewModel() {
     val openedExamPoint: LiveData<Int> get() = _openedExamPoint
 
     init {
-        _loggedIn.value = true
+        _loggedIn.value = false
 
         _myEvaluationCount.value = 3
         _myExamInfoCount.value = 2
@@ -45,5 +48,17 @@ class MoreViewModel : ViewModel() {
 
         _point.value = 130
         _id.value = "pmb0836"
+    }
+
+    fun login() {
+        _loggedIn.value = true
+    }
+
+    fun logout() {
+        _loggedIn.value = false
+    }
+
+    fun loginOrOut() {
+        _loggedIn.value = _loggedIn.value?.not()
     }
 }

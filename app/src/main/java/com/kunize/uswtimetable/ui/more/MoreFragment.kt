@@ -1,17 +1,23 @@
 package com.kunize.uswtimetable.ui.more
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.StartActivity
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
+import com.kunize.uswtimetable.login.LoginActivity
 
 class MoreFragment : Fragment() {
     private lateinit var viewModel: MoreViewModel
@@ -22,15 +28,17 @@ class MoreFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
 
+        incomplete(requireContext())
+        initViews(requireContext())
+
         viewModelFactory = MoreViewModelFactory()
-        viewModel = ViewModelProvider(this,viewModelFactory)[MoreViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[MoreViewModel::class.java]
         binding.viewModel = viewModel
 
         viewModel.loggedIn.observe(viewLifecycleOwner, Observer { isLoggedIn ->
-            if(isLoggedIn) {
+            if (isLoggedIn) {
                 loggedIn()
             } else {
                 loggedOut()
@@ -38,7 +46,7 @@ class MoreFragment : Fragment() {
         })
 
         viewModel.myEvaluationPoint.observe(viewLifecycleOwner, Observer { point ->
-            if(point>=0) {
+            if (point >= 0) {
                 binding.myEvaluationsPoint.text = "(+$point)"
                 binding.myEvaluationsPoint.setTextColor(Color.RED)
             } else {
@@ -48,7 +56,7 @@ class MoreFragment : Fragment() {
         })
 
         viewModel.myExamInfoPoint.observe(viewLifecycleOwner, Observer { point ->
-            if(point>=0) {
+            if (point >= 0) {
                 binding.myExamInformationPoint.text = "(+$point)"
                 binding.myExamInformationPoint.setTextColor(Color.RED)
             } else {
@@ -58,7 +66,7 @@ class MoreFragment : Fragment() {
         })
 
         viewModel.openedExamPoint.observe(viewLifecycleOwner, Observer { point ->
-            if(point>=0) {
+            if (point >= 0) {
                 binding.openedExamPoint.text = "(+$point)"
                 binding.openedExamPoint.setTextColor(Color.RED)
             } else {
@@ -68,7 +76,8 @@ class MoreFragment : Fragment() {
         })
 
         binding.loginButton.setOnClickListener {
-            // TODO 로그인 액티비티 띄우기
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root
@@ -78,11 +87,53 @@ class MoreFragment : Fragment() {
         binding.beforeLoginLayout.isGone = true
         binding.beforeLoginLayoutWithButton.isGone = true
         binding.pointInfoLayout.isGone = false
+
+        /* Test */
+        binding.loginOrLogoutButton.text = "로그 아웃 (테스트)"
     }
 
     private fun loggedOut() {
         binding.beforeLoginLayout.isGone = false
         binding.beforeLoginLayoutWithButton.isGone = false
         binding.pointInfoLayout.isGone = true
+
+        /* Test */
+        binding.loginOrLogoutButton.text = "로그인 (테스트)"
+    }
+
+    private fun incomplete(context: Context) {
+        with(binding) {
+            noticeButton.setOnClickListener {
+                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+            }
+            sendFeedbackButton.setOnClickListener {
+                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+            }
+            questionButton.setOnClickListener {
+                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+            }
+            changePasswordButton.setOnClickListener {
+                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+            }
+            termsOfUseButton.setOnClickListener {
+                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+            }
+            privacyPolicyButton.setOnClickListener {
+                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+            }
+            signOutButton.setOnClickListener {
+                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun initViews(context: Context) {
+        binding.opensourceLicenceButton.setOnClickListener {
+            val intent = Intent(context, OpenSourceActivity::class.java)
+            startActivity(intent)
+        }
+        binding.loginOrLogoutButton.setOnClickListener {
+            viewModel.loginOrOut()
+        }
     }
 }

@@ -35,9 +35,9 @@
                     android:id="@+id/beforeLoginLayoutWithButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="16dp"
                     android:orientation="vertical"
                     android:padding="@dimen/cardview_padding"
-                    android:layout_marginVertical="16dp"
                     tools:visibility="gone">
 
                     <TextView
@@ -67,8 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible"
-                    android:padding="@dimen/cardview_padding">
+                    android:padding="@dimen/cardview_padding"
+                    android:visibility="visible">
 
                     <TextView
                         style="@style/subtitle_textview_style"
@@ -89,9 +89,9 @@
                             android:background="@drawable/border_circle"
                             android:gravity="center"
                             android:padding="8dp"
+                            android:text="@{@string/total_point(viewModel.point)}"
                             android:textColor="#F00"
                             android:textSize="20sp"
-                            android:text="@{@string/total_point(viewModel.point)}"
                             tools:text="0 p" />
 
                         <View
@@ -105,8 +105,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:weightSum="3"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:weightSum="3">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -280,6 +280,21 @@
                     android:showDividers="middle">
 
                     <TextView
+                        android:id="@+id/loginOrLogoutButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_ripple_effect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:minHeight="48dp"
+                        android:paddingHorizontal="@dimen/cardview_padding"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:text="로그인 (테스트)" />
+
+                    <TextView
+                        android:id="@+id/noticeButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
@@ -293,6 +308,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/sendFeedbackButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
@@ -306,6 +322,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/questionButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
@@ -319,6 +336,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/changePasswordButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
@@ -332,6 +350,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/termsOfUseButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
@@ -345,6 +364,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/privacyPolicyButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
@@ -358,6 +378,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/signOutButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
@@ -371,6 +392,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/opensourceLicenceButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_ripple_effect"
