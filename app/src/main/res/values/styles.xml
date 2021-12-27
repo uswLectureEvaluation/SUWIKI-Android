@@ -24,12 +24,12 @@
         <item name="background">@color/white</item>
     </style>
 
-    <style name="edit_text_auto_size_style" parent="@android:style/Widget.TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:focusable">true</item>
-        <item name="android:focusableInTouchMode">true</item>
-        <item name="autoSizeTextType">uniform</item>
+    <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:stepSize">0.1</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">5</item>
+        <item name="android:progressTint">#f1c40f</item>
+        <item name="android:secondaryProgressTint">@android:color/transparent</item>
     </style>
 
 </resources>

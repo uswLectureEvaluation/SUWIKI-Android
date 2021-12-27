@@ -6,12 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
+import com.kunize.uswtimetable.dataclass.EvaluationData
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
+    //리사이클러뷰 어댑터
+    lateinit var evaluationAdapter: EvaluationListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +34,28 @@ class EvaluationFragment : Fragment() {
             adapter = customSpinnerAdapter
         }
 
+        initRecycler()
+
         return binding.root
+    }
+    //리아클러뷰 시작 함수
+    private fun initRecycler() {
+        evaluationAdapter = EvaluationListAdapter()
+        binding.recyclerEvaluation.adapter = evaluationAdapter
+        binding.recyclerEvaluation.layoutManager = LinearLayoutManager(activity)
+        val dummyData = mutableListOf(
+            EvaluationData("올뎃베이직12345678","교양대학",3.2f,3f,2.6f,4.2f,"기교"),
+            EvaluationData("디지털 사회의 마케팅(비대면 수업)","남아영",3.4f,4f,2.3f,3.9f,"기교"),
+            EvaluationData("데이터구조","이명원",0.4f,0.1f,0.2f,0.5f,"전핵"),
+            EvaluationData("컴퓨터구조","장성태",5f,0f,0f,0f,"전핵"),
+            EvaluationData("더미데이터","교양대학",4.9f,0f,0f,0f,"기교"),
+            EvaluationData("더미데이터","교양대학",3.2f,0f,0f,0f,"기교"),
+            EvaluationData("더미데이터","교양대학",3.2f,0f,0f,0f,"기교"),
+            EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교"),
+            EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교"),
+            EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교")
+        )
+        evaluationAdapter.evaluationListData = dummyData
+        evaluationAdapter.notifyDataSetChanged()
     }
 }
