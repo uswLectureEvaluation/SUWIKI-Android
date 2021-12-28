@@ -32,4 +32,11 @@
         <item name="android:secondaryProgressTint">@android:color/transparent</item>
     </style>
 
+    <style name="edittext_style" parent="Widget.AppCompat.EditText" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@drawable/background_corner8_white</item>
+    </style>
+
 </resources>

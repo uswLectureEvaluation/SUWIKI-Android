@@ -6,20 +6,86 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/page_padding"
+    android:background="#093483"
     tools:context=".login.LoginActivity">
+<!--
+    <TextView
+        style="@style/title_textview_style"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/white"
+        android:text="" />-->
 
-    <EditText
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/login_id" />
+        android:fontFamily="@font/godom"
+        android:gravity="center"
+        android:text="수타"
+        android:layout_marginTop="96dp"
+        android:textColor="#EADB80"
+        android:textSize="96dp"
+        app:autoSizeTextType="uniform" />
 
-    <EditText
+    <TextView
+        android:id="@+id/textView10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password" />
+        android:fontFamily="@font/godom"
+        android:gravity="center"
+        android:text="수원대타임"
+        android:textColor="#EADB80"
+        android:textSize="16dp" />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_button_text" />
+        android:background="#1D48BF"
+        android:layout_marginTop="64dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#093483"
+            android:padding="@dimen/cardview_padding"
+            android:orientation="vertical">
+
+            <EditText
+                style="@style/edittext_style"
+                android:layout_marginVertical="8dp"
+                android:hint="@string/login_id"
+                android:inputType="text"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:inputType="textPassword"
+                style="@style/edittext_style"
+                android:layout_marginVertical="8dp"
+                android:hint="@string/password"
+                android:importantForAutofill="no" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
+                android:background="@drawable/custom_ripple_effect_gray"
+                android:text="@string/login_button_text" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginVertical="16dp"
+        android:textColor="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/sign_in"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp" />
 </LinearLayout>

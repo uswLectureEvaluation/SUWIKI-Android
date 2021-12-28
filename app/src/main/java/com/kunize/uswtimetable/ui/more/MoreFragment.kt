@@ -90,6 +90,7 @@ class MoreFragment : Fragment() {
 
         /* Test */
         binding.loginOrLogoutButton.text = "로그 아웃 (테스트)"
+//        viewModel.login()
     }
 
     private fun loggedOut() {
@@ -99,6 +100,7 @@ class MoreFragment : Fragment() {
 
         /* Test */
         binding.loginOrLogoutButton.text = "로그인 (테스트)"
+//        viewModel.logout()
     }
 
     private fun incomplete(context: Context) {
