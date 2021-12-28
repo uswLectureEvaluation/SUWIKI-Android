@@ -31,15 +31,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<EvaluationListAdapter.Holder>
     RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
             with(binding) {
-                lectureName.text = data.name
-                averRatingBar.rating = data.aver
-                lectureProfessor.text = data.professor
-                lectureType.text = data.type
-                averScore.text = data.aver.toString()
-                satisfactionScore.text = data.satisfaction.toString()
-                learningScore.text = data.learning.toString()
-                honeyScore.text = data.honey.toString()
-
+                evaluationData = data
                 seeDetail.setOnClickListener {
                     if(seeDetailLayout.isVisible) {
                         seeDetail.setText(R.string.see_detail)
@@ -50,8 +42,8 @@ class EvaluationListAdapter : RecyclerView.Adapter<EvaluationListAdapter.Holder>
                         seeDetailLayout.visibility = View.VISIBLE
                     }
                 }
+                executePendingBindings()
             }
         }
-
     }
 }

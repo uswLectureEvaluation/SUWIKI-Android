@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.LinearLayout
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kunize.uswtimetable.CustomSpinnerAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.kunize.uswtimetable.adapter.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
@@ -17,13 +19,31 @@ import com.kunize.uswtimetable.dataclass.EvaluationData
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
     //리사이클러뷰 어댑터
-    lateinit var evaluationAdapter: EvaluationListAdapter
+    private lateinit var evaluationAdapter: EvaluationListAdapter
+    private lateinit var evaluationViewModel : EvaluationViewModel
+
+    private val dummyData = arrayListOf(
+        EvaluationData("올뎃베이직12345678","교양대학",3.2f,3f,2.6f,4.2f,"기교"),
+        EvaluationData("디지털 사회의 마케팅(비대면 수업)","남아영",3.4f,4f,2.3f,3.9f,"기교"),
+        EvaluationData("데이터구조","이명원",0.4f,0.1f,0.2f,0.5f,"전핵"),
+        EvaluationData("컴퓨터구조","장성태",5f,0f,0f,0f,"전핵"),
+        EvaluationData("더미데이터","교양대학",4.9f,0f,0f,0f,"기교"),
+        EvaluationData("더미데이터","교양대학",3.2f,0f,0f,0f,"기교"),
+        EvaluationData("더미데이터","교양대학",3.2f,0f,0f,0f,"기교"),
+        EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교"),
+        EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교"),
+        EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교")
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEvaluationBinding.inflate(inflater, container, false)
+
+        evaluationViewModel = ViewModelProvider(requireActivity())[EvaluationViewModel::class.java]
+        binding.viewModel = evaluationViewModel
+        binding.lifecycleOwner = this
 
         val spinnerTextList = listOf("최근 올라온 강의","꿀 강의","만족도가 높은 강의","배울게 많은 강의","Best 강의")
         val spinnerImageList = listOf(R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
@@ -32,30 +52,27 @@ class EvaluationFragment : Fragment() {
         val customSpinnerAdapter = CustomSpinnerAdapter(requireContext(), spinnerTextList, spinnerImageList)
         binding.spinner.apply {
             adapter = customSpinnerAdapter
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    when(position) {
+                        0 -> evaluationViewModel.changeData(dummyData)
+                        1 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(1, 4)))
+                        2 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(3, 4)))
+                        3 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(5, 8)))
+                        4 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(7, 9)))
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+            }
         }
-
-        initRecycler()
-
         return binding.root
-    }
-    //리아클러뷰 시작 함수
-    private fun initRecycler() {
-        evaluationAdapter = EvaluationListAdapter()
-        binding.recyclerEvaluation.adapter = evaluationAdapter
-        binding.recyclerEvaluation.layoutManager = LinearLayoutManager(activity)
-        val dummyData = mutableListOf(
-            EvaluationData("올뎃베이직12345678","교양대학",3.2f,3f,2.6f,4.2f,"기교"),
-            EvaluationData("디지털 사회의 마케팅(비대면 수업)","남아영",3.4f,4f,2.3f,3.9f,"기교"),
-            EvaluationData("데이터구조","이명원",0.4f,0.1f,0.2f,0.5f,"전핵"),
-            EvaluationData("컴퓨터구조","장성태",5f,0f,0f,0f,"전핵"),
-            EvaluationData("더미데이터","교양대학",4.9f,0f,0f,0f,"기교"),
-            EvaluationData("더미데이터","교양대학",3.2f,0f,0f,0f,"기교"),
-            EvaluationData("더미데이터","교양대학",3.2f,0f,0f,0f,"기교"),
-            EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교"),
-            EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교"),
-            EvaluationData("올뎃베이직","교양대학",3.2f,0f,0f,0f,"기교")
-        )
-        evaluationAdapter.evaluationListData = dummyData
-        evaluationAdapter.notifyDataSetChanged()
     }
 }

@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable
+package com.kunize.uswtimetable.adapter
 
 import android.content.Context
 import android.widget.ArrayAdapter
