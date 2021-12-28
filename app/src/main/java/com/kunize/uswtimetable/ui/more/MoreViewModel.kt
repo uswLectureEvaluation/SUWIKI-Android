@@ -47,15 +47,16 @@ class MoreViewModel : ViewModel() {
         _openedExamPoint.value = -40
 
         _point.value = 130
-        _id.value = "pmb0836"
     }
 
     fun login() {
         _loggedIn.value = true
+        _id.value = "pmb0836"
     }
 
     fun logout() {
         _loggedIn.value = false
+        _id.value = ""
     }
 
     fun loginOrOut() {

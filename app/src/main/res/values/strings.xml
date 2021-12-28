@@ -37,4 +37,6 @@
     <string name="opened_exam_count">시험 정보 열람 : %d개</string>
     <string name="total_point">%d P</string>
     <string name="password">패스워드</string>
+    <string name="sign_in">회원 가입</string>
+    <string name="login">로그인</string>
 </resources>
