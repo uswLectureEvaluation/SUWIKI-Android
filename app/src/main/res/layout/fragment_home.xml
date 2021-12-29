@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
     tools:context=".ui.home.HomeFragment">
 
     <ImageView
@@ -68,7 +67,6 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="70dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,8 +86,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 custom:infoFormat="1"
-                custom:yaxisType="4"
-                custom:isEmpty="false" />
+                custom:isEmpty="false"
+                custom:yaxisType="4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

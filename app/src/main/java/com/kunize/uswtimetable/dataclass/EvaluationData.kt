@@ -8,4 +8,6 @@ data class EvaluationData (
     var honey: Float = 0f,
     var learning: Float = 0f,
     var type: String = ""
-        )
+) {
+    fun floatToStr(f: Float) = f.toString()
+}
