@@ -89,64 +89,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-            <TextView
-                android:id="@+id/textView36"
-                style="@style/sort_textview_style"
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/satisfaction"
-                app:layout_constraintBottom_toBottomOf="@+id/textView31"
-                app:layout_constraintStart_toEndOf="@+id/textView31"
-                app:layout_constraintTop_toTopOf="@+id/textView31" />
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/textView31"
+                app:layout_constraintStart_toEndOf="@id/textView31"
+                app:layout_constraintTop_toTopOf="@id/textView31">
 
-            <TextView
-                android:id="@+id/textView37"
-                style="@style/sort_textview_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/honey"
-                app:layout_constraintBottom_toBottomOf="@+id/textView31"
-                app:layout_constraintStart_toEndOf="@+id/textView36"
-                app:layout_constraintTop_toTopOf="@+id/textView31"
-                app:layout_constraintVertical_bias="1.0" />
+                <RadioButton
+                    android:id="@+id/satisfactionBtn"
+                    style="@style/sort_radiobutton_style"
+                    android:text="@string/satisfaction" />
 
-            <TextView
-                android:id="@+id/textView38"
-                style="@style/sort_textview_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/learning"
-                app:layout_constraintBottom_toBottomOf="@+id/textView31"
-                app:layout_constraintStart_toEndOf="@+id/textView37"
-                app:layout_constraintTop_toTopOf="@+id/textView31"
-                app:layout_constraintVertical_bias="0.0" />
+                <RadioButton
+                    android:id="@+id/honeyBtn"
+                    style="@style/sort_radiobutton_style"
+                    android:text="@string/honey" />
 
-            <TextView
-                android:id="@+id/textView39"
-                style="@style/sort_textview_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/date"
-                app:layout_constraintBottom_toBottomOf="@+id/textView31"
-                app:layout_constraintStart_toEndOf="@+id/textView38"
-                app:layout_constraintTop_toTopOf="@+id/textView31"
-                app:layout_constraintVertical_bias="0.0" />
+                <RadioButton
+                    android:id="@+id/learningBtn"
+                    style="@style/sort_radiobutton_style"
+                    android:text="@string/learning" />
 
-            <TextView
-                android:id="@+id/textView40"
-                style="@style/sort_textview_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/total"
-                app:layout_constraintBottom_toBottomOf="@+id/textView31"
-                app:layout_constraintStart_toEndOf="@+id/textView39"
-                app:layout_constraintTop_toTopOf="@+id/textView31"
-                app:layout_constraintVertical_bias="0.0" />
+                <RadioButton
+                    android:id="@+id/dateBtn"
+                    style="@style/sort_radiobutton_style"
+                    android:text="@string/date" />
+
+                <RadioButton
+                    android:id="@+id/totalBtn"
+                    style="@style/sort_radiobutton_style"
+                    android:text="@string/total" />
+            </RadioGroup>
 
             <androidx.cardview.widget.CardView
                 style="@style/cardview_style"
@@ -155,7 +132,7 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView38">
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerSearchResult"
