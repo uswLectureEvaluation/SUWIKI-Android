@@ -28,7 +28,7 @@
         android:id="@+id/searchResultFragment"
         android:name="com.kunize.uswtimetable.ui.search_result.SearchResultFragment"
         android:label="SearchResultFragment"
-        tools:layout="@layout/search_result_fragment">
+        tools:layout="@layout/fragment_search_result">
         <argument
             android:name="searchLectureName"
             app:argType="string"

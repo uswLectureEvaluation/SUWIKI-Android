@@ -12,6 +12,7 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
 
+    <color name="background">#FDFDFD</color>
     <color name="gray_bc">#BCBCBC</color>
     <color name="gray_ddd">#DDD</color>
     <color name="gray_f5">#F5F5F5</color>

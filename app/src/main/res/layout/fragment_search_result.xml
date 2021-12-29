@@ -12,17 +12,20 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.evaluation.EvaluationFragment">
+        tools:context=".ui.search_result.SearchResultFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/page_padding">
 
+
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/textView29"
                 style="@style/title_textview_style"
-                android:text="@string/evaluation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_result"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,25 +37,26 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView18">
+                app:layout_constraintTop_toBottomOf="@+id/textView29">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="#f2f2f2">
 
                     <EditText
                         android:id="@+id/searchLecture"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@null"
+                        android:background="@android:color/transparent"
                         android:ellipsize="end"
                         android:ems="10"
                         android:hint="@string/search_evaluation_hint"
+                        android:imeActionLabel="검색"
+                        android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:padding="10dp"
                         android:textSize="14sp"
-                        android:imeOptions="actionSearch"
-                        android:imeActionLabel="검색"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/searchBtn"
                         app:layout_constraintHorizontal_chainStyle="packed"
@@ -74,21 +78,75 @@
 
             </androidx.cardview.widget.CardView>
 
-            <Spinner
-                android:id="@+id/spinner"
+            <TextView
+                android:id="@+id/textView31"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:text="@string/sort"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardView" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
             <TextView
-                android:id="@+id/moreBtn"
+                android:id="@+id/textView36"
+                style="@style/sort_textview_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/see_more"
-                app:layout_constraintBottom_toBottomOf="@+id/spinner"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_marginStart="24dp"
+                android:text="@string/satisfaction"
+                app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                app:layout_constraintStart_toEndOf="@+id/textView31"
+                app:layout_constraintTop_toTopOf="@+id/textView31" />
+
+            <TextView
+                android:id="@+id/textView37"
+                style="@style/sort_textview_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@string/honey"
+                app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                app:layout_constraintStart_toEndOf="@+id/textView36"
+                app:layout_constraintTop_toTopOf="@+id/textView31"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView38"
+                style="@style/sort_textview_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@string/learning"
+                app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                app:layout_constraintStart_toEndOf="@+id/textView37"
+                app:layout_constraintTop_toTopOf="@+id/textView31"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textView39"
+                style="@style/sort_textview_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@string/date"
+                app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                app:layout_constraintStart_toEndOf="@+id/textView38"
+                app:layout_constraintTop_toTopOf="@+id/textView31"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textView40"
+                style="@style/sort_textview_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@string/total"
+                app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                app:layout_constraintStart_toEndOf="@+id/textView39"
+                app:layout_constraintTop_toTopOf="@+id/textView31"
+                app:layout_constraintVertical_bias="0.0" />
 
             <androidx.cardview.widget.CardView
                 style="@style/cardview_style"
@@ -97,10 +155,10 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/moreBtn">
+                app:layout_constraintTop_toBottomOf="@+id/textView38">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerEvaluation"
+                    android:id="@+id/recyclerSearchResult"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:evaluationList="@{viewModel.evaluationList}"
