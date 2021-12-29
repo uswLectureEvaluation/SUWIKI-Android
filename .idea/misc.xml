@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable-nodpi/custom_ripple_effect_recyclerview.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/background_corner16_white.xml" value="0.278125" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/background_corner8_white.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/border_circle.xml" value="0.278125" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/border_corner8_gray.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_alert.xml" value="0.278125" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/custom_light_blue_button.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/custom_ripple_effect.xml" value="0.278125" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/custom_ripple_effect_gray.xml" value="0.278125" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/custom_ripple_effect_skyblue.xml" value="0.38461538461538464" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/custom_ripple_light_blue_button.xml" value="0.38461538461538464" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/edge_bottom.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_file.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.38461538461538464" />
@@ -18,7 +25,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_create_time_table.xml" value="0.18614130434782608" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_main.xml" value="0.12635869565217392" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_sign_in.xml" value="0.264" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_sign_in.xml" value="0.4" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_start.xml" value="0.18614130434782608" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_evaluation.xml" value="0.31657608695652173" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_home.xml" value="0.31657608695652173" />
