@@ -12,7 +12,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="70dp"
         tools:context=".ui.evaluation.EvaluationFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,6 +51,8 @@
                         android:inputType="text"
                         android:padding="10dp"
                         android:textSize="14sp"
+                        android:imeOptions="actionSearch"
+                        android:imeActionLabel="검색"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/imageView"
                         app:layout_constraintHorizontal_chainStyle="packed"
@@ -98,11 +99,11 @@
                 app:layout_constraintTop_toBottomOf="@id/moreBtn">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:evaluationList="@{viewModel.evaluationList}"
                     android:id="@+id/recyclerEvaluation"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    app:evaluationList="@{viewModel.evaluationList}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

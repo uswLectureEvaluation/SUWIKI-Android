@@ -1,13 +1,19 @@
 package com.kunize.uswtimetable.ui.evaluation
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.adapter.CustomSpinnerAdapter
@@ -18,8 +24,7 @@ import com.kunize.uswtimetable.dataclass.EvaluationData
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
-    //리사이클러뷰 어댑터
-    private lateinit var evaluationAdapter: EvaluationListAdapter
+
     private lateinit var evaluationViewModel : EvaluationViewModel
 
     private val dummyData = arrayListOf(
@@ -41,13 +46,25 @@ class EvaluationFragment : Fragment() {
     ): View? {
         binding = FragmentEvaluationBinding.inflate(inflater, container, false)
 
-        evaluationViewModel = ViewModelProvider(requireActivity())[EvaluationViewModel::class.java]
+        evaluationViewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
 
         val spinnerTextList = listOf("최근 올라온 강의","꿀 강의","만족도가 높은 강의","배울게 많은 강의","Best 강의")
         val spinnerImageList = listOf(R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
         R.drawable.ic_book_24, R.drawable.ic_best_24)
+
+        binding.searchLecture.setOnEditorActionListener { textView, it, keyEvent ->
+            var handled = false
+            if(it == EditorInfo.IME_ACTION_SEARCH) {
+                val action = EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(textView.text.toString())
+                val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.searchLecture.windowToken, 0)
+                findNavController().navigate(action)
+                handled = true
+            }
+            handled
+        }
 
         val customSpinnerAdapter = CustomSpinnerAdapter(requireContext(), spinnerTextList, spinnerImageList)
         binding.spinner.apply {

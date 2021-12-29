@@ -14,10 +14,24 @@
         android:id="@+id/navigation_evaluation"
         android:name="com.kunize.uswtimetable.ui.evaluation.EvaluationFragment"
         android:label="fragment_evaluation"
-        tools:layout="@layout/fragment_evaluation" />
+        tools:layout="@layout/fragment_evaluation" >
+        <action
+            android:id="@+id/action_navigation_evaluation_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_more"
         android:name="com.kunize.uswtimetable.ui.more.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.kunize.uswtimetable.ui.search_result.SearchResultFragment"
+        android:label="SearchResultFragment"
+        tools:layout="@layout/search_result_fragment">
+        <argument
+            android:name="searchLectureName"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
 </navigation>
