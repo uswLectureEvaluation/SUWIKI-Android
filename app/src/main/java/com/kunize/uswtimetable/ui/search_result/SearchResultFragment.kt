@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
+import com.kunize.uswtimetable.dataclass.LectureItemViewType
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 
@@ -37,6 +39,10 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        val recyclerAdapter = EvaluationListAdapter()
+        recyclerAdapter.viewType = LectureItemViewType.SHORT
+        binding.recyclerSearchResult.adapter = recyclerAdapter
 
         val args: SearchResultFragmentArgs by navArgs()
         val msg = args.searchLectureName

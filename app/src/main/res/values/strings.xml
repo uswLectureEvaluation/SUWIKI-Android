@@ -22,6 +22,15 @@
     <string name="learning">배움</string>
     <string name="date">날짜</string>
     <string name="total">종합</string>
+    <string name="report">신고</string>
+    <string name="delete">삭제</string>
+    <string name="edit">수정</string>
+    <string name="slash5">/5</string>
+    <string name="honey_score">꿀강 지수</string>
+    <string name="learning_score">배움 지수</string>
+    <string name="team_meeting">조모임</string>
+    <string name="task">과제</string>
+    <string name="grade">학점</string>
 
     <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
     <string name="need_login">로그인이 필요합니다</string>

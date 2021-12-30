@@ -21,6 +21,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.dataclass.LectureItemViewType
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
@@ -51,6 +52,10 @@ class EvaluationFragment : Fragment() {
         evaluationViewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
+
+        val recyclerAdapter = EvaluationListAdapter()
+        recyclerAdapter.viewType = LectureItemViewType.SHORT
+        binding.recyclerEvaluation.adapter = recyclerAdapter
 
         val spinnerTextList = listOf("최근 올라온 강의","꿀 강의","만족도가 높은 강의","배울게 많은 강의","Best 강의")
         val spinnerImageList = listOf(R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
