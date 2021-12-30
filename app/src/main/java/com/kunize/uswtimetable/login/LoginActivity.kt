@@ -24,6 +24,12 @@ class LoginActivity : AppCompatActivity() {
             signInButton.setOnClickListener {
                 startActivity(Intent(context, SignInActivity::class.java))
             }
+            findIdButton.setOnClickListener {
+                startActivity(Intent(context, FindIdActivity::class.java))
+            }
+            findPasswordButton.setOnClickListener {
+                startActivity(Intent(context, FindPasswordActivity::class.java))
+            }
         }
     }
 }

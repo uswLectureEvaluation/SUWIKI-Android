@@ -11,9 +11,20 @@
     <TextView
         android:id="@+id/titleTextView"
         style="@style/title_textview_style"
-        android:text="@string/sign_in"
+        android:text="SUGANG"
+        android:fontFamily="@font/godom"
+        android:textColor="@color/logo_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/subTitleTextView"
+        style="@style/subtitle_textview_style"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:layout_constraintStart_toStartOf="@+id/titleTextView"
+        app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+        app:layout_constraintHorizontal_bias="0"
+        android:text="회원 가입" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +37,7 @@
         app:layout_constraintBottom_toTopOf="@id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView">
+        app:layout_constraintTop_toBottomOf="@+id/subTitleTextView">
 
         <TextView
             android:id="@+id/idTextView"
