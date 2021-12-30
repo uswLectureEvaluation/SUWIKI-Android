@@ -26,8 +26,9 @@ object EvaluationBindingAdapter {
     @BindingAdapter("evaluationList")
     @JvmStatic
     fun setList(recyclerView: RecyclerView, items : ArrayList<EvaluationData>) {
-        if(recyclerView.adapter == null)
-            recyclerView.adapter = EvaluationListAdapter()
+        //adapter 연결은 viewType 지정을 위해 각 Fragment 에서 연결함
+//        if(recyclerView.adapter == null)
+//            recyclerView.adapter = EvaluationListAdapter()
         val evaluationAdapter = recyclerView.adapter as EvaluationListAdapter
 
         evaluationAdapter.evaluationListData = items

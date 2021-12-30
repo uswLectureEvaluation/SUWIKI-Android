@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
@@ -116,7 +117,12 @@ class HomeFragment : Fragment() {
             }
             withContext(Main) {
                 delay(200L)
-                widgetUpdate()
+                try {
+                    widgetUpdate()
+                } catch (e: Exception) {
+
+                }
+
             }
         }
     }
