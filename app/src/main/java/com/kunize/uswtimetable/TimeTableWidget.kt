@@ -62,8 +62,6 @@ internal fun updateAppWidget(
     val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
     views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
 
-    //TODO 위젯 크기 변경 시 새로운 UswTimeTable 객체 생성 후 view를 image로 바꿈 -> 다시 setImageViewBitmap 사용하기
-
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
