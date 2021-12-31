@@ -49,6 +49,8 @@
     </style>
 
     <style name="sort_radiobutton_style" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingEnd">5dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:button">@null</item>
         <item name="android:background">@drawable/selector_sort_radio_button</item>

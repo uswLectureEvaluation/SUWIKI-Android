@@ -40,6 +40,8 @@ class EvaluationListAdapter : RecyclerView.Adapter<EvaluationListAdapter.Holder>
                         lectureType.visibility = View.VISIBLE
                         yearSemester.visibility = View.GONE
                         content.visibility = View.GONE
+                        itemLayout.isFocusable = true
+                        itemLayout.isClickable = true
                     }
                     //내가 쓴 강의평가
                     LectureItemViewType.USERLECTURE -> {
