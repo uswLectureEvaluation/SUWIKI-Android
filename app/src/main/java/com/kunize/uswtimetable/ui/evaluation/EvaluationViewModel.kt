@@ -13,23 +13,33 @@ class EvaluationViewModel : ViewModel() {
     val evaluationList: LiveData<ArrayList<EvaluationData>>
         get() = _evaluationList
 
+    private val _viewType = MutableLiveData<Int>()
+    val viewType: LiveData<Int>
+        get() = _viewType
+
+
     init {
         _evaluationList.value = arrayListOf()
+        _viewType.value = 0
     }
 
     fun changeData(dataList : ArrayList<EvaluationData>) {
         _evaluationList.value = dataList
     }
+
+    fun setViewType(type : Int) {
+        _viewType.value = type
+    }
 }
 
 object EvaluationBindingAdapter {
-    @BindingAdapter("evaluationList")
+    @BindingAdapter("evaluationList","viewType")
     @JvmStatic
-    fun setList(recyclerView: RecyclerView, items : ArrayList<EvaluationData>) {
-        //adapter 연결은 viewType 지정을 위해 각 Fragment 에서 연결함
-//        if(recyclerView.adapter == null)
-//            recyclerView.adapter = EvaluationListAdapter()
+    fun setList(recyclerView: RecyclerView, items : ArrayList<EvaluationData>, viewType: Int) {
+        if(recyclerView.adapter == null)
+            recyclerView.adapter = EvaluationListAdapter()
         val evaluationAdapter = recyclerView.adapter as EvaluationListAdapter
+        evaluationAdapter.viewType = viewType
 
         evaluationAdapter.evaluationListData = items
         evaluationAdapter.notifyDataSetChanged()

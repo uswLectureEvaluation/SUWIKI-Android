@@ -53,9 +53,7 @@ class EvaluationFragment : Fragment() {
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
 
-        val recyclerAdapter = EvaluationListAdapter()
-        recyclerAdapter.viewType = LectureItemViewType.SHORT
-        binding.recyclerEvaluation.adapter = recyclerAdapter
+        evaluationViewModel.setViewType(LectureItemViewType.SHORT)
 
         val spinnerTextList = listOf("최근 올라온 강의","꿀 강의","만족도가 높은 강의","배울게 많은 강의","Best 강의")
         val spinnerImageList = listOf(R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,

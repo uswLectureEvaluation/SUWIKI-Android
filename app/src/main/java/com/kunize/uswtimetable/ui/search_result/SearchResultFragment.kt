@@ -40,13 +40,10 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        val recyclerAdapter = EvaluationListAdapter()
-        recyclerAdapter.viewType = LectureItemViewType.SHORT
-        binding.recyclerSearchResult.adapter = recyclerAdapter
-
         val args: SearchResultFragmentArgs by navArgs()
         val msg = args.searchLectureName
 
+        viewModel.setViewType(LectureItemViewType.SHORT)
         viewModel.changeData(ArrayList(dummyData.subList(0, 1)))
 
         binding.searchLecture.apply {
