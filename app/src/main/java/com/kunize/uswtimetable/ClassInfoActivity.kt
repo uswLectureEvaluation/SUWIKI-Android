@@ -193,10 +193,11 @@ class ClassInfoActivity : AppCompatActivity() {
                                 }
                             }
                         }
-                        tempTimeData.add(newTime)
                         //에러 발생 시 여기 수정 addTime내에서도 겹치는지 확인하고 tempTimeDAta.add부분을 밖으로 빼면 될듯?
                     }
                     //6. 없을 경우 Array에 추가
+                    for (newTime in addTimeData)
+                        tempTimeData.add(newTime)
                     //7. Array를 Json형식으로 변환
                     var newJsonArray = JSONArray()
                     for (addData in tempTimeData) {
