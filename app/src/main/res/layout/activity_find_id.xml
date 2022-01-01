@@ -40,51 +40,38 @@
         app:layout_constraintVertical_bias="0.3">
 
         <TextView
-            android:id="@+id/findPasswordTextView"
+            android:id="@+id/findIdTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/find_id"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/idlEditText"
+            app:layout_constraintBottom_toTopOf="@+id/emailLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0" />
 
-        <TextView
-            android:id="@+id/inputTextView"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="학교 계정 입력"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/idlEditText"
-            app:layout_constraintStart_toStartOf="@id/idlEditText"
-            app:layout_constraintTop_toBottomOf="@id/findPasswordTextView" />
-
-        <EditText
-            android:id="@+id/idlEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            app:layout_constraintEnd_toStartOf="@+id/schoolDomain"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputTextView"
-            tools:ignore="TextFields" />
-
-        <TextView
-            android:id="@+id/schoolDomain"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/school_domain"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/idlEditText"
+            android:layout_marginTop="16dp"
+            android:hint="학교 계정 입력"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/idlEditText"
-            app:layout_constraintTop_toTopOf="@+id/idlEditText" />
+            app:layout_constraintTop_toBottomOf="@id/findIdTextView"
+            app:suffixText="@string/school_domain"
+            app:endIconMode="clear_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:inputType="text"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
@@ -96,7 +83,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/idlEditText" />
+            app:layout_constraintTop_toBottomOf="@id/emailLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
