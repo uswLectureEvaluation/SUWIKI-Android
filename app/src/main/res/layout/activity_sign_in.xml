@@ -1,220 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="@dimen/page_padding"
+    android:fillViewport="true"
     tools:context=".login.SignInActivity">
-
-    <TextView
-        android:id="@+id/titleTextView"
-        style="@style/title_textview_style"
-        android:text="SUGANG"
-        android:fontFamily="@font/godom"
-        android:textColor="@color/logo_blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@id/subTitleTextView"
-        style="@style/subtitle_textview_style"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        app:layout_constraintStart_toStartOf="@+id/titleTextView"
-        app:layout_constraintEnd_toEndOf="@+id/titleTextView"
-        app:layout_constraintHorizontal_bias="0"
-        android:text="회원 가입" />
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingVertical="32dp"
-        android:background="@drawable/border_corner8_gray"
-        android:paddingHorizontal="16dp"
-        app:layout_constraintBottom_toTopOf="@id/signInButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subTitleTextView">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/page_padding">
+
 
         <TextView
-            android:id="@+id/idTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디"
-            android:textColor="@color/black"
+            android:id="@+id/titleTextView"
+            style="@style/title_textview_style"
+            android:fontFamily="@font/godom"
+            android:text="SUGANG"
+            android:textColor="@color/logo_blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/idEditText"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@id/subTitleTextView"
+            style="@style/subtitle_textview_style"
+            android:text="회원 가입"
+            app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/titleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:minHeight="48dp"
+            android:background="@drawable/border_corner8_gray"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/signInButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/subTitleTextView">
 
-        <TextView
-            android:id="@+id/passwordTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="비밀번호"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/idEditText" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/idEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="아이디"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="비밀번호 입력"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/passwordAgainEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="한 번 더 입력"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="비밀번호 입력"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:endIconMode="password_toggle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/idEditText">
 
-        <TextView
-            android:id="@+id/requireEmailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="학교 이메일 입력"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordAgainEditText" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/linkToSchoolMailHomepage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="학교 메일 홈페이지로 이동"
-            android:textColor="@color/light_blue_900"
-            app:layout_constraintBottom_toBottomOf="@id/requireEmailTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/requireEmailTextView"
-            app:layout_constraintTop_toTopOf="@id/requireEmailTextView" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordAgainEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="비밀번호 다시 입력"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:endIconMode="password_toggle"
+                app:errorContentDescription="비밀번호와 일치하지 않습니다"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditText">
 
-        <EditText
-            android:id="@+id/emailEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toStartOf="@+id/schoolDomain"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/requireEmailTextView" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_pw_again"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/schoolDomain"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="center_vertical"
-            android:text="@string/school_domain"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="@id/emailEditText"
-            app:layout_constraintStart_toEndOf="@+id/emailEditText"
-            app:layout_constraintEnd_toStartOf="@+id/sendCertificationNumberButton"
-            app:layout_constraintTop_toTopOf="@id/emailEditText" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="학교 인증 메일"
+                app:layout_constraintEnd_toStartOf="@id/sendCertificationNumberButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordAgainEditText"
+                app:suffixText="@string/school_domain">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionSend"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/sendCertificationNumberButton"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/custom_ripple_light_blue_button"
+                android:enabled="false"
+                android:imeOptions="actionSend"
+                android:minHeight="36dp"
+                android:text="인증 번호 전송"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/emailEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/emailEditText"
+                app:layout_constraintTop_toTopOf="@id/emailEditText"
+                app:layout_constraintVertical_bias="0.47" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/linkToSchoolMailHomepage"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="학교 메일 홈페이지"
+                android:visibility="gone"
+                app:icon="@drawable/ic_link"
+                app:layout_constraintEnd_toEndOf="@+id/sendCertificationNumberButton"
+                app:layout_constraintTop_toBottomOf="@id/emailEditText"
+                tools:visibility="visible" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/certificationNumberEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="인증 번호 입력"
+                app:layout_constraintEnd_toEndOf="@id/emailEditText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linkToSchoolMailHomepage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_certification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned"
+                    android:nextFocusForward="@id/certificationButton" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/certificationButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/custom_ripple_light_blue_button"
+                android:clickable="true"
+                android:enabled="false"
+                android:focusable="true"
+                android:imeOptions="actionDone"
+                android:minHeight="36dp"
+                android:text="인증 하기"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/certificationNumberEditText"
+                app:layout_constraintEnd_toEndOf="@id/sendCertificationNumberButton"
+                app:layout_constraintStart_toStartOf="@id/sendCertificationNumberButton"
+                app:layout_constraintTop_toTopOf="@+id/certificationNumberEditText" />
+
+            <TextView
+                android:id="@+id/certificationCompleteTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="이메일 인증이 완료되었습니다"
+                android:textColor="@color/light_blue_900"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/certificationNumberEditText"
+                tools:visibility="visible" />
+
+            <CheckBox
+                android:id="@+id/termsTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autoLink="none"
+                android:text="동의 및 회원가입을 누르면 SWLE 이용약관 및 개인정보처리방침에 동의하게 됩니다."
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/certificationCompleteTextView"
+                app:layout_constraintVertical_bias="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/sendCertificationNumberButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/signInButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/custom_ripple_light_blue_button"
-            android:minHeight="36dp"
-            android:text="인증 번호 전송"
             android:enabled="false"
-            android:layout_marginStart="8dp"
+            android:text="@string/sign_in"
             android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="@id/schoolDomain"
-            app:layout_constraintBottom_toBottomOf="@id/schoolDomain"
-            app:layout_constraintStart_toEndOf="@+id/schoolDomain"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <EditText
-            android:id="@+id/certificationNumberEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="인증 번호 입력"
-            android:inputType="numberSigned"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="@id/schoolDomain"
-            app:layout_constraintStart_toStartOf="@id/emailEditText"
-            app:layout_constraintTop_toBottomOf="@id/sendCertificationNumberButton" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/certificationButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_ripple_light_blue_button"
-            android:clickable="true"
-            android:focusable="true"
-            android:minHeight="36dp"
-            android:text="인증 하기"
-            android:enabled="false"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/certificationNumberEditText"
-            app:layout_constraintEnd_toEndOf="@id/sendCertificationNumberButton"
-            app:layout_constraintStart_toStartOf="@id/sendCertificationNumberButton"
-            app:layout_constraintTop_toTopOf="@+id/certificationNumberEditText" />
-
-        <TextView
-            android:id="@+id/certificationCompleteTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            android:text="이메일 인증이 완료되었습니다"
-            android:textColor="@color/light_blue_900"
-            app:layout_constraintTop_toBottomOf="@+id/certificationNumberEditText" />
-
-        <CheckBox
-            android:id="@+id/termsTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="동의 및 회원가입을 누르면 SWLE 이용약관 및 개인정보처리방침에 동의하게 됩니다."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:autoLink="none"
-            app:layout_constraintTop_toBottomOf="@id/certificationCompleteTextView" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signInButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/custom_ripple_light_blue_button"
-        android:enabled="false"
-        android:text="@string/sign_in"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
