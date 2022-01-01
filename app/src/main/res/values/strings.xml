@@ -6,10 +6,7 @@
     <string name="timetable">시간표</string>
     <string name="evaluation">강의 평가</string>
     <string name="more">더보기</string>
-    <string name="title_activity_base">BaseActivity</string>
-    <string name="title_home">Home</string>
     <string name="my_information">내 정보</string>
-    <string name="login_id">로그인 아이디</string>
     <string name="school_email">학교 인증 메일</string>
     <string name="my_evaluate">내가 쓴 글</string>
     <string name="my_point">보유 포인트</string>
@@ -32,12 +29,6 @@
     <string name="task">과제</string>
     <string name="grade">학점</string>
 
-    <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
-    <string name="need_login">로그인이 필요합니다</string>
-    <string name="login_button_text">로그인하기</string>
-    <string name="password">패스워드</string>
-    <string name="sign_in">회원 가입</string>
-    <string name="login">로그인</string>
     <string name="notice">공지사항</string>
     <string name="send_feedback">피드백 전송</string>
     <string name="question">문의하기</string>
@@ -50,15 +41,25 @@
     <string name="average_index">평균 지수</string>
     <string name="see_short"><u>간략하게 보기></u></string>
 
+    <!-- Login & Sign in -->
+    <string name="login">로그인</string>
+    <string name="password">패스워드</string>
+    <string name="sign_in">회원 가입</string>
+    <string name="require_id">아이디 입력</string>
+    <string name="require_password">비밀번호 입력</string>
+    <string name="find_id">아이디 찾기</string>
+    <string name="find_password">비밀번호 찾기</string>
+    <string name="login_button_text">로그인하기</string>
+    <string name="login_id">로그인 아이디</string>
+    <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
+    <string name="need_login">로그인이 필요합니다</string>
+
     <!-- Data binding -->
     <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
     <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
     <string name="opened_exam_count">시험 정보 열람 : %d개</string>
     <string name="total_point">%d P</string>
-    <string name="require_id">아이디 입력 *</string>
-    <string name="require_password">비밀번호 입력 *</string>
     <string name="go_to_mail_homepage"><u>학교 메일 홈페이지로 이동</u></string>
     <string name="school_domain">\@suwon.ac.kr</string>
-    <string name="find_id">아이디 찾기</string>
-    <string name="find_password">비밀번호 찾기</string>
+
 </resources>

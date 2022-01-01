@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,18 +10,30 @@
     android:padding="@dimen/page_padding"
     tools:context=".login.LoginActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top2Guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
 
     <LinearLayout
         android:id="@+id/logoLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/top2Guideline"
+
+        app:layout_constraintTop_toBottomOf="@+id/topGuideline">
 
         <TextView
             android:layout_width="match_parent"
@@ -43,66 +56,51 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3" />
-
     <LinearLayout
+        android:id="@+id/contentBox"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_weight="3"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border_corner8_gray"
         android:orientation="vertical"
-        android:padding="32dp">
+        android:padding="32dp"
+        app:layout_constraintTop_toBottomOf="@id/top2Guideline">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디"
-            android:textColor="@color/black" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginVertical="8dp"
-            android:layout_weight="1"
-            android:height="0dp"
-            android:background="@drawable/background_corner8_white"
-            android:hint="@string/require_id"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:paddingHorizontal="8dp" />
-
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="비밀번호"
-            android:textColor="@color/black" />
+            android:hint="아이디">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginVertical="8dp"
-            android:layout_weight="1"
-            android:height="0dp"
-            android:background="@drawable/background_corner8_white"
-            android:hint="@string/require_password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:paddingHorizontal="8dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="비밀번호"
+            app:endIconMode="password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="로그인 유지" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="@drawable/custom_ripple_effect_skyblue"
             android:text="@string/login_button_text"
             android:textColor="@color/white"
@@ -111,9 +109,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView
@@ -136,7 +133,6 @@
         </LinearLayout>
     </LinearLayout>
 
-
     <TextView
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
@@ -144,9 +140,10 @@
         android:layout_gravity="end"
         android:layout_marginVertical="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_weight="0.5"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/sign_in"
-        android:textSize="16sp" />
-</LinearLayout>
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/contentBox"
+        app:layout_constraintTop_toBottomOf="@id/contentBox" />
+</androidx.constraintlayout.widget.ConstraintLayout>

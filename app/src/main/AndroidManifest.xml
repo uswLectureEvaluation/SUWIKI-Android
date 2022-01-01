@@ -15,15 +15,18 @@
         android:theme="@style/Theme.Uswtimetable">
         <activity
             android:name=".login.FindPasswordActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".login.FindIdActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".login.SignInActivity"
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity android:name=".SettingActivity" />
 
