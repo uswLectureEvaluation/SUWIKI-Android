@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
+    android:background="@color/background"
     tools:context=".CreateTimeTableActivity">
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="80dp"
         android:text="시간표 생성"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +91,7 @@
         android:layout_height="4dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:background="#7F7F7F"
+        android:background="@color/custom_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editName" />
@@ -100,7 +101,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="60dp"
-        app:cardBackgroundColor="#E6E6E6"
+        app:cardBackgroundColor="@color/custom_light_gray"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.06"
@@ -115,7 +116,6 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="완료"
-            android:textColor="#838383"
             android:textStyle="bold"
             app:autoSizeTextType="uniform" />
     </androidx.cardview.widget.CardView>

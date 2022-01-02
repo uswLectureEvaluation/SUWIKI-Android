@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
-                android:background="#CFCFCF"
+                android:background="@color/custom_light_gray"
                 app:layout_constraintEnd_toEndOf="@+id/dialogLocation"
                 app:layout_constraintStart_toStartOf="@+id/dialogLocation"
                 app:layout_constraintTop_toBottomOf="@+id/dialogLocation" />
@@ -65,7 +65,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="월"
-                    android:textColor="#CFCFCF"
+                    android:textColor="@color/custom_light_gray"
                     app:autoSizeTextType="uniform" />
 
                 <TextView
@@ -75,7 +75,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="화"
-                    android:textColor="#CFCFCF"
+                    android:textColor="@color/custom_light_gray"
                     app:autoSizeTextType="uniform" />
 
                 <TextView
@@ -85,7 +85,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="수"
-                    android:textColor="#CFCFCF"
+                    android:textColor="@color/custom_light_gray"
                     app:autoSizeTextType="uniform" />
 
                 <TextView
@@ -95,7 +95,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="목"
-                    android:textColor="#CFCFCF"
+                    android:textColor="@color/custom_light_gray"
                     app:autoSizeTextType="uniform" />
 
                 <TextView
@@ -105,7 +105,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="금"
-                    android:textColor="#CFCFCF"
+                    android:textColor="@color/custom_light_gray"
                     app:autoSizeTextType="uniform" />
             </LinearLayout>
 
@@ -132,7 +132,7 @@
                 android:layout_height="1dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="#CFCFCF"
+                android:background="@color/custom_light_gray"
                 app:layout_constraintEnd_toEndOf="@+id/dialogTime2"
                 app:layout_constraintStart_toStartOf="@+id/dialogTime2"
                 app:layout_constraintTop_toBottomOf="@+id/dialogTime2" />
@@ -188,7 +188,7 @@
                 android:layout_height="1dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="#CFCFCF"
+                android:background="@color/custom_light_gray"
                 app:layout_constraintEnd_toEndOf="@+id/dialogTime1"
                 app:layout_constraintStart_toStartOf="@+id/dialogTime1"
                 app:layout_constraintTop_toBottomOf="@+id/dialogTime1" />
@@ -197,7 +197,7 @@
                 android:id="@+id/cancel"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#CFCFCF"
+                android:background="@color/custom_light_gray"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="취소"
@@ -212,7 +212,7 @@
                 android:id="@+id/ok"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#EA515F"
+                android:background="@color/custom_red"
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="완료"

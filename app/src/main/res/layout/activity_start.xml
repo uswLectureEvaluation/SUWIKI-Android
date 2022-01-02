@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#093483"
+    android:background="@color/background_start"
     tools:context=".StartActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:fontFamily="@font/godom"
         android:gravity="center"
         android:text="수타"
-        android:textColor="#EADB80"
+        android:textColor="@color/yellow_start"
         android:textSize="34sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/textView10"
@@ -33,7 +33,7 @@
         android:fontFamily="@font/godom"
         android:gravity="center"
         android:text="수원대타임"
-        android:textColor="#EADB80"
+        android:textColor="@color/yellow_start"
         android:textSize="34sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,7 +64,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textColor="#fff"
+        android:textColor="@color/white"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
