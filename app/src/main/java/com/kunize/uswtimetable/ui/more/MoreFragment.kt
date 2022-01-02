@@ -18,6 +18,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.StartActivity
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
 import com.kunize.uswtimetable.login.LoginActivity
+import com.kunize.uswtimetable.ui.notice.NoticeActivity
 
 class MoreFragment : Fragment() {
     private lateinit var viewModel: MoreViewModel
@@ -105,9 +106,9 @@ class MoreFragment : Fragment() {
 
     private fun incomplete(context: Context) {
         with(binding) {
-            noticeButton.setOnClickListener {
+            /*noticeButton.setOnClickListener {
                 Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
-            }
+            }*/
             sendFeedbackButton.setOnClickListener {
                 Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
             }
@@ -130,12 +131,18 @@ class MoreFragment : Fragment() {
     }
 
     private fun initViews(context: Context) {
-        binding.opensourceLicenceButton.setOnClickListener {
-            val intent = Intent(context, OpenSourceActivity::class.java)
-            startActivity(intent)
-        }
-        binding.loginOrLogoutButton.setOnClickListener {
-            viewModel.loginOrOut()
+        with(binding) {
+            noticeButton.setOnClickListener {
+                val intent = Intent(context, NoticeActivity::class.java)
+                startActivity(intent)
+            }
+            opensourceLicenceButton.setOnClickListener {
+                val intent = Intent(context, OpenSourceActivity::class.java)
+                startActivity(intent)
+            }
+            loginOrLogoutButton.setOnClickListener {
+                viewModel?.loginOrOut()
+            }
         }
     }
 }

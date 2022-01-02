@@ -14,7 +14,7 @@ import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivitySignInBinding
-import com.kunize.uswtimetable.util.Constants.PasswordAgain
+import com.kunize.uswtimetable.util.PasswordAgain
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
