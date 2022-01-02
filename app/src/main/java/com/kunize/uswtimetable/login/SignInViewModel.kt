@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kunize.uswtimetable.util.Constants.PasswordAgain
 
 class SignInViewModel: ViewModel() {
     private var _isPwSame = MutableLiveData<PasswordAgain>()

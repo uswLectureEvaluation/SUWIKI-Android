@@ -61,5 +61,7 @@
     <string name="total_point">%d P</string>
     <string name="go_to_mail_homepage"><u>학교 메일 홈페이지로 이동</u></string>
     <string name="school_domain">\@suwon.ac.kr</string>
+    <string name="id">아이디</string>
+    <string name="require_password_again">비밀번호 다시 입력</string>
 
 </resources>
