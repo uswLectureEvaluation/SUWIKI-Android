@@ -52,7 +52,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:textColor="#402B04"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:layout_constraintDimensionRatio="6.1"

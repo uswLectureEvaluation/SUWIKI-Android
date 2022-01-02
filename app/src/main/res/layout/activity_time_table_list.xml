@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
+    android:background="@color/background"
     tools:context=".TimeTableListActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="시간표 목록"
-        android:textColor="#402B04"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:layout_constraintDimensionRatio="8.9"
@@ -43,7 +43,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         android:text="오픈소스 라이선스 보기"
-        android:textColor="#3F8CFD"
+        android:textColor="@color/custom_blue"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

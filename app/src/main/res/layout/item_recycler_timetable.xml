@@ -30,7 +30,7 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:text="2021년 1학기"
-                android:textColor="#000"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:autoSizeMinTextSize="2sp"
                 app:autoSizeTextType="uniform"

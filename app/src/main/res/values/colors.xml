@@ -28,4 +28,7 @@
     <color name="custom_gray">#bebebe</color>
     <color name="custom_purple">#6200ed</color>
     <color name="background">#FDFDFD</color>
+    <color name="background_start">#093483</color>
+    <color name="yellow_start">#EADB80</color>
+    <color name="search_result_bar">#F2F2F2</color>
 </resources>

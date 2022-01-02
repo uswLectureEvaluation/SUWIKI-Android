@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:text="sample"
-    android:textColor="#000"
+    android:textColor="@color/black"
     android:textSize="30sp"
     app:autoSizeTextType="uniform">
 

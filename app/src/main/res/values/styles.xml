@@ -29,7 +29,7 @@
         <item name="android:stepSize">0.1</item>
         <item name="android:isIndicator">true</item>
         <item name="android:numStars">5</item>
-        <item name="android:progressTint">#f1c40f</item>
+        <item name="android:progressTint">@color/custom_yellow</item>
         <item name="android:secondaryProgressTint">@android:color/transparent</item>
     </style>
 
