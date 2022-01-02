@@ -309,7 +309,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounding_background"
             android:text="@string/edit"
-            android:textColor="@color/logo_blue"
+            android:textColor="@color/custom_blue"
             android:textSize="12sp"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/deleteBtn"

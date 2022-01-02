@@ -19,7 +19,7 @@
             style="@style/title_textview_style"
             android:fontFamily="@font/godom"
             android:text="SUGANG"
-            android:textColor="@color/logo_blue"
+            android:textColor="@color/custom_blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
