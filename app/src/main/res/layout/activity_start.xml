@@ -13,36 +13,17 @@
         android:layout_height="0dp"
         android:fontFamily="@font/godom"
         android:gravity="center"
-        android:text="수타"
+        android:text="@string/app_name"
         android:textColor="#EADB80"
         android:textSize="34sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1.1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_optimizationLevel="ratio" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fontFamily="@font/godom"
-        android:gravity="center"
-        android:text="수원대타임"
-        android:textColor="#EADB80"
-        android:textSize="34sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.03"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_optimizationLevel="ratio" />
 
     <ProgressBar
@@ -56,7 +37,7 @@
         app:layout_constraintHeight_percent="0.03"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@id/textView9"
         app:layout_optimizationLevel="ratio" />
 
     <TextView
