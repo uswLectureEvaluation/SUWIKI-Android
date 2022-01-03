@@ -2,17 +2,17 @@ package com.kunize.uswtimetable.ui.notice
 
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.retrofit.RetrofitManager
-import com.kunize.uswtimetable.util.RESPONSE_STATE
+import com.kunize.uswtimetable.util.ResponseState
 
 class NoticeViewModel: ViewModel() {
 
     init {
         RetrofitManager.instance.getNoticeList { responseState, responseBody ->
             when(responseState) {
-                RESPONSE_STATE.OK -> {
+                ResponseState.OK -> {
 
                 }
-                RESPONSE_STATE.FAIL -> {
+                ResponseState.FAIL -> {
 
                 }
             }
