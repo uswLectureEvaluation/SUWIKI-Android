@@ -13,3 +13,7 @@ fun EditText.afterTextChanged(completion: (Editable?) -> Unit) {
         }
     })
 }
+
+// 문자열 -> json 형태인지 json 배열 형태인지
+fun String?.isJsonObject(): Boolean = this?.startsWith("{") == true && this.endsWith("}")
+fun String?.isJsonArray(): Boolean = this?.startsWith("[") == true && this.endsWith("]")

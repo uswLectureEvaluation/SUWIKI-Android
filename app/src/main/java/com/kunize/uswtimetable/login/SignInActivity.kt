@@ -2,36 +2,20 @@ package com.kunize.uswtimetable.login
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextWatcher
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.text.util.Linkify
-import android.util.Log
-import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isGone
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.StartActivity
 import com.kunize.uswtimetable.databinding.ActivitySignInBinding
-import com.kunize.uswtimetable.util.Constants.Companion.TAG
+import com.kunize.uswtimetable.util.PasswordAgain
 import com.kunize.uswtimetable.util.afterTextChanged
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class SignInActivity : AppCompatActivity() {

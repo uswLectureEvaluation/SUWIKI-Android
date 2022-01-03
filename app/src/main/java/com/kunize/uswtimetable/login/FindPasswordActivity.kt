@@ -26,6 +26,7 @@ class FindPasswordActivity : AppCompatActivity() {
         }
     }
 
+    // 뒤로 버튼 누르면 항상 로그인 화면으로 이동
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, LoginActivity::class.java)

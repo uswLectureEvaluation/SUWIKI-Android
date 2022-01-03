@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">천마</string>
+    <string name="app_name_short">수타</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
@@ -43,23 +44,26 @@
 
     <!-- Login & Sign in -->
     <string name="login">로그인</string>
-    <string name="password">패스워드</string>
+    <string name="password">비밀번호</string>
     <string name="sign_in">회원 가입</string>
+    <string name="id">아이디</string>
+    <string name="keep_login">로그인 유지</string>
     <string name="require_id">아이디 입력</string>
     <string name="require_password">비밀번호 입력</string>
+    <string name="require_password_again">비밀번호 다시 입력</string>
     <string name="find_id">아이디 찾기</string>
     <string name="find_password">비밀번호 찾기</string>
     <string name="login_button_text">로그인하기</string>
     <string name="login_id">로그인 아이디</string>
     <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
     <string name="need_login">로그인이 필요합니다</string>
+    <string name="school_domain">\@suwon.ac.kr</string>
+    <string name="go_to_mail_homepage"><u>학교 메일 홈페이지로 이동</u></string>
 
     <!-- Data binding -->
     <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
     <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
     <string name="opened_exam_count">시험 정보 열람 : %d개</string>
     <string name="total_point">%d P</string>
-    <string name="go_to_mail_homepage"><u>학교 메일 홈페이지로 이동</u></string>
-    <string name="school_domain">\@suwon.ac.kr</string>
 
 </resources>
