@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">천마</string>
-    <string name="app_name_short">수타</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 

@@ -30,6 +30,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:orientation="vertical"
+        android:weightSum="4"
         app:layout_constraintBottom_toBottomOf="@+id/top2Guideline"
         app:layout_constraintTop_toBottomOf="@+id/topGuideline">
 
@@ -39,18 +40,10 @@
             android:layout_weight="3"
             android:fontFamily="@font/godom"
             android:gravity="center"
-            android:text="@string/app_name_short"
+            android:text="@string/app_name"
             android:textColor="@color/custom_blue"
             app:autoSizeTextType="uniform" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/godom"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/custom_blue" />
     </LinearLayout>
 
     <LinearLayout
