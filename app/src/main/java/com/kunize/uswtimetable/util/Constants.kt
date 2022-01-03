@@ -23,6 +23,6 @@ object API {
     const val SIGN_UP: String = "/signup"
 }
 
-enum class RESPONSE_STATE {
+enum class ResponseState {
     OK, FAIL
 }
