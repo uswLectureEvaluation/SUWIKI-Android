@@ -29,7 +29,7 @@ class EvaluationFragment : Fragment() {
     private lateinit var evaluationViewModel : EvaluationViewModel
 
     companion object {
-        val dummyData = arrayListOf(
+        val dummyData = arrayListOf<EvaluationData?>(
             EvaluationData("올뎃베이직12345678", "교양대학", 3.2f, 3f, 2.6f, 4.2f, "기교"),
             EvaluationData("디지털 사회의 마케팅(비대면 수업)", "남아영", 3.4f, 4f, 2.3f, 3.9f, "기교"),
             EvaluationData("데이터구조", "이명원", 0.4f, 0.1f, 0.2f, 0.5f, "전핵"),

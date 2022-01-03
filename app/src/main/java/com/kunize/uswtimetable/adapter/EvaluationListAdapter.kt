@@ -7,27 +7,53 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ItemRecyclerEvaluationBinding
+import com.kunize.uswtimetable.databinding.ItemRecyclerProgressBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureItemViewType
 
-class EvaluationListAdapter : RecyclerView.Adapter<EvaluationListAdapter.Holder>() {
+class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var viewType: Int = 0
-    var evaluationListData = mutableListOf<EvaluationData>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemRecyclerEvaluationBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return Holder(binding)
+    var evaluationListData = mutableListOf<EvaluationData?>()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            1 -> {
+                val binding = ItemRecyclerEvaluationBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                Holder(binding)
+            }
+            else -> {
+                val binding = ItemRecyclerProgressBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                LoadingHolder(binding)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun getItemViewType(position: Int): Int {
+        return if(evaluationListData[position] != null)
+            1
+        else
+            0
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = evaluationListData[position]
-        holder.setData(data)
+        if(holder is Holder && data != null)
+            holder.setData(data)
     }
 
     override fun getItemCount(): Int = evaluationListData.size
+
+    inner class LoadingHolder(private val binding: ItemRecyclerProgressBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    }
 
     inner class Holder(private val binding: ItemRecyclerEvaluationBinding) :
     RecyclerView.ViewHolder(binding.root) {

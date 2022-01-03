@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
@@ -44,7 +46,26 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         val msg = args.searchLectureName
 
         viewModel.setViewType(LectureItemViewType.SHORT)
-        viewModel.changeData(ArrayList(dummyData.subList(0, 1)))
+
+        viewModel.addData(ArrayList(dummyData.subList(0, 10)))
+
+        binding.recyclerSearchResult.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                val itemTotalCount = recyclerView.adapter!!.itemCount - 1 // 어댑터에 등록된 아이템의 총 개수 -1
+                Log.d("Scroll","$lastVisibleItemPosition , $itemTotalCount")
+                // 스크롤이 끝에 도달했는지 확인
+                if (lastVisibleItemPosition == itemTotalCount) {
+                    //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
+                    viewModel.deleteLoading()
+                    //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
+                    val newData = dummyData.subList(0, 0)
+                    viewModel.addData(ArrayList(newData))
+                }
+            }
+        })
 
         binding.searchLecture.apply {
             setText(msg)

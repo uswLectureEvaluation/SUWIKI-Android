@@ -9,7 +9,7 @@
             type="com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.search_result.SearchResultFragment">
@@ -144,5 +144,5 @@
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </layout>
