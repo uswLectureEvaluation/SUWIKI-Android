@@ -39,6 +39,8 @@ class EvaluationFragment : Fragment() {
             EvaluationData("더미데이터", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
             EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
             EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
+            EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
+            EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
             EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교")
         )
     }
