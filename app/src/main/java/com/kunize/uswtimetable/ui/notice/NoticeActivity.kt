@@ -21,7 +21,7 @@ class NoticeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoticeBinding
     private lateinit var adapter: NoticeAdapter
     private lateinit var viewModel: NoticeViewModel
-    private lateinit var noticeList: LiveData<List<NoticeData>>
+    private lateinit var noticeList: List<NoticeData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class NoticeActivity : AppCompatActivity() {
             Log.d(TAG, "NoticeActivity - ${notice.title} clicked")
             viewModel.getNotice(notice.id)
         })
-        adapter.submitList(viewModel.noticeList.value) // 리사이클러뷰에 공지 목록 추가
+        adapter.submitList(viewModel.noticeList) // 리사이클러뷰에 공지 목록 추가
 
         val decorator = DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL)
         binding.noticeRecyclerView.apply {

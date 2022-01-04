@@ -11,15 +11,15 @@ import com.kunize.uswtimetable.util.isJsonObject
 
 class NoticeViewModel: ViewModel() {
     private val retrofitManager = RetrofitManager.instance
-    private val _noticeList = MutableLiveData<List<NoticeData>>()
-    val noticeList:LiveData<List<NoticeData>> get() = _noticeList
+    private var _noticeList = mutableListOf<NoticeData>()
+    val noticeList:List<NoticeData> get() = _noticeList
 
     init {
         retrofitManager.getNoticeList { state, result ->
             when(state) {
                 ResponseState.OK -> {
                     // result에 받아온 리스트 있음
-                    _noticeList.value = parseNotice(result)
+                    _noticeList = parseNotice(result)
                 }
                 ResponseState.FAIL -> {
                     // result에 오류 메시지 있음
@@ -42,9 +42,9 @@ class NoticeViewModel: ViewModel() {
         })
     }
 
-    private fun parseNotice(data: String): List<NoticeData> {
+    private fun parseNotice(data: String): MutableList<NoticeData> {
         // TODO 받아온 데이터를 리스트로 파싱하는 과정
-        val notices = listOf<NoticeData>()
+        val notices = mutableListOf<NoticeData>()
         when {
             data.isJsonArray() -> {
 
