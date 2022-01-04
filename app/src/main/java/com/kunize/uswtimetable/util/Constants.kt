@@ -14,7 +14,7 @@ enum class PasswordAgain {
 }
 
 object API {
-    const val BASE_URL: String = "https://api.sugang.kr"
+    const val BASE_URL: String = "https://api.1000ma.kr"
     const val NOTICE: String = "/notices"
     const val LECTURE: String = "/lecture"
     const val EXAM: String = "/lecture/exam"

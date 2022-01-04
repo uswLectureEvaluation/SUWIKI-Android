@@ -52,5 +52,20 @@ class RetrofitManager {
         })
     }
 
+    fun getNotice(id: Int, completion: (ResponseState, String) -> Unit) {
+        val call: Call<JsonElement> = iRetrofit?.getNotice(id) ?: return
+        call.enqueue(object: Callback<JsonElement> {
+            override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                Log.d(TAG, "RetrofitManager - onResponse() called / response: ${response.body().toString()}")
+                completion(ResponseState.OK, response.body().toString())
+            }
+
+            override fun onFailure(call: Call<JsonElement>, t: Throwable) {
+                Log.d(TAG, "RetrofitManager - onFailure() called / t: $t")
+                completion(ResponseState.FAIL, t.toString())
+            }
+        })
+    }
+
     // TODO 나머지 인터페이스도 추가
 }

@@ -7,38 +7,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/page_padding">
+        android:paddingHorizontal="@dimen/page_padding"
+        android:paddingTop="@dimen/page_padding">
 
         <TextView
             android:id="@+id/titleTextView"
             style="@style/title_textview_style"
-            android:fontFamily="@font/godom"
-            android:text="@string/app_name"
-            android:textColor="@color/custom_blue"
+            android:text="@string/notice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@id/subTitleTextView"
-            style="@style/subtitle_textview_style"
-            android:text="@string/notice"
-            app:layout_constraintEnd_toEndOf="@+id/titleTextView"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@+id/titleTextView"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/noticeRecyclerView"
-            android:background="@drawable/border_corner8_gray"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:background="@drawable/border_corner8_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/item_notice"
-            app:layout_constraintTop_toBottomOf="@+id/subTitleTextView" />
-
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+            app:layout_constraintVertical_bias="0"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_notice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -22,7 +22,7 @@ interface IRetrofit {
 
     // 공지사항 API
     @GET(NOTICE)
-    fun getNotice(@Query("notice_id") noticeId: String): Call<JsonElement>
+    fun getNotice(@Query("notice_id") noticeId: Int): Call<JsonElement>
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @GET(PASSWORD)
