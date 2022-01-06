@@ -18,6 +18,14 @@ import com.kunize.uswtimetable.dataclass.LectureItemViewType
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.util.infiniteScrolls
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SearchResultFragment : Fragment(), View.OnClickListener {
 
@@ -50,12 +58,16 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
 
         viewModel.addData(ArrayList(dummyData.subList(0, 10)))
 
-        binding.searchResultScroll.infiniteScrolls {
-            //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
-            viewModel.deleteLoading()
-            //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-            val newData = dummyData.subList(0, 10)
-            viewModel.addData(ArrayList(newData))
+        binding.recyclerSearchResult.infiniteScrolls {
+            CoroutineScope(Main).launch {
+
+                delay(1000)
+                //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
+                viewModel.deleteLoading()
+                //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
+                val newData = dummyData.subList(0, 10)
+                viewModel.addData(ArrayList(newData))
+            }
         }
 
         binding.searchLecture.apply {
@@ -82,7 +94,9 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         }
         prevSelRadioButton = radioBtn
         //TODO 클릭 될 때마다 새로운 데이터를 서버에서 받아오는 기능 추가
-        viewModel.changeData(ArrayList(dummyData.subList(0, 12)))
+        val a = Random().nextInt(2)
+        val b = Random().nextInt(6) + 2
+        viewModel.changeData(ArrayList(dummyData.subList(a, b)))
         radioBtn.text = radioBtn.text.toString() + " ↑"
     }
 }

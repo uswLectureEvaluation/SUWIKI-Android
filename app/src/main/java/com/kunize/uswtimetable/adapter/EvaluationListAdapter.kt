@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(evaluationListData[position] != null)
+        return if (evaluationListData[position] != null)
             1
         else
             0
@@ -44,63 +45,43 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = evaluationListData[position]
-        if(holder is Holder && data != null)
+        if (holder is Holder && data != null)
             holder.setData(data)
     }
 
     override fun getItemCount(): Int = evaluationListData.size
 
     inner class LoadingHolder(private val binding: ItemRecyclerProgressBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
 
     }
 
     inner class Holder(private val binding: ItemRecyclerEvaluationBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
             with(binding) {
                 //viewType에 따라 뷰 숨김/보임 처리
-                when(viewType) {
+                //해당 로그가 없을 경우 가끔 적용되지 않음.
+                Log.d("viewType", "$viewType")
+                when (viewType) {
                     //강의평가 목록
-                    LectureItemViewType.SHORT -> {
-                        lectureType.visibility = View.VISIBLE
-                        yearSemester.visibility = View.GONE
-                        content.visibility = View.GONE
-                        itemLayout.isFocusable = true
-                        itemLayout.isClickable = true
-                    }
+                    LectureItemViewType.SHORT -> shortVisible()
                     //내가 쓴 강의평가
-                    LectureItemViewType.USERLECTURE -> {
-                        setVisibilityAdditionalInfo()
-                        editBtn.visibility = View.VISIBLE
-                        deleteBtn.visibility = View.VISIBLE
-                    }
+                    LectureItemViewType.USERLECTURE -> userLectureVisible()
                     //내가 쓴 시험 정보
-                    LectureItemViewType.USEREXAM -> {
-                        goneForUserType()
-                        editBtn.visibility = View.VISIBLE
-                        deleteBtn.visibility = View.VISIBLE
-                    }
+                    LectureItemViewType.USEREXAM -> userExamVisible()
                     //세부 강의평가 정보
-                    LectureItemViewType.LECTURE -> {
-                        goneLectureNameProf()
-                        setVisibilityAdditionalInfo()
-                        reportBtn.visibility = View.VISIBLE
-                    }
+                    LectureItemViewType.LECTURE -> lectureVisible()
                     //세부 시험 정보
-                    LectureItemViewType.EXAM -> {
-                        goneForNotUserType()
-                        reportBtn.visibility = View.VISIBLE
-                    }
+                    LectureItemViewType.EXAM -> examVisible()
                 }
 
                 evaluationData = data
                 seeDetail.setOnClickListener {
-                    if(detailScoreLayout.isVisible) {
+                    if (detailScoreLayout.isVisible) {
                         seeDetail.setText(R.string.see_detail)
                         detailScoreLayout.visibility = View.GONE
-                    }
-                    else {
+                    } else {
                         seeDetail.setText(R.string.see_short)
                         detailScoreLayout.visibility = View.VISIBLE
                     }
@@ -109,32 +90,36 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
 
-        private fun ItemRecyclerEvaluationBinding.goneForNotUserType() {
-            goneLectureNameProf()
-            goneForUserType()
+        private fun ItemRecyclerEvaluationBinding.shortVisible() {
+            nameGroup.visibility = View.VISIBLE
+            averGroup.visibility = View.VISIBLE
+            lectureType.visibility = View.VISIBLE
+            etcInfoGroup.visibility = View.GONE
+            itemLayout.isFocusable = true
+            itemLayout.isClickable = true
         }
 
-        private fun ItemRecyclerEvaluationBinding.goneForUserType() {
-            averScore.visibility = View.GONE
-            averRatingBar.visibility = View.GONE
-            seeDetail.visibility = View.GONE
-            textViewNum6.visibility = View.GONE
-            textViewAver.visibility = View.GONE
-            detailScoreLayout.visibility = View.GONE
+        private fun ItemRecyclerEvaluationBinding.lectureVisible() {
+            examVisible()
+            averGroup.visibility = View.VISIBLE
         }
 
-        private fun ItemRecyclerEvaluationBinding.goneLectureNameProf() {
-            lectureName.visibility = View.GONE
-            lectureProfessor.visibility = View.GONE
+        private fun ItemRecyclerEvaluationBinding.userLectureVisible() {
+            userExamVisible()
+            averGroup.visibility = View.VISIBLE
         }
 
-        private fun ItemRecyclerEvaluationBinding.setVisibilityAdditionalInfo() {
-            teamMeeting.visibility = View.VISIBLE
-            textViewMeeting.visibility = View.VISIBLE
-            task.visibility = View.VISIBLE
-            textViewTask.visibility = View.VISIBLE
-            grade.visibility = View.VISIBLE
-            textViewGrade.visibility = View.VISIBLE
+        private fun ItemRecyclerEvaluationBinding.userExamVisible() {
+            yearSemester.visibility = View.VISIBLE
+            editDeleteGroup.visibility = View.VISIBLE
+            nameGroup.visibility = View.VISIBLE
+            content.visibility = View.VISIBLE
+        }
+
+        private fun ItemRecyclerEvaluationBinding.examVisible() {
+            yearSemester.visibility = View.VISIBLE
+            reportBtn.visibility = View.VISIBLE
+            content.visibility = View.VISIBLE
         }
     }
 }

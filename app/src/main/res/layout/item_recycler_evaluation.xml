@@ -17,6 +17,34 @@
         android:background="@drawable/custom_ripple_effect_recyclerview"
         android:padding="10dp">
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/nameGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="lectureName, lectureProfessor"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="10dp" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/averGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="textViewAver, averRatingBar, seeDetail, averScore, textViewNum6"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="10dp" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/editDeleteGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="editBtn, deleteBtn"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="10dp" />
+
+
         <TextView
             android:id="@+id/lectureName"
             android:layout_width="wrap_content"
@@ -29,6 +57,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/yearSemester"
             tools:text="강의 이름" />
@@ -40,6 +69,7 @@
             android:layout_marginStart="8dp"
             android:text="@{evaluationData.professor}"
             android:textColor="@color/black"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/lectureName"
             app:layout_constraintStart_toEndOf="@+id/lectureName"
             tools:text="교수 이름" />
@@ -52,6 +82,7 @@
             android:text="@string/average_index"
             android:textColor="@color/black"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lectureName" />
 
@@ -62,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:rating="@{evaluationData.aver}"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/textViewAver"
             app:layout_constraintStart_toEndOf="@+id/textViewAver"
             app:layout_constraintTop_toTopOf="@+id/textViewAver" />
@@ -72,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/see_detail"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/averScore"
             app:layout_constraintStart_toEndOf="@+id/textViewNum6" />
 
@@ -83,6 +116,7 @@
             android:text="@{evaluationData.floatToStr(evaluationData.aver)}"
             android:textColor="@color/custom_blue"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/averRatingBar"
             app:layout_constraintStart_toEndOf="@+id/averRatingBar"
             tools:text="5" />
@@ -93,6 +127,7 @@
             android:layout_height="wrap_content"
             android:text="@string/slash5"
             android:textSize="12sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/averScore"
             app:layout_constraintStart_toEndOf="@+id/averScore" />
 
@@ -199,7 +234,7 @@
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginTop="4dp"
                 android:text="@string/team_meeting"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="@+id/textViewSatisfaction"
                 app:layout_constraintTop_toBottomOf="@+id/textViewSatisfaction" />
 
@@ -212,7 +247,7 @@
                 android:textColor="@color/custom_blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewMeeting"
                 app:layout_constraintStart_toEndOf="@+id/textViewMeeting"
                 tools:text="없음" />
@@ -222,7 +257,7 @@
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginTop="4dp"
                 android:text="@string/task"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="@+id/textViewHoney"
                 app:layout_constraintTop_toBottomOf="@+id/textViewHoney" />
 
@@ -235,7 +270,7 @@
                 android:textColor="@color/custom_blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewTask"
                 app:layout_constraintStart_toEndOf="@+id/textViewTask"
                 tools:text="많음" />
@@ -245,7 +280,7 @@
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginTop="4dp"
                 android:text="@string/grade"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="@+id/textViewLearning"
                 app:layout_constraintTop_toBottomOf="@+id/textViewLearning" />
 
@@ -258,10 +293,19 @@
                 android:textColor="@color/custom_blue"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewGrade"
                 app:layout_constraintStart_toEndOf="@+id/textViewGrade"
                 tools:text="까다로움" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/etcInfoGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="textViewTask, textViewMeeting, textViewGrade, task, teamMeeting, grade"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="10dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -322,6 +366,7 @@
             android:layout_marginTop="8dp"
             android:text="@{evaluationData.content}"
             android:textColor="@color/black"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailScoreLayout" />
@@ -334,6 +379,7 @@
             android:text="@{evaluationData.yearSemester}"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2020-1" />

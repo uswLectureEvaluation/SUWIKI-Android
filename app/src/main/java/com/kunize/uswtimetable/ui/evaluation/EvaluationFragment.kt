@@ -39,9 +39,9 @@ class EvaluationFragment : Fragment() {
             EvaluationData("더미데이터", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
             EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
             EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
+            EvaluationData("TEN", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
             EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
-            EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교"),
-            EvaluationData("올뎃베이직", "교양대학", 3.2f, 0f, 0f, 0f, "기교")
+            EvaluationData("LAST", "교양대학", 3.2f, 0f, 0f, 0f, "기교")
         )
     }
 
@@ -56,7 +56,7 @@ class EvaluationFragment : Fragment() {
         binding.lifecycleOwner = this
 
         evaluationViewModel.setViewType(LectureItemViewType.SHORT)
-
+        Log.d("viewType","${LectureItemViewType.SHORT}")
         val spinnerTextList = listOf("최근 올라온 강의","꿀 강의","만족도가 높은 강의","배울게 많은 강의","Best 강의")
         val spinnerImageList = listOf(R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
         R.drawable.ic_book_24, R.drawable.ic_best_24)
