@@ -61,4 +61,64 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- Text Styles  -->
+    <style name="TextTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextSubtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextSubtitle1.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextSubtitle1.White.Bold">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextMedium.Purple">
+        <item name="android:textColor">@color/custom_purple</item>
+    </style>
+
+    <style name="TextMedium.Purple.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextSubtitle2.Gray" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/gray_bc</item>
+    </style>
+
+    <style name="TextSubtitle3">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextSubtitle3.Gray">
+        <item name="android:textColor">@color/gray_bc</item>
+    </style>
+
+    <style name="TextCaption1" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextCaption1.Gray" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/gray_bc</item>
+    </style>
+
+    <style name="TextCaption2" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
