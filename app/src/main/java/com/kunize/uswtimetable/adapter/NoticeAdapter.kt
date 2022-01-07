@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemNoticeBinding
 import com.kunize.uswtimetable.dataclass.NoticeData
+import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeAdapter(val onItemClicked: (NoticeData) -> Unit): ListAdapter<NoticeData, NoticeAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemNoticeBinding): RecyclerView.ViewHolder(binding.root) {
@@ -16,6 +18,7 @@ class NoticeAdapter(val onItemClicked: (NoticeData) -> Unit): ListAdapter<Notice
             }
             binding.titleTextView.text = notice.title
             binding.dateTextView.text = notice.date.toString()
+            Log.d(TAG, "ViewHolder - bind(${notice.title}) called")
         }
     }
 

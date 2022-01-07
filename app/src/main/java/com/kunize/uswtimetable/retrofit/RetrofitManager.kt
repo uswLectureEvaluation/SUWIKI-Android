@@ -20,7 +20,7 @@ class RetrofitManager {
 
     fun getMain(completion: (ResponseState, String) -> Unit) {
         val call: Call<JsonElement> = iRetrofit?.getMain() ?: return
-        call.enqueue(object : retrofit2.Callback<JsonElement> {
+        call.enqueue(object : Callback<JsonElement> {
             // 응답 성공
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                 Log.d(TAG, "RetrofitManager - onResponse() called / response: ${response.body().toString()}")
