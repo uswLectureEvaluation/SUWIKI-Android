@@ -33,5 +33,9 @@
             android:name="searchLectureName"
             app:argType="string"
             android:defaultValue='""' />
+        <argument
+            android:name="sortType"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

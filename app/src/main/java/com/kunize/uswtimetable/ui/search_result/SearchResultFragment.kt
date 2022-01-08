@@ -42,25 +42,13 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
     ): View? {
         binding = FragmentSearchResultBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
-        with(binding) {
-            sortBtn = mutableListOf(satisfactionBtn, honeyBtn, learningBtn, dateBtn, totalBtn)
-        }
-
-        //TODO 검색 기능 추가
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
-        val args: SearchResultFragmentArgs by navArgs()
-        val msg = args.searchLectureName
-
         viewModel.setViewType(LectureItemViewType.SHORT)
-
         viewModel.addData(ArrayList(dummyData.subList(0, 10)))
 
         binding.recyclerSearchResult.infiniteScrolls {
             CoroutineScope(Main).launch {
-
                 delay(1000)
                 //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
                 viewModel.deleteLoading()
@@ -70,14 +58,30 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        binding.searchLecture.apply {
-            setText(msg)
-            setSelection(msg.length)
+        val args: SearchResultFragmentArgs by navArgs()
+        var msg = args.searchLectureName
+        val prevSel = args.sortType
+
+        with(binding) {
+            sortBtn = mutableListOf(dateBtn, honeyBtn, satisfactionBtn , learningBtn, totalBtn)
         }
 
         sortBtn.forEach { btn ->
             btn.setOnClickListener(this)
         }
+
+        if(prevSel >= 0) {
+            msg = "tags:ALL"
+            sortBtn[prevSel].performClick()
+        }
+
+        binding.searchLecture.apply {
+            setText(msg)
+            setSelection(msg.length)
+            //TODO 검색 결과에 맞는 데이터 받아온 후, changeData 수행
+        }
+
+        //TODO 검색 기능 추가
 
         return binding.root
     }

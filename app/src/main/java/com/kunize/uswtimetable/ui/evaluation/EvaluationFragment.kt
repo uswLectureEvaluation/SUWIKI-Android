@@ -27,6 +27,7 @@ class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
 
     private lateinit var evaluationViewModel : EvaluationViewModel
+    private var spinnerSel : Int = 0
 
     companion object {
         val dummyData = arrayListOf<EvaluationData?>(
@@ -62,6 +63,9 @@ class EvaluationFragment : Fragment() {
         R.drawable.ic_book_24, R.drawable.ic_best_24)
 
         //TODO 더보기 버튼 클릭 시 "정렬할 기준", "tags:ALL" 데이터를 가지고 프래그먼트 이동
+        binding.moreBtn.setOnClickListener {
+            goToSearchResult(spinnerSel)
+        }
 
         binding.searchBtn.setOnClickListener {
             goToSearchResult()
@@ -90,6 +94,7 @@ class EvaluationFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
+                    spinnerSel = position
                     when(position) {
                         0 -> evaluationViewModel.changeData(dummyData)
                         1 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(1, 4)))
@@ -107,9 +112,9 @@ class EvaluationFragment : Fragment() {
         return binding.root
     }
 
-    private fun goToSearchResult() {
+    private fun goToSearchResult(now : Int = -1) {
         val action =
-            EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(binding.searchLecture.text.toString())
+            EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(binding.searchLecture.text.toString(), now)
         findNavController().navigate(action)
     }
 }
