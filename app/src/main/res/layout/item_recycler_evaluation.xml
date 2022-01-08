@@ -47,16 +47,9 @@
 
         <TextView
             android:id="@+id/lectureName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/lecture_name_middle_style"
             android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:maxEms="10"
-            android:maxLines="1"
             android:text="@{evaluationData.name}"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/yearSemester"
@@ -64,11 +57,9 @@
 
         <TextView
             android:id="@+id/lectureProfessor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/professor_middle_style"
             android:layout_marginStart="8dp"
             android:text="@{evaluationData.professor}"
-            android:textColor="@color/black"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/lectureName"
             app:layout_constraintStart_toEndOf="@+id/lectureName"
@@ -76,12 +67,9 @@
 
         <TextView
             android:id="@+id/textViewAver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/default_black_bold_textview_style"
             android:layout_marginTop="8dp"
             android:text="@string/average_index"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lectureName" />
@@ -89,8 +77,6 @@
         <RatingBar
             android:id="@+id/averRatingBar"
             style="@style/CustomRatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:rating="@{evaluationData.aver}"
             android:visibility="gone"
@@ -110,12 +96,9 @@
 
         <TextView
             android:id="@+id/averScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{evaluationData.floatToStr(evaluationData.aver)}"
-            android:textColor="@color/custom_blue"
-            android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/averRatingBar"
             app:layout_constraintStart_toEndOf="@+id/averRatingBar"
@@ -123,10 +106,7 @@
 
         <TextView
             android:id="@+id/textViewNum6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/slash5"
-            android:textSize="12sp"
+            style="@style/slash5_textview_style"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/averScore"
             app:layout_constraintStart_toEndOf="@+id/averScore" />
@@ -168,64 +148,46 @@
 
             <TextView
                 android:id="@+id/satisfactionScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
                 android:text="@{evaluationData.floatToStr(evaluationData.satisfaction)}"
-                android:textColor="@color/custom_blue"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewSatisfaction"
                 app:layout_constraintStart_toEndOf="@+id/textViewSatisfaction"
                 tools:text="5" />
 
             <TextView
                 android:id="@+id/honeyScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
                 android:text="@{evaluationData.floatToStr(evaluationData.honey)}"
-                android:textColor="@color/custom_blue"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewHoney"
                 app:layout_constraintStart_toEndOf="@+id/textViewHoney"
                 tools:text="5" />
 
             <TextView
                 android:id="@+id/learningScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
                 android:text="@{evaluationData.floatToStr(evaluationData.learning)}"
-                android:textColor="@color/custom_blue"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewLearning"
                 app:layout_constraintStart_toEndOf="@+id/textViewLearning"
                 tools:text="5" />
 
             <TextView
                 android:id="@+id/textViewNum1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/slash5"
-                android:textSize="12sp"
+                style="@style/slash5_textview_style"
                 app:layout_constraintBottom_toBottomOf="@+id/satisfactionScore"
                 app:layout_constraintStart_toEndOf="@+id/satisfactionScore" />
 
             <TextView
                 android:id="@+id/textViewNum2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/slash5"
-                android:textSize="12sp"
+                style="@style/slash5_textview_style"
                 app:layout_constraintBottom_toBottomOf="@+id/honeyScore"
                 app:layout_constraintStart_toEndOf="@+id/honeyScore" />
 
             <TextView
                 android:id="@+id/textViewNum5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/slash5"
-                android:textSize="12sp"
+                style="@style/slash5_textview_style"
                 app:layout_constraintBottom_toBottomOf="@+id/learningScore"
                 app:layout_constraintStart_toEndOf="@+id/learningScore" />
 
@@ -240,13 +202,9 @@
 
             <TextView
                 android:id="@+id/teamMeeting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
                 android:text="@{evaluationData.teamMeeting}"
-                android:textColor="@color/custom_blue"
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewMeeting"
                 app:layout_constraintStart_toEndOf="@+id/textViewMeeting"
@@ -263,13 +221,9 @@
 
             <TextView
                 android:id="@+id/task"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
                 android:text="@{evaluationData.task}"
-                android:textColor="@color/custom_blue"
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewTask"
                 app:layout_constraintStart_toEndOf="@+id/textViewTask"
@@ -286,13 +240,9 @@
 
             <TextView
                 android:id="@+id/grade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
                 android:text="@{evaluationData.grade}"
-                android:textColor="@color/custom_blue"
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewGrade"
                 app:layout_constraintStart_toEndOf="@+id/textViewGrade"
@@ -312,11 +262,8 @@
 
         <TextView
             android:id="@+id/lectureType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounding_background"
+            style="@style/recyclerview_evaluation_rounding_text_style"
             android:text="@{evaluationData.type}"
-            android:textSize="12sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -324,37 +271,27 @@
 
         <TextView
             android:id="@+id/reportBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounding_background"
+            style="@style/recyclerview_evaluation_rounding_text_style"
             android:text="@string/report"
             android:textColor="@color/custom_red"
-            android:textSize="12sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/deleteBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounding_background"
+            style="@style/recyclerview_evaluation_rounding_text_style"
             android:text="@string/delete"
             android:textColor="@color/custom_red"
-            android:textSize="12sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/editBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/recyclerview_evaluation_rounding_text_style"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/rounding_background"
             android:text="@string/edit"
-            android:textColor="@color/custom_blue"
-            android:textSize="12sp"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/deleteBtn"
             app:layout_constraintTop_toTopOf="parent" />
@@ -373,12 +310,9 @@
 
         <TextView
             android:id="@+id/yearSemester"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounding_background"
+            style="@style/recyclerview_evaluation_rounding_text_style"
             android:text="@{evaluationData.yearSemester}"
             android:textColor="@color/black"
-            android:textSize="12sp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

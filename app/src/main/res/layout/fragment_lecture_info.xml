@@ -9,12 +9,5 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.lecture_info.LectureInfoFragment">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        tools:context=".ui.lecture_info.LectureInfoFragment"/>
 </layout>
