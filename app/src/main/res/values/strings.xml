@@ -28,6 +28,10 @@
     <string name="team_meeting">조모임</string>
     <string name="task">과제</string>
     <string name="grade">학점</string>
+    <string name="write_evaluation">강의평가 쓰기</string>
+    <string name="lecture_evaluation">강의 평가</string>
+    <string name="exam_info">시험 정보</string>
+    <string name="write_exam">시험 정보 쓰기</string>
 
     <string name="notice">공지사항</string>
     <string name="send_feedback">피드백 전송</string>

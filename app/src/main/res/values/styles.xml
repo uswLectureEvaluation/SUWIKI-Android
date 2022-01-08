@@ -50,6 +50,14 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="detail_info_bold_textview_style" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="sort_radiobutton_style" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:paddingStart">5dp</item>
         <item name="android:paddingEnd">5dp</item>
@@ -63,6 +71,18 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="radiobutton_text_style" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/selector_radio_text</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="lecture_name_middle_style" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -74,9 +94,29 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="lecture_name_large_style" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxEms">10</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="professor_middle_style" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxEms">6</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="professor_large_style" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxEms">10</item>
         <item name="android:maxLines">1</item>
@@ -97,10 +137,32 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="score_textview_style_large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="slash5_textview_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:text">@string/slash5</item>
+    </style>
+
+    <style name="button_style" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/custom_dark_gray</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="slash5_textview_style_large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:text">@string/slash5</item>
     </style>
 
@@ -109,6 +171,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/rounding_background</item>
+    </style>
+
+    <style name="year_semester_text_style" parent="recyclerview_evaluation_rounding_text_style">
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- Text Styles  -->

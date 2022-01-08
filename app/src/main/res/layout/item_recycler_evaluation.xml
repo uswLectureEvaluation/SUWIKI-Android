@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_effect_recyclerview"
-        android:padding="10dp">
+        android:padding="@dimen/recyclerview_padding">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/nameGroup"
