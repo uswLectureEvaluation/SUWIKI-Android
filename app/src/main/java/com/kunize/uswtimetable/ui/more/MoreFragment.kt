@@ -17,7 +17,10 @@ import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.StartActivity
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
+import com.kunize.uswtimetable.login.FindIdActivity
+import com.kunize.uswtimetable.login.FindPasswordActivity
 import com.kunize.uswtimetable.login.LoginActivity
+import com.kunize.uswtimetable.login.SignInActivity
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 
 class MoreFragment : Fragment() {
@@ -31,6 +34,7 @@ class MoreFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
 
+
         incomplete(requireContext())
         initViews(requireContext())
 
@@ -38,7 +42,7 @@ class MoreFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[MoreViewModel::class.java]
         binding.viewModel = viewModel
 
-        viewModel.loggedIn.observe(viewLifecycleOwner, Observer { isLoggedIn ->
+        viewModel.loggedIn.observe(viewLifecycleOwner, { isLoggedIn ->
             if (isLoggedIn) {
                 loggedIn()
             } else {
@@ -46,7 +50,7 @@ class MoreFragment : Fragment() {
             }
         })
 
-        viewModel.myEvaluationPoint.observe(viewLifecycleOwner, Observer { point ->
+        viewModel.myEvaluationPoint.observe(viewLifecycleOwner,  { point ->
             if (point >= 0) {
                 binding.myEvaluationsPoint.text = "(+$point)"
                 binding.myEvaluationsPoint.setTextColor(Color.RED)
@@ -56,7 +60,7 @@ class MoreFragment : Fragment() {
             }
         })
 
-        viewModel.myExamInfoPoint.observe(viewLifecycleOwner, Observer { point ->
+        viewModel.myExamInfoPoint.observe(viewLifecycleOwner, { point ->
             if (point >= 0) {
                 binding.myExamInformationPoint.text = "(+$point)"
                 binding.myExamInformationPoint.setTextColor(Color.RED)
@@ -66,7 +70,7 @@ class MoreFragment : Fragment() {
             }
         })
 
-        viewModel.openedExamPoint.observe(viewLifecycleOwner, Observer { point ->
+        viewModel.openedExamPoint.observe(viewLifecycleOwner, { point ->
             if (point >= 0) {
                 binding.openedExamPoint.text = "(+$point)"
                 binding.openedExamPoint.setTextColor(Color.RED)
@@ -84,6 +88,40 @@ class MoreFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.toolBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_login -> {
+                    logIn(requireContext())
+                    true
+                }
+                R.id.action_sign_in -> {
+                    signIn(requireContext())
+                    true
+                }
+                R.id.action_find_id -> {
+                    findId(requireContext())
+                    true
+                }
+                R.id.action_find_password -> {
+                    findPw(requireContext())
+                    true
+                }
+                R.id.action_log_out -> {
+                    loggedOut()
+                    true
+                }
+                else -> {
+                    Toast.makeText(requireContext(), "${it.title} : 준비 중입니다", Toast.LENGTH_SHORT)
+                        .show()
+                    false
+                }
+            }
+        }
+    }
+
     private fun loggedIn() {
         binding.beforeLoginLayout.isGone = true
         binding.beforeLoginLayoutWithButton.isGone = true
@@ -92,6 +130,16 @@ class MoreFragment : Fragment() {
         /* Test */
         binding.loginOrLogoutButton.text = "로그 아웃 (테스트)"
 //        viewModel.login()
+
+        setToolbarMenu()
+    }
+
+    private fun setToolbarMenu() {
+        binding.toolBar.menu.clear()
+        if (viewModel.loggedIn.value == false)
+            binding.toolBar.inflateMenu(R.menu.more_menu_before)
+        else
+            binding.toolBar.inflateMenu(R.menu.more_menu_after)
     }
 
     private fun loggedOut() {
@@ -102,13 +150,12 @@ class MoreFragment : Fragment() {
         /* Test */
         binding.loginOrLogoutButton.text = "로그인 (테스트)"
 //        viewModel.logout()
+
+        setToolbarMenu()
     }
 
     private fun incomplete(context: Context) {
         with(binding) {
-            /*noticeButton.setOnClickListener {
-                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
-            }*/
             sendFeedbackButton.setOnClickListener {
                 Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
             }
@@ -144,5 +191,25 @@ class MoreFragment : Fragment() {
                 viewModel?.loginOrOut()
             }
         }
+    }
+
+    private fun signIn(context: Context) {
+        val intent = Intent(context, SignInActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun findId(context: Context) {
+        val intent = Intent(context, FindIdActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun findPw(context: Context) {
+        val intent = Intent(context, FindPasswordActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun logIn(context: Context) {
+        val intent = Intent(context, LoginActivity::class.java)
+        startActivity(intent)
     }
 }
