@@ -18,9 +18,10 @@
 
     <TextView
         android:id="@+id/subtitleTextView"
-        style="@style/subtitle_textview_style"
+        style="@style/Headline6.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/find_id"
-
         app:layout_constraintEnd_toEndOf="@+id/titleTextView"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/titleTextView"
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="@string/find_id"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            style="@style/Headline5.Bold"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/emailLayout"
             app:layout_constraintStart_toStartOf="parent"

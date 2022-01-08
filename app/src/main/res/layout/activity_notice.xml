@@ -22,7 +22,9 @@
 
                 <TextView
                     android:id="@+id/titleTextView"
-                    style="@style/title_textview_style"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    style="@style/TextTitle"
                     android:text="@string/notice" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>

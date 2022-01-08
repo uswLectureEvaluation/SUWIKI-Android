@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="title_textview_style" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:layout_width">wrap_content</item>
@@ -33,7 +34,7 @@
         <item name="android:secondaryProgressTint">@android:color/transparent</item>
     </style>
 
-    <style name="edittext_style" parent="Widget.AppCompat.EditText" >
+    <style name="edittext_style" parent="Widget.AppCompat.EditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
@@ -62,12 +63,49 @@
     </style>
 
     <!-- Text Styles  -->
+    <style name="Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Headline4.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Headline5.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Headline6.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Logo" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:text">@string/app_name</item>
+        <item name="android:textColor">@color/custom_blue</item>
+    </style>
+
     <style name="TextTitle" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextTitle.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextSubtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextSubtitle1.Bold">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextSubtitle1.White">
@@ -77,6 +115,10 @@
     <style name="TextSubtitle1.White.Bold">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextSubtitle1.Gray">
+        <item name="android:textColor">@color/custom_gray</item>
     </style>
 
     <style name="TextMedium" parent="TextAppearance.AppCompat.Medium">
@@ -96,7 +138,7 @@
     </style>
 
     <style name="TextSubtitle2.Gray" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textColor">@color/gray_bc</item>
+        <item name="android:textColor">@color/custom_gray</item>
     </style>
 
     <style name="TextSubtitle3">
@@ -105,7 +147,23 @@
     </style>
 
     <style name="TextSubtitle3.Gray">
-        <item name="android:textColor">@color/gray_bc</item>
+        <item name="android:textColor">@color/custom_gray</item>
+    </style>
+
+    <style name="TextBody1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextBody1.Gray">
+        <item name="android:textColor">@color/custom_dark_gray</item>
+    </style>
+
+    <style name="TextBody2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextBody2.Gray">
+        <item name="android:textColor">@color/custom_gray</item>
     </style>
 
     <style name="TextCaption1" parent="TextAppearance.AppCompat.Caption">
@@ -113,7 +171,7 @@
     </style>
 
     <style name="TextCaption1.Gray" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textColor">@color/gray_bc</item>
+        <item name="android:textColor">@color/custom_gray</item>
     </style>
 
     <style name="TextCaption2" parent="TextAppearance.AppCompat.Caption">
@@ -121,4 +179,15 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextCaption2.Gray">
+        <item name="android:textColor">@color/custom_gray</item>
+    </style>
+
+    <style name="Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Button.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

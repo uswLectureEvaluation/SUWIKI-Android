@@ -16,6 +16,8 @@
         <TextView
             android:id="@+id/titleTextView"
             style="@style/title_textview_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/godom"
             android:text="@string/app_name"
             android:textColor="@color/custom_blue"
@@ -24,7 +26,9 @@
 
         <TextView
             android:id="@id/subTitleTextView"
-            style="@style/subtitle_textview_style"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/sign_in"
             app:layout_constraintEnd_toEndOf="@+id/titleTextView"
             app:layout_constraintHorizontal_bias="0"
@@ -206,11 +210,12 @@
                 android:id="@+id/termsTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:autoLink="none"
+                style="@style/TextCaption1"
                 android:text="동의 및 회원가입을 누르면 SWLE 이용약관 및 개인정보처리방침에 동의하게 됩니다."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/certificationCompleteTextView"
                 app:layout_constraintVertical_bias="1" />

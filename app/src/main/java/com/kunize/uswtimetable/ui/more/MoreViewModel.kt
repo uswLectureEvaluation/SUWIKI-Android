@@ -11,8 +11,8 @@ class MoreViewModel : ViewModel() {
     private var _loggedIn = MutableLiveData<Boolean>()
     val loggedIn: LiveData<Boolean> get() = _loggedIn
 
-    private var _id = MutableLiveData<String>()
-    val id: LiveData<String> get() = _id
+    private var _id = ""
+    val id get() = _id
 
     private var _point = MutableLiveData<Int>()
     val point: LiveData<Int> get() = _point
@@ -47,16 +47,18 @@ class MoreViewModel : ViewModel() {
         _openedExamPoint.value = -40
 
         _point.value = 130
+
+        _id = "pmb0836"
     }
 
     fun login() {
         _loggedIn.value = true
-        _id.value = "pmb0836"
+        _id = "pmb0836"
     }
 
     fun logout() {
         _loggedIn.value = false
-        _id.value = ""
+        _id = ""
     }
 
     fun loginOrOut() {
