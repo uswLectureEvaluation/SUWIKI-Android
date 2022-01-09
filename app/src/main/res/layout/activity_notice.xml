@@ -11,9 +11,11 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:background="@color/white"
+            app:liftOnScroll="true">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -22,9 +24,9 @@
 
                 <TextView
                     android:id="@+id/titleTextView"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     style="@style/TextTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/notice" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
@@ -38,7 +40,6 @@
                 android:id="@+id/noticeRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_corner8_gray"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_notice" />
         </androidx.core.widget.NestedScrollView>

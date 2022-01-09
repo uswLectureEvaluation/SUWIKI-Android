@@ -18,7 +18,8 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolBar"
@@ -105,12 +106,12 @@
                                 android:id="@+id/totalPoint"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
+                                android:autoSizeMaxTextSize="24sp"
+                                android:autoSizeMinTextSize="12sp"
+                                android:autoSizeTextType="uniform"
                                 android:background="@drawable/border_circle"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:autoSizeTextType="uniform"
-                                android:autoSizeMaxTextSize="24sp"
-                                android:autoSizeMinTextSize="12sp"
                                 android:text="@{@string/total_point(viewModel.point)}"
                                 android:textColor="#F00"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -120,8 +121,8 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintWidth_max="100dp"
                                 app:layout_constraintWidth_min="70dp"
-                                tools:text="0 p"
-                                tools:targetApi="o" />
+                                tools:targetApi="o"
+                                tools:text="0 p" />
 
                             <View
                                 android:id="@+id/divider"
@@ -130,8 +131,8 @@
                                 android:background="?android:attr/listDivider"
                                 android:foreground="@color/black"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toLeftOf="@id/pointDetailInfoLayout"
                                 app:layout_constraintLeft_toRightOf="@+id/totalPoint"
+                                app:layout_constraintRight_toLeftOf="@id/pointDetailInfoLayout"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.constraintlayout.widget.ConstraintLayout
