@@ -3,19 +3,15 @@ package com.kunize.uswtimetable.ui.home
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.kakao.adfit.ads.AdListener
 import com.kunize.uswtimetable.*
 import com.kunize.uswtimetable.MainActivity.Companion.bitmapToString
 import com.kunize.uswtimetable.MainActivity.Companion.jsonToArray
@@ -31,8 +27,6 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
 class HomeFragment : Fragment() {
@@ -46,36 +40,50 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        binding.toolBar.inflateMenu(R.menu.home_menu) // AppBar에 메뉴 설정
 
         db = TimeTableListDatabase.getInstance(requireActivity().applicationContext)!!
 
-        binding.settingBtn.setOnClickListener {
-            if (timeTableSel == null) {
-                Toast.makeText(activity, "시간표를 생성해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val intent = Intent(activity, SettingActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.addClass.setOnClickListener {
-            if (timeTableSel == null) {
-                Toast.makeText(activity, "시간표를 생성해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val intent = Intent(activity, AddClassActivity::class.java)
-            startActivity(intent)
-
-        }
-
-        binding.showTimeTableList.setOnClickListener {
-            val intent = Intent(activity, TimeTableListActivity::class.java)
-            startActivity(intent)
-        }
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // AppBar 메뉴 클릭 리스너
+        binding.toolBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_add_class -> {
+                    if (timeTableSel == null) {
+                        Toast.makeText(activity, "시간표를 생성해주세요", Toast.LENGTH_SHORT).show()
+                        false
+                    } else {
+                        val intent = Intent(activity, AddClassActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                }
+                R.id.action_setting -> {
+                    if (timeTableSel == null) {
+                        Toast.makeText(activity, "시간표를 생성해주세요", Toast.LENGTH_SHORT).show()
+                        false
+                    } else {
+                        val intent = Intent(activity, SettingActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                }
+                R.id.action_show_list -> {
+                    val intent = Intent(activity, TimeTableListActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onResume() {
@@ -108,10 +116,14 @@ class HomeFragment : Fragment() {
                 tempTimeData = jsonToArray(jsonStr)
                 withContext(Main) {
                     binding.uswTimeTable.timeTableData = tempTimeData
-                    binding.uswTimeTable.infoFormat = TimeTableSelPref.prefs.getInt("infoFormat",
-                        CLASSNAME_LOCATION)
-                    binding.uswTimeTable.yaxisType = TimeTableSelPref.prefs.getInt("yaxisType",
-                        TIME)
+                    binding.uswTimeTable.infoFormat = TimeTableSelPref.prefs.getInt(
+                        "infoFormat",
+                        CLASSNAME_LOCATION
+                    )
+                    binding.uswTimeTable.yaxisType = TimeTableSelPref.prefs.getInt(
+                        "yaxisType",
+                        TIME
+                    )
                     binding.uswTimeTable.drawTable()
                 }
             }

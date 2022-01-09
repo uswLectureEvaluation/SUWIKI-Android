@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,71 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <ImageView
-        android:id="@+id/addClass"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textTitle"
-        app:layout_constraintDimensionRatio="1.1"
-        app:layout_constraintEnd_toStartOf="@+id/settingBtn"
-        app:layout_constraintTop_toTopOf="@+id/textTitle"
-        app:layout_constraintWidth_percent="0.1"
-        app:layout_optimizationLevel="ratio"
-        app:srcCompat="@drawable/ic_baseline_add_box_24" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/settingBtn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/addClass"
-        app:layout_constraintDimensionRatio="1.1"
-        app:layout_constraintEnd_toStartOf="@+id/showTimeTableList"
-        app:layout_constraintTop_toTopOf="@+id/addClass"
-        app:layout_constraintWidth_percent="0.1"
-        custom:srcCompat="@drawable/ic_baseline_settings_24" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background">
 
-    <ImageView
-        android:id="@+id/showTimeTableList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="20dp"
-        android:rotation="180"
-        app:layout_constraintBottom_toBottomOf="@+id/settingBtn"
-        app:layout_constraintDimensionRatio="1.1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/settingBtn"
-        app:layout_constraintWidth_percent="0.1"
-        app:layout_optimizationLevel="ratio"
-        app:srcCompat="@drawable/ic_baseline_format_list_bulleted_24" />
-
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintDimensionRatio="6.1"
-        app:layout_constraintEnd_toStartOf="@+id/addClass"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_optimizationLevel="ratio"
-        tools:text="시간표1" />
+            <TextView
+                android:id="@+id/textTitle"
+                style="@style/TextTitle.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="시간표1" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle">
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -93,4 +52,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
