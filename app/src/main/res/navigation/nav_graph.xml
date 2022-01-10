@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_navigation_evaluation_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
+        <action
+            android:id="@+id/action_navigation_evaluation_to_lectureInfoFragment"
+            app:destination="@id/lectureInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_more"
@@ -37,5 +40,13 @@
             android:name="sortType"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_searchResultFragment_to_lectureInfoFragment"
+            app:destination="@id/lectureInfoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/lectureInfoFragment"
+        android:name="com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragment"
+        android:label="LectureInfoFragment"
+        tools:layout="@layout/fragment_lecture_info"/>
 </navigation>
