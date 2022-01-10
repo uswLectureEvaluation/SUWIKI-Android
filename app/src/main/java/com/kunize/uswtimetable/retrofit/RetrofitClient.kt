@@ -19,7 +19,7 @@ object RetrofitClient {
         Log.d(TAG, "RetrofitClient - getClient() called")
 
         /* 로깅 인터셉터 추가 */
-        val client = OkHttpClient.Builder() // OKHttp 클라이언트
+        /*val client = OkHttpClient.Builder() // OKHttp 클라이언트
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             Log.d(TAG, "RetrofitClient - log() called / message: $message")
             when {
@@ -36,7 +36,7 @@ object RetrofitClient {
             }
         }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        client.addInterceptor(loggingInterceptor) // OKHttp 클라이언트에 로깅 인터셉트 추가
+        client.addInterceptor(loggingInterceptor) // OKHttp 클라이언트에 로깅 인터셉트 추가*/
 
         val gson: Gson = GsonBuilder()
             .setDateFormat("yyyy/MM/dd a hh시 mm분") // 2021/10/23 오후 11시 37분
