@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.notice
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,14 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.NoticeAdapter
 import com.kunize.uswtimetable.databinding.ActivityNoticeBinding
-import com.kunize.uswtimetable.dataclass.NoticeData
+import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoticeBinding
     private lateinit var adapter: NoticeAdapter
     private lateinit var viewModel: NoticeViewModel
-    private lateinit var noticeList: List<NoticeData>
+    private var noticeList = listOf<NoticeDto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,19 +29,23 @@ class NoticeActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[NoticeViewModel::class.java]
         // TODO 실제에는 dumpData가 아닌 noticeList로 대체
-//        noticeList = viewModel.noticeList
-        noticeList = viewModel.dumpData
 
         initRecyclerView()
-        Log.d(TAG, "NoticeActivity - noticeList: $noticeList")
+        viewModel.noticeList.observe(this) {
+            noticeList = it
+            adapter.submitList(noticeList)
+        }
+//        noticeList = viewModel.dumpData
+
     }
 
     private fun initRecyclerView() {
         adapter = NoticeAdapter(onItemClicked = { notice ->
             Log.d(TAG, "NoticeActivity - ${notice.title} clicked")
-            viewModel.getNotice(notice.id)
+//            viewModel.getNotice(notice.id)
         })
-        adapter.submitList(noticeList) // 리사이클러뷰에 공지 목록 추가
+        //adapter.submitList(noticeList) // 리사이클러뷰에 공지 목록 추가
+        Log.d(TAG, "NoticeActivity - submitList(noticeList) -> $noticeList")
 
         val decorator = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         binding.noticeRecyclerView.adapter = adapter

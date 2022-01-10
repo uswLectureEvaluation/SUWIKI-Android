@@ -1,24 +1,21 @@
 package com.kunize.uswtimetable.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemNoticeBinding
-import com.kunize.uswtimetable.dataclass.NoticeData
-import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.dataclass.NoticeDto
 
-class NoticeAdapter(val onItemClicked: (NoticeData) -> Unit): ListAdapter<NoticeData, NoticeAdapter.ViewHolder>(diffUtil) {
+class NoticeAdapter(val onItemClicked: (NoticeDto) -> Unit): ListAdapter<NoticeDto, NoticeAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemNoticeBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(notice: NoticeData) {
+        fun bind(notice: NoticeDto) {
             binding.root.setOnClickListener {
                 onItemClicked(notice)
             }
             binding.titleTextView.text = notice.title
             binding.dateTextView.text = notice.date.toString()
-            Log.d(TAG, "ViewHolder - bind(${notice.title}) called")
         }
     }
 
@@ -31,12 +28,12 @@ class NoticeAdapter(val onItemClicked: (NoticeData) -> Unit): ListAdapter<Notice
     }
 
     companion object {
-        val diffUtil = object: DiffUtil.ItemCallback<NoticeData>() {
-            override fun areItemsTheSame(oldItem: NoticeData, newItem: NoticeData): Boolean {
+        val diffUtil = object: DiffUtil.ItemCallback<NoticeDto>() {
+            override fun areItemsTheSame(oldItem: NoticeDto, newItem: NoticeDto): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: NoticeData, newItem: NoticeData): Boolean {
+            override fun areContentsTheSame(oldItem: NoticeDto, newItem: NoticeDto): Boolean {
                 return oldItem.id == newItem.id
             }
         }
