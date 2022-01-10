@@ -1,10 +1,7 @@
 package com.kunize.uswtimetable.retrofit
 
 import com.google.gson.JsonElement
-import com.kunize.uswtimetable.dataclass.EmailData
-import com.kunize.uswtimetable.dataclass.IdData
-import com.kunize.uswtimetable.dataclass.SignUpFormat
-import com.kunize.uswtimetable.dataclass.SignUpSchoolCheckFormat
+import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.LECTURE
 import com.kunize.uswtimetable.util.API.MY_PAGE
@@ -26,11 +23,11 @@ interface IRetrofit {
 
     // 공지사항 리스트 API
     @GET(NOTICE)
-    fun getNoticeList(): Call<JsonElement>
+    fun getNoticeList(): Call<List<NoticeDto>>
 
     // 공지사항 API
     @GET(NOTICE)
-    fun getNotice(@Query("notice_id") noticeId: Int): Call<JsonElement>
+    fun getNotice(@Query("notice_id") noticeId: Int): Call<NoticeDto>
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @GET(PASSWORD)
