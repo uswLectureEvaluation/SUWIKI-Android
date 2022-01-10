@@ -11,11 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.StartActivity
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
 import com.kunize.uswtimetable.login.FindIdActivity
 import com.kunize.uswtimetable.login.FindPasswordActivity
@@ -110,7 +108,7 @@ class MoreFragment : Fragment() {
                     true
                 }
                 R.id.action_log_out -> {
-                    loggedOut()
+                    viewModel.toggleLogin()
                     true
                 }
                 else -> {
@@ -129,7 +127,6 @@ class MoreFragment : Fragment() {
 
         /* Test */
         binding.loginOrLogoutButton.text = "로그 아웃 (테스트)"
-//        viewModel.login()
 
         setToolbarMenu()
     }
@@ -149,7 +146,6 @@ class MoreFragment : Fragment() {
 
         /* Test */
         binding.loginOrLogoutButton.text = "로그인 (테스트)"
-//        viewModel.logout()
 
         setToolbarMenu()
     }
@@ -188,7 +184,7 @@ class MoreFragment : Fragment() {
                 startActivity(intent)
             }
             loginOrLogoutButton.setOnClickListener {
-                viewModel?.loginOrOut()
+                viewModel?.toggleLogin()
             }
         }
     }

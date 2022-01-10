@@ -1,11 +1,8 @@
 package com.kunize.uswtimetable.ui.more
 
-import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.StartActivity
-import com.kunize.uswtimetable.login.LoginActivity
 
 class MoreViewModel : ViewModel() {
     private var _loggedIn = MutableLiveData<Boolean>()
@@ -61,7 +58,7 @@ class MoreViewModel : ViewModel() {
         _id = ""
     }
 
-    fun loginOrOut() {
+    fun toggleLogin() {
         _loggedIn.value = _loggedIn.value?.not()
     }
 }
