@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,14 +51,14 @@ class EvaluationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEvaluationBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation ,container, false)
 
         evaluationViewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
 
         evaluationViewModel.setViewType(LectureItemViewType.SHORT)
-        Log.d("viewType","${LectureItemViewType.SHORT}")
+
         val spinnerTextList = listOf("최근 올라온 강의","꿀 강의","만족도가 높은 강의","배울게 많은 강의","Best 강의")
         val spinnerImageList = listOf(R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
         R.drawable.ic_book_24, R.drawable.ic_best_24)
@@ -70,6 +71,7 @@ class EvaluationFragment : Fragment() {
         binding.searchBtn.setOnClickListener {
             goToSearchResult()
         }
+
 
         //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
         binding.searchLecture.setOnEditorActionListener { _, it, _ ->

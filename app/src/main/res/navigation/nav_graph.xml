@@ -48,5 +48,14 @@
         android:id="@+id/lectureInfoFragment"
         android:name="com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragment"
         android:label="LectureInfoFragment"
-        tools:layout="@layout/fragment_lecture_info"/>
+        tools:layout="@layout/fragment_lecture_info">
+        <argument
+            android:name="lectureName"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="professor"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment><action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment"/>
 </navigation>

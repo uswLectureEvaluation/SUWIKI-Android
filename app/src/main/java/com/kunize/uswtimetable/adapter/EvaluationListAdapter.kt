@@ -52,8 +52,15 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = evaluationListData.size
 
     inner class LoadingHolder(private val binding: ItemRecyclerProgressBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root)
 
+    //Callback
+    interface OnItemClickListener{
+        fun onItemClick(v : View, lectureName : String, professor : String)
+    }
+    private var listener : OnItemClickListener? = null
+    fun setOnItemClickListener(listener : OnItemClickListener) {
+        this.listener = listener
     }
 
     inner class Holder(private val binding: ItemRecyclerEvaluationBinding) :
@@ -65,7 +72,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 Log.d("viewType", "$viewType")
                 when (viewType) {
                     //강의평가 목록
-                    LectureItemViewType.SHORT -> shortVisible()
+                    LectureItemViewType.SHORT -> shortVisible(data)
                     //내가 쓴 강의평가
                     LectureItemViewType.USERLECTURE -> userLectureVisible()
                     //내가 쓴 시험 정보
@@ -77,6 +84,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
 
                 evaluationData = data
+
                 seeDetail.setOnClickListener {
                     if (detailScoreLayout.isVisible) {
                         seeDetail.setText(R.string.see_detail)
@@ -86,17 +94,24 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         detailScoreLayout.visibility = View.VISIBLE
                     }
                 }
+
                 executePendingBindings()
             }
         }
 
-        private fun ItemRecyclerEvaluationBinding.shortVisible() {
+        private fun ItemRecyclerEvaluationBinding.shortVisible(data: EvaluationData) {
             nameGroup.visibility = View.VISIBLE
             averGroup.visibility = View.VISIBLE
             lectureType.visibility = View.VISIBLE
             etcInfoGroup.visibility = View.GONE
             itemLayout.isFocusable = true
             itemLayout.isClickable = true
+            //Callback
+            val pos = adapterPosition
+            if(pos!=RecyclerView.NO_POSITION)
+                itemView.setOnClickListener{
+                    listener?.onItemClick(itemView, data.name, data.professor)
+                }
         }
 
         private fun ItemRecyclerEvaluationBinding.lectureVisible() {

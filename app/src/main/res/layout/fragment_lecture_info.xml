@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="lectureInfoViewModel"
+            type="com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -314,6 +317,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        app:evaluationList="@{lectureInfoViewModel.evaluationList}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:viewType="@{lectureInfoViewModel.viewType}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/menuLayout" />
