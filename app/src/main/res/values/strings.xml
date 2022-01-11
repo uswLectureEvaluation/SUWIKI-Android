@@ -60,6 +60,9 @@
     <string name="need_login">로그인이 필요합니다</string>
     <string name="school_domain">\@suwon.ac.kr</string>
     <string name="go_to_mail_homepage"><u>학교 메일 홈페이지로 이동</u></string>
+    <string name="invalid_id">아이디가 올바르지 않습니다</string>
+    <string name="invalid_pw">비밀번호가 올바르지 않습니다</string>
+    <string name="login_fail">로그인 실패</string>
 
     <!-- Data binding -->
     <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
@@ -71,5 +74,6 @@
     <string name="timtable_list">시간표 목록</string>
     <string name="logout">로그아웃</string>
     <string name="withdrawal">회원 탈퇴</string>
+    <string name="welcome">반갑습니다!</string>
 
 </resources>

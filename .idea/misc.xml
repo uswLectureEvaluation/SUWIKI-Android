@@ -48,6 +48,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/item_recycler_evaluation.xml" value="0.30434782608695654" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/item_recycler_timetable.xml" value="0.30434782608695654" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/sample_page_indicator_view.xml" value="0.17481884057971014" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/usw_timetable.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/bottom_nav_menu.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/home_menu.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/more_menu.xml" value="0.37447916666666664" />
@@ -64,7 +65,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.281008749356665" />
+        <option name="scale" value="0.1" />
       </ProjectState>
     </option>
   </component>
