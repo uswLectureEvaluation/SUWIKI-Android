@@ -43,7 +43,7 @@
     <string name="opensource_licence">오픈소스 라이선스</string>
     <string name="see_detail"><u>자세히 보기></u></string>
     <string name="average_index">평균 지수</string>
-    <string name="see_short"><u>간략하게 보기></u></string>
+    <string name="see_short"><u>간략히 보기></u></string>
 
     <!-- Login & Sign in -->
     <string name="login">로그인</string>
@@ -68,5 +68,7 @@
     <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
     <string name="opened_exam_count">시험 정보 열람 : %d개</string>
     <string name="total_point">%d P</string>
+
+    <string name="floatToStr">%.1f</string>
 
 </resources>

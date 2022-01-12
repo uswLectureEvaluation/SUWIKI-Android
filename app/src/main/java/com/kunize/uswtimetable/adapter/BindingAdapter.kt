@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.dataclass.EvaluationData
 
-object RecyclerViewBindingAdapter {
+object BindingAdapter {
     @BindingAdapter("evaluationList","viewType")
     @JvmStatic
     fun setList(recyclerView: RecyclerView, items : java.util.ArrayList<EvaluationData?>, viewType: Int) {

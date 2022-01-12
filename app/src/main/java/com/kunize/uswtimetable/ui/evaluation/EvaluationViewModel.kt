@@ -43,7 +43,6 @@ open class EvaluationViewModel : ViewModel() {
         dataList.add(null)
         _evaluationList.value!!.addAll(dataList)
         _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
-        Log.d("Scroll","데이터 추가 ${_evaluationList.value?.size}")
     }
 
     fun deleteLoading() {

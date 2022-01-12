@@ -13,6 +13,4 @@ data class EvaluationData (
     var task: String = "", //과제
     var grade: String = "", //학점
     var content: String = "내용이 없습니다." //내용
-) {
-    fun floatToStr(f: Float) = f.toString()
-}
+)

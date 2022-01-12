@@ -57,65 +57,19 @@
                         style="@style/recyclerview_evaluation_rounding_text_style"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="이수" />
+                        tools:text="@{lectureInfoViewModel.lectureType}" />
 
                     <com.google.android.flexbox.FlexboxLayout
                         android:id="@+id/yearSemesterLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:yearSemesterList="@{lectureInfoViewModel.yearSemesterList}"
                         app:alignContent="stretch"
                         app:alignItems="stretch"
                         app:flexWrap="wrap"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/infoLectureName">
-
-                        <TextView
-                            android:id="@+id/yearSemester1"
-                            style="@style/year_semester_text_style"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            tools:text="2021-2" />
-
-                        <TextView
-                            android:id="@+id/yearSemester2"
-                            style="@style/year_semester_text_style"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            tools:text="2021-1" />
-
-                        <TextView
-                            android:id="@+id/yearSemester3"
-                            style="@style/year_semester_text_style"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            tools:text="2019-1" />
-
-                        <TextView
-                            android:id="@+id/yearSemester4"
-                            style="@style/year_semester_text_style"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            tools:text="2019-1"
-                            tools:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/yearSemester5"
-                            style="@style/year_semester_text_style"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            tools:text="2019-1"
-                            tools:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/yearSemester6"
-                            style="@style/year_semester_text_style"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            tools:text="2019-1"
-                            tools:visibility="gone" />
-
-                    </com.google.android.flexbox.FlexboxLayout>
+                        app:layout_constraintTop_toBottomOf="@id/infoLectureName"/>
 
                     <TextView
                         android:id="@+id/infoHoneyTextView"
@@ -148,6 +102,7 @@
                         android:textColor="@color/custom_yellow"
                         app:layout_constraintBottom_toBottomOf="@id/infoHoneyTextView"
                         app:layout_constraintStart_toEndOf="@id/infoHoneyTextView"
+                        android:text="@{@string/floatToStr(lectureInfoViewModel.infoHoneyScore)}"
                         tools:text="4.2" />
 
                     <TextView
@@ -164,6 +119,7 @@
                         android:textColor="@color/custom_red"
                         app:layout_constraintBottom_toBottomOf="@id/infoLearningTextView"
                         app:layout_constraintStart_toEndOf="@id/infoLearningTextView"
+                        android:text="@{@string/floatToStr(lectureInfoViewModel.infoLearningScore)}"
                         tools:text="4.5" />
 
                     <TextView
@@ -179,6 +135,7 @@
                         android:textColor="@color/custom_blue"
                         app:layout_constraintBottom_toBottomOf="@+id/infoSatisfactionTextView"
                         app:layout_constraintStart_toStartOf="@id/infoLearningScore"
+                        android:text="@{@string/floatToStr(lectureInfoViewModel.infoSatisfactionScore)}"
                         tools:text="4.5" />
 
                     <TextView
@@ -222,6 +179,7 @@
                         android:textColor="@color/custom_gray"
                         app:layout_constraintBottom_toBottomOf="@id/infoMeetingTextView"
                         app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
+                        app:customText="@{lectureInfoViewModel.infoMeeting}"
                         tools:text="없음" />
 
                     <TextView
@@ -231,6 +189,7 @@
                         android:textColor="@color/custom_red"
                         app:layout_constraintBottom_toBottomOf="@id/infoTaskTextView"
                         app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
+                        app:customText="@{lectureInfoViewModel.infoTask}"
                         tools:text="많음" />
 
                     <TextView
@@ -240,6 +199,7 @@
                         android:textColor="@color/custom_red"
                         app:layout_constraintBottom_toBottomOf="@id/infoGradeTextView"
                         app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
+                        app:customText="@{lectureInfoViewModel.infoGrade}"
                         tools:text="까다로움" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -249,6 +209,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_baseline_create_24"
                         android:text="@string/write_evaluation"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/yearSemesterLayout" />
@@ -285,7 +246,7 @@
                             android:layout_height="36dp"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
-                            android:text="@string/write_exam"
+                            android:text="@string/write_evaluation"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 

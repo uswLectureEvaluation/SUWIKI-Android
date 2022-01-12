@@ -98,7 +98,7 @@
             android:id="@+id/averScore"
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
-            android:text="@{evaluationData.floatToStr(evaluationData.aver)}"
+            android:text="@{@string/floatToStr(evaluationData.aver)}"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/averRatingBar"
             app:layout_constraintStart_toEndOf="@+id/averRatingBar"
@@ -150,7 +150,7 @@
                 android:id="@+id/satisfactionScore"
                 style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
-                android:text="@{evaluationData.floatToStr(evaluationData.satisfaction)}"
+                android:text="@{@string/floatToStr(evaluationData.satisfaction)}"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewSatisfaction"
                 app:layout_constraintStart_toEndOf="@+id/textViewSatisfaction"
                 tools:text="5" />
@@ -159,7 +159,7 @@
                 android:id="@+id/honeyScore"
                 style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
-                android:text="@{evaluationData.floatToStr(evaluationData.honey)}"
+                android:text="@{@string/floatToStr(evaluationData.honey)}"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewHoney"
                 app:layout_constraintStart_toEndOf="@+id/textViewHoney"
                 tools:text="5" />
@@ -168,7 +168,7 @@
                 android:id="@+id/learningScore"
                 style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
-                android:text="@{evaluationData.floatToStr(evaluationData.learning)}"
+                android:text="@{@string/floatToStr(evaluationData.learning)}"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewLearning"
                 app:layout_constraintStart_toEndOf="@+id/textViewLearning"
                 tools:text="5" />
