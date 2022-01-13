@@ -5,6 +5,8 @@ import com.kunize.uswtimetable.util.Constants.TOKEN
 object Constants {
     const val TAG = "로그"
     const val TOKEN = "token"
+    const val ID_COUNT_LIMIT = 20
+    const val PW_COUNT_LIMIT = 24
 }
 
 enum class PasswordAgain {
@@ -14,7 +16,7 @@ enum class PasswordAgain {
 }
 
 object API {
-    const val BASE_URL: String = "https://api.1000ma.kr"
+    const val BASE_URL: String = "https://61dc5273591c3a0017e1a86b.mockapi.io"
     const val NOTICE: String = "/notices"
     const val LECTURE: String = "/lecture"
     const val EXAM: String = "/lecture/exam"

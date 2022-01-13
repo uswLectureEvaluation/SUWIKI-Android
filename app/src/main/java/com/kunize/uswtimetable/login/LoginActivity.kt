@@ -15,8 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityLoginBinding
 import com.kunize.uswtimetable.dataclass.LoggedInUserView
-import com.kunize.uswtimetable.ui.evaluation.PreferenceManager
+import com.kunize.uswtimetable.signup.SignUpActivity
 import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.lang.ClassCastException
 
@@ -81,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initViews(context: Context) {
         with(binding) {
             signInButton.setOnClickListener {
-                startActivity(Intent(context, SignInActivity::class.java))
+                startActivity(Intent(context, SignUpActivity::class.java))
             }
             findIdButton.setOnClickListener {
                 startActivity(Intent(context, FindIdActivity::class.java))

@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.evaluation
+package com.kunize.uswtimetable.util
 
 import android.content.Context
 import android.content.SharedPreferences
