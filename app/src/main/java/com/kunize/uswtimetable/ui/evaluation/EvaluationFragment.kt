@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,7 @@ class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
 
     private lateinit var evaluationViewModel : EvaluationViewModel
+    private var spinnerSel : Int = 0
 
     companion object {
         val dummyData = arrayListOf<EvaluationData?>(
@@ -49,23 +51,27 @@ class EvaluationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEvaluationBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation ,container, false)
 
         evaluationViewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
 
         evaluationViewModel.setViewType(LectureItemViewType.SHORT)
-        Log.d("viewType","${LectureItemViewType.SHORT}")
+
         val spinnerTextList = listOf("최근 올라온 강의","꿀 강의","만족도가 높은 강의","배울게 많은 강의","Best 강의")
         val spinnerImageList = listOf(R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
         R.drawable.ic_book_24, R.drawable.ic_best_24)
 
         //TODO 더보기 버튼 클릭 시 "정렬할 기준", "tags:ALL" 데이터를 가지고 프래그먼트 이동
+        binding.moreBtn.setOnClickListener {
+            goToSearchResult(spinnerSel)
+        }
 
         binding.searchBtn.setOnClickListener {
             goToSearchResult()
         }
+
 
         //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
         binding.searchLecture.setOnEditorActionListener { _, it, _ ->
@@ -90,6 +96,7 @@ class EvaluationFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
+                    spinnerSel = position
                     when(position) {
                         0 -> evaluationViewModel.changeData(dummyData)
                         1 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(1, 4)))
@@ -107,9 +114,9 @@ class EvaluationFragment : Fragment() {
         return binding.root
     }
 
-    private fun goToSearchResult() {
+    private fun goToSearchResult(now : Int = -1) {
         val action =
-            EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(binding.searchLecture.text.toString())
+            EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(binding.searchLecture.text.toString(), now)
         findNavController().navigate(action)
     }
 }

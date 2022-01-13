@@ -97,9 +97,9 @@
             app:layout_constraintTop_toTopOf="@id/textView31">
 
             <RadioButton
-                android:id="@+id/satisfactionBtn"
+                android:id="@+id/dateBtn"
                 style="@style/sort_radiobutton_style"
-                android:text="@string/satisfaction" />
+                android:text="@string/date" />
 
             <RadioButton
                 android:id="@+id/honeyBtn"
@@ -107,14 +107,14 @@
                 android:text="@string/honey" />
 
             <RadioButton
+                android:id="@+id/satisfactionBtn"
+                style="@style/sort_radiobutton_style"
+                android:text="@string/satisfaction" />
+
+            <RadioButton
                 android:id="@+id/learningBtn"
                 style="@style/sort_radiobutton_style"
                 android:text="@string/learning" />
-
-            <RadioButton
-                android:id="@+id/dateBtn"
-                style="@style/sort_radiobutton_style"
-                android:text="@string/date" />
 
             <RadioButton
                 android:id="@+id/totalBtn"

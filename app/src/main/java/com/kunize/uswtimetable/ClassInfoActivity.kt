@@ -98,7 +98,6 @@ class ClassInfoActivity : AppCompatActivity() {
         setVisibilityTime3(View.GONE)
 
         binding.finishButton.setOnClickListener {
-            Log.d("jsonTest", "클릭됨")
             val inputClassName = binding.editClassName.text.toString()
             val inputProfessor = binding.editProfessorName.text.toString()
             CoroutineScope(IO).launch {

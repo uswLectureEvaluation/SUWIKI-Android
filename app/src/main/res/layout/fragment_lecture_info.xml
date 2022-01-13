@@ -1,20 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="lectureInfoViewModel"
+            type="com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/infoScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
+        android:padding="@dimen/page_padding"
         tools:context=".ui.lecture_info.LectureInfoFragment">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello" />
+            android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/totalInfoCard"
+                style="@style/cardview_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/cardview_short_padding">
+
+
+                    <TextView
+                        android:id="@+id/infoLectureName"
+                        style="@style/lecture_name_large_style"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="강의 이름" />
+
+                    <TextView
+                        android:id="@+id/infoProfessorName"
+                        style="@style/professor_large_style"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/infoLectureName"
+                        app:layout_constraintStart_toEndOf="@+id/infoLectureName"
+                        tools:text="교수명" />
+
+                    <TextView
+                        android:id="@+id/infoEvaluationType"
+                        style="@style/recyclerview_evaluation_rounding_text_style"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@{lectureInfoViewModel.lectureType}" />
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/yearSemesterLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:alignContent="stretch"
+                        app:alignItems="stretch"
+                        app:flexWrap="wrap"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/infoLectureName"
+                        app:yearSemesterList="@{lectureInfoViewModel.yearSemesterList}" />
+
+                    <TextView
+                        android:id="@+id/infoHoneyTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/honey_score"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/yearSemesterLayout" />
+
+                    <TextView
+                        android:id="@+id/infoLearningTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/learning_score"
+                        app:layout_constraintStart_toStartOf="@id/infoHoneyTextView"
+                        app:layout_constraintTop_toBottomOf="@id/infoHoneyTextView" />
+
+                    <TextView
+                        android:id="@+id/infoSatisfactionTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/satisfaction"
+                        app:layout_constraintStart_toStartOf="@id/infoLearningTextView"
+                        app:layout_constraintTop_toBottomOf="@id/infoLearningTextView" />
+
+                    <TextView
+                        android:id="@+id/infoHoneyScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_marginStart="8dp"
+                        android:text="@{@string/floatToStr(lectureInfoViewModel.infoHoneyScore)}"
+                        android:textColor="@color/custom_yellow"
+                        app:layout_constraintBottom_toBottomOf="@id/infoHoneyTextView"
+                        app:layout_constraintStart_toEndOf="@id/infoHoneyTextView"
+                        tools:text="4.2" />
+
+                    <TextView
+                        android:id="@+id/slash1"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@id/infoHoneyScore"
+                        app:layout_constraintStart_toEndOf="@id/infoHoneyScore" />
+
+                    <TextView
+                        android:id="@+id/infoLearningScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_marginStart="8dp"
+                        android:text="@{@string/floatToStr(lectureInfoViewModel.infoLearningScore)}"
+                        android:textColor="@color/custom_red"
+                        app:layout_constraintBottom_toBottomOf="@id/infoLearningTextView"
+                        app:layout_constraintStart_toEndOf="@id/infoLearningTextView"
+                        tools:text="4.5" />
+
+                    <TextView
+                        android:id="@+id/slash2"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@id/infoLearningScore"
+                        app:layout_constraintStart_toEndOf="@id/infoLearningScore" />
+
+                    <TextView
+                        android:id="@+id/infoSatisfactionScore"
+                        style="@style/score_textview_style_large"
+                        android:text="@{@string/floatToStr(lectureInfoViewModel.infoSatisfactionScore)}"
+                        android:textColor="@color/custom_blue"
+                        app:layout_constraintBottom_toBottomOf="@+id/infoSatisfactionTextView"
+                        app:layout_constraintStart_toStartOf="@id/infoLearningScore"
+                        tools:text="4.5" />
+
+                    <TextView
+                        android:id="@+id/slash3"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@id/infoSatisfactionScore"
+                        app:layout_constraintStart_toEndOf="@id/infoSatisfactionScore" />
+
+                    <TextView
+                        android:id="@+id/infoMeetingTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/team_meeting"
+                        app:layout_constraintStart_toEndOf="@id/slash1"
+                        app:layout_constraintTop_toBottomOf="@id/yearSemesterLayout" />
+
+                    <TextView
+                        android:id="@+id/infoTaskTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/task"
+                        app:layout_constraintStart_toEndOf="@id/slash2"
+                        app:layout_constraintTop_toBottomOf="@id/infoMeetingTextView" />
+
+                    <TextView
+                        android:id="@+id/infoGradeTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/grade"
+                        app:layout_constraintStart_toEndOf="@id/slash3"
+                        app:layout_constraintTop_toBottomOf="@id/infoTaskTextView" />
+
+                    <TextView
+                        android:id="@+id/infoMeeting"
+                        style="@style/score_textview_style_large"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/custom_gray"
+                        app:customText="@{lectureInfoViewModel.infoMeeting}"
+                        app:layout_constraintBottom_toBottomOf="@id/infoMeetingTextView"
+                        app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
+                        tools:text="없음" />
+
+                    <TextView
+                        android:id="@+id/infoTask"
+                        style="@style/score_textview_style_large"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/custom_red"
+                        app:customText="@{lectureInfoViewModel.infoTask}"
+                        app:layout_constraintBottom_toBottomOf="@id/infoTaskTextView"
+                        app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
+                        tools:text="많음" />
+
+                    <TextView
+                        android:id="@+id/infoGrade"
+                        style="@style/score_textview_style_large"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/custom_red"
+                        app:customText="@{lectureInfoViewModel.infoGrade}"
+                        app:layout_constraintBottom_toBottomOf="@id/infoGradeTextView"
+                        app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
+                        tools:text="까다로움" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                style="@style/cardview_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalInfoCard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/cardview_short_padding">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/menuLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edge_bottom"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/writeBtn"
+                            style="@style/button_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="@{lectureInfoViewModel.writeBtnText}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <RadioButton
+                                android:id="@+id/lectureEvaluationRadioBtn"
+                                style="@style/radiobutton_text_style"
+                                android:checked="true"
+                                android:text="@string/lecture_evaluation"
+                                android:onClick="@{() -> lectureInfoViewModel.onEvaluationRadioBtnClick()}"/>
+
+                            <RadioButton
+                                android:id="@+id/examInfoRadioBtn"
+                                style="@style/radiobutton_text_style"
+                                android:text="@string/exam_info"
+                                android:onClick="@{() -> lectureInfoViewModel.onExamRadioBtnClick()}"/>
+
+                        </RadioGroup>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <FrameLayout
+                        android:id="@+id/lectureInfoContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:inflateType="@{lectureInfoViewModel.inflateType}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/menuLayout">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/infoRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:evaluationList="@{lectureInfoViewModel.evaluationList}"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:viewType="@{lectureInfoViewModel.viewType}" />
+                    </FrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

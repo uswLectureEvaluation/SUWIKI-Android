@@ -104,8 +104,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:evaluationList="@{viewModel.evaluationList}"
-                    app:viewType="@{viewModel.viewType}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:viewType="@{viewModel.viewType}" />
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
