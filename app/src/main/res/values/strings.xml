@@ -30,6 +30,11 @@
     <string name="grade">학점</string>
     <string name="add">추가</string>
     <string name="complete">완료</string>
+    <string name="write_evaluation">강의평가 쓰기</string>
+    <string name="lecture_evaluation">강의 평가</string>
+    <string name="exam_info">시험 정보</string>
+    <string name="write_exam">시험 정보 쓰기</string>
+    <string name="use_point">포인트 사용</string>
 
     <string name="notice">공지사항</string>
     <string name="send_feedback">피드백 전송</string>
@@ -41,7 +46,11 @@
     <string name="opensource_licence">오픈소스 라이선스</string>
     <string name="see_detail"><u>자세히 보기></u></string>
     <string name="average_index">평균 지수</string>
-    <string name="see_short"><u>간략하게 보기></u></string>
+    <string name="see_short"><u>간략히 보기></u></string>
+    <string name="no_exam_info">등록된 시험정보가 없어요</string>
+    <string name="show_exam_info">시험 정보를 보려면</string>
+    <string name="exam_point">20 POINT</string>
+    <string name="need">가 필요해요</string>
 
     <!-- Login & Sign in -->
     <string name="login">로그인</string>
@@ -71,5 +80,7 @@
     <string name="timtable_list">시간표 목록</string>
     <string name="logout">로그아웃</string>
     <string name="withdrawal">회원 탈퇴</string>
+
+    <string name="floatToStr">%.1f</string>
 
 </resources>

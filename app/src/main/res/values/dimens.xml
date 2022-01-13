@@ -15,6 +15,8 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="cardview_title_size">16sp</dimen>
     <dimen name="cardview_elevation">2dp</dimen>
     <dimen name="cardview_padding">16dp</dimen>
+    <dimen name="cardview_short_padding">8dp</dimen>
+    <dimen name="recyclerview_padding">10dp</dimen>
 
     <!-- Page (Activity / Fragment) -->
     <dimen name="page_title_size">32sp</dimen>
