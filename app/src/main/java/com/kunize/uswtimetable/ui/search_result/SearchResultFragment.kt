@@ -48,7 +48,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         viewModel.setViewType(LectureItemViewType.SHORT)
         viewModel.addData(ArrayList(dummyData.subList(0, 10)))
 
-        binding.recyclerSearchResult.infiniteScrolls {
+        binding.searchResultScroll.infiniteScrolls {
             CoroutineScope(Main).launch {
                 delay(1000)
                 //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거

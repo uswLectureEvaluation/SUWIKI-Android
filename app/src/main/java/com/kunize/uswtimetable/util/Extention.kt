@@ -1,9 +1,14 @@
 package com.kunize.uswtimetable.util
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.DisplayMetrics
 import android.util.Log
+import android.view.WindowManager
 import android.widget.EditText
+import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

@@ -10,139 +10,169 @@
             type="com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/page_padding"
         tools:context=".ui.search_result.SearchResultFragment">
 
-
-        <TextView
-            android:id="@+id/textView29"
-            style="@style/title_textview_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/search_result"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            style="@style/cardview_style"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/searchResultAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView29">
+            app:liftOnScroll="true">
+
+            <androidx.appcompat.widget.Toolbar
+                style="@style/scroll_enter_always_toolbar_style">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/page_padding">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView"
+                        style="@style/cardview_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/textView29"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/search_result_bar">
+
+                            <EditText
+                                android:id="@+id/searchLecture"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:ellipsize="end"
+                                android:ems="10"
+                                android:hint="@string/search_evaluation_hint"
+                                android:imeActionLabel="검색"
+                                android:imeOptions="actionSearch"
+                                android:inputType="text"
+                                android:padding="10dp"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/searchBtn"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/searchBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:src="@drawable/ic_baseline_search_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/searchLecture"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintBottom_toBottomOf="@id/textView31"
+                        app:layout_constraintTop_toTopOf="@id/textView31"
+                        app:layout_constraintStart_toEndOf="@id/textView31">
+
+                        <RadioButton
+                            android:id="@+id/dateBtn"
+                            style="@style/sort_radiobutton_style"
+                            android:text="@string/date" />
+
+                        <RadioButton
+                            android:id="@+id/honeyBtn"
+                            style="@style/sort_radiobutton_style"
+                            android:text="@string/honey" />
+
+                        <RadioButton
+                            android:id="@+id/satisfactionBtn"
+                            style="@style/sort_radiobutton_style"
+                            android:text="@string/satisfaction" />
+
+                        <RadioButton
+                            android:id="@+id/learningBtn"
+                            style="@style/sort_radiobutton_style"
+                            android:text="@string/learning" />
+
+                        <RadioButton
+                            android:id="@+id/totalBtn"
+                            style="@style/sort_radiobutton_style"
+                            android:text="@string/total" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sort"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/cardView"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        style="@style/title_textview_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/search_result"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/searchResultScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/search_result_bar">
+                android:paddingStart="@dimen/page_padding"
+                android:paddingEnd="@dimen/page_padding"
+                android:paddingBottom="@dimen/page_padding">
 
-                <EditText
-                    android:id="@+id/searchLecture"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:ellipsize="end"
-                    android:ems="10"
-                    android:hint="@string/search_evaluation_hint"
-                    android:imeActionLabel="검색"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/searchBtn"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/searchBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:src="@drawable/ic_baseline_search_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <androidx.cardview.widget.CardView
+                    style="@style/cardview_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constrainedHeight="true"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/searchLecture"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSearchResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:evaluationList="@{viewModel.evaluationList}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:viewType="@{viewModel.viewType}" />
+                </androidx.cardview.widget.CardView>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/textView31"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/sort"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@id/textView31"
-            app:layout_constraintStart_toEndOf="@id/textView31"
-            app:layout_constraintTop_toTopOf="@id/textView31">
-
-            <RadioButton
-                android:id="@+id/dateBtn"
-                style="@style/sort_radiobutton_style"
-                android:text="@string/date" />
-
-            <RadioButton
-                android:id="@+id/honeyBtn"
-                style="@style/sort_radiobutton_style"
-                android:text="@string/honey" />
-
-            <RadioButton
-                android:id="@+id/satisfactionBtn"
-                style="@style/sort_radiobutton_style"
-                android:text="@string/satisfaction" />
-
-            <RadioButton
-                android:id="@+id/learningBtn"
-                style="@style/sort_radiobutton_style"
-                android:text="@string/learning" />
-
-            <RadioButton
-                android:id="@+id/totalBtn"
-                style="@style/sort_radiobutton_style"
-                android:text="@string/total" />
-        </RadioGroup>
-
-        <androidx.cardview.widget.CardView
-            style="@style/cardview_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-            app:layout_constraintVertical_bias="0.0">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerSearchResult"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:evaluationList="@{viewModel.evaluationList}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:viewType="@{viewModel.viewType}" />
-        </androidx.cardview.widget.CardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

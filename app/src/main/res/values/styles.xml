@@ -198,6 +198,15 @@
         <item name="android:background">@drawable/rounding_blue_background</item>
     </style>
 
+    <style name="scroll_enter_always_toolbar_style" parent="Widget.AppCompat.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/background</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="layout_scrollFlags">scroll|enterAlways</item>
+    </style>
+
     <!-- Text Styles  -->
     <style name="Headline4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="android:textColor">@color/black</item>
