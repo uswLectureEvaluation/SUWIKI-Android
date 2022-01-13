@@ -9,14 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
 import com.kunize.uswtimetable.login.FindIdActivity
 import com.kunize.uswtimetable.login.FindPasswordActivity
 import com.kunize.uswtimetable.login.LoginActivity
 import com.kunize.uswtimetable.signup.SignUpActivity
+import com.kunize.uswtimetable.ui.notice.NoticeActivity
 
 class MoreFragment : Fragment() {
     private lateinit var viewModel: MoreViewModel

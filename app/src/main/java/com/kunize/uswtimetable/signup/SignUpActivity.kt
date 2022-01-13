@@ -12,55 +12,54 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isGone
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.ActivitySignInBinding
+import com.kunize.uswtimetable.databinding.ActivitySignupBinding
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
-import com.kunize.uswtimetable.util.PasswordAgain
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignInBinding
+    private lateinit var binding: ActivitySignupBinding
     private lateinit var viewModel: SignUpViewModel
     private val imm by lazy { getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager }
-    private var isPwSame = PasswordAgain.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivitySignInBinding.inflate(layoutInflater)
+        binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
-        viewModel.isPwSame.observe(this) {
-            isPwSame = it
-        }
+        viewModel = ViewModelProvider(this, SignUpViewModelFactory())[SignUpViewModel::class.java]
 
+        viewModel.signupFormState.observe(this@SignUpActivity, Observer {
+            val state = it ?: return@Observer
+
+            binding.signInButton.isEnabled = state.isDataValid
+        })
         initViews(this)
     }
 
     private fun initViews(context: Context) {
         with(binding) {
             etMail.afterTextChanged {
-                activateCertificationButton()
+                dataChanged()
             }
 
             etCertification.afterTextChanged {
-                activateCertificationButton()
+                dataChanged()
             }
 
             etPw.afterTextChanged {
-                setPwErrorMsg()
-                activateSignInButton()
+                dataChanged()
             }
             etPwAgain.afterTextChanged {
-                setPwErrorMsg()
-                activateSignInButton()
+                dataChanged()
             }
             etId.afterTextChanged {
-                activateSignInButton()
+                dataChanged()
             }
 
             // 아이디: 소문자와 숫자만 입력 가능
@@ -102,7 +101,7 @@ class SignUpActivity : AppCompatActivity() {
             }, InputFilter.LengthFilter(PW_COUNT_LIMIT))
 
             termsTextView.setOnCheckedChangeListener { _, _ ->
-                activateSignInButton()
+                dataChanged()
             }
             linkToSchoolMailHomepage.setOnClickListener {
                 val url = viewModel.schoolMailUrl
@@ -121,7 +120,7 @@ class SignUpActivity : AppCompatActivity() {
             })
             certificationButton.setOnClickListener {
                 certification(etCertification.text.toString())
-
+                viewModel.emailCheck(binding.etMail.toString())
             }
             etCertification.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -139,23 +138,6 @@ class SignUpActivity : AppCompatActivity() {
         Linkify.addLinks(binding.termsTextView, link2, "")
     }
 
-    private fun setPwErrorMsg() {
-        with(binding) {
-            when {
-                etPwAgain.text.toString().isEmpty() -> {
-                    viewModel.setPwEmpty()
-                }
-                etPw.text.toString() == etPwAgain.text.toString() -> {
-                    viewModel.setPwSame()
-                }
-                else -> {
-                    viewModel.setPwDifferent()
-                }
-            }
-            passwordAgainEditText.error = if (isPwSame == PasswordAgain.DIFFERENT) "비밀번호와 일치하지 않습니다" else null
-        }
-    }
-
     private fun sendEmail(address: String) {
         // TODO 이메일로 인증 번호 전송
         val schoolMail = address + resources.getString(R.string.school_domain)
@@ -165,7 +147,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun certification(certNum: String) {
-        // TODO 인증 로직
+//        viewModel.certification(certNum)
         val number = certNum.toInt()
         Toast.makeText(this@SignUpActivity, "$number: 인증 시도", Toast.LENGTH_SHORT).show()
 
@@ -173,17 +155,9 @@ class SignUpActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(binding.etCertification.windowToken, 0)
     }
 
-    private fun activateCertificationButton() {
-        binding.sendCertificationNumberButton.isEnabled = binding.etMail.text!!.isNotEmpty()
-        binding.certificationButton.isEnabled =
-            binding.etCertification.text!!.isNotEmpty()
-    }
-
-    private fun activateSignInButton() {
+    private fun dataChanged() {
         with(binding) {
-            signInButton.isEnabled =
-                isPwSame == PasswordAgain.SAME && etId.text!!.isNotEmpty() &&
-                        etPw.text!!.isNotEmpty() && etPwAgain.text!!.isNotEmpty() && termsTextView.isChecked
+            viewModel.signUpDataChanged(etId.toString(), etPw.toString(), etPwAgain.toString(), termsTextView.isChecked)
         }
     }
 }

@@ -2,6 +2,8 @@ package com.kunize.uswtimetable.retrofit
 
 import android.util.Log
 import com.google.gson.JsonElement
+import com.kunize.uswtimetable.dataclass.EmailCheckDto
+import com.kunize.uswtimetable.dataclass.EmailData
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.util.API
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -66,6 +68,22 @@ class RetrofitManager {
             }
 
             override fun onFailure(call: Call<NoticeDto>, t: Throwable) {
+                Log.d(TAG, "RetrofitManager - onFailure() called / t: $t")
+                completion(ResponseState.FAIL, null)
+            }
+        })
+    }
+
+    fun emailCheck(email: String, completion: (ResponseState, EmailCheckDto?) -> Unit) {
+        val emailData = EmailData(email)
+        val call: Call<EmailCheckDto> = iRetrofit?.sendCertNumber(emailData) ?: return
+        call.enqueue(object: Callback<EmailCheckDto> {
+            override fun onResponse(call: Call<EmailCheckDto>, response: Response<EmailCheckDto>) {
+                Log.d(TAG, "RetrofitManager - onResponse() called / response: ${response.body().toString()}")
+                completion(ResponseState.OK, response.body())
+            }
+
+            override fun onFailure(call: Call<EmailCheckDto>, t: Throwable) {
                 Log.d(TAG, "RetrofitManager - onFailure() called / t: $t")
                 completion(ResponseState.FAIL, null)
             }

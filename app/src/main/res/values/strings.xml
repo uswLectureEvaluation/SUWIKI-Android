@@ -63,6 +63,8 @@
     <string name="invalid_id">아이디가 올바르지 않습니다</string>
     <string name="invalid_pw">비밀번호가 올바르지 않습니다</string>
     <string name="login_fail">로그인 실패</string>
+    <string name="invalid_pw_again">비밀번호와 일치하지 않습니다</string>
+    <string name="unchecked_term">약관이 동의되어야 합니다</string>
 
     <!-- Data binding -->
     <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>

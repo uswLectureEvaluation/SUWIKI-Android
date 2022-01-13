@@ -2,11 +2,13 @@ package com.kunize.uswtimetable.retrofit
 
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.signup.CertificateEmail
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.LECTURE
 import com.kunize.uswtimetable.util.API.MY_PAGE
 import com.kunize.uswtimetable.util.API.NOTICE
 import com.kunize.uswtimetable.util.API.PASSWORD
+import com.kunize.uswtimetable.util.API.SEND_CERT_NUMBER
 import com.kunize.uswtimetable.util.API.SIGN_UP
 import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
@@ -68,9 +70,13 @@ interface IRetrofit {
     @POST(SIGN_UP_EMAIL_CHECK)
     fun emailCheck(@Body email: EmailData): Call<JsonElement>
 
+    // 임시: 학교 메일로 인증 번호 전송
+    @POST(SEND_CERT_NUMBER)
+    fun sendCertNumber(@Body email: EmailData): Call<EmailCheckDto>
+
     // 학교 메일 인증 API
     @POST(SIGN_UP_SCHOOL_CHECK)
-    fun schoolCheck(@Body certificationNumber: SignUpSchoolCheckFormat): Call<JsonElement>
+    fun schoolCheck(@Body certificationNumber: SignUpSchoolCheckFormat): Call<CertificateEmail>
 
     // TODO 나머지 API도 추가
 }
