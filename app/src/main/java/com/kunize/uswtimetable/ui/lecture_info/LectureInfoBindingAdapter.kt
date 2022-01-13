@@ -1,15 +1,20 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import android.annotation.SuppressLint
 import android.graphics.Color
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import androidx.core.view.size
 import androidx.databinding.BindingAdapter
 import com.google.android.flexbox.FlexboxLayout
 import com.kunize.uswtimetable.MainActivity.Companion.dp
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.dataclass.ExamInfoType
 
 object LectureInfoBindingAdapter {
     @BindingAdapter("yearSemesterList")
@@ -20,7 +25,7 @@ object LectureInfoBindingAdapter {
             textView.text = item
             textView.textSize = 12f
             textView.setTextColor(Color.BLACK)
-            textView.setBackgroundResource(R.drawable.rounding_background)
+            textView.setBackgroundResource(R.drawable.rounding_light_gray_background)
             val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             lp.setMargins(0, 8.dp,8.dp,0)
             textView.layoutParams = lp
@@ -36,6 +41,31 @@ object LectureInfoBindingAdapter {
             in setOf("없음", "잘줌") -> textView.setTextColor(ContextCompat.getColor(textView.context ,R.color.custom_light_gray))
             in setOf("있음", "보통") -> textView.setTextColor(ContextCompat.getColor(textView.context ,R.color.custom_dark_gray))
             else -> textView.setTextColor(ContextCompat.getColor(textView.context ,R.color.custom_red))
+        }
+    }
+
+    @BindingAdapter("inflateType")
+    @JvmStatic
+    fun setLayout(frameLayout: FrameLayout, resource: Int) {
+        val examInflater = LayoutInflater.from(frameLayout.context)
+        when(resource) {
+            ExamInfoType.NOT_INFLATE -> frameLayout.removeViews(1, frameLayout.size - 1)
+            ExamInfoType.NEED_USE -> {
+                val v = examInflater.inflate(R.layout.hide_exam_info, frameLayout, true)
+                val usePointBtn = v.findViewById<AppCompatButton>(R.id.usePointBtn)
+                usePointBtn.setOnClickListener{
+                    frameLayout.removeViews(1, frameLayout.size - 1)
+                    Toast.makeText(frameLayout.context, "포인트 사용!", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else -> {
+                val v =examInflater.inflate(R.layout.no_exam_info, frameLayout, true)
+                val writeExamBtn : AppCompatButton = v.findViewById(R.id.writeExamBtn)
+                writeExamBtn.setOnClickListener{
+                    //TODO 시험 정보 쓰기 화면으로 이동
+                    Toast.makeText(frameLayout.context, "준비중", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }

@@ -11,9 +11,15 @@ import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBindingImpl
+import com.kunize.uswtimetable.dataclass.ExamInfoType
 import com.kunize.uswtimetable.dataclass.LectureInfoData
 import com.kunize.uswtimetable.dataclass.LectureItemViewType
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
+import com.kunize.uswtimetable.util.infiniteScrolls
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LectureInfoFragment : Fragment() {
 
@@ -36,6 +42,17 @@ class LectureInfoFragment : Fragment() {
         lectureInfoViewModel.setViewType(LectureItemViewType.LECTURE)
         lectureInfoViewModel.changeData(dummyData)
 
+        binding.infoScrollView.infiniteScrolls {
+            CoroutineScope(Main).launch {
+                delay(1000)
+                //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
+                lectureInfoViewModel.deleteLoading()
+                //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
+                val newData = dummyData.subList(0, 10)
+                lectureInfoViewModel.addData(ArrayList(newData))
+            }
+        }
+
         //넘어온 데이터 (강의명, 교수명)
         val args: LectureInfoFragmentArgs by navArgs()
 
@@ -43,7 +60,6 @@ class LectureInfoFragment : Fragment() {
             infoLectureName.text = args.lectureName
             infoProfessorName.text = args.professor
         }
-
         return binding.root
     }
 

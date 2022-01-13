@@ -18,6 +18,7 @@
     <color name="red">#F00</color>
     <color name="alert">#C10E0E</color>
     <color name="blur_white">#E6FFFFFF</color>
+    <color name="more_blur_white">#F2FFFFFF</color>
     
     <!-- custom color -->
     <color name="custom_blue">#FF4B89DC</color>
