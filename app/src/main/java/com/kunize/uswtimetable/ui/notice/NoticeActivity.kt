@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.ui.notice
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -34,6 +35,7 @@ class NoticeActivity : AppCompatActivity() {
         viewModel.noticeList.observe(this) {
             noticeList = it
             adapter.submitList(noticeList)
+            binding.loading.isGone = true
         }
 //        noticeList = viewModel.dumpData
 
