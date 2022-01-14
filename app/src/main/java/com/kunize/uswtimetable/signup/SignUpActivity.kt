@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -14,10 +15,12 @@ import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
@@ -37,11 +40,22 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.signupFormState.observe(this@SignUpActivity, Observer {
             val state = it ?: return@Observer
 
+            state.idError?.let { errMsg ->
+                binding.idEditText.error = resources.getString(errMsg)
+            }
+            state.pwError?.let { errMsg ->
+                binding.passwordEditText.error = resources.getString(errMsg)
+            }
+            state.pwAgainError?.let { errMsg ->
+                binding.passwordAgainEditText.error = resources.getString(errMsg)
+            }
+
             with(binding) {
                 idEditText.isErrorEnabled = state.idError != null
                 passwordEditText.isErrorEnabled = state.pwError != null
                 passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
-                signInButton.isEnabled = state.isDataValid
+                signInButton.isEnabled = true
+                Log.d(TAG, "SignUpActivity - $state")
             }
         })
 
@@ -50,65 +64,69 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initViews(context: Context) {
         with(binding) {
-            etMail.afterTextChanged {
+            etId.afterTextChanged {
                 dataChanged()
             }
-
-            etCertification.afterTextChanged {
-                dataChanged()
-            }
-
             etPw.afterTextChanged {
                 dataChanged()
             }
             etPwAgain.afterTextChanged {
                 dataChanged()
             }
-            etId.afterTextChanged {
+            etMail.afterTextChanged {
+                dataChanged()
+                sendCertificationNumberButton.isEnabled = it.isNullOrBlank().not()
+            }
+            etCertification.afterTextChanged {
+                dataChanged()
+                certificationButton.isEnabled = it.isNullOrBlank().not()
+            }
+            termsTextView.setOnCheckedChangeListener { _, _ ->
                 dataChanged()
             }
 
             // 아이디: 소문자와 숫자만 입력 가능
             etId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-                val alphaNum = Pattern.compile(viewModel.alphaNumPattern)
+                val idRegex = """^[a-z0-9]*$"""
+                val idPattern = Pattern.compile(idRegex)
                 if (source.length > ID_COUNT_LIMIT) {
                     Toast.makeText(context, "${ID_COUNT_LIMIT}개까지 입력 가능합니다", Toast.LENGTH_SHORT)
                         .show()
-                    return@InputFilter source
+//                    return@InputFilter source
                 }
-                if (source.equals("") || alphaNum.matcher(source).matches()) {
+                if (source.equals("") || idPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
                 idEditText.isHelperTextEnabled = true
-                Toast.makeText(context, "소문자와 숫자만 입력 가능합니다. $source", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "소문자와 숫자만 입력 가능합니다", Toast.LENGTH_SHORT).show()
                 val lowercaseId = source.toString().lowercase()
-                if (alphaNum.matcher(lowercaseId).matches()) {
+                if (idPattern.matcher(lowercaseId).matches()) {
                     source.toString().lowercase()
-                } else {
-                    lowercaseId.filter {
-                        it.isLowerCase() || it.isDigit()
-                    }
+                }
+                lowercaseId.filter {
+                    it.isLowerCase() || it.isDigit()
                 }
             }, InputFilter.LengthFilter(ID_COUNT_LIMIT))
 
             // 패스워드:
             etPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-//                val tmpPattern = """^(?=.[a-zA-Z])(?=.[!@#\$%^+=-])(?=.[0-9])*$"""
-//                val regex = Pattern.compile(tmpPattern)
-//                if (source.equals("") || regex.matcher(source).matches()) {
+                val pwRegex = """^[0-9a-zA-Z!@#$%^+\-=]*$"""
+                val pwPattern = Pattern.compile(pwRegex)
+                if (source.length > PW_COUNT_LIMIT) {
+                    Toast.makeText(context, "${PW_COUNT_LIMIT}개까지 입력 가능합니다", Toast.LENGTH_SHORT)
+                        .show()
 //                    return@InputFilter source
-//                }
-                val pattern = Pattern.compile("^[a-z0-9]*$")
-                if (source.isNullOrBlank() || pattern.matcher(source).matches()) {
+                }
+                if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
-                Toast.makeText(context, "비밀번호를 확인하세요", Toast.LENGTH_SHORT).show()
-                ""
+                Toast.makeText(context, "입력할 수 없는 문자입니다", Toast.LENGTH_SHORT).show()
+                source.toString().filter {
+                    pwPattern.matcher(it.toString()).matches()
+                }
             }, InputFilter.LengthFilter(PW_COUNT_LIMIT))
 
-            termsTextView.setOnCheckedChangeListener { _, _ ->
-                dataChanged()
-            }
+
             linkToSchoolMailHomepage.setOnClickListener {
                 val url = viewModel.schoolMailUrl
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -135,6 +153,32 @@ class SignUpActivity : AppCompatActivity() {
                 }
                 return@OnEditorActionListener false
             })
+            signInButton.setOnClickListener {
+                val state = viewModel.signupFormState.value
+                if (state?.isDataValid == true) {
+                    Toast.makeText(this@SignUpActivity, "회원가입 중", Toast.LENGTH_SHORT).show()
+                    viewModel.signup(
+                        etId.text.toString(),
+                        etMail.text.toString(),
+                        etPw.text.toString()
+                    )
+                } else {
+                    var errMsg = ""
+                    when {
+                        state?.idError != null -> errMsg = resources.getString(state.idError)
+                        state?.pwError != null -> errMsg = resources.getString(state.pwError)
+                        state?.pwAgainError != null -> errMsg =
+                            resources.getString(state.pwAgainError)
+                        state?.certNumError != null -> errMsg =
+                            resources.getString(state.certNumError)
+                        state?.isTermChecked != null -> errMsg =
+                            resources.getString(state.isTermChecked)
+                        state?.hasBlank != null -> errMsg = resources.getString(state.hasBlank)
+                    }
+                    if (errMsg.isNotBlank())
+                        Snackbar.make(binding.root, errMsg, Snackbar.LENGTH_SHORT).show()
+                }
+            }
         }
         /* 이용 약관 링크 연결 */
         val link1 = Pattern.compile("이용약관")
@@ -149,6 +193,8 @@ class SignUpActivity : AppCompatActivity() {
         val schoolMail = address + resources.getString(R.string.school_domain)
         Toast.makeText(this@SignUpActivity, "$schoolMail: 인증 번호 전송", Toast.LENGTH_SHORT).show()
         binding.linkToSchoolMailHomepage.isGone = false
+        // TODO Dialog로 한 번 더 확인
+        viewModel.sendEmail(address)
         imm.hideSoftInputFromWindow(binding.etMail.windowToken, 0)
     }
 
@@ -164,10 +210,12 @@ class SignUpActivity : AppCompatActivity() {
     private fun dataChanged() {
         with(binding) {
             viewModel.signUpDataChanged(
-                etId.text.toString(),
-                etPw.text.toString(),
-                etPwAgain.text.toString(),
-                termsTextView.isChecked
+                id = etId.text.toString(),
+                pw = etPw.text.toString(),
+                pwAgain = etPwAgain.text.toString(),
+                term = termsTextView.isChecked,
+                email = etMail.text.toString(),
+                certNum = etCertification.text.toString()
             )
         }
     }

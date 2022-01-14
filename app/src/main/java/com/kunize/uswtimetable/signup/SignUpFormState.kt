@@ -6,5 +6,6 @@ data class SignUpFormState(
     val pwAgainError: Int? = null,
     val certNumError: Int? = null,
     val isTermChecked: Int? = null,
+    val hasBlank: Int? = null,
     val isDataValid: Boolean = false
 )
