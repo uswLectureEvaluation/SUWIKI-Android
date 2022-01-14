@@ -37,6 +37,26 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
     private lateinit var sortBtn: MutableList<RadioButton>
     var prevSelRadioButton: RadioButton? = null
 
+    var msg = ""
+    var prevSel = -1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //백스택을 통해 프래그먼트가 다시 실행되면 onCreateView()가 호출됨
+        //만약 아래 코드가 onCreateView()에 있는 경우 EvaluationFragment에서 가져온 args.sortType으로 라디오 버튼이 선택됨
+        /*
+        ex)
+        1. EvaluationFragment에서 "만족도" 스피너가 선택된 상태로 SearchResult 프래그먼트 실행
+        2. SearchResult에서 "만족도" 라디오 버튼이 선택됨
+        3. 사용자가 "날짜" 라디오 버튼 선택 후 LectureInfoFragment로 이동
+        4. LectureInfoFragment에서 백스택을 통해 SearchResult로 돌아온 경우
+        5. 아래 코드가 onCreateView()에 있다면 다시 "만족도"가 선택됨
+         */
+        val args: SearchResultFragmentArgs by navArgs()
+        msg = args.searchLectureName
+        prevSel = args.sortType
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,7 +68,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         viewModel.setViewType(LectureItemViewType.SHORT)
         viewModel.addData(ArrayList(dummyData.subList(0, 10)))
 
-        binding.searchResultScroll.infiniteScrolls {
+        binding.recyclerSearchResult.infiniteScrolls {
             CoroutineScope(Main).launch {
                 delay(1000)
                 //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
@@ -59,10 +79,6 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        val args: SearchResultFragmentArgs by navArgs()
-        var msg = args.searchLectureName
-        val prevSel = args.sortType
-
         with(binding) {
             sortBtn = mutableListOf(dateBtn, honeyBtn, satisfactionBtn , learningBtn, totalBtn)
         }
@@ -71,10 +87,6 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
             btn.setOnClickListener(this)
         }
 
-        if(prevSel >= 0) {
-            msg = "tags:ALL"
-            sortBtn[prevSel].performClick()
-        }
 
         binding.searchLecture.apply {
             setText(msg)
@@ -85,6 +97,23 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         //TODO 검색 기능 추가
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sortBtn.forEach { btn ->
+            if(prevSel == -1 && btn.isChecked) {
+                btn.text = btn.text.toString() + " ↑"
+                prevSelRadioButton = btn
+            }
+        }
+
+        if(prevSel >= 0) {
+            Log.d("RadioSel","${sortBtn[prevSel].text.toString()} 클릭됨")
+            msg = "tags:ALL"
+            sortBtn[prevSel].performClick()
+            prevSel = -1
+        }
     }
 
     override fun onClick(v: View?) {

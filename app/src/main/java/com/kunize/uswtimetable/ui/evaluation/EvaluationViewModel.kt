@@ -45,7 +45,14 @@ open class EvaluationViewModel : ViewModel() {
         _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
     }
 
+    fun clearData() {
+        _evaluationList.value = arrayListOf()
+        _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
+    }
+
     fun deleteLoading() {
+        if(_evaluationList.value?.isEmpty() == true)
+            return
         if(_evaluationList.value?.get(evaluationList.value?.size!! - 1) == null) {
             _evaluationList.value?.removeAt(evaluationList.value?.size!! - 1)
             _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.

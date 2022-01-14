@@ -106,26 +106,17 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingStart="@dimen/page_padding"
-                android:paddingEnd="@dimen/page_padding"
-                android:paddingBottom="@dimen/page_padding">
-
-
                 <androidx.cardview.widget.CardView
                     style="@style/cardview_style"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/page_padding"
+                    android:layout_marginEnd="@dimen/page_padding"
+                    android:layout_marginBottom="@dimen/page_padding"
+                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerEvaluation"
@@ -136,7 +127,7 @@
                         app:viewType="@{viewModel.viewType}" />
                 </androidx.cardview.widget.CardView>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

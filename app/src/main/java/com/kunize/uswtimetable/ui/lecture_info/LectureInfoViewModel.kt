@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.ExamInfoType
 import com.kunize.uswtimetable.dataclass.LectureInfoData
+import com.kunize.uswtimetable.dataclass.LectureItemViewType
+import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 
 class LectureInfoViewModel : EvaluationViewModel() {
@@ -68,20 +70,25 @@ class LectureInfoViewModel : EvaluationViewModel() {
     }
 
     fun onEvaluationRadioBtnClick() {
-        //TODO 서버로 부터 강의평가 데이터 받아오기
-        //changeData 호출
+        clearData()
         _inflateType.value = ExamInfoType.NOT_INFLATE
+        setViewType(LectureItemViewType.LECTURE)
+        //TODO 서버로 부터 강의평가 데이터 받아오기
+        changeData(ArrayList(dummyData.subList(1, 2)))
         changeWriteBtnText(R.string.write_evaluation)
     }
 
     fun onExamRadioBtnClick() {
+        clearData()
         //TODO 서버로부터 시험정보 데이터 받아오기
         //1. 이미 포인트를 사용한 경우
         //setInflate(ExamInfoType.NOT_INFLATE)
         //2. 시험정보를 받아왔으나 포인트를 사용해야 하는 경우
-        //setInflate(ExamInfoType.NEED_USE)
+        setInflate(ExamInfoType.NEED_USE)
         //3. 시험정보가 없을 경우
-        setInflate(ExamInfoType.NO_DATA)
+        setViewType(LectureItemViewType.HIDE_EXAM)
+        //setInflate(ExamInfoType.NO_DATA)
+        changeData(dummyData)
         changeWriteBtnText(R.string.write_exam)
     }
 

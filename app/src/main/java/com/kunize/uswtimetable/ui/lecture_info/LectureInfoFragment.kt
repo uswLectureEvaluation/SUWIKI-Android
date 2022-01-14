@@ -42,13 +42,13 @@ class LectureInfoFragment : Fragment() {
         lectureInfoViewModel.setViewType(LectureItemViewType.LECTURE)
         lectureInfoViewModel.changeData(dummyData)
 
-        binding.infoScrollView.infiniteScrolls {
+        binding.infoRecyclerView.infiniteScrolls {
             CoroutineScope(Main).launch {
                 delay(1000)
                 //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
                 lectureInfoViewModel.deleteLoading()
                 //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-                val newData = dummyData.subList(0, 10)
+                val newData = dummyData
                 lectureInfoViewModel.addData(ArrayList(newData))
             }
         }

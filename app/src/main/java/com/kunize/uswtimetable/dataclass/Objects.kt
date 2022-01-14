@@ -6,6 +6,7 @@ object LectureItemViewType {
     const val USEREXAM = 2 //내가 쓴 시험정보
     const val LECTURE = 3 //세부 강의평가 정보
     const val EXAM = 4 //세부 시험정보
+    const val HIDE_EXAM = 5 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
 }
 
 object ExamInfoType {

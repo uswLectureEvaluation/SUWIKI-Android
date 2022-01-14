@@ -1,11 +1,14 @@
 package com.kunize.uswtimetable.adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.collection.LLRBNode
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ItemRecyclerEvaluationBinding
 import com.kunize.uswtimetable.databinding.ItemRecyclerProgressBinding
@@ -80,7 +83,11 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     //세부 강의평가 정보
                     LectureItemViewType.LECTURE -> lectureVisible()
                     //세부 시험 정보
-                    LectureItemViewType.EXAM -> examVisible()
+                    LectureItemViewType.EXAM -> examVisible(false)
+                    //세부 시험 정보 가림
+                    LectureItemViewType.HIDE_EXAM -> {
+                        examVisible(true)
+                    }
                 }
 
                 evaluationData = data
@@ -115,7 +122,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         private fun ItemRecyclerEvaluationBinding.lectureVisible() {
-            examVisible()
+            examVisible(false)
             averGroup.visibility = View.VISIBLE
         }
 
@@ -131,10 +138,18 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             content.visibility = View.VISIBLE
         }
 
-        private fun ItemRecyclerEvaluationBinding.examVisible() {
+        private fun ItemRecyclerEvaluationBinding.examVisible(hide: Boolean) {
             yearSemester.visibility = View.VISIBLE
             reportBtn.visibility = View.VISIBLE
             content.visibility = View.VISIBLE
+            averGroup.visibility = View.GONE
+
+            reportBtn.isClickable = hide
+            val color = when(hide) {
+                true -> ContextCompat.getColor(binding.root.context, R.color.custom_light_gray)
+                else -> Color.BLACK
+            }
+            content.setTextColor(color)
         }
     }
 }
