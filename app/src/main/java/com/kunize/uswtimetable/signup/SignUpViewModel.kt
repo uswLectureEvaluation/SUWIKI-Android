@@ -9,6 +9,7 @@ import com.kunize.uswtimetable.dataclass.Result
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
+import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.TAG
 
 class SignUpViewModel(private val certificateEmail: CertificateEmail): ViewModel() {
@@ -24,16 +25,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail): ViewModel
     val alphaNumPattern = """^[a-z0-9]*$"""
 //    val passwordPattern = "^(?=.[a-zA-Z])(?=.[!@#\$%^+=-])(?=.[0-9])$"
     val passwordPattern = """/^(?=.[a-zA-Z])(?=.[!@#\$%^+=-])(?=.[0-9])$/"""
-/*
-    fun setPwSame() {
-        _isPwSame.value = PasswordAgain.SAME
-    }
-    fun setPwDifferent() {
-        _isPwSame.value = PasswordAgain.DIFFERENT
-    }
-    fun setPwEmpty() {
-        _isPwSame.value = PasswordAgain.EMPTY
-    }*/
+
     fun signup(id: String, pw: String, pwAgain: String, term: Boolean) {
         // TODO 회원 가입 로직
     }
@@ -78,7 +70,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail): ViewModel
     }
 
     private fun isPwValid(pw: String): Boolean {
-        return pw.length in PW_COUNT_LIMIT..PW_COUNT_LIMIT
+        return pw.length in PW_COUNT_LOWER_LIMIT..PW_COUNT_LIMIT
     }
 
     private fun isPwAgainValid(pw: String, pwAgain: String): Boolean {

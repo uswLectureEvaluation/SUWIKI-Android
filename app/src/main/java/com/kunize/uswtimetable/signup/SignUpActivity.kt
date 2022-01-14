@@ -37,8 +37,14 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.signupFormState.observe(this@SignUpActivity, Observer {
             val state = it ?: return@Observer
 
-            binding.signInButton.isEnabled = state.isDataValid
+            with(binding) {
+                idEditText.isErrorEnabled = state.idError != null
+                passwordEditText.isErrorEnabled = state.pwError != null
+                passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
+                signInButton.isEnabled = state.isDataValid
+            }
         })
+
         initViews(this)
     }
 
@@ -66,7 +72,8 @@ class SignUpActivity : AppCompatActivity() {
             etId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                 val alphaNum = Pattern.compile(viewModel.alphaNumPattern)
                 if (source.length > ID_COUNT_LIMIT) {
-                    Toast.makeText(context, "${ID_COUNT_LIMIT}개까지 입력 가능합니다", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "${ID_COUNT_LIMIT}개까지 입력 가능합니다", Toast.LENGTH_SHORT)
+                        .show()
                     return@InputFilter source
                 }
                 if (source.equals("") || alphaNum.matcher(source).matches()) {
@@ -77,8 +84,7 @@ class SignUpActivity : AppCompatActivity() {
                 val lowercaseId = source.toString().lowercase()
                 if (alphaNum.matcher(lowercaseId).matches()) {
                     source.toString().lowercase()
-                }
-                else {
+                } else {
                     lowercaseId.filter {
                         it.isLowerCase() || it.isDigit()
                     }
@@ -93,7 +99,7 @@ class SignUpActivity : AppCompatActivity() {
 //                    return@InputFilter source
 //                }
                 val pattern = Pattern.compile("^[a-z0-9]*$")
-                if (source.isNullOrBlank() || pattern.matcher(source).matches()){
+                if (source.isNullOrBlank() || pattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
                 Toast.makeText(context, "비밀번호를 확인하세요", Toast.LENGTH_SHORT).show()
@@ -157,7 +163,12 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun dataChanged() {
         with(binding) {
-            viewModel.signUpDataChanged(etId.toString(), etPw.toString(), etPwAgain.toString(), termsTextView.isChecked)
+            viewModel.signUpDataChanged(
+                etId.text.toString(),
+                etPw.text.toString(),
+                etPwAgain.text.toString(),
+                termsTextView.isChecked
+            )
         }
     }
 }

@@ -37,8 +37,6 @@ class NoticeActivity : AppCompatActivity() {
             adapter.submitList(noticeList)
             binding.loading.isGone = true
         }
-//        noticeList = viewModel.dumpData
-
     }
 
     private fun initRecyclerView() {
