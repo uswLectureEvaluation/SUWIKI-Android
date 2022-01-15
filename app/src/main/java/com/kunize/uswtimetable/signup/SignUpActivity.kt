@@ -28,6 +28,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var viewModel: SignUpViewModel
     private val imm by lazy { getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager }
+    private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,9 +67,11 @@ class SignUpActivity : AppCompatActivity() {
         with(binding) {
             etId.afterTextChanged {
                 dataChanged()
+                inputLimitAlert(it.toString(), ID_COUNT_LIMIT)
             }
             etPw.afterTextChanged {
                 dataChanged()
+                inputLimitAlert(it.toString(), PW_COUNT_LIMIT)
             }
             etPwAgain.afterTextChanged {
                 dataChanged()
@@ -81,7 +84,7 @@ class SignUpActivity : AppCompatActivity() {
                 dataChanged()
                 certificationButton.isEnabled = it.isNullOrBlank().not()
             }
-            termsTextView.setOnCheckedChangeListener { _, _ ->
+            terms.setOnCheckedChangeListener { _, _ ->
                 dataChanged()
             }
 
@@ -89,16 +92,16 @@ class SignUpActivity : AppCompatActivity() {
             etId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                 val idRegex = """^[a-z0-9]*$"""
                 val idPattern = Pattern.compile(idRegex)
-                if (source.length > ID_COUNT_LIMIT) {
-                    Toast.makeText(context, "${ID_COUNT_LIMIT}개까지 입력 가능합니다", Toast.LENGTH_SHORT)
-                        .show()
-//                    return@InputFilter source
+                Log.d(TAG, "SignUpActivity - 아이디: $source 아이디 입력 개수: ${source.length}, 제한 개수: $ID_COUNT_LIMIT called")
+
+                if (source.length >= ID_COUNT_LIMIT) {
+                    makeToast("${ID_COUNT_LIMIT}개까지 입력 가능합니다")
                 }
-                if (source.equals("") || idPattern.matcher(source).matches()) {
+                if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
                 idEditText.isHelperTextEnabled = true
-                Toast.makeText(context, "소문자와 숫자만 입력 가능합니다", Toast.LENGTH_SHORT).show()
+                makeToast("소문자와 숫자만 입력 가능합니다")
                 val lowercaseId = source.toString().lowercase()
                 if (idPattern.matcher(lowercaseId).matches()) {
                     source.toString().lowercase()
@@ -112,18 +115,15 @@ class SignUpActivity : AppCompatActivity() {
             etPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                 val pwRegex = """^[0-9a-zA-Z!@#$%^+\-=]*$"""
                 val pwPattern = Pattern.compile(pwRegex)
-                if (source.length > PW_COUNT_LIMIT) {
-                    Toast.makeText(context, "${PW_COUNT_LIMIT}개까지 입력 가능합니다", Toast.LENGTH_SHORT)
-                        .show()
-//                    return@InputFilter source
+                Log.d(TAG, "SignUpActivity - 비번: $source 비번 입력 개수: ${source.length}, 제한 개수: ${PW_COUNT_LIMIT} called")
+                if (source.length >= PW_COUNT_LIMIT-1) {
+                    makeToast("${ PW_COUNT_LIMIT}개까지 입력 가능합니다")
                 }
                 if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
-                Toast.makeText(context, "입력할 수 없는 문자입니다", Toast.LENGTH_SHORT).show()
-                source.toString().filter {
-                    pwPattern.matcher(it.toString()).matches()
-                }
+                makeToast("입력할 수 없는 문자입니다: $source")
+                ""
             }, InputFilter.LengthFilter(PW_COUNT_LIMIT))
 
 
@@ -156,12 +156,13 @@ class SignUpActivity : AppCompatActivity() {
             signInButton.setOnClickListener {
                 val state = viewModel.signupFormState.value
                 if (state?.isDataValid == true) {
-                    Toast.makeText(this@SignUpActivity, "회원가입 중", Toast.LENGTH_SHORT).show()
+                    makeToast("회원가입 중")
                     viewModel.signup(
                         etId.text.toString(),
                         etMail.text.toString(),
                         etPw.text.toString()
                     )
+                    Log.d(TAG, "SignUpActivity - id: ${etId.text.toString()}, pw: ${etPw.text.toString()}")
                 } else {
                     var errMsg = ""
                     when {
@@ -184,14 +185,14 @@ class SignUpActivity : AppCompatActivity() {
         val link1 = Pattern.compile("이용약관")
         val link2 = Pattern.compile("개인정보처리방침")
         // TODO 이용약관, 개인정보처리방침 링크 연결
-        Linkify.addLinks(binding.termsTextView, link1, "")
-        Linkify.addLinks(binding.termsTextView, link2, "")
+        Linkify.addLinks(binding.terms, link1, "")
+        Linkify.addLinks(binding.terms, link2, "")
     }
 
     private fun sendEmail(address: String) {
         // TODO 이메일로 인증 번호 전송
         val schoolMail = address + resources.getString(R.string.school_domain)
-        Toast.makeText(this@SignUpActivity, "$schoolMail: 인증 번호 전송", Toast.LENGTH_SHORT).show()
+        makeToast("$schoolMail: 인증 번호 전송")
         binding.linkToSchoolMailHomepage.isGone = false
         // TODO Dialog로 한 번 더 확인
         viewModel.sendEmail(address)
@@ -201,7 +202,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun certification(certNum: String) {
 //        viewModel.certification(certNum)
         val number = certNum.toInt()
-        Toast.makeText(this@SignUpActivity, "$number: 인증 시도", Toast.LENGTH_SHORT).show()
+        makeToast("$number: 인증 시도")
 
         // 키보드 내리기
         imm.hideSoftInputFromWindow(binding.etCertification.windowToken, 0)
@@ -213,10 +214,27 @@ class SignUpActivity : AppCompatActivity() {
                 id = etId.text.toString(),
                 pw = etPw.text.toString(),
                 pwAgain = etPwAgain.text.toString(),
-                term = termsTextView.isChecked,
+                term = terms.isChecked,
                 email = etMail.text.toString(),
                 certNum = etCertification.text.toString()
             )
         }
+    }
+
+    private fun inputLimitAlert(str: String, limit: Int) {
+        if (str.length >= limit) {
+            makeToast("입력할 수 있는 최대 길이입니다")
+        }
+    }
+
+    private fun makeToast(message: String) {
+        toast?.cancel()
+        toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
+        toast?.show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        toast?.cancel()
     }
 }
