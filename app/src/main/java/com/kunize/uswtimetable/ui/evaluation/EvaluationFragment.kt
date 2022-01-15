@@ -14,9 +14,11 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.adapter.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
@@ -98,7 +100,7 @@ class EvaluationFragment : Fragment() {
                 ) {
                     spinnerSel = position
                     when(position) {
-                        0 -> evaluationViewModel.changeData(dummyData)
+                        0 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(0, 10)))
                         1 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(1, 4)))
                         2 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(3, 4)))
                         3 -> evaluationViewModel.changeData(ArrayList(dummyData.subList(5, 8)))

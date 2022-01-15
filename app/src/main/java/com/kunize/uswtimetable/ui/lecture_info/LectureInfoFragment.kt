@@ -40,7 +40,7 @@ class LectureInfoFragment : Fragment() {
 
         //recyclerview 설정
         lectureInfoViewModel.setViewType(LectureItemViewType.LECTURE)
-        lectureInfoViewModel.changeData(dummyData)
+        lectureInfoViewModel.changeData(ArrayList(dummyData.subList(0, 12)))
 
         binding.infoRecyclerView.infiniteScrolls {
             CoroutineScope(Main).launch {

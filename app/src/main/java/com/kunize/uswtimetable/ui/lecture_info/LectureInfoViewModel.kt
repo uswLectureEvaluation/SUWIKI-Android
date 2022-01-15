@@ -88,7 +88,7 @@ class LectureInfoViewModel : EvaluationViewModel() {
         //3. 시험정보가 없을 경우
         setViewType(LectureItemViewType.HIDE_EXAM)
         //setInflate(ExamInfoType.NO_DATA)
-        changeData(dummyData)
+        changeData(ArrayList(dummyData.subList(0,0)))
         changeWriteBtnText(R.string.write_exam)
     }
 
