@@ -170,19 +170,6 @@
                         app:layout_constraintTop_toTopOf="@id/emailEditText"
                         app:layout_constraintVertical_bias="0.47" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/linkToSchoolMailHomepage"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="학교 메일 홈페이지"
-                        android:visibility="gone"
-                        app:icon="@drawable/ic_link"
-                        app:layout_constraintEnd_toEndOf="@+id/sendCertificationNumberButton"
-                        app:layout_constraintTop_toBottomOf="@id/emailEditText"
-                        tools:visibility="visible" />
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/certificationNumberEditText"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -191,7 +178,7 @@
                         android:hint="인증 번호 입력"
                         app:layout_constraintEnd_toEndOf="@id/emailEditText"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linkToSchoolMailHomepage">
+                        app:layout_constraintTop_toBottomOf="@+id/emailEditText">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_certification"

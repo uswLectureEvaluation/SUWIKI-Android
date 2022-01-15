@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.signup
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +11,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -111,14 +109,10 @@ class SignUpActivity : AppCompatActivity() {
                 ""
             })
 
-            linkToSchoolMailHomepage.setOnClickListener {
-                val url = viewModel.schoolMailUrl
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
-            }
             sendCertificationNumberButton.setOnClickListener {
                 sendEmail(etMail.text.toString())
             }
+
             etMail.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     sendEmail(etMail.text.toString())
@@ -126,10 +120,12 @@ class SignUpActivity : AppCompatActivity() {
                 }
                 return@OnEditorActionListener false
             })
+
             certificationButton.setOnClickListener {
                 certification(etCertification.text.toString())
                 viewModel.emailCheck(binding.etMail.toString())
             }
+
             etCertification.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     certification(etCertification.text.toString())
@@ -137,6 +133,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
                 return@OnEditorActionListener false
             })
+
             signInButton.setOnClickListener {
                 val state = viewModel.signupFormState.value
                 if (state?.isDataValid == true) {
@@ -176,7 +173,8 @@ class SignUpActivity : AppCompatActivity() {
         // TODO 이메일로 인증 번호 전송
         val schoolMail = address + resources.getString(R.string.school_domain)
         makeToast("$schoolMail: 인증 번호 전송")
-        binding.linkToSchoolMailHomepage.isGone = false
+        makeSchoolMailSnackBar()
+
         // TODO Dialog로 한 번 더 확인
         viewModel.sendEmail(address)
         imm.hideSoftInputFromWindow(binding.etMail.windowToken, 0)
@@ -214,6 +212,15 @@ class SignUpActivity : AppCompatActivity() {
         toast?.cancel()
         toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast?.show()
+    }
+
+    private fun makeSchoolMailSnackBar() {
+        Snackbar.make(binding.root, "학교 메일 홈페이지", Snackbar.LENGTH_INDEFINITE)
+            .setAction("이동") {
+                val url = viewModel.schoolMailUrl
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }.show()
     }
 
     override fun onStop() {
