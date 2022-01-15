@@ -60,10 +60,10 @@ class SignUpActivity : AppCompatActivity() {
             }
         })
 
-        initViews(this)
+        initViews()
     }
 
-    private fun initViews(context: Context) {
+    private fun initViews() {
         with(binding) {
             etId.afterTextChanged {
                 dataChanged()
@@ -75,6 +75,7 @@ class SignUpActivity : AppCompatActivity() {
             }
             etPwAgain.afterTextChanged {
                 dataChanged()
+                inputLimitAlert(it.toString(), PW_COUNT_LIMIT)
             }
             etMail.afterTextChanged {
                 dataChanged()
@@ -92,40 +93,23 @@ class SignUpActivity : AppCompatActivity() {
             etId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                 val idRegex = """^[a-z0-9]*$"""
                 val idPattern = Pattern.compile(idRegex)
-                Log.d(TAG, "SignUpActivity - 아이디: $source 아이디 입력 개수: ${source.length}, 제한 개수: $ID_COUNT_LIMIT called")
-
-                if (source.length >= ID_COUNT_LIMIT) {
-                    makeToast("${ID_COUNT_LIMIT}개까지 입력 가능합니다")
-                }
                 if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
-                idEditText.isHelperTextEnabled = true
-                makeToast("소문자와 숫자만 입력 가능합니다")
-                val lowercaseId = source.toString().lowercase()
-                if (idPattern.matcher(lowercaseId).matches()) {
-                    source.toString().lowercase()
-                }
-                lowercaseId.filter {
-                    it.isLowerCase() || it.isDigit()
-                }
-            }, InputFilter.LengthFilter(ID_COUNT_LIMIT))
+                makeToast("소문자와 숫자만 입력 가능합니다: $source")
+                source.dropLast(1)
+            })
 
-            // 패스워드:
+            // 패스워드: 알파벳, 숫자, 특정 특수 문자 입력 가능
             etPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                 val pwRegex = """^[0-9a-zA-Z!@#$%^+\-=]*$"""
                 val pwPattern = Pattern.compile(pwRegex)
-                Log.d(TAG, "SignUpActivity - 비번: $source 비번 입력 개수: ${source.length}, 제한 개수: ${PW_COUNT_LIMIT} called")
-                if (source.length >= PW_COUNT_LIMIT-1) {
-                    makeToast("${ PW_COUNT_LIMIT}개까지 입력 가능합니다")
-                }
                 if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
                 makeToast("입력할 수 없는 문자입니다: $source")
                 ""
-            }, InputFilter.LengthFilter(PW_COUNT_LIMIT))
-
+            })
 
             linkToSchoolMailHomepage.setOnClickListener {
                 val url = viewModel.schoolMailUrl
@@ -162,7 +146,6 @@ class SignUpActivity : AppCompatActivity() {
                         etMail.text.toString(),
                         etPw.text.toString()
                     )
-                    Log.d(TAG, "SignUpActivity - id: ${etId.text.toString()}, pw: ${etPw.text.toString()}")
                 } else {
                     var errMsg = ""
                     when {
