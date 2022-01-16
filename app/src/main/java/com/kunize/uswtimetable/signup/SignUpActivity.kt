@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.signup
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +14,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
+import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
@@ -54,7 +56,6 @@ class SignUpActivity : AppCompatActivity() {
                 passwordEditText.isErrorEnabled = state.pwError != null
                 passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
                 signInButton.isEnabled = true
-                Log.d(TAG, "SignUpActivity - $state")
             }
         })
 
@@ -110,7 +111,8 @@ class SignUpActivity : AppCompatActivity() {
             })
 
             sendCertificationNumberButton.setOnClickListener {
-                sendEmail(etMail.text.toString())
+//                sendEmail(etMail.text.toString())
+                floatEmailSendDialog(this@SignUpActivity, etMail.text.toString())
             }
 
             etMail.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
@@ -123,7 +125,7 @@ class SignUpActivity : AppCompatActivity() {
 
             certificationButton.setOnClickListener {
                 certification(etCertification.text.toString())
-                viewModel.emailCheck(binding.etMail.toString())
+                viewModel.certificate(binding.etMail.toString())
             }
 
             etCertification.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
@@ -171,13 +173,12 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun sendEmail(address: String) {
         // TODO 이메일로 인증 번호 전송
-        val schoolMail = address + resources.getString(R.string.school_domain)
+        val schoolMail = address + SCHOOL_DOMAIN
         makeToast("$schoolMail: 인증 번호 전송")
         makeSchoolMailSnackBar()
 
-        // TODO Dialog로 한 번 더 확인
         viewModel.sendEmail(address)
-        imm.hideSoftInputFromWindow(binding.etMail.windowToken, 0)
+//        imm.hideSoftInputFromWindow(binding.etMail.windowToken, 0)
     }
 
     private fun certification(certNum: String) {
@@ -220,6 +221,19 @@ class SignUpActivity : AppCompatActivity() {
                 val url = viewModel.schoolMailUrl
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
+            }.show()
+    }
+
+    private fun floatEmailSendDialog(context: Context, email: String,) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle("인증 메일 전송")
+            .setMessage("$email@$SCHOOL_DOMAIN 로 인증 번호를 전송하시겠습니까?")
+            .setNeutralButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("보내기") { dialog, which ->
+//                viewModel.sendEmail(email)
+                sendEmail(email)
             }.show()
     }
 

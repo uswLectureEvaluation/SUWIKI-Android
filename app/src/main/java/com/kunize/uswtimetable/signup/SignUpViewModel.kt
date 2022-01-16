@@ -66,7 +66,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
         }
     }
 
-    fun emailCheck(email: String) {
+    fun certificate(email: String) {
         // TODO 인증 로직
         when (val result = certificateEmail.certificate(email)) {
             is Result.Success -> {
