@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.dataclass.EmailCheckDto
 import com.kunize.uswtimetable.dataclass.EmailData
+import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.util.API
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -59,15 +60,15 @@ class RetrofitManager {
         })
     }
 
-    fun getNotice(id: Int, completion: (ResponseState, NoticeDto?) -> Unit) {
-        val call: Call<NoticeDto> = iRetrofit?.getNotice(id) ?: return
-        call.enqueue(object: Callback<NoticeDto> {
-            override fun onResponse(call: Call<NoticeDto>, response: Response<NoticeDto>) {
+    fun getNotice(id: Int, completion: (ResponseState, NoticeDetailDto?) -> Unit) {
+        val call: Call<NoticeDetailDto> = iRetrofit?.getNotice(id) ?: return
+        call.enqueue(object: Callback<NoticeDetailDto> {
+            override fun onResponse(call: Call<NoticeDetailDto>, response: Response<NoticeDetailDto>) {
                 Log.d(TAG, "RetrofitManager - onResponse() called / response: ${response.body().toString()}")
                 completion(ResponseState.OK, response.body())
             }
 
-            override fun onFailure(call: Call<NoticeDto>, t: Throwable) {
+            override fun onFailure(call: Call<NoticeDetailDto>, t: Throwable) {
                 Log.d(TAG, "RetrofitManager - onFailure() called / t: $t")
                 completion(ResponseState.FAIL, null)
             }
