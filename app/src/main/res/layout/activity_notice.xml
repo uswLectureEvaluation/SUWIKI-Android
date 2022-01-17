@@ -28,25 +28,6 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--        <androidx.core.widget.NestedScrollView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">-->
-
-    <!--            <androidx.recyclerview.widget.RecyclerView-->
-    <!--                android:id="@+id/noticeRecyclerView"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                tools:itemCount="3"-->
-    <!--                tools:listitem="@layout/item_notice" />-->
-    <!--        </androidx.core.widget.NestedScrollView>-->
-
-    <!--        <ProgressBar-->
-    <!--            android:id="@+id/loading"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_height="wrap_content" />-->
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:name="com.kunize.uswtimetable.ui.notice.NoticeListFragment"

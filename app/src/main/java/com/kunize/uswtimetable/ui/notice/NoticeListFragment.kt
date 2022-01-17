@@ -1,19 +1,17 @@
 package com.kunize.uswtimetable.ui.notice
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.view.isGone
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.NoticeAdapter
 import com.kunize.uswtimetable.databinding.NoticeListFragmentBinding
+import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeListFragment : Fragment() {
@@ -22,6 +20,7 @@ class NoticeListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: NoticeListViewModel
     private lateinit var adapter: NoticeAdapter
+    private var notices = listOf<NoticeDto>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +42,6 @@ class NoticeListFragment : Fragment() {
         binding.noticeRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
 
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -54,9 +52,11 @@ class NoticeListFragment : Fragment() {
 
         })
 
-        viewModel.noticeList.observe(viewLifecycleOwner, { notices ->
+        viewModel.noticeList.observe(viewLifecycleOwner, {
+            notices = it
             adapter.submitList(notices)
             binding.loading.isGone = true
+            binding.noticeRecyclerView.scrollToPosition(notices.size-1)
         })
     }
 
