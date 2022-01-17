@@ -69,29 +69,6 @@ class LectureInfoViewModel : EvaluationViewModel() {
         _writeBtnText.value = resource
     }
 
-    fun onEvaluationRadioBtnClick() {
-        clearData()
-        _inflateType.value = ExamInfoType.NOT_INFLATE
-        setViewType(LectureItemViewType.LECTURE)
-        //TODO 서버로 부터 강의평가 데이터 받아오기
-        changeData(ArrayList(dummyData.subList(1, 2)))
-        changeWriteBtnText(R.string.write_evaluation)
-    }
-
-    fun onExamRadioBtnClick() {
-        clearData()
-        //TODO 서버로부터 시험정보 데이터 받아오기
-        //1. 이미 포인트를 사용한 경우
-        //setInflate(ExamInfoType.NOT_INFLATE)
-        //2. 시험정보를 받아왔으나 포인트를 사용해야 하는 경우
-        setInflate(ExamInfoType.NEED_USE)
-        //3. 시험정보가 없을 경우
-        setViewType(LectureItemViewType.HIDE_EXAM)
-        //setInflate(ExamInfoType.NO_DATA)
-        changeData(ArrayList(dummyData.subList(0,0)))
-        changeWriteBtnText(R.string.write_exam)
-    }
-
     fun setInfoValue(data: LectureInfoData) {
         _lectureType.value = data.lectureType
         _yearSemesterList.value = data.yearSemesterList

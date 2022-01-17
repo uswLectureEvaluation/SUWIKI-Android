@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
@@ -24,7 +27,7 @@ import kotlinx.coroutines.launch
 class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
-    private lateinit var lectureInfoViewModel : LectureInfoViewModel
+    private lateinit var lectureInfoViewModel: LectureInfoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,14 +46,11 @@ class LectureInfoFragment : Fragment() {
         lectureInfoViewModel.changeData(ArrayList(dummyData.subList(0, 12)))
 
         binding.infoRecyclerView.infiniteScrolls {
-            CoroutineScope(Main).launch {
-                delay(1000)
-                //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
-                lectureInfoViewModel.deleteLoading()
-                //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-                val newData = dummyData.subList(0, 12)
-                lectureInfoViewModel.addData(ArrayList(newData))
-            }
+            //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
+            lectureInfoViewModel.deleteLoading()
+            //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
+            val newData = dummyData.subList(0, 12)
+            lectureInfoViewModel.addData(ArrayList(newData))
         }
 
         //넘어온 데이터 (강의명, 교수명)
@@ -59,9 +59,48 @@ class LectureInfoFragment : Fragment() {
         with(binding) {
             infoLectureName.text = args.lectureName
             infoProfessorName.text = args.professor
+
+
+            lectureEvaluationRadioBtn.setOnClickListener {
+                //TODO 서버로 부터 강의평가 데이터 받아오기
+                lectureInfoViewModel?.setViewType(LectureItemViewType.LECTURE)
+                lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+            }
+
+
+            examInfoRadioBtn.setOnClickListener {
+                lectureInfoViewModel?.setViewType(LectureItemViewType.HIDE_EXAM)
+                //TODO 서버로 부터 시험 정보 데이터 받아오기
+                val type = ExamInfoType.NO_DATA
+                val examInflater = LayoutInflater.from(context)
+                when (type) {
+                    ExamInfoType.NOT_INFLATE -> {
+                        lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+                        lectureInfoViewModel?.setViewType(LectureItemViewType.EXAM)
+                    }
+                    ExamInfoType.NEED_USE -> {
+                        val v = examInflater.inflate(R.layout.hide_exam_info, lectureInfoContainer, true)
+                        val usePointBtn = v.findViewById<AppCompatButton>(R.id.usePointBtn)
+                        usePointBtn.setOnClickListener {
+                            lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+                            lectureInfoViewModel?.setViewType(LectureItemViewType.EXAM)
+                            Toast.makeText(activity, "포인트 사용!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    else -> {
+                        val v =
+                            examInflater.inflate(R.layout.no_exam_info, lectureInfoContainer, true)
+                        val writeExamBtn: AppCompatButton = v.findViewById(R.id.writeExamBtn)
+                        writeExamBtn.setOnClickListener {
+                            //TODO 시험 정보 쓰기 화면으로 이동
+                            Toast.makeText(activity, "준비중", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                lectureInfoViewModel?.changeWriteBtnText(R.string.write_exam)
+            }
+
+            return binding.root
         }
-        return binding.root
     }
-
-
 }

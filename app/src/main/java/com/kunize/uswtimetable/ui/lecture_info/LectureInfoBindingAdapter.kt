@@ -44,29 +44,4 @@ object LectureInfoBindingAdapter {
             else -> textView.setTextColor(ContextCompat.getColor(textView.context ,R.color.custom_red))
         }
     }
-
-    @BindingAdapter("inflateType")
-    @JvmStatic
-    fun setLayout(constraintLayout: ConstraintLayout, resource: Int) {
-        val examInflater = LayoutInflater.from(constraintLayout.context)
-        when(resource) {
-            ExamInfoType.NOT_INFLATE -> constraintLayout.removeViews(1, constraintLayout.size - 1)
-            ExamInfoType.NEED_USE -> {
-                val v = examInflater.inflate(R.layout.hide_exam_info, constraintLayout, true)
-                val usePointBtn = v.findViewById<AppCompatButton>(R.id.usePointBtn)
-                usePointBtn.setOnClickListener{
-                    constraintLayout.removeViews(1, constraintLayout.size - 1)
-                    Toast.makeText(constraintLayout.context, "포인트 사용!", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else -> {
-                val v =examInflater.inflate(R.layout.no_exam_info, constraintLayout, true)
-                val writeExamBtn : AppCompatButton = v.findViewById(R.id.writeExamBtn)
-                writeExamBtn.setOnClickListener{
-                    //TODO 시험 정보 쓰기 화면으로 이동
-                    Toast.makeText(constraintLayout.context, "준비중", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
 }

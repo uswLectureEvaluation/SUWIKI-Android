@@ -276,13 +276,11 @@
                             android:id="@+id/lectureEvaluationRadioBtn"
                             style="@style/radiobutton_text_style"
                             android:checked="true"
-                            android:onClick="@{() -> lectureInfoViewModel.onEvaluationRadioBtnClick()}"
                             android:text="@string/lecture_evaluation" />
 
                         <RadioButton
                             android:id="@+id/examInfoRadioBtn"
                             style="@style/radiobutton_text_style"
-                            android:onClick="@{() -> lectureInfoViewModel.onExamRadioBtnClick()}"
                             android:text="@string/exam_info" />
 
                     </RadioGroup>
@@ -292,7 +290,6 @@
                     android:id="@+id/lectureInfoContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:inflateType="@{lectureInfoViewModel.inflateType}"
                     app:layout_constrainedHeight="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
