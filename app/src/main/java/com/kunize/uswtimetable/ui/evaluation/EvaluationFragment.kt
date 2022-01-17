@@ -67,7 +67,7 @@ class EvaluationFragment : Fragment() {
 
         //TODO 더보기 버튼 클릭 시 "정렬할 기준", "tags:ALL" 데이터를 가지고 프래그먼트 이동
         binding.moreBtn.setOnClickListener {
-            goToSearchResult(spinnerSel)
+            goToSearchResult("tags:ALL",spinnerSel)
         }
 
         binding.searchBtn.setOnClickListener {
@@ -116,9 +116,9 @@ class EvaluationFragment : Fragment() {
         return binding.root
     }
 
-    private fun goToSearchResult(now : Int = -1) {
+    private fun goToSearchResult(msg : String = binding.searchLecture.text.toString(), now : Int = 0) {
         val action =
-            EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(binding.searchLecture.text.toString(), now)
+            EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(msg, now)
         findNavController().navigate(action)
     }
 }

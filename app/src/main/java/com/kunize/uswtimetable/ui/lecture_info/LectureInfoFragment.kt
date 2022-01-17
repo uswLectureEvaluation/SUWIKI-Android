@@ -48,7 +48,7 @@ class LectureInfoFragment : Fragment() {
                 //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
                 lectureInfoViewModel.deleteLoading()
                 //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-                val newData = dummyData
+                val newData = dummyData.subList(0, 12)
                 lectureInfoViewModel.addData(ArrayList(newData))
             }
         }

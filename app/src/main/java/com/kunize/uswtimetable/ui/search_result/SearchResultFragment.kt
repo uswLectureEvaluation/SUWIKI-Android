@@ -35,7 +35,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
     //EvaluationFragment와 동일한 viewModel 사용
     private lateinit var viewModel: EvaluationViewModel
     private lateinit var sortBtn: MutableList<RadioButton>
-    var prevSelRadioButton: RadioButton? = null
+    val args: SearchResultFragmentArgs by navArgs()
 
     var msg = ""
     var prevSel = -1
@@ -52,7 +52,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         4. LectureInfoFragment에서 백스택을 통해 SearchResult로 돌아온 경우
         5. 아래 코드가 onCreateView()에 있다면 다시 "만족도"가 선택됨
          */
-        val args: SearchResultFragmentArgs by navArgs()
+
         msg = args.searchLectureName
         prevSel = args.sortType
     }
@@ -66,7 +66,6 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.setViewType(LectureItemViewType.SHORT)
-        viewModel.addData(ArrayList(dummyData.subList(0, 10)))
 
         binding.recyclerSearchResult.infiniteScrolls {
             CoroutineScope(Main).launch {
@@ -89,9 +88,12 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
 
 
         binding.searchLecture.apply {
-            setText(msg)
-            setSelection(msg.length)
-            //TODO 검색 결과에 맞는 데이터 받아온 후, changeData 수행
+            if(prevSel >= 0) {
+                setText(msg)
+                setSelection(msg.length)
+                //TODO 검색 결과에 맞는 데이터 받아온 후, changeData 수행
+                viewModel.changeData(ArrayList(dummyData.subList(1, 11)))
+            }
         }
 
         //TODO 검색 기능 추가
@@ -104,13 +106,10 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         sortBtn.forEach { btn ->
             if(prevSel == -1 && btn.isChecked) {
                 btn.text = btn.text.toString() + " ↑"
-                prevSelRadioButton = btn
             }
         }
 
         if(prevSel >= 0) {
-            Log.d("RadioSel","${sortBtn[prevSel].text.toString()} 클릭됨")
-            msg = "tags:ALL"
             sortBtn[prevSel].performClick()
             prevSel = -1
         }
@@ -121,12 +120,6 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         sortBtn.forEach { btn ->
             btn.text = btn.text.toString().split(" ")[0]
         }
-        if(prevSelRadioButton == radioBtn) {
-            binding.radioGroup.clearCheck()
-            prevSelRadioButton = null
-            return
-        }
-        prevSelRadioButton = radioBtn
         //TODO 클릭 될 때마다 새로운 데이터를 서버에서 받아오는 기능 추가
         val a = Random().nextInt(2)
         val b = Random().nextInt(6) + 2

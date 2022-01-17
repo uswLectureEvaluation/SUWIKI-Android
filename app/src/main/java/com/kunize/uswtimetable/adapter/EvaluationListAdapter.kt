@@ -71,7 +71,6 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun setData(data: EvaluationData) {
             with(binding) {
                 //viewType에 따라 뷰 숨김/보임 처리
-                //해당 로그가 없을 경우 가끔 적용되지 않음.
                 Log.d("viewType", "$viewType")
                 when (viewType) {
                     //강의평가 목록
