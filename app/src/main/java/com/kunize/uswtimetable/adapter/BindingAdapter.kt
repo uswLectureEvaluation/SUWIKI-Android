@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.adapter
 
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -37,5 +38,14 @@ object BindingAdapter {
             evaluationAdapter.notifyItemRangeInserted(prevItemSize + 1, newItemSize - prevItemSize + 1)
         else
             evaluationAdapter.notifyDataSetChanged()
+    }
+
+    @BindingAdapter("recyclerViewList")
+    @JvmStatic
+    fun setVisible(textView: TextView, items : java.util.ArrayList<EvaluationData?>) {
+        if(items.isEmpty())
+            textView.visibility = View.VISIBLE
+        else
+            textView.visibility = View.GONE
     }
 }

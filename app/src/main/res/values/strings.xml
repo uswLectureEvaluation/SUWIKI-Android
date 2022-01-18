@@ -51,6 +51,7 @@
     <string name="show_exam_info">시험 정보를 보려면</string>
     <string name="exam_point">20 POINT</string>
     <string name="need">가 필요해요</string>
+    <string name="no_data">데이터가 없어요</string>
 
     <!-- Login & Sign in -->
     <string name="login">로그인</string>

@@ -153,6 +153,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                style="@style/no_data_textview_style"
+                app:recyclerViewList="@{viewModel.evaluationList}" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSearchResult"
                 android:layout_width="match_parent"

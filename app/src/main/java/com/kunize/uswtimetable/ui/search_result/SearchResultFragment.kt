@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
+import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureItemViewType
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
@@ -73,7 +74,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
                 //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
                 viewModel.deleteLoading()
                 //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-                val newData = dummyData.subList(0, 10)
+                val newData = dummyData.subList(0, 0)
                 viewModel.addData(ArrayList(newData))
             }
         }
@@ -92,7 +93,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
                 setText(msg)
                 setSelection(msg.length)
                 //TODO 검색 결과에 맞는 데이터 받아온 후, changeData 수행
-                viewModel.changeData(ArrayList(dummyData.subList(1, 11)))
+                viewModel.changeData(ArrayList(dummyData.subList(0, 0)))
             }
         }
 
@@ -123,7 +124,9 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         //TODO 클릭 될 때마다 새로운 데이터를 서버에서 받아오는 기능 추가
         val a = Random().nextInt(2)
         val b = Random().nextInt(6) + 2
-        viewModel.changeData(ArrayList(dummyData.subList(a, b)))
+        val temp = ArrayList<EvaluationData?>()
+        temp.add(null)
+        viewModel.changeData(temp)
         radioBtn.text = radioBtn.text.toString() + " ↑"
     }
 }

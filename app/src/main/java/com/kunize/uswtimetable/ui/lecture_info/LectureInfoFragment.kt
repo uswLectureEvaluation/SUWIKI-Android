@@ -50,7 +50,7 @@ class LectureInfoFragment : Fragment() {
             lectureInfoViewModel.deleteLoading()
             //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
             val newData = dummyData.subList(0, 12)
-            lectureInfoViewModel.addData(ArrayList(newData))
+            //lectureInfoViewModel.addData(ArrayList(newData))
         }
 
         //넘어온 데이터 (강의명, 교수명)
