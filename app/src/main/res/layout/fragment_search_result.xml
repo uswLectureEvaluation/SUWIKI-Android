@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel" />
@@ -155,7 +155,7 @@
 
             <TextView
                 style="@style/no_data_textview_style"
-                app:recyclerViewList="@{viewModel.evaluationList}" />
+                android:visibility="@{viewModel.evaluationList.empty ? View.VISIBLE : View.GONE}" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSearchResult"

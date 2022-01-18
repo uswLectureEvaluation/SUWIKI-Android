@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="lectureInfoViewModel"
             type="com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel" />
@@ -302,7 +302,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:recyclerViewList="@{lectureInfoViewModel.evaluationList}" />
+                        android:visibility="@{lectureInfoViewModel.evaluationList.empty ? View.VISIBLE : View.GONE}" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/infoRecyclerView"

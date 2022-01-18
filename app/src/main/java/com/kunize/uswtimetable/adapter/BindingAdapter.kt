@@ -39,13 +39,4 @@ object BindingAdapter {
         else
             evaluationAdapter.notifyDataSetChanged()
     }
-
-    @BindingAdapter("recyclerViewList")
-    @JvmStatic
-    fun setVisible(textView: TextView, items : java.util.ArrayList<EvaluationData?>) {
-        if(items.isEmpty())
-            textView.visibility = View.VISIBLE
-        else
-            textView.visibility = View.GONE
-    }
 }
