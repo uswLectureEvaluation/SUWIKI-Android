@@ -1,7 +1,7 @@
 package com.kunize.uswtimetable.dataclass
 
-import java.io.Serializable
+import com.google.gson.annotations.SerializedName
 
 data class SignUpSchoolCheckFormat(
-    val student_certification: String
-): Serializable
+    @SerializedName("success") val student_certification: String
+)

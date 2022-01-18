@@ -18,7 +18,7 @@ import com.kunize.uswtimetable.databinding.FragmentMoreBinding
 import com.kunize.uswtimetable.login.FindIdActivity
 import com.kunize.uswtimetable.login.FindPasswordActivity
 import com.kunize.uswtimetable.login.LoginActivity
-import com.kunize.uswtimetable.login.SignInActivity
+import com.kunize.uswtimetable.signup.SignUpActivity
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 
 class MoreFragment : Fragment() {
@@ -190,7 +190,7 @@ class MoreFragment : Fragment() {
     }
 
     private fun signIn(context: Context) {
-        val intent = Intent(context, SignInActivity::class.java)
+        val intent = Intent(context, SignUpActivity::class.java)
         startActivity(intent)
     }
 
