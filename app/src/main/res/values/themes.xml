@@ -16,6 +16,12 @@
         <item name="android:windowBackground">@color/background</item>
     </style>
 
+    <!-- Splash 화면 테마 -->
+    <style name="Theme.Uswtimetable.Splash">
+        <item name="android:statusBarColor">@color/background_start</item>
+        <item name="android:windowBackground">@color/background_start</item>
+    </style>
+
     <style name="ThemeOverlay.Uswtimetable.AppWidgetContainer" parent="">
         <item name="appWidgetBackgroundColor">@color/light_blue_600</item>
         <item name="appWidgetTextColor">@color/light_blue_50</item>

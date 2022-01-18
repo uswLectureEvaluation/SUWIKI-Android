@@ -48,6 +48,7 @@
         <activity android:name=".OpenSourceActivity" />
         <activity
             android:name=".StartActivity"
+            android:theme="@style/Theme.Uswtimetable.Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
