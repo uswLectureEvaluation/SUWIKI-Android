@@ -16,7 +16,9 @@ import com.kunize.uswtimetable.adapter.NoticeAdapter
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.dataclass.NoticeDto
+import com.kunize.uswtimetable.retrofit.RetrofitManager
 import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.ResponseState
 
 class NoticeListFragment : Fragment() {
 
@@ -25,6 +27,9 @@ class NoticeListFragment : Fragment() {
     private lateinit var viewModel: NoticeListViewModel
     private lateinit var adapter: NoticeAdapter
     private var notices = listOf<NoticeDto>()
+    private val retrofit: RetrofitManager by lazy {
+        RetrofitManager.instance
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +45,17 @@ class NoticeListFragment : Fragment() {
 
         adapter = NoticeAdapter { notice ->
             Log.d(TAG, "NoticeListFragment - ${notice.title} clicked")
+
+            retrofit.getNotice(notice.id.toInt(), completion = { state, result ->
+                when(state) {
+                    ResponseState.OK -> {
+                        Log.d(TAG, "NoticeListFragment - 공지 수신 성공: $result")
+                    }
+                    ResponseState.FAIL -> {
+                        Log.d(TAG, "NoticeListFragment - 공지 수신 실패: $result")
+                    }
+                }
+            })
 
             // TODO 통신 후 실제 데이터로 교체
             val fakeNotice = NoticeDetailDto(
