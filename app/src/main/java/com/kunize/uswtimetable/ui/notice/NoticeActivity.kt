@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
@@ -22,7 +23,7 @@ class NoticeActivity : AppCompatActivity() {
         binding = ActivityNoticeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolBar.setNavigationOnClickListener {
-            finish()
+            this.findNavController(R.id.fragment_container).popBackStack()
         }
     }
 
