@@ -56,7 +56,6 @@ open class EvaluationViewModel : ViewModel() {
     }
 
     fun setViewType(type : Int) {
-        changeData(arrayListOf())
         _viewType.value = type
     }
 }

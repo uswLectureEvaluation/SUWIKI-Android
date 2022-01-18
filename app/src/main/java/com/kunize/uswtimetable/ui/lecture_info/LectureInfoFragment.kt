@@ -63,6 +63,7 @@ class LectureInfoFragment : Fragment() {
 
             lectureEvaluationRadioBtn.setOnClickListener {
                 //TODO 서버로 부터 강의평가 데이터 받아오기
+                lectureInfoViewModel?.changeData(arrayListOf())
                 lectureInfoViewModel?.setViewType(LectureItemViewType.LECTURE)
                 lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
             }
@@ -70,12 +71,14 @@ class LectureInfoFragment : Fragment() {
 
             examInfoRadioBtn.setOnClickListener {
                 lectureInfoViewModel?.setViewType(LectureItemViewType.HIDE_EXAM)
+                lectureInfoViewModel?.changeData(arrayListOf())
                 //TODO 서버로 부터 시험 정보 데이터 받아오기
-                val type = ExamInfoType.NO_DATA
+                val type = ExamInfoType.NEED_USE
                 val examInflater = LayoutInflater.from(context)
                 when (type) {
                     ExamInfoType.NOT_INFLATE -> {
                         lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+                        lectureInfoViewModel?.changeData(arrayListOf())
                         lectureInfoViewModel?.setViewType(LectureItemViewType.EXAM)
                     }
                     ExamInfoType.NEED_USE -> {
@@ -83,6 +86,7 @@ class LectureInfoFragment : Fragment() {
                         val usePointBtn = v.findViewById<AppCompatButton>(R.id.usePointBtn)
                         usePointBtn.setOnClickListener {
                             lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+                            lectureInfoViewModel?.changeData(arrayListOf())
                             lectureInfoViewModel?.setViewType(LectureItemViewType.EXAM)
                             Toast.makeText(activity, "포인트 사용!", Toast.LENGTH_SHORT).show()
                         }
