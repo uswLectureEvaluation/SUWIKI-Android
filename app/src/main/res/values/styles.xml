@@ -219,6 +219,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="exam_type_layout_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingTop">@dimen/exam_type_padding</item>
+        <item name="android:paddingBottom">@dimen/exam_type_padding</item>
+        <item name="android:background">@color/blur_white</item>
+    </style>
+
     <!-- Text Styles  -->
     <style name="Headline4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="android:textColor">@color/black</item>
