@@ -43,8 +43,7 @@
             android:minHeight="200dp"
             android:inputType="textMultiLine"
             style="@style/TextBody2"
-            tools:text="공지사항의 본문이 들어가는 부분입니다. "
-            />
+            tools:text="공지사항의 본문이 들어가는 부분입니다. " />
 
         <View
             android:id="@+id/bottom_divider"

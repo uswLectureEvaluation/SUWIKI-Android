@@ -9,7 +9,7 @@
         android:id="@+id/noticeListFragment"
         android:name="com.kunize.uswtimetable.ui.notice.NoticeListFragment"
         android:label="notice_list_fragment"
-        tools:layout="@layout/notice_list_fragment" >
+        tools:layout="@layout/fragment_notice_list" >
         <action
             android:id="@+id/action_noticeListFragment_to_noticeDetailFragment"
             app:destination="@id/noticeDetailFragment"
@@ -19,7 +19,7 @@
         android:id="@+id/noticeDetailFragment"
         android:name="com.kunize.uswtimetable.ui.notice.NoticeDetailFragment"
         android:label="notice_detail_fragment"
-        tools:layout="@layout/notice_detail_fragment" >
+        tools:layout="@layout/fragment_notice_detail" >
         <argument
             android:name="detailNotice"
             app:argType="com.kunize.uswtimetable.dataclass.NoticeDetailDto" />

@@ -13,14 +13,14 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.NoticeAdapter
-import com.kunize.uswtimetable.databinding.NoticeListFragmentBinding
+import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeListFragment : Fragment() {
 
-    private var _binding: NoticeListFragmentBinding? = null
+    private var _binding: FragmentNoticeListBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: NoticeListViewModel
     private lateinit var adapter: NoticeAdapter
@@ -30,7 +30,7 @@ class NoticeListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NoticeListFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentNoticeListBinding.inflate(inflater, container, false)
 
         return binding.root
     }

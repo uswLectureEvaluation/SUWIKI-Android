@@ -7,20 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.NoticeDetailFragmentBinding
+import com.kunize.uswtimetable.databinding.FragmentNoticeDetailBinding
 import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeDetailFragment : Fragment() {
-    private var _binding: NoticeDetailFragmentBinding? = null
-    private val binding: NoticeDetailFragmentBinding get() = _binding!!
+    private var _binding: FragmentNoticeDetailBinding? = null
+    private val binding: FragmentNoticeDetailBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NoticeDetailFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentNoticeDetailBinding.inflate(inflater, container, false)
 
         val noticeData = arguments?.getSerializable("noticeData") as NoticeDetailDto
         with(binding) {
