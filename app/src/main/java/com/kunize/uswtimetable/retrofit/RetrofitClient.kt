@@ -22,7 +22,7 @@ object RetrofitClient {
         /* 로깅 인터셉터 추가 */
         val client = OkHttpClient.Builder() // OKHttp 클라이언트
         val loggingInterceptor = HttpLoggingInterceptor { message ->
-            Log.d(TAG, "RetrofitClient - log() called / message: $message")
+//            Log.d(TAG, "RetrofitClient - log() called / message: $message")
             when {
                 message.isJsonObject() ->
                     Log.d(TAG, JSONObject(message).toString(4))
@@ -32,7 +32,7 @@ object RetrofitClient {
                     try {
                         Log.d(TAG, JSONObject(message).toString(4))
                     } catch (e: Exception) {
-                        Log.d(TAG, message)
+                        Log.d(TAG, "CONNECTION INFO -> $message")
                     }
             }
         }
