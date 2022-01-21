@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.more
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
 class MoreViewModel : ViewModel() {
@@ -12,7 +13,10 @@ class MoreViewModel : ViewModel() {
     val id get() = _id
 
     private var _point = MutableLiveData<Int>()
-    val point: LiveData<Int> get() = _point
+
+    val point: LiveData<String> = Transformations.map(_point) { point ->
+        "$point P"
+    }
 
     private var _myEvaluationCount = MutableLiveData<Int>()
     val myEvaluationCount: LiveData<Int> get() = _myEvaluationCount
@@ -25,12 +29,33 @@ class MoreViewModel : ViewModel() {
 
     private var _myEvaluationPoint = MutableLiveData<Int>()
     val myEvaluationPoint: LiveData<Int> get() = _myEvaluationPoint
+    val myEvaluationPointText: LiveData<String> = Transformations.map(_myEvaluationPoint) { point ->
+        if (point >= 0) {
+            "(+$point)"
+        } else {
+            "($point)"
+        }
+    }
 
     private var _myExamInfoPoint = MutableLiveData<Int>()
     val myExamInfoPoint: LiveData<Int> get() = _myExamInfoPoint
+    val myExamInfoPointText: LiveData<String> = Transformations.map(_myExamInfoPoint) { point ->
+        if (point >= 0) {
+            "(+$point)"
+        } else {
+            "($point)"
+        }
+    }
 
     private var _openedExamPoint = MutableLiveData<Int>()
     val openedExamPoint: LiveData<Int> get() = _openedExamPoint
+    val openedExamPointText: LiveData<String> = Transformations.map(_openedExamPoint) { point ->
+        if (point >= 0) {
+            "(+$point)"
+        } else {
+            "($point)"
+        }
+    }
 
     init {
         _loggedIn.value = false

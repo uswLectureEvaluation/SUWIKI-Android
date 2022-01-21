@@ -23,7 +23,6 @@ import com.kunize.uswtimetable.ui.notice.NoticeActivity
 
 class MoreFragment : Fragment() {
     private lateinit var viewModel: MoreViewModel
-    private lateinit var viewModelFactory: MoreViewModelFactory
     private lateinit var binding: FragmentMoreBinding
 
     override fun onCreateView(
@@ -32,12 +31,11 @@ class MoreFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
 
-
         incomplete(requireContext())
         initViews(requireContext())
 
-        viewModelFactory = MoreViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory)[MoreViewModel::class.java]
+        viewModel = ViewModelProvider(this)[MoreViewModel::class.java]
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         viewModel.loggedIn.observe(viewLifecycleOwner, { isLoggedIn ->
@@ -45,36 +43,6 @@ class MoreFragment : Fragment() {
                 loggedIn()
             } else {
                 loggedOut()
-            }
-        })
-
-        viewModel.myEvaluationPoint.observe(viewLifecycleOwner,  { point ->
-            if (point >= 0) {
-                binding.myEvaluationsPoint.text = "(+$point)"
-                binding.myEvaluationsPoint.setTextColor(Color.RED)
-            } else {
-                binding.myEvaluationsPoint.text = "($point)"
-                binding.myEvaluationsPoint.setTextColor(Color.BLUE)
-            }
-        })
-
-        viewModel.myExamInfoPoint.observe(viewLifecycleOwner, { point ->
-            if (point >= 0) {
-                binding.myExamInformationPoint.text = "(+$point)"
-                binding.myExamInformationPoint.setTextColor(Color.RED)
-            } else {
-                binding.myExamInformationPoint.text = "($point)"
-                binding.myExamInformationPoint.setTextColor(Color.BLUE)
-            }
-        })
-
-        viewModel.openedExamPoint.observe(viewLifecycleOwner, { point ->
-            if (point >= 0) {
-                binding.openedExamPoint.text = "(+$point)"
-                binding.openedExamPoint.setTextColor(Color.RED)
-            } else {
-                binding.openedExamPoint.text = "($point)"
-                binding.openedExamPoint.setTextColor(Color.BLUE)
             }
         })
 

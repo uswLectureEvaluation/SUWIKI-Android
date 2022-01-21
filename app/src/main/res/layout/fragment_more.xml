@@ -112,7 +112,7 @@
                                 android:background="@drawable/border_circle"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="@{@string/total_point(viewModel.point)}"
+                                android:text="@{viewModel.point}"
                                 android:textColor="#F00"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="W, 1:1"
@@ -168,6 +168,8 @@
                                         style="@style/TextCaption2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:text="@{viewModel.myEvaluationPointText}"
+                                        android:textColor="@{viewModel.myEvaluationPoint >= 0 ? @color/red : @color/blue}"
                                         tools:text="(+100P)"
                                         tools:textColor="#F00" />
 
@@ -197,6 +199,8 @@
                                         style="@style/TextCaption2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:text="@{viewModel.myExamInfoPointText}"
+                                        android:textColor="@{viewModel.myExamInfoPoint >= 0 ? @color/red : @color/blue}"
                                         tools:text="(+40P)"
                                         tools:textColor="#F00" />
 
@@ -227,6 +231,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         tools:text="(-40P)"
+                                        android:textColor="@{viewModel.openedExamPoint >= 0 ? @color/red : @color/blue}"
+                                        android:text="@{viewModel.openedExamPointText}"
                                         tools:textColor="#00F" />
                                 </LinearLayout>
                             </androidx.constraintlayout.widget.ConstraintLayout>
