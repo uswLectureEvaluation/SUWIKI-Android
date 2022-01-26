@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.retrofit.RetrofitManager
 import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.ConnectionManager
 import com.kunize.uswtimetable.util.ResponseState
 
 class NoticeListFragment : Fragment() {
@@ -75,15 +77,22 @@ class NoticeListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[NoticeListViewModel::class.java]
 
-        viewModel.selectedNotice.observe(viewLifecycleOwner, {
-        })
+        val isConnected = ConnectionManager.isConnected(requireContext())
+        if (isConnected) {
+            viewModel.selectedNotice.observe(viewLifecycleOwner, {
+            })
 
-        viewModel.noticeList.observe(viewLifecycleOwner, {
-            notices = it
-            adapter.submitList(notices)
+            viewModel.noticeList.observe(viewLifecycleOwner, {
+                notices = it
+                adapter.submitList(notices)
+                binding.loading.isGone = true
+                binding.noticeRecyclerView.scrollToPosition(notices.size - 1)
+            })
+        } else {
             binding.loading.isGone = true
-            binding.noticeRecyclerView.scrollToPosition(notices.size - 1)
-        })
+            Toast.makeText(requireContext(), "인터넷이 연결되지 않았습니다", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onDestroyView() {
