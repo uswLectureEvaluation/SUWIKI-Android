@@ -37,6 +37,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/finishButton"
                     style="@style/blue_button_style"
                     android:text="@string/write_lecture_info"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -66,16 +67,16 @@
                     style="@style/lecture_name_large_style"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="강의 이름"/>
+                    tools:text="강의 이름" />
 
                 <TextView
                     android:id="@+id/writeProfessor"
                     style="@style/professor_large_style"
                     android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="@id/writeLectureName"
                     app:layout_constraintStart_toEndOf="@id/writeLectureName"
                     app:layout_constraintTop_toTopOf="@id/writeLectureName"
-                    app:layout_constraintBottom_toBottomOf="@id/writeLectureName"
-                    tools:text="교수 이름"/>
+                    tools:text="교수 이름" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/writeDetailLayout"
@@ -270,7 +271,7 @@
                             android:text="@string/not_exist" />
 
                         <RadioButton
-                            android:id="@+id/teamExistRadioButton2"
+                            android:id="@+id/teamExistRadioButton"
                             style="@style/write_radiobutton_text_style"
                             android:text="@string/exist" />
                     </RadioGroup>
@@ -332,19 +333,21 @@
 
                 <EditText
                     android:id="@+id/writeContent"
-                    tools:hint="샘플 힌트 입니다 ~"
-                    android:textSize="16sp"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@null"
+                    android:background="@drawable/border_corner8_gray"
                     android:ems="10"
                     android:gravity="top"
-                    android:inputType="text"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:inputType="textMultiLine"
+                    android:minHeight="400dp"
+                    android:padding="@dimen/cardview_short_padding"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/writeDetailLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/writeDetailLayout"
+                    tools:hint="샘플 힌트 입니다 ~" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

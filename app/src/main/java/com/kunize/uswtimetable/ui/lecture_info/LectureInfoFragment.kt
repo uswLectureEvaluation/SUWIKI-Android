@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
@@ -105,7 +106,16 @@ class LectureInfoFragment : Fragment() {
                 lectureInfoViewModel?.changeWriteBtnText(R.string.write_exam)
             }
 
-            return binding.root
+            writeBtn.setOnClickListener {
+                goToWriteFragment()
+            }
         }
+        return binding.root
+    }
+
+    private fun goToWriteFragment() {
+        val action =
+            LectureInfoFragmentDirections.actionLectureInfoFragmentToWriteFragment()
+        findNavController().navigate(action)
     }
 }
