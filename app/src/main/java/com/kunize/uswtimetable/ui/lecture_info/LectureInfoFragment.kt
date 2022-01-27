@@ -66,6 +66,7 @@ class LectureInfoFragment : Fragment() {
                 lectureInfoViewModel?.changeData(arrayListOf())
                 lectureInfoViewModel?.setViewType(LectureItemViewType.LECTURE)
                 lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+                lectureInfoViewModel?.changeWriteBtnText(R.string.write_evaluation)
             }
 
 

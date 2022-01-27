@@ -52,17 +52,9 @@
 
                             <EditText
                                 android:id="@+id/searchLecture"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                style="@style/search_style"
                                 android:background="@null"
-                                android:ellipsize="end"
-                                android:ems="10"
                                 android:hint="@string/search_evaluation_hint"
-                                android:imeActionLabel="검색"
-                                android:imeOptions="actionSearch"
-                                android:inputType="text"
-                                android:padding="10dp"
-                                android:textSize="14sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/searchBtn"
                                 app:layout_constraintHorizontal_chainStyle="packed"

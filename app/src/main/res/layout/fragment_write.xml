@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            app:navigationIcon="@drawable/ic_back">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp">
+
+                <TextView
+                    android:id="@+id/writeType"
+                    style="@style/TextTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/write_evaluation"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/blue_button_style"
+                    android:text="@string/write_lecture_info"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/page_padding">
+
+                <TextView
+                    android:id="@+id/writeLectureName"
+                    style="@style/lecture_name_large_style"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="강의 이름"/>
+
+                <TextView
+                    android:id="@+id/writeProfessor"
+                    style="@style/professor_large_style"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toEndOf="@id/writeLectureName"
+                    app:layout_constraintTop_toTopOf="@id/writeLectureName"
+                    app:layout_constraintBottom_toBottomOf="@id/writeLectureName"
+                    tools:text="교수 이름"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/writeDetailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edge_bottom"
+                    android:paddingBottom="@dimen/page_padding"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/writeProfessor">
+
+                    <TextView
+                        android:id="@+id/writeSelYearTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:text="@string/sel_year"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/writeYearSemesterSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeSelYearTextView"
+                        app:layout_constraintStart_toEndOf="@+id/writeSelYearTextView"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/writeHoneyTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/honey_score"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/writeSelYearTextView" />
+
+                    <TextView
+                        android:id="@+id/writeLearningTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/learning_score"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/writeHoneyTextView" />
+
+                    <TextView
+                        android:id="@+id/writeSatisfactionTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/satisfaction"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/writeLearningTextView" />
+
+                    <TextView
+                        android:id="@+id/writeTeamTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/team_meeting"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/writeSatisfactionTextView" />
+
+                    <TextView
+                        android:id="@+id/writeTaskTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/task"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/writeTeamTextView" />
+
+                    <TextView
+                        android:id="@+id/writeGradeTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/grade"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/writeTaskTextView" />
+
+                    <SeekBar
+                        android:id="@+id/honeySeekBar"
+                        style="@style/custom_seekbar_style"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:progressDrawable="@drawable/honey_progress"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeHoneyTextView"
+                        app:layout_constraintEnd_toStartOf="@+id/writeHoneyScore"
+                        app:layout_constraintStart_toEndOf="@+id/writeHoneyTextView"
+                        app:layout_constraintTop_toTopOf="@+id/writeHoneyTextView"
+                        tools:progress="3" />
+
+                    <SeekBar
+                        android:id="@+id/learningSeekBar"
+                        style="@style/custom_seekbar_style"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:progressDrawable="@drawable/learning_progress"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeLearningTextView"
+                        app:layout_constraintEnd_toStartOf="@+id/writeLearningScore"
+                        app:layout_constraintStart_toEndOf="@+id/writeLearningTextView"
+                        app:layout_constraintTop_toTopOf="@+id/writeLearningTextView"
+                        tools:progress="3" />
+
+                    <SeekBar
+                        android:id="@+id/satisfactionSeekBar"
+                        style="@style/custom_seekbar_style"
+                        android:progressDrawable="@drawable/satisfaction_progress"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeSatisfactionTextView"
+                        app:layout_constraintEnd_toEndOf="@+id/learningSeekBar"
+                        app:layout_constraintStart_toStartOf="@+id/learningSeekBar"
+                        app:layout_constraintTop_toTopOf="@+id/writeSatisfactionTextView"
+                        tools:progress="3" />
+
+                    <TextView
+                        android:id="@+id/writeHoneyScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_marginEnd="4dp"
+                        android:minHeight="0dp"
+                        android:textColor="@color/custom_yellow"
+                        app:layout_constraintBottom_toBottomOf="@+id/honeySeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView1"
+                        app:layout_constraintTop_toTopOf="@+id/honeySeekBar"
+                        tools:text="3.5" />
+
+                    <TextView
+                        android:id="@+id/writeLearningScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:textColor="@color/custom_red"
+                        app:layout_constraintBottom_toBottomOf="@+id/learningSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
+                        app:layout_constraintTop_toTopOf="@+id/learningSeekBar"
+                        tools:text="3.5" />
+
+                    <TextView
+                        android:id="@+id/writeSatisfactionScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:textColor="@color/custom_blue"
+                        app:layout_constraintBottom_toBottomOf="@+id/satisfactionSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
+                        app:layout_constraintTop_toTopOf="@+id/satisfactionSeekBar"
+                        tools:text="3.5" />
+
+                    <TextView
+                        android:id="@+id/scoreTextView1"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeHoneyScore"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/scoreTextView"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeLearningScore"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/scoreTextView2"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeSatisfactionScore"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <RadioGroup
+                        android:id="@+id/teamRadioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeTeamTextView"
+                        app:layout_constraintStart_toStartOf="@+id/satisfactionSeekBar"
+                        app:layout_constraintTop_toTopOf="@+id/writeTeamTextView">
+
+                        <RadioButton
+                            android:id="@+id/teamNotExistRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/not_exist" />
+
+                        <RadioButton
+                            android:id="@+id/teamExistRadioButton2"
+                            style="@style/write_radiobutton_text_style"
+                            android:text="@string/exist" />
+                    </RadioGroup>
+
+                    <RadioGroup
+                        android:id="@+id/taskRadioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeTaskTextView"
+                        app:layout_constraintStart_toStartOf="@+id/teamRadioGroup"
+                        app:layout_constraintTop_toTopOf="@+id/writeTaskTextView">
+
+                        <RadioButton
+                            android:id="@+id/taskExistRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/not_exist" />
+
+                        <RadioButton
+                            android:id="@+id/taskNormalRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/normal" />
+
+                        <RadioButton
+                            android:id="@+id/taskManyRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:text="@string/many" />
+                    </RadioGroup>
+
+                    <RadioGroup
+                        android:id="@+id/gradeRadioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeGradeTextView"
+                        app:layout_constraintStart_toStartOf="@+id/taskRadioGroup"
+                        app:layout_constraintTop_toTopOf="@+id/writeGradeTextView">
+
+                        <RadioButton
+                            android:id="@+id/gradeDifficultRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/difficult" />
+
+                        <RadioButton
+                            android:id="@+id/gradeNormalRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/normal" />
+
+                        <RadioButton
+                            android:id="@+id/gradeGoodRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:text="@string/good" />
+                    </RadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <EditText
+                    android:id="@+id/writeContent"
+                    tools:hint="샘플 힌트 입니다 ~"
+                    android:textSize="16sp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:inputType="text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/writeDetailLayout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
