@@ -93,5 +93,9 @@
     <string name="back_to_list">목록으로</string>
 
     <string name="floatToStr">%.1f</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back">뒤로</string>
+    <string name="next">다음</string>
 
 </resources>
