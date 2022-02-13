@@ -7,25 +7,30 @@
     <fragment
         android:id="@+id/signUpFragment1"
         android:name="com.kunize.uswtimetable.signup.SignUpFragment1"
-        android:label="fragment_sign_up1"
+        android:label="회원 가입 1/2"
         tools:layout="@layout/fragment_sign_up1">
         <action
             android:id="@+id/action_signUpFragment1_to_signUpFragment2"
-            app:destination="@id/signUpFragment2" />
+            app:destination="@id/signUpFragment2"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/signUpFragment1"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment2"
         android:name="com.kunize.uswtimetable.signup.SignUpFragment2"
-        android:label="fragment_sign_up2"
-        tools:layout="@layout/fragment_sign_up2" >
-        <argument android:name="user_id"
+        android:label="회원 가입 2/2"
+        tools:layout="@layout/fragment_sign_up2">
+        <argument
+            android:name="user_id"
             app:argType="string" />
         <argument
             android:name="user_pw"
             app:argType="string" />
         <argument
             android:name="term_checked"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 </navigation>

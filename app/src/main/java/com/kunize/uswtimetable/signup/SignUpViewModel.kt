@@ -36,9 +36,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
         id: String,
         pw: String,
         pwAgain: String,
-        term: Boolean,
-        email: String,
-        certNum: String
+        term: Boolean
     ) {
         when {
             checkIdLength(id).not() -> {
@@ -56,7 +54,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
             isPwAgainValid(pw, pwAgain).not() -> {
                 _signupForm.value = SignUpFormState(pwAgainError = R.string.invalid_pw_again)
             }
-            hasBlank(id, pw, pwAgain, email, certNum) -> {
+            hasBlank(id, pw, pwAgain) -> {
                 _signupForm.value = SignUpFormState(hasBlank = R.string.has_blank)
             }
             term.not() -> {
@@ -108,11 +106,8 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
     private fun hasBlank(
         id: String,
         pw: String,
-        pwAgain: String,
-        email: String,
-        certNum: String
+        pwAgain: String
     ): Boolean {
-        return id.isBlank() || pw.isBlank() ||
-                pwAgain.isBlank() || email.isBlank() || certNum.isBlank()
+        return id.isBlank() || pw.isBlank() || pwAgain.isBlank()
     }
 }

@@ -18,6 +18,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/signUp1Container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -80,7 +81,7 @@
                     android:id="@+id/et_pw_again"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLength="@{constants.PW_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -100,9 +101,13 @@
             style="@style/Button.Bold"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/next" />
+            android:background="@drawable/custom_ripple_light_blue_button"
+            app:layout_anchor="@id/signUp1Container"
+            app:layout_anchorGravity="bottom|end"
+            android:enabled="true"
+            android:text="@string/next"
+            android:textColor="@color/white" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

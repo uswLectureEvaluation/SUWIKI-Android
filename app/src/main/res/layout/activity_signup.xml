@@ -28,15 +28,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationIcon="@drawable/ic_back"
-                android:background="@color/background">
-
-                <TextView
-                    style="@style/TextTitle.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sign_in" />
-
-            </androidx.appcompat.widget.Toolbar>
+                app:title="@string/sign_in"
+                app:titleTextAppearance="@style/TextTitle.Bold"
+                android:background="@color/background" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

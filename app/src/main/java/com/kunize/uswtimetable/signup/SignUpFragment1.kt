@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.util.Constants
@@ -58,6 +59,7 @@ class SignUpFragment1 : Fragment() {
                 idEditText.isErrorEnabled = state.idError != null
                 passwordEditText.isErrorEnabled = state.pwError != null
                 passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
+                nextButton.isEnabled = state.isDataValid
             }
         })
 
@@ -71,12 +73,11 @@ class SignUpFragment1 : Fragment() {
         binding.nextButton.setOnClickListener {
             // TODO 아이디, 비밀번호, 체크 확인
             val action = SignUpFragment1Directions.actionSignUpFragment1ToSignUpFragment2("", "", true)
-            activity.navController.navigate(action)
+            findNavController().navigate(action)
         }
     }
 
     private fun initViews() {
-        activity.progress.progress = 50
 
         with(binding) {
             etId.afterTextChanged {
@@ -131,9 +132,7 @@ class SignUpFragment1 : Fragment() {
                 id = etId.text.toString(),
                 pw = etPw.text.toString(),
                 pwAgain = etPwAgain.text.toString(),
-                term = terms.isChecked,
-                email = "",
-                certNum = ""
+                term = terms.isChecked
             )
         }
     }

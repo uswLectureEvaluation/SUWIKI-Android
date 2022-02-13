@@ -13,27 +13,28 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/signUpCoordiLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="@dimen/page_padding">
 
-        <LinearLayout
-            android:id="@+id/SignUpFragment2"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/signUp2Container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            app:layout_dodgeInsetEdges="bottom"
+            android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailEditText"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:hint="@string/school_email"
                 app:helperText="메일로 인증 번호를 전송합니다"
                 app:layout_constraintBottom_toTopOf="@+id/certificationNumberEditText"
-                app:layout_constraintEnd_toStartOf="@id/sendCertificationNumberButton"
+                app:layout_constraintEnd_toStartOf="@id/sendCertNumButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
@@ -48,26 +49,28 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/sendCertificationNumberButton"
+                android:id="@+id/sendCertNumButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/custom_ripple_light_blue_button"
+                android:layout_height="48dp"
                 android:enabled="false"
-                android:imeOptions="actionSend"
-                android:minHeight="36dp"
-                android:padding="8dp"
-                android:text="인증 번호 전송"
-                android:textColor="@color/white" />
+                android:contentDescription="인증 번호 전송"
+                android:drawableEnd="@drawable/ic_send"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:enabled="true"
+                android:text="SEND"
+                app:layout_constraintTop_toTopOf="@id/emailEditText" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/certificationNumberEditText"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:hint="인증 번호 입력">
+                android:hint="인증 번호 입력"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emailEditText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_certification"
@@ -76,18 +79,20 @@
                     android:inputType="number"
                     android:nextFocusForward="@id/certificationButton" />
             </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signUpButton"
             style="@style/Button.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="16dp"
             android:background="@drawable/custom_ripple_light_blue_button"
+            android:enabled="false"
             android:text="인증 및 회원 가입"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:layout_anchor="@id/signUp2Container"
+            app:layout_anchorGravity="bottom" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

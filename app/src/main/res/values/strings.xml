@@ -69,7 +69,7 @@
     <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
     <string name="need_login">로그인이 필요합니다</string>
     <string name="school_domain">\@suwon.ac.kr</string>
-    <string name="go_to_mail_homepage"><u>학교 메일 홈페이지로 이동</u></string>
+    <string name="go_to_mail_homepage">학교 메일 홈페이지로 이동</string>
     <string name="invalid_id">아이디가 올바르지 않습니다</string>
     <string name="invalid_pw">문자, 숫자, 특수 문자를 조합하세요</string>
     <string name="login_fail">로그인 실패</string>
@@ -93,8 +93,6 @@
     <string name="back_to_list">목록으로</string>
 
     <string name="floatToStr">%.1f</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="back">뒤로</string>
     <string name="next">다음</string>
 
