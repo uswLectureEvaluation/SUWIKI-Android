@@ -24,14 +24,6 @@ class SignUpFragment1 : Fragment() {
     val binding: FragmentSignUp1Binding get() = _binding!!
     private lateinit var viewModel: SignUpViewModel
 
-    //    private val imm by lazy { getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager }
-    private val activity by lazy {
-        when(requireActivity()) {
-            is SignUpActivity -> requireActivity() as SignUpActivity
-            else -> requireActivity() as SignUpActivity
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,8 +64,13 @@ class SignUpFragment1 : Fragment() {
     private fun initButton() {
         binding.nextButton.setOnClickListener {
             // TODO 아이디, 비밀번호, 체크 확인
-            val action = SignUpFragment1Directions.actionSignUpFragment1ToSignUpFragment2("", "", true)
-            findNavController().navigate(action)
+            if (viewModel.signupFormState.value?.isDataValid == null) {
+                val userId = binding.etId.text.toString()
+                val userPw = binding.etPw.text.toString()
+                val action =
+                    SignUpFragment1Directions.actionSignUpFragment1ToSignUpFragment2(userId, userPw, true)
+                findNavController().navigate(action)
+            }
         }
     }
 

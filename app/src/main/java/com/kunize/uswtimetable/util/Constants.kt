@@ -10,6 +10,7 @@ object Constants {
     const val ID_COUNT_LIMIT = 20
     const val PW_COUNT_LIMIT = 24
     const val SCHOOL_DOMAIN = "suwon.ac.kr"
+    const val SCHOOL_DOMAIN_AT = "@suwon.ac.kr"
     const val NUMBER_OF_YEAR = 6
     const val SEMESTER_1_START = 1
     const val SEMESTER_1_END = 6

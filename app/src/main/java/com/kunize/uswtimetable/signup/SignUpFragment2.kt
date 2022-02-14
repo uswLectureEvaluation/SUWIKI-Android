@@ -6,26 +6,28 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
 import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 
 class SignUpFragment2 : Fragment() {
     private var _binding: FragmentSignUp2Binding? = null
+    private val args: SignUpFragment2Args by navArgs()
     val binding: FragmentSignUp2Binding get() = _binding!!
 
     private lateinit var viewModel: SignUpViewModel
@@ -51,7 +53,6 @@ class SignUpFragment2 : Fragment() {
             }
             sendCertNumButton.setOnClickListener {
                 floatEmailSendDialog(requireContext(), etMail.text.toString())
-//                homepageButton.visibility = View.VISIBLE
             }
             etMail.setOnEditorActionListener { textView, actionId, keyEvent ->
                 return@setOnEditorActionListener when (actionId) {
@@ -66,16 +67,11 @@ class SignUpFragment2 : Fragment() {
             etCertification.afterTextChanged {
                 signUpButton.isEnabled = isFullInput()
             }
-            /*homepageButton.setOnClickListener {
-                val url = viewModel.schoolMailUrl
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
-            }*/
         }
     }
 
     private fun makeSchoolMailSnackBar() {
-        Snackbar.make(binding.signUpCoordiLayout, "학교 메일 홈페이지", Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(binding.root, "학교 메일 홈페이지", Snackbar.LENGTH_INDEFINITE)
             .setAction("이동") {
                 val url = viewModel.schoolMailUrl
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
