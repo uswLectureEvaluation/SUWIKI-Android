@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
 import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 
@@ -58,7 +59,6 @@ class SignUpFragment2 : Fragment() {
                 return@setOnEditorActionListener when (actionId) {
                     EditorInfo.IME_ACTION_SEND -> {
                         floatEmailSendDialog(requireContext(), textView.text.toString())
-
                         true
                     }
                     else -> false
@@ -67,7 +67,11 @@ class SignUpFragment2 : Fragment() {
             etCertification.afterTextChanged {
                 signUpButton.isEnabled = isFullInput()
             }
+            signUpButton.setOnClickListener {
+                viewModel.signup(args.userId, args.userPw, etMail.text.toString() + SCHOOL_DOMAIN_AT, etCertification.text.toString())
+            }
         }
+
     }
 
     private fun makeSchoolMailSnackBar() {
@@ -88,8 +92,7 @@ class SignUpFragment2 : Fragment() {
                 dialog.dismiss()
             }
             .setPositiveButton("보내기") { dialog, which ->
-//                viewModel.sendEmail(email)
-//                sendEmail(email)
+                viewModel.sendEmail(email)
                 makeSchoolMailSnackBar()
             }.show()
     }
