@@ -12,19 +12,25 @@
         android:layout_height="wrap_content"
         app:liftOnScroll="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolBar"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_back"
-            android:background="@color/background">
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <TextView
-                style="@style/TextTitle.Bold"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="내가 쓴 글" />
-        </androidx.appcompat.widget.Toolbar>
+                android:background="@color/background"
+                app:navigationIcon="@drawable/ic_back">
+
+                <TextView
+                    style="@style/TextTitle.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="내가 쓴 글" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:text="강의 평가" />
 
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,6 +71,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/my_post_container"
+            android:name="com.kunize.uswtimetable.ui.more.MyEvaluationFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

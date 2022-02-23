@@ -69,5 +69,22 @@
         android:id="@+id/myPostFragment"
         android:name="com.kunize.uswtimetable.ui.more.MyPostFragment"
         android:label="fragment_my_post"
-        tools:layout="@layout/fragment_my_post"/>
+        tools:layout="@layout/fragment_my_post">
+        <action
+            android:id="@+id/action_myPostFragment_to_myEvaluationFragment"
+            app:destination="@id/myEvaluationFragment" />
+        <action
+            android:id="@+id/action_myPostFragment_to_myExamInfoFragment"
+            app:destination="@id/myExamInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myEvaluationFragment"
+        android:name="com.kunize.uswtimetable.ui.more.MyEvaluationFragment"
+        android:label="fragment_my_evaluation"
+        tools:layout="@layout/fragment_my_evaluation" />
+    <fragment
+        android:id="@+id/myExamInfoFragment"
+        android:name="com.kunize.uswtimetable.ui.more.MyExamInfoFragment"
+        android:label="fragment_my_exam_info"
+        tools:layout="@layout/fragment_my_exam_info" />
 </navigation>

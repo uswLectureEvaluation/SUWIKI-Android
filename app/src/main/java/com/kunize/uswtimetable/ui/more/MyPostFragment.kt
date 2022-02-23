@@ -1,10 +1,13 @@
 package com.kunize.uswtimetable.ui.more
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.kunize.uswtimetable.R
@@ -21,7 +24,6 @@ class MyPostFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMyPostBinding.inflate(inflater, container, false)
-//        childFragmentManager.beginTransaction().add(R.id.fragment_my_evaluation, MyEvaluationFragment(), "MyEvaluation").commit()
 
         return binding.root
     }
@@ -37,6 +39,14 @@ class MyPostFragment: Fragment() {
 
         tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> {
+                        childFragmentManager.beginTransaction().add(R.id.my_post_container, MyEvaluationFragment()).commit()
+                    }
+                    1 -> {
+                        childFragmentManager.beginTransaction().add(R.id.my_post_container, MyExamInfoFragment()).commit()
+                    }
+                }
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
