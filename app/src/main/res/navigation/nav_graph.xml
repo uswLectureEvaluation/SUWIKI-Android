@@ -14,7 +14,7 @@
         android:id="@+id/navigation_evaluation"
         android:name="com.kunize.uswtimetable.ui.evaluation.EvaluationFragment"
         android:label="fragment_evaluation"
-        tools:layout="@layout/fragment_evaluation" >
+        tools:layout="@layout/fragment_evaluation">
         <action
             android:id="@+id/action_navigation_evaluation_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
@@ -26,7 +26,11 @@
         android:id="@+id/navigation_more"
         android:name="com.kunize.uswtimetable.ui.more.MoreFragment"
         android:label="fragment_more"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/fragment_more" >
+        <action
+            android:id="@+id/action_more_to_myPostFragment"
+            app:destination="@id/myPostFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
         android:name="com.kunize.uswtimetable.ui.search_result.SearchResultFragment"
@@ -34,12 +38,12 @@
         tools:layout="@layout/fragment_search_result">
         <argument
             android:name="searchLectureName"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
         <argument
             android:name="sortType"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_searchResultFragment_to_lectureInfoFragment"
             app:destination="@id/lectureInfoFragment" />
@@ -51,11 +55,19 @@
         tools:layout="@layout/fragment_lecture_info">
         <argument
             android:name="lectureName"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
         <argument
             android:name="professor"
-            app:argType="string"
-            android:defaultValue='""' />
-    </fragment><action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment"/>
+            android:defaultValue='""'
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_lectureInfoFragment"
+        app:destination="@id/lectureInfoFragment" />
+    <fragment
+        android:id="@+id/myPostFragment"
+        android:name="com.kunize.uswtimetable.ui.more.MyPostFragment"
+        android:label="fragment_my_post"
+        tools:layout="@layout/fragment_my_post"/>
 </navigation>
