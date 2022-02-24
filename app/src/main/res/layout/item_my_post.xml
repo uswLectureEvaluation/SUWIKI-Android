@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-<!--
-        <variable
-            name="evaluationData"
-            type="com.kunize.uswtimetable.dataclass.EvaluationData" />-->
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemLayout"
         android:layout_width="match_parent"
@@ -30,8 +23,7 @@
             android:id="@+id/averGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="textViewAver, averRatingBar, seeDetail, averScore, textViewNum6"
+            app:constraint_referenced_ids="textViewAver, averRatingBar, averScore, textViewNum6"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="10dp"
             tools:visibility="visible" />

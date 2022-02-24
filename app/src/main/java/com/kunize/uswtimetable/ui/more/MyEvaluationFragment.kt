@@ -5,13 +5,56 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kunize.uswtimetable.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.kunize.uswtimetable.adapter.MyEvaluationAdapter
+import com.kunize.uswtimetable.adapter.MyEvaluationAdapter.Companion.itemType
+import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 
 class MyEvaluationFragment : Fragment() {
+    private var _binding: FragmentMyEvaluationBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var adapter: MyEvaluationAdapter
+    private val viewModel: MyPostViewModel by viewModels { ViewModelFactory(requireContext()) }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_my_evaluation, container, false)
+        _binding = FragmentMyEvaluationBinding.inflate(inflater, container, false)
+
+        adapter = MyEvaluationAdapter { id, type ->
+            when (type) {
+                itemType.ROOT_VIEW -> {
+                    Toast.makeText(requireContext(), "$id 아이템 선택됨", Toast.LENGTH_SHORT).show()
+                }
+                itemType.EDIT_BUTTON -> {
+                    Toast.makeText(requireContext(), "$id 아이템 수정", Toast.LENGTH_SHORT).show()
+                }
+                itemType.DELETE_BUTTON -> {
+                    Toast.makeText(requireContext(), "$id 아이템 삭제", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        initRecyclerView()
+
+        return _binding?.root
+    }
+
+    private fun initRecyclerView() {
+        binding.myEvaluationList.adapter = adapter
+        binding.myEvaluationList.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        viewModel.myEvaluationData.observe(viewLifecycleOwner) { evaluations ->
+            adapter.submitList(evaluations)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

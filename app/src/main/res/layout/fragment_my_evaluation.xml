@@ -7,9 +7,10 @@
     tools:context=".ui.more.MyEvaluationFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_evaluation_list"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_my_post"
+        android:layout_height="match_parent"
         tools:itemCount="10"
-        android:layout_height="wrap_content" />
+        tools:listitem="@layout/item_my_post" />
 
 </FrameLayout>

@@ -17,6 +17,8 @@ class MyPostFragment: Fragment() {
     private var _binding: FragmentMyPostBinding? = null
     private val binding get() = _binding!!
     private val tab by lazy { binding.tabLayout }
+    private val myEvaluationFragment by lazy { MyEvaluationFragment() }
+    private val myExamInfoFragment by lazy { MyExamInfoFragment() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +29,6 @@ class MyPostFragment: Fragment() {
 
         return binding.root
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,10 +41,10 @@ class MyPostFragment: Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
-                        childFragmentManager.beginTransaction().add(R.id.my_post_container, MyEvaluationFragment()).commit()
+                        childFragmentManager.beginTransaction().replace(R.id.my_post_container, myEvaluationFragment, "my_evaluation").commit()
                     }
                     1 -> {
-                        childFragmentManager.beginTransaction().add(R.id.my_post_container, MyExamInfoFragment()).commit()
+                        childFragmentManager.beginTransaction().replace(R.id.my_post_container, myExamInfoFragment, "my_exam_info").commit()
                     }
                 }
             }
