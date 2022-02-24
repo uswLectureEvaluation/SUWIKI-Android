@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 
-class MyEvaluationAdapter(val onItemClicked: (id: String, type: itemType) -> Unit): ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
+class MyEvaluationAdapter(val onItemClicked: (id: String, type: ItemType) -> Unit): ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
 
     inner class MyEvaluationViewHolder(private val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MyEvaluation) {
@@ -28,13 +27,13 @@ class MyEvaluationAdapter(val onItemClicked: (id: String, type: itemType) -> Uni
                 content.text = data.content
             }
             binding.root.setOnClickListener {
-                onItemClicked(data.id, itemType.ROOT_VIEW)
+                onItemClicked(data.id, ItemType.ROOT_VIEW)
             }
             binding.editBtn.setOnClickListener {
-                onItemClicked(data.id, itemType.EDIT_BUTTON)
+                onItemClicked(data.id, ItemType.EDIT_BUTTON)
             }
             binding.deleteBtn.setOnClickListener {
-                onItemClicked(data.id, itemType.DELETE_BUTTON)
+                onItemClicked(data.id, ItemType.DELETE_BUTTON)
             }
         }
     }
@@ -58,7 +57,7 @@ class MyEvaluationAdapter(val onItemClicked: (id: String, type: itemType) -> Uni
             }
         }
 
-        enum class itemType {
+        enum class ItemType {
             ROOT_VIEW,
             EDIT_BUTTON,
             DELETE_BUTTON

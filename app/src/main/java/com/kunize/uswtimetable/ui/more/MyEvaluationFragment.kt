@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.adapter.MyEvaluationAdapter
-import com.kunize.uswtimetable.adapter.MyEvaluationAdapter.Companion.itemType
+import com.kunize.uswtimetable.adapter.MyEvaluationAdapter.Companion.ItemType
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 
@@ -27,13 +27,13 @@ class MyEvaluationFragment : Fragment() {
 
         adapter = MyEvaluationAdapter { id, type ->
             when (type) {
-                itemType.ROOT_VIEW -> {
+                ItemType.ROOT_VIEW -> {
                     Toast.makeText(requireContext(), "$id 아이템 선택됨", Toast.LENGTH_SHORT).show()
                 }
-                itemType.EDIT_BUTTON -> {
+                ItemType.EDIT_BUTTON -> {
                     Toast.makeText(requireContext(), "$id 아이템 수정", Toast.LENGTH_SHORT).show()
                 }
-                itemType.DELETE_BUTTON -> {
+                ItemType.DELETE_BUTTON -> {
                     Toast.makeText(requireContext(), "$id 아이템 삭제", Toast.LENGTH_SHORT).show()
                 }
             }

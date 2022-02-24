@@ -86,6 +86,9 @@ class MoreFragment : Fragment() {
                 }
             }
         }
+        binding.numberOfEvaluations.setOnClickListener {
+            findNavController().navigate(R.id.action_more_to_myPostFragment)
+        }
         binding.myPostButton.setOnClickListener {
             // TODO 로그인 상태 확인 작업
             findNavController().navigate(R.id.action_more_to_myPostFragment)

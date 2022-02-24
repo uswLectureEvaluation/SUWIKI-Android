@@ -9,16 +9,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.MyPostPageAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyPostBinding
 
-class MyPostFragment: Fragment() {
+class MyPostFragment : Fragment() {
     private var _binding: FragmentMyPostBinding? = null
     private val binding get() = _binding!!
     private val tab by lazy { binding.tabLayout }
-    private val myEvaluationFragment by lazy { MyEvaluationFragment() }
-    private val myExamInfoFragment by lazy { MyExamInfoFragment() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,21 +37,15 @@ class MyPostFragment: Fragment() {
         binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+        binding.viewPager.isUserInputEnabled = false
+        binding.viewPager.adapter = MyPostPageAdapter(this)
 
-        tab.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> {
-                        childFragmentManager.beginTransaction().replace(R.id.my_post_container, myEvaluationFragment, "my_evaluation").commit()
-                    }
-                    1 -> {
-                        childFragmentManager.beginTransaction().replace(R.id.my_post_container, myExamInfoFragment, "my_exam_info").commit()
-                    }
-                }
+        TabLayoutMediator(tab, binding.viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "강의 평가"
+                1 -> tab.text = "시험 정보"
             }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
+        }.attach()
     }
 
     override fun onDestroyView() {
