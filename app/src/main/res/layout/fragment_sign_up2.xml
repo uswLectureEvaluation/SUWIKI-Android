@@ -6,6 +6,9 @@
     tools:context=".signup.SignUpFragment2">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.kunize.uswtimetable.signup.SignUpViewModel" />
 
         <variable
             name="constants"

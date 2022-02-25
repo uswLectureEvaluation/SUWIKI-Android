@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.signup
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,20 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
-import com.kunize.uswtimetable.R
+import android.widget.Toast
 import com.kunize.uswtimetable.databinding.FragmentSignUp3Binding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants.SCHOOL_HOMEPAGE
 
 class SignUpFragment3 : Fragment() {
-
-    private val args: SignUpFragment3Args by navArgs()
     private var _binding: FragmentSignUp3Binding? = null
     private val binding get() = _binding!!
+    private lateinit var activity: SignUpActivity
     private lateinit var viewModel: SignUpViewModel
 
     override fun onCreateView(
@@ -28,14 +23,12 @@ class SignUpFragment3 : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignUp3Binding.inflate(inflater, container, false)
-        binding.tvInfo.text = getString(R.string.signup_welcome_info, args.email)
 
-//        viewModel = ViewModelProvider(viewLifecycleOwner, ViewModelFactory(requireContext())).get(SignUpViewModel::class.java)
+        activity = requireActivity() as SignUpActivity
+        viewModel = activity.viewModel
 
-
-        binding.btnCheckMail.setOnClickListener {
-            onClickEmailCheckButton(it)
-        }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         return binding.root
     }

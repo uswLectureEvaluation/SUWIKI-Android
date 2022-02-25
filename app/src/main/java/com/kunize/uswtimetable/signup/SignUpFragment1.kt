@@ -24,6 +24,8 @@ import java.util.regex.Pattern
 class SignUpFragment1 : Fragment() {
     private var _binding: FragmentSignUp1Binding? = null
     val binding: FragmentSignUp1Binding get() = _binding!!
+
+    private lateinit var activity: SignUpActivity
     private lateinit var viewModel: SignUpViewModel
 
     override fun onCreateView(
@@ -32,10 +34,11 @@ class SignUpFragment1 : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false)
 
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            SignUpViewModelFactory()
-        )[SignUpViewModel::class.java]
+        activity = requireActivity() as SignUpActivity
+        viewModel = activity.viewModel
+
+        binding.lifecycleOwner = viewLifecycleOwner
+
         viewModel.signupFormState.observe(requireActivity(), Observer {
             val state = it ?: return@Observer
 

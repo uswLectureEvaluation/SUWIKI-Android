@@ -7,22 +7,21 @@ import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.children
-import androidx.fragment.app.findFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.BackKeyManager
 import com.kunize.uswtimetable.util.Constants.TAG
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
-    private lateinit var viewModel: SignUpViewModel
+//    private lateinit var viewModel: SignUpViewModel
+    val viewModel: SignUpViewModel by viewModels { ViewModelFactory(this) }
     private val imm by lazy { getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager }
     private var toast: Toast? = null
     lateinit var navHostFragment: NavHostFragment
@@ -35,8 +34,6 @@ class SignUpActivity : AppCompatActivity() {
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this, SignUpViewModelFactory())[SignUpViewModel::class.java]
 
         initNavigation()
         initViews()

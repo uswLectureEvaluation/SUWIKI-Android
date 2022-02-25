@@ -38,6 +38,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:paddingHorizontal="30dp"
+            android:text="@{@string/signup_welcome_info(viewModel.email)}"
             app:layout_constraintBottom_toTopOf="@id/btn_check_mail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +57,7 @@
             app:layout_constraintVertical_bias="0"
             android:text="메일 확인하기"
             android:layout_marginTop="30dp"
+            android:onClick="@{fragment::onClickEmailCheckButton}"
             style="@style/Widget.MaterialComponents.Button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

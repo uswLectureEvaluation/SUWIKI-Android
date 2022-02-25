@@ -1,21 +1,13 @@
 package com.kunize.uswtimetable.signup
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -33,6 +25,7 @@ class SignUpFragment2 : Fragment() {
     val binding: FragmentSignUp2Binding get() = _binding!!
 
     private lateinit var viewModel: SignUpViewModel
+    private lateinit var activity: SignUpActivity
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -40,7 +33,12 @@ class SignUpFragment2 : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up2, container, false)
-        viewModel = ViewModelProvider(requireActivity(), SignUpViewModelFactory())[SignUpViewModel::class.java]
+
+        activity = requireActivity() as SignUpActivity
+        viewModel = activity.viewModel
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         initViews()
 
@@ -48,31 +46,20 @@ class SignUpFragment2 : Fragment() {
     }
 
     private fun initViews() {
-        with(binding) {
-            etMail.afterTextChanged {
-                signUpButton.isEnabled = isFullInput()
-            }
-            /*etMail.setOnEditorActionListener { textView, actionId, keyEvent ->
-                return@setOnEditorActionListener when (actionId) {
-                    EditorInfo.IME_ACTION_SEND -> {
-                        floatEmailSendDialog(requireContext(), textView.text.toString())
-                        true
-                    }
-                    else -> false
-                }
-            }*/
-            signUpButton.setOnClickListener {
-                viewModel.signup(args.userId, args.userPw, etMail.text.toString() + SCHOOL_DOMAIN_AT)
-                // TODO 이메일 중복 확인
-                // TODO 이메일 전송 성공 시 다음 페이지로 이동
-                viewModel.setEmail(etMail.text.toString())
-                val action = SignUpFragment2Directions.actionSignUpFragment2ToSignUpFragment3(etMail.text.toString())
-                findNavController().navigate(action)
-            }
+
+        binding.etMail.afterTextChanged {
+            binding.signUpButton.isEnabled = isFullInput()
         }
-
+        binding.signUpButton.setOnClickListener {
+            viewModel.signup(args.userId, args.userPw, binding.etMail.text.toString() + SCHOOL_DOMAIN_AT)
+            // TODO 이메일 중복 확인
+            // TODO 이메일 전송 성공 시 다음 페이지로 이동
+            viewModel.setEmail(binding.etMail.text.toString())
+            val action =
+                SignUpFragment2Directions.actionSignUpFragment2ToSignUpFragment3(binding.etMail.text.toString())
+            findNavController().navigate(action)
+        }
     }
-
     /*private fun makeSchoolMailSnackBar() {
         Snackbar.make(binding.root, "학교 메일 홈페이지", Snackbar.LENGTH_INDEFINITE)
             .setAction("이동") {
@@ -102,9 +89,4 @@ class SignUpFragment2 : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    /*private fun hideKeyboard(context: Context, view: View) {
-        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }*/
 }
