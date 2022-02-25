@@ -28,8 +28,9 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
     private val idPattern: Pattern = Pattern.compile(idRegex)
     private val pwPattern: Pattern = Pattern.compile(pwRegex)
 
-    fun signup(id: String, email: String, pw: String) {
+    fun signup(id: String, pw: String, email: String, checkNumber: String) {
         // TODO 회원 가입 로직
+
     }
 
     fun signUpDataChanged(
