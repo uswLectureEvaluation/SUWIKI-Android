@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
@@ -64,7 +66,8 @@ class SignUpFragment1 : Fragment() {
     private fun initButton() {
         binding.nextButton.setOnClickListener {
             // TODO 아이디, 비밀번호, 체크 확인
-            if (viewModel.signupFormState.value?.isDataValid == null) {
+            // TODO 아이디 중복 체크
+            if (viewModel.signupFormState.value?.isDataValid == true) {
                 val userId = binding.etId.text.toString()
                 val userPw = binding.etPw.text.toString()
                 val action =

@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -49,13 +50,9 @@ class SignUpFragment2 : Fragment() {
     private fun initViews() {
         with(binding) {
             etMail.afterTextChanged {
-                sendCertNumButton.isEnabled = it.isNullOrBlank().not()
                 signUpButton.isEnabled = isFullInput()
             }
-            sendCertNumButton.setOnClickListener {
-                floatEmailSendDialog(requireContext(), etMail.text.toString())
-            }
-            etMail.setOnEditorActionListener { textView, actionId, keyEvent ->
+            /*etMail.setOnEditorActionListener { textView, actionId, keyEvent ->
                 return@setOnEditorActionListener when (actionId) {
                     EditorInfo.IME_ACTION_SEND -> {
                         floatEmailSendDialog(requireContext(), textView.text.toString())
@@ -63,27 +60,29 @@ class SignUpFragment2 : Fragment() {
                     }
                     else -> false
                 }
-            }
-            etCertification.afterTextChanged {
-                signUpButton.isEnabled = isFullInput()
-            }
+            }*/
             signUpButton.setOnClickListener {
-                viewModel.signup(args.userId, args.userPw, etMail.text.toString() + SCHOOL_DOMAIN_AT, etCertification.text.toString())
+                viewModel.signup(args.userId, args.userPw, etMail.text.toString() + SCHOOL_DOMAIN_AT)
+                // TODO 이메일 중복 확인
+                // TODO 이메일 전송 성공 시 다음 페이지로 이동
+                viewModel.setEmail(etMail.text.toString())
+                val action = SignUpFragment2Directions.actionSignUpFragment2ToSignUpFragment3(etMail.text.toString())
+                findNavController().navigate(action)
             }
         }
 
     }
 
-    private fun makeSchoolMailSnackBar() {
+    /*private fun makeSchoolMailSnackBar() {
         Snackbar.make(binding.root, "학교 메일 홈페이지", Snackbar.LENGTH_INDEFINITE)
             .setAction("이동") {
                 val url = viewModel.schoolMailUrl
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
             }.show()
-    }
+    }*/
 
-    private fun floatEmailSendDialog(context: Context, email: String) {
+    /*private fun floatEmailSendDialog(context: Context, email: String) {
         hideKeyboard(context, binding.emailEditText)
         MaterialAlertDialogBuilder(context)
             .setTitle("인증 메일 전송")
@@ -95,18 +94,17 @@ class SignUpFragment2 : Fragment() {
                 viewModel.sendEmail(email)
                 makeSchoolMailSnackBar()
             }.show()
-    }
+    }*/
 
-    private fun isFullInput(): Boolean = binding.etMail.text.isNullOrBlank().not() &&
-            binding.etCertification.text.isNullOrBlank().not()
+    private fun isFullInput(): Boolean = binding.etMail.text.isNullOrBlank().not()
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun hideKeyboard(context: Context, view: View) {
+    /*private fun hideKeyboard(context: Context, view: View) {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
+    }*/
 }

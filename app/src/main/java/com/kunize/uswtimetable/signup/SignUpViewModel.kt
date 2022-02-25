@@ -13,13 +13,18 @@ import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.TAG
 import java.util.regex.Pattern
 
-class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewModel() {
+class SignUpViewModel : ViewModel() {
 
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
 
     private var _certResult = MutableLiveData<Boolean>()
     val certResult: LiveData<Boolean> get() = _certResult
+
+    private var _id: String? = null
+    private var _pw: String? = null
+    private var _email: String? = null
+    val email get() = _email
 
     val schoolMailUrl = "http://mail.suwon.ac.kr"
 
@@ -28,7 +33,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
     private val idPattern: Pattern = Pattern.compile(idRegex)
     private val pwPattern: Pattern = Pattern.compile(pwRegex)
 
-    fun signup(id: String, pw: String, email: String, checkNumber: String) {
+    fun signup(id: String, pw: String, email: String) {
         // TODO 회원 가입 로직
 
     }
@@ -67,7 +72,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
 
     fun certificate(email: String) {
         // TODO 인증 로직
-        when (val result = certificateEmail.certificate(email)) {
+        /*when (val result = certificateEmail.certificate(email)) {
             is Result.Success -> {
                 _certResult.value = result.data.success
             }
@@ -77,7 +82,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
             else -> {
                 Log.d(TAG, "SignUpViewModel - emailCheck() called / Error!")
             }
-        }
+        }*/
     }
 
     fun sendEmail(address: String) {
@@ -102,6 +107,10 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
 
     private fun isPwAgainValid(pw: String, pwAgain: String): Boolean {
         return pw.isBlank() || pwAgain.isBlank() || pw == pwAgain
+    }
+
+    fun setEmail(email: String) {
+        _email = email
     }
 
     private fun hasBlank(

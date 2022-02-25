@@ -68,11 +68,15 @@ class SignUpActivity : AppCompatActivity() {
                 when (destination.id) {
                     R.id.signUpFragment1 -> {
                         signUpToolBar.title = "회원 가입 1/2"
-                        pageProgress.progress = 50
+                        pageProgress.progress = 33
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                     }
                     R.id.signUpFragment2 -> {
                         signUpToolBar.title = "회원 가입 2/2"
+                        pageProgress.progress = 67
+                    }
+                    R.id.signUpFragment3 -> {
+                        signUpToolBar.title = "Welcome!"
                         pageProgress.progress = 100
                     }
                 }

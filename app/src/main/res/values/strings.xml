@@ -81,6 +81,9 @@
     <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
     <string name="opened_exam_count">시험 정보 열람 : %d개</string>
     <string name="total_point">%d P</string>
+    <string name="signup_welcome_message">가입을 환영합니다</string>
+    <string name="signup_welcome_info">"<b>"%s"</b>"로 이메일이 발송되었습니다.\n로그인 하기 위해서 이메일로 발송된 링크를 클릭해주세요</string>
+
     <string name="setting">설정</string>
     <string name="add_timetable">시간표 추가</string>
     <string name="timtable_list">시간표 목록</string>

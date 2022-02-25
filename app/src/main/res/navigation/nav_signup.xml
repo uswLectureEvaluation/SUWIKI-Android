@@ -32,5 +32,19 @@
             android:name="term_checked"
             android:defaultValue="false"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_signUpFragment2_to_signUpFragment3"
+            app:destination="@id/signUpFragment3"
+            app:popUpTo="@id/signUpFragment1"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment3"
+        android:name="com.kunize.uswtimetable.signup.SignUpFragment3"
+        android:label="회원 가입 완료"
+        tools:layout="@layout/fragment_sign_up3">
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
 </navigation>

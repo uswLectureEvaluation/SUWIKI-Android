@@ -8,7 +8,7 @@ class SignUpViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
             return SignUpViewModel(
-                certificateEmail = CertificateEmail()
+//                certificateEmail = CertificateEmail()
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
