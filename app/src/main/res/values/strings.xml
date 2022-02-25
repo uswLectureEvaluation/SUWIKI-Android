@@ -83,6 +83,7 @@
     <string name="total_point">%d P</string>
     <string name="signup_welcome_message">가입을 환영합니다</string>
     <string name="signup_welcome_info">"<b>"%s"</b>"로 이메일이 발송되었습니다.\n로그인 하기 위해서 이메일로 발송된 링크를 클릭해주세요</string>
+    <string name="floatToStr">%.1f</string>
 
     <string name="setting">설정</string>
     <string name="add_timetable">시간표 추가</string>
@@ -95,10 +96,10 @@
     <string name="has_blank">빈 칸이 있습니다</string>
     <string name="back_to_list">목록으로</string>
 
-    <string name="floatToStr">%.1f</string>
-    <string name="back">뒤로</string>
-    <string name="next">다음</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_back">뒤로</string>
+    <string name="btn_next">다음</string>
+    <string name="btn_previous">이전</string>
+    <string name="btn_exit">닫기</string>
+
 
 </resources>

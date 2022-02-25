@@ -27,10 +27,10 @@
                 android:id="@+id/signUpToolBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/background"
                 app:navigationIcon="@drawable/ic_back"
                 app:title="@string/sign_in"
-                app:titleTextAppearance="@style/TextTitle.Bold"
-                android:background="@color/background" />
+                app:titleTextAppearance="@style/TextTitle.Bold" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,23 +39,46 @@
             android:background="@color/white"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/pageProgress"
-                android:layout_width="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/signUpFragmentContainer"
-                android:name="androidx.navigation.fragment.NavHostFragment"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/signup_view_pager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:defaultNavHost="true"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/signup_indicator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pageProgress"
-                app:navGraph="@navigation/nav_signup" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/signup_indicator"
+                android:layout_width="wrap_content"
+                app:dotsColor="@color/custom_blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_signup_1"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signup_1"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/btn_previous"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_signup_2"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/btn_next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,16 +1,13 @@
 package com.kunize.uswtimetable.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.Result
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
-import com.kunize.uswtimetable.util.Constants.TAG
 import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {
@@ -20,6 +17,9 @@ class SignUpViewModel : ViewModel() {
 
     private var _certResult = MutableLiveData<Boolean>()
     val certResult: LiveData<Boolean> get() = _certResult
+
+    private var _currentPage = MutableLiveData<Int>(0)
+    val currentPage: LiveData<Int> get() = _currentPage
 
     private var _id: String? = null
     private var _pw: String? = null
@@ -119,5 +119,21 @@ class SignUpViewModel : ViewModel() {
         pwAgain: String
     ): Boolean {
         return id.isBlank() || pw.isBlank() || pwAgain.isBlank()
+    }
+
+    fun moveToNextPage() {
+        _currentPage.value?.let { page ->
+            if (page < 2) {
+                _currentPage.value = page + 1
+            }
+        }
+    }
+
+    fun moveToPreviousPage() {
+        _currentPage.value?.let { page ->
+            if (page > 0) {
+                _currentPage.value = page - 1
+            }
+        }
     }
 }

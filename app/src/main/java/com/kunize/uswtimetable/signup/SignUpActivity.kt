@@ -1,128 +1,100 @@
 package com.kunize.uswtimetable.signup
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.SignUpPageAdapter
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
+import com.kunize.uswtimetable.login.LoginActivity
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.BackKeyManager
-import com.kunize.uswtimetable.util.Constants.TAG
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
-//    private lateinit var viewModel: SignUpViewModel
     val viewModel: SignUpViewModel by viewModels { ViewModelFactory(this) }
     private val imm by lazy { getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager }
     private var toast: Toast? = null
-    lateinit var navHostFragment: NavHostFragment
-    lateinit var navController: NavController
+
+    private lateinit var indicator: WormDotsIndicator
+    private lateinit var viewPager: ViewPager2
+    private lateinit var button1: MaterialButton
+    private lateinit var button2: MaterialButton
+
     private val backKeyManager = BackKeyManager(this)
-    val progress: ProgressBar by lazy { findViewById(R.id.pageProgress) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+
         setContentView(binding.root)
 
-        initNavigation()
         initViews()
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.home -> {
-                onBackPressed()
-                Log.d(TAG, "SignUpActivity - onOptionsItemSelected() called")
+        viewModel.currentPage.observe(this) { page ->
+            when (page) {
+                0 -> {
+                    button1.visibility = View.INVISIBLE
+                    button1.text = getString(R.string.btn_previous)
+                    button2.text = getString(R.string.btn_next)
+                }
+                1 -> {
+                    button1.visibility = View.VISIBLE
+                    button1.text = getString(R.string.btn_previous)
+                    button2.text = getString(R.string.sign_in)
+                }
+                2 -> {
+                    button1.visibility = View.VISIBLE
+                    button1.text = getString(R.string.btn_exit)
+                    button2.text = getString(R.string.login)
+                }
             }
+            viewPager.currentItem = page
         }
-        return super.onOptionsItemSelected(item)
-    }
 
-    private fun initNavigation() {
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.signUpFragmentContainer) as NavHostFragment
-        navController = navHostFragment.navController
-    }
-
-    override fun onBackPressed() {
-        backKeyClicked()
+        button1.setOnClickListener {
+            if (viewModel.currentPage.value == 2) {
+                finish()
+            }
+            viewModel.moveToPreviousPage()
+        }
+        button2.setOnClickListener {
+            if (viewModel.currentPage.value == 2) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            viewModel.moveToNextPage()
+        }
     }
 
     private fun initViews() {
-        with(binding) {
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.signUpFragment1 -> {
-                        signUpToolBar.title = "회원 가입 1/2"
-                        pageProgress.progress = 33
-                        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                    }
-                    R.id.signUpFragment2 -> {
-                        signUpToolBar.title = "회원 가입 2/2"
-                        pageProgress.progress = 67
-                    }
-                    R.id.signUpFragment3 -> {
-                        signUpToolBar.title = "Welcome!"
-                        pageProgress.progress = 100
-                    }
-                }
-            }
-            val appBarConfiguration = AppBarConfiguration(navController.graph)
-            signUpToolBar.setupWithNavController(navController, appBarConfiguration)
-            /*button.setOnClickListener {
-                val state = viewModel.signupFormState.value
-                if (state?.isDataValid == true) {
-                    makeToast("회원가입 중")
-                    viewModel.signup(
-//                        etId.text.toString(),
-//                        etMail.text.toString(),
-//                        etPw.text.toString()
-                    "", "", ""
-                    )
-                } else {
-                    var errMsg = ""
-                    when {
-                        state?.idError != null -> errMsg = resources.getString(state.idError)
-                        state?.pwError != null -> errMsg = resources.getString(state.pwError)
-                        state?.pwAgainError != null -> errMsg =
-                            resources.getString(state.pwAgainError)
-                        state?.certNumError != null -> errMsg =
-                            resources.getString(state.certNumError)
-                        state?.isTermChecked != null -> errMsg =
-                            resources.getString(state.isTermChecked)
-                        state?.hasBlank != null -> errMsg = resources.getString(state.hasBlank)
-                    }
-                    if (errMsg.isNotBlank())
-                        Snackbar.make(binding.root, errMsg, Snackbar.LENGTH_SHORT).show()
-                }
-            }*/
+        indicator = binding.signupIndicator
+        viewPager = binding.signupViewPager
+        button1 = binding.btnSignup1
+        button2 = binding.btnSignup2
 
+        binding.signupViewPager.apply {
+            adapter = SignUpPageAdapter(this@SignUpActivity)
+            isUserInputEnabled = false
         }
+        indicator.clearFocus()
+        indicator.dotsClickable = false
+        indicator.setViewPager2(viewPager)
     }
 
-    private fun backKeyClicked() {
-        when (navController.currentDestination?.id) {
-            R.id.signUpFragment1 -> {
-                backKeyManager.onBackPressed(
-                    "뒤로 가면 모든 내용이 지워집니다. \n" +
-                            "종료하려면 2회 연속 누르세요"
-                )
-            }
-            R.id.signUpFragment2 -> {
-                navController.popBackStack()
-            }
-        }
+    override fun onBackPressed() {
+        backKeyManager.onBackPressed("뒤로 가면 모든 내용이 지워집니다. \n" +
+                "종료하려면 2회 연속 누르세요")
     }
 
     fun makeToast(message: String) {

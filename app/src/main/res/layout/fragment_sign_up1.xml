@@ -107,7 +107,7 @@
             app:layout_anchor="@id/signUp1Container"
             app:layout_anchorGravity="bottom|end"
             android:enabled="true"
-            android:text="@string/next"
+            android:text="@string/btn_next"
             android:textColor="@color/white" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
