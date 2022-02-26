@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.signup
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,8 @@ import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
+import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
+import com.kunize.uswtimetable.util.Constants.TAG
 import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {
@@ -18,7 +21,7 @@ class SignUpViewModel : ViewModel() {
     private var _certResult = MutableLiveData<Boolean>()
     val certResult: LiveData<Boolean> get() = _certResult
 
-    private var _currentPage = MutableLiveData<Int>(0)
+    private var _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> get() = _currentPage
 
     private var _id: String? = null
@@ -26,16 +29,17 @@ class SignUpViewModel : ViewModel() {
     private var _email: String? = null
     val email get() = _email
 
-    val schoolMailUrl = "http://mail.suwon.ac.kr"
-
     private val idRegex = """^[a-z0-9]*$"""
     private val pwRegex = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
     private val idPattern: Pattern = Pattern.compile(idRegex)
     private val pwPattern: Pattern = Pattern.compile(pwRegex)
 
-    fun signup(id: String, pw: String, email: String) {
-        // TODO 회원 가입 로직
+    init {
+        _currentPage.value = 0
+    }
 
+    fun signup() {
+        // TODO 회원 가입 로직
     }
 
     fun signUpDataChanged(
@@ -85,7 +89,7 @@ class SignUpViewModel : ViewModel() {
         }*/
     }
 
-    fun sendEmail(address: String) {
+    fun sendEmail() {
         // TODO 이메일 전송 로직
     }
 
@@ -110,7 +114,7 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun setEmail(email: String) {
-        _email = email
+        _email = email + SCHOOL_DOMAIN_AT
     }
 
     private fun hasBlank(
@@ -135,5 +139,10 @@ class SignUpViewModel : ViewModel() {
                 _currentPage.value = page - 1
             }
         }
+    }
+
+    fun saveUserIdAndPw(id: String, pw: String) {
+        _id = id
+        _pw = pw
     }
 }

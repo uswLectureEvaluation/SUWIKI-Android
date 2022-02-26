@@ -7,9 +7,6 @@
         <variable
             name="fragment"
             type="com.kunize.uswtimetable.signup.SignUpFragment3" />
-        <variable
-            name="viewModel"
-            type="com.kunize.uswtimetable.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,13 +35,12 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:paddingHorizontal="30dp"
-            android:text="@{@string/signup_welcome_info(viewModel.email)}"
             app:layout_constraintBottom_toTopOf="@id/btn_check_mail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome"
             android:textColor="@color/alert"
-            tools:text="hihi@suwon.ac.kr로 이메일이 발송되었습니다.\n로그인 하기 위해서 이메일로 발송된 링크를 클릭해주세요" />
+            tools:text="test@suwon.ac.kr로 이메일이 발송되었습니다.\n로그인 하기 위해서 이메일로 발송된 링크를 클릭해주세요" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_check_mail"
@@ -57,7 +53,6 @@
             app:layout_constraintVertical_bias="0"
             android:text="메일 확인하기"
             android:layout_marginTop="30dp"
-            android:onClick="@{fragment::onClickEmailCheckButton}"
             style="@style/Widget.MaterialComponents.Button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

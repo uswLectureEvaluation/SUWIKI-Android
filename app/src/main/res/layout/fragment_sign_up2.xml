@@ -48,19 +48,5 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/signUpButton"
-            style="@style/Button.Bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/custom_ripple_light_blue_button"
-            android:enabled="false"
-            android:text="인증 및 회원 가입"
-            app:layout_behavior=".util.ButtonBehavior"
-            android:textColor="@color/white"
-            app:layout_anchorGravity="bottom" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

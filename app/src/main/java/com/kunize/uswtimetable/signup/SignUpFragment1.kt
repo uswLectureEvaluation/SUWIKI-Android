@@ -1,23 +1,18 @@
 package com.kunize.uswtimetable.signup
 
-import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.util.Constants
-import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
@@ -27,6 +22,7 @@ class SignUpFragment1 : Fragment() {
 
     private lateinit var activity: SignUpActivity
     private lateinit var viewModel: SignUpViewModel
+    private lateinit var nextButton: MaterialButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +33,15 @@ class SignUpFragment1 : Fragment() {
         activity = requireActivity() as SignUpActivity
         viewModel = activity.viewModel
 
+        nextButton = activity.button2
+
         binding.lifecycleOwner = viewLifecycleOwner
 
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.signupFormState.observe(requireActivity(), Observer {
             val state = it ?: return@Observer
 
@@ -62,20 +65,15 @@ class SignUpFragment1 : Fragment() {
 
         initViews()
         initButton()
-
-        return binding.root
     }
 
     private fun initButton() {
-        binding.nextButton.setOnClickListener {
+        nextButton.setOnClickListener {
             // TODO 아이디, 비밀번호, 체크 확인
             // TODO 아이디 중복 체크
             if (viewModel.signupFormState.value?.isDataValid == true) {
-                val userId = binding.etId.text.toString()
-                val userPw = binding.etPw.text.toString()
-                val action =
-                    SignUpFragment1Directions.actionSignUpFragment1ToSignUpFragment2(userId, userPw, true)
-                findNavController().navigate(action)
+                viewModel.saveUserIdAndPw(binding.etId.text.toString(), binding.etPw.text.toString())
+                viewModel.moveToNextPage()
             }
         }
     }
