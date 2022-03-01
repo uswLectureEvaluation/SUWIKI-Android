@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBindingImpl
+import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.ExamInfoType
 import com.kunize.uswtimetable.dataclass.LectureInfoData
 import com.kunize.uswtimetable.dataclass.LectureItemViewType
@@ -51,7 +52,7 @@ class LectureInfoFragment : Fragment() {
             lectureInfoViewModel.deleteLoading()
             //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
             val newData = dummyData.subList(0, 12)
-            //lectureInfoViewModel.addData(ArrayList(newData))
+            lectureInfoViewModel.addData(ArrayList(newData))
         }
 
         //넘어온 데이터 (강의명, 교수명)
@@ -64,9 +65,11 @@ class LectureInfoFragment : Fragment() {
 
             lectureEvaluationRadioBtn.setOnClickListener {
                 //TODO 서버로 부터 강의평가 데이터 받아오기
-                lectureInfoViewModel?.changeData(arrayListOf())
+                val tmp = arrayListOf<EvaluationData?>()
+                tmp.add(null)
+                lectureInfoViewModel?.changeData(tmp)
                 lectureInfoViewModel?.setViewType(LectureItemViewType.LECTURE)
-                lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+                lectureInfoContainer.removeViews(2, lectureInfoContainer.size - 2)
                 lectureInfoViewModel?.changeWriteBtnText(R.string.write_evaluation)
             }
 
@@ -79,7 +82,8 @@ class LectureInfoFragment : Fragment() {
                 val examInflater = LayoutInflater.from(context)
                 when (type) {
                     ExamInfoType.NOT_INFLATE -> {
-                        lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
+                        lectureInfoContainer.removeViewAt(lectureInfoContainer.size - 1)
+                        val newData = dummyData.subList(0, 12)
                         lectureInfoViewModel?.changeData(arrayListOf())
                         lectureInfoViewModel?.setViewType(LectureItemViewType.EXAM)
                     }
@@ -87,9 +91,11 @@ class LectureInfoFragment : Fragment() {
                         val v = examInflater.inflate(R.layout.hide_exam_info, lectureInfoContainer, true)
                         val usePointBtn = v.findViewById<AppCompatButton>(R.id.usePointBtn)
                         usePointBtn.setOnClickListener {
-                            lectureInfoContainer.removeViews(1, lectureInfoContainer.size - 1)
-                            lectureInfoViewModel?.changeData(arrayListOf())
+                            lectureInfoContainer.removeViewAt(lectureInfoContainer.size - 1)
                             lectureInfoViewModel?.setViewType(LectureItemViewType.EXAM)
+                            val tmp = arrayListOf<EvaluationData?>()
+                            tmp.add(null)
+                            lectureInfoViewModel?.changeData(tmp)
                             Toast.makeText(activity, "포인트 사용!", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -115,7 +121,7 @@ class LectureInfoFragment : Fragment() {
 
     private fun goToWriteFragment() {
         val action =
-            LectureInfoFragmentDirections.actionLectureInfoFragmentToWriteFragment()
+            LectureInfoFragmentDirections.actionLectureInfoFragmentToWriteFragment(binding.infoLectureName.text.toString(), binding.infoProfessorName.text.toString())
         findNavController().navigate(action)
     }
 }

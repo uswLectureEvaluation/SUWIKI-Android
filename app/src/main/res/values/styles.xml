@@ -258,9 +258,10 @@
         <item name="android:paddingEnd">0dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">18dp</item>
-        <item name="android:max">5</item>
+        <item name="android:max">10</item>
         <item name="splitTrack">false</item>
         <item name="android:thumb">@android:color/transparent</item>
+        <item name="android:progress">0</item>
     </style>
 
     <!-- Text Styles  -->

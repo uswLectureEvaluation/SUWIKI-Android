@@ -3,53 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kunize.uswtimetable.ui.write.WriteViewModel" />
     </data>
+
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolBar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            app:navigationIcon="@drawable/ic_back">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp">
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                app:navigationIcon="@drawable/ic_back">
 
-                <TextView
-                    android:id="@+id/writeType"
-                    style="@style/TextTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/write_evaluation"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/finishButton"
-                    style="@style/blue_button_style"
-                    android:text="@string/write_lecture_info"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:id="@+id/writeType"
+                        style="@style/TextTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/write_evaluation"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/finishButton"
+                        style="@style/blue_button_style"
+                        android:text="@string/write_lecture_info"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </androidx.appcompat.widget.Toolbar>
+            </androidx.appcompat.widget.Toolbar>
 
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -202,6 +207,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/honeySeekBar"
                         app:layout_constraintEnd_toStartOf="@+id/scoreTextView1"
                         app:layout_constraintTop_toTopOf="@+id/honeySeekBar"
+                        android:text="@{@string/floatToStr(viewModel.honeyScore)}"
                         tools:text="3.5" />
 
                     <TextView
@@ -214,6 +220,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/learningSeekBar"
                         app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
                         app:layout_constraintTop_toTopOf="@+id/learningSeekBar"
+                        android:text="@{@string/floatToStr(viewModel.learningScore)}"
                         tools:text="3.5" />
 
                     <TextView
@@ -226,6 +233,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/satisfactionSeekBar"
                         app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
                         app:layout_constraintTop_toTopOf="@+id/satisfactionSeekBar"
+                        android:text="@{@string/floatToStr(viewModel.satisfactionScore)}"
                         tools:text="3.5" />
 
                     <TextView

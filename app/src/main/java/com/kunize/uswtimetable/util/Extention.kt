@@ -7,6 +7,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.widget.NestedScrollView
@@ -52,6 +53,20 @@ fun RecyclerView.infiniteScrolls(doScrollBottom: () -> Unit) {
         }
     }))
 
+}
+
+fun SeekBar.seekbarChangeListener(doChangeProgress: (progress: Float) -> Unit) {
+    this.setOnSeekBarChangeListener((object : SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+            doChangeProgress(progress.toFloat() / 2)
+        }
+
+        override fun onStartTrackingTouch(p0: SeekBar?) {
+        }
+
+        override fun onStopTrackingTouch(p0: SeekBar?) {
+        }
+    }))
 }
 
 // 문자열 -> json 형태인지 json 배열 형태인지

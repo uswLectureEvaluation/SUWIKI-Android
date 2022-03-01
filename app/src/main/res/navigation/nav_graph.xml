@@ -60,7 +60,14 @@
         <action
             android:id="@+id/action_lectureInfoFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
-    </fragment><action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment"/>
+    </fragment><action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment">
+    <argument
+        android:name="lectureName"
+        android:defaultValue='""' />
+    <argument
+        android:name="professor"
+        android:defaultValue='""' />
+</action>
     <fragment
         android:id="@+id/writeFragment"
         android:name="com.kunize.uswtimetable.ui.write.WriteFragment"
@@ -69,6 +76,18 @@
         <action
             android:id="@+id/action_writeFragment_to_lectureInfoFragment"
             app:destination="@id/lectureInfoFragment"
+            app:popUpTo="@id/lectureInfoFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="lectureName"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="professor"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_writeFragment_to_lectureInfoFragment2"
             app:popUpTo="@id/lectureInfoFragment"
             app:popUpToInclusive="true" />
     </fragment>
