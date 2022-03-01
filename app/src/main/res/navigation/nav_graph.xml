@@ -62,9 +62,6 @@
             android:defaultValue='""'
             app:argType="string" />
     </fragment>
-    <action
-        android:id="@+id/action_global_lectureInfoFragment"
-        app:destination="@id/lectureInfoFragment" />
     <fragment
         android:id="@+id/myPostFragment"
         android:name="com.kunize.uswtimetable.ui.more.MyPostFragment"
@@ -92,7 +89,7 @@
         <action
             android:id="@+id/action_lectureInfoFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
-    </fragment><action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment">
+    <action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment">
     <argument
         android:name="lectureName"
         android:defaultValue='""' />
