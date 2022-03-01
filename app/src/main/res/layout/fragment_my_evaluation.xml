@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_my_evaluation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.more.MyEvaluationFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_evaluation_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_my_post" />
+</FrameLayout>

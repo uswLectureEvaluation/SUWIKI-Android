@@ -1,11 +1,14 @@
 package com.kunize.uswtimetable
 
+import com.kunize.uswtimetable.util.Constants.NUMBER_OF_YEAR
+import com.kunize.uswtimetable.util.Constants.SEMESTER_1_END
+import com.kunize.uswtimetable.util.Constants.SEMESTER_1_START
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DateUtil {
     companion object {
-        fun getToday(): String {
+        private fun getToday(): String {
             val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
             return dateFormat.format(System.currentTimeMillis())
         }
@@ -30,9 +33,5 @@ class DateUtil {
             val month = today.split("/")[1].toInt()
             return if (month in SEMESTER_1_START..SEMESTER_1_END) 1 else 2
         }
-
-        private const val NUMBER_OF_YEAR = 6
-        private const val SEMESTER_1_START = 3
-        private const val SEMESTER_1_END = 6
     }
 }

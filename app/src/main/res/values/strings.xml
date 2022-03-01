@@ -69,7 +69,7 @@
     <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
     <string name="need_login">로그인이 필요합니다</string>
     <string name="school_domain">\@suwon.ac.kr</string>
-    <string name="go_to_mail_homepage"><u>학교 메일 홈페이지로 이동</u></string>
+    <string name="go_to_mail_homepage">학교 메일 홈페이지로 이동</string>
     <string name="invalid_id">아이디가 올바르지 않습니다</string>
     <string name="invalid_pw">문자, 숫자, 특수 문자를 조합하세요</string>
     <string name="login_fail">로그인 실패</string>
@@ -81,6 +81,10 @@
     <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
     <string name="opened_exam_count">시험 정보 열람 : %d개</string>
     <string name="total_point">%d P</string>
+    <string name="signup_welcome_message">가입을 환영합니다</string>
+    <string name="signup_welcome_info">"<b>"%s"</b>"로 이메일이 발송되었습니다.\n로그인 하기 위해서 이메일로 발송된 링크를 클릭해주세요</string>
+    <string name="floatToStr">%.1f</string>
+
     <string name="setting">설정</string>
     <string name="add_timetable">시간표 추가</string>
     <string name="timtable_list">시간표 목록</string>
@@ -92,7 +96,11 @@
     <string name="has_blank">빈 칸이 있습니다</string>
     <string name="back_to_list">목록으로</string>
 
-    <string name="floatToStr">%.1f</string>
+    <string name="btn_back">뒤로</string>
+    <string name="btn_next">다음</string>
+    <string name="btn_previous">이전</string>
+    <string name="btn_exit">닫기</string>
+
 
     <!-- write -->
     <string name="write_lecture_info">완료 (+10P)</string>

@@ -1,240 +1,94 @@
 package com.kunize.uswtimetable.signup
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputFilter
-import android.text.util.Linkify
 import android.util.Log
-import android.view.inputmethod.EditorInfo
+import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
+import androidx.activity.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
+import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.SignUpPageAdapter
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
-import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
-import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
-import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN
+import com.kunize.uswtimetable.login.LoginActivity
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.BackKeyManager
 import com.kunize.uswtimetable.util.Constants.TAG
-import com.kunize.uswtimetable.util.afterTextChanged
-import java.util.regex.Pattern
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class SignUpActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignupBinding
-    private lateinit var viewModel: SignUpViewModel
-    private val imm by lazy { getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager }
+    lateinit var binding: ActivitySignupBinding
+    val viewModel: SignUpViewModel by viewModels { ViewModelFactory(this) }
     private var toast: Toast? = null
+
+    lateinit var viewPager: ViewPager2
+    private lateinit var adapter: SignUpPageAdapter
+    private lateinit var indicator: WormDotsIndicator
+    lateinit var button1: MaterialButton
+    lateinit var button2: MaterialButton
+
+    private val backKeyManager = BackKeyManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, SignUpViewModelFactory())[SignUpViewModel::class.java]
-
-        viewModel.signupFormState.observe(this@SignUpActivity, Observer {
-            val state = it ?: return@Observer
-
-            state.idError?.let { errMsg ->
-                binding.idEditText.error = resources.getString(errMsg)
-            }
-            state.pwError?.let { errMsg ->
-                binding.passwordEditText.error = resources.getString(errMsg)
-            }
-            state.pwAgainError?.let { errMsg ->
-                binding.passwordAgainEditText.error = resources.getString(errMsg)
-            }
-
-            with(binding) {
-                idEditText.isErrorEnabled = state.idError != null
-                passwordEditText.isErrorEnabled = state.pwError != null
-                passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
-                signInButton.isEnabled = true
-            }
-        })
-
         initViews()
+
+        viewModel.currentPage.observe(this) { page ->
+            when (page) {
+                0 -> {
+                    button1.visibility = View.INVISIBLE
+                    button1.text = getString(R.string.btn_previous)
+                    button2.text = getString(R.string.btn_next)
+                }
+                1 -> {
+                    button1.visibility = View.VISIBLE
+                    button1.text = getString(R.string.btn_previous)
+                    button2.text = getString(R.string.sign_in)
+                }
+                2 -> {
+                    button1.visibility = View.VISIBLE
+                    button1.text = getString(R.string.btn_exit)
+                    button2.text = getString(R.string.login)
+                }
+            }
+            viewPager.currentItem = page
+        }
     }
 
     private fun initViews() {
-        with(binding) {
-            etId.afterTextChanged {
-                dataChanged()
-                inputLimitAlert(it.toString(), ID_COUNT_LIMIT)
-            }
-            etPw.afterTextChanged {
-                dataChanged()
-                inputLimitAlert(it.toString(), PW_COUNT_LIMIT)
-            }
-            etPwAgain.afterTextChanged {
-                dataChanged()
-                inputLimitAlert(it.toString(), PW_COUNT_LIMIT)
-            }
-            etMail.afterTextChanged {
-                dataChanged()
-                sendCertificationNumberButton.isEnabled = it.isNullOrBlank().not()
-            }
-            etCertification.afterTextChanged {
-                dataChanged()
-                certificationButton.isEnabled = it.isNullOrBlank().not()
-            }
-            terms.setOnCheckedChangeListener { _, _ ->
-                dataChanged()
-            }
+        button1 = binding.btnSignup1
+        button2 = binding.btnSignup2
 
-            // 아이디: 소문자와 숫자만 입력 가능
-            etId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-                val idRegex = """^[a-z0-9]*$"""
-                val idPattern = Pattern.compile(idRegex)
-                if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
-                    return@InputFilter source
-                }
-                makeToast("소문자와 숫자만 입력 가능합니다: $source")
-                source.dropLast(1)
-            })
+        viewPager = binding.signupViewPager
+        adapter = SignUpPageAdapter(this@SignUpActivity)
+        viewPager.adapter = adapter
+        viewPager.isUserInputEnabled = false
 
-            // 패스워드: 알파벳, 숫자, 특정 특수 문자 입력 가능
-            etPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-                val pwRegex = """^[0-9a-zA-Z!@#$%^+\-=]*$"""
-                val pwPattern = Pattern.compile(pwRegex)
-                if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
-                    return@InputFilter source
-                }
-                makeToast("입력할 수 없는 문자입니다: $source")
-                ""
-            })
-
-            sendCertificationNumberButton.setOnClickListener {
-//                sendEmail(etMail.text.toString())
-                floatEmailSendDialog(this@SignUpActivity, etMail.text.toString())
-            }
-
-            etMail.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    sendEmail(etMail.text.toString())
-                    return@OnEditorActionListener true
-                }
-                return@OnEditorActionListener false
-            })
-
-            certificationButton.setOnClickListener {
-                certification(etCertification.text.toString())
-                viewModel.certificate(binding.etMail.toString())
-            }
-
-            etCertification.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    certification(etCertification.text.toString())
-                    return@OnEditorActionListener true
-                }
-                return@OnEditorActionListener false
-            })
-
-            signInButton.setOnClickListener {
-                val state = viewModel.signupFormState.value
-                if (state?.isDataValid == true) {
-                    makeToast("회원가입 중")
-                    viewModel.signup(
-                        etId.text.toString(),
-                        etMail.text.toString(),
-                        etPw.text.toString()
-                    )
-                } else {
-                    var errMsg = ""
-                    when {
-                        state?.idError != null -> errMsg = resources.getString(state.idError)
-                        state?.pwError != null -> errMsg = resources.getString(state.pwError)
-                        state?.pwAgainError != null -> errMsg =
-                            resources.getString(state.pwAgainError)
-                        state?.certNumError != null -> errMsg =
-                            resources.getString(state.certNumError)
-                        state?.isTermChecked != null -> errMsg =
-                            resources.getString(state.isTermChecked)
-                        state?.hasBlank != null -> errMsg = resources.getString(state.hasBlank)
-                    }
-                    if (errMsg.isNotBlank())
-                        Snackbar.make(binding.root, errMsg, Snackbar.LENGTH_SHORT).show()
-                }
-            }
-        }
-        /* 이용 약관 링크 연결 */
-        val link1 = Pattern.compile("이용약관")
-        val link2 = Pattern.compile("개인정보처리방침")
-        // TODO 이용약관, 개인정보처리방침 링크 연결
-        Linkify.addLinks(binding.terms, link1, "")
-        Linkify.addLinks(binding.terms, link2, "")
+        indicator = binding.signupIndicator
+        indicator.clearFocus()
+        indicator.dotsClickable = false
+        indicator.setViewPager2(viewPager)
     }
 
-    private fun sendEmail(address: String) {
-        // TODO 이메일로 인증 번호 전송
-        val schoolMail = address + SCHOOL_DOMAIN
-        makeToast("$schoolMail: 인증 번호 전송")
-        makeSchoolMailSnackBar()
-
-        viewModel.sendEmail(address)
-//        imm.hideSoftInputFromWindow(binding.etMail.windowToken, 0)
+    override fun onBackPressed() {
+        backKeyManager.onBackPressed("뒤로 가면 모든 내용이 지워집니다. \n" +
+                "종료하려면 2회 연속 누르세요")
     }
 
-    private fun certification(certNum: String) {
-//        viewModel.certification(certNum)
-        val number = certNum.toInt()
-        makeToast("$number: 인증 시도")
-
-        // 키보드 내리기
-        imm.hideSoftInputFromWindow(binding.etCertification.windowToken, 0)
-    }
-
-    private fun dataChanged() {
-        with(binding) {
-            viewModel.signUpDataChanged(
-                id = etId.text.toString(),
-                pw = etPw.text.toString(),
-                pwAgain = etPwAgain.text.toString(),
-                term = terms.isChecked,
-                email = etMail.text.toString(),
-                certNum = etCertification.text.toString()
-            )
-        }
-    }
-
-    private fun inputLimitAlert(str: String, limit: Int) {
-        if (str.length >= limit) {
-            makeToast("입력할 수 있는 최대 길이입니다")
-        }
-    }
-
-    private fun makeToast(message: String) {
+    fun makeToast(message: String) {
         toast?.cancel()
         toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast?.show()
-    }
-
-    private fun makeSchoolMailSnackBar() {
-        Snackbar.make(binding.root, "학교 메일 홈페이지", Snackbar.LENGTH_INDEFINITE)
-            .setAction("이동") {
-                val url = viewModel.schoolMailUrl
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(intent)
-            }.show()
-    }
-
-    private fun floatEmailSendDialog(context: Context, email: String,) {
-        MaterialAlertDialogBuilder(context)
-            .setTitle("인증 메일 전송")
-            .setMessage("$email@$SCHOOL_DOMAIN 로 인증 번호를 전송하시겠습니까?")
-            .setNeutralButton("취소") { dialog, which ->
-                dialog.dismiss()
-            }
-            .setPositiveButton("보내기") { dialog, which ->
-//                viewModel.sendEmail(email)
-                sendEmail(email)
-            }.show()
     }
 
     override fun onStop() {

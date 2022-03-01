@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.ui.more
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
@@ -85,6 +85,13 @@ class MoreFragment : Fragment() {
                     false
                 }
             }
+        }
+        binding.numberOfEvaluations.setOnClickListener {
+            findNavController().navigate(R.id.action_more_to_myPostFragment)
+        }
+        binding.myPostButton.setOnClickListener {
+            // TODO 로그인 상태 확인 작업
+            findNavController().navigate(R.id.action_more_to_myPostFragment)
         }
     }
 

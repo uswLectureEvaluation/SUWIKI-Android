@@ -5,15 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.Result
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
+import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.kunize.uswtimetable.util.Constants.TAG
 import java.util.regex.Pattern
 
-class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewModel() {
+class SignUpViewModel : ViewModel() {
 
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
@@ -21,14 +21,24 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
     private var _certResult = MutableLiveData<Boolean>()
     val certResult: LiveData<Boolean> get() = _certResult
 
-    val schoolMailUrl = "http://mail.suwon.ac.kr"
+    private var _currentPage = MutableLiveData<Int>()
+    val currentPage: LiveData<Int> get() = _currentPage
+
+    private var _id: String? = null
+    private var _pw: String? = null
+    private var _email: String? = null
+    val email get() = _email
 
     private val idRegex = """^[a-z0-9]*$"""
     private val pwRegex = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
     private val idPattern: Pattern = Pattern.compile(idRegex)
     private val pwPattern: Pattern = Pattern.compile(pwRegex)
 
-    fun signup(id: String, email: String, pw: String) {
+    init {
+        _currentPage.value = 0
+    }
+
+    fun signup() {
         // TODO 회원 가입 로직
     }
 
@@ -36,9 +46,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
         id: String,
         pw: String,
         pwAgain: String,
-        term: Boolean,
-        email: String,
-        certNum: String
+        term: Boolean
     ) {
         when {
             checkIdLength(id).not() -> {
@@ -56,7 +64,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
             isPwAgainValid(pw, pwAgain).not() -> {
                 _signupForm.value = SignUpFormState(pwAgainError = R.string.invalid_pw_again)
             }
-            hasBlank(id, pw, pwAgain, email, certNum) -> {
+            hasBlank(id, pw, pwAgain) -> {
                 _signupForm.value = SignUpFormState(hasBlank = R.string.has_blank)
             }
             term.not() -> {
@@ -68,7 +76,7 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
 
     fun certificate(email: String) {
         // TODO 인증 로직
-        when (val result = certificateEmail.certificate(email)) {
+        /*when (val result = certificateEmail.certificate(email)) {
             is Result.Success -> {
                 _certResult.value = result.data.success
             }
@@ -78,10 +86,10 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
             else -> {
                 Log.d(TAG, "SignUpViewModel - emailCheck() called / Error!")
             }
-        }
+        }*/
     }
 
-    fun sendEmail(address: String) {
+    fun sendEmail() {
         // TODO 이메일 전송 로직
     }
 
@@ -105,14 +113,36 @@ class SignUpViewModel(private val certificateEmail: CertificateEmail) : ViewMode
         return pw.isBlank() || pwAgain.isBlank() || pw == pwAgain
     }
 
+    fun setEmail(email: String) {
+        _email = email + SCHOOL_DOMAIN_AT
+    }
+
     private fun hasBlank(
         id: String,
         pw: String,
-        pwAgain: String,
-        email: String,
-        certNum: String
+        pwAgain: String
     ): Boolean {
-        return id.isBlank() || pw.isBlank() ||
-                pwAgain.isBlank() || email.isBlank() || certNum.isBlank()
+        return id.isBlank() || pw.isBlank() || pwAgain.isBlank()
+    }
+
+    fun moveToNextPage() {
+        _currentPage.value?.let { page ->
+            if (page < 2) {
+                _currentPage.value = page + 1
+            }
+        }
+    }
+
+    fun moveToPreviousPage() {
+        _currentPage.value?.let { page ->
+            if (page > 0) {
+                _currentPage.value = page - 1
+            }
+        }
+    }
+
+    fun saveUserIdAndPw(id: String, pw: String) {
+        _id = id
+        _pw = pw
     }
 }
