@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluation
+import com.kunize.uswtimetable.util.ItemType
 
 class MyEvaluationAdapter(val onItemClicked: (id: String, type: ItemType) -> Unit): ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
 
@@ -55,12 +56,6 @@ class MyEvaluationAdapter(val onItemClicked: (id: String, type: ItemType) -> Uni
             override fun areContentsTheSame(oldItem: MyEvaluation, newItem: MyEvaluation): Boolean {
                 return oldItem == newItem
             }
-        }
-
-        enum class ItemType {
-            ROOT_VIEW,
-            EDIT_BUTTON,
-            DELETE_BUTTON
         }
     }
 }

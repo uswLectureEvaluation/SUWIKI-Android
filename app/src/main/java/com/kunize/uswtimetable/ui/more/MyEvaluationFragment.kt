@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.adapter.MyEvaluationAdapter
-import com.kunize.uswtimetable.adapter.MyEvaluationAdapter.Companion.ItemType
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.ItemType
 
 class MyEvaluationFragment : Fragment() {
     private var _binding: FragmentMyEvaluationBinding? = null
