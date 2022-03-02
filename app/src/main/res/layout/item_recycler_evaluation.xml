@@ -119,7 +119,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/averScore"
+            app:layout_constraintTop_toBottomOf="@id/detailTestLayout"
             tools:visibility="visible">
 
             <TextView
@@ -317,6 +317,84 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2020-1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailTestLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/averScore">
+
+            <TextView
+                android:id="@+id/tv_exam_type_title"
+                style="@style/default_black_bold_textview_style"
+                android:layout_marginTop="8dp"
+                android:text="시험 방식"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_exam_type"
+                style="@style/TextBody1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/custom_blue"
+                android:textStyle="bold"
+                android:text="@{evaluationData.testMethod}"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_exam_type_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_exam_type_title"
+                app:layout_constraintTop_toTopOf="@+id/tv_exam_type_title"
+                tools:text="족보, 교재, PPT" />
+
+            <TextView
+                android:id="@+id/tv_exam_difficulty_title"
+                style="@style/default_black_bold_textview_style"
+                android:layout_marginTop="8dp"
+                android:text="난이도"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_exam_type_title" />
+
+            <TextView
+                android:id="@+id/tv_exam_difficulty"
+                style="@style/TextBody1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:difficultColor="@{evaluationData.difficulty}"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_exam_difficulty_title"
+                app:layout_constraintEnd_toStartOf="@id/tv_evaluation_type_title"
+                app:layout_constraintStart_toStartOf="@id/tv_exam_type"
+                app:layout_constraintTop_toTopOf="@id/tv_exam_difficulty_title"
+                android:text="@{evaluationData.difficulty}"
+                tools:text="보통" />
+
+            <TextView
+                android:id="@+id/tv_evaluation_type_title"
+                style="@style/default_black_bold_textview_style"
+                android:text="평가 방식"
+                app:layout_constraintBottom_toBottomOf="@id/tv_exam_difficulty_title"
+                app:layout_constraintEnd_toStartOf="@id/tv_evaluation_type"
+                app:layout_constraintStart_toEndOf="@id/tv_exam_difficulty"
+                app:layout_constraintTop_toTopOf="@id/tv_exam_difficulty_title" />
+
+            <TextView
+                android:id="@+id/tv_evaluation_type"
+                style="@style/TextBody1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+                android:textColor="@color/custom_blue"
+                app:layout_constraintBottom_toBottomOf="@id/tv_exam_difficulty_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_evaluation_type_title"
+                app:layout_constraintTop_toTopOf="@id/tv_exam_difficulty_title"
+                tools:text="절대 평가" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

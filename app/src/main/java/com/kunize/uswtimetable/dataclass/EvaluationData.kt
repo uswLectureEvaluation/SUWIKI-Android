@@ -12,5 +12,7 @@ data class EvaluationData (
     var teamMeeting: String = "", //조모임
     var task: String = "", //과제
     var grade: String = "", //학점
-    var content: String = "내용이 없습니다." //내용
+    var content: String = "내용이 없습니다.", //내용
+    var difficulty: String = "", //시험 난이도
+    var testMethod: String = "", //시험 방식
 )

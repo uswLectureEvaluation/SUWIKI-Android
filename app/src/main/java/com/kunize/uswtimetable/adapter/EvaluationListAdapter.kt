@@ -80,12 +80,19 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     //내가 쓴 시험 정보
                     LectureItemViewType.USEREXAM -> userExamVisible()
                     //세부 강의평가 정보
-                    LectureItemViewType.LECTURE -> lectureVisible()
+                    LectureItemViewType.LECTURE -> {
+                        lectureVisible()
+                        detailTestLayout.visibility = View.GONE
+                    }
                     //세부 시험 정보
-                    LectureItemViewType.EXAM -> examVisible(false)
+                    LectureItemViewType.EXAM -> {
+                        detailTestLayout.visibility = View.VISIBLE
+                        examVisible(false)
+                    }
                     //세부 시험 정보 가림
                     LectureItemViewType.HIDE_EXAM -> {
                         examVisible(true)
+                        detailTestLayout.visibility = View.VISIBLE
                     }
                 }
 

@@ -1,12 +1,15 @@
 package com.kunize.uswtimetable.adapter
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.NavGraphDirections
+import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragmentDirections
 
@@ -41,5 +44,15 @@ object BindingAdapter {
             evaluationAdapter.notifyItemRangeInserted(prevItemSize + 1, newItemSize - prevItemSize + 1)
         else
             evaluationAdapter.notifyDataSetChanged()
+    }
+
+    @BindingAdapter("difficultColor")
+    @JvmStatic
+    fun setColor(textView: TextView, difficult: String) {
+        when(difficult) {
+            "쉬움", "매우 쉬움" -> textView.setTextColor(ContextCompat.getColor(textView.context, R.color.custom_yellow))
+            "보통" -> textView.setTextColor(ContextCompat.getColor(textView.context, R.color.custom_blue))
+            else -> textView.setTextColor(ContextCompat.getColor(textView.context, R.color.custom_red))
+        }
     }
 }
