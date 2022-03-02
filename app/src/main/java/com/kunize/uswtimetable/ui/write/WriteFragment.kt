@@ -36,6 +36,7 @@ class WriteFragment : Fragment() {
 
         //TODO 수강학기 선택 동적으로 불러와서 처리하기
 
+        binding.testGroup.visibility = View.GONE
         binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack(R.id.writeFragment, true)
         }

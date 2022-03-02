@@ -26,7 +26,7 @@
         android:id="@+id/navigation_more"
         android:name="com.kunize.uswtimetable.ui.more.MoreFragment"
         android:label="fragment_more"
-        tools:layout="@layout/fragment_more" >
+        tools:layout="@layout/fragment_more">
         <action
             android:id="@+id/action_more_to_myPostFragment"
             app:destination="@id/myPostFragment" />
@@ -84,19 +84,19 @@
         android:name="com.kunize.uswtimetable.ui.more.MyExamInfoFragment"
         android:label="fragment_my_exam_info"
         tools:layout="@layout/fragment_my_exam_info" />
-            app:argType="string"
+    <action
+        android:id="@+id/action_lectureInfoFragment_to_writeFragment"
+        app:destination="@id/writeFragment" />
+    <action
+        android:id="@+id/action_global_lectureInfoFragment"
+        app:destination="@id/lectureInfoFragment">
+        <argument
+            android:name="lectureName"
             android:defaultValue='""' />
-        <action
-            android:id="@+id/action_lectureInfoFragment_to_writeFragment"
-            app:destination="@id/writeFragment" />
-    <action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment">
-    <argument
-        android:name="lectureName"
-        android:defaultValue='""' />
-    <argument
-        android:name="professor"
-        android:defaultValue='""' />
-</action>
+        <argument
+            android:name="professor"
+            android:defaultValue='""' />
+    </action>
     <fragment
         android:id="@+id/writeFragment"
         android:name="com.kunize.uswtimetable.ui.write.WriteFragment"
@@ -109,12 +109,12 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="lectureName"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
         <argument
             android:name="professor"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
         <action
             android:id="@+id/action_writeFragment_to_lectureInfoFragment2"
             app:popUpTo="@id/lectureInfoFragment"

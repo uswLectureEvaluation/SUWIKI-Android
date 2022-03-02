@@ -5,6 +5,7 @@
 
 
     <data>
+
         <variable
             name="viewModel"
             type="com.kunize.uswtimetable.ui.write.WriteViewModel" />
@@ -89,7 +90,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/edge_bottom"
-                    android:paddingBottom="@dimen/page_padding"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/writeProfessor">
@@ -110,6 +110,12 @@
                         app:layout_constraintStart_toEndOf="@+id/writeSelYearTextView"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/lectureGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="writeHoneyTextView,honeySeekBar,taskRadioGroup,writeGradeTextView,teamRadioGroup,writeTaskTextView,satisfactionSeekBar,writeSatisfactionTextView,writeLearningTextView,gradeRadioGroup,writeTeamTextView,learningSeekBar,scoreTextView,writeSatisfactionScore,scoreTextView1,scoreTextView2,writeLearningScore,writeHoneyScore" />
+
                     <TextView
                         android:id="@+id/writeHoneyTextView"
                         style="@style/detail_info_bold_textview_style"
@@ -117,6 +123,71 @@
                         android:text="@string/honey_score"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/writeSelYearTextView" />
+
+                    <TextView
+                        android:id="@+id/scoreTextView"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeLearningScore"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/writeSatisfactionScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="@{@string/floatToStr(viewModel.satisfactionScore)}"
+                        android:textColor="@color/custom_blue"
+                        app:layout_constraintBottom_toBottomOf="@+id/satisfactionSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
+                        app:layout_constraintTop_toTopOf="@+id/satisfactionSeekBar"
+                        tools:text="3.5" />
+
+                    <TextView
+                        android:id="@+id/scoreTextView1"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeHoneyScore"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/scoreTextView2"
+                        style="@style/slash5_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeSatisfactionScore"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/writeLearningScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="@{@string/floatToStr(viewModel.learningScore)}"
+                        android:textColor="@color/custom_red"
+                        app:layout_constraintBottom_toBottomOf="@+id/learningSeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
+                        app:layout_constraintTop_toTopOf="@+id/learningSeekBar"
+                        tools:text="3.5" />
+
+                    <TextView
+                        android:id="@+id/writeHoneyScore"
+                        style="@style/score_textview_style_large"
+                        android:layout_marginEnd="4dp"
+                        android:minHeight="0dp"
+                        android:text="@{@string/floatToStr(viewModel.honeyScore)}"
+                        android:textColor="@color/custom_yellow"
+                        app:layout_constraintBottom_toBottomOf="@+id/honeySeekBar"
+                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView1"
+                        app:layout_constraintTop_toTopOf="@+id/honeySeekBar"
+                        tools:text="3.5" />
 
                     <TextView
                         android:id="@+id/writeLearningTextView"
@@ -160,9 +231,157 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:paddingBottom="16dp"
                         android:text="@string/grade"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/writeTaskTextView" />
+
+                    <RadioGroup
+                        android:id="@+id/gradeRadioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/writeGradeTextView"
+                        app:layout_constraintStart_toStartOf="@+id/taskRadioGroup"
+                        app:layout_constraintTop_toTopOf="@+id/writeGradeTextView">
+
+                        <RadioButton
+                            android:id="@+id/gradeDifficultRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/difficult" />
+
+                        <RadioButton
+                            android:id="@+id/gradeNormalRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/normal" />
+
+                        <RadioButton
+                            android:id="@+id/gradeGoodRadioButton"
+                            style="@style/write_radiobutton_text_style"
+                            android:text="@string/good" />
+                    </RadioGroup>
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/testGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="testContentsTextView,testContentsGroup,difficultyGroup,multSelectTextView,difficultyTextView" />
+
+                    <TextView
+                        android:id="@+id/testContentsTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="시험 내용"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/writeGradeTextView" />
+
+                    <TextView
+                        android:id="@+id/multSelectTextView"
+                        style="@style/professor_middle_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(복수 선택)"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/testContentsTextView" />
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/testContentsGroup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:alignContent="stretch"
+                        app:alignItems="stretch"
+                        app:flexWrap="wrap"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/testContentsTextView"
+                        app:layout_constraintTop_toTopOf="@+id/testContentsTextView">
+
+                        <CheckBox
+                            android:id="@+id/genealogyRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="@string/genealogy" />
+
+                        <CheckBox
+                            android:id="@+id/textbookRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="@string/textbook" />
+
+                        <CheckBox
+                            android:id="@+id/pptRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="@string/ppt" />
+
+                        <CheckBox
+                            android:id="@+id/noteRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="@string/note" />
+
+                        <CheckBox
+                            android:id="@+id/applicationRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="@string/application" />
+
+                        <CheckBox
+                            android:id="@+id/practiceRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="@string/practice" />
+
+                        <CheckBox
+                            android:id="@+id/taskRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="@string/task" />
+                    </com.google.android.flexbox.FlexboxLayout>
+
+                    <TextView
+                        android:id="@+id/difficultyTextView"
+                        style="@style/detail_info_bold_textview_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="난이도"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/testContentsGroup" />
+
+                    <com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup
+                        android:id="@+id/difficultyGroup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/testContentsGroup"
+                        app:layout_constraintTop_toTopOf="@+id/difficultyTextView">
+
+
+                        <RadioButton
+                            android:id="@+id/veryEasyRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="아주 쉬움" />
+
+                        <RadioButton
+                            android:id="@+id/easyRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="쉬움" />
+
+                        <RadioButton
+                            android:id="@+id/normalRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="보통" />
+
+                        <RadioButton
+                            android:id="@+id/difficultRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="어려움" />
+
+                        <RadioButton
+                            android:id="@+id/veryDifficultRadioButton"
+                            style="@style/write_checkbox_style"
+                            android:text="아주 어려움" />
+                    </com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup>
 
                     <SeekBar
                         android:id="@+id/honeySeekBar"
@@ -197,71 +416,6 @@
                         app:layout_constraintStart_toStartOf="@+id/learningSeekBar"
                         app:layout_constraintTop_toTopOf="@+id/writeSatisfactionTextView"
                         tools:progress="3" />
-
-                    <TextView
-                        android:id="@+id/writeHoneyScore"
-                        style="@style/score_textview_style_large"
-                        android:layout_marginEnd="4dp"
-                        android:minHeight="0dp"
-                        android:textColor="@color/custom_yellow"
-                        app:layout_constraintBottom_toBottomOf="@+id/honeySeekBar"
-                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView1"
-                        app:layout_constraintTop_toTopOf="@+id/honeySeekBar"
-                        android:text="@{@string/floatToStr(viewModel.honeyScore)}"
-                        tools:text="3.5" />
-
-                    <TextView
-                        android:id="@+id/writeLearningScore"
-                        style="@style/score_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:textColor="@color/custom_red"
-                        app:layout_constraintBottom_toBottomOf="@+id/learningSeekBar"
-                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
-                        app:layout_constraintTop_toTopOf="@+id/learningSeekBar"
-                        android:text="@{@string/floatToStr(viewModel.learningScore)}"
-                        tools:text="3.5" />
-
-                    <TextView
-                        android:id="@+id/writeSatisfactionScore"
-                        style="@style/score_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:textColor="@color/custom_blue"
-                        app:layout_constraintBottom_toBottomOf="@+id/satisfactionSeekBar"
-                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
-                        app:layout_constraintTop_toTopOf="@+id/satisfactionSeekBar"
-                        android:text="@{@string/floatToStr(viewModel.satisfactionScore)}"
-                        tools:text="3.5" />
-
-                    <TextView
-                        android:id="@+id/scoreTextView1"
-                        style="@style/slash5_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/score"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeHoneyScore"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
-                        android:id="@+id/scoreTextView"
-                        style="@style/slash5_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/score"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeLearningScore"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
-                        android:id="@+id/scoreTextView2"
-                        style="@style/slash5_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/score"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeSatisfactionScore"
-                        app:layout_constraintEnd_toEndOf="parent" />
 
                     <RadioGroup
                         android:id="@+id/teamRadioGroup"
@@ -311,32 +465,6 @@
                             android:text="@string/many" />
                     </RadioGroup>
 
-                    <RadioGroup
-                        android:id="@+id/gradeRadioGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeGradeTextView"
-                        app:layout_constraintStart_toStartOf="@+id/taskRadioGroup"
-                        app:layout_constraintTop_toTopOf="@+id/writeGradeTextView">
-
-                        <RadioButton
-                            android:id="@+id/gradeDifficultRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:layout_marginEnd="16dp"
-                            android:text="@string/difficult" />
-
-                        <RadioButton
-                            android:id="@+id/gradeNormalRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:layout_marginEnd="16dp"
-                            android:text="@string/normal" />
-
-                        <RadioButton
-                            android:id="@+id/gradeGoodRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:text="@string/good" />
-                    </RadioGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <EditText

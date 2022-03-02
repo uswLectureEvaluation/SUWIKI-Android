@@ -113,7 +113,12 @@
     <string name="many">많음</string>
     <string name="difficult">까다로움</string>
     <string name="good">잘줌</string>
-
+    <string name="genealogy">족보</string>
+    <string name="textbook">교재</string>
+    <string name="ppt">PPT</string>
+    <string name="note">필기</string>
+    <string name="application">응용</string>
+    <string name="practice">실습</string>
 
 
 </resources>
