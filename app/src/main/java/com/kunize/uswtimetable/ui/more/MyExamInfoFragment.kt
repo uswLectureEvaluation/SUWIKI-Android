@@ -27,16 +27,16 @@ class MyExamInfoFragment : Fragment() {
         _binding = FragmentMyExamInfoBinding.inflate(inflater, container, false)
 
         binding.myExamInfoContainer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        adapter = MyExamInfoAdapter { id, type ->
+        adapter = MyExamInfoAdapter { data, type ->
             when (type) {
                 ItemType.ROOT_VIEW -> {
-                    Toast.makeText(requireContext(), "아이템$id 선택됨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "$data 선택됨", Toast.LENGTH_SHORT).show()
                 }
                 ItemType.EDIT_BUTTON -> {
-                    Toast.makeText(requireContext(), "아이템$id 수정 버튼 선택됨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "아이템${data.id} 수정 버튼 선택됨", Toast.LENGTH_SHORT).show()
                 }
                 ItemType.DELETE_BUTTON -> {
-                    Toast.makeText(requireContext(), "아이템$id 삭제 버튼 선택됨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "아이템${data.id} 삭제 버튼 선택됨", Toast.LENGTH_SHORT).show()
                 }
             }
         }

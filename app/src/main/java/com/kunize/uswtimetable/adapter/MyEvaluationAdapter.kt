@@ -9,7 +9,7 @@ import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.util.ItemType
 
-class MyEvaluationAdapter(val onItemClicked: (id: String, type: ItemType) -> Unit): ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
+class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType) -> Unit): ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
 
     inner class MyEvaluationViewHolder(private val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: MyEvaluation) {
@@ -28,13 +28,13 @@ class MyEvaluationAdapter(val onItemClicked: (id: String, type: ItemType) -> Uni
                 content.text = data.content
             }
             binding.root.setOnClickListener {
-                onItemClicked(data.id, ItemType.ROOT_VIEW)
+                onItemClicked(data, ItemType.ROOT_VIEW)
             }
             binding.editBtn.setOnClickListener {
-                onItemClicked(data.id, ItemType.EDIT_BUTTON)
+                onItemClicked(data, ItemType.EDIT_BUTTON)
             }
             binding.deleteBtn.setOnClickListener {
-                onItemClicked(data.id, ItemType.DELETE_BUTTON)
+                onItemClicked(data, ItemType.DELETE_BUTTON)
             }
         }
     }

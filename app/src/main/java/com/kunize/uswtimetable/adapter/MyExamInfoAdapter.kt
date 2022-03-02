@@ -12,7 +12,7 @@ import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.util.ExamDifficulty
 import com.kunize.uswtimetable.util.ItemType
 
-class MyExamInfoAdapter(val onItemClicked: (id: String, type: ItemType) -> Unit) :
+class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) -> Unit) :
     ListAdapter<MyExamInfo, MyExamInfoAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemMyExamInfoBinding) :
@@ -29,7 +29,7 @@ class MyExamInfoAdapter(val onItemClicked: (id: String, type: ItemType) -> Unit)
                         tvExamDifficulty.text = "쉬움"
                         tvExamDifficulty.setTextColor(
                             ContextCompat.getColor(
-                                tvEvaluationType.context,
+                                tvExamDifficulty.context,
                                 R.color.custom_yellow
                             )
                         )
@@ -38,7 +38,7 @@ class MyExamInfoAdapter(val onItemClicked: (id: String, type: ItemType) -> Unit)
                         tvExamDifficulty.text = "보통"
                         tvExamDifficulty.setTextColor(
                             ContextCompat.getColor(
-                                tvEvaluationType.context,
+                                tvExamDifficulty.context,
                                 R.color.custom_blue
                             )
                         )
@@ -47,24 +47,23 @@ class MyExamInfoAdapter(val onItemClicked: (id: String, type: ItemType) -> Unit)
                         tvExamDifficulty.text = "어려움"
                         tvExamDifficulty.setTextColor(
                             ContextCompat.getColor(
-                                tvEvaluationType.context,
+                                tvExamDifficulty.context,
                                 R.color.custom_red
                             )
                         )
                     }
                 }
                 tvExamType.text = data.examType
-                tvEvaluationType.text = data.evaluationType
                 content.text = data.content
             }
             binding.root.setOnClickListener {
-                onItemClicked(data.id, ItemType.ROOT_VIEW)
+                onItemClicked(data, ItemType.ROOT_VIEW)
             }
             binding.editBtn.setOnClickListener {
-                onItemClicked(data.id, ItemType.EDIT_BUTTON)
+                onItemClicked(data, ItemType.EDIT_BUTTON)
             }
             binding.deleteBtn.setOnClickListener {
-                onItemClicked(data.id, ItemType.DELETE_BUTTON)
+                onItemClicked(data, ItemType.DELETE_BUTTON)
             }
         }
     }
