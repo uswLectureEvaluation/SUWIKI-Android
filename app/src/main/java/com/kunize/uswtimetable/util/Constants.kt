@@ -34,3 +34,15 @@ object API {
 enum class ResponseState {
     OK, FAIL
 }
+
+enum class ItemType {
+    ROOT_VIEW,
+    EDIT_BUTTON,
+    DELETE_BUTTON
+}
+
+enum class ExamDifficulty {
+    EASY,
+    NORMAL,
+    DIFFICULT
+}
