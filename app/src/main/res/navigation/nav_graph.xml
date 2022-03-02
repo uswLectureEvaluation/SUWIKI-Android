@@ -62,9 +62,6 @@
             android:defaultValue='""'
             app:argType="string" />
     </fragment>
-    <action
-        android:id="@+id/action_global_lectureInfoFragment"
-        app:destination="@id/lectureInfoFragment" />
     <fragment
         android:id="@+id/myPostFragment"
         android:name="com.kunize.uswtimetable.ui.more.MyPostFragment"
@@ -87,4 +84,40 @@
         android:name="com.kunize.uswtimetable.ui.more.MyExamInfoFragment"
         android:label="fragment_my_exam_info"
         tools:layout="@layout/fragment_my_exam_info" />
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_lectureInfoFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
+    <action android:id="@+id/action_global_lectureInfoFragment" app:destination="@id/lectureInfoFragment">
+    <argument
+        android:name="lectureName"
+        android:defaultValue='""' />
+    <argument
+        android:name="professor"
+        android:defaultValue='""' />
+</action>
+    <fragment
+        android:id="@+id/writeFragment"
+        android:name="com.kunize.uswtimetable.ui.write.WriteFragment"
+        android:label="WriteFragment"
+        tools:layout="@layout/fragment_write">
+        <action
+            android:id="@+id/action_writeFragment_to_lectureInfoFragment"
+            app:destination="@id/lectureInfoFragment"
+            app:popUpTo="@id/lectureInfoFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="lectureName"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="professor"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_writeFragment_to_lectureInfoFragment2"
+            app:popUpTo="@id/lectureInfoFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

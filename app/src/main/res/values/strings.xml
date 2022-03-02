@@ -102,4 +102,18 @@
     <string name="btn_exit">닫기</string>
 
 
+    <!-- write -->
+    <string name="write_lecture_info">완료 (+10P)</string>
+    <string name="write_exam_info">완료 (+20P)</string>
+    <string name="sel_year">수강학기 선택</string>
+    <string name="score">점</string>
+    <string name="exist">있음</string>
+    <string name="not_exist">없음</string>
+    <string name="normal">보통</string>
+    <string name="many">많음</string>
+    <string name="difficult">까다로움</string>
+    <string name="good">잘줌</string>
+
+
+
 </resources>

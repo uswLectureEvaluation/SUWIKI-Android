@@ -35,7 +35,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/usePointBtn"
-        style="@style/exam_info_button_style"
+        style="@style/blue_button_style"
         android:text="@string/use_point"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
