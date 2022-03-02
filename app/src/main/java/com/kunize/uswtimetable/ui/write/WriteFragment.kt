@@ -57,6 +57,19 @@ class WriteFragment : Fragment() {
             writeViewModel.changeLearningScore(it)
         }
 
+        /*
+        * progress 초기화를 하지 않을 경우
+        * 강의평가 쓰기 -> 꿀강 지수 2, 배움 지수 4로 설정 -> 완료
+        * 위 과정 진행 후 다시 강의평가 쓰기를 클릭할 경우
+        * 꿀강 지수 및 배움 지수가 0으로 초기화 되지 않고 2와 4로 남아있음
+        * AVD 및 V20에서는 해당 문제가 발생하지만 갤럭시 s10e 에서는 발생하지 않음
+        *
+        * 해당 문제를 해결하기 위해 progress 초기화
+        * */
+        binding.satisfactionSeekBar.progress = 6
+        binding.learningSeekBar.progress = 6
+        binding.honeySeekBar.progress = 6
+
         return binding.root
     }
 
