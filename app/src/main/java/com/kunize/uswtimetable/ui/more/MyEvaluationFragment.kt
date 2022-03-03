@@ -25,16 +25,16 @@ class MyEvaluationFragment : Fragment() {
     ): View? {
         _binding = FragmentMyEvaluationBinding.inflate(inflater, container, false)
 
-        adapter = MyEvaluationAdapter { id, type ->
+        adapter = MyEvaluationAdapter { data, type ->
             when (type) {
                 ItemType.ROOT_VIEW -> {
-                    Toast.makeText(requireContext(), "$id 아이템 선택됨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "$data 선택됨", Toast.LENGTH_SHORT).show()
                 }
                 ItemType.EDIT_BUTTON -> {
-                    Toast.makeText(requireContext(), "$id 아이템 수정", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "${data.id} 아이템 수정", Toast.LENGTH_SHORT).show()
                 }
                 ItemType.DELETE_BUTTON -> {
-                    Toast.makeText(requireContext(), "$id 아이템 삭제", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "${data.id} 아이템 삭제", Toast.LENGTH_SHORT).show()
                 }
             }
         }
