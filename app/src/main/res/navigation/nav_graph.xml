@@ -119,5 +119,9 @@
             android:id="@+id/action_writeFragment_to_lectureInfoFragment2"
             app:popUpTo="@id/lectureInfoFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="writeType"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

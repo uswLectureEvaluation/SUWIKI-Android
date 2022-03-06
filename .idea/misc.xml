@@ -77,6 +77,9 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_write.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_my_exam_info.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_evaluation.xml" value="0.264" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/menu/bottom_nav_menu.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/menu/home_menu.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/menu/more_menu_after.xml" value="0.14605263157894738" />
       </map>
     </option>
   </component>

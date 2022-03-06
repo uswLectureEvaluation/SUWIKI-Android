@@ -1,5 +1,9 @@
 package com.kunize.uswtimetable.dataclass
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MyEvaluation (
     val id: String,
     val subject: String,
@@ -14,4 +18,4 @@ data class MyEvaluation (
     val homework: String,
     val grade: String,
     val content: String
-)
+) : Parcelable
