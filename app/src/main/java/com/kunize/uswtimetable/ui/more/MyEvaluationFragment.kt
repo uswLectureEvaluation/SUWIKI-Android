@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.adapter.MyEvaluationAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
+import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
 import com.kunize.uswtimetable.util.ItemType
 
 class MyEvaluationFragment : Fragment() {
@@ -32,6 +35,7 @@ class MyEvaluationFragment : Fragment() {
                 }
                 ItemType.EDIT_BUTTON -> {
                     Toast.makeText(requireContext(), "${data.id} 아이템 수정", Toast.LENGTH_SHORT).show()
+                    gotoWriteFragment(data)
                 }
                 ItemType.DELETE_BUTTON -> {
                     Toast.makeText(requireContext(), "${data.id} 아이템 삭제", Toast.LENGTH_SHORT).show()
@@ -42,6 +46,15 @@ class MyEvaluationFragment : Fragment() {
         initRecyclerView()
 
         return _binding?.root
+    }
+
+    private fun gotoWriteFragment(data: MyEvaluation) {
+        val action =
+            LectureInfoFragmentDirections.actionGlobalWriteFragment(
+                myEvaluation = data,
+                isEvaluation = true
+            )
+        findNavController().navigate(action)
     }
 
     private fun initRecyclerView() {

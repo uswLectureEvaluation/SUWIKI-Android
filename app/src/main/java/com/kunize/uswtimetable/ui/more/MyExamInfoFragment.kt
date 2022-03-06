@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.adapter.MyExamInfoAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
+import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
 import com.kunize.uswtimetable.util.ItemType
 
 class MyExamInfoFragment : Fragment() {
@@ -34,6 +37,7 @@ class MyExamInfoFragment : Fragment() {
                 }
                 ItemType.EDIT_BUTTON -> {
                     Toast.makeText(requireContext(), "아이템${data.id} 수정 버튼 선택됨", Toast.LENGTH_SHORT).show()
+                    gotoWriteFragment(data)
                 }
                 ItemType.DELETE_BUTTON -> {
                     Toast.makeText(requireContext(), "아이템${data.id} 삭제 버튼 선택됨", Toast.LENGTH_SHORT).show()
@@ -48,6 +52,15 @@ class MyExamInfoFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun gotoWriteFragment(data: MyExamInfo) {
+        val action =
+            LectureInfoFragmentDirections.actionGlobalWriteFragment(
+                myExamInfo = data,
+                isEvaluation = false
+            )
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

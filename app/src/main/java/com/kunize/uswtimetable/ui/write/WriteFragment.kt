@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.util.seekbarChangeListener
@@ -32,11 +33,17 @@ class WriteFragment : Fragment() {
 
         val args: WriteFragmentArgs by navArgs()
         binding.writeLectureName.text = args.lectureName
-        binding.writeProfessor.text = args.professor
+        binding.writeProfessor.text = args.professorName
+
+        if(args.isEvaluation) {
+            binding.testGroup.visibility = View.GONE
+        } else{
+            binding.lectureGroup.visibility = View.GONE
+        }
 
         //TODO 수강학기 선택 동적으로 불러와서 처리하기
 
-        binding.testGroup.visibility = View.GONE
+
         binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack(R.id.writeFragment, true)
         }
@@ -75,8 +82,10 @@ class WriteFragment : Fragment() {
     }
 
     private fun goToLectureInfoFragment() {
-        val action =
-            WriteFragmentDirections.actionWriteFragmentToLectureInfoFragment(binding.writeLectureName.text.toString(), binding.writeProfessor.text.toString())
+        val action = NavGraphDirections.actionGlobalLectureInfoFragment(
+            binding.writeLectureName.text.toString(),
+            binding.writeProfessor.text.toString()
+        )
         findNavController().navigate(action)
     }
 }

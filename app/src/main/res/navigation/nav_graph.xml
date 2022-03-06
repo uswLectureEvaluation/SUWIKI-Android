@@ -85,11 +85,10 @@
         android:label="fragment_my_exam_info"
         tools:layout="@layout/fragment_my_exam_info" />
     <action
-        android:id="@+id/action_lectureInfoFragment_to_writeFragment"
-        app:destination="@id/writeFragment" />
-    <action
         android:id="@+id/action_global_lectureInfoFragment"
-        app:destination="@id/lectureInfoFragment">
+        app:destination="@id/lectureInfoFragment"
+        app:popUpTo="@id/lectureInfoFragment"
+        app:popUpToInclusive="true">
         <argument
             android:name="lectureName"
             android:defaultValue='""' />
@@ -103,25 +102,42 @@
         android:label="WriteFragment"
         tools:layout="@layout/fragment_write">
         <action
-            android:id="@+id/action_writeFragment_to_lectureInfoFragment"
-            app:destination="@id/lectureInfoFragment"
-            app:popUpTo="@id/lectureInfoFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="lectureName"
-            android:defaultValue='""'
-            app:argType="string" />
-        <argument
-            android:name="professor"
-            android:defaultValue='""'
-            app:argType="string" />
-        <action
             android:id="@+id/action_writeFragment_to_lectureInfoFragment2"
             app:popUpTo="@id/lectureInfoFragment"
             app:popUpToInclusive="true" />
         <argument
-            android:name="writeType"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:name="myEvaluation"
+            app:argType="com.kunize.uswtimetable.dataclass.MyEvaluation"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="myExamInfo"
+            app:argType="com.kunize.uswtimetable.dataclass.MyExamInfo"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="lectureName"
+            app:argType="string"
+            android:defaultValue=" " />
+        <argument android:name="professorName"
+            app:argType="string"
+            android:defaultValue=" " />
+        <action
+            android:id="@+id/action_writeFragment_to_myPostFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/myPostFragment" />
+        <argument
+            android:name="isEvaluation"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
+    <action
+        android:id="@+id/action_global_writeFragment"
+        app:destination="@id/writeFragment"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_myPostFragment"
+        app:destination="@id/myPostFragment"
+        app:popUpTo="@id/myPostFragment"
+        app:popUpToInclusive="true" />
 </navigation>

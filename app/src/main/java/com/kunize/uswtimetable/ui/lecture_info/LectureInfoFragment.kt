@@ -30,6 +30,7 @@ class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
     private lateinit var lectureInfoViewModel: LectureInfoViewModel
+    private var isEvaluation = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +65,7 @@ class LectureInfoFragment : Fragment() {
 
 
             lectureEvaluationRadioBtn.setOnClickListener {
+                isEvaluation = true
                 //TODO 서버로 부터 강의평가 데이터 받아오기
                 val tmp = arrayListOf<EvaluationData?>()
                 tmp.add(null)
@@ -75,6 +77,7 @@ class LectureInfoFragment : Fragment() {
 
 
             examInfoRadioBtn.setOnClickListener {
+                isEvaluation = false
                 lectureInfoViewModel?.setViewType(LectureItemViewType.HIDE_EXAM)
                 lectureInfoViewModel?.changeData(arrayListOf())
                 //TODO 서버로 부터 시험 정보 데이터 받아오기
@@ -121,7 +124,7 @@ class LectureInfoFragment : Fragment() {
 
     private fun goToWriteFragment() {
         val action =
-            LectureInfoFragmentDirections.actionLectureInfoFragmentToWriteFragment(binding.infoLectureName.text.toString(), binding.infoProfessorName.text.toString())
+            LectureInfoFragmentDirections.actionGlobalWriteFragment(lectureName = binding.infoLectureName.text.toString(),professorName =  binding.infoProfessorName.text.toString(), isEvaluation = isEvaluation)
         findNavController().navigate(action)
     }
 }
