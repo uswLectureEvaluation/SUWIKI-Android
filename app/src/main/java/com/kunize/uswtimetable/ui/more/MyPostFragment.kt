@@ -19,7 +19,7 @@ import com.kunize.uswtimetable.databinding.FragmentMyPostBinding
 class MyPostFragment : Fragment() {
     private var _binding: FragmentMyPostBinding? = null
     private val binding get() = _binding!!
-    private val tab by lazy { binding.tabLayout }
+    private lateinit var tab: TabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,17 +28,13 @@ class MyPostFragment : Fragment() {
     ): View {
         _binding = FragmentMyPostBinding.inflate(inflater, container, false)
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.adapter = MyPostPageAdapter(this)
+
+        tab = binding.tabLayout
 
         TabLayoutMediator(tab, binding.viewPager) { tab, position ->
             when (position) {
@@ -46,6 +42,8 @@ class MyPostFragment : Fragment() {
                 1 -> tab.text = "시험 정보"
             }
         }.attach()
+
+        return binding.root
     }
 
     override fun onDestroyView() {

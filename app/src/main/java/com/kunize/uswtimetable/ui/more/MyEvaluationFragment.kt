@@ -21,6 +21,7 @@ class MyEvaluationFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: MyEvaluationAdapter
     private val viewModel: MyPostViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +32,14 @@ class MyEvaluationFragment : Fragment() {
         adapter = MyEvaluationAdapter { data, type ->
             when (type) {
                 ItemType.ROOT_VIEW -> {
-                    Toast.makeText(requireContext(), "$data 선택됨", Toast.LENGTH_SHORT).show()
+                    makeToast("$data 선택됨")
                 }
                 ItemType.EDIT_BUTTON -> {
-                    Toast.makeText(requireContext(), "${data.id} 아이템 수정", Toast.LENGTH_SHORT).show()
+                    makeToast("${data.id} 아이템 수정 클릭")
                     gotoWriteFragment(data)
                 }
                 ItemType.DELETE_BUTTON -> {
-                    Toast.makeText(requireContext(), "${data.id} 아이템 삭제", Toast.LENGTH_SHORT).show()
+                    makeToast("${data.id} 아이템 삭제 클릭")
                 }
             }
         }
@@ -69,5 +70,10 @@ class MyEvaluationFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun makeToast(message: String) {
+        toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        toast?.show()
     }
 }
