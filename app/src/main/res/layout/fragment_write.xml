@@ -247,10 +247,10 @@
                         app:layout_constraintTop_toTopOf="@+id/writeGradeTextView">
 
                         <RadioButton
-                            android:id="@+id/gradeDifficultRadioButton"
+                            android:id="@+id/gradeGoodRadioButton"
                             style="@style/write_radiobutton_text_style"
                             android:layout_marginEnd="16dp"
-                            android:text="@string/difficult" />
+                            android:text="@string/good" />
 
                         <RadioButton
                             android:id="@+id/gradeNormalRadioButton"
@@ -259,9 +259,10 @@
                             android:text="@string/normal" />
 
                         <RadioButton
-                            android:id="@+id/gradeGoodRadioButton"
+                            android:id="@+id/gradeDifficultRadioButton"
                             style="@style/write_radiobutton_text_style"
-                            android:text="@string/good" />
+                            android:text="@string/difficult" />
+
                     </RadioGroup>
 
                     <androidx.constraintlayout.widget.Group
