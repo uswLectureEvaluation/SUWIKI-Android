@@ -31,6 +31,13 @@ object API {
     const val SEND_CERT_NUMBER: String =  "/send_email"
 }
 
+object WriteFragmentTitle {
+    const val EDIT_MY_EVALUATION = "강의평가 수정"
+    const val EDIT_MY_EXAM = "시험정보 수정"
+    const val WRITE_EVALUATION = "강의평가 쓰기"
+    const val WRITE_EXAM = "시험정보 쓰기"
+}
+
 enum class ResponseState {
     OK, FAIL
 }

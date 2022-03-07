@@ -54,13 +54,10 @@
         android:label="LectureInfoFragment"
         tools:layout="@layout/fragment_lecture_info">
         <argument
-            android:name="lectureName"
-            android:defaultValue='""'
-            app:argType="string" />
-        <argument
-            android:name="professor"
-            android:defaultValue='""'
-            app:argType="string" />
+            android:name="lectureProfessorName"
+            app:argType="com.kunize.uswtimetable.dataclass.LectureProfessorName"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/myPostFragment"
@@ -115,13 +112,6 @@
             app:argType="com.kunize.uswtimetable.dataclass.MyExamInfo"
             app:nullable="true"
             android:defaultValue="@null" />
-        <argument
-            android:name="lectureName"
-            app:argType="string"
-            android:defaultValue=" " />
-        <argument android:name="professorName"
-            app:argType="string"
-            android:defaultValue=" " />
         <action
             android:id="@+id/action_writeFragment_to_myPostFragment"
             app:popUpToInclusive="true"
@@ -130,6 +120,11 @@
             android:name="isEvaluation"
             app:argType="boolean"
             android:defaultValue="true" />
+        <argument
+            android:name="lectureProfessorName"
+            app:argType="com.kunize.uswtimetable.dataclass.LectureProfessorName"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <action
         android:id="@+id/action_global_writeFragment"

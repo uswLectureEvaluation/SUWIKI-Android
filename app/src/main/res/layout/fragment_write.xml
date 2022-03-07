@@ -302,37 +302,37 @@
                         app:layout_constraintTop_toTopOf="@+id/testContentsTextView">
 
                         <CheckBox
-                            android:id="@+id/genealogyRadioButton"
+                            android:id="@+id/genealogyCheckBox"
                             style="@style/write_checkbox_style"
                             android:text="@string/genealogy" />
 
                         <CheckBox
-                            android:id="@+id/textbookRadioButton"
+                            android:id="@+id/textbookCheckBox"
                             style="@style/write_checkbox_style"
                             android:text="@string/textbook" />
 
                         <CheckBox
-                            android:id="@+id/pptRadioButton"
+                            android:id="@+id/pptCheckBox"
                             style="@style/write_checkbox_style"
                             android:text="@string/ppt" />
 
                         <CheckBox
-                            android:id="@+id/noteRadioButton"
+                            android:id="@+id/noteCheckBox"
                             style="@style/write_checkbox_style"
                             android:text="@string/note" />
 
                         <CheckBox
-                            android:id="@+id/applicationRadioButton"
+                            android:id="@+id/applicationCheckBox"
                             style="@style/write_checkbox_style"
                             android:text="@string/application" />
 
                         <CheckBox
-                            android:id="@+id/practiceRadioButton"
+                            android:id="@+id/practiceCheckBox"
                             style="@style/write_checkbox_style"
                             android:text="@string/practice" />
 
                         <CheckBox
-                            android:id="@+id/taskRadioButton"
+                            android:id="@+id/taskCheckBox"
                             style="@style/write_checkbox_style"
                             android:text="@string/task" />
                     </com.google.android.flexbox.FlexboxLayout>
@@ -448,7 +448,7 @@
                         app:layout_constraintTop_toTopOf="@+id/writeTaskTextView">
 
                         <RadioButton
-                            android:id="@+id/taskExistRadioButton"
+                            android:id="@+id/taskNotExistRadioButton"
                             style="@style/write_radiobutton_text_style"
                             android:layout_marginEnd="16dp"
                             android:text="@string/not_exist" />

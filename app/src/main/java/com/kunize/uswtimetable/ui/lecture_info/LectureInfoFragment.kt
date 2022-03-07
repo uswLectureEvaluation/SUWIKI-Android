@@ -14,17 +14,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
-import com.kunize.uswtimetable.databinding.FragmentLectureInfoBindingImpl
-import com.kunize.uswtimetable.dataclass.EvaluationData
-import com.kunize.uswtimetable.dataclass.ExamInfoType
-import com.kunize.uswtimetable.dataclass.LectureInfoData
-import com.kunize.uswtimetable.dataclass.LectureItemViewType
+import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
 import com.kunize.uswtimetable.util.infiniteScrolls
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class LectureInfoFragment : Fragment() {
 
@@ -36,13 +28,25 @@ class LectureInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lecture_info, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_lecture_info, container, false)
 
         lectureInfoViewModel = ViewModelProvider(this)[LectureInfoViewModel::class.java]
         binding.lectureInfoViewModel = lectureInfoViewModel
         binding.lifecycleOwner = this
 
-        lectureInfoViewModel.setInfoValue(LectureInfoData("전핵", arrayListOf("2021-2","2021-1","2020-2","2020-1","2018-1","2018-2"), 4.2f,2.4f, 3.5f, "없음","보통","까다로움"))
+        lectureInfoViewModel.setInfoValue(
+            LectureInfoData(
+                "전핵",
+                arrayListOf("2021-2", "2021-1", "2020-2", "2020-1", "2018-1", "2018-2"),
+                4.2f,
+                2.4f,
+                3.5f,
+                "없음",
+                "보통",
+                "까다로움"
+            )
+        )
 
         //recyclerview 설정
         lectureInfoViewModel.setViewType(LectureItemViewType.LECTURE)
@@ -60,8 +64,10 @@ class LectureInfoFragment : Fragment() {
         val args: LectureInfoFragmentArgs by navArgs()
 
         with(binding) {
-            infoLectureName.text = args.lectureName
-            infoProfessorName.text = args.professor
+            args.lectureProfessorName?.let {
+                infoLectureName.text = it.subject
+                infoProfessorName.text = it.professor
+            }
 
 
             lectureEvaluationRadioBtn.setOnClickListener {
@@ -91,7 +97,11 @@ class LectureInfoFragment : Fragment() {
                         lectureInfoViewModel?.setViewType(LectureItemViewType.EXAM)
                     }
                     ExamInfoType.NEED_USE -> {
-                        val v = examInflater.inflate(R.layout.hide_exam_info, lectureInfoContainer, true)
+                        val v = examInflater.inflate(
+                            R.layout.hide_exam_info,
+                            lectureInfoContainer,
+                            true
+                        )
                         val usePointBtn = v.findViewById<AppCompatButton>(R.id.usePointBtn)
                         usePointBtn.setOnClickListener {
                             lectureInfoContainer.removeViewAt(lectureInfoContainer.size - 1)
@@ -124,7 +134,12 @@ class LectureInfoFragment : Fragment() {
 
     private fun goToWriteFragment() {
         val action =
-            LectureInfoFragmentDirections.actionGlobalWriteFragment(lectureName = binding.infoLectureName.text.toString(),professorName =  binding.infoProfessorName.text.toString(), isEvaluation = isEvaluation)
+            LectureInfoFragmentDirections.actionGlobalWriteFragment(
+                lectureProfessorName = LectureProfessorName(
+                    binding.infoLectureName.text.toString(),
+                    binding.infoProfessorName.text.toString()
+                ), isEvaluation = isEvaluation
+            )
         findNavController().navigate(action)
     }
 }
