@@ -96,6 +96,7 @@ class WriteFragment : Fragment() {
             setDifficultyRadioBtn(it)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EXAM
+            binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
         }
     }
 
@@ -143,9 +144,11 @@ class WriteFragment : Fragment() {
         if (args.isEvaluation) {
             binding.testGroup.visibility = View.GONE
             binding.writeType.text = WriteFragmentTitle.WRITE_EVALUATION
+            binding.finishButton.text = WriteFragmentTitle.FINISH_EVALUATION
         } else {
             binding.lectureGroup.visibility = View.GONE
             binding.writeType.text = WriteFragmentTitle.WRITE_EXAM
+            binding.finishButton.text = WriteFragmentTitle.FINISH_EXAM
         }
     }
 
@@ -165,6 +168,7 @@ class WriteFragment : Fragment() {
             setGradeRadioBtn(it)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EVALUATION
+            binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
         }
     }
 
