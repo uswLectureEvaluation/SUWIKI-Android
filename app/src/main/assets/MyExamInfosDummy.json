@@ -4,6 +4,7 @@
       "id": "1",
       "subject": "컴퓨터 네트워크",
       "semester": "2019-1",
+      "professor": "김일준",
       "evaluationType": "상대 평가",
       "examType": "오픈 테스트",
       "examDifficulty": "쉬움",
@@ -13,15 +14,17 @@
       "id": "2",
       "subject": "소프트웨어 공학",
       "semester": "2020-2",
+      "professor": "윤선희",
       "evaluationType": "상대 평가",
       "examType": "필기",
       "examDifficulty": "보통",
-      "content": "책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴"
+      "content": "책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴책 연습문제에서 응용돼서 나옴"
     },
     {
       "id": "3",
       "subject": "객체지향프로그래밍",
       "semester": "2016-1",
+      "professor": "김대엽",
       "evaluationType": "상대 평가",
       "examType": "프로젝트",
       "examDifficulty": "어려움",

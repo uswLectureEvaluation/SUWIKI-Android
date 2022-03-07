@@ -22,6 +22,7 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
             val difficultyType = convertExamDifficulty(data.examDifficulty)
             with(binding) {
                 lectureName.text = data.subject
+                lectureProfessor.text = data.professor
                 yearSemester.text = data.semester
 
                 when (difficultyType) {
@@ -90,9 +91,11 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
 
     private fun convertExamDifficulty(difficultyString: String) =
         when (difficultyString) {
+            "매우 쉬움" -> ExamDifficulty.VERY_EASY
             "쉬움" -> ExamDifficulty.EASY
             "보통" -> ExamDifficulty.NORMAL
             "어려움" -> ExamDifficulty.DIFFICULT
+            "매우 어려움" -> ExamDifficulty.VERY_DIFFICULT
             else -> ExamDifficulty.NORMAL
         }
 
