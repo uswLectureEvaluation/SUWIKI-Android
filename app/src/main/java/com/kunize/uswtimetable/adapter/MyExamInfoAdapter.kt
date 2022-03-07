@@ -25,6 +25,16 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
                 yearSemester.text = data.semester
 
                 when (difficultyType) {
+                    ExamDifficulty.VERY_EASY -> {
+                        tvExamDifficulty.text = "매우 쉬움"
+                        tvExamDifficulty.setTextColor(
+                            ContextCompat.getColor(
+                                tvExamDifficulty.context,
+                                R.color.custom_yellow
+                            )
+                        )
+                    }
+
                     ExamDifficulty.EASY -> {
                         tvExamDifficulty.text = "쉬움"
                         tvExamDifficulty.setTextColor(
@@ -52,12 +62,22 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
                             )
                         )
                     }
+                    ExamDifficulty.VERY_DIFFICULT -> {
+                        tvExamDifficulty.text = "매우 어려움"
+                        tvExamDifficulty.setTextColor(
+                            ContextCompat.getColor(
+                                tvExamDifficulty.context,
+                                R.color.custom_red
+                            )
+                        )
+                    }
                 }
                 tvExamType.text = data.examType
                 content.text = data.content
             }
             binding.root.setOnClickListener {
                 onItemClicked(data, ItemType.ROOT_VIEW)
+                binding.content.maxLines = if (binding.content.maxLines > 2) 2 else 100
             }
             binding.editBtn.setOnClickListener {
                 onItemClicked(data, ItemType.EDIT_BUTTON)
