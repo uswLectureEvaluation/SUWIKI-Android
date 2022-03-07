@@ -78,4 +78,73 @@ object BindingAdapter {
             )
         }
     }
+
+    @BindingAdapter("teamColor")
+    @JvmStatic
+    fun setTeamColor(textView: TextView, team: String) {
+        when (team) {
+            textView.context.getString(R.string.not_exist) -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_light_gray
+                )
+            )
+            else -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_dark_gray
+                )
+            )
+        }
+    }
+
+    @BindingAdapter("taskColor")
+    @JvmStatic
+    fun setTaskColor(textView: TextView, task: String) {
+        when (task) {
+            textView.context.getString(R.string.not_exist) -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_light_gray
+                )
+            )
+            textView.context.getString(R.string.normal) -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_dark_gray
+                )
+            )
+            else -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_red
+                )
+            )
+        }
+    }
+
+    @BindingAdapter("gradeColor")
+    @JvmStatic
+    fun setGradeColor(textView: TextView, grade: String) {
+        when (grade) {
+            textView.context.getString(R.string.good) -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_light_gray
+                )
+            )
+            textView.context.getString(R.string.normal) -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_dark_gray
+                )
+            )
+            else -> textView.setTextColor(
+                ContextCompat.getColor(
+                    textView.context,
+                    R.color.custom_red
+                )
+            )
+        }
+    }
 }

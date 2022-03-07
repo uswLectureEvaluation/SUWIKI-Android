@@ -33,15 +33,4 @@ object LectureInfoBindingAdapter {
             flexBox.addView(textView)
         }
     }
-
-    @BindingAdapter("customText")
-    @JvmStatic
-    fun setText(textView: TextView, string: String) {
-        textView.text = string
-        when (string) {
-            in setOf("없음", "잘줌") -> textView.setTextColor(ContextCompat.getColor(textView.context ,R.color.custom_light_gray))
-            in setOf("있음", "보통") -> textView.setTextColor(ContextCompat.getColor(textView.context ,R.color.custom_dark_gray))
-            else -> textView.setTextColor(ContextCompat.getColor(textView.context ,R.color.custom_red))
-        }
-    }
 }

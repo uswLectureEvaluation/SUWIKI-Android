@@ -186,8 +186,8 @@
                                 android:id="@+id/infoMeeting"
                                 style="@style/score_textview_style_large"
                                 android:layout_marginStart="8dp"
-                                android:textColor="@color/custom_gray"
-                                app:customText="@{lectureInfoViewModel.infoMeeting}"
+                                android:text="@{lectureInfoViewModel.infoMeeting}"
+                                app:teamColor="@{lectureInfoViewModel.infoMeeting}"
                                 app:layout_constraintBottom_toBottomOf="@id/infoMeetingTextView"
                                 app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
                                 tools:text="없음" />
@@ -196,8 +196,8 @@
                                 android:id="@+id/infoTask"
                                 style="@style/score_textview_style_large"
                                 android:layout_marginStart="8dp"
-                                android:textColor="@color/custom_red"
-                                app:customText="@{lectureInfoViewModel.infoTask}"
+                                android:text="@{lectureInfoViewModel.infoTask}"
+                                app:taskColor="@{lectureInfoViewModel.infoTask}"
                                 app:layout_constraintBottom_toBottomOf="@id/infoTaskTextView"
                                 app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
                                 tools:text="많음" />
@@ -206,8 +206,8 @@
                                 android:id="@+id/infoGrade"
                                 style="@style/score_textview_style_large"
                                 android:layout_marginStart="8dp"
-                                android:textColor="@color/custom_red"
-                                app:customText="@{lectureInfoViewModel.infoGrade}"
+                                android:text="@{lectureInfoViewModel.infoGrade}"
+                                app:gradeColor="@{lectureInfoViewModel.infoGrade}"
                                 app:layout_constraintBottom_toBottomOf="@id/infoGradeTextView"
                                 app:layout_constraintStart_toEndOf="@id/infoMeetingTextView"
                                 tools:text="까다로움" />
