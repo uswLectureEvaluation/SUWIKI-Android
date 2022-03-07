@@ -3,9 +3,11 @@ package com.kunize.uswtimetable.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.util.ItemType
@@ -23,7 +25,13 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType
                 satisfactionScore.text = data.satisfaction.toString()
                 learningScore.text = data.learning.toString()
                 honeyScore.text = data.honey.toString()
-                teamMeeting.text = if (data.team) "많음" else "적음"
+                if (data.team) {
+                    teamMeeting.text = "있음"
+                    teamMeeting.setTextColor(ContextCompat.getColor(teamMeeting.context, R.color.custom_blue))
+                } else {
+                    teamMeeting.text = "없음"
+                    teamMeeting.setTextColor(ContextCompat.getColor(teamMeeting.context, R.color.custom_gray))
+                }
                 task.text = data.homework
                 grade.text = data.grade
                 content.text = data.content
