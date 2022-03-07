@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -29,6 +30,12 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType
             }
             binding.root.setOnClickListener {
                 onItemClicked(data, ItemType.ROOT_VIEW)
+                binding.detailScoreLayout.visibility = when(binding.detailScoreLayout.visibility) {
+                    View.VISIBLE -> View.GONE
+                    View.GONE -> View.VISIBLE
+                    else -> View.VISIBLE
+                }
+                binding.content.maxLines = if(binding.content.maxLines > 2) 2 else 100
             }
             binding.editBtn.setOnClickListener {
                 onItemClicked(data, ItemType.EDIT_BUTTON)
