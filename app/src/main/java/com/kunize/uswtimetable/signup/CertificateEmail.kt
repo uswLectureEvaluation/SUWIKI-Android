@@ -2,11 +2,11 @@ package com.kunize.uswtimetable.signup
 
 import android.util.Log
 import com.kunize.uswtimetable.dataclass.EmailCheckDto
-import com.kunize.uswtimetable.dataclass.Result
 import com.kunize.uswtimetable.retrofit.RetrofitManager
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.ResponseState
+import com.kunize.uswtimetable.util.Result
 
 class CertificateEmail {
     private val retrofitManager = RetrofitManager.instance
@@ -19,15 +19,15 @@ class CertificateEmail {
         retrofitManager.emailCheck(fullEmail, completion = { state, data ->
             result = when(state) {
                 ResponseState.OK -> {
-                    if(data == null) Result.Fail("실패: 받아온 인증 데이터 없음")
+                    if(data == null) Result.Error(NullPointerException("실패: 받아온 인증 데이터 없음"))
                     else Result.Success(data)
                 }
                 ResponseState.FAIL -> {
-                    Result.Fail("실패: 인증 통신 실패")
+                    Result.Error(Exception("실패: 인증 통신 실패"))
                 }
             }
         })
         Log.d(TAG, "CertificateEmail - certificate() called / $result")
-        return result ?: Result.Fail("실패: 초기화되지 않음")
+        return result ?: Result.Error(Exception("실패: 초기화되지 않음"))
     }
 }

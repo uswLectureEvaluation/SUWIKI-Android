@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.kunize.uswtimetable.login.User
 
 class MoreViewModel : ViewModel() {
     private var _loggedIn = MutableLiveData<Boolean>()
@@ -58,7 +59,7 @@ class MoreViewModel : ViewModel() {
     }
 
     init {
-        _loggedIn.value = false
+        _loggedIn.value = User.isLoggedIn
 
         _myEvaluationCount.value = 3
         _myExamInfoCount.value = 2

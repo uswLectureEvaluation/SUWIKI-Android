@@ -45,9 +45,27 @@ class PreferenceManager {
             return prefs.getInt(key, DEFAULT_INT_VALUE)
         }
 
+        fun saveAccessToken(context: Context, value: String) {
+            setString(context, ACCESS_TOKEN, value)
+        }
+
+        fun getAccessToken(context: Context) {
+            getString(context, ACCESS_TOKEN)
+        }
+
+        fun saveRefreshToken(context: Context, value: String) {
+            setString(context, REFRESH_TOKEN, value)
+        }
+
+        fun getRefreshToken(context: Context) {
+            getString(context, REFRESH_TOKEN)
+        }
+
         private const val PREFERENCE_NAME = "APP_SETTING"
         private const val DEFAULT_BOOLEAN_VALUE = false
         private const val DEFAULT_STRING_VALUE = ""
         private const val DEFAULT_INT_VALUE = 0
+        private const val ACCESS_TOKEN = "access"
+        private const val REFRESH_TOKEN = "refresh"
     }
 }

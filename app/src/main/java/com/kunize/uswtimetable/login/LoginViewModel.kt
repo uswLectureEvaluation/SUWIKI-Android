@@ -4,24 +4,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.LoggedInUserView
-import com.kunize.uswtimetable.dataclass.LoginRepository
-import com.kunize.uswtimetable.dataclass.Result
+import com.kunize.uswtimetable.ui.repository.LoginRepository
+import com.kunize.uswtimetable.util.Result
 
 class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() {
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> get() = _loginForm
 
-    private val _loginResult = MutableLiveData<LoginResult>()
-    val loginResult: LiveData<LoginResult> get() = _loginResult
+    private val _loginResult = MutableLiveData<LoginState>()
+    val loginResult: LiveData<LoginState> get() = _loginResult
+
+    var isLoggedIn = false
+        private set
+
+    init {
+         isLoggedIn = User.isLoggedIn
+    }
 
     fun login(id: String, pw: String) {
         val result = loginRepository.login(id, pw)
 
         if (result is Result.Success) {
-            _loginResult.value = LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            _loginResult.value = LoginState.SUCCESS
         } else {
-            _loginResult.value = LoginResult(error = R.string.login_fail)
+            // TODO 에러 형식에 따라 분기 필요
+            _loginResult.value = LoginState.UNKNOWN_ERROR
         }
     }
 
@@ -46,4 +53,11 @@ class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() 
     private fun isPwValid(pw: String): Boolean {
         return pw.length > 5
     }
+}
+
+enum class LoginState {
+    SUCCESS,
+    ID_ERROR,
+    PW_ERROR,
+    UNKNOWN_ERROR
 }
