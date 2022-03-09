@@ -50,7 +50,6 @@ class LectureInfoFragment : Fragment() {
 
         //recyclerview 설정
         lectureInfoViewModel.setViewType(LectureItemViewType.LECTURE)
-        lectureInfoViewModel.changeData(ArrayList(dummyData.subList(0, 12)))
 
         binding.infoRecyclerView.infiniteScrolls {
             //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거

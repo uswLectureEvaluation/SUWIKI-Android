@@ -49,9 +49,16 @@ class ClassInfoActivity : AppCompatActivity() {
     private lateinit var db: TimeTableListDatabase
     private lateinit var timetableSel: TimeTableList
     private var tempTimeData = mutableListOf<TimeData>()
+    private lateinit var bindingTimeList: List<List<TextView>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        bindingTimeList = listOf(
+            listOf(binding.time1, binding.editTime1, binding.deleteTime1),
+            listOf(binding.time2, binding.editTime2, binding.deleteTime2),
+            listOf(binding.time3, binding.editTime3, binding.deleteTime3)
+        )
 
         val deleteIdx = intent.getIntExtra("deleteIdx", -1)
 
@@ -94,8 +101,8 @@ class ClassInfoActivity : AppCompatActivity() {
             }
         }
 
-        setVisibilityTime2(View.GONE)
-        setVisibilityTime3(View.GONE)
+        setVisibilityTime(View.GONE, 2)
+        setVisibilityTime(View.GONE, 3)
 
         binding.finishButton.setOnClickListener {
             val inputClassName = binding.editClassName.text.toString()
@@ -233,8 +240,9 @@ class ClassInfoActivity : AppCompatActivity() {
         } //끝
 
         //TODO deleteIdx != -1 일 경우 로직 수정해야함 (장소에 띄어쓰기가 있을 경우 장소명이 "이러닝"으로 변함)
+
         try {
-            Log.d("eLearningTest", "$time")
+            // deleteIdx가 -1이 아닌 경우에만 문자열 분리
             if (deleteIdx != -1) {
                 if (time!! == "" || time == "()")
                     binding.time1.text = "이러닝"
@@ -242,59 +250,35 @@ class ClassInfoActivity : AppCompatActivity() {
                     binding.time1.text = time
             } else if (time!! == "None") {
                 binding.time1.text = "이러닝"
-            } else if (time!!.contains("),")) {
-                timeSplit = time.split("),")
-                binding.time1.text = timeSplit[0] + ")"
-                binding.time2.text = timeSplit[1]
-                setVisibilityTime2(View.VISIBLE)
-            } else if (time!!.contains(" ")) {
-                timeSplit = time.split("(")
-                val location = timeSplit[0]
-                val daySplit = timeSplit[1].replace("(", "").replace(")", "").split(" ")
-                binding.time1.text = location + "(" + daySplit[0] + ")"
-                binding.time2.text = location + "(" + daySplit[1] + ")"
-                setVisibilityTime2(View.VISIBLE)
-                if (daySplit.size > 2) {
-                    binding.time3.text = location + "(" + daySplit[2] + ")"
-                    setVisibilityTime3(View.VISIBLE)
-                }
             } else {
-                timeSplit = time.split("(")
-                val location = timeSplit[0]
-                val day = timeSplit[1][0]
-                val checkTime = checkSeq(timeSplit[1].replace(")", "").substring(1))
-                binding.time1.text = location + "(" + day + checkTime[0] + ")"
-
-                if (checkTime.size == 2) {
-                    binding.time2.text = location + "(" + day + checkTime[1] + ")"
-                    setVisibilityTime2(View.VISIBLE)
-                }
-                if (checkTime.size == 3) {
-                    binding.time3.text = location + "(" + day + checkTime[2] + ")"
-                    setVisibilityTime3(View.VISIBLE)
+                val timeListSplitByDay = splitTime(time)
+                for (i in timeListSplitByDay.indices) {
+                    setVisibilityTime(View.VISIBLE, i + 1)
+                    bindingTimeList[i][0].text = timeListSplitByDay[i]
                 }
             }
         } catch (e: Exception) {
+            Log.d("timeSplit", "$e")
             binding.time1.text = "이러닝"
         }
 
         binding.addTime.setOnClickListener {
             if (!binding.time1.isVisible)
-                setVisibilityTime1(View.VISIBLE)
+                setVisibilityTime(View.VISIBLE, 1)
             else if (!binding.time2.isVisible)
-                setVisibilityTime2(View.VISIBLE)
+                setVisibilityTime(View.VISIBLE, 2)
             else if (!binding.time3.isVisible)
-                setVisibilityTime3(View.VISIBLE)
+                setVisibilityTime(View.VISIBLE, 3)
         }
 
         binding.deleteTime1.setOnClickListener {
-            setVisibilityTime1(View.GONE)
+            setVisibilityTime(View.GONE, 1)
         }
         binding.deleteTime2.setOnClickListener {
-            setVisibilityTime2(View.GONE)
+            setVisibilityTime(View.GONE, 2)
         }
         binding.deleteTime3.setOnClickListener {
-            setVisibilityTime3(View.GONE)
+            setVisibilityTime(View.GONE, 3)
         }
 
         binding.editTime1.setOnClickListener {
@@ -351,6 +335,42 @@ class ClassInfoActivity : AppCompatActivity() {
         }
     }
 
+    private fun splitTime(
+        time: String?
+    ): List<String> {
+        val timeListSplitByDay = mutableListOf<String>()
+        // 1. 장소 분리 (미술108(월1,2),미술109(월3,4))
+        val timeListSplitByLocation = time!!.split("),")
+        // 2. 요일 분리 (미래417(화10,11 목10,11,12,13))
+        for (timeSplitByLocation in timeListSplitByLocation) {
+            val splitLocationDay = timeSplitByLocation.split("(")
+            val location = splitLocationDay[0]
+            val dayHourList = splitLocationDay[1].replace(")", "").split(" ")
+            val dayHourMap = splitContinuousHour(dayHourList)
+            dayHourMap.forEach { (day, hourList) ->
+                hourList.forEach { hour ->
+                    val locationDayHour = "$location($day${hour})"
+                    timeListSplitByDay.add(locationDayHour)
+                }
+            }
+        }
+        return timeListSplitByDay
+    }
+
+    private fun splitContinuousHour(
+        dayHourList: List<String>,
+    ): MutableMap<String, List<String>> {
+        val dayHourMap = mutableMapOf<String, List<String>>()
+        for (dayHour in dayHourList) {
+            // 3. 시간 분리 (2공학204(화1,2,3,5,6,7))
+            val day = dayHour.substring(0, 1)
+            val hour = dayHour.substring(1)
+            val hourList = checkSeq(hour)
+            dayHourMap[day] = hourList
+        }
+        return dayHourMap
+    }
+
     private fun startDialogWithData(
         tempSplit: List<String>,
         dlg: EditTimeDialog
@@ -371,10 +391,8 @@ class ClassInfoActivity : AppCompatActivity() {
             try {
                 if ((onlyNumList[idx].toInt() - onlyNumList[idx + 1].toInt()) == -1) {
                     tempNumString = tempNumString + onlyNumList[idx] + ","
-                    Log.d("divide", " $tempNumString $idx")
                 } else {
                     tempNumString = tempNumString + onlyNumList[idx] + "!"
-                    Log.d("divide", " $tempNumString $idx")
                 }
             } catch (e: Exception) {
                 tempNumString += onlyNumList[idx]
@@ -383,30 +401,12 @@ class ClassInfoActivity : AppCompatActivity() {
         return tempNumString.split("!")
     }
 
-    private fun setVisibilityTime1(set: Int) {
+    private fun setVisibilityTime(set: Int, idx: Int) {
         if (set == View.GONE) {
             binding.time1.text = ""
         }
-        binding.time1.visibility = set
-        binding.editTime1.visibility = set
-        binding.deleteTime1.visibility = set
-    }
-
-    private fun setVisibilityTime2(set: Int) {
-        if (set == View.GONE) {
-            binding.time2.text = ""
+        for (textView in bindingTimeList[idx - 1]) {
+            textView.visibility = set
         }
-        binding.time2.visibility = set
-        binding.editTime2.visibility = set
-        binding.deleteTime2.visibility = set
-    }
-
-    private fun setVisibilityTime3(set: Int) {
-        if (set == View.GONE) {
-            binding.time3.text = ""
-        }
-        binding.time3.visibility = set
-        binding.editTime3.visibility = set
-        binding.deleteTime3.visibility = set
     }
 }
