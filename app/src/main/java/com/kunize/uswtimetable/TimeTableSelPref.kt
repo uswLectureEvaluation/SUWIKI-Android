@@ -40,4 +40,18 @@ class PrefsManager(context: Context) {
     fun setString(key: String, value: String) {
         prefs.edit().putString(key, value).apply()
     }
+
+    fun saveAccessToken(value: String) = setString(ACCESS_TOKEN, value)
+
+    fun getAccessToken() = getString(ACCESS_TOKEN, "")
+
+    fun saveRefreshToken(value: String) = setString(REFRESH_TOKEN, value)
+
+    fun getRefreshToken() = prefs.getString(REFRESH_TOKEN, "")
+
+
+    companion object {
+        private const val ACCESS_TOKEN = "access"
+        private const val REFRESH_TOKEN = "refresh"
+    }
 }
