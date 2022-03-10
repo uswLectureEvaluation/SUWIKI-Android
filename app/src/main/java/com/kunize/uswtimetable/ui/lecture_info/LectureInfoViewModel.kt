@@ -55,10 +55,34 @@ class LectureInfoViewModel : EvaluationViewModel() {
     val inflateType: LiveData<Int>
         get() = _inflateType
 
+    private val _showNoExamDataLayout = MutableLiveData<Boolean>()
+    val showNoExamDataLayout: LiveData<Boolean>
+        get() = _showNoExamDataLayout
+
+    private val _showHideExamDataLayout = MutableLiveData<Boolean>()
+    val showHideExamDataLayout: LiveData<Boolean>
+        get() = _showHideExamDataLayout
+
     init {
         setInfoValue(LectureInfoData())
         _writeBtnText.value = R.string.write_evaluation
         _inflateType.value = ExamInfoType.NOT_INFLATE
+        _showNoExamDataLayout.value = false
+        _showHideExamDataLayout.value = false
+    }
+
+    fun usePointBtnClicked() {
+        _showHideExamDataLayout.value = false
+        changeData(arrayListOf())
+        changeWriteBtnText(R.string.write_exam)
+    }
+
+    fun examInfoRadioBtnClicked() {
+        //TODO
+        // 서버로 부터 데이터 불러옴
+        // 데이터 결과에 따라 _showHideExamDataLayout 여부 설정
+        _showHideExamDataLayout.value = true
+        changeWriteBtnText(R.string.write_exam)
     }
 
     fun setInflate(type: Int) {

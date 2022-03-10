@@ -1,43 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/exam_type_layout_style">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/usePointText1"
-        style="@style/default_black_bold_large_textview_style"
-        android:text="@string/show_exam_info"
-        app:layout_constraintBottom_toTopOf="@+id/usePointText2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="lectureInfoViewModel"
+            type="com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/usePointText2"
-        style="@style/default_black_bold_large_textview_style"
-        android:text="@string/exam_point"
-        android:textColor="@color/custom_blue"
-        app:layout_constraintEnd_toStartOf="@id/usePointText3"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usePointText1"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/exam_type_layout_style"
+        android:visibility="@{lectureInfoViewModel.showHideExamDataLayout ? View.VISIBLE : View.GONE}">
 
-    <TextView
-        android:id="@+id/usePointText3"
-        style="@style/default_black_bold_large_textview_style"
-        android:text="@string/need"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/usePointText2"
-        app:layout_constraintTop_toBottomOf="@id/usePointText1" />
+        <TextView
+            android:id="@+id/usePointText1"
+            style="@style/default_black_bold_large_textview_style"
+            android:text="@string/show_exam_info"
+            app:layout_constraintBottom_toTopOf="@+id/usePointText2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/usePointBtn"
-        style="@style/blue_button_style"
-        android:text="@string/use_point"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usePointText2" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/usePointText2"
+            style="@style/default_black_bold_large_textview_style"
+            android:text="@string/exam_point"
+            android:textColor="@color/custom_blue"
+            app:layout_constraintEnd_toStartOf="@id/usePointText3"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/usePointText1"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/usePointText3"
+            style="@style/default_black_bold_large_textview_style"
+            android:text="@string/need"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/usePointText2"
+            app:layout_constraintTop_toBottomOf="@id/usePointText1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/usePointBtn"
+            style="@style/blue_button_style"
+            android:text="@string/use_point"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/usePointText2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
