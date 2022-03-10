@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel" />
@@ -11,8 +13,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:fillViewport="true"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         tools:context=".ui.notice.NoticeDetailFragment">
 
         <LinearLayout
@@ -46,16 +48,30 @@
                 android:layout_marginTop="16dp"
                 android:background="?android:attr/listDivider" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/notice_detail"
-                android:layout_marginTop="16dp"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="200dp"
-                android:inputType="textMultiLine"
-                android:text="@{viewModel.notice.content}"
-                style="@style/TextBody2"
-                tools:text="공지사항의 본문이 들어가는 부분입니다. " />
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/notice_detail"
+                    style="@style/TextBody2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:inputType="textMultiLine"
+                    android:minHeight="200dp"
+                    android:text="@{viewModel.notice.content}"
+                    tools:text="공지사항의 본문이 들어가는 부분입니다. " />
+
+                <ProgressBar
+                    android:id="@+id/notice_detail_progress"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
+                    android:layout_gravity="center" />
+            </FrameLayout>
 
             <View
                 android:id="@+id/bottom_divider"

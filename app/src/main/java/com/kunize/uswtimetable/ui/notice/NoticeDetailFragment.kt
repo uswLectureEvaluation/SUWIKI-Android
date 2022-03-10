@@ -20,6 +20,8 @@ class NoticeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNoticeDetailBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
         arguments?.getLong("noticeId")?.let { viewModel.getNotice(it) }
 

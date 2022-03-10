@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 class NoticeDetailViewModel(private val repository: NoticeDetailRepository) : ViewModel() {
     private val _notice = MutableLiveData<NoticeDetailDto>()
     val notice: LiveData<NoticeDetailDto> get() = _notice
+    private val _isLoading = MutableLiveData(true)
+    val loading: LiveData<Boolean> get() = _isLoading
 
     fun getNotice(id: Long) {
         Log.d(TAG, "NoticeDetailViewModel - getNotice() called")
@@ -20,6 +22,7 @@ class NoticeDetailViewModel(private val repository: NoticeDetailRepository) : Vi
             val item = repository.getNotice(id)
             Log.d(TAG, "NoticeDetailViewModel - notice: $item")
             _notice.value = item
+            _isLoading.value = false
         }
     }
 }
