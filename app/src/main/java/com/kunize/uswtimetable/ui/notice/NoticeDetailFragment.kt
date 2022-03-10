@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.notice
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.kunize.uswtimetable.databinding.FragmentNoticeDetailBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeDetailFragment : Fragment() {
     private var _binding: FragmentNoticeDetailBinding? = null
@@ -23,16 +21,7 @@ class NoticeDetailFragment : Fragment() {
     ): View {
         _binding = FragmentNoticeDetailBinding.inflate(inflater, container, false)
 
-        val noticeId = arguments?.getLong("noticeId")
-        Log.d(TAG, "NoticeDetailFragment - noticeId: $noticeId")
-
-        noticeId?.let { viewModel.getNotice(it) }
-        viewModel.notice.observe(viewLifecycleOwner) { noticeData ->
-            Log.d(TAG, "NoticeDetailFragment - notice: $noticeData")
-            binding.noticeTitle.text = noticeData.title
-            binding.noticeDate.text = noticeData.date
-            binding.noticeDetail.text = noticeData.content
-        }
+        arguments?.getLong("noticeId")?.let { viewModel.getNotice(it) }
 
         return binding.root
     }
@@ -41,7 +30,6 @@ class NoticeDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.backButton.setOnClickListener {
-            Log.d(TAG, "NoticeDetailFragment - Back button Clicked!")
             view.findNavController().popBackStack()
         }
     }
