@@ -4,7 +4,7 @@ import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.util.Result
 import java.io.IOException
 
-class LoginServerDataSource: LoginDataSource {
+class LoginRemoteDataSource: LoginDataSource {
 
     override fun login(userId: String, userPassword: String): Result<LoggedInUser>  {
         return try {
