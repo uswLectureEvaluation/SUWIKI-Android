@@ -1,8 +1,8 @@
 package com.kunize.uswtimetable.ui.repository
 
 import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.login.LoginServerDataSource
 import com.kunize.uswtimetable.login.User.user
+import com.kunize.uswtimetable.ui.repository.login.LoginServerDataSource
 import com.kunize.uswtimetable.util.Result
 
 class LoginRepository(private val serverDataSource: LoginServerDataSource) {
