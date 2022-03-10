@@ -5,7 +5,6 @@ import com.google.gson.JsonElement
 import com.kunize.uswtimetable.dataclass.EmailCheckDto
 import com.kunize.uswtimetable.dataclass.EmailData
 import com.kunize.uswtimetable.dataclass.NoticeDetailDto
-import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.util.API
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.ResponseState
@@ -35,27 +34,6 @@ class RetrofitManager {
             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
                 Log.d(TAG, "RetrofitManager - onFailure() called / t: $t")
                 completion(ResponseState.FAIL, t.toString())
-            }
-        })
-    }
-
-    fun getNoticeList(completion: (ResponseState, List<NoticeDto>?) -> Unit) {
-        val call: Call<List<NoticeDto>> = iRetrofit?.getNoticeList() ?: return
-        var notices: List<NoticeDto>?
-        call.enqueue(object: Callback<List<NoticeDto>> {
-            // 응답 성공
-            override fun onResponse(
-                call: Call<List<NoticeDto>>,
-                response: Response<List<NoticeDto>>
-            ) {
-                Log.d(TAG, "RetrofitManager - onResponse() called / response: ${response.body()}")
-                notices = response.body()
-                completion(ResponseState.OK, notices)
-            }
-            // 응답 실패
-            override fun onFailure(call: Call<List<NoticeDto>>, t: Throwable) {
-                Log.d(TAG, "RetrofitManager - onFailure() called / t: $t")
-                completion(ResponseState.FAIL, null)
             }
         })
     }

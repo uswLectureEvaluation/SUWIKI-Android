@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
@@ -18,15 +18,17 @@ import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.retrofit.RetrofitManager
-import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.ConnectionManager
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.ResponseState
 
 class NoticeListFragment : Fragment() {
 
     private var _binding: FragmentNoticeListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: NoticeListViewModel
+//    private lateinit var viewModel: NoticeListViewModel
+    private val viewModel: NoticeViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var adapter: NoticeAdapter
     private var notices = listOf<NoticeDto>()
     private val retrofit: RetrofitManager by lazy {
@@ -75,19 +77,15 @@ class NoticeListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[NoticeListViewModel::class.java]
 
         val isConnected = ConnectionManager.isConnected(requireContext())
         if (isConnected) {
-            viewModel.selectedNotice.observe(viewLifecycleOwner, {
-            })
-
-            viewModel.noticeList.observe(viewLifecycleOwner, {
+            viewModel.noticeList.observe(viewLifecycleOwner) {
                 notices = it
                 adapter.submitList(notices)
                 binding.loading.isGone = true
                 binding.noticeRecyclerView.scrollToPosition(notices.size - 1)
-            })
+            }
         } else {
             binding.loading.isGone = true
             Toast.makeText(requireContext(), "인터넷이 연결되지 않았습니다", Toast.LENGTH_SHORT).show()
