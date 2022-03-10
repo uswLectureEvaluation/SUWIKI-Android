@@ -6,16 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
-import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
+import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyExamData
+import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyLectureData
+import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyShortData
+import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.infiniteScrolls
 
 class LectureInfoFragment : Fragment() {
@@ -47,9 +47,6 @@ class LectureInfoFragment : Fragment() {
             )
         )
 
-        //recyclerview 설정
-        lectureInfoViewModel.setViewType(LectureItemViewType.LECTURE)
-
         val tmp = arrayListOf<EvaluationData?>()
         tmp.add(null)
         lectureInfoViewModel.changeData(tmp)
@@ -58,7 +55,10 @@ class LectureInfoFragment : Fragment() {
             //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
             lectureInfoViewModel.deleteLoading()
             //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-            val newData = dummyData.subList(0, 12)
+            val newData = if(binding.lectureEvaluationRadioBtn.isChecked)
+                dummyLectureData.subList(0, 12)
+            else
+                dummyExamData.subList(0, 12)
             lectureInfoViewModel.addData(ArrayList(newData))
         }
 

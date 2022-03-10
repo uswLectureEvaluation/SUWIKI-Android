@@ -15,12 +15,11 @@ import com.kunize.uswtimetable.dataclass.LectureProfessorName
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragmentDirections
 
 object BindingAdapter {
-    @BindingAdapter("evaluationList", "viewType")
+    @BindingAdapter("evaluationList")
     @JvmStatic
     fun setList(
         recyclerView: RecyclerView,
-        items: java.util.ArrayList<EvaluationData?>,
-        viewType: Int
+        items: java.util.ArrayList<EvaluationData?>
     ) {
         if (recyclerView.adapter == null)
             recyclerView.adapter = EvaluationListAdapter()
@@ -37,7 +36,6 @@ object BindingAdapter {
                 v.findNavController().navigate(action)
             }
         })
-        evaluationAdapter.viewType = viewType
 
         val prevItemSize = evaluationAdapter.evaluationListData.size
         val newItemSize = items.size

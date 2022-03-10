@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.ui.search_result
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,20 +9,15 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
-import com.kunize.uswtimetable.dataclass.LectureItemViewType
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
+import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyShortData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
+import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.infiniteScrolls
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
@@ -66,7 +60,6 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         viewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.setViewType(LectureItemViewType.SHORT)
 
         binding.recyclerSearchResult.infiniteScrolls {
             CoroutineScope(Main).launch {
@@ -74,7 +67,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
                 //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
                 viewModel.deleteLoading()
                 //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-                val newData = dummyData.subList(0, 10)
+                val newData = dummyShortData.subList(0, 10)
                 viewModel.addData(ArrayList(newData))
             }
         }
@@ -93,7 +86,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
                 setText(msg)
                 setSelection(msg.length)
                 //TODO 검색 결과에 맞는 데이터 받아온 후, changeData 수행
-                viewModel.changeData(ArrayList(dummyData.subList(0, 0)))
+                viewModel.changeData(ArrayList(dummyShortData.subList(0, 0)))
             }
         }
 

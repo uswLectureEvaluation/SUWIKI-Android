@@ -15,23 +15,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="@dimen/recyclerview_padding"
+        android:background="@drawable/custom_ripple_effect_recyclerview">
 
         <include
             android:id="@+id/semesterReport"
             layout="@layout/part_semester_report"
-            bind:evaluationList="@{evaluationData}"
+            bind:evaluationData="@{evaluationData}"
             />
 
         <include
             android:id="@+id/averageSeeDetail"
             layout="@layout/part_average_see_detail"
-            bind:evaluationList="@{evaluationData}" />
+            bind:evaluationData="@{evaluationData}" />
 
         <include
             android:id="@+id/scoresEtc"
             layout="@layout/part_scores_etc"
-            bind:evaluationList="@{evaluationData}" />
+            bind:evaluationData="@{evaluationData}" />
 
         <TextView
             android:id="@+id/content"

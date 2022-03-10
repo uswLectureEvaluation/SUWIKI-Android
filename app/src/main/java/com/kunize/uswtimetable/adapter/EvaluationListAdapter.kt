@@ -10,23 +10,37 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.collection.LLRBNode
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.ItemRecyclerEvaluationBinding
-import com.kunize.uswtimetable.databinding.ItemRecyclerProgressBinding
+import com.kunize.uswtimetable.databinding.*
 import com.kunize.uswtimetable.dataclass.EvaluationData
-import com.kunize.uswtimetable.dataclass.LectureItemViewType
+import com.kunize.uswtimetable.util.LectureItemViewType
 
 class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var viewType: Int = 0
     var evaluationListData = mutableListOf<EvaluationData?>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            1 -> {
-                val binding = ItemRecyclerEvaluationBinding.inflate(
+            LectureItemViewType.SHORT -> {
+                val binding = ItemRecyclerLectureSearchBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
-                Holder(binding)
+                LectureSearchHolder(binding)
+            }
+            LectureItemViewType.LECTURE -> {
+                val binding = ItemRecyclerLectureInfoBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                LectureInfoHolder(binding)
+            }
+            LectureItemViewType.EXAM -> {
+                val binding = ItemRecyclerExamInfoBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                ExamInfoHolder(binding)
             }
             else -> {
                 val binding = ItemRecyclerProgressBinding.inflate(
@@ -40,16 +54,22 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (evaluationListData[position] != null)
-            1
-        else
-            0
+        evaluationListData[position]?.let {
+            return it.recyclerViewType
+        }
+        return -1
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = evaluationListData[position]
-        if (holder is Holder && data != null)
-            holder.setData(data)
+        data?.let {
+            if (holder is LectureInfoHolder)
+                holder.setData(data)
+            if (holder is LectureSearchHolder)
+                holder.setData(data)
+            if (holder is ExamInfoHolder)
+                holder.setData(data)
+        }
     }
 
     override fun getItemCount(): Int = evaluationListData.size
@@ -66,96 +86,56 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.listener = listener
     }
 
-    inner class Holder(private val binding: ItemRecyclerEvaluationBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class LectureSearchHolder(private val binding: ItemRecyclerLectureSearchBinding) :
+    RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
             with(binding) {
-                //viewType에 따라 뷰 숨김/보임 처리
-                Log.d("viewType", "$viewType")
-                when (viewType) {
-                    //강의평가 목록
-                    LectureItemViewType.SHORT -> shortVisible(data)
-                    //내가 쓴 강의평가
-                    LectureItemViewType.USERLECTURE -> userLectureVisible()
-                    //내가 쓴 시험 정보
-                    LectureItemViewType.USEREXAM -> userExamVisible()
-                    //세부 강의평가 정보
-                    LectureItemViewType.LECTURE -> {
-                        lectureVisible()
-                        detailTestLayout.visibility = View.GONE
-                    }
-                    //세부 시험 정보
-                    LectureItemViewType.EXAM -> {
-                        detailTestLayout.visibility = View.VISIBLE
-                        examVisible(false)
-                    }
-                    //세부 시험 정보 가림
-                    LectureItemViewType.HIDE_EXAM -> {
-                        examVisible(true)
-                        detailTestLayout.visibility = View.VISIBLE
-                    }
-                }
-
                 evaluationData = data
-
-                seeDetail.setOnClickListener {
-                    if (detailScoreLayout.isVisible) {
-                        seeDetail.setText(R.string.see_detail)
-                        detailScoreLayout.visibility = View.GONE
+                    averageSeeDetail.seeDetail.setOnClickListener {
+                    if (scores.layout.isVisible) {
+                        averageSeeDetail.seeDetail.setText(R.string.see_detail)
+                        scores.layout.visibility = View.GONE
                     } else {
-                        seeDetail.setText(R.string.see_short)
-                        detailScoreLayout.visibility = View.VISIBLE
+                        averageSeeDetail.seeDetail.setText(R.string.see_short)
+                        scores.layout.visibility = View.VISIBLE
                     }
                 }
-
+                val pos = adapterPosition
+                if(pos!=RecyclerView.NO_POSITION)
+                    itemView.setOnClickListener{
+                        listener?.onItemClick(itemView, data.name, data.professor)
+                    }
                 executePendingBindings()
             }
         }
+    }
 
-        private fun ItemRecyclerEvaluationBinding.shortVisible(data: EvaluationData) {
-            nameGroup.visibility = View.VISIBLE
-            averGroup.visibility = View.VISIBLE
-            lectureType.visibility = View.VISIBLE
-            etcInfoGroup.visibility = View.GONE
-            itemLayout.isFocusable = true
-            itemLayout.isClickable = true
-            //Callback
-            val pos = adapterPosition
-            if(pos!=RecyclerView.NO_POSITION)
-                itemView.setOnClickListener{
-                    listener?.onItemClick(itemView, data.name, data.professor)
+    inner class LectureInfoHolder(private val binding: ItemRecyclerLectureInfoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun setData(data: EvaluationData) {
+            with(binding) {
+                evaluationData = data
+                averageSeeDetail.seeDetail.setOnClickListener {
+                    if (scoresEtc.layout.isVisible) {
+                        averageSeeDetail.seeDetail.setText(R.string.see_detail)
+                        scoresEtc.layout.visibility = View.GONE
+                    } else {
+                        averageSeeDetail.seeDetail.setText(R.string.see_short)
+                        scoresEtc.layout.visibility = View.VISIBLE
+                    }
                 }
-        }
-
-        private fun ItemRecyclerEvaluationBinding.lectureVisible() {
-            examVisible(false)
-            averGroup.visibility = View.VISIBLE
-        }
-
-        private fun ItemRecyclerEvaluationBinding.userLectureVisible() {
-            userExamVisible()
-            averGroup.visibility = View.VISIBLE
-        }
-
-        private fun ItemRecyclerEvaluationBinding.userExamVisible() {
-            yearSemester.visibility = View.VISIBLE
-            editDeleteGroup.visibility = View.VISIBLE
-            nameGroup.visibility = View.VISIBLE
-            content.visibility = View.VISIBLE
-        }
-
-        private fun ItemRecyclerEvaluationBinding.examVisible(hide: Boolean) {
-            yearSemester.visibility = View.VISIBLE
-            reportBtn.visibility = View.VISIBLE
-            content.visibility = View.VISIBLE
-            averGroup.visibility = View.GONE
-
-            reportBtn.isClickable = hide
-            val color = when(hide) {
-                true -> ContextCompat.getColor(binding.root.context, R.color.custom_light_gray)
-                else -> Color.BLACK
+                executePendingBindings()
             }
-            content.setTextColor(color)
+        }
+    }
+
+    inner class ExamInfoHolder(private val binding: ItemRecyclerExamInfoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun setData(data: EvaluationData) {
+            with(binding) {
+                evaluationData = data
+                executePendingBindings()
+            }
         }
     }
 }

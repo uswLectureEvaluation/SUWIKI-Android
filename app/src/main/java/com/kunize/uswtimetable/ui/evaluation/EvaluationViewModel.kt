@@ -22,14 +22,9 @@ open class EvaluationViewModel : ViewModel() {
     val evaluationList: LiveData<ArrayList<EvaluationData?>>
         get() = _evaluationList
 
-    private val _viewType = MutableLiveData<Int>()
-    val viewType: LiveData<Int>
-        get() = _viewType
-
 
     init {
         _evaluationList.value = arrayListOf()
-        _viewType.value = 0
     }
 
     fun changeData(dataList : ArrayList<EvaluationData?>) {
@@ -52,10 +47,6 @@ open class EvaluationViewModel : ViewModel() {
             _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
         }
         //대입을 해줘야지만 옵저버가 변화를 감지함.
-    }
-
-    fun setViewType(type : Int) {
-        _viewType.value = type
     }
 }
 

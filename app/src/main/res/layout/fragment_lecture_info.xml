@@ -316,7 +316,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:viewType="@{lectureInfoViewModel.viewType}" />
+                         />
 
                     <include
                         android:id="@+id/noExamDataLayout"

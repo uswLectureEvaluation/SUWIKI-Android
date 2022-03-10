@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.dataclass
 
 data class EvaluationData (
+    var recyclerViewType: Int = -1, //viewType
     var name: String = "", //과목명
     var professor: String = "", //교수
     var aver: Float = 0f, //평균 지수

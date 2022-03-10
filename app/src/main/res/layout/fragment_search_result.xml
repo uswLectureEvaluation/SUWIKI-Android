@@ -155,7 +155,7 @@
                 android:layout_height="match_parent"
                 app:evaluationList="@{viewModel.evaluationList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:viewType="@{viewModel.viewType}" />
+                />
         </androidx.cardview.widget.CardView>
 
 

@@ -1,16 +1,10 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import android.content.Context
-import android.provider.Settings.Global.getString
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
-import com.kunize.uswtimetable.dataclass.ExamInfoType
 import com.kunize.uswtimetable.dataclass.LectureInfoData
-import com.kunize.uswtimetable.dataclass.LectureItemViewType
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 
 class LectureInfoViewModel : EvaluationViewModel() {
@@ -52,10 +46,6 @@ class LectureInfoViewModel : EvaluationViewModel() {
     val writeBtnText: LiveData<Int>
         get() = _writeBtnText
 
-    private val _inflateType = MutableLiveData<Int>()
-    val inflateType: LiveData<Int>
-        get() = _inflateType
-
     private val _showNoExamDataLayout = MutableLiveData<Boolean>()
     val showNoExamDataLayout: LiveData<Boolean>
         get() = _showNoExamDataLayout
@@ -67,7 +57,6 @@ class LectureInfoViewModel : EvaluationViewModel() {
     init {
         setInfoValue(LectureInfoData())
         _writeBtnText.value = R.string.write_evaluation
-        _inflateType.value = ExamInfoType.NOT_INFLATE
         _showNoExamDataLayout.value = false
         _showHideExamDataLayout.value = false
     }
@@ -93,15 +82,10 @@ class LectureInfoViewModel : EvaluationViewModel() {
         val tmp = arrayListOf<EvaluationData?>()
         tmp.add(null)
         changeData(tmp)
-        setViewType(LectureItemViewType.LECTURE)
         changeWriteBtnText(R.string.write_evaluation)
     }
 
-    fun setInflate(type: Int) {
-        _inflateType.value = type
-    }
-
-    fun changeWriteBtnText(resource: Int) {
+    private fun changeWriteBtnText(resource: Int) {
         _writeBtnText.value = resource
     }
 
