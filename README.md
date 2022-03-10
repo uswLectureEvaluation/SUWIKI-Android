@@ -17,7 +17,7 @@
    
 **MODIFY** : 디자인 등의 변화가 있을 때 사용합니다.
    
-**REFACTORING** : 리팩토링을 한 경우 사용합니다.
+**REFACTOR** : 리팩토링을 한 경우 사용합니다.
 
    # ETC
 \app\src\main\res 위치에 keys.xml 파일을 추가해야합니다. keys.xml의 내용은 다음과 같습니다.
