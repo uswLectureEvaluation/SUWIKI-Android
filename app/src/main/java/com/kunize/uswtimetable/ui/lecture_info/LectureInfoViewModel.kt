@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.ExamInfoType
 import com.kunize.uswtimetable.dataclass.LectureInfoData
 import com.kunize.uswtimetable.dataclass.LectureItemViewType
@@ -83,6 +84,17 @@ class LectureInfoViewModel : EvaluationViewModel() {
         // 데이터 결과에 따라 _showHideExamDataLayout 여부 설정
         _showHideExamDataLayout.value = true
         changeWriteBtnText(R.string.write_exam)
+    }
+
+    fun lectureInfoRadioBtnClicked() {
+        //TODO 서버로 부터 강의평가 데이터 받아오기
+        _showHideExamDataLayout.value = false
+        _showNoExamDataLayout.value = false
+        val tmp = arrayListOf<EvaluationData?>()
+        tmp.add(null)
+        changeData(tmp)
+        setViewType(LectureItemViewType.LECTURE)
+        changeWriteBtnText(R.string.write_evaluation)
     }
 
     fun setInflate(type: Int) {

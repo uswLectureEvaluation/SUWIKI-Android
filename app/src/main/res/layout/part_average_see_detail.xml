@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="evaluationData"
+            type="com.kunize.uswtimetable.dataclass.EvaluationData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewAver"
+            style="@style/default_black_bold_textview_style"
+            android:layout_marginTop="8dp"
+            android:text="@string/average_index"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RatingBar
+            android:id="@+id/averRatingBar"
+            style="@style/CustomRatingBar"
+            android:layout_marginStart="8dp"
+            android:rating="@{evaluationData.aver}"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewAver"
+            app:layout_constraintStart_toEndOf="@+id/textViewAver"
+            app:layout_constraintTop_toTopOf="@+id/textViewAver" />
+
+        <TextView
+            android:id="@+id/averScore"
+            style="@style/score_textview_style"
+            android:layout_marginStart="8dp"
+            android:text="@{@string/floatToStr(evaluationData.aver)}"
+            app:layout_constraintBottom_toBottomOf="@+id/averRatingBar"
+            app:layout_constraintStart_toEndOf="@+id/averRatingBar"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/textViewNum6"
+            style="@style/slash5_textview_style"
+            app:layout_constraintBottom_toBottomOf="@+id/averScore"
+            app:layout_constraintStart_toEndOf="@+id/averScore" />
+
+        <TextView
+            android:id="@+id/seeDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/see_detail"
+            app:layout_constraintBottom_toBottomOf="@+id/averScore"
+            app:layout_constraintStart_toEndOf="@+id/textViewNum6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

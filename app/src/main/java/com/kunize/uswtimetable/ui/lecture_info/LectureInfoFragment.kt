@@ -73,12 +73,7 @@ class LectureInfoFragment : Fragment() {
 
 
             lectureEvaluationRadioBtn.setOnClickListener {
-                //TODO 서버로 부터 강의평가 데이터 받아오기
-                val tmp = arrayListOf<EvaluationData?>()
-                tmp.add(null)
-                lectureInfoViewModel?.changeData(tmp)
-                lectureInfoViewModel?.setViewType(LectureItemViewType.LECTURE)
-                lectureInfoViewModel?.changeWriteBtnText(R.string.write_evaluation)
+                lectureInfoViewModel?.lectureInfoRadioBtnClicked()
             }
 
             hideExamDataLayout.usePointBtn.setOnClickListener {

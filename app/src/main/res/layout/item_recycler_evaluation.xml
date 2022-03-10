@@ -123,23 +123,6 @@
             tools:visibility="visible">
 
             <TextView
-                android:id="@+id/textViewLearning"
-                style="@style/recyclerview_evaluation_text_info"
-                android:layout_marginStart="24dp"
-                android:text="@string/learning_score"
-                app:layout_constraintEnd_toStartOf="@+id/learningScore"
-                app:layout_constraintStart_toEndOf="@+id/textViewNum2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewHoney"
-                style="@style/recyclerview_evaluation_text_info"
-                android:layout_marginStart="24dp"
-                android:text="@string/honey_score"
-                app:layout_constraintStart_toEndOf="@+id/textViewNum1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/textViewSatisfaction"
                 style="@style/recyclerview_evaluation_text_info"
                 android:text="@string/satisfaction"
@@ -156,6 +139,20 @@
                 tools:text="5" />
 
             <TextView
+                android:id="@+id/textViewNum1"
+                style="@style/slash5_textview_style"
+                app:layout_constraintBottom_toBottomOf="@+id/satisfactionScore"
+                app:layout_constraintStart_toEndOf="@+id/satisfactionScore" />
+
+            <TextView
+                android:id="@+id/textViewHoney"
+                style="@style/recyclerview_evaluation_text_info"
+                android:layout_marginStart="24dp"
+                android:text="@string/honey_score"
+                app:layout_constraintStart_toEndOf="@+id/textViewNum1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/honeyScore"
                 style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
@@ -165,6 +162,21 @@
                 tools:text="5" />
 
             <TextView
+                android:id="@+id/textViewNum2"
+                style="@style/slash5_textview_style"
+                app:layout_constraintBottom_toBottomOf="@+id/honeyScore"
+                app:layout_constraintStart_toEndOf="@+id/honeyScore" />
+
+            <TextView
+                android:id="@+id/textViewLearning"
+                style="@style/recyclerview_evaluation_text_info"
+                android:layout_marginStart="24dp"
+                android:text="@string/learning_score"
+                app:layout_constraintEnd_toStartOf="@+id/learningScore"
+                app:layout_constraintStart_toEndOf="@+id/textViewNum2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/learningScore"
                 style="@style/score_textview_style"
                 android:layout_marginStart="8dp"
@@ -172,18 +184,6 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textViewLearning"
                 app:layout_constraintStart_toEndOf="@+id/textViewLearning"
                 tools:text="5" />
-
-            <TextView
-                android:id="@+id/textViewNum1"
-                style="@style/slash5_textview_style"
-                app:layout_constraintBottom_toBottomOf="@+id/satisfactionScore"
-                app:layout_constraintStart_toEndOf="@+id/satisfactionScore" />
-
-            <TextView
-                android:id="@+id/textViewNum2"
-                style="@style/slash5_textview_style"
-                app:layout_constraintBottom_toBottomOf="@+id/honeyScore"
-                app:layout_constraintStart_toEndOf="@+id/honeyScore" />
 
             <TextView
                 android:id="@+id/textViewNum5"

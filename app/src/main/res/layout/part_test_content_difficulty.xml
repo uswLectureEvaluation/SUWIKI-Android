@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="evaluationData"
+            type="com.kunize.uswtimetable.dataclass.EvaluationData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_exam_type_title"
+            style="@style/default_black_bold_textview_style"
+            android:layout_marginTop="8dp"
+            android:text="시험 방식"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_exam_type"
+            style="@style/TextBody1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{evaluationData.testMethod}"
+            android:textColor="@color/custom_blue"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_exam_type_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_exam_type_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_exam_type_title"
+            tools:text="족보, 교재, PPT" />
+
+        <TextView
+            android:id="@+id/tv_exam_difficulty_title"
+            style="@style/default_black_bold_textview_style"
+            android:layout_marginTop="8dp"
+            android:text="난이도"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_exam_type_title" />
+
+        <TextView
+            android:id="@+id/tv_exam_difficulty"
+            style="@style/TextBody1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{evaluationData.difficulty}"
+            android:textStyle="bold"
+            app:difficultColor="@{evaluationData.difficulty}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_exam_difficulty_title"
+            app:layout_constraintStart_toStartOf="@id/tv_exam_type"
+            app:layout_constraintTop_toTopOf="@id/tv_exam_difficulty_title"
+            tools:text="보통" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
