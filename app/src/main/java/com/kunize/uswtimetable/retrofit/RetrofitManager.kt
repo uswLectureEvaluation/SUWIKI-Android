@@ -4,7 +4,6 @@ import android.util.Log
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.dataclass.EmailCheckDto
 import com.kunize.uswtimetable.dataclass.EmailData
-import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.util.API
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.ResponseState
@@ -38,7 +37,7 @@ class RetrofitManager {
         })
     }
 
-    fun getNotice(id: Int, completion: (ResponseState, NoticeDetailDto?) -> Unit) {
+    /*fun getNotice(id: Int, completion: (ResponseState, NoticeDetailDto?) -> Unit) {
         val call: Call<NoticeDetailDto> = iRetrofit?.getNotice(id) ?: return
         call.enqueue(object: Callback<NoticeDetailDto> {
             override fun onResponse(call: Call<NoticeDetailDto>, response: Response<NoticeDetailDto>) {
@@ -51,7 +50,7 @@ class RetrofitManager {
                 completion(ResponseState.FAIL, null)
             }
         })
-    }
+    }*/
 
     fun emailCheck(email: String, completion: (ResponseState, EmailCheckDto?) -> Unit) {
         val emailData = EmailData(email)

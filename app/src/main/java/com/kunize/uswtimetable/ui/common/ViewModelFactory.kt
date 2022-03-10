@@ -9,9 +9,12 @@ import com.kunize.uswtimetable.ui.more.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.more.MyPostAssetDataSource
 import com.kunize.uswtimetable.ui.more.MyPostViewModel
+import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.repository.MyExamInfoRepository
 import com.kunize.uswtimetable.ui.repository.MyPostRepository
+import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRemoteDataSource
+import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRepository
 import com.kunize.uswtimetable.util.AssetLoader
@@ -34,6 +37,10 @@ class ViewModelFactory(private val context: Context): ViewModelProvider.Factory 
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {
                 val repository = NoticeRepository(NoticeRemoteDataSource(IRetrofit.create()))
                 NoticeViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(NoticeDetailViewModel::class.java) -> {
+                val repository = NoticeDetailRepository(NoticeDetailRemoteDataSource(IRetrofit.create()))
+                NoticeDetailViewModel(repository) as T
             }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel: ${modelClass.name}")
