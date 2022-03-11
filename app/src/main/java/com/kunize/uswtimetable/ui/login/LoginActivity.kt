@@ -8,10 +8,11 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.databinding.ActivityLoginBinding
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.PreferenceManager
@@ -19,15 +20,13 @@ import com.kunize.uswtimetable.util.afterTextChanged
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by viewModels { ViewModelFactory(this) }
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
 
         if (viewModel.isLoggedIn) {
             makeToast("이미 로그인 되어있습니다")
@@ -52,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.passwordContainer.isErrorEnabled = false
             }
         })
-        viewModel.loginResult.observe(this@LoginActivity, { loginResult ->
+        viewModel.loginResult.observe(this@LoginActivity) { loginResult ->
 
             binding.loading.visibility = View.GONE
 
@@ -75,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else -> makeToast("LoginActivity 에러 : $loginResult")
             }
-        })
+        }
 
         initViews(this)
 
