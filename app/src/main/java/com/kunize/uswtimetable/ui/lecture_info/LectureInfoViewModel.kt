@@ -64,7 +64,6 @@ class LectureInfoViewModel : EvaluationViewModel() {
     fun usePointBtnClicked() {
         _showHideExamDataLayout.value = false
         changeData(arrayListOf())
-        changeWriteBtnText(R.string.write_exam)
     }
 
     fun examInfoRadioBtnClicked() {
@@ -72,6 +71,7 @@ class LectureInfoViewModel : EvaluationViewModel() {
         // 서버로 부터 데이터 불러옴
         // 데이터 결과에 따라 _showHideExamDataLayout 여부 설정
         _showHideExamDataLayout.value = true
+        changeData(arrayListOf())
         changeWriteBtnText(R.string.write_exam)
     }
 
