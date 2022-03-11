@@ -5,10 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginViewModel
-import com.kunize.uswtimetable.ui.more.MyExamInfoAssetDataSource
-import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
-import com.kunize.uswtimetable.ui.more.MyPostAssetDataSource
-import com.kunize.uswtimetable.ui.more.MyPostViewModel
+import com.kunize.uswtimetable.ui.more.*
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.repository.LoginRepository
@@ -36,6 +33,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(LoginRepository(LoginRemoteDataSource())) as T
+            }
+            modelClass.isAssignableFrom(MoreViewModel::class.java) -> {
+                MoreViewModel() as T
             }
             modelClass.isAssignableFrom(MyExamInfoViewModel::class.java) -> {
                 val repository = MyExamInfoRepository(MyExamInfoAssetDataSource(AssetLoader(context)))

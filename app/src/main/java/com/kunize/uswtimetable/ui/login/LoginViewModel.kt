@@ -25,6 +25,7 @@ class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() 
         val result = loginRepository.login(id, pw)
 
         if (result is Result.Success) {
+            User.setUser(result.data)
             _loginResult.value = LoginState.SUCCESS
         } else {
             // TODO 에러 형식에 따라 분기 필요

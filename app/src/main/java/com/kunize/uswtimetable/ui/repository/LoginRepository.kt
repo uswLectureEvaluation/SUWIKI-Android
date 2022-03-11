@@ -1,18 +1,14 @@
 package com.kunize.uswtimetable.ui.repository
 
 import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.ui.login.User.user
+import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
 import com.kunize.uswtimetable.util.Result
 
 class LoginRepository(private val remoteDataSource: LoginRemoteDataSource) {
 
-    init {
-        user = null
-    }
-
     fun logout() {
-        user = null
+        User.logout()
         remoteDataSource.logout()
     }
 
@@ -27,6 +23,6 @@ class LoginRepository(private val remoteDataSource: LoginRemoteDataSource) {
     }
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        user = loggedInUser
+        User.setUser(loggedInUser)
     }
 }
