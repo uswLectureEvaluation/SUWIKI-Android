@@ -3,22 +3,22 @@ package com.kunize.uswtimetable.ui.more
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
-import com.kunize.uswtimetable.login.FindIdActivity
-import com.kunize.uswtimetable.login.FindPasswordActivity
-import com.kunize.uswtimetable.login.LoginActivity
 import com.kunize.uswtimetable.signup.SignUpActivity
+import com.kunize.uswtimetable.ui.login.FindIdActivity
+import com.kunize.uswtimetable.ui.login.FindPasswordActivity
+import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 
 class MoreFragment : Fragment() {

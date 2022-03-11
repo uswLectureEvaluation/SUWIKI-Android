@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.login
+package com.kunize.uswtimetable.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,9 +9,7 @@ class LoginViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
-                loginRepository = LoginRepository(
-                    serverDataSource = LoginRemoteDataSource()
-                )
+                loginRepository = LoginRepository(LoginRemoteDataSource())
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

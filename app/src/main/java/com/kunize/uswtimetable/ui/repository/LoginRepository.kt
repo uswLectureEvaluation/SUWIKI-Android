@@ -1,7 +1,7 @@
 package com.kunize.uswtimetable.ui.repository
 
 import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.login.User.user
+import com.kunize.uswtimetable.ui.login.User.user
 import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
 import com.kunize.uswtimetable.util.Result
 

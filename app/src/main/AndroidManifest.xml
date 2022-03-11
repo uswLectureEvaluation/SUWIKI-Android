@@ -17,18 +17,18 @@
             android:name=".ui.notice.NoticeActivity"
             android:exported="false" />
         <activity
-            android:name=".login.FindPasswordActivity"
+            android:name="com.kunize.uswtimetable.ui.login.FindPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".login.FindIdActivity"
+            android:name="com.kunize.uswtimetable.ui.login.FindIdActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".signup.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".login.LoginActivity"
+            android:name="com.kunize.uswtimetable.ui.login.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".SettingActivity" />

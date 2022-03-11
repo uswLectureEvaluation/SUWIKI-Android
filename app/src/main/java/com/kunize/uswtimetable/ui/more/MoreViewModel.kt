@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.login.User
+import com.kunize.uswtimetable.ui.login.User
 
 class MoreViewModel : ViewModel() {
     private var _loggedIn = MutableLiveData<Boolean>()
