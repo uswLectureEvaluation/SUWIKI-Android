@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.signup
+package com.kunize.uswtimetable.ui.signup
 
 import android.content.Intent
 import android.net.Uri

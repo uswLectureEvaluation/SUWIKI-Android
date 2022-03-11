@@ -3,7 +3,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".signup.SignUpFragment1">
+    tools:context=".ui.signup.SignUpFragment1">
 
     <data>
 
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:autoLink="none"
-                android:text="동의 및 회원가입을 누르면 SWLE 이용약관 및 개인정보처리방침에 동의하게 됩니다." />
+                android:text="@string/terms" />
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

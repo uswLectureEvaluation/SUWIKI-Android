@@ -15,11 +15,11 @@ import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
-import com.kunize.uswtimetable.signup.SignUpActivity
 import com.kunize.uswtimetable.ui.login.FindIdActivity
 import com.kunize.uswtimetable.ui.login.FindPasswordActivity
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
+import com.kunize.uswtimetable.ui.signup.SignUpActivity
 
 class MoreFragment : Fragment() {
     private lateinit var viewModel: MoreViewModel

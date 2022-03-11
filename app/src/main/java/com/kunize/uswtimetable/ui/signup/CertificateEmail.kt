@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.signup
+package com.kunize.uswtimetable.ui.signup
 
 import android.util.Log
 import com.kunize.uswtimetable.dataclass.EmailCheckDto

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.more.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.more.MyPostAssetDataSource
@@ -17,6 +16,7 @@ import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRepository
+import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.util.AssetLoader
 
 class ViewModelFactory(private val context: Context): ViewModelProvider.Factory {

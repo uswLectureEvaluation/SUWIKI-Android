@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.databinding.ActivityLoginBinding
-import com.kunize.uswtimetable.signup.SignUpActivity
+import com.kunize.uswtimetable.ui.signup.SignUpActivity
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.afterTextChanged
@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.passwordContainer.isErrorEnabled = false
             }
         })
-        viewModel.loginResult.observe(this@LoginActivity, Observer { loginResult ->
+        viewModel.loginResult.observe(this@LoginActivity, { loginResult ->
 
             binding.loading.visibility = View.GONE
 

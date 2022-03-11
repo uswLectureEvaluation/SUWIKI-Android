@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.signup
+package com.kunize.uswtimetable.ui.signup
 
 data class SignUpFormState(
     val idError: Int? = null,

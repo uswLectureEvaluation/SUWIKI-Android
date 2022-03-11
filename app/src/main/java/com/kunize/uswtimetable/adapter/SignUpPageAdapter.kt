@@ -2,11 +2,10 @@ package com.kunize.uswtimetable.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.kunize.uswtimetable.signup.SignUpActivity
-import com.kunize.uswtimetable.signup.SignUpFragment1
-import com.kunize.uswtimetable.signup.SignUpFragment2
-import com.kunize.uswtimetable.signup.SignUpFragment3
-import com.kunize.uswtimetable.ui.more.MyPostFragment
+import com.kunize.uswtimetable.ui.signup.SignUpActivity
+import com.kunize.uswtimetable.ui.signup.SignUpFragment1
+import com.kunize.uswtimetable.ui.signup.SignUpFragment2
+import com.kunize.uswtimetable.ui.signup.SignUpFragment3
 
 class SignUpPageAdapter(activity: SignUpActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int = 3

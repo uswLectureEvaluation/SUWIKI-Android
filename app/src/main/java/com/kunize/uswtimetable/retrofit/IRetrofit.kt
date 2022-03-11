@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.retrofit
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.signup.CertificateEmail
+import com.kunize.uswtimetable.ui.signup.CertificateEmail
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.LECTURE
