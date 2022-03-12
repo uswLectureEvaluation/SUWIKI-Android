@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -12,7 +11,6 @@ import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureProfessorName
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragmentDirections
 
 object BindingAdapter {
     @BindingAdapter("evaluationList")

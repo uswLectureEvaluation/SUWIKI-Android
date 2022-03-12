@@ -50,10 +50,12 @@ class MyEvaluationFragment : Fragment() {
     }
 
     private fun gotoWriteFragment(data: MyEvaluation) {
+        //TODO semesterList만 받아오는 로직 필요
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
                 myEvaluation = data,
                 isEvaluation = true
+            //TODO 현재 선택된 Semester, SemesterList도 넘겨주기
             )
         findNavController().navigate(action)
     }

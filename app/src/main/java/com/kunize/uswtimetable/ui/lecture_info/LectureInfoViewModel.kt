@@ -14,8 +14,8 @@ class LectureInfoViewModel : EvaluationViewModel() {
         get() = _lectureType
 
     //이수 년도 (배열로 받아온다고 가정 ex) {"2021-2", "2020-1"} )
-    private val _yearSemesterList = MutableLiveData<ArrayList<String>>()
-    val yearSemesterList: LiveData<ArrayList<String>>
+    private val _yearSemesterList = MutableLiveData<String>()
+    val yearSemesterList: LiveData<String>
         get() = _yearSemesterList
 
     private val _infoHoneyScore = MutableLiveData<Float>()
@@ -55,7 +55,7 @@ class LectureInfoViewModel : EvaluationViewModel() {
         get() = _showHideExamDataLayout
 
     init {
-        setInfoValue(LectureInfoData())
+        setInfoValue()
         _writeBtnText.value = R.string.write_evaluation
         _showNoExamDataLayout.value = false
         _showHideExamDataLayout.value = false
@@ -89,7 +89,17 @@ class LectureInfoViewModel : EvaluationViewModel() {
         _writeBtnText.value = resource
     }
 
-    fun setInfoValue(data: LectureInfoData) {
+    fun setInfoValue() {
+        val data = LectureInfoData(
+            "전핵",
+            "2021-2, 2021-1, 2020-2, 2020-1, 2018-1, 2018-2",
+            4.2f,
+            2.4f,
+            3.5f,
+            "없음",
+            "보통",
+            "까다로움"
+        )
         _lectureType.value = data.lectureType
         _yearSemesterList.value = data.yearSemesterList
         _infoHoneyScore.value = data.infoHoneyScore

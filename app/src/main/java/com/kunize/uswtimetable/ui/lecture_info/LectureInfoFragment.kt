@@ -14,8 +14,6 @@ import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyExamData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyLectureData
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyShortData
-import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.infiniteScrolls
 
 class LectureInfoFragment : Fragment() {
@@ -34,18 +32,7 @@ class LectureInfoFragment : Fragment() {
         binding.lectureInfoViewModel = lectureInfoViewModel
         binding.lifecycleOwner = this
 
-        lectureInfoViewModel.setInfoValue(
-            LectureInfoData(
-                "전핵",
-                arrayListOf("2021-2", "2021-1", "2020-2", "2020-1", "2018-1", "2018-2"),
-                4.2f,
-                2.4f,
-                3.5f,
-                "없음",
-                "보통",
-                "까다로움"
-            )
-        )
+        lectureInfoViewModel.setInfoValue()
 
         val tmp = arrayListOf<EvaluationData?>()
         tmp.add(null)

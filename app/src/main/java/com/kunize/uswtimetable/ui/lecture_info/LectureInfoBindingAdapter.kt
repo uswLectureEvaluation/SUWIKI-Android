@@ -12,10 +12,10 @@ import com.kunize.uswtimetable.R
 object LectureInfoBindingAdapter {
     @BindingAdapter("yearSemesterList")
     @JvmStatic
-    fun setList(flexBox: FlexboxLayout, items : java.util.ArrayList<String>) {
-        for(item in items) {
+    fun setList(flexBox: FlexboxLayout, items : String) {
+        for(item in items.split(",")) {
             val textView = TextView(flexBox.context)
-            textView.text = item
+            textView.text = item.replace(" ","")
             textView.textSize = 12f
             textView.setTextColor(Color.BLACK)
             textView.setBackgroundResource(R.drawable.rounding_light_gray_background)

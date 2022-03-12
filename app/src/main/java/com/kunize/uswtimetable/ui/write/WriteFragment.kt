@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.dataclass.LectureProfessorName
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.dataclass.MyExamInfo
-import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.WriteFragmentTitle
 import com.kunize.uswtimetable.util.seekbarChangeListener
 import kotlin.math.roundToInt
@@ -109,7 +107,6 @@ class WriteFragment : Fragment() {
             binding.veryDifficultRadioButton
         )
         for (radioButton in difficultyRadioBtnList) {
-            Log.d("radioBtn", "${it.examDifficulty}, ${radioButton.text.toString()}")
             if (it.examDifficulty == radioButton.text.toString()) {
                 radioButton.isChecked = true
                 break
