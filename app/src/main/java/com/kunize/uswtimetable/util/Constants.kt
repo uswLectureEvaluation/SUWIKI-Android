@@ -50,6 +50,10 @@ object LectureItemViewType {
     const val HIDE_EXAM = 5 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
 }
 
+object TextLength {
+    const val MIN_SEARCH_TEXT_LENGTH = 2
+}
+
 object ExamInfoType {
     const val NO_DATA = 0 //데이터 없음
     const val NEED_USE = 1 //포인트 사용 필요

@@ -111,7 +111,7 @@
     <string name="not_exist">없음</string>
     <string name="normal">보통</string>
     <string name="many">많음</string>
-    <string name="difficult">까다로움</string>
+    <string name="picky">까다로움</string>
     <string name="good">잘 줌</string>
     <string name="genealogy">족보</string>
     <string name="textbook">교재</string>
@@ -119,6 +119,10 @@
     <string name="note">필기</string>
     <string name="application">응용</string>
     <string name="practice">실습</string>
+    <string name="veryDifficult">매우 어려움</string>
+    <string name="difficult">어려움</string>
+    <string name="easy">쉬움</string>
+    <string name="veryEasy">매우 쉬움</string>
 
 
 </resources>
