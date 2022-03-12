@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.util.LectureItemViewType
+import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
@@ -129,6 +131,7 @@ class EvaluationFragment : Fragment() {
         }
 
         binding.searchBtn.setOnClickListener {
+            if (isSearchTextLengthNotEnough()) return@setOnClickListener
             goToSearchResult()
         }
 
@@ -136,7 +139,7 @@ class EvaluationFragment : Fragment() {
         //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
         binding.searchLecture.setOnEditorActionListener { _, it, _ ->
             var handled = false
-            if (it == EditorInfo.IME_ACTION_SEARCH) {
+            if (it == EditorInfo.IME_ACTION_SEARCH && !isSearchTextLengthNotEnough()) {
                 val inputMethodManager =
                     requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.searchLecture.windowToken, 0)
@@ -181,6 +184,14 @@ class EvaluationFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    private fun isSearchTextLengthNotEnough(): Boolean {
+        if (binding.searchLecture.text.toString().length < MIN_SEARCH_TEXT_LENGTH) {
+            Toast.makeText(requireContext(), "2글자 이상 입력해주세요!", Toast.LENGTH_SHORT).show()
+            return true
+        }
+        return false
     }
 
     private fun goToSearchResult(

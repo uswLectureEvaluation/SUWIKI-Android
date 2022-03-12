@@ -30,7 +30,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginEnd="16dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
 
                     <TextView
                         android:id="@+id/writeType"
@@ -261,7 +263,7 @@
                         <RadioButton
                             android:id="@+id/gradeDifficultRadioButton"
                             style="@style/write_radiobutton_text_style"
-                            android:text="@string/difficult" />
+                            android:text="@string/picky" />
 
                     </RadioGroup>
 
@@ -361,27 +363,27 @@
                         <RadioButton
                             android:id="@+id/veryEasyRadioButton"
                             style="@style/write_checkbox_style"
-                            android:text="아주 쉬움" />
+                            android:text="@string/veryEasy" />
 
                         <RadioButton
                             android:id="@+id/easyRadioButton"
                             style="@style/write_checkbox_style"
-                            android:text="쉬움" />
+                            android:text="@string/easy" />
 
                         <RadioButton
                             android:id="@+id/normalRadioButton"
                             style="@style/write_checkbox_style"
-                            android:text="보통" />
+                            android:text="@string/normal" />
 
                         <RadioButton
                             android:id="@+id/difficultRadioButton"
                             style="@style/write_checkbox_style"
-                            android:text="어려움" />
+                            android:text="@string/difficult" />
 
                         <RadioButton
                             android:id="@+id/veryDifficultRadioButton"
                             style="@style/write_checkbox_style"
-                            android:text="아주 어려움" />
+                            android:text="@string/veryDifficult" />
                     </com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup>
 
                     <SeekBar
@@ -480,6 +482,7 @@
                     android:minHeight="400dp"
                     android:padding="@dimen/cardview_short_padding"
                     android:textSize="16sp"
+                    android:maxLength="1000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/writeDetailLayout"

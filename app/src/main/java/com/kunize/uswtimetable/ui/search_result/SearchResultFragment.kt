@@ -1,12 +1,16 @@
 package com.kunize.uswtimetable.ui.search_result
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
@@ -15,6 +19,7 @@ import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyShortData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.util.LectureItemViewType
+import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.infiniteScrolls
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
@@ -90,9 +95,35 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        //TODO 검색 기능 추가
+
+        binding.searchBtn.setOnClickListener {
+            if (isSearchTextLengthNotEnough()) return@setOnClickListener
+            //TODO 검색 기능 추가
+        }
+
+
+        //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
+        binding.searchLecture.setOnEditorActionListener { _, it, _ ->
+            var handled = false
+            if (it == EditorInfo.IME_ACTION_SEARCH && !isSearchTextLengthNotEnough()) {
+                val inputMethodManager =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.searchLecture.windowToken, 0)
+                handled = true
+                //TODO 검색 기능 추가
+            }
+            handled
+        }
 
         return binding.root
+    }
+
+    private fun isSearchTextLengthNotEnough(): Boolean {
+        if (binding.searchLecture.text.toString().length < MIN_SEARCH_TEXT_LENGTH) {
+            Toast.makeText(requireContext(), "2글자 이상 입력해주세요!", Toast.LENGTH_SHORT).show()
+            return true
+        }
+        return false
     }
 
     override fun onResume() {
