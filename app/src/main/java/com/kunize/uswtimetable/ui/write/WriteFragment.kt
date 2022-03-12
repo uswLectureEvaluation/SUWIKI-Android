@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -125,7 +126,7 @@ class WriteFragment : Fragment() {
             binding.taskCheckBox
         )
         for (checkBox in testContentCheckBoxList) {
-            for (dataString in it.evaluationType.split(",")) {
+            for (dataString in it.examType.split(",")) {
                 if (checkBox.text == dataString)
                     checkBox.isChecked = true
             }
