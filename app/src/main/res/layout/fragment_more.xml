@@ -5,6 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+        <variable
+            name="User"
+            type="com.kunize.uswtimetable.ui.login.User" />
 
         <variable
             name="viewModel"
@@ -56,6 +60,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginVertical="16dp"
                         android:orientation="vertical"
+                        android:visibility="@{viewModel.user.loggedIn ? View.GONE : View.VISIBLE}"
                         android:padding="@dimen/cardview_padding"
                         tools:visibility="gone">
 
@@ -87,7 +92,8 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:padding="@dimen/cardview_padding"
-                        android:visibility="visible">
+                        android:visibility="@{viewModel.user.loggedIn ? View.VISIBLE : View.GONE}"
+                        tools:visibility="visible">
 
                         <TextView
                             style="@style/TextSubtitle1.Bold"
@@ -112,7 +118,7 @@
                                 android:background="@drawable/border_circle"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="@{viewModel.point}"
+                                android:text="@{@string/total_point(viewModel.user.user.point)}"
                                 android:textColor="#F00"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="W, 1:1"
@@ -159,7 +165,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_evaluation_count(viewModel.myEvaluationCount)}"
+                                        android:text="@{@string/my_evaluation_count(viewModel.user.user.writtenLecture)}"
                                         android:textColor="@color/black"
                                         tools:text="작성한 강의 평가 : 5개" />
 
@@ -190,7 +196,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_exam_info_count(viewModel.myExamInfoCount)}"
+                                        android:text="@{@string/my_exam_info_count(viewModel.user.user.writtenExam)}"
                                         android:textColor="@color/black"
                                         tools:text="작성한 시험 정보 : 2개" />
 
@@ -221,7 +227,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/opened_exam_count(viewModel.openedExamCount)}"
+                                        android:text="@{@string/opened_exam_count(viewModel.user.user.viewExam)}"
                                         android:textColor="@color/black"
                                         tools:text="시험 정보 열람 : 5개" />
 
@@ -297,7 +303,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:text="@{viewModel.id}"
+                                android:text="@{viewModel.user.user.userId}"
                                 app:layout_constraintBottom_toBottomOf="@+id/loginIdTextView"
                                 app:layout_constraintEnd_toStartOf="@+id/myPostButton"
                                 app:layout_constraintHorizontal_bias="0"
@@ -312,7 +318,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/blur_white"
-                            android:visibility="gone">
+                            android:visibility="@{viewModel.user.loggedIn ? View.GONE : View.VISIBLE}"
+                            tools:visibility="gone">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -336,20 +343,6 @@
                         android:divider="?android:listDivider"
                         android:orientation="vertical"
                         android:showDividers="middle">
-
-                        <TextView
-                            android:id="@+id/loginOrLogoutButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:textColor="@color/black"
-                            tools:text="로그인 (테스트)" />
 
                         <TextView
                             android:id="@+id/noticeButton"

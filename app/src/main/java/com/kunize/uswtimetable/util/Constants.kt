@@ -67,7 +67,9 @@ enum class ItemType {
 }
 
 enum class ExamDifficulty {
+    VERY_EASY,
     EASY,
     NORMAL,
-    DIFFICULT
+    DIFFICULT,
+    VERY_DIFFICULT
 }

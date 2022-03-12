@@ -17,18 +17,18 @@
             android:name=".ui.notice.NoticeActivity"
             android:exported="false" />
         <activity
-            android:name=".login.FindPasswordActivity"
+            android:name=".ui.login.FindPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".login.FindIdActivity"
+            android:name=".ui.login.FindIdActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".signup.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".SettingActivity" />

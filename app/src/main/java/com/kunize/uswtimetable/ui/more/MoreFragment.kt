@@ -3,26 +3,27 @@ package com.kunize.uswtimetable.ui.more
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMoreBinding
-import com.kunize.uswtimetable.login.FindIdActivity
-import com.kunize.uswtimetable.login.FindPasswordActivity
-import com.kunize.uswtimetable.login.LoginActivity
-import com.kunize.uswtimetable.signup.SignUpActivity
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.login.FindIdActivity
+import com.kunize.uswtimetable.ui.login.FindPasswordActivity
+import com.kunize.uswtimetable.ui.login.LoginActivity
+import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
+import com.kunize.uswtimetable.ui.signup.SignUpActivity
 
 class MoreFragment : Fragment() {
-    private lateinit var viewModel: MoreViewModel
+    private val viewModel: MoreViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var binding: FragmentMoreBinding
 
     override fun onCreateView(
@@ -30,21 +31,13 @@ class MoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         incomplete(requireContext())
         initViews(requireContext())
 
-        viewModel = ViewModelProvider(this)[MoreViewModel::class.java]
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-
-        viewModel.loggedIn.observe(viewLifecycleOwner, { isLoggedIn ->
-            if (isLoggedIn) {
-                loggedIn()
-            } else {
-                loggedOut()
-            }
-        })
+        logInStateView()
 
         binding.loginButton.setOnClickListener {
             val intent = Intent(context, LoginActivity::class.java)
@@ -76,7 +69,8 @@ class MoreFragment : Fragment() {
                     true
                 }
                 R.id.action_log_out -> {
-                    viewModel.toggleLogin()
+                    User.logout()
+                    viewModel.refresh()
                     true
                 }
                 else -> {
@@ -95,34 +89,21 @@ class MoreFragment : Fragment() {
         }
     }
 
-    private fun loggedIn() {
-        binding.beforeLoginLayout.isGone = true
-        binding.beforeLoginLayoutWithButton.isGone = true
-        binding.pointInfoLayout.isGone = false
+    private fun logInStateView() {
+        viewModel.user.observe(viewLifecycleOwner) { data ->
+            val user = data ?: return@observe
 
-        /* Test */
-        binding.loginOrLogoutButton.text = "로그 아웃 (테스트)"
-
-        setToolbarMenu()
+            binding.toolBar.menu.clear()
+            if (user.isLoggedIn)
+                binding.toolBar.inflateMenu(R.menu.more_menu_after)
+            else
+                binding.toolBar.inflateMenu(R.menu.more_menu_before)
+        }
     }
 
-    private fun setToolbarMenu() {
-        binding.toolBar.menu.clear()
-        if (viewModel.loggedIn.value == false)
-            binding.toolBar.inflateMenu(R.menu.more_menu_before)
-        else
-            binding.toolBar.inflateMenu(R.menu.more_menu_after)
-    }
-
-    private fun loggedOut() {
-        binding.beforeLoginLayout.isGone = false
-        binding.beforeLoginLayoutWithButton.isGone = false
-        binding.pointInfoLayout.isGone = true
-
-        /* Test */
-        binding.loginOrLogoutButton.text = "로그인 (테스트)"
-
-        setToolbarMenu()
+    override fun onStart() {
+        super.onStart()
+        viewModel.refresh()
     }
 
     private fun incomplete(context: Context) {
@@ -157,9 +138,6 @@ class MoreFragment : Fragment() {
             opensourceLicenceButton.setOnClickListener {
                 val intent = Intent(context, OpenSourceActivity::class.java)
                 startActivity(intent)
-            }
-            loginOrLogoutButton.setOnClickListener {
-                viewModel?.toggleLogin()
             }
         }
     }

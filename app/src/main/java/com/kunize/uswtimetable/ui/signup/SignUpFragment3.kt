@@ -1,15 +1,15 @@
-package com.kunize.uswtimetable.signup
+package com.kunize.uswtimetable.ui.signup
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp3Binding
-import com.kunize.uswtimetable.login.LoginActivity
+import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.Constants.SCHOOL_HOMEPAGE
 
 class SignUpFragment3 : Fragment() {

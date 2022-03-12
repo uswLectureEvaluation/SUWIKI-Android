@@ -1,6 +1,5 @@
-package com.kunize.uswtimetable.signup
+package com.kunize.uswtimetable.ui.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
-import com.kunize.uswtimetable.util.Constants.TAG
 import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/page_padding"
-    tools:context=".login.FindIdActivity">
+    tools:context=".ui.login.FindIdActivity">
 
     <TextView
         android:id="@+id/titleTextView"

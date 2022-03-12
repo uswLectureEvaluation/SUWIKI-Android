@@ -1,17 +1,26 @@
 package com.kunize.uswtimetable.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.util.ItemType
 
-class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType) -> Unit): ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
+class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType) -> Unit) :
+    ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
 
-    inner class MyEvaluationViewHolder(private val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MyEvaluationViewHolder(private val binding: ItemMyPostBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        private val gray = ContextCompat.getColor(binding.detailScoreLayout.context, R.color.custom_gray)
+        private val darkGray = ContextCompat.getColor(binding.detailScoreLayout.context, R.color.custom_dark_gray)
+        private val red = ContextCompat.getColor(binding.detailScoreLayout.context, R.color.custom_red)
+
         fun bind(data: MyEvaluation) {
             with(binding) {
                 lectureName.text = data.subject
@@ -22,13 +31,35 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType
                 satisfactionScore.text = data.satisfaction.toString()
                 learningScore.text = data.learning.toString()
                 honeyScore.text = data.honey.toString()
-                teamMeeting.text = if (data.team) "많음" else "적음"
+                if (data.team) {
+                    teamMeeting.text = "있음"
+                    teamMeeting.setTextColor(darkGray)
+                } else {
+                    teamMeeting.text = "없음"
+                    teamMeeting.setTextColor(gray)
+                }
                 task.text = data.homework
+                when (data.homework) {
+                    "없음" -> task.setTextColor(gray)
+                    "보통" -> task.setTextColor(darkGray)
+                    "많음" -> task.setTextColor(red)
+                }
                 grade.text = data.grade
+                when (data.grade) {
+                    "잘 줌" -> grade.setTextColor(gray)
+                    "보통" -> grade.setTextColor(darkGray)
+                    "까다로움" -> grade.setTextColor(red)
+                }
                 content.text = data.content
             }
             binding.root.setOnClickListener {
                 onItemClicked(data, ItemType.ROOT_VIEW)
+                binding.detailScoreLayout.visibility = when (binding.detailScoreLayout.visibility) {
+                    View.VISIBLE -> View.GONE
+                    View.GONE -> View.VISIBLE
+                    else -> View.VISIBLE
+                }
+                binding.content.maxLines = if (binding.content.maxLines > 2) 2 else 100
             }
             binding.editBtn.setOnClickListener {
                 onItemClicked(data, ItemType.EDIT_BUTTON)

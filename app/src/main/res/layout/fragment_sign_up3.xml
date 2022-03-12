@@ -6,13 +6,13 @@
     <data>
         <variable
             name="fragment"
-            type="com.kunize.uswtimetable.signup.SignUpFragment3" />
+            type="com.kunize.uswtimetable.ui.signup.SignUpFragment3" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".signup.SignUpFragment3">
+        tools:context=".ui.signup.SignUpFragment3">
 
         <TextView
             android:id="@+id/tv_welcome"
@@ -51,7 +51,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0"
-            android:text="메일 확인하기"
+            android:text="@string/check_mail"
             android:layout_marginTop="30dp"
             style="@style/Widget.MaterialComponents.Button" />
 

@@ -21,7 +21,7 @@
         android:label="notice_detail_fragment"
         tools:layout="@layout/fragment_notice_detail" >
         <argument
-            android:name="detailNotice"
-            app:argType="com.kunize.uswtimetable.dataclass.NoticeDetailDto" />
+            android:name="noticeId"
+            app:argType="long" />
     </fragment>
 </navigation>

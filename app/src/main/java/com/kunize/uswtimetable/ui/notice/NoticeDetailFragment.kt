@@ -1,32 +1,29 @@
 package com.kunize.uswtimetable.ui.notice
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.kunize.uswtimetable.databinding.FragmentNoticeDetailBinding
-import com.kunize.uswtimetable.dataclass.NoticeDetailDto
-import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 
 class NoticeDetailFragment : Fragment() {
     private var _binding: FragmentNoticeDetailBinding? = null
     private val binding: FragmentNoticeDetailBinding get() = _binding!!
+    private val viewModel: NoticeDetailViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNoticeDetailBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
-        val noticeData = arguments?.getSerializable("noticeData") as NoticeDetailDto
-        with(binding) {
-            noticeTitle.text = noticeData.title
-            noticeDate.text = noticeData.date
-            noticeDetail.text = noticeData.contents
-        }
+        arguments?.getLong("noticeId")?.let { viewModel.getNotice(it) }
 
         return binding.root
     }
@@ -35,11 +32,8 @@ class NoticeDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.backButton.setOnClickListener {
-            Log.d(TAG, "NoticeDetailFragment - Back button Clicked!")
             view.findNavController().popBackStack()
         }
-
-
     }
 
     override fun onDestroyView() {

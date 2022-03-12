@@ -22,9 +22,20 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
             val difficultyType = convertExamDifficulty(data.examDifficulty)
             with(binding) {
                 lectureName.text = data.subject
+                lectureProfessor.text = data.professor
                 yearSemester.text = data.semester
 
                 when (difficultyType) {
+                    ExamDifficulty.VERY_EASY -> {
+                        tvExamDifficulty.text = "매우 쉬움"
+                        tvExamDifficulty.setTextColor(
+                            ContextCompat.getColor(
+                                tvExamDifficulty.context,
+                                R.color.custom_yellow
+                            )
+                        )
+                    }
+
                     ExamDifficulty.EASY -> {
                         tvExamDifficulty.text = "쉬움"
                         tvExamDifficulty.setTextColor(
@@ -52,12 +63,22 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
                             )
                         )
                     }
+                    ExamDifficulty.VERY_DIFFICULT -> {
+                        tvExamDifficulty.text = "매우 어려움"
+                        tvExamDifficulty.setTextColor(
+                            ContextCompat.getColor(
+                                tvExamDifficulty.context,
+                                R.color.custom_red
+                            )
+                        )
+                    }
                 }
                 tvExamType.text = data.examType
                 content.text = data.content
             }
             binding.root.setOnClickListener {
                 onItemClicked(data, ItemType.ROOT_VIEW)
+                binding.content.maxLines = if (binding.content.maxLines > 2) 2 else 100
             }
             binding.editBtn.setOnClickListener {
                 onItemClicked(data, ItemType.EDIT_BUTTON)
@@ -70,9 +91,11 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
 
     private fun convertExamDifficulty(difficultyString: String) =
         when (difficultyString) {
+            "매우 쉬움" -> ExamDifficulty.VERY_EASY
             "쉬움" -> ExamDifficulty.EASY
             "보통" -> ExamDifficulty.NORMAL
             "어려움" -> ExamDifficulty.DIFFICULT
+            "매우 어려움" -> ExamDifficulty.VERY_DIFFICULT
             else -> ExamDifficulty.NORMAL
         }
 

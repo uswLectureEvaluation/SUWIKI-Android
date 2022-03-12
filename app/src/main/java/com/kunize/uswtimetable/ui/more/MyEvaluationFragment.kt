@@ -1,11 +1,11 @@
 package com.kunize.uswtimetable.ui.more
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,10 +32,10 @@ class MyEvaluationFragment : Fragment() {
         adapter = MyEvaluationAdapter { data, type ->
             when (type) {
                 ItemType.ROOT_VIEW -> {
-                    makeToast("$data 선택됨")
+//                    makeToast("$data 선택됨")
                 }
                 ItemType.EDIT_BUTTON -> {
-                    makeToast("${data.id} 아이템 수정 클릭")
+//                    makeToast("${data.id} 아이템 수정 클릭")
                     gotoWriteFragment(data)
                 }
                 ItemType.DELETE_BUTTON -> {

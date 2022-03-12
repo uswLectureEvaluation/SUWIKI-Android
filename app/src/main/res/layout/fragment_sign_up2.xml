@@ -3,12 +3,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".signup.SignUpFragment2">
+    tools:context=".ui.signup.SignUpFragment2">
 
     <data>
         <variable
             name="viewModel"
-            type="com.kunize.uswtimetable.signup.SignUpViewModel" />
+            type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
 
         <variable
             name="constants"

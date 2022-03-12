@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.login
+package com.kunize.uswtimetable.ui.login
 
 data class LoginFormState(
     val idError: Int? = null,

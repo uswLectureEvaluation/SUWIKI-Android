@@ -1,8 +1,10 @@
 package com.kunize.uswtimetable.retrofit
 
 import com.google.gson.JsonElement
+import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.signup.CertificateEmail
+import com.kunize.uswtimetable.ui.signup.CertificateEmail
+import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.LECTURE
 import com.kunize.uswtimetable.util.API.MY_PAGE
@@ -14,7 +16,11 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.Constants.TOKEN
+import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface IRetrofit {
@@ -25,11 +31,11 @@ interface IRetrofit {
 
     // 공지사항 리스트 API
     @GET(NOTICE)
-    fun getNoticeList(): Call<List<NoticeDto>>
+    suspend fun getNoticeList(): List<NoticeDto>
 
     // 공지사항 API
     @GET(NOTICE)
-    fun getNotice(@Query("notice_id") noticeId: Int): Call<NoticeDetailDto>
+    suspend fun getNotice(@Query("notice_id") noticeId: Long): NoticeDetailDto
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @GET(PASSWORD)
@@ -79,4 +85,42 @@ interface IRetrofit {
     fun schoolCheck(@Body certificationNumber: SignUpSchoolCheckFormat): Call<CertificateEmail>
 
     // TODO 나머지 API도 추가
+
+    companion object {
+        fun create(): IRetrofit {
+
+            val logger = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BASIC
+            }
+
+            val client = OkHttpClient.Builder().authenticator(object : Authenticator {
+                override fun authenticate(route: Route?, response: Response): Request? {
+                    when (response.code) {
+                        400 -> {
+                            // TODO 로그인 에러
+                            return response.request
+                        }
+                        401 -> {
+                            val refreshToken = TimeTableSelPref.prefs.getRefreshToken()
+                            return refreshToken?.let {
+                                response.request.newBuilder().header("Authorization",
+                                    it
+                                ).build()
+                            }
+                        }
+                        else -> {
+                            return response.request
+                        }
+                    }
+                }
+            }).addInterceptor(logger)
+
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(IRetrofit::class.java)
+        }
+    }
 }

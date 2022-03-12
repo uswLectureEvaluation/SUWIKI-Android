@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class NoticeDetailDto(
-    @SerializedName("notice_id") val id: String,
-    @SerializedName("notice_title") val title: String,
-    @SerializedName("notice_date") val date: String,
-    @SerializedName("notice_detail") val contents: String
+    val id: Long,
+    val title: String,
+    @SerializedName("modifiedDate") val date: String,
+    val content: String
 ): Serializable

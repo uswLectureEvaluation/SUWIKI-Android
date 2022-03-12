@@ -1,23 +1,17 @@
-package com.kunize.uswtimetable.signup
+package com.kunize.uswtimetable.ui.signup
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.SignUpPageAdapter
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
-import com.kunize.uswtimetable.login.LoginActivity
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.BackKeyManager
-import com.kunize.uswtimetable.util.Constants.TAG
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class SignUpActivity : AppCompatActivity() {
