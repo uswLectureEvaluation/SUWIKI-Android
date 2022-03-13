@@ -8,10 +8,10 @@ import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.more.*
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
-import com.kunize.uswtimetable.ui.repository.LoginRepository
 import com.kunize.uswtimetable.ui.repository.MyExamInfoRepository
 import com.kunize.uswtimetable.ui.repository.MyPostRepository
 import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
+import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRemoteDataSource

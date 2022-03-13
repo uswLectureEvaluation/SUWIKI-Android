@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.ui.repository.LoginRepository
+import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.util.Result
 
 class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() {
