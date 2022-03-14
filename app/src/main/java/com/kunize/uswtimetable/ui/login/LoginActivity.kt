@@ -39,13 +39,13 @@ class LoginActivity : AppCompatActivity() {
             binding.login.isEnabled = loginState.isDataValid
 
             if (loginState.idError != null) {
-                binding.userIdContainer.errorContentDescription = getString(loginState.idError)
+                binding.userIdContainer.error = getString(loginState.idError)
                 binding.userIdContainer.isErrorEnabled = true
             } else {
                 binding.userIdContainer.isErrorEnabled = false
             }
             if (loginState.pwError != null) {
-                binding.passwordContainer.errorContentDescription = getString(loginState.pwError)
+                binding.passwordContainer.error = getString(loginState.pwError)
                 binding.passwordContainer.isErrorEnabled = true
             } else {
                 binding.passwordContainer.isErrorEnabled = false
@@ -57,11 +57,9 @@ class LoginActivity : AppCompatActivity() {
 
             when (loginResult) {
                 LoginState.ID_ERROR -> {
-                    binding.userIdContainer.error = "잘못된 아이디 입니다."
                     binding.userIdContainer.isErrorEnabled = true
                 }
                 LoginState.PW_ERROR -> {
-                    binding.passwordContainer.error = "잘못된 비밀번호 입니다."
                     binding.passwordContainer.isErrorEnabled = true
                 }
                 LoginState.UNKNOWN_ERROR -> {
