@@ -15,6 +15,9 @@ object Constants {
     const val NUMBER_OF_YEAR = 6
     const val SEMESTER_1_START = 1
     const val SEMESTER_1_END = 6
+    const val ID_REGEX = """^[a-z0-9]*$"""
+    const val PW_REGEX = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
+
 }
 
 object API {

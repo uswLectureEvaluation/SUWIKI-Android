@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
+import com.kunize.uswtimetable.util.Constants.ID_REGEX
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
+import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import java.util.regex.Pattern
 
@@ -27,10 +29,8 @@ class SignUpViewModel : ViewModel() {
     private var _email: String? = null
     val email get() = _email
 
-    private val idRegex = """^[a-z0-9]*$"""
-    private val pwRegex = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
-    private val idPattern: Pattern = Pattern.compile(idRegex)
-    private val pwPattern: Pattern = Pattern.compile(pwRegex)
+    private val idPattern: Pattern = Pattern.compile(ID_REGEX)
+    private val pwPattern: Pattern = Pattern.compile(PW_REGEX)
 
     init {
         _currentPage.value = 0
