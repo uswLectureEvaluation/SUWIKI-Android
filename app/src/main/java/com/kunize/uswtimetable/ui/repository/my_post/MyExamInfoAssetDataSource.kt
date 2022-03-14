@@ -1,7 +1,6 @@
-package com.kunize.uswtimetable.ui.more
+package com.kunize.uswtimetable.ui.repository.my_post
 
 import com.google.gson.Gson
-import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.util.AssetLoader
 import org.json.JSONObject

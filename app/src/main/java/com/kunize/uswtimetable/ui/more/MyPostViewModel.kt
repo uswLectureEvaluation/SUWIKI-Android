@@ -3,9 +3,8 @@ package com.kunize.uswtimetable.ui.more
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.MyEvaluation
-import com.kunize.uswtimetable.ui.repository.MyPostRepository
+import com.kunize.uswtimetable.ui.repository.my_post.MyPostRepository
 
 class MyPostViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _myEvaluationData = MutableLiveData<List<MyEvaluation>>()
