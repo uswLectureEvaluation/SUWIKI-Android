@@ -5,8 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.kunize.uswtimetable.util.Constants" />
 
+        <variable
+            name="viewModel"
+            type="com.kunize.uswtimetable.ui.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,14 +73,15 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/id">
+                android:hint="@string/id"
+                app:errorEnabled="@{viewModel.loginFormState.idError != null ? true : false}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="@{Constants.ID_COUNT_LIMIT}"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:maxLength="@{Constants.ID_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -86,14 +91,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/password"
-                app:endIconMode="password_toggle">
+                app:endIconMode="password_toggle"
+                app:errorEnabled="@{viewModel.loginFormState.pwError != null ? true : false}">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/user_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="@{Constants.PW_COUNT_LIMIT}"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:maxLength="@{Constants.PW_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
@@ -106,9 +112,10 @@
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_ripple_effect_skyblue"
-                android:enabled="false"
+                android:background="@drawable/button_ripple_skyblue"
+                android:enabled="@{viewModel.loginFormState.dataValid}"
                 android:text="@string/login_button_text"
+                android:onClick="@{() -> viewModel.login(userId.getText().toString(), userPassword.getText().toString())}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
