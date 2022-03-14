@@ -20,6 +20,8 @@ import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRepository
+import com.kunize.uswtimetable.ui.repository.signup.SignUpRemoteDataSource
+import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.util.AssetLoader
 
@@ -33,7 +35,8 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 MyPostViewModel(repository) as T
             }
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
-                SignUpViewModel() as T
+                val repository = SignUpRepository(SignUpRemoteDataSource())
+                SignUpViewModel(repository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(LoginRepository(LoginRemoteDataSource())) as T
