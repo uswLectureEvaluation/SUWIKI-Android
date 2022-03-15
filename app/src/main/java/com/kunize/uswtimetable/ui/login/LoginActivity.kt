@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -31,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.viewModel = loginViewModel
 
-        if (loginViewModel.isLoggedIn) {
+        if (User.isLoggedIn) {
             makeToast("이미 로그인 되어있습니다")
             finish()
         }
@@ -66,6 +67,13 @@ class LoginActivity : AppCompatActivity() {
 
         initViews(this)
 
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        if (User.isLoggedIn) {
+            finish()
+        }
     }
 
     private fun initViews(context: Context) {
