@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical"
             android:weightSum="4"
             app:layout_constraintBottom_toBottomOf="@+id/top2Guideline"
@@ -48,7 +49,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:fontFamily="@font/godom"
                 android:gravity="center"
                 android:text="@string/app_name"
@@ -114,8 +115,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_ripple_skyblue"
                 android:enabled="@{viewModel.loginFormState.dataValid}"
-                android:text="@string/login_button_text"
                 android:onClick="@{() -> viewModel.login(userId.getText().toString(), userPassword.getText().toString())}"
+                android:text="@string/login_button_text"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
