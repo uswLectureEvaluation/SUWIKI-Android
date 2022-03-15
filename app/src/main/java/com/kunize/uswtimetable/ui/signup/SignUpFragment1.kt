@@ -6,6 +6,7 @@ import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,6 +24,8 @@ class SignUpFragment1 : Fragment() {
     private lateinit var activity: SignUpActivity
     private lateinit var viewModel: SignUpViewModel
     private lateinit var nextButton: MaterialButton
+
+    private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,11 +72,39 @@ class SignUpFragment1 : Fragment() {
 
     private fun initButton() {
         nextButton.setOnClickListener {
-            // TODO 아이디, 비밀번호, 체크 확인
-            // TODO 아이디 중복 체크
-            if (viewModel.signupFormState.value?.isDataValid == true) {
-                viewModel.saveUserIdAndPw(binding.etId.text.toString(), binding.etPw.text.toString())
-                viewModel.moveToNextPage()
+            val state = viewModel.signupFormState.value ?: return@setOnClickListener
+            viewModel.saveUserIdAndPw(
+                binding.etId.text.toString(),
+                binding.etPw.text.toString()
+            )
+            if (state.isDataValid) {
+                if (viewModel.checkId()) {
+                    viewModel.moveToNextPage()
+                } else {
+                    makeToast("아이디가 중복되었습니다.")
+                }
+            } else {
+                val msg: String = when  {
+                    state.hasBlank != null -> {
+                        resources.getString(state.hasBlank)
+                    }
+                    state.idError != null -> {
+                        resources.getString(state.idError)
+                    }
+                    state.pwError != null -> {
+                        resources.getString(state.pwError)
+                    }
+                    state.pwAgainError != null -> {
+                        resources.getString(state.pwAgainError)
+                    }
+                    state.isTermChecked != null -> {
+                        resources.getString(state.isTermChecked)
+                    }
+                    else -> {
+                        "알 수 없는 에러 발생"
+                    }
+                }
+                makeToast(msg)
             }
         }
     }
@@ -149,8 +180,15 @@ class SignUpFragment1 : Fragment() {
         return requireActivity() as SignUpActivity
     }
 
+    private fun makeToast(msg: String) {
+        toast?.cancel()
+        toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
+        toast?.show()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        toast = null
     }
 }

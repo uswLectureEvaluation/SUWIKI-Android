@@ -1,23 +1,25 @@
 package com.kunize.uswtimetable.ui.signup
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
+import com.kunize.uswtimetable.util.Constants.ID_REGEX
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
+import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
+import com.kunize.uswtimetable.util.Constants.TAG
 import java.util.regex.Pattern
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
-
-    private var _certResult = MutableLiveData<Boolean>()
-    val certResult: LiveData<Boolean> get() = _certResult
 
     private var _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> get() = _currentPage
@@ -25,19 +27,69 @@ class SignUpViewModel : ViewModel() {
     private var _id: String? = null
     private var _pw: String? = null
     private var _email: String? = null
-    val email get() = _email
+    val email get() = _email + SCHOOL_DOMAIN_AT
 
-    private val idRegex = """^[a-z0-9]*$"""
-    private val pwRegex = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
-    private val idPattern: Pattern = Pattern.compile(idRegex)
-    private val pwPattern: Pattern = Pattern.compile(pwRegex)
+    private val idPattern: Pattern = Pattern.compile(ID_REGEX)
+    private val pwPattern: Pattern = Pattern.compile(PW_REGEX)
 
     init {
         _currentPage.value = 0
     }
 
     fun signup() {
-        // TODO 회원 가입 로직
+        val id = _id ?: return
+        val pw = _pw ?: return
+        val email = email
+        when (repository.signUp(id, pw, email)) {
+            SignUpState.INVALID_ID -> {
+                Log.d(TAG, "SignUpViewModel - signup() called / 아이디 중복")
+                // TODO 아이디 중복
+            }
+            SignUpState.INVALID_EMAIL -> {
+                Log.d(TAG, "SignUpViewModel - signup() called / 이메일 중복")
+                // TODO 이메일 주소 중복
+            }
+            SignUpState.SUCCESS -> {
+                Log.d(TAG, "SignUpViewModel - signup() called / 로그인 성공")
+
+                // TODO 로그인 성공
+            }
+        }
+    }
+
+    fun checkId(): Boolean {
+        _id?.let {
+            return when (repository.checkId(it)) {
+                SignUpState.INVALID_ID -> {
+                    // TODO 중복된 아이디
+                    false
+                }
+                SignUpState.SUCCESS -> {
+                    // TODO 사용 가능한 아이디
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+        return false
+    }
+
+    fun checkEmail(): Boolean {
+        _email.let {
+            return when (repository.checkEmail(email)) {
+                SignUpState.INVALID_EMAIL -> {
+                    // TODO 중복된 이메일
+                    false
+                }
+                SignUpState.SUCCESS -> {
+                    // TODO 사용 가능한 이메일
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     fun signUpDataChanged(
@@ -72,25 +124,6 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun certificate(email: String) {
-        // TODO 인증 로직
-        /*when (val result = certificateEmail.certificate(email)) {
-            is Result.Success -> {
-                _certResult.value = result.data.success
-            }
-            is Result.Fail -> {
-                Log.d(TAG, "SignUpViewModel - emailCheck() called / Result Fail: ${result.message}")
-            }
-            else -> {
-                Log.d(TAG, "SignUpViewModel - emailCheck() called / Error!")
-            }
-        }*/
-    }
-
-    fun sendEmail() {
-        // TODO 이메일 전송 로직
-    }
-
     private fun isIdValid(id: String): Boolean {
         return id.isBlank() || idPattern.matcher(id).matches()
     }
@@ -109,10 +142,6 @@ class SignUpViewModel : ViewModel() {
 
     private fun isPwAgainValid(pw: String, pwAgain: String): Boolean {
         return pw.isBlank() || pwAgain.isBlank() || pw == pwAgain
-    }
-
-    fun setEmail(email: String) {
-        _email = email + SCHOOL_DOMAIN_AT
     }
 
     private fun hasBlank(
@@ -142,5 +171,15 @@ class SignUpViewModel : ViewModel() {
     fun saveUserIdAndPw(id: String, pw: String) {
         _id = id
         _pw = pw
+    }
+
+    fun setEmail(email: String) {
+        _email = email
+    }
+
+    enum class SignUpState {
+        INVALID_ID,
+        INVALID_EMAIL,
+        SUCCESS
     }
 }

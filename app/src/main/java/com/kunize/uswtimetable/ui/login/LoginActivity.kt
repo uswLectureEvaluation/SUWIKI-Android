@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,50 +19,40 @@ import com.kunize.uswtimetable.util.afterTextChanged
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: LoginViewModel by viewModels { ViewModelFactory(this) }
+    private val loginViewModel: LoginViewModel by viewModels { ViewModelFactory(this) }
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (viewModel.isLoggedIn) {
+        binding.lifecycleOwner = this
+
+        binding.viewModel = loginViewModel
+
+        if (User.isLoggedIn) {
             makeToast("이미 로그인 되어있습니다")
             finish()
         }
 
-        viewModel.loginFormState.observe(this@LoginActivity, Observer {
+        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
-            binding.login.isEnabled = loginState.isDataValid
-
             if (loginState.idError != null) {
-                binding.userIdContainer.errorContentDescription = getString(loginState.idError)
-                binding.userIdContainer.isErrorEnabled = true
-            } else {
-                binding.userIdContainer.isErrorEnabled = false
+                binding.userIdContainer.error = getString(loginState.idError)
             }
             if (loginState.pwError != null) {
-                binding.passwordContainer.errorContentDescription = getString(loginState.pwError)
-                binding.passwordContainer.isErrorEnabled = true
-            } else {
-                binding.passwordContainer.isErrorEnabled = false
+                binding.passwordContainer.error = getString(loginState.pwError)
             }
         })
-        viewModel.loginResult.observe(this@LoginActivity) { loginResult ->
+
+        loginViewModel.loginResult.observe(this@LoginActivity) { loginResult ->
 
             binding.loading.visibility = View.GONE
 
             when (loginResult) {
-                LoginState.ID_ERROR -> {
-                    binding.userIdContainer.error = "잘못된 아이디 입니다."
-                    binding.userIdContainer.isErrorEnabled = true
-                }
-                LoginState.PW_ERROR -> {
-                    binding.passwordContainer.error = "잘못된 비밀번호 입니다."
-                    binding.passwordContainer.isErrorEnabled = true
-                }
                 LoginState.UNKNOWN_ERROR -> {
                     makeToast("알 수 없는 에러 발생")
                 }
@@ -78,6 +67,13 @@ class LoginActivity : AppCompatActivity() {
 
         initViews(this)
 
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        if (User.isLoggedIn) {
+            finish()
+        }
     }
 
     private fun initViews(context: Context) {
@@ -102,29 +98,17 @@ class LoginActivity : AppCompatActivity() {
             }
 
             userId.afterTextChanged {
-                viewModel.loginDataChanged(userId.text.toString(), password.text.toString())
+                loginViewModel.loginDataChanged(userId.text.toString(), userPassword.text.toString())
             }
 
-            password.apply {
+            userPassword.apply {
                 afterTextChanged {
-                    viewModel.loginDataChanged(userId.text.toString(), password.text.toString())
-                }
-
-                setOnEditorActionListener { _, actionId, _ ->
-                    when (actionId) {
-                        EditorInfo.IME_ACTION_DONE ->
-                            viewModel.login(userId.text.toString(), password.text.toString())
-                    }
-                    false
+                    loginViewModel.loginDataChanged(userId.text.toString(), userPassword.text.toString())
                 }
             }
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                userIdContainer.isErrorEnabled = false
-                passwordContainer.isErrorEnabled = false
-
-                viewModel.login(userId.text.toString(), password.text.toString())
             }
         }
     }

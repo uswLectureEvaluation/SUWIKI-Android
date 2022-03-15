@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.dataclass.MyExamInfo
-import com.kunize.uswtimetable.ui.repository.MyExamInfoRepository
+import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoRepository
 
 class MyExamInfoViewModel(private val repository: MyExamInfoRepository) : ViewModel() {
     private val _myExamInfoData = MutableLiveData<List<MyExamInfo>>()
