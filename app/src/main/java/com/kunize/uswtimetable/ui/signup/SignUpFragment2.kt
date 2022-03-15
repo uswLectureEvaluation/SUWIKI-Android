@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.signup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 
 class SignUpFragment2 : Fragment() {
@@ -35,6 +37,7 @@ class SignUpFragment2 : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        signUpButton.isEnabled = isFullInput()
 
         return binding.root
     }
@@ -42,11 +45,16 @@ class SignUpFragment2 : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        signUpButton.isEnabled = isFullInput()
         signUpButton.setOnClickListener {
-            viewModel.signup()
-            viewModel.setEmail(binding.etMail.text.toString())
-            viewModel.moveToNextPage()
+            try {
+                viewModel.setEmail(binding.etMail.text.toString())
+                if (viewModel.checkEmail()) {
+                    viewModel.signup()
+                    viewModel.moveToNextPage()
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, "SignUpFragment2 - signUpButton Clicked! / error: $e")
+            }
         }
         backButton.setOnClickListener { viewModel.moveToPreviousPage() }
         initViews()
