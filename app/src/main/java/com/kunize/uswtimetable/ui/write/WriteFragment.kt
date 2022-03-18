@@ -1,14 +1,13 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -185,21 +184,15 @@ class WriteFragment : Fragment() {
     }
 
     private fun setTaskRadioBtn(it: MyEvaluation) {
-        taskRadioBtnList = listOf(
-            binding.taskNotExistRadioButton,
-            binding.taskNormalRadioButton,
-            binding.taskManyRadioButton
-        )
-        for (taskBtn in taskRadioBtnList) {
-            if (it.homework == taskBtn.text.toString()) {
-                taskBtn.isChecked = true
-                break
-            }
+        when (it.homework) {
+            0 -> binding.taskNotExistRadioButton.isChecked = true
+            1 -> binding.taskNormalRadioButton.isChecked = true
+            2 -> binding.taskManyRadioButton.isChecked = true
         }
     }
 
     private fun setTeamRadioBtn(it: MyEvaluation) {
-        if (it.team)
+        if (it.team == 1)
             binding.teamExistRadioButton.isChecked = true
         else
             binding.teamNotExistRadioButton.isChecked = false

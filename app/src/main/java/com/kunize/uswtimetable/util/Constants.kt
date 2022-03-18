@@ -1,7 +1,5 @@
 package com.kunize.uswtimetable.util
 
-import com.kunize.uswtimetable.util.Constants.TOKEN
-
 object Constants {
     const val TAG = "로그"
     const val TOKEN = "token"
@@ -21,16 +19,24 @@ object Constants {
 }
 
 object API {
-    const val BASE_URL: String = "https://61dc5273591c3a0017e1a86b.mockapi.io"
-    const val NOTICE: String = "/notices"
+    const val BASE_URL: String = "https://api.suwiki.kr"
+    const val NOTICE_LIST: String = "/notice/findAllList"
+    const val NOTICE: String = "/notice"
     const val LECTURE: String = "/lecture"
     const val EXAM: String = "/lecture/exam"
-    const val PASSWORD: String = "/pwinquiry"
-    const val MY_PAGE: String = "/{$TOKEN}/mypage"
+    const val PASSWORD: String = "/user/find-pw"
+    const val PASSWORD_RESET: String = "/user/reset-pw"
+    const val LOGIN: String = "/user/login"
+    const val QUIT: String = "/user/quit"
+    const val MY_PAGE: String = "/user/my-page"
+    const val EVALUATE_POST: String = "/evaluate-posts/findByUserIdx"
+    const val UPDATE_EVALUATE_POST: String = "/evaluate-posts/update"
+    const val EXAM_POSTS: String = "/exam-posts/findByUserIdx"
+    const val UPDATE_EXAM_POSTS: String = "/exam-posts/findByUserIdx"
     const val SIGN_UP: String = "/user/join"
-    const val SIGN_UP_ID_CHECK: String = "/signup_id_check"
-    const val SIGN_UP_EMAIL_CHECK: String = "/signup_email_check"
-    const val SIGN_UP_SCHOOL_CHECK: String = "/signup_check"
+    const val SIGN_UP_ID_CHECK: String = "/user/check_id"
+    const val SIGN_UP_EMAIL_CHECK: String = "/user/check_email"
+    const val SIGN_UP_SCHOOL_CHECK: String = "/user/verify-email"
     const val SEND_CERT_NUMBER: String =  "/send_email"
 }
 
