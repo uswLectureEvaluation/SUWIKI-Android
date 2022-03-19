@@ -13,13 +13,12 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
     val noticeList: LiveData<List<NoticeDto>> get() = _noticeList
 
     init {
-        getNotices()
+        getNotices(1) // TODO 스크롤에 따른 페이지 변화
     }
 
-    private fun getNotices() {
+    private fun getNotices(page: Int?) {
         viewModelScope.launch {
-            val notices = noticeRepository.getNotices()
-            _noticeList.value = notices
+            _noticeList = noticeRepository.getNotices(page) as MutableLiveData<List<NoticeDto>>
         }
     }
 }

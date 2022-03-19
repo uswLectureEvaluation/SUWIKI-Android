@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.util
 
 object Constants {
     const val TAG = "로그"
-    const val TOKEN = "token"
     const val ID_COUNT_LOWER_LIMIT = 6
     const val PW_COUNT_LOWER_LIMIT = 8
     const val ID_COUNT_LIMIT = 20
@@ -37,7 +36,6 @@ object API {
     const val SIGN_UP_ID_CHECK: String = "/user/check_id"
     const val SIGN_UP_EMAIL_CHECK: String = "/user/check_email"
     const val SIGN_UP_SCHOOL_CHECK: String = "/user/verify-email"
-    const val SEND_CERT_NUMBER: String =  "/send_email"
 }
 
 object WriteFragmentTitle {
