@@ -5,7 +5,7 @@ import com.kunize.uswtimetable.dataclass.NoticeDto
 
 class NoticeRepository(private val noticeRemoteDataSource: NoticeRemoteDataSource) {
 
-    suspend fun getNotices(page: Int?): LiveData<List<NoticeDto>> {
+    fun getNotices(page: Int?): LiveData<List<NoticeDto>> {
         return noticeRemoteDataSource.getNotices(page)
     }
 }

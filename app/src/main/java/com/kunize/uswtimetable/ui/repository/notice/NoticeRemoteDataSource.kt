@@ -14,9 +14,9 @@ import retrofit2.Response
 class NoticeRemoteDataSource: NoticeDataSource {
 
     private val noticeResponse = MutableLiveData<List<NoticeDto>>()
-    private val retrofit: IRetrofit by lazy { ApiClient.getClientWithNoToken().create(IRetrofit::class.java) }
+    private val retrofit: IRetrofit by lazy { ApiClient.getClient().create(IRetrofit::class.java) }
 
-    override suspend fun getNotices(page: Int?): LiveData<List<NoticeDto>> {
+    override fun getNotices(page: Int?): LiveData<List<NoticeDto>> {
         retrofit.getNoticeList(page).enqueue(object: Callback<List<NoticeDto>> {
             override fun onResponse(
                 call: Call<List<NoticeDto>>,
@@ -24,6 +24,11 @@ class NoticeRemoteDataSource: NoticeDataSource {
             ) {
                 if (response.isSuccessful.not()) {
                     Log.e(TAG, "[${response.code()}] getNoticeList failed")
+                    when (response.code()) {
+                        502 -> {
+                            Log.d(TAG, "NoticeRemoteDataSource - 502 에러 발생")
+                        }
+                    }
                 }
                 noticeResponse.value = response.body()
             }

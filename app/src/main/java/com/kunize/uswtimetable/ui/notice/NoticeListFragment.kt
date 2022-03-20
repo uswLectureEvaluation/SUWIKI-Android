@@ -40,7 +40,8 @@ class NoticeListFragment : Fragment() {
         val isConnected = ConnectionManager.isConnected(requireContext())
         if (isConnected) {
             viewModel.noticeList.observe(viewLifecycleOwner) {
-                notices = it
+                val data = it?:return@observe
+                notices = data
                 adapter.submitList(notices)
                 binding.loading.isGone = true
                 binding.noticeRecyclerView.scrollToPosition(notices.size - 1)

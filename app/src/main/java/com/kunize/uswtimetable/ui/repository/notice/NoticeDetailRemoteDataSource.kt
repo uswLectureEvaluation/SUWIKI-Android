@@ -10,7 +10,6 @@ import com.kunize.uswtimetable.util.Constants.TAG
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 
 class NoticeDetailRemoteDataSource : NoticeDetailDataSource {
 
@@ -31,7 +30,6 @@ class NoticeDetailRemoteDataSource : NoticeDetailDataSource {
             }
             override fun onFailure(call: Call<NoticeDetailDto>, t: Throwable) {
                 Log.e(TAG, "NoticeDetailRemoteDataSource - onFailure() call failed: ${t.message}")
-                throw IOException("NoticeDetailRemoteDataSource - onFailure() call failed: ${t.message}")
             }
         })
 

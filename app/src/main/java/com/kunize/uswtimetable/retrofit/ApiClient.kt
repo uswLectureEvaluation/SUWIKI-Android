@@ -1,7 +1,7 @@
 package com.kunize.uswtimetable.retrofit
 
 import android.util.Log
-import com.kunize.uswtimetable.TimeTableSelPref
+import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.isJsonArray
@@ -49,47 +49,45 @@ object ApiClient {
                 message.isJsonArray() ->
                     Log.d(TAG, JSONArray(message).toString(4))
                 else ->
-                    try {
-                        Log.d(TAG, JSONObject(message).toString(4))
-                    } catch (e: Exception) {
-                        Log.d(TAG, "CONNECTION INFO -> $message")
-                    }
+                    Log.d(TAG, "CONNECTION INFO -> $message")
             }
         }
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val client = if (authenticator == null) {
-            OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build()
-        } else {
-            OkHttpClient.Builder()
-                .authenticator(authenticator)
-                .addInterceptor(loggingInterceptor)
-                .build()
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AuthenticationInterceptor())
+        authenticator?.apply { client.authenticator(this) }
+
+        return client.build()
+    }
+
+    class AuthenticationInterceptor : Interceptor {
+
+        private val accessToken = User.user?.token
+
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request().newBuilder()
+                .header("AccessToken", accessToken?:"").build()
+            return chain.proceed(request)
         }
-        return client
     }
 
     class AppAuthenticator : Authenticator {
         override fun authenticate(route: Route?, response: Response): Request? {
+
             return when (response.code) {
                 400 -> {
                     // TODO 로그인 에러
                     response.request
                 }
-                401 -> {
-                    // TODO Refresh Token 얻어서 서버에 전송
-                    val refreshToken = TimeTableSelPref.prefs.getRefreshToken()
-                    refreshToken?.let {
-                        response.request.newBuilder().header("Authorization", it).build()
-                    }
-                }
-                403 -> {
-                    Log.e(TAG, "403에러: ${response.message}")
+                402 -> {
+                    Log.e(TAG, "402에러: ${response.message}")
                     response.request
                 }
-                else -> response.request
+                else -> {
+                    Log.e(TAG, "${response.code}에러: ${response.message}")
+                    response.request
+                }
             }
         }
     }
