@@ -109,6 +109,9 @@ class StartActivity : AppCompatActivity() {
             version = it.value.toString()
             Log.d("firebase", "$update ${it.value.toString().toLong()} // ${version!!.toLong()}")
             binding.showProgress.text = "시간표 DB 버전 확인 완료"
+        }.addOnFailureListener {
+            binding.showProgress.text = "시간표 DB 버전 확인 실패"
+            startActivity(intent)
         }
 
         firebaseTimetableData = database.getReference("uswTimetable")
