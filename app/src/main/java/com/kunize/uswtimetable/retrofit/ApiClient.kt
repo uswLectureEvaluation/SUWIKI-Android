@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.retrofit
 
 import android.util.Log
+import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -21,7 +22,7 @@ object ApiClient {
         if (retrofitClient == null) {
             retrofitClient = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(getOkHttpClient(AppAuthenticator()))
+                .client(getOkHttpClient(TokenAuthenticator()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
@@ -40,7 +41,7 @@ object ApiClient {
     }
 
     private fun getOkHttpClient(
-        authenticator: AppAuthenticator?
+        authenticator: TokenAuthenticator?
     ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             when {
@@ -72,23 +73,17 @@ object ApiClient {
         }
     }
 
-    class AppAuthenticator : Authenticator {
-        override fun authenticate(route: Route?, response: Response): Request? {
+    class TokenAuthenticator : Authenticator {
+        override fun authenticate(route: Route?, response: Response): Request {
+            val updatedToken = getUpdatedToken()
+            return response.request.newBuilder().header("AccessToken", updatedToken).build()
+        }
 
-            return when (response.code) {
-                400 -> {
-                    // TODO 로그인 에러
-                    response.request
-                }
-                402 -> {
-                    Log.e(TAG, "402에러: ${response.message}")
-                    response.request
-                }
-                else -> {
-                    Log.e(TAG, "${response.code}에러: ${response.message}")
-                    response.request
-                }
-            }
+        private fun getUpdatedToken(): String {
+            val requestParams = HashMap<String, String>()
+            val authTokenResponse = getClientWithNoToken().create(IRetrofit::class.java).requestRefresh(requestParams).execute().body()!!
+            TimeTableSelPref.prefs.saveRefreshToken(authTokenResponse.refreshToken)
+            return authTokenResponse.accessToken
         }
     }
 }

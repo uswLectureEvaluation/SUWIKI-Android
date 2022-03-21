@@ -15,6 +15,7 @@ import com.kunize.uswtimetable.util.API.NOTICE_LIST
 import com.kunize.uswtimetable.util.API.PASSWORD
 import com.kunize.uswtimetable.util.API.PASSWORD_RESET
 import com.kunize.uswtimetable.util.API.QUIT
+import com.kunize.uswtimetable.util.API.REQUEST_REFRESH
 import com.kunize.uswtimetable.util.API.SIGN_UP
 import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
@@ -26,12 +27,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface IRetrofit {
+
+    // Refresh Token
+    @FormUrlEncoded
+    @POST(REQUEST_REFRESH)
+    fun requestRefresh(@FieldMap tokens: HashMap<String, String>): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()

@@ -19,6 +19,7 @@ object Constants {
 
 object API {
     const val BASE_URL: String = "https://api.suwiki.kr"
+    const val REQUEST_REFRESH: String = "/user/refresh"
     const val NOTICE_LIST: String = "/notice/findAllList"
     const val NOTICE: String = "/notice"
     const val LECTURE: String = "/lecture"
