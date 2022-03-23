@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,8 +27,6 @@ class SignUpFragment1 : Fragment() {
     private lateinit var viewModel: SignUpViewModel
     private lateinit var nextButton: MaterialButton
 
-    private var toast: Toast? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +40,11 @@ class SignUpFragment1 : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         viewModel.signupFormState.observe(requireActivity(), Observer {
             val state = it ?: return@Observer
@@ -68,14 +70,6 @@ class SignUpFragment1 : Fragment() {
         initViews()
         viewModel.resetIdResult()
         initButton()
-
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     private fun initButton() {
@@ -95,11 +89,11 @@ class SignUpFragment1 : Fragment() {
                         }
                         SignUpState.INVALID_ID -> {
                             Log.d(TAG, "SignUpFragment1 - initButton() called / 아이디 오류")
-                            makeToast("아이디가 중복되었습니다.")
+                            activity.makeToast("아이디가 중복되었습니다.")
                         }
                         SignUpState.ERROR -> {
                             Log.d(TAG, "SignUpFragment1 - initButton() called / 에러 발생")
-                            makeToast("서버 에러가 발생했습니다")
+                            activity.makeToast("서버 에러가 발생했습니다")
                         }
                         else -> {
                             Log.d(TAG, "SignUpFragment1 - initButton() called / 수신된 값: $it")
@@ -127,7 +121,7 @@ class SignUpFragment1 : Fragment() {
                         "알 수 없는 에러 발생"
                     }
                 }
-                makeToast(msg)
+                activity.makeToast(msg)
             }
         }
     }
@@ -203,15 +197,8 @@ class SignUpFragment1 : Fragment() {
         return requireActivity() as SignUpActivity
     }
 
-    private fun makeToast(msg: String) {
-        toast?.cancel()
-        toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
-        toast?.show()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        toast?.cancel()
         _binding = null
     }
 }

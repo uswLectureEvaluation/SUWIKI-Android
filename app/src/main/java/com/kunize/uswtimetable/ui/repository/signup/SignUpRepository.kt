@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.kunize.uswtimetable.dataclass.OverlapCheckDto
 import com.kunize.uswtimetable.dataclass.SuccessCheckDto
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel.SignUpState
+import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.kunize.uswtimetable.util.Constants.TAG
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +36,10 @@ class SignUpRepository(private val dataSource: SignUpRemoteDataSource) {
     }
 
     fun checkEmail(email: String) {
+        if (email == SCHOOL_DOMAIN_AT) {
+            emailCheckResult.value = SignUpState.INVALID_EMAIL
+            return
+        }
         dataSource.checkEmail(email).enqueue(object : Callback<OverlapCheckDto> {
             override fun onResponse(call: Call<OverlapCheckDto>, response: Response<OverlapCheckDto>) {
                 emailCheckResult.value = if (response.isSuccessful && response.body() != null) {

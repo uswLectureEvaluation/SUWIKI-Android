@@ -38,6 +38,7 @@ class SignUpActivity : AppCompatActivity() {
         initViews()
 
         viewModel.currentPage.observe(this) { page ->
+            toast?.cancel()
             when (page) {
                 0 -> {
                     button1.visibility = View.INVISIBLE
