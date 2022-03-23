@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,10 +12,20 @@ import com.kunize.uswtimetable.util.Constants.ID_REGEX
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
-import com.kunize.uswtimetable.util.Result
+import com.kunize.uswtimetable.util.Constants.TAG
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
+import kotlin.coroutines.CoroutineContext
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+
+    private val parentJob = Job()
+    private val coroutineContext: CoroutineContext get() = parentJob + Dispatchers.Default
+    private val scope = CoroutineScope(coroutineContext)
+
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> get() = _loginForm
 
@@ -32,7 +43,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
 
     fun login(id: String, pw: String) {
-        val result = loginRepository.login(id, pw)
+        /*val result = loginRepository.login(id, pw)
 
         if (result is Result.Success) {
             User.setUser(result.data)
@@ -40,6 +51,11 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         } else {
             // TODO 에러 형식에 따라 분기 필요
             _loginResult.value = LoginState.UNKNOWN_ERROR
+        }*/
+
+        scope.launch {
+            val token = loginRepository.login(id, pw)
+            Log.d(TAG, "LoginViewModel - login() called / token: $token")
         }
     }
 

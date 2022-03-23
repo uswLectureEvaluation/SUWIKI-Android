@@ -20,7 +20,9 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface IRetrofit {
@@ -68,7 +70,7 @@ interface IRetrofit {
 
     // 로그인 요청 API
     @POST(LOGIN)
-    fun login(@Body info: LoginIdPassword): Call<LoginResponseToken>
+    fun login(@Body info: LoginIdPassword): Deferred<Response<Token>>
 
     // 회원탈퇴 요청 API
     @POST(QUIT)

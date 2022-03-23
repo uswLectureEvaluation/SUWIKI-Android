@@ -9,7 +9,6 @@ import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.more.MyPostViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
-import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoRepository
@@ -38,7 +37,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 SignUpViewModel(repository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(LoginRepository(LoginRemoteDataSource())) as T
+                LoginViewModel(LoginRepository()) as T
             }
             modelClass.isAssignableFrom(MoreViewModel::class.java) -> {
                 MoreViewModel() as T

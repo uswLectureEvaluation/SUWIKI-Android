@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.retrofit
 
 import android.util.Log
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -34,6 +35,7 @@ object ApiClient {
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(null))
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
         }
         return retrofitClientWithNoToken!!

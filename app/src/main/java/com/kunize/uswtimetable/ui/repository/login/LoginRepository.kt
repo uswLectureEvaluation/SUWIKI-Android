@@ -1,24 +1,31 @@
 package com.kunize.uswtimetable.ui.repository.login
 
 import com.kunize.uswtimetable.dataclass.LoggedInUser
+import com.kunize.uswtimetable.dataclass.LoginIdPassword
+import com.kunize.uswtimetable.dataclass.Token
+import com.kunize.uswtimetable.retrofit.ApiClient
+import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.User
-import com.kunize.uswtimetable.util.Result
+import com.kunize.uswtimetable.ui.repository.common.BaseRepository
 
-class LoginRepository(private val remoteDataSource: LoginRemoteDataSource) {
+class LoginRepository: BaseRepository() {
+
+    private val retrofit: IRetrofit by lazy { ApiClient.getClientWithNoToken().create(IRetrofit::class.java) }
 
     fun logout() {
         User.logout()
-        remoteDataSource.logout()
     }
 
-    fun login(id: String, pw: String): Result<LoggedInUser> {
-        val result = remoteDataSource.login(id, pw)
+    suspend fun login(id: String, pw: String): Token {
 
-        if (result is Result.Success) {
-            setLoggedInUser(result.data)
+        val result = safeApiCall(
+            call = { retrofit.login(LoginIdPassword(id, pw)).await() },
+            error = "Login error"
+        )
+        if (result != null) {
+            setLoggedInUser(LoggedInUser(id, 0, 0, 0, 0))
         }
-
-        return result
+        return result?:Token("", "")
     }
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
