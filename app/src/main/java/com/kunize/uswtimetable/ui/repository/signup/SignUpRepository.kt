@@ -20,11 +20,13 @@ class SignUpRepository(private val dataSource: SignUpRemoteDataSource) {
         dataSource.checkId(id).enqueue(object : Callback<OverlapCheckDto> {
             override fun onResponse(call: Call<OverlapCheckDto>, response: Response<OverlapCheckDto>) {
                 idCheckResult.value = if (response.isSuccessful && response.body() != null) {
-                    Log.d(TAG, "SignUpRepository - Check Id onResponse() success called / ${response.code()}: msg->${response.message()} body->${response.body()}")
-                    SignUpState.SUCCESS
+                    Log.d(TAG, "SignUpRepository - Check Id onResponse() success called / ${response.code()}: body->${response.body()}")
+                    if (response.body()?.overlap==false) {
+                        SignUpState.SUCCESS
+                    } else SignUpState.INVALID_ID
                 } else {
-                    Log.d(TAG, "SignUpRepository - Check Id onResponse() called / ${response.code()}: msg->${response.message()} body->${response.body()}")
-                    SignUpState.INVALID_ID
+                    Log.d(TAG, "SignUpRepository - Check Id onResponse() called / ${response.code()}: body->${response.body()}")
+                    SignUpState.ERROR
                 }
             }
 
@@ -43,10 +45,12 @@ class SignUpRepository(private val dataSource: SignUpRemoteDataSource) {
         dataSource.checkEmail(email).enqueue(object : Callback<OverlapCheckDto> {
             override fun onResponse(call: Call<OverlapCheckDto>, response: Response<OverlapCheckDto>) {
                 emailCheckResult.value = if (response.isSuccessful && response.body() != null) {
-                    SignUpState.SUCCESS
+                    if (response.body()?.overlap == false) {
+                        SignUpState.SUCCESS
+                    } else SignUpState.INVALID_EMAIL
                 } else {
                     Log.d(TAG, "SignUpRepository - Check Email onResponse() called / ${response.code()}: ${response.body()}")
-                    SignUpState.INVALID_EMAIL
+                    SignUpState.ERROR
                 }
             }
 
