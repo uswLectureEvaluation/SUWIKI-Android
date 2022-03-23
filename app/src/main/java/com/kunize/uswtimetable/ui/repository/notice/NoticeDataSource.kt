@@ -1,9 +1,9 @@
 package com.kunize.uswtimetable.ui.repository.notice
 
-import androidx.lifecycle.LiveData
 import com.kunize.uswtimetable.dataclass.NoticeDto
+import retrofit2.Call
 
 interface NoticeDataSource {
 
-    fun getNotices(page: Int?): LiveData<List<NoticeDto>>
+    suspend fun getNotices(): Call<List<NoticeDto>>
 }

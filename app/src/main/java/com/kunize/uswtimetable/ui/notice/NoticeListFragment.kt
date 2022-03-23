@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.notice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,10 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.NoticeAdapter
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.dataclass.NoticeDto
+import com.kunize.uswtimetable.ui.common.NetworkStatus
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.ConnectionManager
+import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeListFragment : Fragment() {
 
@@ -25,9 +28,6 @@ class NoticeListFragment : Fragment() {
     private val viewModel: NoticeViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var adapter: NoticeAdapter
     private var notices = listOf<NoticeDto>()
-    /*private val retrofit: RetrofitManager by lazy {
-        RetrofitManager.instance
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +39,15 @@ class NoticeListFragment : Fragment() {
 
         val isConnected = ConnectionManager.isConnected(requireContext())
         if (isConnected) {
-            viewModel.noticeList.observe(viewLifecycleOwner) {
-                val data = it?:return@observe
-                notices = data
-                adapter.submitList(notices)
+            viewModel.networkResult.observe(viewLifecycleOwner) { result ->
+                Log.d(TAG, "NoticeListFragment - onCreateView() called / result: $result")
+                when (result.status) {
+                    NetworkStatus.SUCCESS -> {
+                        adapter.submitList(result.data)
+                    }
+                    NetworkStatus.EMPTY -> {}
+                    NetworkStatus.FAIL -> {}
+                }
                 binding.loading.isGone = true
                 binding.noticeRecyclerView.scrollToPosition(notices.size - 1)
             }
