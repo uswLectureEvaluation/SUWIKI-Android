@@ -47,6 +47,7 @@ class SignUpFragment2 : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.resetEmailResult()
 
         signUpButton.setOnClickListener {
             binding.signupProgress.visibility = View.VISIBLE
@@ -116,6 +117,7 @@ class SignUpFragment2 : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        toast?.cancel()
         _binding = null
     }
 }

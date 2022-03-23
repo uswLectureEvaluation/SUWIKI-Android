@@ -19,10 +19,10 @@ class SignUpRepository(private val dataSource: SignUpRemoteDataSource) {
         dataSource.checkId(id).enqueue(object : Callback<OverlapCheckDto> {
             override fun onResponse(call: Call<OverlapCheckDto>, response: Response<OverlapCheckDto>) {
                 idCheckResult.value = if (response.isSuccessful && response.body() != null) {
-                    Log.d(TAG, "SignUpRepository - onResponse() called / ${response.code()}: ${response.body()}")
+                    Log.d(TAG, "SignUpRepository - Check Id onResponse() success called / ${response.code()}: msg->${response.message()} body->${response.body()}")
                     SignUpState.SUCCESS
                 } else {
-                    Log.d(TAG, "SignUpRepository - Check Id onResponse() called / ${response.code()}: ${response.body()}")
+                    Log.d(TAG, "SignUpRepository - Check Id onResponse() called / ${response.code()}: msg->${response.message()} body->${response.body()}")
                     SignUpState.INVALID_ID
                 }
             }
@@ -52,10 +52,6 @@ class SignUpRepository(private val dataSource: SignUpRemoteDataSource) {
         })
     }
 
-    fun getIdCheckResult() = idCheckResult
-    fun getEmailCheckResult() = emailCheckResult
-    fun getSignUpResult() = signUpResult
-
     fun signUp(id: String, pw: String, email: String) {
         when {
             idCheckResult.value == SignUpState.INVALID_ID -> signUpResult.value = SignUpState.INVALID_ID
@@ -80,5 +76,16 @@ class SignUpRepository(private val dataSource: SignUpRemoteDataSource) {
             }
             else -> signUpResult.value = SignUpState.ERROR
         }
+    }
+
+    fun getIdCheckResult() = idCheckResult
+    fun getEmailCheckResult() = emailCheckResult
+    fun getSignUpResult() = signUpResult
+
+    fun resetIdResult() {
+        idCheckResult.value = SignUpState.DEFAULT
+    }
+    fun resetEmailResult() {
+        emailCheckResult.value = SignUpState.DEFAULT
     }
 }

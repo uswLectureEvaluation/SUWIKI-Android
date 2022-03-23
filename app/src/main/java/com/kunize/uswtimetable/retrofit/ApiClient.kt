@@ -32,7 +32,7 @@ object ApiClient {
         if (retrofitClientWithNoToken == null) {
             retrofitClientWithNoToken = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-//                .client(getOkHttpClient(null))
+                .client(getOkHttpClient(null))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
@@ -54,11 +54,10 @@ object ApiClient {
         }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val client = OkHttpClient.Builder()
+        val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
         authenticator?.apply {
             client
                 .addInterceptor(AuthenticationInterceptor())
-                .addInterceptor(loggingInterceptor)
                 .authenticator(this)
         }
 

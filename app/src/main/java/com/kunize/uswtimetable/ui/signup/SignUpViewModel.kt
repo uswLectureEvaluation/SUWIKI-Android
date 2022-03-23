@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.signup
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
+import com.kunize.uswtimetable.util.Constants.TAG
 import java.util.regex.Pattern
 
 class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
@@ -46,6 +48,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     fun checkId(): LiveData<SignUpState> {
+        Log.d(TAG, "SignUpViewModel - checkId() called")
         _id?.let {
             repository.checkId(it)
             return repository.getIdCheckResult()
@@ -137,6 +140,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         }
     }
 
+    fun movePage(page: Int) {
+        if (page in 0..2) _currentPage.value = page
+    }
+
     fun saveUserIdAndPw(id: String, pw: String) {
         _id = id
         _pw = pw
@@ -146,7 +153,11 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         _email = email
     }
 
+    fun resetIdResult() = repository.resetIdResult()
+    fun resetEmailResult() = repository.resetEmailResult()
+
     enum class SignUpState {
+        DEFAULT,
         INVALID_ID,
         INVALID_EMAIL,
         INVALID_PASSWORD,

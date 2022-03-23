@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
+import com.kunize.uswtimetable.ui.signup.SignUpViewModel.SignUpState
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
@@ -42,11 +43,7 @@ class SignUpFragment1 : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        return binding.root
-    }
 
-    override fun onResume() {
-        super.onResume()
         viewModel.signupFormState.observe(requireActivity(), Observer {
             val state = it ?: return@Observer
 
@@ -69,7 +66,16 @@ class SignUpFragment1 : Fragment() {
         })
 
         initViews()
+        viewModel.resetIdResult()
         initButton()
+
+
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
     private fun initButton() {
@@ -81,16 +87,17 @@ class SignUpFragment1 : Fragment() {
             )
             if (state.isDataValid) {
                 viewModel.checkId().observe(viewLifecycleOwner) {
+                    Log.d(TAG, "SignUpFragment1 - initButton() called / name: ${it.name} ordinal: ${it.ordinal} ${it.declaringClass}")
                     when (it) {
-                        SignUpViewModel.SignUpState.SUCCESS -> {
+                        SignUpState.SUCCESS -> {
                             Log.d(TAG, "SignUpFragment1 - initButton() called / 아이디 검증 완료")
-                            viewModel.moveToNextPage()
+                            viewModel.movePage(1)
                         }
-                        SignUpViewModel.SignUpState.INVALID_ID -> {
+                        SignUpState.INVALID_ID -> {
                             Log.d(TAG, "SignUpFragment1 - initButton() called / 아이디 오류")
                             makeToast("아이디가 중복되었습니다.")
                         }
-                        SignUpViewModel.SignUpState.ERROR -> {
+                        SignUpState.ERROR -> {
                             Log.d(TAG, "SignUpFragment1 - initButton() called / 에러 발생")
                             makeToast("서버 에러가 발생했습니다")
                         }
@@ -100,7 +107,7 @@ class SignUpFragment1 : Fragment() {
                     }
                 }
             } else {
-                val msg: String = when  {
+                val msg: String = when {
                     state.hasBlank != null -> {
                         resources.getString(state.hasBlank)
                     }
@@ -204,7 +211,7 @@ class SignUpFragment1 : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        toast?.cancel()
         _binding = null
-        toast = null
     }
 }
