@@ -32,15 +32,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginState>()
     val loginResult: LiveData<LoginState> get() = _loginResult
 
-    var isLoggedIn = false
-        private set
-
     private val idPattern: Pattern = Pattern.compile(ID_REGEX)
     private val pwPattern: Pattern = Pattern.compile(PW_REGEX)
-
-    init {
-        isLoggedIn = User.isLoggedIn
-    }
 
     fun login(id: String, pw: String) {
         /*val result = loginRepository.login(id, pw)
@@ -54,8 +47,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }*/
 
         scope.launch {
-            val token = loginRepository.login(id, pw)
-            Log.d(TAG, "LoginViewModel - login() called / token: $token")
+            try {
+                val token = loginRepository.login(id, pw)
+                Log.d(TAG, "LoginViewModel - login() called / access: ${token.accessToken}")
+                Log.d(TAG, "LoginViewModel - login() called / refresh: ${token.refreshToken}")
+                _loginResult.value = LoginState.SUCCESS
+            } catch (e: Exception) {
+                _loginResult.value = LoginState.UNKNOWN_ERROR
+            }
         }
     }
 
