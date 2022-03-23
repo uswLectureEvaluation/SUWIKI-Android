@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.ui.signup
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
@@ -78,10 +80,24 @@ class SignUpFragment1 : Fragment() {
                 binding.etPw.text.toString()
             )
             if (state.isDataValid) {
-                if (viewModel.checkId()) {
-                    viewModel.moveToNextPage()
-                } else {
-                    makeToast("아이디가 중복되었습니다.")
+                viewModel.checkId().observe(viewLifecycleOwner) {
+                    when (it) {
+                        SignUpViewModel.SignUpState.SUCCESS -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 아이디 검증 완료")
+                            viewModel.moveToNextPage()
+                        }
+                        SignUpViewModel.SignUpState.INVALID_ID -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 아이디 오류")
+                            makeToast("아이디가 중복되었습니다.")
+                        }
+                        SignUpViewModel.SignUpState.ERROR -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 에러 발생")
+                            makeToast("서버 에러가 발생했습니다")
+                        }
+                        else -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 수신된 값: $it")
+                        }
+                    }
                 }
             } else {
                 val msg: String = when  {

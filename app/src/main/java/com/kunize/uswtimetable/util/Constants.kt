@@ -34,8 +34,8 @@ object API {
     const val EXAM_POSTS: String = "/exam-posts/findByUserIdx"
     const val UPDATE_EXAM_POSTS: String = "/exam-posts/findByUserIdx"
     const val SIGN_UP: String = "/user/join"
-    const val SIGN_UP_ID_CHECK: String = "/user/check_id"
-    const val SIGN_UP_EMAIL_CHECK: String = "/user/check_email"
+    const val SIGN_UP_ID_CHECK: String = "/user/check-id"
+    const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
     const val SIGN_UP_SCHOOL_CHECK: String = "/user/verify-email"
 }
 

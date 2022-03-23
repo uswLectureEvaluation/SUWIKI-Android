@@ -1,9 +1,7 @@
 package com.kunize.uswtimetable.retrofit
 
 import com.google.gson.JsonElement
-import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
@@ -22,11 +20,7 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
-import okhttp3.*
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface IRetrofit {
@@ -42,15 +36,15 @@ interface IRetrofit {
 
     // 회원가입 요청 API
     @POST(SIGN_UP)
-    fun signUp(@Body info: SignUpFormat): Call<Boolean>
+    fun signUp(@Body info: SignUpFormat): Call<SuccessCheckDto>
 
     // 아이디 중복 확인 요청 API
     @POST(SIGN_UP_ID_CHECK)
-    fun checkId(@Body loginId: String): Call<Boolean>
+    fun checkId(@Body loginId: CheckIdFormat): Call<OverlapCheckDto>
 
     // 이메일 중복 확인 요청 API
     @POST(SIGN_UP_EMAIL_CHECK)
-    fun checkEmail(@Body email: String): Call<Boolean>
+    fun checkEmail(@Body email: CheckEmailFormat): Call<OverlapCheckDto>
 
     // 학교 메일 인증 API
     @GET(SIGN_UP_SCHOOL_CHECK)
@@ -66,11 +60,11 @@ interface IRetrofit {
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @POST(PASSWORD)
-    fun findPassword(@Body info: UserIdEmail): Call<Boolean>
+    fun findPassword(@Body info: UserIdEmail): Call<SuccessCheckDto>
 
     // 비밀번호 재설정 API
     @POST(PASSWORD_RESET)
-    fun resetPassword(@Body password: String): Call<Boolean>
+    fun resetPassword(@Body password: String): Call<SuccessCheckDto>
 
     // 로그인 요청 API
     @POST(LOGIN)
@@ -78,7 +72,7 @@ interface IRetrofit {
 
     // 회원탈퇴 요청 API
     @POST(QUIT)
-    fun quit(@Body info: LoginIdPassword): Call<Boolean>
+    fun quit(@Body info: LoginIdPassword): Call<SuccessCheckDto>
 
     // 내 정보 페이지 호출 API
     @GET(MY_PAGE)
@@ -118,42 +112,4 @@ interface IRetrofit {
     ): Call<JsonElement>
 
     // TODO 나머지 API도 추가
-
-    companion object {
-        fun create(): IRetrofit {
-
-            val logger = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BASIC
-            }
-
-            val client = OkHttpClient.Builder().authenticator(object : Authenticator {
-                override fun authenticate(route: Route?, response: Response): Request? {
-                    when (response.code) {
-                        400 -> {
-                            // TODO 로그인 에러
-                            return response.request
-                        }
-                        401 -> {
-                            val refreshToken = TimeTableSelPref.prefs.getRefreshToken()
-                            return refreshToken?.let {
-                                response.request.newBuilder().header("Authorization",
-                                    it
-                                ).build()
-                            }
-                        }
-                        else -> {
-                            return response.request
-                        }
-                    }
-                }
-            }).addInterceptor(logger)
-
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(IRetrofit::class.java)
-        }
-    }
 }
