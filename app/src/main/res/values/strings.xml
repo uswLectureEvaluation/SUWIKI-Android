@@ -37,6 +37,7 @@
     <string name="use_point">포인트 사용</string>
 
     <string name="notice">공지사항</string>
+    <string name="my_page">내 정보</string>
     <string name="send_feedback">피드백 전송</string>
     <string name="question">문의하기</string>
     <string name="change_password">비밀번호 변경</string>

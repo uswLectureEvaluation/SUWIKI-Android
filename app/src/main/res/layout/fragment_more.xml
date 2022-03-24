@@ -35,7 +35,7 @@
                     style="@style/TextTitle.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/more" />
+                    android:text="@string/my_page" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
