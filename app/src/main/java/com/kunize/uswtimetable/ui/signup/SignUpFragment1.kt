@@ -15,6 +15,10 @@ import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.afterTextChanged
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class SignUpFragment1 : Fragment() {
@@ -79,6 +83,8 @@ class SignUpFragment1 : Fragment() {
     private fun initButton() {
         nextButton.setOnClickListener {
             val state = viewModel.signupFormState.value ?: return@setOnClickListener
+
+            viewModel.loading.value = true
             viewModel.saveUserIdAndPw(
                 binding.etId.text.toString(),
                 binding.etPw.text.toString()
@@ -87,37 +93,41 @@ class SignUpFragment1 : Fragment() {
                 binding.etId.text.toString(),
                 binding.etPw.text.toString()
             )
-            if (state.isDataValid) {
-                viewModel.checkId()
-                if (viewModel.isIdUnique.value == true) {
-                    activity.changePage(1)
+            CoroutineScope(Dispatchers.Main).launch {
+                if (state.isDataValid) {
+                    viewModel.checkId()
+                    delay(500)
+                    if (viewModel.isIdUnique.value == true) {
+                        activity.changePage(1)
+                    } else {
+                        if (viewModel.errorMessage.value.isNullOrBlank().not()) {
+                            activity.makeToast(viewModel.errorMessage.value!!)
+                        }
+                    }
                 } else {
-                    if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                        activity.makeToast(viewModel.errorMessage.value!!)
+                    val msg: String = when {
+                        state.hasBlank != null -> {
+                            resources.getString(state.hasBlank)
+                        }
+                        state.idError != null -> {
+                            resources.getString(state.idError)
+                        }
+                        state.pwError != null -> {
+                            resources.getString(state.pwError)
+                        }
+                        state.pwAgainError != null -> {
+                            resources.getString(state.pwAgainError)
+                        }
+                        state.isTermChecked != null -> {
+                            resources.getString(state.isTermChecked)
+                        }
+                        else -> {
+                            "알 수 없는 에러 발생"
+                        }
                     }
+                    activity.makeToast(msg)
                 }
-            } else {
-                val msg: String = when {
-                    state.hasBlank != null -> {
-                        resources.getString(state.hasBlank)
-                    }
-                    state.idError != null -> {
-                        resources.getString(state.idError)
-                    }
-                    state.pwError != null -> {
-                        resources.getString(state.pwError)
-                    }
-                    state.pwAgainError != null -> {
-                        resources.getString(state.pwAgainError)
-                    }
-                    state.isTermChecked != null -> {
-                        resources.getString(state.isTermChecked)
-                    }
-                    else -> {
-                        "알 수 없는 에러 발생"
-                    }
-                }
-                activity.makeToast(msg)
+                viewModel.loading.postValue(false)
             }
         }
     }

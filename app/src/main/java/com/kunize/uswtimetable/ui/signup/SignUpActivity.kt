@@ -65,6 +65,8 @@ class SignUpActivity : AppCompatActivity() {
     fun changePage(page: Int) = viewModel.movePage(page)
     fun saveIdPw(id: String, pw: String) = viewModel.saveIdPw(id, pw)
     fun saveEmail(email: String) = viewModel.saveEmail(email)
+    fun getId() = viewModel.id
+    fun getPw() = viewModel.pw
 
     private fun initViews() {
         button1 = binding.btnSignup1

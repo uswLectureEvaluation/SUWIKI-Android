@@ -9,10 +9,8 @@ import kotlinx.coroutines.*
 
 class SignUpPage2ViewModel(private val repository: SignUpRepository): ViewModel() {
     var job: Job? = null
-    val errorMessage = MutableLiveData<String>()
+    val errorMessage = MutableLiveData("")
     val loading = MutableLiveData<Boolean>()
-    val nextButtonEnable = MutableLiveData(false)
-    val previousButtonEnable = MutableLiveData(false)
     val isEmailUnique = MutableLiveData(false)
     val signUpResult = MutableLiveData<SuccessCheckDto>()
     private var _email: String? = null
@@ -20,9 +18,12 @@ class SignUpPage2ViewModel(private val repository: SignUpRepository): ViewModel(
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
+    private lateinit var id: String
+    private lateinit var pw: String
 
     fun checkEmail() {
         _email?:return
+        onError("")
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = repository.checkEmail(email)
             withContext(Dispatchers.Main) {
@@ -41,11 +42,10 @@ class SignUpPage2ViewModel(private val repository: SignUpRepository): ViewModel(
     }
 
     fun signUp() {
-        /*_id?:return
-        _pw?:return
         _email?:return
+        onError("")
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = repository.signUp(_id!!, _pw!!, email)
+            val response = repository.signUp(id, pw, email)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     signUpResult.postValue(response.body())
@@ -53,7 +53,12 @@ class SignUpPage2ViewModel(private val repository: SignUpRepository): ViewModel(
                     onError("${response.code()} Error: ${response.message()}")
                 }
             }
-        }*/
+        }
+    }
+
+    fun setIdPw(id: String, pw: String) {
+        this.id = id
+        this.pw = pw
     }
 
     fun setEmail(email: String) {

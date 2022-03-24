@@ -11,7 +11,7 @@ import java.util.regex.Pattern
 
 class SignUpPage1ViewModel(private val repository: SignUpRepository): ViewModel() {
     var job: Job? = null
-    val errorMessage = MutableLiveData<String>()
+    val errorMessage = MutableLiveData("")
     val loading = MutableLiveData<Boolean>()
     val nextButtonEnable = MutableLiveData(false)
     val isIdUnique = MutableLiveData(false)
