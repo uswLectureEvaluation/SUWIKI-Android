@@ -17,8 +17,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyShortData
-import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
-import com.kunize.uswtimetable.util.LectureItemViewType
+import com.kunize.uswtimetable.ui.evaluation.TempEvaluationViewModel
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.infiniteScrolls
 import kotlinx.coroutines.CoroutineScope
@@ -33,7 +32,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentSearchResultBinding
 
     //EvaluationFragment와 동일한 viewModel 사용
-    private lateinit var viewModel: EvaluationViewModel
+    private lateinit var viewModel: TempEvaluationViewModel
     private lateinit var sortBtn: MutableList<RadioButton>
     val args: SearchResultFragmentArgs by navArgs()
 
@@ -62,7 +61,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result,container, false)
-        viewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
+        viewModel = ViewModelProvider(this)[TempEvaluationViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 

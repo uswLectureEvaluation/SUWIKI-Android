@@ -3,12 +3,17 @@ package com.kunize.uswtimetable.ui.common
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.kunize.uswtimetable.retrofit.ApiClient
+import com.kunize.uswtimetable.retrofit.IRetrofit
+import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.more.MoreViewModel
 import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.more.MyPostViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
+import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRemoteDataSource
+import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRepository
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoRepository
@@ -53,6 +58,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             modelClass.isAssignableFrom(NoticeDetailViewModel::class.java) -> {
                 val repository = NoticeDetailRepository(NoticeDetailRemoteDataSource())
                 NoticeDetailViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(EvaluationViewModel::class.java) -> {
+                val repository = EvaluationRepository(EvaluationRemoteDataSource())
+                EvaluationViewModel(repository) as T
             }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel: ${modelClass.name}")

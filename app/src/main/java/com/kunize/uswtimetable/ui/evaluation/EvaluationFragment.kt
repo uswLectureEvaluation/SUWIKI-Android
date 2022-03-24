@@ -11,19 +11,25 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.adapter.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.LectureApiOption.HONEY
+import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
+import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
+import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
 
-    private lateinit var evaluationViewModel: EvaluationViewModel
+    private val evaluationViewModel: EvaluationViewModel by viewModels {ViewModelFactory(requireContext())}
     private var spinnerSel: Int = 0
 
     companion object {
@@ -115,7 +121,7 @@ class EvaluationFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation, container, false)
 
-        evaluationViewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
+        //evaluationViewModel = ViewModelProvider(this)[TempEvaluationViewModel::class.java]
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
 
@@ -125,7 +131,6 @@ class EvaluationFragment : Fragment() {
             R.drawable.ic_book_24, R.drawable.ic_best_24
         )
 
-        //TODO 더보기 버튼 클릭 시 "정렬할 기준", "tags:ALL" 데이터를 가지고 프래그먼트 이동
         binding.moreBtn.setOnClickListener {
             goToSearchResult("tags:ALL", spinnerSel)
         }
@@ -163,18 +168,11 @@ class EvaluationFragment : Fragment() {
                 ) {
                     spinnerSel = position
                     when (position) {
-                        0 -> evaluationViewModel.changeData(
-                            ArrayList(
-                                dummyShortData.subList(
-                                    0,
-                                    10
-                                )
-                            )
-                        )
-                        1 -> evaluationViewModel.changeData(ArrayList(dummyShortData.subList(1, 4)))
-                        2 -> evaluationViewModel.changeData(ArrayList(dummyShortData.subList(3, 4)))
-                        3 -> evaluationViewModel.changeData(ArrayList(dummyShortData.subList(5, 8)))
-                        4 -> evaluationViewModel.changeData(ArrayList(dummyShortData.subList(7, 9)))
+                        0 -> evaluationViewModel.changeType(MODIFIED)
+                        1 -> evaluationViewModel.changeType(HONEY)
+                        2 -> evaluationViewModel.changeType(SATISFACTION)
+                        3 -> evaluationViewModel.changeType(LEARNING)
+                        4 -> evaluationViewModel.changeType(HONEY)
                     }
                 }
 

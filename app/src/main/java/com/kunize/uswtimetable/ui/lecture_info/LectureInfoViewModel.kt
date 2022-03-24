@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureInfoData
-import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
+import com.kunize.uswtimetable.ui.evaluation.TempEvaluationViewModel
 
-class LectureInfoViewModel : EvaluationViewModel() {
+class LectureInfoViewModel : TempEvaluationViewModel() {
     //이수 구분
     private val _lectureType = MutableLiveData<String>()
     val lectureType: LiveData<String>

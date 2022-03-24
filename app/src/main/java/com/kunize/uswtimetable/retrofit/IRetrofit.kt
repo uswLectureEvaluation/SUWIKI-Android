@@ -6,6 +6,7 @@ import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
 import com.kunize.uswtimetable.util.API.LECTURE
+import com.kunize.uswtimetable.util.API.LECTURE_MAIN
 import com.kunize.uswtimetable.util.API.LOGIN
 import com.kunize.uswtimetable.util.API.MY_PAGE
 import com.kunize.uswtimetable.util.API.NOTICE
@@ -113,5 +114,11 @@ interface IRetrofit {
         @Query("reprPrfsEnoNm") professorName: String
     ): Call<JsonElement>
 
+    // 메인 페이지
+    @GET(LECTURE_MAIN)
+    suspend fun getLectureMainList(
+        @Query("option") option: String,
+        @Query("page") page: Int = 1
+    ): Response<LectureMainDto>
     // TODO 나머지 API도 추가
 }

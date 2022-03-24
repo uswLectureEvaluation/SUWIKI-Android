@@ -37,6 +37,7 @@ object API {
     const val SIGN_UP_ID_CHECK: String = "/user/check-id"
     const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
     const val SIGN_UP_SCHOOL_CHECK: String = "/user/verify-email"
+    const val LECTURE_MAIN: String = "/lecture/findAllList"
 }
 
 object WriteFragmentTitle {
@@ -66,6 +67,13 @@ object ExamInfoType {
     const val NO_DATA = 0 //데이터 없음
     const val NEED_USE = 1 //포인트 사용 필요
     const val NOT_INFLATE = 2 //포인트 이미 사용 OR 강의평가 쓰기
+}
+
+object LectureApiOption {
+    const val MODIFIED = "modifiedDate"
+    const val SATISFACTION = "lectureSatisfactionAvg"
+    const val HONEY = "lectureHoneyAvg"
+    const val LEARNING = "lectureLearningAvg"
 }
 
 enum class ResponseState {
