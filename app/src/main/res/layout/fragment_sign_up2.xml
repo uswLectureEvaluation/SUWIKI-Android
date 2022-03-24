@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
+            type="com.kunize.uswtimetable.ui.signup.SignUpPage2ViewModel" />
 
         <variable
             name="constants"

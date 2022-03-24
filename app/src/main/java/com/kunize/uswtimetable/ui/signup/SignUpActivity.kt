@@ -60,6 +60,12 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    fun onNextButtonClicked() = viewModel.moveToNextPage()
+    fun onPreviousButtonClicked() = viewModel.moveToPreviousPage()
+    fun changePage(page: Int) = viewModel.movePage(page)
+    fun saveIdPw(id: String, pw: String) = viewModel.saveIdPw(id, pw)
+    fun saveEmail(email: String) = viewModel.saveEmail(email)
+
     private fun initViews() {
         button1 = binding.btnSignup1
         button2 = binding.btnSignup2

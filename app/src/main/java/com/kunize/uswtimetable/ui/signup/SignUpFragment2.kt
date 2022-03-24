@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.afterTextChanged
 
 class SignUpFragment2 : Fragment() {
     private var _binding: FragmentSignUp2Binding? = null
     val binding: FragmentSignUp2Binding get() = _binding!!
 
-    private lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpPage2ViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var activity: SignUpActivity
     private lateinit var signUpButton: MaterialButton
     private lateinit var backButton: MaterialButton
@@ -27,7 +29,6 @@ class SignUpFragment2 : Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up2, container, false)
 
         activity = requireActivity() as SignUpActivity
-        viewModel = activity.viewModel
 
         backButton = activity.button1
         signUpButton = activity.button2
@@ -35,7 +36,7 @@ class SignUpFragment2 : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.errorMessage2.observe(viewLifecycleOwner) { message ->
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             activity.makeToast(message)
         }
 
@@ -49,6 +50,7 @@ class SignUpFragment2 : Fragment() {
 
         signUpButton.setOnClickListener {
             viewModel.setEmail(binding.etMail.text.toString())
+            activity.saveEmail(binding.etMail.text.toString())
             viewModel.checkEmail()
             viewModel.isEmailUnique.observe(viewLifecycleOwner) { emailValid ->
                 if (emailValid) {
@@ -56,7 +58,7 @@ class SignUpFragment2 : Fragment() {
                     viewModel.signUp()
                     viewModel.signUpResult.observe(viewLifecycleOwner) { result ->
                         if (result.success) {
-                            viewModel.moveToNextPage()
+                            activity.onNextButtonClicked()
                         } else {
                             // TODO 회원 가입 실패
                         }
@@ -66,7 +68,7 @@ class SignUpFragment2 : Fragment() {
                 }
             }
         }
-        backButton.setOnClickListener { viewModel.moveToPreviousPage() }
+        backButton.setOnClickListener { activity.onPreviousButtonClicked() }
     }
 
     private fun initViews() {

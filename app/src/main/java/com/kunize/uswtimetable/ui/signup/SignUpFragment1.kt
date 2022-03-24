@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
@@ -21,7 +22,7 @@ class SignUpFragment1 : Fragment() {
     val binding: FragmentSignUp1Binding get() = _binding!!
 
     private lateinit var activity: SignUpActivity
-    private lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpPage1ViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var nextButton: MaterialButton
 
     override fun onCreateView(
@@ -31,13 +32,12 @@ class SignUpFragment1 : Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false)
 
         activity = requireActivity() as SignUpActivity
-        viewModel = activity.viewModel
 
         nextButton = activity.button2
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.errorMessage1.observe(viewLifecycleOwner) { message ->
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             activity.makeToast(message)
         }
 
@@ -47,8 +47,8 @@ class SignUpFragment1 : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.signupFormState.observe(requireActivity(), Observer {
-            val state = it ?: return@Observer
+        viewModel.signupFormState.observe(viewLifecycleOwner) {
+            val state = it ?: return@observe
 
             state.idError?.let { errMsg ->
                 binding.idEditText.error = resources.getString(errMsg)
@@ -66,7 +66,7 @@ class SignUpFragment1 : Fragment() {
                 passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
                 nextButton.isEnabled = state.isDataValid
             }
-        })
+        }
 
         initViews()
         initButton()
@@ -79,12 +79,16 @@ class SignUpFragment1 : Fragment() {
                 binding.etId.text.toString(),
                 binding.etPw.text.toString()
             )
+            activity.saveIdPw(
+                binding.etId.text.toString(),
+                binding.etPw.text.toString()
+            )
             if (state.isDataValid) {
                 viewModel.checkId()
                 if (viewModel.isIdUnique.value == true) {
-                    viewModel.movePage(1)
+                    activity.changePage(1)
                 } else {
-                    viewModel.errorMessage1.value?.let { msg -> activity.makeToast(msg) }
+                    viewModel.errorMessage.value?.let { msg -> activity.makeToast(msg) }
                 }
             } else {
                 val msg: String = when {
@@ -162,14 +166,13 @@ class SignUpFragment1 : Fragment() {
     }
 
     private fun dataChanged() {
-        with(binding) {
-            viewModel.signUpDataChanged(
-                id = etId.text.toString(),
-                pw = etPw.text.toString(),
-                pwAgain = etPwAgain.text.toString(),
-                term = terms.isChecked
-            )
-        }
+        viewModel.signUpDataChanged(
+            id = binding.etId.text.toString(),
+            pw = binding.etPw.text.toString(),
+            pwAgain = binding.etPwAgain.text.toString(),
+            term = binding.terms.isChecked
+        )
+
     }
 
     private fun inputLimitAlert(str: String, limit: Int) {

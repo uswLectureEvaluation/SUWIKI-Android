@@ -6,7 +6,10 @@
     tools:context=".ui.signup.SignUpFragment1">
 
     <data>
-
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.kunize.uswtimetable.ui.signup.SignUpPage1ViewModel" />
         <variable
             name="constants"
             type="com.kunize.uswtimetable.util.Constants" />
@@ -74,8 +77,7 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="@{constants.PW_COUNT_LIMIT}"
                 app:endIconMode="password_toggle"
-                app:errorContentDescription="비밀번호와 일치하지 않습니다"
-                app:errorEnabled="true">
+                app:errorContentDescription="비밀번호와 일치하지 않습니다" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_pw_again"
@@ -95,5 +97,12 @@
                 android:autoLink="none"
                 android:text="@string/terms" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/signup1_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.loading?View.VISIBLE:View.GONE}"
+            android:layout_gravity="center" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
