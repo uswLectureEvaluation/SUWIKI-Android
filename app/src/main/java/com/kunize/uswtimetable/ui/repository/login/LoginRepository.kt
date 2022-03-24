@@ -23,6 +23,7 @@ class LoginRepository: BaseRepository() {
             error = "Login error"
         )
         if (result != null) {
+            // TODO 내 정보 API 호출해서 정보 받아오기
             setLoggedInUser(LoggedInUser(id, 0, 0, 0, 0))
         }
         return result?:Token("", "")

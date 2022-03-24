@@ -36,24 +36,19 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val pwPattern: Pattern = Pattern.compile(PW_REGEX)
 
     fun login(id: String, pw: String) {
-        /*val result = loginRepository.login(id, pw)
-
-        if (result is Result.Success) {
-            User.setUser(result.data)
-            _loginResult.value = LoginState.SUCCESS
-        } else {
-            // TODO 에러 형식에 따라 분기 필요
-            _loginResult.value = LoginState.UNKNOWN_ERROR
-        }*/
 
         scope.launch {
             try {
                 val token = loginRepository.login(id, pw)
                 Log.d(TAG, "LoginViewModel - login() called / access: ${token.accessToken}")
                 Log.d(TAG, "LoginViewModel - login() called / refresh: ${token.refreshToken}")
-                _loginResult.value = LoginState.SUCCESS
+                CoroutineScope(Dispatchers.Main).launch {
+                    _loginResult.value = LoginState.SUCCESS
+                }
             } catch (e: Exception) {
-                _loginResult.value = LoginState.UNKNOWN_ERROR
+                CoroutineScope(Dispatchers.Main).launch {
+                    _loginResult.value = LoginState.UNKNOWN_ERROR
+                }
             }
         }
     }
@@ -78,7 +73,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    private fun checkIdLength(id: String) = id.isBlank() || id.length in ID_COUNT_LOWER_LIMIT..ID_COUNT_LIMIT
+    private fun checkIdLength(id: String) =
+        id.isBlank() || id.length in ID_COUNT_LOWER_LIMIT..ID_COUNT_LIMIT
 
     private fun isIdValid(id: String) = id.isBlank() || idPattern.matcher(id).matches()
 

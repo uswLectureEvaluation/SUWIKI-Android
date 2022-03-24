@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.repository.common
 
 import android.util.Log
 import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.Result
 import retrofit2.Response
 import java.io.IOException
 
@@ -12,9 +13,9 @@ open class BaseRepository {
         var output: T? = null
 
         when (result) {
-            is Output.Success ->
-                output = result.output
-            is Output.Error ->
+            is Result.Success ->
+                output = result.data
+            is Result.Error ->
                 Log.e(TAG, "BaseRepository - safeApiCall() called / error: $error, ${result.exception}")
         }
         return output
@@ -23,12 +24,12 @@ open class BaseRepository {
     private suspend fun <T : Any> apiCall(
         call: suspend () -> Response<T>,
         error: String
-    ): Output<T> {
+    ): Result<T> {
         val response = call.invoke()
 
         return if (response.isSuccessful)
-            Output.Success(response.body()!!)
+            Result.Success(response.body()!!)
         else
-            Output.Error(IOException("error: $error"))
+            Result.Error(IOException("error: $error"))
     }
 }
