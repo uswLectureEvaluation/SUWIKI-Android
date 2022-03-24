@@ -3,17 +3,19 @@ package com.kunize.uswtimetable.ui.signup
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
+import com.kunize.uswtimetable.ui.signup.SignUpViewModel.SignUpState
 import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
@@ -24,8 +26,6 @@ class SignUpFragment1 : Fragment() {
     private lateinit var activity: SignUpActivity
     private lateinit var viewModel: SignUpViewModel
     private lateinit var nextButton: MaterialButton
-
-    private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +45,7 @@ class SignUpFragment1 : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         viewModel.signupFormState.observe(requireActivity(), Observer {
             val state = it ?: return@Observer
 
@@ -67,6 +68,7 @@ class SignUpFragment1 : Fragment() {
         })
 
         initViews()
+        viewModel.resetIdResult()
         initButton()
     }
 
@@ -78,13 +80,28 @@ class SignUpFragment1 : Fragment() {
                 binding.etPw.text.toString()
             )
             if (state.isDataValid) {
-                if (viewModel.checkId()) {
-                    viewModel.moveToNextPage()
-                } else {
-                    makeToast("아이디가 중복되었습니다.")
+                viewModel.checkId().observe(viewLifecycleOwner) {
+                    Log.d(TAG, "SignUpFragment1 - initButton() called / name: ${it.name} ordinal: ${it.ordinal} ${it.declaringClass}")
+                    when (it) {
+                        SignUpState.SUCCESS -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 아이디 검증 완료")
+                            viewModel.movePage(1)
+                        }
+                        SignUpState.INVALID_ID -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 아이디 오류")
+                            activity.makeToast("아이디가 중복되었습니다.")
+                        }
+                        SignUpState.ERROR -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 에러 발생")
+                            activity.makeToast("서버 에러가 발생했습니다")
+                        }
+                        else -> {
+                            Log.d(TAG, "SignUpFragment1 - initButton() called / 수신된 값: $it")
+                        }
+                    }
                 }
             } else {
-                val msg: String = when  {
+                val msg: String = when {
                     state.hasBlank != null -> {
                         resources.getString(state.hasBlank)
                     }
@@ -104,7 +121,7 @@ class SignUpFragment1 : Fragment() {
                         "알 수 없는 에러 발생"
                     }
                 }
-                makeToast(msg)
+                activity.makeToast(msg)
             }
         }
     }
@@ -180,15 +197,8 @@ class SignUpFragment1 : Fragment() {
         return requireActivity() as SignUpActivity
     }
 
-    private fun makeToast(msg: String) {
-        toast?.cancel()
-        toast = Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
-        toast?.show()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        toast = null
     }
 }

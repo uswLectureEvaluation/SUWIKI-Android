@@ -34,62 +34,34 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     init {
         _currentPage.value = 0
+        repository.getIdCheckResult()
+        repository.getEmailCheckResult()
     }
 
-    fun signup() {
-        val id = _id ?: return
-        val pw = _pw ?: return
+    fun signup(): LiveData<SignUpState> {
+        val id = _id ?: return MutableLiveData(SignUpState.INVALID_ID)
+        val pw = _pw ?: return MutableLiveData(SignUpState.INVALID_PASSWORD)
         val email = email
-        when (repository.signUp(id, pw, email)) {
-            SignUpState.INVALID_ID -> {
-                Log.d(TAG, "SignUpViewModel - signup() called / 아이디 중복")
-                // TODO 아이디 중복
-            }
-            SignUpState.INVALID_EMAIL -> {
-                Log.d(TAG, "SignUpViewModel - signup() called / 이메일 중복")
-                // TODO 이메일 주소 중복
-            }
-            SignUpState.SUCCESS -> {
-                Log.d(TAG, "SignUpViewModel - signup() called / 로그인 성공")
 
-                // TODO 로그인 성공
-            }
-        }
+        repository.signUp(id, pw, email)
+        return repository.getSignUpResult()
     }
 
-    fun checkId(): Boolean {
+    fun checkId(): LiveData<SignUpState> {
+        Log.d(TAG, "SignUpViewModel - checkId() called")
         _id?.let {
-            return when (repository.checkId(it)) {
-                SignUpState.INVALID_ID -> {
-                    // TODO 중복된 아이디
-                    false
-                }
-                SignUpState.SUCCESS -> {
-                    // TODO 사용 가능한 아이디
-                    true
-                }
-                else -> {
-                    false
-                }
-            }
+            repository.checkId(it)
+            return repository.getIdCheckResult()
         }
-        return false
+        return MutableLiveData(SignUpState.INVALID_ID)
     }
 
-    fun checkEmail(): Boolean {
-        _email.let {
-            return when (repository.checkEmail(email)) {
-                SignUpState.INVALID_EMAIL -> {
-                    // TODO 중복된 이메일
-                    false
-                }
-                SignUpState.SUCCESS -> {
-                    // TODO 사용 가능한 이메일
-                    true
-                }
-                else -> false
-            }
+    fun checkEmail(): LiveData<SignUpState> {
+        _email?.let {
+            repository.checkEmail(it)
+            return repository.getEmailCheckResult()
         }
+        return MutableLiveData(SignUpState.INVALID_EMAIL)
     }
 
     fun signUpDataChanged(
@@ -168,6 +140,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         }
     }
 
+    fun movePage(page: Int) {
+        if (page in 0..2) _currentPage.value = page
+    }
+
     fun saveUserIdAndPw(id: String, pw: String) {
         _id = id
         _pw = pw
@@ -177,9 +153,15 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         _email = email
     }
 
+    fun resetIdResult() = repository.resetIdResult()
+    fun resetEmailResult() = repository.resetEmailResult()
+
     enum class SignUpState {
+        DEFAULT,
         INVALID_ID,
         INVALID_EMAIL,
-        SUCCESS
+        INVALID_PASSWORD,
+        SUCCESS,
+        ERROR
     }
 }

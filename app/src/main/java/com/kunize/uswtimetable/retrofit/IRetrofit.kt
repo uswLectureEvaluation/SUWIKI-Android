@@ -1,43 +1,99 @@
 package com.kunize.uswtimetable.retrofit
 
 import com.google.gson.JsonElement
-import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.util.API.BASE_URL
+import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
+import com.kunize.uswtimetable.util.API.EXAM_POSTS
 import com.kunize.uswtimetable.util.API.LECTURE
+import com.kunize.uswtimetable.util.API.LOGIN
 import com.kunize.uswtimetable.util.API.MY_PAGE
 import com.kunize.uswtimetable.util.API.NOTICE
+import com.kunize.uswtimetable.util.API.NOTICE_LIST
 import com.kunize.uswtimetable.util.API.PASSWORD
-import com.kunize.uswtimetable.util.API.SEND_CERT_NUMBER
+import com.kunize.uswtimetable.util.API.PASSWORD_RESET
+import com.kunize.uswtimetable.util.API.QUIT
+import com.kunize.uswtimetable.util.API.REQUEST_REFRESH
 import com.kunize.uswtimetable.util.API.SIGN_UP
 import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
-import com.kunize.uswtimetable.util.Constants.TOKEN
-import okhttp3.*
-import okhttp3.logging.HttpLoggingInterceptor
+import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
+import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
+import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.Response
 import retrofit2.http.*
 
 interface IRetrofit {
+
+    // Refresh Token
+    @FormUrlEncoded
+    @POST(REQUEST_REFRESH)
+    fun requestRefresh(@FieldMap tokens: HashMap<String, String>): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()
     fun getMain(): Call<JsonElement>
 
+    // 회원가입 요청 API
+    @POST(SIGN_UP)
+    fun signUp(@Body info: SignUpFormat): Call<SuccessCheckDto>
+
+    // 아이디 중복 확인 요청 API
+    @POST(SIGN_UP_ID_CHECK)
+    fun checkId(@Body loginId: CheckIdFormat): Call<OverlapCheckDto>
+
+    // 이메일 중복 확인 요청 API
+    @POST(SIGN_UP_EMAIL_CHECK)
+    fun checkEmail(@Body email: CheckEmailFormat): Call<OverlapCheckDto>
+
+    // 학교 메일 인증 API
+    @GET(SIGN_UP_SCHOOL_CHECK)
+    fun verifyEmail()
+
     // 공지사항 리스트 API
-    @GET(NOTICE)
-    suspend fun getNoticeList(): List<NoticeDto>
+    @GET(NOTICE_LIST)
+    fun getNoticeList(): Call<List<NoticeDto>>
 
     // 공지사항 API
     @GET(NOTICE)
-    suspend fun getNotice(@Query("notice_id") noticeId: Long): NoticeDetailDto
+    suspend fun getNotice(@Query("notice_id") id: Long): Call<NoticeDetailDto>
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
-    @GET(PASSWORD)
-    fun findPassword(): Call<JsonElement>
+    @POST(PASSWORD)
+    fun findPassword(@Body info: UserIdEmail): Call<SuccessCheckDto>
+
+    // 비밀번호 재설정 API
+    @POST(PASSWORD_RESET)
+    fun resetPassword(@Body password: String): Call<SuccessCheckDto>
+
+    // 로그인 요청 API
+    @POST(LOGIN)
+    fun login(@Body info: LoginIdPassword): Deferred<Response<Token>>
+
+    // 회원탈퇴 요청 API
+    @POST(QUIT)
+    fun quit(@Body info: LoginIdPassword): Call<SuccessCheckDto>
+
+    // 내 정보 페이지 호출 API
+    @GET(MY_PAGE)
+    fun getUserInfo(): Call<MyPageData>
+
+    // 내가 쓴 글 (강의평가)
+    @GET(EVALUATE_POST)
+    fun getEvaluatePosts(@Query("page") page: Int): Call<MyEvaluation>
+
+    // 내가 쓴 글 (강의평가 수정)
+    @GET(UPDATE_EVALUATE_POST)
+    fun updateEvaluatePost(@Query("evaluateIdx") index: Int): Call<MyEvaluationShort>
+
+    // 내가 쓴 글 (시험 정보)
+    @GET(EXAM_POSTS)
+    fun getExamPosts(@Query("page") page: Int): Call<ExamPost>
+
+    @GET(UPDATE_EXAM_POSTS)
+    fun updateExamPost(@Query("examIdx") id: Int): Call<ExamPostShort>
 
     // 검색결과 페이지 호출 API
     @GET(LECTURE)
@@ -57,68 +113,5 @@ interface IRetrofit {
         @Query("reprPrfsEnoNm") professorName: String
     ): Call<JsonElement>
 
-    // 내 정보 페이지 호출 API
-    @GET(MY_PAGE)
-    fun getUserInfo(@Path(TOKEN) token: String): Call<JsonElement>
-
-    // TODO RetrofitManager에 추가
-    // 회원가입 요청 API
-    @POST(SIGN_UP)
-    fun signUp(@Body info: SignUpFormat): Call<JsonElement>
-
-    // 아이디 중복 확인 요청 API
-    @POST(SIGN_UP_ID_CHECK)
-    fun idCheck(@Body id: IdData): Call<JsonElement>
-
-    // 이메일 중복 확인 요청 API
-    @POST(SIGN_UP_EMAIL_CHECK)
-    fun emailCheck(@Body email: EmailData): Call<JsonElement>
-
-    // 임시: 학교 메일로 인증 번호 전송
-    @POST(SEND_CERT_NUMBER)
-    fun sendCertNumber(@Body email: EmailData): Call<EmailCheckDto>
-
-    // 학교 메일 인증 API
-//    @POST(SIGN_UP_SCHOOL_CHECK)
-//    fun schoolCheck(@Body certificationNumber: SignUpSchoolCheckFormat): Call<CertificateEmail>
-
     // TODO 나머지 API도 추가
-
-    companion object {
-        fun create(): IRetrofit {
-
-            val logger = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BASIC
-            }
-
-            val client = OkHttpClient.Builder().authenticator(object : Authenticator {
-                override fun authenticate(route: Route?, response: Response): Request? {
-                    when (response.code) {
-                        400 -> {
-                            // TODO 로그인 에러
-                            return response.request
-                        }
-                        401 -> {
-                            val refreshToken = TimeTableSelPref.prefs.getRefreshToken()
-                            return refreshToken?.let {
-                                response.request.newBuilder().header("Authorization",
-                                    it
-                                ).build()
-                            }
-                        }
-                        else -> {
-                            return response.request
-                        }
-                    }
-                }
-            }).addInterceptor(logger)
-
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(IRetrofit::class.java)
-        }
-    }
 }

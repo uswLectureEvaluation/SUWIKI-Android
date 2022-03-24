@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
 
             when (loginResult) {
                 LoginState.UNKNOWN_ERROR -> {
-                    makeToast("알 수 없는 에러 발생")
+                    makeToast("로그인 실패")
                 }
                 LoginState.SUCCESS -> {
                     makeToast("로그인 성공!")

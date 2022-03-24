@@ -2,10 +2,11 @@ package com.kunize.uswtimetable.dataclass
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.time.LocalDateTime
 
 data class NoticeDetailDto(
     val id: Long,
     val title: String,
-    @SerializedName("modifiedDate") val date: String,
+    @SerializedName("modifiedDate") val date: LocalDateTime,
     val content: String
 ): Serializable

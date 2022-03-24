@@ -3,14 +3,12 @@ package com.kunize.uswtimetable.ui.common
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.more.MoreViewModel
 import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.more.MyPostViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
-import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoRepository
@@ -39,7 +37,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 SignUpViewModel(repository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(LoginRepository(LoginRemoteDataSource())) as T
+                LoginViewModel(LoginRepository()) as T
             }
             modelClass.isAssignableFrom(MoreViewModel::class.java) -> {
                 MoreViewModel() as T
@@ -49,11 +47,11 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 MyExamInfoViewModel(repository) as T
             }
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {
-                val repository = NoticeRepository(NoticeRemoteDataSource(IRetrofit.create()))
+                val repository = NoticeRepository(NoticeRemoteDataSource())
                 NoticeViewModel(repository) as T
             }
             modelClass.isAssignableFrom(NoticeDetailViewModel::class.java) -> {
-                val repository = NoticeDetailRepository(NoticeDetailRemoteDataSource(IRetrofit.create()))
+                val repository = NoticeDetailRepository(NoticeDetailRemoteDataSource())
                 NoticeDetailViewModel(repository) as T
             }
             else -> {

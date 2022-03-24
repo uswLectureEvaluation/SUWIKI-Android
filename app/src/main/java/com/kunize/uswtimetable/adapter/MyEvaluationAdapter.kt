@@ -31,24 +31,41 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType
                 satisfactionScore.text = data.satisfaction.toString()
                 learningScore.text = data.learning.toString()
                 honeyScore.text = data.honey.toString()
-                if (data.team) {
+                if (data.team == 1) {
                     teamMeeting.text = "있음"
                     teamMeeting.setTextColor(darkGray)
                 } else {
                     teamMeeting.text = "없음"
                     teamMeeting.setTextColor(gray)
                 }
-                task.text = data.homework
                 when (data.homework) {
-                    "없음" -> task.setTextColor(gray)
-                    "보통" -> task.setTextColor(darkGray)
-                    "많음" -> task.setTextColor(red)
+                    0 -> {
+                        task.text = "없음"
+                        task.setTextColor(gray)
+                    }
+                    1 -> {
+                        task.text = "보통"
+                        task.setTextColor(darkGray)
+                    }
+                    2 -> {
+                        task.text = "많음"
+                        task.setTextColor(red)
+                    }
                 }
-                grade.text = data.grade
-                when (data.grade) {
-                    "잘 줌" -> grade.setTextColor(gray)
-                    "보통" -> grade.setTextColor(darkGray)
-                    "까다로움" -> grade.setTextColor(red)
+
+                when (data.difficulty) {
+                    0 -> {
+                        grade.text = "까다로움"
+                        grade.setTextColor(gray)
+                    }
+                    1 -> {
+                        grade.text = "보통"
+                        grade.setTextColor(darkGray)
+                    }
+                    2 -> {
+                        grade.text = "잘 줌"
+                        grade.setTextColor(red)
+                    }
                 }
                 content.text = data.content
             }

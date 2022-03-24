@@ -1,13 +1,11 @@
 package com.kunize.uswtimetable.ui.repository.notice
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import com.kunize.uswtimetable.dataclass.NoticeDetailDto
-import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeDetailRepository(private val dataSource: NoticeDetailRemoteDataSource) {
 
-    suspend fun getNotice(id: Long): NoticeDetailDto {
-        Log.d(TAG, "NoticeDetailRepository - getNotice() called")
+    suspend fun getNotice(id: Long): LiveData<NoticeDetailDto> {
         return dataSource.getNotice(id)
     }
 }

@@ -1,14 +1,15 @@
 package com.kunize.uswtimetable.ui.repository.notice
 
-import android.util.Log
 import com.kunize.uswtimetable.dataclass.NoticeDto
+import com.kunize.uswtimetable.retrofit.ApiClient
 import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.util.Constants.TAG
+import retrofit2.Call
 
-class NoticeRemoteDataSource(private val iRetrofit: IRetrofit): NoticeDataSource {
+class NoticeRemoteDataSource: NoticeDataSource {
 
-    override suspend fun getNotices(): List<NoticeDto> {
-        Log.d(TAG, "NoticeRemoteDataSource - ${iRetrofit.getNoticeList()}")
-        return iRetrofit.getNoticeList()
+    private val retrofit: IRetrofit by lazy { ApiClient.getClientWithNoToken().create(IRetrofit::class.java) }
+
+    override suspend fun getNotices(): Call<List<NoticeDto>> {
+        return retrofit.getNoticeList()
     }
 }
