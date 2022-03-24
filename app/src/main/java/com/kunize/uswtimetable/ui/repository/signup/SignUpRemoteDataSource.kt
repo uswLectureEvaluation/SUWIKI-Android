@@ -1,19 +1,15 @@
 package com.kunize.uswtimetable.ui.repository.signup
 
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.retrofit.ApiClient
 import com.kunize.uswtimetable.retrofit.IRetrofit
-import retrofit2.Call
+import retrofit2.Response
 
-class SignUpRemoteDataSource : SignUpDataSource {
+class SignUpRemoteDataSource(private val apiService: IRetrofit) : SignUpDataSource {
+    override suspend fun checkId(id: String): Response<OverlapCheckDto> = apiService.checkId(CheckIdFormat(id))
 
-    private val retrofit: IRetrofit by lazy { ApiClient.getClientWithNoToken().create(IRetrofit::class.java) }
-
-    override fun checkId(id: String): Call<OverlapCheckDto> = retrofit.checkId(CheckIdFormat(id))
-
-    override fun checkEmail(email: String): Call<OverlapCheckDto> = retrofit.checkEmail(
+    override suspend fun checkEmail(email: String): Response<OverlapCheckDto> = apiService.checkEmail(
         CheckEmailFormat(email)
     )
 
-    override fun signup(id: String, pw: String, email: String): Call<SuccessCheckDto> = retrofit.signUp(SignUpFormat(id, pw, email))
+    override suspend fun signup(id: String, pw: String, email: String): Response<SuccessCheckDto> = apiService.signUp(SignUpFormat(id, pw, email))
 }

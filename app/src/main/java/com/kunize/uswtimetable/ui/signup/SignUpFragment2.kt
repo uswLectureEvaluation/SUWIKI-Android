@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.signup
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
-import com.kunize.uswtimetable.ui.signup.SignUpViewModel.SignUpState
-import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 
 class SignUpFragment2 : Fragment() {
@@ -38,64 +35,38 @@ class SignUpFragment2 : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        viewModel.errorMessage2.observe(viewLifecycleOwner) { message ->
+            activity.makeToast(message)
+        }
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.resetEmailResult()
 
-        signUpButton.isEnabled = isFullInput()
+        initViews()
 
         signUpButton.setOnClickListener {
-            binding.signupProgress.visibility = View.VISIBLE
-            signUpButton.isEnabled = false
-
             viewModel.setEmail(binding.etMail.text.toString())
-            viewModel.checkEmail().observe(viewLifecycleOwner) { state ->
-                when (state) {
-                    SignUpState.SUCCESS -> {
-                        viewModel.signup().observe(viewLifecycleOwner) { result ->
-                            when (result) {
-                                SignUpState.INVALID_ID -> {
-                                    activity.makeToast("아이디를 확인하세요")
-                                }
-                                SignUpState.INVALID_EMAIL -> {
-                                    activity.makeToast("이메일을 확인하세요")
-                                }
-                                SignUpState.INVALID_PASSWORD -> {
-                                    activity.makeToast("비밀번호를 입력하세요")
-                                }
-                                SignUpState.ERROR -> {
-                                    activity.makeToast("서버 통신 에러 발생")
-                                }
-                                SignUpState.SUCCESS -> {
-                                    binding.signupProgress.visibility = View.GONE
-                                    viewModel.moveToNextPage()
-                                }
-                                else -> {
-                                    Log.d(TAG, "SignUpFragment2 - onResume() called / result: $result")}
-                            }
+            viewModel.checkEmail()
+            viewModel.isEmailUnique.observe(viewLifecycleOwner) { emailValid ->
+                if (emailValid) {
+                    // TODO 회원가입 시도
+                    viewModel.signUp()
+                    viewModel.signUpResult.observe(viewLifecycleOwner) { result ->
+                        if (result.success) {
+                            viewModel.moveToNextPage()
+                        } else {
+                            // TODO 회원 가입 실패
                         }
                     }
-                    SignUpState.INVALID_EMAIL -> {
-                        activity.makeToast("중복된 이메일입니다.")
-                        Log.d(TAG, "SignUpFragment2 - onResume() called / checkEmail: 중복된 이메일")
-                    }
-                    SignUpState.ERROR -> {
-                        activity.makeToast("서버 통신 에러 발생")
-                        Log.d(TAG, "SignUpFragment2 - onResume() called / checkEmail: error")
-                    }
-                    else -> {
-                        Log.d(TAG, "SignUpFragment2 - onResume() called / checkEmail: $state")
-                    }
+                } else {
+                    // TODO 이메일 중복
                 }
             }
-            binding.signupProgress.visibility = View.GONE
-            signUpButton.isEnabled = true
         }
         backButton.setOnClickListener { viewModel.moveToPreviousPage() }
-        initViews()
     }
 
     private fun initViews() {

@@ -2,10 +2,10 @@ package com.kunize.uswtimetable.ui.repository.signup
 
 import com.kunize.uswtimetable.dataclass.OverlapCheckDto
 import com.kunize.uswtimetable.dataclass.SuccessCheckDto
-import retrofit2.Call
+import retrofit2.Response
 
 interface SignUpDataSource {
-    fun checkId(id: String): Call<OverlapCheckDto>
-    fun checkEmail(email: String): Call<OverlapCheckDto>
-    fun signup(id: String, pw: String, email: String): Call<SuccessCheckDto>
+    suspend fun checkId(id: String): Response<OverlapCheckDto>
+    suspend fun checkEmail(email: String): Response<OverlapCheckDto>
+    suspend fun signup(id: String, pw: String, email: String): Response<SuccessCheckDto>
 }

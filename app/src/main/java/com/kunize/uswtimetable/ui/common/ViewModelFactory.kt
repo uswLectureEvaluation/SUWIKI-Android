@@ -34,7 +34,8 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 MyPostViewModel(repository) as T
             }
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
-                val repository = SignUpRepository(SignUpRemoteDataSource())
+                val apiService = IRetrofit.getInstanceWithNoToken()
+                val repository = SignUpRepository(SignUpRemoteDataSource(apiService))
                 SignUpViewModel(repository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {

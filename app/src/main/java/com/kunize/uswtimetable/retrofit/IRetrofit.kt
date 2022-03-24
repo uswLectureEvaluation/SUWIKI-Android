@@ -50,15 +50,15 @@ interface IRetrofit {
 
     // 회원가입 요청 API
     @POST(SIGN_UP)
-    fun signUp(@Body info: SignUpFormat): Call<SuccessCheckDto>
+    suspend fun signUp(@Body info: SignUpFormat): Response<SuccessCheckDto>
 
     // 아이디 중복 확인 요청 API
     @POST(SIGN_UP_ID_CHECK)
-    fun checkId(@Body loginId: CheckIdFormat): Call<OverlapCheckDto>
+    suspend fun checkId(@Body loginId: CheckIdFormat): Response<OverlapCheckDto>
 
     // 이메일 중복 확인 요청 API
     @POST(SIGN_UP_EMAIL_CHECK)
-    fun checkEmail(@Body email: CheckEmailFormat): Call<OverlapCheckDto>
+    suspend fun checkEmail(@Body email: CheckEmailFormat): Response<OverlapCheckDto>
 
     // 학교 메일 인증 API
     @GET(SIGN_UP_SCHOOL_CHECK)

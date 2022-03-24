@@ -11,7 +11,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
     val errorMessage = MutableLiveData<String>()
     val notices = MutableLiveData<List<NoticeDto>>()
     var job: Job? = null
-    val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
@@ -27,7 +27,11 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                     notices.postValue(response.body())
                     loading.value = false
                 } else {
-                    onError("${response.code()} Error: ${response.message()} ${response.errorBody()} ")
+                    when (response.code()) {
+                        403 -> onError("${response.code()} Error: 권한이 없습니다")
+                        500 -> onError("${response.code()} Error: 서버 에러")
+                        else -> onError("${response.code()} Error: ${response.message()}")
+                    }
                 }
             }
         }

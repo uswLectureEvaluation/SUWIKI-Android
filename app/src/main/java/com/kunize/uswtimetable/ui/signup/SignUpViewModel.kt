@@ -1,10 +1,10 @@
 package com.kunize.uswtimetable.ui.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.dataclass.SuccessCheckDto
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
@@ -13,10 +13,22 @@ import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
-import com.kunize.uswtimetable.util.Constants.TAG
+import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
 class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
+    var job: Job? = null
+    val errorMessage1 = MutableLiveData<String>()
+    val errorMessage2 = MutableLiveData<String>()
+    val loading = MutableLiveData<Boolean>()
+    val nextButtonEnable = MutableLiveData(false)
+    val previousButtonEnable = MutableLiveData(false)
+    val isIdUnique = MutableLiveData(false)
+    val isEmailUnique = MutableLiveData(false)
+    val signUpResult = MutableLiveData<SuccessCheckDto>()
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        onError1("Exception handled: ${throwable.localizedMessage}")
+    }
 
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
@@ -34,34 +46,58 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     init {
         _currentPage.value = 0
-        repository.getIdCheckResult()
-        repository.getEmailCheckResult()
     }
 
-    fun signup(): LiveData<SignUpState> {
-        val id = _id ?: return MutableLiveData(SignUpState.INVALID_ID)
-        val pw = _pw ?: return MutableLiveData(SignUpState.INVALID_PASSWORD)
-        val email = email
-
-        repository.signUp(id, pw, email)
-        return repository.getSignUpResult()
-    }
-
-    fun checkId(): LiveData<SignUpState> {
-        Log.d(TAG, "SignUpViewModel - checkId() called")
-        _id?.let {
-            repository.checkId(it)
-            return repository.getIdCheckResult()
+    fun checkId() {
+        _id?:return
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            delay(500)
+            val response = repository.checkId(_id!!)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    isIdUnique.postValue(response.body()?.overlap == false)
+                    if (response.body()?.overlap == true) onError1("아이디가 중복되었습니다")
+                } else {
+                    onError1("${response.code()} Error: ${response.message()}")
+                }
+            }
         }
-        return MutableLiveData(SignUpState.INVALID_ID)
     }
 
-    fun checkEmail(): LiveData<SignUpState> {
-        _email?.let {
-            repository.checkEmail(it)
-            return repository.getEmailCheckResult()
+    fun checkEmail() {
+        _email?:return
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            delay(500)
+            val response = repository.checkEmail(email)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val overlap = response.body()?.overlap
+                    if (overlap==false) {
+                        isEmailUnique.postValue(overlap==false)
+                    } else {
+                        onError2("이미 가입된 이메일입니다.")
+                    }
+                } else {
+                    onError2("${response.code()} Error: ${response.message()}")
+                }
+            }
         }
-        return MutableLiveData(SignUpState.INVALID_EMAIL)
+    }
+
+    fun signUp() {
+        _id?:return
+        _pw?:return
+        _email?:return
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = repository.signUp(_id!!, _pw!!, email)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    signUpResult.postValue(response.body())
+                } else {
+                    onError2("${response.code()} Error: ${response.message()}")
+                }
+            }
+        }
     }
 
     fun signUpDataChanged(
@@ -126,6 +162,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     fun moveToNextPage() {
         _currentPage.value?.let { page ->
+            resetUniqueCheck(page + 1)
             if (page < 2) {
                 _currentPage.value = page + 1
             }
@@ -134,6 +171,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     fun moveToPreviousPage() {
         _currentPage.value?.let { page ->
+            resetUniqueCheck(page - 1)
             if (page > 0) {
                 _currentPage.value = page - 1
             }
@@ -141,6 +179,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     fun movePage(page: Int) {
+        resetUniqueCheck(page)
         if (page in 0..2) _currentPage.value = page
     }
 
@@ -153,8 +192,13 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         _email = email
     }
 
-    fun resetIdResult() = repository.resetIdResult()
-    fun resetEmailResult() = repository.resetEmailResult()
+    private fun resetUniqueCheck(page: Int) {
+        when (page) {
+            0 -> isIdUnique.value = false
+            1 -> isEmailUnique.value = false
+            else -> {}
+        }
+    }
 
     enum class SignUpState {
         DEFAULT,
@@ -163,5 +207,20 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         INVALID_PASSWORD,
         SUCCESS,
         ERROR
+    }
+
+    private fun onError1(message: String) {
+        errorMessage1.value = message
+        loading.value = false
+    }
+
+    private fun onError2(message: String) {
+        errorMessage2.value = message
+        loading.value = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 }
