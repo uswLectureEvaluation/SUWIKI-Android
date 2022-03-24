@@ -28,10 +28,16 @@ class SignUpPage1ViewModel(private val repository: SignUpRepository): ViewModel(
     private val idPattern: Pattern = Pattern.compile(Constants.ID_REGEX)
     private val pwPattern: Pattern = Pattern.compile(Constants.PW_REGEX)
 
+    init {
+        onResume()
+    }
+
     fun checkId() {
         _id?:return
+        nextButtonEnable.value = false
+        onError("")
+        CoroutineScope(Dispatchers.IO).async {  }
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            delay(500)
             val response = repository.checkId(_id!!)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
@@ -40,6 +46,7 @@ class SignUpPage1ViewModel(private val repository: SignUpRepository): ViewModel(
                 } else {
                     onError("${response.code()} Error: ${response.message()}")
                 }
+                nextButtonEnable.postValue(signupFormState.value?.isDataValid==true)
             }
         }
     }
@@ -74,6 +81,12 @@ class SignUpPage1ViewModel(private val repository: SignUpRepository): ViewModel(
             }
             else -> _signupForm.value = SignUpFormState(isDataValid = true)
         }
+        nextButtonEnable.value = signupFormState.value?.isDataValid==true
+    }
+
+    fun onResume() {
+        nextButtonEnable.value = signupFormState.value?.isDataValid==true
+        isIdUnique.value = null
     }
 
     private fun isIdValid(id: String): Boolean {

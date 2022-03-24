@@ -38,7 +38,11 @@ class SignUpFragment1 : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (message.isNullOrBlank()) return@observe
             activity.makeToast(message)
+        }
+        viewModel.nextButtonEnable.observe(viewLifecycleOwner) { enable ->
+            nextButton.isEnabled = enable
         }
 
         return binding.root
@@ -47,6 +51,7 @@ class SignUpFragment1 : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        viewModel.onResume()
         viewModel.signupFormState.observe(viewLifecycleOwner) {
             val state = it ?: return@observe
 
@@ -64,7 +69,6 @@ class SignUpFragment1 : Fragment() {
                 idEditText.isErrorEnabled = state.idError != null
                 passwordEditText.isErrorEnabled = state.pwError != null
                 passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
-                nextButton.isEnabled = state.isDataValid
             }
         }
 
@@ -88,7 +92,9 @@ class SignUpFragment1 : Fragment() {
                 if (viewModel.isIdUnique.value == true) {
                     activity.changePage(1)
                 } else {
-                    viewModel.errorMessage.value?.let { msg -> activity.makeToast(msg) }
+                    if (viewModel.errorMessage.value.isNullOrBlank().not()) {
+                        activity.makeToast(viewModel.errorMessage.value!!)
+                    }
                 }
             } else {
                 val msg: String = when {

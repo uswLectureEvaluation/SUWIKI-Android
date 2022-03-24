@@ -24,7 +24,6 @@ class SignUpPage2ViewModel(private val repository: SignUpRepository): ViewModel(
     fun checkEmail() {
         _email?:return
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            delay(500)
             val response = repository.checkEmail(email)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
