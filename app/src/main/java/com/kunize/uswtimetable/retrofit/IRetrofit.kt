@@ -1,7 +1,10 @@
 package com.kunize.uswtimetable.retrofit
 
+import android.util.Log
 import com.google.gson.JsonElement
+import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
@@ -20,9 +23,18 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
+import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.isJsonArray
+import com.kunize.uswtimetable.util.isJsonObject
 import kotlinx.coroutines.Deferred
+import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface IRetrofit {
@@ -54,7 +66,7 @@ interface IRetrofit {
 
     // 공지사항 리스트 API
     @GET(NOTICE_LIST)
-    fun getNoticeList(): Call<List<NoticeDto>>
+    suspend fun getNoticeList(): Response<List<NoticeDto>>
 
     // 공지사항 API
     @GET(NOTICE)
@@ -114,4 +126,99 @@ interface IRetrofit {
     ): Call<JsonElement>
 
     // TODO 나머지 API도 추가
+
+    companion object {
+        private var retrofitService: IRetrofit? = null
+        private var retrofitServiceWithNoToken: IRetrofit? = null
+
+        fun getInstance(): IRetrofit {
+            if (retrofitService == null) {
+                val client = getClient()
+                retrofitService = client.create(IRetrofit::class.java)
+            }
+            return retrofitService!!
+        }
+
+        fun getInstanceWithNoToken(): IRetrofit {
+            if (retrofitServiceWithNoToken == null) {
+                val client = getClientWithNoToken()
+                retrofitServiceWithNoToken = client.create(IRetrofit::class.java)
+            }
+            return retrofitServiceWithNoToken!!
+        }
+
+        private fun getClient(): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(getOkHttpClient(TokenAuthenticator()))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+
+        private fun getClientWithNoToken(): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(getOkHttpClient(null))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+
+        private fun getOkHttpClient(
+            authenticator: TokenAuthenticator?
+        ): OkHttpClient {
+            val loggingInterceptor = HttpLoggingInterceptor { message ->
+                when {
+                    message.isJsonObject() ->
+                        Log.d(Constants.TAG, JSONObject(message).toString(4))
+                    message.isJsonArray() ->
+                        Log.d(Constants.TAG, JSONArray(message).toString(4))
+                    else ->
+                        Log.d(Constants.TAG, "CONNECTION INFO -> $message")
+                }
+            }
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
+            authenticator?.apply {
+                client
+                    .addInterceptor(AuthenticationInterceptor())
+                    .authenticator(this)
+            }
+
+            return client.build()
+        }
+    }
+}
+
+class AuthenticationInterceptor : Interceptor {
+
+    private val accessToken = try {
+        TimeTableSelPref.prefs.getAccessToken()
+    } catch (e: Exception) {
+        Log.d(Constants.TAG, "AuthenticationInterceptor - getAccessToken() returns null")
+        ""
+    }
+
+    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        val request = chain.request().newBuilder()
+            .addHeader("AccessToken", accessToken).build()
+        return chain.proceed(request)
+    }
+}
+
+class TokenAuthenticator : Authenticator {
+    override fun authenticate(route: Route?, response: okhttp3.Response): Request {
+        val updatedToken = getUpdatedToken()
+        return response.request.newBuilder().header("AccessToken", updatedToken).build()
+    }
+
+    private fun getUpdatedToken(): String {
+        val requestParams = HashMap<String, String>()
+        val authTokenResponse = ApiClient.getClientWithNoToken().create(IRetrofit::class.java)
+            .requestRefresh(requestParams).execute().body()!!
+        Log.d(Constants.TAG, "TokenAuthenticator - getUpdatedToken() called / $authTokenResponse")
+        TimeTableSelPref.prefs.saveRefreshToken(authTokenResponse.refreshToken)
+        TimeTableSelPref.prefs.saveAccessToken(authTokenResponse.accessToken)
+        return authTokenResponse.accessToken
+    }
 }

@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.ui.common
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.more.MoreViewModel
 import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
@@ -47,7 +48,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 MyExamInfoViewModel(repository) as T
             }
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {
-                val repository = NoticeRepository(NoticeRemoteDataSource())
+                val apiService = IRetrofit.getInstanceWithNoToken()
+                val dataSource = NoticeRemoteDataSource(apiService)
+                val repository = NoticeRepository(dataSource)
                 NoticeViewModel(repository) as T
             }
             modelClass.isAssignableFrom(NoticeDetailViewModel::class.java) -> {

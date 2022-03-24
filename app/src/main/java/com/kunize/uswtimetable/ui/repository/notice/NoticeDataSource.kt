@@ -1,9 +1,9 @@
 package com.kunize.uswtimetable.ui.repository.notice
 
 import com.kunize.uswtimetable.dataclass.NoticeDto
-import retrofit2.Call
+import retrofit2.Response
 
 interface NoticeDataSource {
 
-    suspend fun getNotices(): Call<List<NoticeDto>>
+    suspend fun getNotices(): Response<List<NoticeDto>>
 }
