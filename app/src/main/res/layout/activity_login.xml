@@ -6,6 +6,7 @@
 
     <data>
 
+        <import type="android.view.View" />
         <import type="com.kunize.uswtimetable.util.Constants" />
 
         <variable
@@ -165,7 +166,7 @@
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{viewModel.loading?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

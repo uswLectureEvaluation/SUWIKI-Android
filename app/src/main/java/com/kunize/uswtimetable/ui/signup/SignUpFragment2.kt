@@ -64,7 +64,6 @@ class SignUpFragment2 : Fragment() {
 
                 viewModel.isEmailUnique.observe(viewLifecycleOwner) { emailValid ->
                     if (emailValid) {
-                        // TODO 회원가입 시도
                         launch {
                         viewModel.signUp()
                             delay(2000)
@@ -77,7 +76,6 @@ class SignUpFragment2 : Fragment() {
                                         activity.makeToast(viewModel.errorMessage.value!!)
                                     }
                                 } else {
-                                    // TODO 회원 가입 실패
                                     if (viewModel.errorMessage.value.isNullOrBlank().not()) {
                                         activity.onNextButtonClicked()
                                     } else {
@@ -87,7 +85,6 @@ class SignUpFragment2 : Fragment() {
                             }
                         }
                     } else {
-                        // TODO 이메일 중복
                         if (viewModel.errorMessage.value.isNullOrBlank().not()) {
                             activity.makeToast(viewModel.errorMessage.value!!)
                         }

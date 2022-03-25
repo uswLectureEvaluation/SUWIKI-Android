@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
@@ -18,13 +19,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
-import kotlin.coroutines.CoroutineContext
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-    private val parentJob = Job()
-    private val coroutineContext: CoroutineContext get() = parentJob + Dispatchers.Default
-    private val scope = CoroutineScope(coroutineContext)
+    private var job: Job? = null
+    val loading = MutableLiveData(false)
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> get() = _loginForm
@@ -36,20 +35,26 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val pwPattern: Pattern = Pattern.compile(PW_REGEX)
 
     fun login(id: String, pw: String) {
-
-        scope.launch {
-            try {
-                val token = loginRepository.login(id, pw)
-                Log.d(TAG, "LoginViewModel - login() called / access: ${token.accessToken}")
-                Log.d(TAG, "LoginViewModel - login() called / refresh: ${token.refreshToken}")
-                CoroutineScope(Dispatchers.Main).launch {
-                    _loginResult.value = LoginState.SUCCESS
+        loading.value = true
+        job = CoroutineScope(Dispatchers.IO).launch {
+            val loginResult = loginRepository.login(id, pw)
+            if (loginResult.isSuccessful) {
+                when (loginResult.code()) {
+                    200 -> {
+                        User.setUser(LoggedInUser(id, 0, 0, 0, 0))
+                        // TODO 내 정보 API 요청해서 정보 받아오기
+                        _loginResult.postValue(LoginState.SUCCESS)
+                        Log.d(TAG, "LoginViewModel - login() success / ${loginResult.body()}")
+                    }
+                    else -> {
+                        Log.d(TAG, "LoginViewModel - login() failed / ${loginResult.code()}: ${loginResult.message()}")
+                        _loginResult.postValue(LoginState.FAIL)
+                    }
                 }
-            } catch (e: Exception) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    _loginResult.value = LoginState.UNKNOWN_ERROR
-                }
+            } else {
+                _loginResult.postValue(LoginState.FAIL)
             }
+            loading.postValue(false)
         }
     }
 
@@ -83,11 +88,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     private fun isPwValid(pw: String) = pw.isBlank() || pwPattern.matcher(pw).matches()
 
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
+    }
 }
 
 enum class LoginState {
     SUCCESS,
-    ID_ERROR,
-    PW_ERROR,
-    UNKNOWN_ERROR
+    FAIL
 }

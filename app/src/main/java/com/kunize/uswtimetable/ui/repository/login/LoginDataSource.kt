@@ -1,9 +1,9 @@
 package com.kunize.uswtimetable.ui.repository.login
 
-import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.util.Result
+import com.kunize.uswtimetable.dataclass.Token
+import retrofit2.Response
 
 interface LoginDataSource {
-    suspend fun login(userId: String, userPassword: String): Result<LoggedInUser>
+    suspend fun login(userId: String, userPassword: String): Response<Token>
     suspend fun logout()
 }

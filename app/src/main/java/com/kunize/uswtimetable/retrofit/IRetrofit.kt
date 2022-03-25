@@ -26,7 +26,6 @@ import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.isJsonArray
 import com.kunize.uswtimetable.util.isJsonObject
-import kotlinx.coroutines.Deferred
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONArray
@@ -82,7 +81,7 @@ interface IRetrofit {
 
     // 로그인 요청 API
     @POST(LOGIN)
-    fun login(@Body info: LoginIdPassword): Deferred<Response<Token>>
+    suspend fun login(@Body info: LoginIdPassword): Response<Token>
 
     // 회원탈퇴 요청 API
     @POST(QUIT)

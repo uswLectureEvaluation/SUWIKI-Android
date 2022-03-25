@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -50,10 +49,8 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.loginResult.observe(this@LoginActivity) { loginResult ->
 
-            binding.loading.visibility = View.GONE
-
             when (loginResult) {
-                LoginState.UNKNOWN_ERROR -> {
+                LoginState.FAIL -> {
                     makeToast("로그인 실패")
                 }
                 LoginState.SUCCESS -> {
@@ -105,10 +102,6 @@ class LoginActivity : AppCompatActivity() {
                 afterTextChanged {
                     loginViewModel.loginDataChanged(userId.text.toString(), userPassword.text.toString())
                 }
-            }
-
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
             }
         }
     }
