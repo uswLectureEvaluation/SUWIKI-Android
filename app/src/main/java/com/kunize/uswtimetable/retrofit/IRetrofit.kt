@@ -96,16 +96,17 @@ interface IRetrofit {
     @GET(UPDATE_EXAM_POSTS)
     fun updateExamPost(@Query("examIdx") id: Int): Call<ExamPostShort>
 
-    // 검색결과 페이지 호출 API
+    // 검색결과 자세히 보기 API
     @GET(LECTURE)
     fun getSearchResult(@Query("query") searchTerm: String): Call<JsonElement>
 
-    // 검색결과 자세히 보기(강의평)
+    // 검색결과 페이지 API(강의평)
     @GET(LECTURE)
-    fun getSearchResultDetail(
-        @Query("subjtNmname") subjectName: String,
-        @Query("reprPrfsEnoNm") professorName: String
-    ): Call<JsonElement>
+    suspend fun getSearchResultDetail(
+        @Query("searchValue") searchValue: String,
+        @Query("option") option: String,
+        @Query("page") page: Int
+    ): Response<LectureMainDto>
 
     // 시험 정보 보기 API
     @GET(EXAM)

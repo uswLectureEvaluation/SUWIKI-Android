@@ -7,5 +7,5 @@ import retrofit2.Call
 import retrofit2.Response
 
 interface EvaluationDataSource {
-    suspend fun getEvaluationDataSource(option: String): Response<LectureMainDto>
+    suspend fun getEvaluationDataSource(option: String, page: Int = 1): Response<LectureMainDto>
 }

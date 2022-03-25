@@ -51,18 +51,6 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
         loadEvaluationData()
     }
 
-    fun changeData(dataList : ArrayList<EvaluationData?>) {
-        _evaluationList.value = dataList
-    }
-
-    fun addData(dataList: ArrayList<EvaluationData?>) {
-        if(dataList.isEmpty())
-            return
-        dataList.add(null)
-        _evaluationList.value!!.addAll(dataList)
-        _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
-    }
-
     private fun deleteLoading() {
         if(_evaluationList.value?.isEmpty() == true)
             return

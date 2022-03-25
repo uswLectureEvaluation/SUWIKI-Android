@@ -23,8 +23,11 @@ import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRepository
+import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRemoteDataSource
+import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
+import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.util.AssetLoader
 
@@ -62,6 +65,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             modelClass.isAssignableFrom(EvaluationViewModel::class.java) -> {
                 val repository = EvaluationRepository(EvaluationRemoteDataSource())
                 EvaluationViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(SearchResultViewModel::class.java) -> {
+                val repository = SearchResultRepository(SearchResultRemoteDataSource())
+                SearchResultViewModel(repository) as T
             }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel: ${modelClass.name}")

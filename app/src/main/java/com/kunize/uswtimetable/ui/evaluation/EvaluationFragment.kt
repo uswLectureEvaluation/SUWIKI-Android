@@ -19,6 +19,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.LectureApiOption.BEST
 import com.kunize.uswtimetable.util.LectureApiOption.HONEY
 import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
@@ -121,7 +122,6 @@ class EvaluationFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation, container, false)
 
-        //evaluationViewModel = ViewModelProvider(this)[TempEvaluationViewModel::class.java]
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
 
@@ -132,7 +132,7 @@ class EvaluationFragment : Fragment() {
         )
 
         binding.moreBtn.setOnClickListener {
-            goToSearchResult("tags:ALL", spinnerSel)
+            goToSearchResult("", spinnerSel)
         }
 
         binding.searchBtn.setOnClickListener {
@@ -172,7 +172,7 @@ class EvaluationFragment : Fragment() {
                         1 -> evaluationViewModel.changeType(HONEY)
                         2 -> evaluationViewModel.changeType(SATISFACTION)
                         3 -> evaluationViewModel.changeType(LEARNING)
-                        4 -> evaluationViewModel.changeType(HONEY)
+                        4 -> evaluationViewModel.changeType(BEST)
                     }
                 }
 
