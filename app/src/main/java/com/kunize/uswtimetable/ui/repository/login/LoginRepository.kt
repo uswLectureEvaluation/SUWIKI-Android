@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.repository.login
 
-import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.ui.login.User
 
 class LoginRepository(private val dataSource: LoginRemoteDataSource) {
@@ -10,8 +9,5 @@ class LoginRepository(private val dataSource: LoginRemoteDataSource) {
     }
 
     suspend fun login(id: String, pw: String) = dataSource.login(id, pw)
-
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        User.setUser(loggedInUser)
-    }
+    suspend fun getUserData(accessToken: String) = dataSource.getUserData(accessToken)
 }

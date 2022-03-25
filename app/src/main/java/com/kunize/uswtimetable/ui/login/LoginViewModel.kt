@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.LoggedInUser
+import com.kunize.uswtimetable.dataclass.UserDataDto
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
@@ -41,10 +42,23 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             if (loginResult.isSuccessful) {
                 when (loginResult.code()) {
                     200 -> {
+                        // TODO API 정상화 후 제거
                         User.setUser(LoggedInUser(id, 0, 0, 0, 0))
-                        // TODO 내 정보 API 요청해서 정보 받아오기
                         _loginResult.postValue(LoginState.SUCCESS)
-                        Log.d(TAG, "LoginViewModel - login() success / ${loginResult.body()}")
+
+                        // TODO 내 정보 API 요청해서 정보 받아오기
+                        /*CoroutineScope(Dispatchers.IO).launch {
+                            val accessToken = loginResult.body()?.accessToken?:""
+                            Log.d(TAG, "LoginViewModel - login() called / accessToken: $accessToken")
+                            val userDataResult = loginRepository.getUserData(accessToken)
+                            if (userDataResult.isSuccessful) {
+                                if (userDataResult.code() == 200) {
+                                    Log.d(TAG, "LoginViewModel - userData: ${userDataResult.body()}")
+                                    setUserData(userDataResult.body()!!)
+                                    _loginResult.postValue(LoginState.SUCCESS)
+                                }
+                            }
+                        }*/
                     }
                     else -> {
                         Log.d(TAG, "LoginViewModel - login() failed / ${loginResult.code()}: ${loginResult.message()}")
@@ -87,6 +101,18 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         pw.isBlank() || pw.length in PW_COUNT_LOWER_LIMIT..PW_COUNT_LIMIT
 
     private fun isPwValid(pw: String) = pw.isBlank() || pwPattern.matcher(pw).matches()
+
+    private fun setUserData(userData: UserDataDto) {
+        User.setUser(
+            LoggedInUser(
+                userId = userData.userId,
+                point = userData.point,
+                writtenExam = userData.writtenExam,
+                writtenLecture = userData.writtenEvaluation,
+                viewExam = userData.viewExam
+            )
+        )
+    }
 
     override fun onCleared() {
         super.onCleared()

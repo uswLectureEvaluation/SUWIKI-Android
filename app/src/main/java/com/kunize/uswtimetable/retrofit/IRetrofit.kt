@@ -89,7 +89,7 @@ interface IRetrofit {
 
     // 내 정보 페이지 호출 API
     @GET(MY_PAGE)
-    fun getUserInfo(): Call<MyPageData>
+    suspend fun getUserData(@Header("AccessToken") accessToken: String): Response<UserDataDto>
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
