@@ -23,7 +23,7 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
-import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.isJsonArray
 import com.kunize.uswtimetable.util.isJsonObject
 import okhttp3.*
@@ -41,7 +41,7 @@ interface IRetrofit {
     // Refresh Token
     @FormUrlEncoded
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@FieldMap tokens: HashMap<String, String>): Call<Token>
+    fun requestRefresh(@FieldMap tokens: HashMap<String, String>): Response<Token>
 
     // 메인 페이지 요청 API
     @GET()
@@ -168,11 +168,11 @@ interface IRetrofit {
             val loggingInterceptor = HttpLoggingInterceptor { message ->
                 when {
                     message.isJsonObject() ->
-                        Log.d(Constants.TAG, JSONObject(message).toString(4))
+                        Log.d(TAG, JSONObject(message).toString(4))
                     message.isJsonArray() ->
-                        Log.d(Constants.TAG, JSONArray(message).toString(4))
+                        Log.d(TAG, JSONArray(message).toString(4))
                     else ->
-                        Log.d(Constants.TAG, "CONNECTION INFO -> $message")
+                        Log.d(TAG, "CONNECTION INFO -> $message")
                 }
             }
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -192,32 +192,42 @@ interface IRetrofit {
 class AuthenticationInterceptor : Interceptor {
 
     private val accessToken = try {
-        TimeTableSelPref.prefs.getAccessToken()
+        TimeTableSelPref.encryptedPrefs.getAccessToken()?:""
     } catch (e: Exception) {
-        Log.d(Constants.TAG, "AuthenticationInterceptor - getAccessToken() returns null")
+        Log.d(TAG, "AuthenticationInterceptor - getAccessToken() returns null")
         ""
     }
 
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val request = chain.request().newBuilder()
             .addHeader("AccessToken", accessToken).build()
+        Log.d(TAG, "AuthenticationInterceptor - intercept() called / access: $accessToken")
         return chain.proceed(request)
     }
 }
 
 class TokenAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request {
-        val updatedToken = getUpdatedToken()
+        val updatedToken = getUpdatedToken()?:""
         return response.request.newBuilder().header("AccessToken", updatedToken).build()
     }
 
-    private fun getUpdatedToken(): String {
+    private fun getUpdatedToken(): String? {
         val requestParams = HashMap<String, String>()
-        val authTokenResponse = ApiClient.getClientWithNoToken().create(IRetrofit::class.java)
-            .requestRefresh(requestParams).execute().body()!!
-        Log.d(Constants.TAG, "TokenAuthenticator - getUpdatedToken() called / $authTokenResponse")
-        TimeTableSelPref.prefs.saveRefreshToken(authTokenResponse.refreshToken)
-        TimeTableSelPref.prefs.saveAccessToken(authTokenResponse.accessToken)
-        return authTokenResponse.accessToken
+        val access = TimeTableSelPref.encryptedPrefs.getAccessToken()?:""
+        val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken()?:""
+        requestParams[access] = refresh
+
+        val authTokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams)
+        if (authTokenResponse.isSuccessful) {
+            authTokenResponse.body()?.let { tokens ->
+                tokens.accessToken.let { TimeTableSelPref.encryptedPrefs.saveAccessToken(it) }
+                tokens.refreshToken.let { TimeTableSelPref.encryptedPrefs.saveRefreshToken(it) }
+            }
+        } else {
+            Log.d(TAG, "TokenAuthenticator - getUpdatedToken() called failed / ${authTokenResponse.code()}: ${authTokenResponse.message()}")
+        }
+
+        return authTokenResponse.body()?.accessToken
     }
 }

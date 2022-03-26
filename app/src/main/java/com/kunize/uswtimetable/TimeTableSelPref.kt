@@ -23,7 +23,7 @@ class TimeTableSelPref : Application() {
 class EncryptedPrefsManger(context: Context) {
     var masterKeyAlias: String = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
     var sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
-        "tmp_file",
+        "encryptedValues",
         masterKeyAlias,
         context,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

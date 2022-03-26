@@ -57,6 +57,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                                     setUserData(userDataResult.body()!!)
                                     _loginResult.postValue(LoginState.SUCCESS)
                                 }
+                                else {
+                                    Log.d(TAG, "내 정보 API 요청")
+                                    Log.d(TAG, "${userDataResult.code()} 에러 errorBody: ${userDataResult.errorBody()} message: ${userDataResult.message()} raw: ${userDataResult.raw()}")
+                                }
+                            } else {
+                                Log.d(TAG, "내 정보 API 요청 실패: ${userDataResult.code()}")
+                                Log.d(TAG, "errorBody: ${userDataResult.errorBody()} message: ${userDataResult.message()} raw: ${userDataResult.raw()} body: ${userDataResult.body()}")
                             }
                         }*/
                     }
