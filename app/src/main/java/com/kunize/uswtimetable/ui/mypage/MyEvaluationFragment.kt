@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.adapter.MyEvaluationAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
-import com.kunize.uswtimetable.dataclass.MyEvaluation
+import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
 import com.kunize.uswtimetable.util.ItemType
 
 class MyEvaluationFragment : Fragment() {
@@ -49,15 +47,16 @@ class MyEvaluationFragment : Fragment() {
         return _binding?.root
     }
 
-    private fun gotoWriteFragment(data: MyEvaluation) {
+    private fun gotoWriteFragment(data: MyEvaluationDto) {
+        // TODO MyEvaluation -> MyEvaluationDto 마이그레이션
         //TODO semesterList만 받아오는 로직 필요
-        val action =
+        /*val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
                 myEvaluation = data,
                 isEvaluation = true
             //TODO 현재 선택된 Semester, SemesterList도 넘겨주기
             )
-        findNavController().navigate(action)
+        findNavController().navigate(action)*/
     }
 
     private fun initRecyclerView() {

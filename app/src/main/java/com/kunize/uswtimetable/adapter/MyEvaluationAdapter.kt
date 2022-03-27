@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
-import com.kunize.uswtimetable.dataclass.MyEvaluation
+import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.util.ItemType
 
-class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType) -> Unit) :
-    ListAdapter<MyEvaluation, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
+class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluationDto, type: ItemType) -> Unit) :
+    ListAdapter<MyEvaluationDto, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
 
     inner class MyEvaluationViewHolder(private val binding: ItemMyPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,13 +21,13 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType
         private val darkGray = ContextCompat.getColor(binding.detailScoreLayout.context, R.color.custom_dark_gray)
         private val red = ContextCompat.getColor(binding.detailScoreLayout.context, R.color.custom_red)
 
-        fun bind(data: MyEvaluation) {
+        fun bind(data: MyEvaluationDto) {
             with(binding) {
-                lectureName.text = data.subject
+                lectureName.text = data.lectureName
                 yearSemester.text = data.semester
                 lectureProfessor.text = data.professor
-                averRatingBar.rating = data.totalValue
-                averScore.text = data.totalValue.toString()
+                averRatingBar.rating = data.totalAvg
+                averScore.text = data.totalAvg.toString()
                 satisfactionScore.text = data.satisfaction.toString()
                 learningScore.text = data.learning.toString()
                 honeyScore.text = data.honey.toString()
@@ -96,12 +96,12 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluation, type: ItemType
     }
 
     companion object {
-        private val diffUtil = object: DiffUtil.ItemCallback<MyEvaluation>() {
-            override fun areItemsTheSame(oldItem: MyEvaluation, newItem: MyEvaluation): Boolean {
+        private val diffUtil = object: DiffUtil.ItemCallback<MyEvaluationDto>() {
+            override fun areItemsTheSame(oldItem: MyEvaluationDto, newItem: MyEvaluationDto): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: MyEvaluation, newItem: MyEvaluation): Boolean {
+            override fun areContentsTheSame(oldItem: MyEvaluationDto, newItem: MyEvaluationDto): Boolean {
                 return oldItem == newItem
             }
         }

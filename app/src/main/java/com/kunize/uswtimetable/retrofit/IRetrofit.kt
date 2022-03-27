@@ -94,18 +94,19 @@ interface IRetrofit {
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
-    fun getEvaluatePosts(@Query("page") page: Int): Call<MyEvaluation>
+    suspend fun getEvaluatePosts(): Response<MyEvaluationListDto>
 
     // 내가 쓴 글 (강의평가 수정)
     @GET(UPDATE_EVALUATE_POST)
-    fun updateEvaluatePost(@Query("evaluateIdx") index: Int): Call<MyEvaluationShort>
+    suspend fun updateEvaluatePost(@Body info: MyEvaluationEditDto)
 
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)
-    fun getExamPosts(@Query("page") page: Int): Call<ExamPost>
+    suspend fun getExamPosts(): Response<MyExamInfoListDto>
 
+    // 내가 쓴 글 (시험 정보 수정)
     @GET(UPDATE_EXAM_POSTS)
-    fun updateExamPost(@Query("examIdx") id: Int): Call<ExamPostShort>
+    suspend fun updateExamPost(@Body info: MyExamInfoEditDto)
 
     // 검색결과 자세히 보기 API
     @GET(LECTURE)

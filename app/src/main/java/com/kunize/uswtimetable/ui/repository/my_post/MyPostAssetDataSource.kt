@@ -1,15 +1,13 @@
 package com.kunize.uswtimetable.ui.repository.my_post
 
 import com.google.gson.Gson
-import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.util.AssetLoader
-import org.json.JSONObject
 
-class MyPostAssetDataSource(private val assetLoader: AssetLoader): MyPostDataSource {
+class MyPostAssetDataSource(private val assetLoader: AssetLoader) {
 
     private val gson = Gson()
 
-    override fun getMyPostData(): List<MyEvaluation> {
+    /*override fun getMyPostData(): List<MyEvaluation> {
         val evaluationsList = mutableListOf<MyEvaluation>()
         assetLoader.getJsonString("MyEvaluationsDummy.json")?.let { jsonString ->
             val jsonObject = JSONObject(jsonString)
@@ -22,5 +20,5 @@ class MyPostAssetDataSource(private val assetLoader: AssetLoader): MyPostDataSou
             }
         }
         return evaluationsList.toList()
-    }
+    }*/
 }

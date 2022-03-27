@@ -17,7 +17,7 @@ import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoRepository
-import com.kunize.uswtimetable.ui.repository.my_post.MyPostAssetDataSource
+import com.kunize.uswtimetable.ui.repository.my_post.MyPostRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.ui.repository.mypage.MyPageRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.mypage.MyPageRepository
@@ -41,7 +41,8 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MyPostViewModel::class.java) -> {
-                val repository = MyPostRepository(MyPostAssetDataSource(AssetLoader(context)))
+//                val repository = MyPostRepository(MyPostAssetDataSource(AssetLoader(context)))
+                val repository = MyPostRepository(MyPostRemoteDataSource())
                 MyPostViewModel(repository) as T
             }
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
