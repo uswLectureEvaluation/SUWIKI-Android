@@ -31,6 +31,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                 if (response.isSuccessful) {
                     Log.d(TAG, "NoticeViewModel - getNotices() called -> ${response.body()}")
                     notices.postValue(response.body()?.data)
+                    if (response.body()?.data.isNullOrEmpty()) onError("공지사항이 없습니다")
                     loading.value = false
                 } else {
                     when (response.code()) {

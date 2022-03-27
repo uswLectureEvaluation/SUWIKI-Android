@@ -1,33 +1,7 @@
 package com.kunize.uswtimetable.ui.repository.notice
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.kunize.uswtimetable.dataclass.NoticeDetailDto
-import com.kunize.uswtimetable.retrofit.ApiClient
 import com.kunize.uswtimetable.retrofit.IRetrofit
 
 class NoticeDetailRemoteDataSource : NoticeDetailDataSource {
-
-    private val noticeResponse = MutableLiveData<NoticeDetailDto>()
-    private val retrofit: IRetrofit by lazy { ApiClient.getClientWithNoToken().create(IRetrofit::class.java) }
-
-    override suspend fun getNotice(id: Long): LiveData<NoticeDetailDto> {
-
-        /*retrofit.getNotice(id).enqueue(object : Callback<NoticeDetailDto> {
-            override fun onResponse(
-                call: Call<NoticeDetailDto>,
-                response: Response<NoticeDetailDto>
-            ) {
-                if (response.isSuccessful.not()) {
-                    Log.e(TAG, "NoticeDetailRemoteDataSource - onResponse() call failed: ${response.code()}")
-                }
-                noticeResponse.value = response.body()
-            }
-            override fun onFailure(call: Call<NoticeDetailDto>, t: Throwable) {
-                Log.e(TAG, "NoticeDetailRemoteDataSource - onFailure() call failed: ${t.message}")
-            }
-        })*/
-
-        return noticeResponse
-    }
+    override suspend fun getNotice(id: Long) = IRetrofit.getInstanceWithNoToken().getNotice(id)
 }

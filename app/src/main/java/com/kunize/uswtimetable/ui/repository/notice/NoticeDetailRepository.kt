@@ -1,11 +1,11 @@
 package com.kunize.uswtimetable.ui.repository.notice
 
-import androidx.lifecycle.LiveData
-import com.kunize.uswtimetable.dataclass.NoticeDetailDto
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class NoticeDetailRepository(private val dataSource: NoticeDetailRemoteDataSource) {
 
-    suspend fun getNotice(id: Long): LiveData<NoticeDetailDto> {
-        return dataSource.getNotice(id)
+    suspend fun getNotice(id: Long) = withContext(Dispatchers.IO) {
+        dataSource.getNotice(id)
     }
 }
