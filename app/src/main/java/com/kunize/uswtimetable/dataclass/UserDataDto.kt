@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class UserDataDto(
-    val userId: String,
+    @SerializedName("loginId") val userId: String,
     val point: Int,
     @SerializedName("written_evaluation") val writtenEvaluation: Int,
     @SerializedName("written_exam") val writtenExam: Int,

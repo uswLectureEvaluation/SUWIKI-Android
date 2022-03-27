@@ -69,7 +69,7 @@ object ApiClient {
     class AuthenticationInterceptor : Interceptor {
 
         private val accessToken = try {
-            TimeTableSelPref.prefs.getAccessToken()
+            TimeTableSelPref.encryptedPrefs.getAccessToken()?:""
         } catch (e: Exception) {
             Log.d(TAG, "AuthenticationInterceptor - getAccessToken() returns null")
             ""
@@ -89,12 +89,13 @@ object ApiClient {
         }
 
         private fun getUpdatedToken(): String {
-            val requestParams = HashMap<String, String>()
+            /*val requestParams = HashMap<String, String>()
             val authTokenResponse = getClientWithNoToken().create(IRetrofit::class.java).requestRefresh(requestParams).execute().body()!!
             Log.d(TAG, "TokenAuthenticator - getUpdatedToken() called / $authTokenResponse")
             TimeTableSelPref.prefs.saveRefreshToken(authTokenResponse.refreshToken)
             TimeTableSelPref.prefs.saveAccessToken(authTokenResponse.accessToken)
-            return authTokenResponse.accessToken
+            return authTokenResponse.accessToken*/
+            return ""
         }
     }
 }

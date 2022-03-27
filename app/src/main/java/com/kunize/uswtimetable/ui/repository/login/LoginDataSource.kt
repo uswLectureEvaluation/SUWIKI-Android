@@ -6,5 +6,5 @@ import retrofit2.Response
 
 interface LoginDataSource {
     suspend fun login(userId: String, userPassword: String): Response<Token>
-    suspend fun getUserData(accessToken: String): Response<UserDataDto>
+    suspend fun getUserData(): Response<UserDataDto>
 }

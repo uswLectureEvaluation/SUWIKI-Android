@@ -63,8 +63,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             }
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {
                 val apiService = IRetrofit.getInstanceWithNoToken()
-                val dataSource = NoticeRemoteDataSource(apiService)
-                val repository = NoticeRepository(dataSource)
+                val repository = NoticeRepository(NoticeRemoteDataSource(apiService))
                 NoticeViewModel(repository) as T
             }
             modelClass.isAssignableFrom(NoticeDetailViewModel::class.java) -> {
