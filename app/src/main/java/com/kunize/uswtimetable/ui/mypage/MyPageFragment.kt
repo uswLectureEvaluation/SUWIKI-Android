@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.more
+package com.kunize.uswtimetable.ui.mypage
 
 import android.content.Context
 import android.content.Intent
@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.FragmentMoreBinding
+import com.kunize.uswtimetable.databinding.FragmentMyPageBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.FindIdActivity
 import com.kunize.uswtimetable.ui.login.FindPasswordActivity
@@ -22,15 +22,15 @@ import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
 
-class MoreFragment : Fragment() {
-    private val viewModel: MoreViewModel by viewModels { ViewModelFactory(requireContext()) }
-    private lateinit var binding: FragmentMoreBinding
+class MyPageFragment : Fragment() {
+    private val viewModel: MyPageViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private lateinit var binding: FragmentMyPageBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 

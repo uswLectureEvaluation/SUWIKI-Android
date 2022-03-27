@@ -190,10 +190,8 @@ interface IRetrofit {
 }
 
 class AuthenticationInterceptor : Interceptor {
-
-    private val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
-
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val request = chain.request().newBuilder()
             .addHeader("AccessToken", accessToken).build()
         Log.d(TAG, "AuthenticationInterceptor - intercept() called / access: $accessToken")

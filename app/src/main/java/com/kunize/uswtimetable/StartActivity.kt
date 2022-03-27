@@ -1,35 +1,30 @@
 package com.kunize.uswtimetable
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.core.app.NotificationCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
-import androidx.room.Update
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.gson.JsonArray
-import com.kunize.uswtimetable.dataclass.TimeTableData
 import com.kunize.uswtimetable.dao_database.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
-import kotlinx.coroutines.*
+import com.kunize.uswtimetable.dataclass.TimeTableData
+import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
+import com.kunize.uswtimetable.ui.login.User
+import com.kunize.uswtimetable.util.PreferenceManager
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import org.json.JSONArray
-import java.lang.Exception
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StartActivity : AppCompatActivity() {
 
@@ -69,6 +64,11 @@ class StartActivity : AppCompatActivity() {
         var done = false
         var update: Boolean? = null
         var appVersion: Boolean = false
+
+        // 로그인 유지
+        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN).not()) {
+            User.logout()
+        }
 
         //intent 설정
         val intent = Intent(this@StartActivity, MainActivity::class.java)

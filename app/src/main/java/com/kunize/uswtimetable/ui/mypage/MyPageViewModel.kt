@@ -1,12 +1,16 @@
-package com.kunize.uswtimetable.ui.more
+package com.kunize.uswtimetable.ui.mypage
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
+import com.kunize.uswtimetable.dataclass.LoggedInUser
+import com.kunize.uswtimetable.dataclass.UserDataDto
 import com.kunize.uswtimetable.ui.login.User
+import com.kunize.uswtimetable.ui.repository.mypage.MyPageRepository
+import com.kunize.uswtimetable.util.Constants.TAG
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class MoreViewModel : ViewModel() {
+class MyPageViewModel(private val repository: MyPageRepository) : ViewModel() {
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> get() = _user
 
@@ -47,6 +51,27 @@ class MoreViewModel : ViewModel() {
     }
 
     fun refresh() {
-        _user.value = User
+        viewModelScope.launch {
+            val userDataResponse = repository.getUserData()
+            if (userDataResponse.isSuccessful) {
+                Log.d(TAG, "MoreViewModel - refresh() called / ${userDataResponse.body()}")
+                setUserData(userDataResponse.body()!!)
+            }
+            launch(Dispatchers.Main) {
+                _user.value = User
+            }
+        }
+    }
+
+    private fun setUserData(userData: UserDataDto) {
+        User.setUser(
+            LoggedInUser(
+                userId = userData.userId,
+                point = userData.point,
+                writtenExam = userData.writtenExam,
+                writtenLecture = userData.writtenEvaluation,
+                viewExam = userData.viewExam
+            )
+        )
     }
 }

@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.dataclass.UserDataDto
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
@@ -18,7 +16,6 @@ import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -44,32 +41,11 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             if (loginResult.isSuccessful) {
                 when (loginResult.code()) {
                     200 -> {
-                        // 내 정보 요청 API
-                        delay(500)
-                        val userDataResult = loginRepository.getUserData()
-                        if (userDataResult.isSuccessful) {
-                            if (userDataResult.code() == 200) {
-                                Log.d(
-                                    TAG,
-                                    "LoginViewModel - userData: ${userDataResult.body()}"
-                                )
-                                setUserData(userDataResult.body()!!)
-                                _loginResult.postValue(LoginState.SUCCESS)
-                            }
-                        } else {
-                            Log.d(TAG, "내 정보 API 요청 실패: ${userDataResult.code()}")
-                            Log.d(
-                                TAG,
-                                "errorBody: ${userDataResult.errorBody()} message: ${userDataResult.message()} raw: ${userDataResult.raw()} body: ${userDataResult.body()}"
-                            )
-                        }
+                        _loginResult.postValue(LoginState.SUCCESS)
                     }
                     else -> {
-                        Log.d(
-                            TAG,
-                            "LoginViewModel - login() failed / ${loginResult.code()}: ${loginResult.message()}"
-                        )
                         _loginResult.postValue(LoginState.FAIL)
+                        Log.d(TAG, "LoginViewModel - login() failed : ${loginResult.code()} ${loginResult.message()}")
                     }
                 }
             } else {
@@ -108,18 +84,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         pw.isBlank() || pw.length in PW_COUNT_LOWER_LIMIT..PW_COUNT_LIMIT
 
     private fun isPwValid(pw: String) = pw.isBlank() || pwPattern.matcher(pw).matches()
-
-    private fun setUserData(userData: UserDataDto) {
-        User.setUser(
-            LoggedInUser(
-                userId = userData.userId,
-                point = userData.point,
-                writtenExam = userData.writtenExam,
-                writtenLecture = userData.writtenEvaluation,
-                viewExam = userData.viewExam
-            )
-        )
-    }
 
     override fun onCleared() {
         super.onCleared()

@@ -3,11 +3,9 @@ package com.kunize.uswtimetable.ui.signup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.util.Constants
-import com.kunize.uswtimetable.util.Result
 import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
@@ -37,7 +35,7 @@ class SignUpPage1ViewModel(private val repository: SignUpRepository): ViewModel(
     suspend fun checkId() {
         _id?:return
         nextButtonEnable.value = false
-        /*onError("")
+        onError("")
         CoroutineScope(Dispatchers.IO).async {  }
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = repository.checkId(_id!!)
@@ -50,9 +48,9 @@ class SignUpPage1ViewModel(private val repository: SignUpRepository): ViewModel(
                 }
                 nextButtonEnable.postValue(signupFormState.value?.isDataValid==true)
             }
-        }*/
+        }
 
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val result = repository.checkId(_id!!)
                 when(result) {
@@ -65,7 +63,7 @@ class SignUpPage1ViewModel(private val repository: SignUpRepository): ViewModel(
                 }
             }
 
-        }
+        }*/
     }
 
     fun signUpDataChanged(

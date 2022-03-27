@@ -24,9 +24,9 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_more"
-        android:name="com.kunize.uswtimetable.ui.more.MoreFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.MyPageFragment"
         android:label="fragment_more"
-        tools:layout="@layout/fragment_more">
+        tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_more_to_myPostFragment"
             app:destination="@id/myPostFragment" />
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/myPostFragment"
-        android:name="com.kunize.uswtimetable.ui.more.MyPostFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.MyPostFragment"
         android:label="fragment_my_post"
         tools:layout="@layout/fragment_my_post">
         <action
@@ -73,12 +73,12 @@
     </fragment>
     <fragment
         android:id="@+id/myEvaluationFragment"
-        android:name="com.kunize.uswtimetable.ui.more.MyEvaluationFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.MyEvaluationFragment"
         android:label="fragment_my_evaluation"
         tools:layout="@layout/fragment_my_evaluation" />
     <fragment
         android:id="@+id/myExamInfoFragment"
-        android:name="com.kunize.uswtimetable.ui.more.MyExamInfoFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.MyExamInfoFragment"
         android:label="fragment_my_exam_info"
         tools:layout="@layout/fragment_my_exam_info" />
     <action

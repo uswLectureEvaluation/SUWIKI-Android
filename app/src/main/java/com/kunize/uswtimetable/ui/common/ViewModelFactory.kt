@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginViewModel
-import com.kunize.uswtimetable.ui.more.MoreViewModel
-import com.kunize.uswtimetable.ui.more.MyExamInfoViewModel
-import com.kunize.uswtimetable.ui.more.MyPostViewModel
+import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
+import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
+import com.kunize.uswtimetable.ui.mypage.MyPostViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
@@ -16,6 +16,8 @@ import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoRepository
 import com.kunize.uswtimetable.ui.repository.my_post.MyPostAssetDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyPostRepository
+import com.kunize.uswtimetable.ui.repository.mypage.MyPageRemoteDataSource
+import com.kunize.uswtimetable.ui.repository.mypage.MyPageRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRemoteDataSource
@@ -54,8 +56,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 val repository = LoginRepository(LoginRemoteDataSource(apiService))
                 LoginViewModel(repository) as T
             }
-            modelClass.isAssignableFrom(MoreViewModel::class.java) -> {
-                MoreViewModel() as T
+            modelClass.isAssignableFrom(MyPageViewModel::class.java) -> {
+                val repository = MyPageRepository(MyPageRemoteDataSource())
+                MyPageViewModel(repository) as T
             }
             modelClass.isAssignableFrom(MyExamInfoViewModel::class.java) -> {
                 val repository = MyExamInfoRepository(MyExamInfoAssetDataSource(AssetLoader(context)))

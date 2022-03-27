@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.login
 
+import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.LoggedInUser
 
 object User {
@@ -16,7 +17,8 @@ object User {
 
     fun logout() {
         user = null
-//        TimeTableSelPref.prefs.saveRefreshToken("")
+        TimeTableSelPref.encryptedPrefs.saveAccessToken("")
+        TimeTableSelPref.encryptedPrefs.saveRefreshToken("")
     }
 
     fun getUserName(): String {

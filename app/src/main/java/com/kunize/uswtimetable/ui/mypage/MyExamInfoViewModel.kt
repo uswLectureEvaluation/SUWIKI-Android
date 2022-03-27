@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.more
+package com.kunize.uswtimetable.ui.mypage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

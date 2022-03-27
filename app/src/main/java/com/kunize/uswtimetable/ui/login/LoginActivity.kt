@@ -113,6 +113,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val REMEMBER_LOGIN = "rememberLogin"
+        const val REMEMBER_LOGIN = "rememberLogin"
     }
 }
