@@ -66,7 +66,7 @@ interface IRetrofit {
 
     // 공지사항 리스트 API
     @GET(NOTICE_LIST)
-    suspend fun getNoticeList(): Response<List<NoticeDto>>
+    suspend fun getNoticeList(): Response<NoticeListDto>
 
     // 공지사항 API
     @GET(NOTICE)
