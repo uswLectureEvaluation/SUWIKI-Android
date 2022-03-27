@@ -69,7 +69,7 @@ interface IRetrofit {
 
     // 공지사항 API
     @GET(NOTICE)
-    suspend fun getNotice(@Query("notice_id") id: Long): Call<NoticeDetailDto>
+    suspend fun getNotice(@Query("notice_id") id: Long): Response<NoticeDetailDto>
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @POST(PASSWORD)
