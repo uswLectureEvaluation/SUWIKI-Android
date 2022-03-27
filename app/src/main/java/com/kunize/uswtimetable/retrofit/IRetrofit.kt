@@ -132,7 +132,6 @@ interface IRetrofit {
         @Query("option") option: String,
         @Query("page") page: Int = 1
     ): Response<LectureMainDto>
-    // TODO 나머지 API도 추가
 
     companion object {
         private var retrofitService: IRetrofit? = null
