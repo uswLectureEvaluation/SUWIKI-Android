@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.dataclass.UserDataDto
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
@@ -15,10 +16,7 @@ import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.TAG
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.regex.Pattern
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -43,14 +41,21 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 when (loginResult.code()) {
                     200 -> {
                         // TODO API 정상화 후 제거
-                        User.setUser(LoggedInUser(id, 0, 0, 0, 0))
-                        _loginResult.postValue(LoginState.SUCCESS)
+//                        User.setUser(LoggedInUser(id, 0, 0, 0, 0))
+//                        _loginResult.postValue(LoginState.SUCCESS)
 
                         // TODO 내 정보 API 요청해서 정보 받아오기
-                        /*CoroutineScope(Dispatchers.IO).launch {
+                        CoroutineScope(Dispatchers.IO).launch {
                             val accessToken = loginResult.body()?.accessToken?:""
+                            val refreshToken = loginResult.body()?.refreshToken?:""
                             Log.d(TAG, "LoginViewModel - login() called / accessToken: $accessToken")
-                            val userDataResult = loginRepository.getUserData(accessToken)
+                            Log.d(TAG, "LoginViewModel - login() called / refreshToken: $refreshToken")
+                            TimeTableSelPref.encryptedPrefs.saveAccessToken(accessToken)
+                            TimeTableSelPref.encryptedPrefs.saveRefreshToken(refreshToken)
+
+                            delay(500)
+
+                            val userDataResult = loginRepository.getUserData()
                             if (userDataResult.isSuccessful) {
                                 if (userDataResult.code() == 200) {
                                     Log.d(TAG, "LoginViewModel - userData: ${userDataResult.body()}")
@@ -65,7 +70,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                                 Log.d(TAG, "내 정보 API 요청 실패: ${userDataResult.code()}")
                                 Log.d(TAG, "errorBody: ${userDataResult.errorBody()} message: ${userDataResult.message()} raw: ${userDataResult.raw()} body: ${userDataResult.body()}")
                             }
-                        }*/
+                        }
                     }
                     else -> {
                         Log.d(TAG, "LoginViewModel - login() failed / ${loginResult.code()}: ${loginResult.message()}")

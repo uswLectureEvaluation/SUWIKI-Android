@@ -89,7 +89,7 @@ interface IRetrofit {
 
     // 내 정보 페이지 호출 API
     @GET(MY_PAGE)
-    suspend fun getUserData(@Header("AccessToken") accessToken: String): Response<UserDataDto>
+    suspend fun getUserData(): Response<UserDataDto>
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
@@ -191,12 +191,7 @@ interface IRetrofit {
 
 class AuthenticationInterceptor : Interceptor {
 
-    private val accessToken = try {
-        TimeTableSelPref.encryptedPrefs.getAccessToken()?:""
-    } catch (e: Exception) {
-        Log.d(TAG, "AuthenticationInterceptor - getAccessToken() returns null")
-        ""
-    }
+    private val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
 
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val request = chain.request().newBuilder()
@@ -208,14 +203,14 @@ class AuthenticationInterceptor : Interceptor {
 
 class TokenAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request {
-        val updatedToken = getUpdatedToken()?:""
+        val updatedToken = getUpdatedToken() ?: ""
         return response.request.newBuilder().header("AccessToken", updatedToken).build()
     }
 
     private fun getUpdatedToken(): String? {
         val requestParams = HashMap<String, String>()
-        val access = TimeTableSelPref.encryptedPrefs.getAccessToken()?:""
-        val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken()?:""
+        val access = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
+        val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
         requestParams[access] = refresh
 
         val authTokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams)
@@ -225,7 +220,10 @@ class TokenAuthenticator : Authenticator {
                 tokens.refreshToken.let { TimeTableSelPref.encryptedPrefs.saveRefreshToken(it) }
             }
         } else {
-            Log.d(TAG, "TokenAuthenticator - getUpdatedToken() called failed / ${authTokenResponse.code()}: ${authTokenResponse.message()}")
+            Log.d(
+                TAG,
+                "TokenAuthenticator - getUpdatedToken() called failed / ${authTokenResponse.code()}: ${authTokenResponse.message()}"
+            )
         }
 
         return authTokenResponse.body()?.accessToken

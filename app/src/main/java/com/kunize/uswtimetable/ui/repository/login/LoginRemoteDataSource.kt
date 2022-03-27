@@ -9,5 +9,5 @@ class LoginRemoteDataSource(private val apiService: IRetrofit) : LoginDataSource
         LoginIdPassword(userId, userPassword)
     )
 
-    override suspend fun getUserData(accessToken: String) = apiService.getUserData(accessToken)
+    override suspend fun getUserData() = apiService.getUserData()
 }

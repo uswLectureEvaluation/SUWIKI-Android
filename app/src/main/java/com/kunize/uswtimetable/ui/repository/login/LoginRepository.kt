@@ -9,5 +9,5 @@ class LoginRepository(private val dataSource: LoginRemoteDataSource) {
     }
 
     suspend fun login(id: String, pw: String) = dataSource.login(id, pw)
-    suspend fun getUserData(accessToken: String) = dataSource.getUserData(accessToken)
+    suspend fun getUserData() = dataSource.getUserData()
 }
