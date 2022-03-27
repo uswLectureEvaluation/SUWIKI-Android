@@ -1,52 +1,62 @@
 package com.kunize.uswtimetable.ui.evaluation
 
 import android.util.Log
-import android.view.View
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.NavGraphDirections
-import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.adapter.EvaluationListAdapter
+import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.dataclass.LectureMainDto
+import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRepository
+import com.kunize.uswtimetable.util.LectureApiOption.HONEY
+import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
+import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-import com.kunize.uswtimetable.ui.search_result.SearchResultFragmentDirections
-import okhttp3.internal.notify
-
-open class EvaluationViewModel : ViewModel() {
+class EvaluationViewModel(private val evaluationRepository: EvaluationRepository) : ViewModel() {
     private val _evaluationList = MutableLiveData<ArrayList<EvaluationData?>>()
     val evaluationList: LiveData<ArrayList<EvaluationData?>>
         get() = _evaluationList
 
+    private val _selectedType = MutableLiveData<String>()
+
+    private fun loadEvaluationData() {
+        viewModelScope.launch {
+            val response = evaluationRepository.getLectureMainList(_selectedType.value.toString())
+            if(response.isSuccessful) {
+                deleteLoading()
+                _evaluationList.value = response.body()?.convertToEvaluationData()
+            } else {
+                _evaluationList.value = arrayListOf()
+            }
+        }
+    }
 
     init {
-        _evaluationList.value = arrayListOf()
+        changeType(MODIFIED)
     }
 
-    fun changeData(dataList : ArrayList<EvaluationData?>) {
-        _evaluationList.value = dataList
+    private fun loading() {
+        _evaluationList.value = arrayListOf(null)
     }
 
-    fun addData(dataList: ArrayList<EvaluationData?>) {
-        if(dataList.isEmpty())
-            return
-        dataList.add(null)
-        _evaluationList.value!!.addAll(dataList)
-        _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
+    fun changeType(option: String) {
+        _selectedType.value = option
+        loading()
+        loadEvaluationData()
     }
 
-    fun deleteLoading() {
+    private fun deleteLoading() {
         if(_evaluationList.value?.isEmpty() == true)
             return
         if(_evaluationList.value?.get(evaluationList.value?.size!! - 1) == null) {
             _evaluationList.value?.removeAt(evaluationList.value?.size!! - 1)
-            _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
+            _evaluationList.value = _evaluationList.value
         }
-        //대입을 해줘야지만 옵저버가 변화를 감지함.
     }
 }
-

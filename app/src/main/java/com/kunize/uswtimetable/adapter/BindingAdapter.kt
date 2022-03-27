@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
@@ -38,16 +39,17 @@ object BindingAdapter {
         val prevItemSize = evaluationAdapter.evaluationListData.size
         val newItemSize = items.size
 
-        Log.d("Scroll", "$recyclerView $newItemSize")
+        Log.d("Scroll", "$prevItemSize $newItemSize")
         evaluationAdapter.evaluationListData = items
         //api를 호출했을 때 불러올 수 있는 데이터 개수의 최대값이 11이므로 만약 newItemSize의 크기가 11보다 크다면 데이터가 추가되었음을 의미
-        if (newItemSize > 11)
-            evaluationAdapter.notifyItemRangeInserted(
+        when {
+            newItemSize == prevItemSize -> evaluationAdapter.notifyDataSetChanged()
+            newItemSize > 11 -> evaluationAdapter.notifyItemRangeInserted(
                 prevItemSize + 1,
                 newItemSize - prevItemSize + 1
             )
-        else
-            evaluationAdapter.notifyDataSetChanged()
+            else -> evaluationAdapter.notifyDataSetChanged()
+        }
     }
 
     @BindingAdapter("difficultColor")

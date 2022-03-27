@@ -16,4 +16,5 @@ data class EvaluationData (
     var content: String = "내용이 없습니다.", //내용
     var difficulty: String = "", //시험 난이도
     var testMethod: String = "", //시험 방식
+    var lectureId: Long = 0
 )

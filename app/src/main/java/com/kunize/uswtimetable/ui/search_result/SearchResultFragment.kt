@@ -12,13 +12,20 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyShortData
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
-import com.kunize.uswtimetable.util.LectureItemViewType
+import com.kunize.uswtimetable.ui.evaluation.TempEvaluationViewModel
+import com.kunize.uswtimetable.util.LectureApiOption.BEST
+import com.kunize.uswtimetable.util.LectureApiOption.HONEY
+import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
+import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
+import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.infiniteScrolls
 import kotlinx.coroutines.CoroutineScope
@@ -32,8 +39,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
 
     lateinit var binding: FragmentSearchResultBinding
 
-    //EvaluationFragment와 동일한 viewModel 사용
-    private lateinit var viewModel: EvaluationViewModel
+    private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var sortBtn: MutableList<RadioButton>
     val args: SearchResultFragmentArgs by navArgs()
 
@@ -62,19 +68,11 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result,container, false)
-        viewModel = ViewModelProvider(this)[EvaluationViewModel::class.java]
-        binding.viewModel = viewModel
+        binding.viewModel = searchResultViewModel
         binding.lifecycleOwner = this
 
         binding.recyclerSearchResult.infiniteScrolls {
-            CoroutineScope(Main).launch {
-                delay(1000)
-                //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
-                viewModel.deleteLoading()
-                //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-                val newData = dummyShortData.subList(0, 10)
-                viewModel.addData(ArrayList(newData))
-            }
+            searchResultViewModel.scrollBottomEvent()
         }
 
         with(binding) {
@@ -91,14 +89,15 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
                 setText(msg)
                 setSelection(msg.length)
                 //TODO 검색 결과에 맞는 데이터 받아온 후, changeData 수행
-                viewModel.changeData(ArrayList(dummyShortData.subList(0, 0)))
+                searchResultViewModel.search(msg)
+                //searchResultViewModel.changeData(ArrayList(dummyShortData.subList(0, 0)))
             }
         }
 
 
         binding.searchBtn.setOnClickListener {
             if (isSearchTextLengthNotEnough()) return@setOnClickListener
-            //TODO 검색 기능 추가
+            searchResultViewModel.search(binding.searchLecture.text.toString())
         }
 
 
@@ -110,7 +109,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
                     requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.searchLecture.windowToken, 0)
                 handled = true
-                //TODO 검색 기능 추가
+                searchResultViewModel.search(binding.searchLecture.text.toString())
             }
             handled
         }
@@ -145,12 +144,14 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         sortBtn.forEach { btn ->
             btn.text = btn.text.toString().split(" ")[0]
         }
-        //TODO 클릭 될 때마다 새로운 데이터를 서버에서 받아오는 기능 추가
-        val a = Random().nextInt(2)
-        val b = Random().nextInt(6) + 2
-        val temp = ArrayList<EvaluationData?>()
-        temp.add(null)
-        viewModel.changeData(temp)
+        when(radioBtn.text.toString()) {
+            "날짜" -> searchResultViewModel.changeType(MODIFIED)
+            "꿀강" -> searchResultViewModel.changeType(HONEY)
+            "만족도" -> searchResultViewModel.changeType(SATISFACTION)
+            "배움" -> searchResultViewModel.changeType(LEARNING)
+            "종합" -> searchResultViewModel.changeType(BEST)
+            else -> searchResultViewModel.changeType(MODIFIED)
+        }
         radioBtn.text = radioBtn.text.toString() + " ↑"
     }
 }
