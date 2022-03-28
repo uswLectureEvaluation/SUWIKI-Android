@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
-import com.kunize.uswtimetable.dataclass.LectureInfoData
-import com.kunize.uswtimetable.ui.evaluation.TempEvaluationViewModel
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
