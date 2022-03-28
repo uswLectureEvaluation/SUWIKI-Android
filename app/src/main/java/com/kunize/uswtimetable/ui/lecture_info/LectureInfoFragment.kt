@@ -31,13 +31,9 @@ class LectureInfoFragment : Fragment() {
         binding.lectureInfoViewModel = lectureInfoViewModel
         binding.lifecycleOwner = this
 
-        //넘어온 데이터 (강의명, 교수명)
         val args: LectureInfoFragmentArgs by navArgs()
 
         lectureInfoViewModel.setInfoValue(args.lectureId)
-
-        val tmp = arrayListOf<EvaluationData?>()
-        tmp.add(null)
 
         binding.infoRecyclerView.infiniteScrolls {
             lectureInfoViewModel.getEvaluationList(args.lectureId)

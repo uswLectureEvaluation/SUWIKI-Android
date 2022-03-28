@@ -7,11 +7,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
-import com.kunize.uswtimetable.dataclass.LectureProfessorName
 
 object BindingAdapter {
     @BindingAdapter("evaluationList")
@@ -65,75 +63,6 @@ object BindingAdapter {
                 ContextCompat.getColor(
                     textView.context,
                     R.color.custom_blue
-                )
-            )
-            else -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_red
-                )
-            )
-        }
-    }
-
-    @BindingAdapter("teamColor")
-    @JvmStatic
-    fun setTeamColor(textView: TextView, team: String) {
-        when (team) {
-            textView.context.getString(R.string.not_exist) -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_light_gray
-                )
-            )
-            else -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_dark_gray
-                )
-            )
-        }
-    }
-
-    @BindingAdapter("taskColor")
-    @JvmStatic
-    fun setTaskColor(textView: TextView, task: String) {
-        when (task) {
-            textView.context.getString(R.string.not_exist) -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_light_gray
-                )
-            )
-            textView.context.getString(R.string.normal) -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_dark_gray
-                )
-            )
-            else -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_red
-                )
-            )
-        }
-    }
-
-    @BindingAdapter("gradeColor")
-    @JvmStatic
-    fun setGradeColor(textView: TextView, grade: String) {
-        when (grade) {
-            textView.context.getString(R.string.good) -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_light_gray
-                )
-            )
-            textView.context.getString(R.string.normal) -> textView.setTextColor(
-                ContextCompat.getColor(
-                    textView.context,
-                    R.color.custom_dark_gray
                 )
             )
             else -> textView.setTextColor(

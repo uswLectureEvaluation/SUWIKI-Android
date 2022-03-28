@@ -12,10 +12,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel() {
-    private val _lectureType = MutableLiveData<String>()
-    val lectureType: LiveData<String>
-        get() = _lectureType
-
     private val _writeBtnText = MutableLiveData<Int>()
     val writeBtnText: LiveData<Int>
         get() = _writeBtnText
