@@ -54,10 +54,8 @@
         android:label="LectureInfoFragment"
         tools:layout="@layout/fragment_lecture_info">
         <argument
-            android:name="lectureProfessorName"
-            app:argType="com.kunize.uswtimetable.dataclass.LectureProfessorName"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:name="lectureId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/myPostFragment"

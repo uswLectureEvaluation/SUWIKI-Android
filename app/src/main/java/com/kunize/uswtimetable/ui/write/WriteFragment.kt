@@ -225,14 +225,14 @@ class WriteFragment : Fragment() {
     }
 
     private fun goToLectureInfoFragment() {
-        val action = NavGraphDirections.actionGlobalLectureInfoFragment(
-            lectureProfessorName =
-            LectureProfessorName(
-                binding.writeLectureName.text.toString(),
-                binding.writeProfessor.text.toString()
-            )
-        )
-        findNavController().navigate(action)
+//        val action = NavGraphDirections.actionGlobalLectureInfoFragment(
+//            lectureProfessorName =
+//            LectureProfessorName(
+//                binding.writeLectureName.text.toString(),
+//                binding.writeProfessor.text.toString()
+//            )
+//        )
+//        findNavController().navigate(action)
     }
 
     private fun goToMyPostFragment() {

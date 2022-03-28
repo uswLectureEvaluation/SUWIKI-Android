@@ -1,46 +1,23 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
 import com.kunize.uswtimetable.dataclass.LectureInfoData
 import com.kunize.uswtimetable.ui.evaluation.TempEvaluationViewModel
+import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
+import kotlinx.coroutines.launch
 
-class LectureInfoViewModel : TempEvaluationViewModel() {
+class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel() {
     //이수 구분
     private val _lectureType = MutableLiveData<String>()
     val lectureType: LiveData<String>
         get() = _lectureType
-
-    //이수 년도 (배열로 받아온다고 가정 ex) {"2021-2", "2020-1"} )
-    private val _yearSemesterList = MutableLiveData<String>()
-    val yearSemesterList: LiveData<String>
-        get() = _yearSemesterList
-
-    private val _infoHoneyScore = MutableLiveData<Float>()
-    val infoHoneyScore: LiveData<Float>
-        get() = _infoHoneyScore
-
-    private val _infoLearningScore = MutableLiveData<Float>()
-    val infoLearningScore: LiveData<Float>
-        get() = _infoLearningScore
-
-    private val _infoSatisfactionScore = MutableLiveData<Float>()
-    val infoSatisfactionScore: LiveData<Float>
-        get() = _infoSatisfactionScore
-
-    private val _infoMeeting = MutableLiveData<String>()
-    val infoMeeting: LiveData<String>
-        get() = _infoMeeting
-
-    private val _infoTask = MutableLiveData<String>()
-    val infoTask: LiveData<String>
-        get() = _infoTask
-
-    private val _infoGrade = MutableLiveData<String>()
-    val infoGrade: LiveData<String>
-        get() = _infoGrade
 
     private val _writeBtnText = MutableLiveData<Int>()
     val writeBtnText: LiveData<Int>
@@ -54,8 +31,11 @@ class LectureInfoViewModel : TempEvaluationViewModel() {
     val showHideExamDataLayout: LiveData<Boolean>
         get() = _showHideExamDataLayout
 
+    private val _lectureDetailInfoData = MutableLiveData<LectureDetailInfoDto>()
+    val lectureDetailInfoData: LiveData<LectureDetailInfoDto>
+        get() = _lectureDetailInfoData
+
     init {
-        setInfoValue()
         _writeBtnText.value = R.string.write_evaluation
         _showNoExamDataLayout.value = false
         _showHideExamDataLayout.value = false
@@ -63,7 +43,6 @@ class LectureInfoViewModel : TempEvaluationViewModel() {
 
     fun usePointBtnClicked() {
         _showHideExamDataLayout.value = false
-        changeData(arrayListOf())
     }
 
     fun examInfoRadioBtnClicked() {
@@ -71,7 +50,6 @@ class LectureInfoViewModel : TempEvaluationViewModel() {
         // 서버로 부터 데이터 불러옴
         // 데이터 결과에 따라 _showHideExamDataLayout 여부 설정
         _showHideExamDataLayout.value = true
-        changeData(arrayListOf())
         changeWriteBtnText(R.string.write_exam)
     }
 
@@ -81,7 +59,6 @@ class LectureInfoViewModel : TempEvaluationViewModel() {
         _showNoExamDataLayout.value = false
         val tmp = arrayListOf<EvaluationData?>()
         tmp.add(null)
-        changeData(tmp)
         changeWriteBtnText(R.string.write_evaluation)
     }
 
@@ -89,24 +66,14 @@ class LectureInfoViewModel : TempEvaluationViewModel() {
         _writeBtnText.value = resource
     }
 
-    fun setInfoValue() {
-        val data = LectureInfoData(
-            "전핵",
-            "2021-2, 2021-1, 2020-2, 2020-1, 2018-1, 2018-2",
-            4.2f,
-            2.4f,
-            3.5f,
-            "없음",
-            "보통",
-            "까다로움"
-        )
-        _lectureType.value = data.lectureType
-        _yearSemesterList.value = data.yearSemesterList
-        _infoHoneyScore.value = data.infoHoneyScore
-        _infoLearningScore.value = data.infoLearningScore
-        _infoSatisfactionScore.value = data.infoSatisfactionScore
-        _infoMeeting.value = data.infoMeeting
-        _infoTask.value = data.infoTask
-        _infoGrade.value = data.infoGrade
+    fun setInfoValue(lectureId: Long) {
+        viewModelScope.launch {
+            val response = lectureInfoRepository.getLectureDetailInfo(lectureId)
+            if(response.isSuccessful) {
+                _lectureDetailInfoData.value = response.body()
+            } else {
+                //TODO 통신 실패 처리
+            }
+        }
     }
 }

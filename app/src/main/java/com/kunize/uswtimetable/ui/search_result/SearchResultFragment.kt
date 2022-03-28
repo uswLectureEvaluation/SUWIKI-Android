@@ -18,9 +18,6 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyShortData
-import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
-import com.kunize.uswtimetable.ui.evaluation.TempEvaluationViewModel
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
 import com.kunize.uswtimetable.util.LectureApiOption.HONEY
 import com.kunize.uswtimetable.util.LectureApiOption.LEARNING

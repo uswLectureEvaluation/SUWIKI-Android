@@ -35,6 +35,7 @@
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{@string/floatToStr(evaluationData.aver)}"
+            lectureTotalAvg="@{evaluationData.aver}"
             app:layout_constraintBottom_toBottomOf="@+id/averRatingBar"
             app:layout_constraintStart_toEndOf="@+id/averRatingBar"
             tools:text="5" />

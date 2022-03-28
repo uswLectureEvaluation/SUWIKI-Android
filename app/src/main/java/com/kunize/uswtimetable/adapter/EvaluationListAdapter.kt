@@ -79,7 +79,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     //Callback
     interface OnItemClickListener{
-        fun onItemClick(v : View, lectureName : String, professor : String)
+        fun onItemClick(v : View, lectureId : Long)
     }
     private var listener : OnItemClickListener? = null
     fun setOnItemClickListener(listener : OnItemClickListener) {
@@ -103,7 +103,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val pos = adapterPosition
                 if(pos!=RecyclerView.NO_POSITION)
                     itemView.setOnClickListener{
-                        listener?.onItemClick(itemView, data.name, data.professor)
+                        listener?.onItemClick(itemView, data.lectureId)
                     }
                 executePendingBindings()
             }

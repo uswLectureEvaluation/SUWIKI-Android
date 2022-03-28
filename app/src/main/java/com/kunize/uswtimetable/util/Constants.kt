@@ -22,7 +22,7 @@ object API {
     const val REQUEST_REFRESH: String = "/user/refresh"
     const val NOTICE_LIST: String = "/notice/findAllList"
     const val NOTICE: String = "/notice"
-    const val LECTURE: String = "/lecture/findBySearchValue"
+    const val SEARCH: String = "/lecture/findBySearchValue"
     const val EXAM: String = "/lecture/exam"
     const val PASSWORD: String = "/user/find-pw"
     const val PASSWORD_RESET: String = "/user/reset-pw"
@@ -38,6 +38,7 @@ object API {
     const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
     const val SIGN_UP_SCHOOL_CHECK: String = "/user/verify-email"
     const val LECTURE_MAIN: String = "/lecture/findAllList"
+    const val LECTURE_DETAIL_INFO = "/lecture"
 }
 
 object WriteFragmentTitle {

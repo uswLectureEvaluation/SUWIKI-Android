@@ -8,7 +8,8 @@ import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
-import com.kunize.uswtimetable.util.API.LECTURE
+import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_INFO
+import com.kunize.uswtimetable.util.API.SEARCH
 import com.kunize.uswtimetable.util.API.LECTURE_MAIN
 import com.kunize.uswtimetable.util.API.LOGIN
 import com.kunize.uswtimetable.util.API.MY_PAGE
@@ -108,12 +109,12 @@ interface IRetrofit {
     @GET(UPDATE_EXAM_POSTS)
     suspend fun updateExamPost(@Body info: MyExamInfoEditDto)
 
-    // 검색결과 자세히 보기 API
-    @GET(LECTURE)
-    fun getSearchResult(@Query("query") searchTerm: String): Call<JsonElement>
+    // 검색결과 자세히 보기 (LECTURE)API
+    @GET(LECTURE_DETAIL_INFO)
+    suspend fun getLectureDetailInfo(@Query("lectureId") lectureId: Long): Response<LectureDetailInfoDto>
 
     // 검색결과 페이지 API(강의평)
-    @GET(LECTURE)
+    @GET(SEARCH)
     suspend fun getSearchResultDetail(
         @Query("searchValue") searchValue: String,
         @Query("option") option: String,

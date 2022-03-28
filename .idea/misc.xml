@@ -94,6 +94,7 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_test_info.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/no_exam_info.xml" value="0.1" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_average_see_detail.xml" value="0.27222562844880444" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_lecture_professor_lecture_type.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_scores.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_scores_etc.xml" value="0.3648315529991783" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_semester_report.xml" value="0.264" />
@@ -105,7 +106,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

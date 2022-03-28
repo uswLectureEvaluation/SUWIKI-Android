@@ -28,6 +28,7 @@
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{@string/floatToStr(evaluationData.satisfaction)}"
+            lectureTotalAvg="@{evaluationData.aver}"
             app:layout_constraintBottom_toBottomOf="@+id/textViewSatisfaction"
             app:layout_constraintStart_toEndOf="@+id/textViewSatisfaction"
             tools:text="5" />
@@ -51,6 +52,7 @@
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{@string/floatToStr(evaluationData.honey)}"
+            lectureTotalAvg="@{evaluationData.aver}"
             app:layout_constraintBottom_toBottomOf="@+id/textViewHoney"
             app:layout_constraintStart_toEndOf="@+id/textViewHoney"
             tools:text="5" />
@@ -75,6 +77,7 @@
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{@string/floatToStr(evaluationData.learning)}"
+            lectureTotalAvg="@{evaluationData.aver}"
             app:layout_constraintBottom_toBottomOf="@+id/textViewLearning"
             app:layout_constraintStart_toEndOf="@+id/textViewLearning"
             tools:text="5" />
@@ -99,6 +102,7 @@
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{evaluationData.teamMeeting}"
+            lectureTotalAvg="@{evaluationData.aver}"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/textViewMeeting"
             app:layout_constraintStart_toEndOf="@+id/textViewMeeting"
@@ -119,6 +123,7 @@
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{evaluationData.task}"
+            lectureTotalAvg="@{evaluationData.aver}"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/textViewTask"
             app:layout_constraintStart_toEndOf="@+id/textViewTask"
@@ -139,6 +144,7 @@
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
             android:text="@{evaluationData.grade}"
+            lectureTotalAvg="@{evaluationData.aver}"
             android:visibility="visible"
             app:gradeColor="@{evaluationData.grade}"
             app:layout_constraintBottom_toBottomOf="@+id/textViewGrade"

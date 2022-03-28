@@ -7,19 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyExamData
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragment.Companion.dummyLectureData
-import com.kunize.uswtimetable.util.infiniteScrolls
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 
 class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
-    private lateinit var lectureInfoViewModel: LectureInfoViewModel
+    private val lectureInfoViewModel: LectureInfoViewModel by viewModels {ViewModelFactory(requireContext())}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,38 +27,32 @@ class LectureInfoFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_lecture_info, container, false)
 
-        lectureInfoViewModel = ViewModelProvider(this)[LectureInfoViewModel::class.java]
         binding.lectureInfoViewModel = lectureInfoViewModel
         binding.lifecycleOwner = this
-
-        lectureInfoViewModel.setInfoValue()
-
-        val tmp = arrayListOf<EvaluationData?>()
-        tmp.add(null)
-        lectureInfoViewModel.changeData(tmp)
-
-        binding.infoRecyclerView.infiniteScrolls {
-            //TODO 추상화 필요
-            //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
-            lectureInfoViewModel.deleteLoading()
-            //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-            val newData = if(binding.lectureEvaluationRadioBtn.isChecked)
-                dummyLectureData.subList(0, 12)
-            else
-                dummyExamData.subList(0, 12)
-            lectureInfoViewModel.addData(ArrayList(newData))
-        }
 
         //넘어온 데이터 (강의명, 교수명)
         val args: LectureInfoFragmentArgs by navArgs()
 
+        lectureInfoViewModel.setInfoValue(args.lectureId)
+
+        val tmp = arrayListOf<EvaluationData?>()
+        tmp.add(null)
+        //lectureInfoViewModel.changeData(tmp)
+
+//        binding.infoRecyclerView.infiniteScrolls {
+//            //TODO 추상화 필요
+//            //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
+//            lectureInfoViewModel.deleteLoading()
+//            //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
+//            val newData = if(binding.lectureEvaluationRadioBtn.isChecked)
+//                dummyLectureData.subList(0, 12)
+//            else
+//                dummyExamData.subList(0, 12)
+//            lectureInfoViewModel.addData(ArrayList(newData))
+//        }
+
+
         with(binding) {
-            args.lectureProfessorName?.let {
-                infoLectureName.text = it.subject
-                infoProfessorName.text = it.professor
-            }
-
-
             lectureEvaluationRadioBtn.setOnClickListener {
                 lectureInfoViewModel?.lectureInfoRadioBtnClicked()
             }

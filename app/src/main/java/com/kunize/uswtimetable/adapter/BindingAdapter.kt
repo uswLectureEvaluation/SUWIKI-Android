@@ -27,10 +27,9 @@ object BindingAdapter {
         //Callback
         evaluationAdapter.setOnItemClickListener(object :
             EvaluationListAdapter.OnItemClickListener {
-            override fun onItemClick(v: View, lectureName: String, professor: String) {
-                Log.d("callback!", "$lectureName, $professor")
+            override fun onItemClick(v: View, lectureId: Long) {
                 val action = NavGraphDirections.actionGlobalLectureInfoFragment(
-                    lectureProfessorName = LectureProfessorName(lectureName, professor)
+                    lectureId = lectureId
                 )
                 v.findNavController().navigate(action)
             }

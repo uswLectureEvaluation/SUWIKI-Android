@@ -127,5 +127,7 @@
     <string name="easy">쉬움</string>
     <string name="veryEasy">매우 쉬움</string>
 
+    <!--common-->
+    <string name="hyphen">-</string>
 
 </resources>
