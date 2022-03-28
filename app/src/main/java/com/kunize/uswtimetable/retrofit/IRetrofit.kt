@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
@@ -35,14 +36,16 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface IRetrofit {
 
     // Refresh Token
-    @FormUrlEncoded
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@FieldMap tokens: HashMap<String, String>): Response<Token>
+    fun requestRefresh(@Body refreshToken: RefreshTokenDto): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()
@@ -203,35 +206,52 @@ class AuthenticationInterceptor : Interceptor {
         val request = chain.request().newBuilder()
             .addHeader("AccessToken", accessToken).build()
         Log.d(TAG, "AuthenticationInterceptor - intercept() called / access: $accessToken")
+        Log.d(TAG, "AuthenticationInterceptor - intercept() called / request header: ${request.headers}")
         return chain.proceed(request)
     }
 }
 
 class TokenAuthenticator : Authenticator {
-    override fun authenticate(route: Route?, response: okhttp3.Response): Request {
-        val updatedToken = getUpdatedToken() ?: ""
-        return response.request.newBuilder().header("AccessToken", updatedToken).build()
+    override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
+        Log.d(TAG, "TokenAuthenticator - authenticate() called / response.code: ${response.code}")
+
+        val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
+        val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(RefreshTokenDto(refresh)).execute()
+        if (handleResponse(tokenResponse)) {
+            return response.request
+                .newBuilder()
+                .removeHeader("AccessToken")
+                .header("AccessToken", TimeTableSelPref.encryptedPrefs.getAccessToken()?:"").build()
+        }
+        return null
     }
 
-    private fun getUpdatedToken(): String? {
+    private fun handleResponse(tokenResponse: Response<Token>) =
+        if (tokenResponse.isSuccessful && tokenResponse.body() != null) {
+            Log.d(TAG, "TokenAuthenticator - handleResponse() called / token: ${tokenResponse.body()}")
+            TimeTableSelPref.encryptedPrefs.saveAccessToken(tokenResponse.body()!!.accessToken)
+            TimeTableSelPref.encryptedPrefs.saveRefreshToken(tokenResponse.body()!!.refreshToken)
+            true
+        } else {
+            User.logout()
+            false
+        }
+/*
+    private fun getUpdatedToken(): String {
         val requestParams = HashMap<String, String>()
         val access = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
         requestParams[access] = refresh
 
-        val authTokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams)
-        if (authTokenResponse.isSuccessful) {
-            authTokenResponse.body()?.let { tokens ->
-                tokens.accessToken.let { TimeTableSelPref.encryptedPrefs.saveAccessToken(it) }
-                tokens.refreshToken.let { TimeTableSelPref.encryptedPrefs.saveRefreshToken(it) }
-            }
-        } else {
-            Log.d(
-                TAG,
-                "TokenAuthenticator - getUpdatedToken() called failed / ${authTokenResponse.code()}: ${authTokenResponse.message()}"
-            )
-        }
+        *//*val tokenResponse = CoroutineScope(IO).async { IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams) }
+        val token = tokenResponse.await()*//*
+        val response = IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams)
+        Log.d(TAG, "TokenAuthenticator - getUpdatedToken() called / response: $response")
 
-        return authTokenResponse.body()?.accessToken
-    }
+        return response.let { tokens ->
+            tokens.accessToken.let { TimeTableSelPref.encryptedPrefs.saveAccessToken(it) }
+            tokens.refreshToken.let { TimeTableSelPref.encryptedPrefs.saveRefreshToken(it) }
+            tokens.accessToken
+        }
+    }*/
 }
