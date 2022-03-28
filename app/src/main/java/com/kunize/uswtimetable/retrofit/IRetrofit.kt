@@ -36,16 +36,13 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface IRetrofit {
 
     // Refresh Token
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@Body refreshToken: RefreshTokenDto): Call<Token>
+    fun requestRefresh(@Header("RefreshToken")refresh: String, @Body refreshToken: Token): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()
@@ -205,7 +202,6 @@ class AuthenticationInterceptor : Interceptor {
         val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val request = chain.request().newBuilder()
             .addHeader("AccessToken", accessToken).build()
-        Log.d(TAG, "AuthenticationInterceptor - intercept() called / access: $accessToken")
         Log.d(TAG, "AuthenticationInterceptor - intercept() called / request header: ${request.headers}")
         return chain.proceed(request)
     }
@@ -215,13 +211,17 @@ class TokenAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
         Log.d(TAG, "TokenAuthenticator - authenticate() called / response.code: ${response.code}")
 
+        val access = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
-        val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(RefreshTokenDto(refresh)).execute()
+        val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(refresh=refresh, Token(accessToken = access, refreshToken = refresh)).execute()
+
         if (handleResponse(tokenResponse)) {
-            return response.request
+            val request =  response.request
                 .newBuilder()
                 .removeHeader("AccessToken")
                 .header("AccessToken", TimeTableSelPref.encryptedPrefs.getAccessToken()?:"").build()
+            Log.d(TAG, "TokenAuthenticator - authenticate() called / request header: ${request.headers}")
+            return request
         }
         return null
     }
