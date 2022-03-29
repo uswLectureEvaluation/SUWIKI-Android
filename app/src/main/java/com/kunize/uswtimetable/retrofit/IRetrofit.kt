@@ -209,26 +209,26 @@ class AuthenticationInterceptor : Interceptor {
 
 class TokenAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-        Log.d(TAG, "TokenAuthenticator - authenticate() called / response.code: ${response.code}")
+        Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청")
 
         val access = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
         val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(refresh=refresh, Token(accessToken = access, refreshToken = refresh)).execute()
 
-        if (handleResponse(tokenResponse)) {
-            val request =  response.request
+        return if (handleResponse(tokenResponse)) {
+            Log.d(TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")
+            response.request
                 .newBuilder()
                 .removeHeader("AccessToken")
-                .header("AccessToken", TimeTableSelPref.encryptedPrefs.getAccessToken()?:"").build()
-            Log.d(TAG, "TokenAuthenticator - authenticate() called / request header: ${request.headers}")
-            return request
+                .header("AccessToken", TimeTableSelPref.encryptedPrefs.getAccessToken() ?: "")
+                .build()
+        } else {
+            null
         }
-        return null
     }
 
     private fun handleResponse(tokenResponse: Response<Token>) =
         if (tokenResponse.isSuccessful && tokenResponse.body() != null) {
-            Log.d(TAG, "TokenAuthenticator - handleResponse() called / token: ${tokenResponse.body()}")
             TimeTableSelPref.encryptedPrefs.saveAccessToken(tokenResponse.body()!!.accessToken)
             TimeTableSelPref.encryptedPrefs.saveRefreshToken(tokenResponse.body()!!.refreshToken)
             true
@@ -236,22 +236,4 @@ class TokenAuthenticator : Authenticator {
             User.logout()
             false
         }
-/*
-    private fun getUpdatedToken(): String {
-        val requestParams = HashMap<String, String>()
-        val access = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
-        val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
-        requestParams[access] = refresh
-
-        *//*val tokenResponse = CoroutineScope(IO).async { IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams) }
-        val token = tokenResponse.await()*//*
-        val response = IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams)
-        Log.d(TAG, "TokenAuthenticator - getUpdatedToken() called / response: $response")
-
-        return response.let { tokens ->
-            tokens.accessToken.let { TimeTableSelPref.encryptedPrefs.saveAccessToken(it) }
-            tokens.refreshToken.let { TimeTableSelPref.encryptedPrefs.saveRefreshToken(it) }
-            tokens.accessToken
-        }
-    }*/
 }
