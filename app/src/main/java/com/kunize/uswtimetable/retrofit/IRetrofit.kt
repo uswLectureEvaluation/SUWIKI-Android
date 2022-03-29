@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
@@ -41,9 +42,8 @@ import retrofit2.http.*
 interface IRetrofit {
 
     // Refresh Token
-    @FormUrlEncoded
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@FieldMap tokens: HashMap<String, String>): Response<Token>
+    fun requestRefresh(@Header("RefreshToken")refresh: String, @Body refreshToken: Token): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()
@@ -203,36 +203,38 @@ class AuthenticationInterceptor : Interceptor {
         val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val request = chain.request().newBuilder()
             .addHeader("AccessToken", accessToken).build()
-        Log.d(TAG, "AuthenticationInterceptor - intercept() called / access: $accessToken")
+        Log.d(TAG, "AuthenticationInterceptor - intercept() called / request header: ${request.headers}")
         return chain.proceed(request)
     }
 }
 
 class TokenAuthenticator : Authenticator {
-    override fun authenticate(route: Route?, response: okhttp3.Response): Request {
-        val updatedToken = getUpdatedToken() ?: ""
-        return response.request.newBuilder().header("AccessToken", updatedToken).build()
-    }
+    override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
+        Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청")
 
-    private fun getUpdatedToken(): String? {
-        val requestParams = HashMap<String, String>()
         val access = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
-        requestParams[access] = refresh
+        val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(refresh=refresh, Token(accessToken = access, refreshToken = refresh)).execute()
 
-        val authTokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(requestParams)
-        if (authTokenResponse.isSuccessful) {
-            authTokenResponse.body()?.let { tokens ->
-                tokens.accessToken.let { TimeTableSelPref.encryptedPrefs.saveAccessToken(it) }
-                tokens.refreshToken.let { TimeTableSelPref.encryptedPrefs.saveRefreshToken(it) }
-            }
+        return if (handleResponse(tokenResponse)) {
+            Log.d(TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")
+            response.request
+                .newBuilder()
+                .removeHeader("AccessToken")
+                .header("AccessToken", TimeTableSelPref.encryptedPrefs.getAccessToken() ?: "")
+                .build()
         } else {
-            Log.d(
-                TAG,
-                "TokenAuthenticator - getUpdatedToken() called failed / ${authTokenResponse.code()}: ${authTokenResponse.message()}"
-            )
+            null
         }
-
-        return authTokenResponse.body()?.accessToken
     }
+
+    private fun handleResponse(tokenResponse: Response<Token>) =
+        if (tokenResponse.isSuccessful && tokenResponse.body() != null) {
+            TimeTableSelPref.encryptedPrefs.saveAccessToken(tokenResponse.body()!!.accessToken)
+            TimeTableSelPref.encryptedPrefs.saveRefreshToken(tokenResponse.body()!!.refreshToken)
+            true
+        } else {
+            User.logout()
+            false
+        }
 }
