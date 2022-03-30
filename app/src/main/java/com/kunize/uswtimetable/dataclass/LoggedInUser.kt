@@ -5,5 +5,6 @@ data class LoggedInUser(
     val point: Int,
     val writtenLecture: Int,
     val writtenExam: Int,
-    val viewExam: Int
+    val viewExam: Int,
+    val email: String
 )

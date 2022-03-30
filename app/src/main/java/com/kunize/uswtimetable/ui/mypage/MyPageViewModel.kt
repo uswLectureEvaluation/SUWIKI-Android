@@ -70,7 +70,8 @@ class MyPageViewModel(private val repository: MyPageRepository) : ViewModel() {
                 point = userData.point,
                 writtenExam = userData.writtenExam,
                 writtenLecture = userData.writtenEvaluation,
-                viewExam = userData.viewExam
+                viewExam = userData.viewExam,
+                email = userData.email
             )
         )
     }

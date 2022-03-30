@@ -129,5 +129,6 @@
 
     <!--common-->
     <string name="hyphen">-</string>
+    <string name="email_string">이메일</string>
 
 </resources>

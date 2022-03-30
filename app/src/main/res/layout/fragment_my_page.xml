@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="User"
             type="com.kunize.uswtimetable.ui.login.User" />
@@ -60,8 +62,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginVertical="16dp"
                         android:orientation="vertical"
-                        android:visibility="@{viewModel.user.loggedIn ? View.GONE : View.VISIBLE}"
                         android:padding="@dimen/cardview_padding"
+                        android:visibility="@{viewModel.user.loggedIn ? View.GONE : View.VISIBLE}"
                         tools:visibility="gone">
 
                         <TextView
@@ -236,9 +238,9 @@
                                         style="@style/TextCaption2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        tools:text="(-40P)"
-                                        android:textColor="@{viewModel.openedExamPoint >= 0 ? @color/red : @color/blue}"
                                         android:text="@{viewModel.openedExamPointText}"
+                                        android:textColor="@{viewModel.openedExamPoint >= 0 ? @color/red : @color/blue}"
+                                        tools:text="(-40P)"
                                         tools:textColor="#00F" />
                                 </LinearLayout>
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -300,8 +302,8 @@
                             <TextView
                                 android:id="@+id/loginId"
                                 style="@style/TextBody2.Gray"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
                                 android:layout_marginStart="16dp"
                                 android:text="@{viewModel.user.user.userId}"
                                 app:layout_constraintBottom_toBottomOf="@+id/loginIdTextView"
@@ -310,6 +312,31 @@
                                 app:layout_constraintStart_toEndOf="@+id/loginIdTextView"
                                 app:layout_constraintTop_toTopOf="@+id/loginIdTextView"
                                 tools:text="pmb0836" />
+
+                            <TextView
+                                android:id="@+id/loginEmailTextView"
+                                style="@style/TextSubtitle2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/email_string"
+                                android:textColor="@color/black"
+                                app:layout_constraintStart_toStartOf="@+id/loginIdTextView"
+                                app:layout_constraintTop_toBottomOf="@+id/loginIdTextView" />
+
+                            <TextView
+                                android:id="@+id/loginEmail"
+                                style="@style/TextBody2.Gray"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="16dp"
+                                android:text="@{viewModel.user.user.email}"
+                                app:layout_constraintBottom_toBottomOf="@+id/loginEmailTextView"
+                                app:layout_constraintEnd_toStartOf="@+id/myPostButton"
+                                app:layout_constraintHorizontal_bias="0"
+                                app:layout_constraintStart_toEndOf="@+id/loginEmailTextView"
+                                app:layout_constraintTop_toTopOf="@+id/loginEmailTextView"
+                                tools:text="pmb0836@suwon.ac.kr" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
