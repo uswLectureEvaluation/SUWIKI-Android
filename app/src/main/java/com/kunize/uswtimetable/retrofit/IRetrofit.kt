@@ -11,7 +11,6 @@ import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_EVALUATION
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_INFO
-import com.kunize.uswtimetable.util.API.SEARCH
 import com.kunize.uswtimetable.util.API.LECTURE_MAIN
 import com.kunize.uswtimetable.util.API.LOGIN
 import com.kunize.uswtimetable.util.API.MY_PAGE
@@ -21,6 +20,7 @@ import com.kunize.uswtimetable.util.API.PASSWORD
 import com.kunize.uswtimetable.util.API.PASSWORD_RESET
 import com.kunize.uswtimetable.util.API.QUIT
 import com.kunize.uswtimetable.util.API.REQUEST_REFRESH
+import com.kunize.uswtimetable.util.API.SEARCH
 import com.kunize.uswtimetable.util.API.SIGN_UP
 import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
@@ -44,7 +44,7 @@ interface IRetrofit {
 
     // Refresh Token
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@Header("RefreshToken")refresh: String, @Body refreshToken: Token): Call<Token>
+    fun requestRefresh(@Header("RefreshToken")refresh: String): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()
@@ -218,11 +218,10 @@ class AuthenticationInterceptor : Interceptor {
 
 class TokenAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-        Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청")
 
-        val access = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
-        val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(refresh=refresh, Token(accessToken = access, refreshToken = refresh)).execute()
+        Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh")
+        val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(refresh=refresh).execute()
 
         return if (handleResponse(tokenResponse)) {
             Log.d(TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")
@@ -243,6 +242,7 @@ class TokenAuthenticator : Authenticator {
             true
         } else {
             User.logout()
+            Log.d(TAG, "TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다.")
             false
         }
 }
