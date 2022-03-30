@@ -14,6 +14,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.infiniteScrolls
 
 class LectureInfoFragment : Fragment() {
 
@@ -30,26 +31,13 @@ class LectureInfoFragment : Fragment() {
         binding.lectureInfoViewModel = lectureInfoViewModel
         binding.lifecycleOwner = this
 
-        //넘어온 데이터 (강의명, 교수명)
         val args: LectureInfoFragmentArgs by navArgs()
 
         lectureInfoViewModel.setInfoValue(args.lectureId)
 
-        val tmp = arrayListOf<EvaluationData?>()
-        tmp.add(null)
-        //lectureInfoViewModel.changeData(tmp)
-
-//        binding.infoRecyclerView.infiniteScrolls {
-//            //TODO 추상화 필요
-//            //로딩 바 제거, 서버 연동 시 새로운 데이터를 받아 온 후에 제거
-//            lectureInfoViewModel.deleteLoading()
-//            //스크롤 끝에 도달한 경우 새로운 데이터를 받아옴
-//            val newData = if(binding.lectureEvaluationRadioBtn.isChecked)
-//                dummyLectureData.subList(0, 12)
-//            else
-//                dummyExamData.subList(0, 12)
-//            lectureInfoViewModel.addData(ArrayList(newData))
-//        }
+        binding.infoRecyclerView.infiniteScrolls {
+            lectureInfoViewModel.getEvaluationList(args.lectureId)
+        }
 
 
         with(binding) {

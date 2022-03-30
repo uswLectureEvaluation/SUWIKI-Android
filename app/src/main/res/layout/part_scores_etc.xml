@@ -101,12 +101,11 @@
             android:id="@+id/teamMeeting"
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
-            android:text="@{evaluationData.teamMeeting}"
+            lectureTeamAvg="@{evaluationData.teamMeeting}"
             lectureTotalAvg="@{evaluationData.aver}"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/textViewMeeting"
             app:layout_constraintStart_toEndOf="@+id/textViewMeeting"
-            app:teamColor="@{evaluationData.teamMeeting}"
             tools:text="없음" />
 
         <TextView
@@ -122,12 +121,11 @@
             android:id="@+id/task"
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
-            android:text="@{evaluationData.task}"
+            lectureHomeworkAvg="@{evaluationData.task}"
             lectureTotalAvg="@{evaluationData.aver}"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/textViewTask"
             app:layout_constraintStart_toEndOf="@+id/textViewTask"
-            app:taskColor="@{evaluationData.task}"
             tools:text="많음" />
 
         <TextView
@@ -143,10 +141,9 @@
             android:id="@+id/grade"
             style="@style/score_textview_style"
             android:layout_marginStart="8dp"
-            android:text="@{evaluationData.grade}"
+            lectureDifficultyAvg="@{evaluationData.grade}"
             lectureTotalAvg="@{evaluationData.aver}"
             android:visibility="visible"
-            app:gradeColor="@{evaluationData.grade}"
             app:layout_constraintBottom_toBottomOf="@+id/textViewGrade"
             app:layout_constraintStart_toEndOf="@+id/textViewGrade"
             tools:text="까다로움" />

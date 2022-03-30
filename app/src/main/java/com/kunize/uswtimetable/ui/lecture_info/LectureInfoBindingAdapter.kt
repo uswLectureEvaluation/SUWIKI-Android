@@ -44,10 +44,12 @@ object LectureInfoBindingAdapter {
 
     @BindingAdapter("lectureTeamAvg")
     @JvmStatic
-    fun setTeamText(textView: TextView, value: Float) {
+    fun setTeamText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        when (value.roundToInt()) {
+        if(value is Float)
+            value.roundToInt()
+        when (value) {
             0 -> {
                 textId = R.string.not_exist
                 colorId = R.color.custom_light_gray
@@ -63,10 +65,12 @@ object LectureInfoBindingAdapter {
 
     @BindingAdapter("lectureDifficultyAvg")
     @JvmStatic
-    fun setDifficultText(textView: TextView, value: Float) {
+    fun setDifficultText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        when (value.roundToInt()) {
+        if(value is Float)
+            value.roundToInt()
+        when (value) {
             0 -> {
                 textId = R.string.good
                 colorId = R.color.custom_light_gray
@@ -86,10 +90,12 @@ object LectureInfoBindingAdapter {
 
     @BindingAdapter("lectureHomeworkAvg")
     @JvmStatic
-    fun setHomeworkText(textView: TextView, value: Float) {
+    fun setHomeworkText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        when (value.roundToInt()) {
+        if(value is Float)
+            value.roundToInt()
+        when (value) {
             0 -> {
                 textId = R.string.not_exist
                 colorId = R.color.custom_light_gray

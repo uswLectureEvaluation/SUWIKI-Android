@@ -151,6 +151,8 @@ class StartActivity : AppCompatActivity() {
                     Log.d("firebase", "추가 완료")
                 }
 
+
+
                 db!!.timetableDao().deleteAll()
 
                 while (true) {
