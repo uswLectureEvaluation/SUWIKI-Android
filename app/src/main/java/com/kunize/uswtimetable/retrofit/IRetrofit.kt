@@ -28,6 +28,7 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
+import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.isJsonArray
 import com.kunize.uswtimetable.util.isJsonObject
@@ -150,6 +151,12 @@ interface IRetrofit {
         @Query("option") option: String,
         @Query("page") page: Int = 1
     ): Response<LectureMainDto>
+
+    @POST(WRITE_LECTURE_EVALUATION)
+    suspend fun postLectureEvaluation(
+        @Query("lectureId") lectureId: Long,
+        @Body info: LectureEvaluationPostDto
+    ): Response<String>
 
     companion object {
         private var retrofitService: IRetrofit? = null

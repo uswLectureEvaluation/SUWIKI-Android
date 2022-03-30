@@ -9,6 +9,7 @@ import android.widget.CheckBox
 import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,8 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.dataclass.MyExamInfo
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.util.WriteFragmentTitle
 import com.kunize.uswtimetable.util.seekbarChangeListener
 import kotlin.math.roundToInt
@@ -25,7 +28,7 @@ class WriteFragment : Fragment() {
 
     lateinit var binding: FragmentWriteBinding
 
-    private lateinit var writeViewModel: WriteViewModel
+    private val writeViewModel: WriteViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     private lateinit var taskRadioBtnList: List<RadioButton>
     private lateinit var gradeRadioBtnList: List<RadioButton>
@@ -45,7 +48,6 @@ class WriteFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_write, container, false)
 
-        writeViewModel = ViewModelProvider(this)[WriteViewModel::class.java]
         binding.viewModel = writeViewModel
         binding.lifecycleOwner = this
 
@@ -58,10 +60,6 @@ class WriteFragment : Fragment() {
         setInitValueWhenEditMyExam(args)
         setSeekBarListener()
         setSeekBarProgress()
-
-        //TODO 수강학기 선택 동적으로 불러와서 처리하기
-        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, args.lectureProfessorName!!.semester.split(","))
-        binding.writeYearSemesterSpinner.adapter = spinnerAdapter
 
         binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack(R.id.writeFragment, true)
@@ -157,6 +155,8 @@ class WriteFragment : Fragment() {
         args.lectureProfessorName?.let {
             binding.writeLectureName.text = it.subject
             binding.writeProfessor.text = it.professor
+            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, args.lectureProfessorName!!.semester.split(","))
+            binding.writeYearSemesterSpinner.adapter = spinnerAdapter
         }
     }
 

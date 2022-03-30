@@ -3,8 +3,10 @@ package com.kunize.uswtimetable.ui.write
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
+import com.kunize.uswtimetable.ui.repository.write.WriteRepository
 
-class WriteViewModel : ViewModel() {
+class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel() {
     private val _honeyScore = MutableLiveData<Float>()
     val honeyScore: LiveData<Float>
         get() = _honeyScore

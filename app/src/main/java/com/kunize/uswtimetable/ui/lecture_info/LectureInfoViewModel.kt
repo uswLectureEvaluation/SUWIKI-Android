@@ -9,6 +9,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
+import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -65,16 +66,19 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
 
     private fun getExamList(lectureId: Long) {
         viewModelScope.launch {
-            val response = lectureInfoRepository.getLectureDetailExam(lectureId, _page.value!!.toInt())
+            val response =
+                lectureInfoRepository.getLectureDetailExam(lectureId, _page.value!!.toInt())
             delay(delayTime)
-            if(response.isSuccessful) {
+            if (response.isSuccessful) {
                 val tmpExamData = response.body()
                 deleteLoading()
-                if(tmpExamData != null) {
-                    Log.d("lectureApi","시험정보 클릭 $lectureId,${tmpExamData.examDataExist}")
-                    if(tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
+                if (tmpExamData != null) {
+                    Log.d("lectureApi", "시험정보 클릭 ${_page.value},${tmpExamData.examDataExist}")
+                    if(tmpExamData.data.size != 10)
+                        _page.value = LAST_PAGE
+                    if (tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
                         _showHideExamDataLayout.value = true
-                    else if(!tmpExamData.examDataExist)
+                    else if (!tmpExamData.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
                         //TODO Page 값에 따른 별도 로직 추가, LAST_PAGE 로직 추가
@@ -82,9 +86,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                         nextPage()
                     }
                 }
-            }
-            else {
-                //TODO 통신 실패 로직 추가
+            } else {
+                Log.d("lectureApi", "시험정보 클릭 에러 $lectureId,${response.code()}")
             }
         }
     }
@@ -96,7 +99,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     fun setInfoValue(lectureId: Long) {
         viewModelScope.launch {
             val response = lectureInfoRepository.getLectureDetailInfo(lectureId)
-            if(response.isSuccessful) {
+            if (response.isSuccessful) {
                 _lectureDetailInfoData.value = response.body()
             } else {
                 //TODO 통신 실패 처리
@@ -105,7 +108,9 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     fun scrollBottom(lectureId: Long) {
-        when(_writeBtnText.value) {
+        if (_page.value == LAST_PAGE)
+            return
+        when (_writeBtnText.value) {
             R.string.write_evaluation -> getEvaluationList(lectureId)
             else -> getExamList(lectureId)
         }
@@ -113,15 +118,18 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
 
     private fun getEvaluationList(lectureId: Long) {
         viewModelScope.launch {
-            val response = lectureInfoRepository.getLectureDetailEvaluation(lectureId, _page.value!!.toInt())
+            val response =
+                lectureInfoRepository.getLectureDetailEvaluation(lectureId, _page.value!!.toInt())
             delay(delayTime)
             if (response.isSuccessful) {
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
-                Log.d("lectureApi","강의평가 클릭 $lectureId,${tmpEvaluationData}")
+                Log.d("lectureApi", "강의평가 클릭 $lectureId,${tmpEvaluationData}")
                 deleteLoading()
-                if(!tmpEvaluationData.isNullOrEmpty()) {
-                    if(tmpEvaluationData.size == 10)
+                if (!tmpEvaluationData.isNullOrEmpty()) {
+                    if (tmpEvaluationData.size == 10)
                         tmpEvaluationData.add(null)
+                    else
+                        _page.value = LAST_PAGE
                     _evaluationList.value!!.addAll(tmpEvaluationData)
                     _evaluationList.value = _evaluationList.value
                 }
@@ -133,6 +141,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     private fun nextPage() {
+        if (_page.value == LAST_PAGE)
+            return
         _page.value = _page.value?.plus(1)
         _page.value = _page.value
     }
