@@ -55,7 +55,8 @@
         tools:layout="@layout/fragment_lecture_info">
         <argument
             android:name="lectureId"
-            app:argType="long" />
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/myPostFragment"
@@ -120,9 +121,13 @@
             android:defaultValue="true" />
         <argument
             android:name="lectureProfessorName"
-            app:argType="com.kunize.uswtimetable.dataclass.LectureProfessorName"
+            app:argType="com.kunize.uswtimetable.dataclass.LectureProfessorSemester"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="lectureId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <action
         android:id="@+id/action_global_writeFragment"

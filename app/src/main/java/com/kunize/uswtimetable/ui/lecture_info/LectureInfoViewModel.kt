@@ -74,7 +74,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                     Log.d("lectureApi","시험정보 클릭 $lectureId,${tmpExamData.examDataExist}")
                     if(tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
                         _showHideExamDataLayout.value = true
-                    else if(tmpExamData.data.isEmpty() && !tmpExamData.examDataExist)
+                    else if(!tmpExamData.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
                         //TODO Page 값에 따른 별도 로직 추가, LAST_PAGE 로직 추가

@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +19,7 @@ class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
     private val lectureInfoViewModel: LectureInfoViewModel by viewModels {ViewModelFactory(requireContext())}
+    var lectureId = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +32,9 @@ class LectureInfoFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val args: LectureInfoFragmentArgs by navArgs()
+        lectureId = args.lectureId
 
-        lectureInfoViewModel.setInfoValue(args.lectureId)
+        lectureInfoViewModel.setInfoValue(lectureId)
 
         binding.infoRecyclerView.infiniteScrolls {
             lectureInfoViewModel.scrollBottom(args.lectureId)
@@ -67,10 +68,12 @@ class LectureInfoFragment : Fragment() {
     private fun goToWriteFragment() {
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
-                lectureProfessorName = LectureProfessorName(
+                lectureProfessorName = LectureProfessorSemester(
                     binding.infoLectureName.text.toString(),
-                    binding.infoProfessorName.text.toString()
-                ), isEvaluation = !binding.examInfoRadioBtn.isChecked
+                    binding.infoProfessorName.text.toString(),
+                    lectureInfoViewModel.lectureDetailInfoData.value?.data?.semester ?: ""
+                ), isEvaluation = !binding.examInfoRadioBtn.isChecked,
+                lectureId = lectureId
             )
         findNavController().navigate(action)
     }

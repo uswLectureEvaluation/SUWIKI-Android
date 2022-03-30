@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
@@ -14,7 +15,6 @@ import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
-import com.kunize.uswtimetable.dataclass.LectureProfessorName
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.util.WriteFragmentTitle
@@ -37,6 +37,8 @@ class WriteFragment : Fragment() {
     private var defaultLearningProgress = 6
     private var defaultSatisfactionProgress = 6
 
+    var lectureId = 0L
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +50,7 @@ class WriteFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val args: WriteFragmentArgs by navArgs()
+        lectureId = args.lectureId
 
         setInitValueWhenWrite(args)
         setFragmentViewType(args)
@@ -57,7 +60,8 @@ class WriteFragment : Fragment() {
         setSeekBarProgress()
 
         //TODO 수강학기 선택 동적으로 불러와서 처리하기
-
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, args.lectureProfessorName!!.semester.split(","))
+        binding.writeYearSemesterSpinner.adapter = spinnerAdapter
 
         binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack(R.id.writeFragment, true)
@@ -225,14 +229,8 @@ class WriteFragment : Fragment() {
     }
 
     private fun goToLectureInfoFragment() {
-//        val action = NavGraphDirections.actionGlobalLectureInfoFragment(
-//            lectureProfessorName =
-//            LectureProfessorName(
-//                binding.writeLectureName.text.toString(),
-//                binding.writeProfessor.text.toString()
-//            )
-//        )
-//        findNavController().navigate(action)
+        val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = lectureId)
+        findNavController().navigate(action)
     }
 
     private fun goToMyPostFragment() {
