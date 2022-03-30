@@ -91,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
                 rememberLogin.isChecked = PreferenceManager.getBoolean(context, REMEMBER_LOGIN)
             } catch (e: ClassCastException) {
                 Log.d(TAG, "LoginActivity - \"로그인 유지\" 값이 저장되지 않음: $e")
-                rememberLogin.isChecked = false
+                rememberLogin.isChecked = true
             }
 
             userId.afterTextChanged {
