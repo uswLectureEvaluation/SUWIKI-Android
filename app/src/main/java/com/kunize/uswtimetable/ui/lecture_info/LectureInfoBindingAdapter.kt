@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.size
 import androidx.databinding.BindingAdapter
 import com.google.android.flexbox.FlexboxLayout
 import com.kunize.uswtimetable.MainActivity.Companion.dp
@@ -15,7 +16,7 @@ object LectureInfoBindingAdapter {
     @BindingAdapter("yearSemesterList")
     @JvmStatic
     fun setList(flexBox: FlexboxLayout, items: String?) {
-        if (items == null)
+        if (items == null || flexBox.size != 0)
             return
         for (item in items.split(",")) {
             val textView = TextView(flexBox.context)
