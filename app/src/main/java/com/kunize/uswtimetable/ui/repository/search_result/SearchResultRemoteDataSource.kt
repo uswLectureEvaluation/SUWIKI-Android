@@ -5,8 +5,7 @@ import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationDataSource
 import retrofit2.Response
 
-class SearchResultRemoteDataSource : SearchResultDataSource, EvaluationDataSource {
-    private val apiService = IRetrofit.getInstanceWithNoToken()
+class SearchResultRemoteDataSource(private val apiService: IRetrofit) : SearchResultDataSource, EvaluationDataSource {
     override suspend fun getSearchResultDataSource(
         name: String,
         option: String,

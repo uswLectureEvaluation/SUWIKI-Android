@@ -84,11 +84,13 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 NoticeDetailViewModel(repository) as T
             }
             modelClass.isAssignableFrom(EvaluationViewModel::class.java) -> {
-                val repository = EvaluationRepository(EvaluationRemoteDataSource())
+                val apiService = IRetrofit.getInstanceWithNoToken()
+                val repository = EvaluationRepository(EvaluationRemoteDataSource(apiService))
                 EvaluationViewModel(repository) as T
             }
             modelClass.isAssignableFrom(SearchResultViewModel::class.java) -> {
-                val repository = SearchResultRepository(SearchResultRemoteDataSource())
+                val apiService = IRetrofit.getInstanceWithNoToken()
+                val repository = SearchResultRepository(SearchResultRemoteDataSource(apiService))
                 SearchResultViewModel(repository) as T
             }
             modelClass.isAssignableFrom(LectureInfoViewModel::class.java) -> {

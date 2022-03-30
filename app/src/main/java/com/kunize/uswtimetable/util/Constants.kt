@@ -39,6 +39,7 @@ object API {
     const val SIGN_UP_SCHOOL_CHECK: String = "/user/verify-email"
     const val LECTURE_MAIN: String = "/lecture/findAllList"
     const val LECTURE_DETAIL_INFO = "/lecture"
+    const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/findByLectureId"
 }
 
 object WriteFragmentTitle {

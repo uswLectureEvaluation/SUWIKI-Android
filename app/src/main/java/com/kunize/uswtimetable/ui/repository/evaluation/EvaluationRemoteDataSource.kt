@@ -4,9 +4,9 @@ import com.kunize.uswtimetable.dataclass.LectureMainDto
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import retrofit2.Response
 
-class EvaluationRemoteDataSource: EvaluationDataSource {
+class EvaluationRemoteDataSource(private val apiService: IRetrofit): EvaluationDataSource {
 
     override suspend fun getEvaluationDataSource(option: String, page: Int): Response<LectureMainDto> {
-        return IRetrofit.getInstanceWithNoToken().getLectureMainList(option)
+        return apiService.getLectureMainList(option)
     }
 }
