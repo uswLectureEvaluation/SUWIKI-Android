@@ -36,7 +36,7 @@ class LectureInfoFragment : Fragment() {
         lectureInfoViewModel.setInfoValue(args.lectureId)
 
         binding.infoRecyclerView.infiniteScrolls {
-            lectureInfoViewModel.getEvaluationList(args.lectureId)
+            lectureInfoViewModel.scrollBottom(args.lectureId)
         }
 
 

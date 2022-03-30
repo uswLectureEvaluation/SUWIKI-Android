@@ -10,6 +10,7 @@ import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_EVALUATION
+import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_EXAM
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_INFO
 import com.kunize.uswtimetable.util.API.SEARCH
 import com.kunize.uswtimetable.util.API.LECTURE_MAIN
@@ -120,6 +121,13 @@ interface IRetrofit {
         @Query("lectureId") lectureId: Long,
         @Query("page") page: Int
     ): Response<LectureDetailEvaluationDto>
+
+    // 검색결과 자세히 보기 (Exam)
+    @GET(LECTURE_DETAIL_EXAM)
+    suspend fun getLectureDetailExam(
+        @Query("lectureId") lectureId: Long,
+        @Query("page") page: Int
+    ): Response<LectureDetailExamDto>
 
     // 검색결과 페이지 API(강의평)
     @GET(SEARCH)

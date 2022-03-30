@@ -1,11 +1,13 @@
 package com.kunize.uswtimetable.ui.search_result
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
+import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -28,15 +30,20 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     }
 
     fun scrollBottomEvent() {
+        if(_page.value == LAST_PAGE)
+            return
         viewModelScope.launch {
             val response = getResponse()
             delay(delayTime)
             if (response.isSuccessful) {
+                Log.d("searchResultApi","${_page.value}")
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 deleteLoading()
                 if(!tmpEvaluationData.isNullOrEmpty()) {
                     if(tmpEvaluationData.size == 10)
                         tmpEvaluationData.add(null)
+                    else
+                        _page.value = LAST_PAGE
                     if(_page.value == 1) _evaluationList.value = tmpEvaluationData!!
                     else {
                         _evaluationList.value!!.addAll(tmpEvaluationData)
@@ -51,6 +58,8 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     }
 
     private fun nextPage() {
+        if(_page.value == LAST_PAGE)
+            return
         _page.value = _page.value?.plus(1)
         _page.value = _page.value
     }

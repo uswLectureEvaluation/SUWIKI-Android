@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,21 +49,44 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _showHideExamDataLayout.value = false
     }
 
-    fun examInfoRadioBtnClicked() {
-        //TODO
-        // 서버로 부터 데이터 불러옴
-        // 데이터 결과에 따라 _showHideExamDataLayout 여부 설정
-        _showHideExamDataLayout.value = true
-        changeWriteBtnText(R.string.write_exam)
-    }
-
     fun lectureInfoRadioBtnClicked() {
-        //TODO 서버로 부터 강의평가 데이터 받아오기
+        _page.value = 1
         _showHideExamDataLayout.value = false
         _showNoExamDataLayout.value = false
-        val tmp = arrayListOf<EvaluationData?>()
-        tmp.add(null)
         changeWriteBtnText(R.string.write_evaluation)
+        _evaluationList.value = arrayListOf(null)
+    }
+
+    fun examInfoRadioBtnClicked() {
+        changeWriteBtnText(R.string.write_exam)
+        _page.value = 1
+        _evaluationList.value = arrayListOf(null)
+    }
+
+    private fun getExamList(lectureId: Long) {
+        viewModelScope.launch {
+            val response = lectureInfoRepository.getLectureDetailExam(lectureId, _page.value!!.toInt())
+            delay(delayTime)
+            if(response.isSuccessful) {
+                val tmpExamData = response.body()
+                deleteLoading()
+                if(tmpExamData != null) {
+                    Log.d("lectureApi","시험정보 클릭 $lectureId,${tmpExamData.examDataExist}")
+                    if(tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
+                        _showHideExamDataLayout.value = true
+                    else if(tmpExamData.data.isEmpty() && !tmpExamData.examDataExist)
+                        _showNoExamDataLayout.value = true
+                    else {
+                        //TODO Page 값에 따른 별도 로직 추가, LAST_PAGE 로직 추가
+                        _evaluationList.value = tmpExamData.convertToEvaluationData()
+                        nextPage()
+                    }
+                }
+            }
+            else {
+                //TODO 통신 실패 로직 추가
+            }
+        }
     }
 
     private fun changeWriteBtnText(resource: Int) {
@@ -80,12 +104,20 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         }
     }
 
-    fun getEvaluationList(lectureId: Long) {
+    fun scrollBottom(lectureId: Long) {
+        when(_writeBtnText.value) {
+            R.string.write_evaluation -> getEvaluationList(lectureId)
+            else -> getExamList(lectureId)
+        }
+    }
+
+    private fun getEvaluationList(lectureId: Long) {
         viewModelScope.launch {
             val response = lectureInfoRepository.getLectureDetailEvaluation(lectureId, _page.value!!.toInt())
             delay(delayTime)
             if (response.isSuccessful) {
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
+                Log.d("lectureApi","강의평가 클릭 $lectureId,${tmpEvaluationData}")
                 deleteLoading()
                 if(!tmpEvaluationData.isNullOrEmpty()) {
                     if(tmpEvaluationData.size == 10)

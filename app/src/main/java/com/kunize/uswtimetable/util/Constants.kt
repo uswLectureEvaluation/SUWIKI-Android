@@ -40,6 +40,7 @@ object API {
     const val LECTURE_MAIN: String = "/lecture/findAllList"
     const val LECTURE_DETAIL_INFO = "/lecture"
     const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/findByLectureId"
+    const val LECTURE_DETAIL_EXAM = "/exam-posts/findByLectureId"
 }
 
 object WriteFragmentTitle {
@@ -96,3 +97,6 @@ enum class ExamDifficulty {
     DIFFICULT,
     VERY_DIFFICULT
 }
+
+//무한 스크롤
+const val LAST_PAGE = 0
