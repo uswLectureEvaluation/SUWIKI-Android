@@ -24,6 +24,7 @@ object API {
     const val NOTICE: String = "/notice"
     const val SEARCH: String = "/lecture/findBySearchValue"
     const val EXAM: String = "/lecture/exam"
+    const val ID: String = "/user/find-id"
     const val PASSWORD: String = "/user/find-pw"
     const val PASSWORD_RESET: String = "/user/reset-pw"
     const val LOGIN: String = "/user/login"

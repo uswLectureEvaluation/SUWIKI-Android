@@ -1,0 +1,10 @@
+package com.kunize.uswtimetable.ui.repository.find_user_info
+
+import com.kunize.uswtimetable.dataclass.EmailDto
+import com.kunize.uswtimetable.retrofit.IRetrofit
+
+class FindIdRepository {
+
+    suspend fun findId(email: String) =
+        IRetrofit.getInstanceWithNoToken().findId(EmailDto(email))
+}

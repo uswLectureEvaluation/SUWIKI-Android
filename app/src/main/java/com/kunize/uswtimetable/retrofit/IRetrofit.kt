@@ -9,6 +9,7 @@ import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
+import com.kunize.uswtimetable.util.API.ID
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_EVALUATION
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_INFO
 import com.kunize.uswtimetable.util.API.LECTURE_MAIN
@@ -68,6 +69,10 @@ interface IRetrofit {
     // 공지사항 API
     @GET(NOTICE)
     suspend fun getNotice(@Query("notice_id") id: Long): Response<NoticeDetailDto>
+
+    // 아이디 찾기 API
+    @POST(ID)
+    suspend fun findId(@Body email: EmailDto): Response<SuccessCheckDto>
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @POST(PASSWORD)
