@@ -12,6 +12,7 @@ import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel() {
     private val _writeBtnText = MutableLiveData<Int>()
@@ -60,7 +61,6 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
 
     fun examInfoRadioBtnClicked(lectureId: Long) {
         _page.value = 1
-        Log.d("lectureApi", "라디오 버튼 클릭 ${_page.value}")
         changeWriteBtnText(R.string.write_exam)
         _evaluationList.value = arrayListOf(null)
         scrollBottom(lectureId)
@@ -76,11 +76,14 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 val tmpExamData = response.body()
                 deleteLoading()
                 if (tmpExamData != null) {
+                    if(tmpExamData.data.size != 10)
+                        _page.value = LAST_PAGE
                     if (tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
                         _showHideExamDataLayout.value = true
                     else if (!tmpExamData.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
+                        //TODO null 로직 추가
                         _evaluationList.value = tmpExamData.convertToEvaluationData()
                         nextPage()
                     }
@@ -95,8 +98,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _writeBtnText.value = resource
     }
 
-    fun setInfoValue(lectureId: Long) {
-        viewModelScope.launch {
+    suspend fun setInfoValue(lectureId: Long) {
+        withContext(viewModelScope.coroutineContext) {
             val response = lectureInfoRepository.getLectureDetailInfo(lectureId)
             if (response.isSuccessful) {
                 _lectureDetailInfoData.value = response.body()
@@ -116,7 +119,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         }
     }
 
-    private fun getEvaluationList(lectureId: Long) {
+    fun getEvaluationList(lectureId: Long) {
         viewModelScope.launch {
             val response =
                 lectureInfoRepository.getLectureDetailEvaluation(lectureId, _page.value!!.toInt())
@@ -135,7 +138,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 }
                 nextPage()
             } else {
-                _evaluationList.value = arrayListOf()
+                //TODO 통신 실패 로직
             }
         }
     }
