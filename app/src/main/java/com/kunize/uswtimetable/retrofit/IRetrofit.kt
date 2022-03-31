@@ -24,7 +24,6 @@ import com.kunize.uswtimetable.util.API.SEARCH
 import com.kunize.uswtimetable.util.API.SIGN_UP
 import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
-import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -62,10 +61,6 @@ interface IRetrofit {
     @POST(SIGN_UP_EMAIL_CHECK)
     suspend fun checkEmail(@Body email: CheckEmailFormat): Response<OverlapCheckDto>
 
-    // 학교 메일 인증 API
-    @GET(SIGN_UP_SCHOOL_CHECK)
-    fun verifyEmail()
-
     // 공지사항 리스트 API
     @GET(NOTICE_LIST)
     suspend fun getNoticeList(): Response<NoticeListDto>
@@ -76,11 +71,11 @@ interface IRetrofit {
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @POST(PASSWORD)
-    fun findPassword(@Body info: UserIdEmail): Call<SuccessCheckDto>
+    suspend fun findPassword(@Body info: UserIdEmail): Response<SuccessCheckDto>
 
     // 비밀번호 재설정 API
     @POST(PASSWORD_RESET)
-    fun resetPassword(@Body password: String): Call<SuccessCheckDto>
+    suspend fun resetPassword(@Body password: String): Response<SuccessCheckDto>
 
     // 로그인 요청 API
     @POST(LOGIN)
@@ -88,7 +83,7 @@ interface IRetrofit {
 
     // 회원탈퇴 요청 API
     @POST(QUIT)
-    fun quit(@Body info: LoginIdPassword): Call<SuccessCheckDto>
+    suspend fun quit(@Body info: LoginIdPassword): Response<SuccessCheckDto>
 
     // 내 정보 페이지 호출 API
     @GET(MY_PAGE)

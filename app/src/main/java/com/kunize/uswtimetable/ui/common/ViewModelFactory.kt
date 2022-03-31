@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
+import com.kunize.uswtimetable.ui.login.FindPwViewModel
 import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
@@ -14,7 +15,7 @@ import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRepository
-import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoDataSource
+import com.kunize.uswtimetable.ui.repository.find_user_info.FindPwRepository
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
@@ -66,6 +67,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 val apiService = IRetrofit.getInstance()
                 val repository = LoginRepository(LoginRemoteDataSource(apiService))
                 LoginViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(FindPwViewModel::class.java) -> {
+                val repository = FindPwRepository()
+                FindPwViewModel(repository) as T
             }
             modelClass.isAssignableFrom(MyPageViewModel::class.java) -> {
                 val repository = MyPageRepository(MyPageRemoteDataSource())
