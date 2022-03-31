@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.login.FindIdViewModel" />
+            type="com.kunize.uswtimetable.ui.user_info.FindIdViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/page_padding"
-        tools:context=".ui.login.FindIdActivity">
+        tools:context=".ui.user_info.FindIdActivity">
 
         <TextView
             android:id="@+id/titleTextView"

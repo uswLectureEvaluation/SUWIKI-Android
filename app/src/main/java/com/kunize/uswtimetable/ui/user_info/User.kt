@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.login
+package com.kunize.uswtimetable.ui.user_info
 
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.LoggedInUser

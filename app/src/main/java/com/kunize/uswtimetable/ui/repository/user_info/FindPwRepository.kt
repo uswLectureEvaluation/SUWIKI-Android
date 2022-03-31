@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.repository.find_user_info
+package com.kunize.uswtimetable.ui.repository.user_info
 
 import com.kunize.uswtimetable.dataclass.UserIdEmail
 import com.kunize.uswtimetable.retrofit.IRetrofit

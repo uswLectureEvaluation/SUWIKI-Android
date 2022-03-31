@@ -15,12 +15,12 @@ import com.kunize.uswtimetable.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMyPageBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.login.FindIdActivity
-import com.kunize.uswtimetable.ui.login.FindPasswordActivity
 import com.kunize.uswtimetable.ui.login.LoginActivity
-import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
+import com.kunize.uswtimetable.ui.user_info.FindIdActivity
+import com.kunize.uswtimetable.ui.user_info.FindPasswordActivity
+import com.kunize.uswtimetable.ui.user_info.User
 
 class MyPageFragment : Fragment() {
     private val viewModel: MyPageViewModel by viewModels { ViewModelFactory(requireContext()) }

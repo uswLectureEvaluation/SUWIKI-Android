@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.dataclass.UserDataDto
-import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.ui.repository.mypage.MyPageRepository
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.login
+package com.kunize.uswtimetable.ui.user_info
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityFindIdBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.login.LoginActivity
 
 class FindIdActivity : AppCompatActivity() {
     private var _binding: ActivityFindIdBinding? = null

@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
-import com.kunize.uswtimetable.ui.login.User
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM

@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
-import com.kunize.uswtimetable.ui.login.FindIdViewModel
-import com.kunize.uswtimetable.ui.login.FindPwViewModel
 import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
@@ -16,8 +14,6 @@ import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRepository
-import com.kunize.uswtimetable.ui.repository.find_user_info.FindIdRepository
-import com.kunize.uswtimetable.ui.repository.find_user_info.FindPwRepository
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.ui.repository.login.LoginRemoteDataSource
@@ -36,10 +32,14 @@ import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRemoteDat
 import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
+import com.kunize.uswtimetable.ui.repository.user_info.FindIdRepository
+import com.kunize.uswtimetable.ui.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpPage1ViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpPage2ViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
+import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
+import com.kunize.uswtimetable.ui.user_info.FindPwViewModel
 import com.kunize.uswtimetable.util.AssetLoader
 
 @Suppress("UNCHECKED_CAST")

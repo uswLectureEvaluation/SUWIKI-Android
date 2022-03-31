@@ -17,7 +17,7 @@ import com.kunize.uswtimetable.dao_database.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
 import com.kunize.uswtimetable.dataclass.TimeTableData
 import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
-import com.kunize.uswtimetable.ui.login.User
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
