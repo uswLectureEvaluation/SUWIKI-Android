@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +11,23 @@ import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
+import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.util.WriteFragmentTitle
 import com.kunize.uswtimetable.util.seekbarChangeListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
 class WriteFragment : Fragment() {
@@ -66,13 +72,46 @@ class WriteFragment : Fragment() {
         }
 
         binding.finishButton.setOnClickListener {
-            if (args.myExamInfo == null && args.myEvaluation == null)
-                goToLectureInfoFragment()
-            else
-                goToMyPostFragment()
+            CoroutineScope(IO).launch {
+                val success = writeViewModel.postLectureEvaluation(
+                    lectureId, getLectureEvaluationInfo())
+                withContext(Main) {
+                    if (success)
+                        if (args.myExamInfo == null && args.myEvaluation == null)
+                            goToLectureInfoFragment()
+                        else
+                            goToMyPostFragment()
+                }
+            }
         }
 
         return binding.root
+    }
+
+    private fun getLectureEvaluationInfo(): LectureEvaluationPostDto {
+        val info: LectureEvaluationPostDto
+        with(binding) {
+            val team = if (teamNotExistRadioButton.isChecked) 0 else 1
+            val difficulty =
+                if (gradeGoodRadioButton.isChecked) 0 else if (binding.gradeNormalRadioButton.isChecked) 1 else 2
+            val homework =
+                if (taskNotExistRadioButton.isChecked) 0 else if (taskNormalRadioButton.isChecked) 1 else 2
+
+
+            info = LectureEvaluationPostDto(
+                writeLectureName.text.toString(),
+                writeProfessor.text.toString(),
+                writeYearSemesterSpinner.selectedItem.toString(),
+                writeViewModel.satisfactionScore.value!!.toFloat(),
+                writeViewModel.learningScore.value!!.toFloat(),
+                writeViewModel.honeyScore.value!!.toFloat(),
+                team,
+                difficulty,
+                homework,
+                writeContent.text.toString()
+            )
+        }
+        return info
     }
 
     private fun setSeekBarListener() {
@@ -155,7 +194,11 @@ class WriteFragment : Fragment() {
         args.lectureProfessorName?.let {
             binding.writeLectureName.text = it.subject
             binding.writeProfessor.text = it.professor
-            val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, args.lectureProfessorName!!.semester.split(","))
+            val spinnerAdapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                args.lectureProfessorName!!.semester.split(",")
+            )
             binding.writeYearSemesterSpinner.adapter = spinnerAdapter
         }
     }

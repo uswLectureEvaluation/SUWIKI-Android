@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
 import android.graphics.Color
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -48,9 +49,7 @@ object LectureInfoBindingAdapter {
     fun setTeamText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        if(value is Float)
-            value.roundToInt()
-        when (value) {
+        when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.not_exist
                 colorId = R.color.custom_light_gray
@@ -69,9 +68,7 @@ object LectureInfoBindingAdapter {
     fun setDifficultText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        if(value is Float)
-            value.roundToInt()
-        when (value) {
+        when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.good
                 colorId = R.color.custom_light_gray
@@ -94,9 +91,7 @@ object LectureInfoBindingAdapter {
     fun setHomeworkText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        if(value is Float)
-            value.roundToInt()
-        when (value) {
+        when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.not_exist
                 colorId = R.color.custom_light_gray

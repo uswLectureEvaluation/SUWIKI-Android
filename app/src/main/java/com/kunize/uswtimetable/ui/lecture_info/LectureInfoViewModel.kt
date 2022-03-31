@@ -58,30 +58,29 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _evaluationList.value = arrayListOf(null)
     }
 
-    fun examInfoRadioBtnClicked() {
-        changeWriteBtnText(R.string.write_exam)
+    fun examInfoRadioBtnClicked(lectureId: Long) {
         _page.value = 1
+        Log.d("lectureApi", "라디오 버튼 클릭 ${_page.value}")
+        changeWriteBtnText(R.string.write_exam)
         _evaluationList.value = arrayListOf(null)
+        scrollBottom(lectureId)
     }
 
     private fun getExamList(lectureId: Long) {
         viewModelScope.launch {
             val response =
                 lectureInfoRepository.getLectureDetailExam(lectureId, _page.value!!.toInt())
+            Log.d("lectureApi", "시험정보 클릭 ${_page.value}")
             delay(delayTime)
             if (response.isSuccessful) {
                 val tmpExamData = response.body()
                 deleteLoading()
                 if (tmpExamData != null) {
-                    Log.d("lectureApi", "시험정보 클릭 ${_page.value},${tmpExamData.examDataExist}")
-                    if(tmpExamData.data.size != 10)
-                        _page.value = LAST_PAGE
                     if (tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
                         _showHideExamDataLayout.value = true
                     else if (!tmpExamData.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
-                        //TODO Page 값에 따른 별도 로직 추가, LAST_PAGE 로직 추가
                         _evaluationList.value = tmpExamData.convertToEvaluationData()
                         nextPage()
                     }
@@ -108,6 +107,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     fun scrollBottom(lectureId: Long) {
+        Log.d("lectureApi", "무한 스크롤 ${_page.value}")
         if (_page.value == LAST_PAGE)
             return
         when (_writeBtnText.value) {

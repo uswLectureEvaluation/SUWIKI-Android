@@ -55,7 +55,7 @@ class LectureInfoFragment : Fragment() {
             }
 
             examInfoRadioBtn.setOnClickListener {
-                lectureInfoViewModel?.examInfoRadioBtnClicked()
+                lectureInfoViewModel?.examInfoRadioBtnClicked(args.lectureId)
             }
 
             writeBtn.setOnClickListener {
