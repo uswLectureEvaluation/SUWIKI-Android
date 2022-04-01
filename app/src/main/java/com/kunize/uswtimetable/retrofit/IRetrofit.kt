@@ -29,6 +29,7 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
+import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EXAM
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.isJsonArray
 import com.kunize.uswtimetable.util.isJsonObject
@@ -153,10 +154,18 @@ interface IRetrofit {
         @Query("page") page: Int = 1
     ): Response<LectureMainDto>
 
+    //강의평가 쓰기
     @POST(WRITE_LECTURE_EVALUATION)
     suspend fun postLectureEvaluation(
         @Query("lectureId") lectureId: Long,
         @Body info: LectureEvaluationPostDto
+    ): Response<String>
+
+    //시험정보 쓰기
+    @POST(WRITE_LECTURE_EXAM)
+    suspend fun postLectureExam(
+        @Query("lectureId") lectureId: Long,
+        @Body info: LectureExamPostDto
     ): Response<String>
 
     companion object {

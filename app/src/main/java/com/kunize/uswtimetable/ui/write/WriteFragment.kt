@@ -17,6 +17,7 @@ import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
+import com.kunize.uswtimetable.dataclass.LectureExamPostDto
 import com.kunize.uswtimetable.dataclass.MyEvaluation
 import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
@@ -60,6 +61,24 @@ class WriteFragment : Fragment() {
         val args: WriteFragmentArgs by navArgs()
         lectureId = args.lectureId
 
+        testContentCheckBoxList = listOf(
+            binding.genealogyCheckBox,
+            binding.textbookCheckBox,
+            binding.pptCheckBox,
+            binding.noteCheckBox,
+            binding.applicationCheckBox,
+            binding.practiceCheckBox,
+            binding.taskCheckBox
+        )
+
+        difficultyRadioBtnList = listOf(
+            binding.easyRadioButton,
+            binding.veryEasyRadioButton,
+            binding.normalRadioButton,
+            binding.difficultRadioButton,
+            binding.veryDifficultRadioButton
+        )
+
         setInitValueWhenWrite(args)
         setFragmentViewType(args)
         setInitValueWhenEditMyEvaluation(args)
@@ -73,8 +92,11 @@ class WriteFragment : Fragment() {
 
         binding.finishButton.setOnClickListener {
             CoroutineScope(IO).launch {
-                val success = writeViewModel.postLectureEvaluation(
-                    lectureId, getLectureEvaluationInfo())
+                val success = when(binding.writeType.text.toString()) {
+                    getString(R.string.write_evaluation) -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
+                    getString(R.string.write_exam) -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
+                    else -> {false}
+                }
                 withContext(Main) {
                     if (success)
                         if (args.myExamInfo == null && args.myEvaluation == null)
@@ -114,6 +136,34 @@ class WriteFragment : Fragment() {
         return info
     }
 
+    private fun getLectureExamInfo(): LectureExamPostDto {
+        val info: LectureExamPostDto
+        with(binding) {
+            var testContent = ""
+            testContentCheckBoxList.forEach { checkBox ->
+                if(checkBox.isChecked)
+                    testContent += checkBox.text.toString() + ","
+            }
+            testContent = testContent.dropLast(1)
+
+            var testDifficulty = ""
+            difficultyRadioBtnList.forEach {
+                if(it.isChecked)
+                    testDifficulty = it.text.toString()
+            }
+
+            info = LectureExamPostDto(
+                writeLectureName.text.toString(),
+                writeProfessor.text.toString(),
+                writeYearSemesterSpinner.selectedItem.toString(),
+                testContent,
+                testDifficulty,
+                writeContent.text.toString()
+            )
+        }
+        return info
+    }
+
     private fun setSeekBarListener() {
         binding.honeySeekBar.seekbarChangeListener {
             writeViewModel.changeHoneyScore(it)
@@ -140,13 +190,6 @@ class WriteFragment : Fragment() {
     }
 
     private fun setDifficultyRadioBtn(it: MyExamInfo) {
-        difficultyRadioBtnList = listOf(
-            binding.easyRadioButton,
-            binding.veryEasyRadioButton,
-            binding.normalRadioButton,
-            binding.difficultRadioButton,
-            binding.veryDifficultRadioButton
-        )
         for (radioButton in difficultyRadioBtnList) {
             if (it.examDifficulty == radioButton.text.toString()) {
                 radioButton.isChecked = true
@@ -156,15 +199,6 @@ class WriteFragment : Fragment() {
     }
 
     private fun setTestContentCheckBox(it: MyExamInfo) {
-        testContentCheckBoxList = listOf(
-            binding.genealogyCheckBox,
-            binding.textbookCheckBox,
-            binding.pptCheckBox,
-            binding.noteCheckBox,
-            binding.applicationCheckBox,
-            binding.practiceCheckBox,
-            binding.taskCheckBox
-        )
         for (checkBox in testContentCheckBoxList) {
             for (dataString in it.examType.split(",")) {
                 if (checkBox.text == dataString)

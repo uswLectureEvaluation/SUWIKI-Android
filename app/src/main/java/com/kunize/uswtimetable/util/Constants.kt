@@ -42,13 +42,14 @@ object API {
     const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/findByLectureId"
     const val LECTURE_DETAIL_EXAM = "/exam-posts/findByLectureId"
     const val WRITE_LECTURE_EVALUATION = "/evaluate-posts/write/"
+    const val WRITE_LECTURE_EXAM = "/exam-posts/write/"
 }
 
 object WriteFragmentTitle {
     const val EDIT_MY_EVALUATION = "강의평가 수정"
-    const val EDIT_MY_EXAM = "시험정보 수정"
+    const val EDIT_MY_EXAM = "시험 정보 수정"
     const val WRITE_EVALUATION = "강의평가 쓰기"
-    const val WRITE_EXAM = "시험정보 쓰기"
+    const val WRITE_EXAM = "시험 정보 쓰기"
     const val FINISH_EXAM = "완료 (+20p)"
     const val FINISH_EVALUATION = "완료 (+10p)"
     const val FINISH_EDIT = "완료"
