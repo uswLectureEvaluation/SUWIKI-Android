@@ -5,6 +5,7 @@ import com.kunize.uswtimetable.util.LAST_PAGE
 
 open class BaseInfiniteRecyclerItemViewModel: BaseRecyclerItemViewModel() {
     val page = MutableLiveData<Int>()
+    var lectureId: Long = 0
 
     fun nextPage() {
         if (page.value == LAST_PAGE)

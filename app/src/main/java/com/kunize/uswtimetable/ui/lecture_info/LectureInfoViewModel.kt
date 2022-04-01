@@ -43,17 +43,18 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _showHideExamDataLayout.value = false
         _showNoExamDataLayout.value = false
         changeWriteBtnText(R.string.write_evaluation)
-        evaluationList.value = arrayListOf(null)
+        loading()
+        scrollBottomEvent()
     }
 
-    fun examInfoRadioBtnClicked(lectureId: Long) {
+    fun examInfoRadioBtnClicked() {
         page.value = 1
         changeWriteBtnText(R.string.write_exam)
         evaluationList.value = arrayListOf(null)
-        scrollBottomEvent(lectureId)
+        scrollBottomEvent()
     }
 
-    fun usePointBtnClicked(lectureId: Long) {
+    fun usePointBtnClicked() {
         viewModelScope.launch {
             val response = lectureInfoRepository.buyExam(lectureId)
             if(response.isSuccessful) {
@@ -66,7 +67,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         }
     }
 
-    private fun getExamList(lectureId: Long) {
+    private fun getExamList() {
         viewModelScope.launch {
             val response =
                 lectureInfoRepository.getLectureDetailExam(lectureId, page.value!!.toInt())
@@ -97,7 +98,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _writeBtnText.value = resource
     }
 
-    suspend fun setInfoValue(lectureId: Long) {
+    suspend fun setInfoValue() {
         withContext(viewModelScope.coroutineContext) {
             val response = lectureInfoRepository.getLectureDetailInfo(lectureId)
             if (response.isSuccessful) {
@@ -108,16 +109,16 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         }
     }
 
-    fun scrollBottomEvent(lectureId: Long) {
+    fun scrollBottomEvent() {
         if (page.value == LAST_PAGE)
             return
         when (_writeBtnText.value) {
-            R.string.write_evaluation -> getEvaluationList(lectureId)
-            else -> getExamList(lectureId)
+            R.string.write_evaluation -> getEvaluationList()
+            else -> getExamList()
         }
     }
 
-    fun getEvaluationList(lectureId: Long) {
+    fun getEvaluationList() {
         viewModelScope.launch {
             val response =
                 lectureInfoRepository.getLectureDetailEvaluation(lectureId, page.value!!.toInt())

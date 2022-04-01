@@ -81,7 +81,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/refresh_menu.xml" value="0.3619791666666667" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_login.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_evaluation.xml" value="0.14605263157894738" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_lecture_info.xml" value="0.3648315529991783" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_lecture_info.xml" value="0.1" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_more.xml" value="0.1" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_evaluation.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_exam_info.xml" value="0.264" />
@@ -108,7 +108,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

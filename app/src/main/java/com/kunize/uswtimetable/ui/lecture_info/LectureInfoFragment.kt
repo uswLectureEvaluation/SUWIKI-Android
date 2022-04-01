@@ -24,7 +24,6 @@ class LectureInfoFragment : Fragment() {
     lateinit var binding: FragmentLectureInfoBinding
     private lateinit var adapter: EvaluationListAdapter
     private val lectureInfoViewModel: LectureInfoViewModel by viewModels {ViewModelFactory(requireContext())}
-    var lectureId = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,14 +39,14 @@ class LectureInfoFragment : Fragment() {
         binding.infoRecyclerView.adapter = adapter
 
         val args: LectureInfoFragmentArgs by navArgs()
-        lectureId = args.lectureId
+        lectureInfoViewModel.lectureId = args.lectureId
 
 
         CoroutineScope(IO).launch {
-            lectureInfoViewModel.setInfoValue(lectureId)
-            lectureInfoViewModel.getEvaluationList(args.lectureId)
+            lectureInfoViewModel.setInfoValue()
+            lectureInfoViewModel.getEvaluationList()
             binding.infoRecyclerView.infiniteScrolls {
-                lectureInfoViewModel.scrollBottomEvent(args.lectureId)
+                lectureInfoViewModel.scrollBottomEvent()
             }
         }
 
@@ -57,7 +56,7 @@ class LectureInfoFragment : Fragment() {
             }
 
             hideExamDataLayout.usePointBtn.setOnClickListener {
-                lectureInfoViewModel?.usePointBtnClicked(lectureId)
+                lectureInfoViewModel?.usePointBtnClicked()
             }
 
             noExamDataLayout.writeExamBtn.setOnClickListener {
@@ -65,7 +64,7 @@ class LectureInfoFragment : Fragment() {
             }
 
             examInfoRadioBtn.setOnClickListener {
-                lectureInfoViewModel?.examInfoRadioBtnClicked(args.lectureId)
+                lectureInfoViewModel?.examInfoRadioBtnClicked()
             }
 
             writeBtn.setOnClickListener {
@@ -83,7 +82,7 @@ class LectureInfoFragment : Fragment() {
                     binding.infoProfessorName.text.toString(),
                     lectureInfoViewModel.lectureDetailInfoData.value?.data?.semester ?: ""
                 ), isEvaluation = !binding.examInfoRadioBtn.isChecked,
-                lectureId = lectureId
+                lectureId = lectureInfoViewModel.lectureId
             )
         findNavController().navigate(action)
     }
