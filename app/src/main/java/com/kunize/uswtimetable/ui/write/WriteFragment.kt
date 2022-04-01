@@ -69,8 +69,8 @@ class WriteFragment : Fragment() {
         )
 
         difficultyRadioBtnList = listOf(
-            binding.easyRadioButton,
             binding.veryEasyRadioButton,
+            binding.easyRadioButton,
             binding.normalRadioButton,
             binding.difficultRadioButton,
             binding.veryDifficultRadioButton
@@ -225,13 +225,16 @@ class WriteFragment : Fragment() {
         args.lectureProfessorName?.let {
             binding.writeLectureName.text = it.subject
             binding.writeProfessor.text = it.professor
-            val spinnerAdapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                args.lectureProfessorName!!.semester.split(",")
-            )
-            binding.writeYearSemesterSpinner.adapter = spinnerAdapter
+            setSpinnerList(args.lectureProfessorName!!.semester.split(","))
         }
+    }
+
+    private fun setSpinnerList(list: List<String>) {
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            list)
+        binding.writeYearSemesterSpinner.adapter = spinnerAdapter
     }
 
     private fun setInitValueWhenEditMyEvaluation(args: WriteFragmentArgs) {
@@ -241,6 +244,9 @@ class WriteFragment : Fragment() {
             setTeamRadioBtn(it)
             setTaskRadioBtn(it)
             setGradeRadioBtn(it)
+            val list = it.semesterList.split(",")
+            setSpinnerList(list)
+            binding.writeYearSemesterSpinner.setSelection(list.indexOf(it.semester))
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EVALUATION
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
