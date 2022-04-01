@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kunize.uswtimetable.dataclass.LectureEvaluationEditDto
 import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
 import com.kunize.uswtimetable.dataclass.LectureExamPostDto
 import com.kunize.uswtimetable.ui.repository.write.WriteRepository
@@ -40,7 +41,6 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.postLectureEvaluation(lectureId, info)
-            Log.d("postLE","뷰모델 전송 완료")
         }
         return response.isSuccessful
     }
@@ -49,6 +49,14 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.postLectureExam(lectureId, info)
+        }
+        return response.isSuccessful
+    }
+
+    suspend fun updateLectureEvaluation(lectureId: Long, info: LectureEvaluationEditDto): Boolean {
+        val response: Response<String>
+        withContext(viewModelScope.coroutineContext) {
+            response = writeRepository.updateLectureEvaluation(lectureId, info)
         }
         return response.isSuccessful
     }

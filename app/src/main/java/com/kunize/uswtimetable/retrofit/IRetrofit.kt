@@ -6,6 +6,7 @@ import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.util.API.BASE_URL
+import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
@@ -166,6 +167,13 @@ interface IRetrofit {
     suspend fun postLectureExam(
         @Query("lectureId") lectureId: Long,
         @Body info: LectureExamPostDto
+    ): Response<String>
+
+    //강의평가 수정
+    @POST(EDIT_LECTURE_EVALUATION)
+    suspend fun updateLectureEvaluation(
+        @Query("evaluateIdx") lectureId: Long,
+        @Body info: LectureEvaluationEditDto
     ): Response<String>
 
     companion object {

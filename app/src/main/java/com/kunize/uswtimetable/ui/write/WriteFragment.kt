@@ -92,6 +92,7 @@ class WriteFragment : Fragment() {
                 val success = when(binding.writeType.text.toString()) {
                     getString(R.string.write_evaluation) -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
                     getString(R.string.write_exam) -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
+                    getString(R.string.edit_evaluation) -> writeViewModel.updateLectureEvaluation(lectureId, getLectureEvaluationEditInfo())
                     else -> {false}
                 }
                 withContext(Main) {
@@ -155,6 +156,30 @@ class WriteFragment : Fragment() {
                 writeYearSemesterSpinner.selectedItem.toString(),
                 testContent,
                 testDifficulty,
+                writeContent.text.toString()
+            )
+        }
+        return info
+    }
+
+    private fun getLectureEvaluationEditInfo(): LectureEvaluationEditDto {
+        val info: LectureEvaluationEditDto
+        with(binding) {
+            val team = if (teamNotExistRadioButton.isChecked) 0 else 1
+            val difficulty =
+                if (gradeGoodRadioButton.isChecked) 0 else if (binding.gradeNormalRadioButton.isChecked) 1 else 2
+            val homework =
+                if (taskNotExistRadioButton.isChecked) 0 else if (taskNormalRadioButton.isChecked) 1 else 2
+
+
+            info = LectureEvaluationEditDto(
+                writeYearSemesterSpinner.selectedItem.toString(),
+                writeViewModel.satisfactionScore.value!!.toFloat(),
+                writeViewModel.learningScore.value!!.toFloat(),
+                writeViewModel.honeyScore.value!!.toFloat(),
+                team,
+                difficulty,
+                homework,
                 writeContent.text.toString()
             )
         }

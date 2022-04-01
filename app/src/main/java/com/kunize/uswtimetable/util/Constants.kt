@@ -43,6 +43,7 @@ object API {
     const val LECTURE_DETAIL_EXAM = "/exam-posts/findByLectureId"
     const val WRITE_LECTURE_EVALUATION = "/evaluate-posts/write/"
     const val WRITE_LECTURE_EXAM = "/exam-posts/write/"
+    const val EDIT_LECTURE_EVALUATION = "/evaluate-posts/update/"
 }
 
 object WriteFragmentTitle {

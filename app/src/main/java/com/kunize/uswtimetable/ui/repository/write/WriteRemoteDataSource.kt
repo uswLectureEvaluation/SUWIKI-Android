@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.repository.write
 
+import com.kunize.uswtimetable.dataclass.LectureEvaluationEditDto
 import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
 import com.kunize.uswtimetable.dataclass.LectureExamPostDto
 import com.kunize.uswtimetable.retrofit.IRetrofit
@@ -15,5 +16,12 @@ class WriteRemoteDataSource(private val apiService: IRetrofit): WriteDataSource 
         info: LectureExamPostDto
     ): Response<String> {
         return apiService.postLectureExam(lectureId, info)
+    }
+
+    override suspend fun updateLectureEvaluation(
+        lectureId: Long,
+        info: LectureEvaluationEditDto
+    ): Response<String> {
+        return apiService.updateLectureEvaluation(lectureId, info)
     }
 }
