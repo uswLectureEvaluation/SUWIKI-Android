@@ -16,10 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
-import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
-import com.kunize.uswtimetable.dataclass.LectureExamPostDto
-import com.kunize.uswtimetable.dataclass.MyEvaluation
-import com.kunize.uswtimetable.dataclass.MyExamInfo
+import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.WriteFragmentTitle
 import com.kunize.uswtimetable.util.seekbarChangeListener
@@ -250,21 +247,16 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setGradeRadioBtn(it: MyEvaluation) {
+    private fun setGradeRadioBtn(it: MyEvaluationDto) {
         gradeRadioBtnList = listOf(
-            binding.gradeNormalRadioButton,
             binding.gradeGoodRadioButton,
+            binding.gradeNormalRadioButton,
             binding.gradeDifficultRadioButton
         )
-        for (taskBtn in gradeRadioBtnList) {
-            if (it.grade == taskBtn.text.toString()) {
-                taskBtn.isChecked = true
-                break
-            }
-        }
+        gradeRadioBtnList[it.difficulty].isChecked = true
     }
 
-    private fun setTaskRadioBtn(it: MyEvaluation) {
+    private fun setTaskRadioBtn(it: MyEvaluationDto) {
         when (it.homework) {
             0 -> binding.taskNotExistRadioButton.isChecked = true
             1 -> binding.taskNormalRadioButton.isChecked = true
@@ -272,21 +264,21 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setTeamRadioBtn(it: MyEvaluation) {
+    private fun setTeamRadioBtn(it: MyEvaluationDto) {
         if (it.team == 1)
             binding.teamExistRadioButton.isChecked = true
         else
-            binding.teamNotExistRadioButton.isChecked = false
+            binding.teamNotExistRadioButton.isChecked = true
     }
 
-    private fun setDefaultSeekBarProgressValue(it: MyEvaluation) {
+    private fun setDefaultSeekBarProgressValue(it: MyEvaluationDto) {
         defaultHoneyProgress = (it.honey * 2).roundToInt()
         defaultLearningProgress = (it.learning * 2).roundToInt()
         defaultSatisfactionProgress = (it.satisfaction * 2).roundToInt()
     }
 
-    private fun setLectureProfessorName(it: MyEvaluation) {
-        binding.writeLectureName.text = it.subject
+    private fun setLectureProfessorName(it: MyEvaluationDto) {
+        binding.writeLectureName.text = it.lectureName
         binding.writeProfessor.text = it.professor
     }
 

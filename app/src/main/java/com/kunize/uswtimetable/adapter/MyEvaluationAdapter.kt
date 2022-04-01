@@ -55,7 +55,7 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluationDto, type: ItemT
 
                 when (data.difficulty) {
                     0 -> {
-                        grade.text = "까다로움"
+                        grade.text = "잘 줌"
                         grade.setTextColor(gray)
                     }
                     1 -> {
@@ -63,7 +63,7 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluationDto, type: ItemT
                         grade.setTextColor(darkGray)
                     }
                     2 -> {
-                        grade.text = "잘 줌"
+                        grade.text = "까다로움"
                         grade.setTextColor(red)
                     }
                 }
