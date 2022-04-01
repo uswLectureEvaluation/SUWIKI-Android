@@ -1,104 +1,75 @@
 package com.kunize.uswtimetable.ui.search_result
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.ui.common.BaseInfiniteRecyclerItemViewModel
 import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchResultViewModel(private val searchResultRepository: SearchResultRepository) :
-    ViewModel() {
-    private val _evaluationList = MutableLiveData<ArrayList<EvaluationData?>>()
-    val evaluationList: LiveData<ArrayList<EvaluationData?>>
-        get() = _evaluationList
-
+    BaseInfiniteRecyclerItemViewModel() {
     private val _selectedType = MutableLiveData<String>()
-    private val _page = MutableLiveData<Int>()
     private val _searchValue = MutableLiveData<String>()
 
-    private val delayTime = 200L
-
     init {
-        _page.value = 1
+        page.value = 1
         _searchValue.value = ""
-        _evaluationList.value = arrayListOf(null)
+        evaluationList.value = arrayListOf(null)
     }
 
     fun scrollBottomEvent() {
-        if(_page.value == LAST_PAGE)
+        if(page.value == LAST_PAGE)
             return
         viewModelScope.launch {
             val response = getResponse()
             delay(delayTime)
             if (response.isSuccessful) {
-                Log.d("searchResultApi","${_page.value}")
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 deleteLoading()
                 if(!tmpEvaluationData.isNullOrEmpty()) {
                     if(tmpEvaluationData.size == 10)
                         tmpEvaluationData.add(null)
                     else
-                        _page.value = LAST_PAGE
-                    if(_page.value == 1) _evaluationList.value = tmpEvaluationData!!
+                        page.value = LAST_PAGE
+                    if(page.value == 1) evaluationList.value = tmpEvaluationData!!
                     else {
-                        _evaluationList.value!!.addAll(tmpEvaluationData)
-                        _evaluationList.value = _evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
+                        evaluationList.value!!.addAll(tmpEvaluationData)
+                        evaluationList.value = evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
                     }
                     nextPage()
                 }
             } else {
-                _evaluationList.value = arrayListOf()
+                evaluationList.value = arrayListOf()
             }
         }
-    }
-
-    private fun nextPage() {
-        if(_page.value == LAST_PAGE)
-            return
-        _page.value = _page.value?.plus(1)
-        _page.value = _page.value
     }
 
     private suspend fun getResponse() = if (_searchValue.value.toString().isBlank()) {
         searchResultRepository.getLectureMainList(
             _selectedType.value.toString(),
-            _page.value ?: 1
+            page.value ?: 1
         )
     } else {
         searchResultRepository.getSearchResultList(
             _searchValue.value.toString(),
             _selectedType.value.toString(),
-            _page.value ?: 1
+            page.value ?: 1
         )
     }
 
     fun search(searchValue: String) {
         _searchValue.value = searchValue
-        _page.value = 1
+        page.value = 1
         loading()
-    }
-
-    private fun loading() {
-        _evaluationList.value = arrayListOf(null)
     }
 
     fun changeType(option: String) {
         _selectedType.value = option
-        _page.value = 1
+        page.value = 1
         loading()
-    }
-
-    private fun deleteLoading() {
-        if (_evaluationList.value?.isEmpty() == true)
-            return
-        if (_evaluationList.value?.last() == null) {
-            _evaluationList.value?.removeLast()
-            _evaluationList.value = _evaluationList.value
-        }
     }
 }

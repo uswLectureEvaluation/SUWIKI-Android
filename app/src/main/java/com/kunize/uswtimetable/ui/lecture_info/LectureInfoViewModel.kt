@@ -3,18 +3,17 @@ package com.kunize.uswtimetable.ui.lecture_info
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
+import com.kunize.uswtimetable.ui.common.BaseInfiniteRecyclerItemViewModel
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel() {
+class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : BaseInfiniteRecyclerItemViewModel() {
     private val _writeBtnText = MutableLiveData<Int>()
     val writeBtnText: LiveData<Int>
         get() = _writeBtnText
@@ -31,17 +30,9 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     val lectureDetailInfoData: LiveData<LectureDetailInfoDto>
         get() = _lectureDetailInfoData
 
-    private val _evaluationList = MutableLiveData<ArrayList<EvaluationData?>>()
-    val evaluationList: LiveData<ArrayList<EvaluationData?>>
-        get() = _evaluationList
-
-    private val _page = MutableLiveData<Int>()
-
-    private val delayTime = 200L
-
     init {
-        _page.value = 1
-        _evaluationList.value = arrayListOf(null)
+        page.value = 1
+        evaluationList.value = arrayListOf(null)
         _writeBtnText.value = R.string.write_evaluation
         _showNoExamDataLayout.value = false
         _showHideExamDataLayout.value = false
@@ -52,39 +43,39 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     fun lectureInfoRadioBtnClicked() {
-        _page.value = 1
+        page.value = 1
         _showHideExamDataLayout.value = false
         _showNoExamDataLayout.value = false
         changeWriteBtnText(R.string.write_evaluation)
-        _evaluationList.value = arrayListOf(null)
+        evaluationList.value = arrayListOf(null)
     }
 
     fun examInfoRadioBtnClicked(lectureId: Long) {
-        _page.value = 1
+        page.value = 1
         changeWriteBtnText(R.string.write_exam)
-        _evaluationList.value = arrayListOf(null)
+        evaluationList.value = arrayListOf(null)
         scrollBottom(lectureId)
     }
 
     private fun getExamList(lectureId: Long) {
         viewModelScope.launch {
             val response =
-                lectureInfoRepository.getLectureDetailExam(lectureId, _page.value!!.toInt())
-            Log.d("lectureApi", "시험정보 클릭 ${_page.value}")
+                lectureInfoRepository.getLectureDetailExam(lectureId, page.value!!.toInt())
+            Log.d("lectureApi", "시험정보 클릭 ${page.value}")
             delay(delayTime)
             if (response.isSuccessful) {
                 val tmpExamData = response.body()
                 deleteLoading()
                 if (tmpExamData != null) {
                     if(tmpExamData.data.size != 10)
-                        _page.value = LAST_PAGE
+                        page.value = LAST_PAGE
                     if (tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
                         _showHideExamDataLayout.value = true
                     else if (!tmpExamData.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
                         //TODO null 로직 추가
-                        _evaluationList.value = tmpExamData.convertToEvaluationData()
+                        evaluationList.value = tmpExamData.convertToEvaluationData()
                         nextPage()
                     }
                 }
@@ -110,8 +101,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     fun scrollBottom(lectureId: Long) {
-        Log.d("lectureApi", "무한 스크롤 ${_page.value}")
-        if (_page.value == LAST_PAGE)
+        Log.d("lectureApi", "무한 스크롤 ${page.value}")
+        if (page.value == LAST_PAGE)
             return
         when (_writeBtnText.value) {
             R.string.write_evaluation -> getEvaluationList(lectureId)
@@ -122,7 +113,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     fun getEvaluationList(lectureId: Long) {
         viewModelScope.launch {
             val response =
-                lectureInfoRepository.getLectureDetailEvaluation(lectureId, _page.value!!.toInt())
+                lectureInfoRepository.getLectureDetailEvaluation(lectureId, page.value!!.toInt())
             delay(delayTime)
             if (response.isSuccessful) {
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
@@ -132,30 +123,14 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                     if (tmpEvaluationData.size == 10)
                         tmpEvaluationData.add(null)
                     else
-                        _page.value = LAST_PAGE
-                    _evaluationList.value!!.addAll(tmpEvaluationData)
-                    _evaluationList.value = _evaluationList.value
+                        page.value = LAST_PAGE
+                    evaluationList.value!!.addAll(tmpEvaluationData)
+                    evaluationList.value = evaluationList.value
                 }
                 nextPage()
             } else {
                 //TODO 통신 실패 로직
             }
-        }
-    }
-
-    private fun nextPage() {
-        if (_page.value == LAST_PAGE)
-            return
-        _page.value = _page.value?.plus(1)
-        _page.value = _page.value
-    }
-
-    private fun deleteLoading() {
-        if (_evaluationList.value?.isEmpty() == true)
-            return
-        if (_evaluationList.value?.last() == null) {
-            _evaluationList.value?.removeLast()
-            _evaluationList.value = _evaluationList.value
         }
     }
 }
