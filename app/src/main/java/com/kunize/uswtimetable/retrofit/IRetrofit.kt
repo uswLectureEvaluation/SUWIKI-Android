@@ -6,6 +6,7 @@ import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.ui.login.User
 import com.kunize.uswtimetable.util.API.BASE_URL
+import com.kunize.uswtimetable.util.API.BUY_EXAM
 import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
@@ -175,6 +176,10 @@ interface IRetrofit {
         @Query("evaluateIdx") lectureId: Long,
         @Body info: LectureEvaluationEditDto
     ): Response<String>
+
+    //시험 정보 구매
+    @POST(BUY_EXAM)
+    suspend fun buyExam(@Query("lectureId") lectureId: Long): Response<String>
 
     companion object {
         private var retrofitService: IRetrofit? = null

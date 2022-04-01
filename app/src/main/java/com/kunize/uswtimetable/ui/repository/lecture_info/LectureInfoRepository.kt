@@ -19,4 +19,8 @@ class LectureInfoRepository(
     suspend fun getLectureDetailExam(lectureId: Long, page: Int): Response<LectureDetailExamDto> {
         return remoteDataSource.getLectureDetailExamDataSource(lectureId, page)
     }
+
+    suspend fun buyExam(lectureId: Long): Response<String> {
+        return remoteDataSource.buyExam(lectureId)
+    }
 }

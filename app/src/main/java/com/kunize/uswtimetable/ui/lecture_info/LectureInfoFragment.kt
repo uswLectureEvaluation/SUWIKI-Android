@@ -57,7 +57,7 @@ class LectureInfoFragment : Fragment() {
             }
 
             hideExamDataLayout.usePointBtn.setOnClickListener {
-                lectureInfoViewModel?.usePointBtnClicked()
+                lectureInfoViewModel?.usePointBtnClicked(lectureId)
             }
 
             noExamDataLayout.writeExamBtn.setOnClickListener {

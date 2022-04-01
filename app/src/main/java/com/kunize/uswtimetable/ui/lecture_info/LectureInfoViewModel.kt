@@ -38,10 +38,6 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _showHideExamDataLayout.value = false
     }
 
-    fun usePointBtnClicked() {
-        _showHideExamDataLayout.value = false
-    }
-
     fun lectureInfoRadioBtnClicked() {
         page.value = 1
         _showHideExamDataLayout.value = false
@@ -55,6 +51,19 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         changeWriteBtnText(R.string.write_exam)
         evaluationList.value = arrayListOf(null)
         scrollBottomEvent(lectureId)
+    }
+
+    fun usePointBtnClicked(lectureId: Long) {
+        viewModelScope.launch {
+            val response = lectureInfoRepository.buyExam(lectureId)
+            if(response.isSuccessful) {
+                if(response.body() == "success") {
+                    _showHideExamDataLayout.value = false
+                    page.value = 1
+                    loading()
+                }
+            }
+        }
     }
 
     private fun getExamList(lectureId: Long) {

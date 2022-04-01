@@ -22,4 +22,8 @@ class LectureInfoRemoteDataSource(private val apiService: IRetrofit): LectureInf
     ): Response<LectureDetailExamDto> {
         return apiService.getLectureDetailExam(lectureId, page)
     }
+
+    override suspend fun buyExam(lectureId: Long): Response<String> {
+        return apiService.buyExam(lectureId)
+    }
 }
