@@ -58,6 +58,8 @@ fun RecyclerView.infiniteScrolls(doScrollBottom: () -> Unit) {
 fun SeekBar.seekbarChangeListener(doChangeProgress: (progress: Float) -> Unit) {
     this.setOnSeekBarChangeListener((object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+            if(progress < 1)
+                progress = 1
             doChangeProgress(progress.toFloat() / 2)
         }
 

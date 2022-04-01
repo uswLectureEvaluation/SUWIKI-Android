@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,8 +9,10 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
+import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel() {
     private val _writeBtnText = MutableLiveData<Int>()
@@ -48,31 +51,57 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _showHideExamDataLayout.value = false
     }
 
-    fun examInfoRadioBtnClicked() {
-        //TODO
-        // 서버로 부터 데이터 불러옴
-        // 데이터 결과에 따라 _showHideExamDataLayout 여부 설정
-        _showHideExamDataLayout.value = true
-        changeWriteBtnText(R.string.write_exam)
-    }
-
     fun lectureInfoRadioBtnClicked() {
-        //TODO 서버로 부터 강의평가 데이터 받아오기
+        _page.value = 1
         _showHideExamDataLayout.value = false
         _showNoExamDataLayout.value = false
-        val tmp = arrayListOf<EvaluationData?>()
-        tmp.add(null)
         changeWriteBtnText(R.string.write_evaluation)
+        _evaluationList.value = arrayListOf(null)
+    }
+
+    fun examInfoRadioBtnClicked(lectureId: Long) {
+        _page.value = 1
+        changeWriteBtnText(R.string.write_exam)
+        _evaluationList.value = arrayListOf(null)
+        scrollBottom(lectureId)
+    }
+
+    private fun getExamList(lectureId: Long) {
+        viewModelScope.launch {
+            val response =
+                lectureInfoRepository.getLectureDetailExam(lectureId, _page.value!!.toInt())
+            Log.d("lectureApi", "시험정보 클릭 ${_page.value}")
+            delay(delayTime)
+            if (response.isSuccessful) {
+                val tmpExamData = response.body()
+                deleteLoading()
+                if (tmpExamData != null) {
+                    if(tmpExamData.data.size != 10)
+                        _page.value = LAST_PAGE
+                    if (tmpExamData.data.isEmpty() && tmpExamData.examDataExist)
+                        _showHideExamDataLayout.value = true
+                    else if (!tmpExamData.examDataExist)
+                        _showNoExamDataLayout.value = true
+                    else {
+                        //TODO null 로직 추가
+                        _evaluationList.value = tmpExamData.convertToEvaluationData()
+                        nextPage()
+                    }
+                }
+            } else {
+                Log.d("lectureApi", "시험정보 클릭 에러 $lectureId,${response.code()}")
+            }
+        }
     }
 
     private fun changeWriteBtnText(resource: Int) {
         _writeBtnText.value = resource
     }
 
-    fun setInfoValue(lectureId: Long) {
-        viewModelScope.launch {
+    suspend fun setInfoValue(lectureId: Long) {
+        withContext(viewModelScope.coroutineContext) {
             val response = lectureInfoRepository.getLectureDetailInfo(lectureId)
-            if(response.isSuccessful) {
+            if (response.isSuccessful) {
                 _lectureDetailInfoData.value = response.body()
             } else {
                 //TODO 통신 실패 처리
@@ -80,27 +109,43 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         }
     }
 
+    fun scrollBottom(lectureId: Long) {
+        Log.d("lectureApi", "무한 스크롤 ${_page.value}")
+        if (_page.value == LAST_PAGE)
+            return
+        when (_writeBtnText.value) {
+            R.string.write_evaluation -> getEvaluationList(lectureId)
+            else -> getExamList(lectureId)
+        }
+    }
+
     fun getEvaluationList(lectureId: Long) {
         viewModelScope.launch {
-            val response = lectureInfoRepository.getLectureDetailEvaluation(lectureId, _page.value!!.toInt())
+            val response =
+                lectureInfoRepository.getLectureDetailEvaluation(lectureId, _page.value!!.toInt())
             delay(delayTime)
             if (response.isSuccessful) {
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
+                Log.d("lectureApi", "강의평가 클릭 $lectureId,${tmpEvaluationData}")
                 deleteLoading()
-                if(!tmpEvaluationData.isNullOrEmpty()) {
-                    if(tmpEvaluationData.size == 10)
+                if (!tmpEvaluationData.isNullOrEmpty()) {
+                    if (tmpEvaluationData.size == 10)
                         tmpEvaluationData.add(null)
+                    else
+                        _page.value = LAST_PAGE
                     _evaluationList.value!!.addAll(tmpEvaluationData)
                     _evaluationList.value = _evaluationList.value
                 }
                 nextPage()
             } else {
-                _evaluationList.value = arrayListOf()
+                //TODO 통신 실패 로직
             }
         }
     }
 
     private fun nextPage() {
+        if (_page.value == LAST_PAGE)
+            return
         _page.value = _page.value?.plus(1)
         _page.value = _page.value
     }

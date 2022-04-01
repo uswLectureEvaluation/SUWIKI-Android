@@ -33,10 +33,13 @@ import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRemoteDat
 import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
+import com.kunize.uswtimetable.ui.repository.write.WriteRemoteDataSource
+import com.kunize.uswtimetable.ui.repository.write.WriteRepository
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpPage1ViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpPage2ViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
+import com.kunize.uswtimetable.ui.write.WriteViewModel
 import com.kunize.uswtimetable.util.AssetLoader
 
 @Suppress("UNCHECKED_CAST")
@@ -97,6 +100,11 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 val apiService = IRetrofit.getInstance()
                 val repository = LectureInfoRepository(LectureInfoRemoteDataSource(apiService))
                 LectureInfoViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(WriteViewModel::class.java) -> {
+                val apiService = IRetrofit.getInstance()
+                val repository = WriteRepository(WriteRemoteDataSource(apiService))
+                WriteViewModel(repository) as T
             }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel: ${modelClass.name}")

@@ -10,6 +10,7 @@ import com.kunize.uswtimetable.util.API.EVALUATE_POST
 import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_EVALUATION
+import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_EXAM
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_INFO
 import com.kunize.uswtimetable.util.API.LECTURE_MAIN
 import com.kunize.uswtimetable.util.API.LOGIN
@@ -27,6 +28,7 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_SCHOOL_CHECK
 import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
+import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.isJsonArray
 import com.kunize.uswtimetable.util.isJsonObject
@@ -38,6 +40,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 interface IRetrofit {
@@ -121,6 +124,13 @@ interface IRetrofit {
         @Query("page") page: Int
     ): Response<LectureDetailEvaluationDto>
 
+    // 검색결과 자세히 보기 (Exam)
+    @GET(LECTURE_DETAIL_EXAM)
+    suspend fun getLectureDetailExam(
+        @Query("lectureId") lectureId: Long,
+        @Query("page") page: Int
+    ): Response<LectureDetailExamDto>
+
     // 검색결과 페이지 API(강의평)
     @GET(SEARCH)
     suspend fun getSearchResultDetail(
@@ -142,6 +152,12 @@ interface IRetrofit {
         @Query("option") option: String,
         @Query("page") page: Int = 1
     ): Response<LectureMainDto>
+
+    @POST(WRITE_LECTURE_EVALUATION)
+    suspend fun postLectureEvaluation(
+        @Query("lectureId") lectureId: Long,
+        @Body info: LectureEvaluationPostDto
+    ): Response<String>
 
     companion object {
         private var retrofitService: IRetrofit? = null
@@ -167,6 +183,7 @@ interface IRetrofit {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(TokenAuthenticator()))
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }

@@ -1,10 +1,12 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
 import android.graphics.Color
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.size
 import androidx.databinding.BindingAdapter
 import com.google.android.flexbox.FlexboxLayout
 import com.kunize.uswtimetable.MainActivity.Companion.dp
@@ -15,7 +17,7 @@ object LectureInfoBindingAdapter {
     @BindingAdapter("yearSemesterList")
     @JvmStatic
     fun setList(flexBox: FlexboxLayout, items: String?) {
-        if (items == null)
+        if (items == null || flexBox.size != 0)
             return
         for (item in items.split(",")) {
             val textView = TextView(flexBox.context)
@@ -47,9 +49,7 @@ object LectureInfoBindingAdapter {
     fun setTeamText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        if(value is Float)
-            value.roundToInt()
-        when (value) {
+        when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.not_exist
                 colorId = R.color.custom_light_gray
@@ -68,9 +68,7 @@ object LectureInfoBindingAdapter {
     fun setDifficultText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        if(value is Float)
-            value.roundToInt()
-        when (value) {
+        when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.good
                 colorId = R.color.custom_light_gray
@@ -93,9 +91,7 @@ object LectureInfoBindingAdapter {
     fun setHomeworkText(textView: TextView, value: Number) {
         val colorId: Int
         val textId: Int
-        if(value is Float)
-            value.roundToInt()
-        when (value) {
+        when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.not_exist
                 colorId = R.color.custom_light_gray
