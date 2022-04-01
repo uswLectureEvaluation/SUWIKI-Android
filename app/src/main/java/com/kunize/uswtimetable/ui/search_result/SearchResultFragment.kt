@@ -13,11 +13,15 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
 import com.kunize.uswtimetable.util.LectureApiOption.HONEY
 import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
@@ -35,7 +39,7 @@ import kotlin.collections.ArrayList
 class SearchResultFragment : Fragment(), View.OnClickListener {
 
     lateinit var binding: FragmentSearchResultBinding
-
+    private lateinit var adapter: EvaluationListAdapter
     private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var sortBtn: MutableList<RadioButton>
     val args: SearchResultFragmentArgs by navArgs()
@@ -67,6 +71,13 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result,container, false)
         binding.viewModel = searchResultViewModel
         binding.lifecycleOwner = this
+
+        adapter = EvaluationListAdapter { id ->
+            val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
+            findNavController().navigate(action)
+        }
+
+        binding.recyclerSearchResult.adapter = adapter
 
         binding.recyclerSearchResult.infiniteScrolls {
             searchResultViewModel.scrollBottomEvent()

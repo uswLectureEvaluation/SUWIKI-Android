@@ -13,12 +13,16 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.adapter.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
 import com.kunize.uswtimetable.util.LectureApiOption.HONEY
 import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
@@ -29,7 +33,7 @@ import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
-
+    private lateinit var adapter: EvaluationListAdapter
     private val evaluationViewModel: EvaluationViewModel by viewModels {ViewModelFactory(requireContext())}
     private var spinnerSel: Int = 0
 
@@ -38,6 +42,13 @@ class EvaluationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation, container, false)
+
+        adapter = EvaluationListAdapter { id ->
+            val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
+            findNavController().navigate(action)
+        }
+
+        binding.recyclerEvaluation.adapter = adapter
 
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this

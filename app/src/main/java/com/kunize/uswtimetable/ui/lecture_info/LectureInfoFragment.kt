@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.dataclass.LectureProfessorSemester
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
@@ -22,6 +23,7 @@ import kotlinx.coroutines.Dispatchers.Main
 class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
+    private lateinit var adapter: EvaluationListAdapter
     private val lectureInfoViewModel: LectureInfoViewModel by viewModels {ViewModelFactory(requireContext())}
     var lectureId = 0L
 
@@ -34,6 +36,9 @@ class LectureInfoFragment : Fragment() {
 
         binding.lectureInfoViewModel = lectureInfoViewModel
         binding.lifecycleOwner = this
+
+        adapter = EvaluationListAdapter { id -> Log.d("lectureApi", "$id 클릭됨") }
+        binding.infoRecyclerView.adapter = adapter
 
         val args: LectureInfoFragmentArgs by navArgs()
         lectureId = args.lectureId

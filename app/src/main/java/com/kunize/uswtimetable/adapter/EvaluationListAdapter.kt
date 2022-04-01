@@ -12,9 +12,11 @@ import com.google.firebase.database.collection.LLRBNode
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.*
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.dataclass.MyEvaluationDto
+import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.LectureItemViewType
 
-class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var evaluationListData = mutableListOf<EvaluationData?>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -77,15 +79,6 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class LoadingHolder(private val binding: ItemRecyclerProgressBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    //Callback
-    interface OnItemClickListener{
-        fun onItemClick(v : View, lectureId : Long)
-    }
-    private var listener : OnItemClickListener? = null
-    fun setOnItemClickListener(listener : OnItemClickListener) {
-        this.listener = listener
-    }
-
     inner class LectureSearchHolder(private val binding: ItemRecyclerLectureSearchBinding) :
     RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
@@ -103,7 +96,7 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val pos = adapterPosition
                 if(pos!=RecyclerView.NO_POSITION)
                     itemView.setOnClickListener{
-                        listener?.onItemClick(itemView, data.lectureId)
+                        onItemClicked(data.lectureId)
                     }
                 executePendingBindings()
             }
@@ -124,6 +117,9 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         scoresEtc.layout.visibility = View.VISIBLE
                     }
                 }
+                semesterReport.reportBtn.setOnClickListener {
+                    onItemClicked(data.lectureId)
+                }
                 executePendingBindings()
             }
         }
@@ -134,6 +130,9 @@ class EvaluationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun setData(data: EvaluationData) {
             with(binding) {
                 evaluationData = data
+                semesterReport.reportBtn.setOnClickListener {
+                    onItemClicked(data.lectureId)
+                }
                 executePendingBindings()
             }
         }

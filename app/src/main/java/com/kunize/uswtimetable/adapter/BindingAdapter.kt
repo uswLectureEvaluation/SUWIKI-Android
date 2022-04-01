@@ -19,19 +19,8 @@ object BindingAdapter {
         items: java.util.ArrayList<EvaluationData?>
     ) {
         if (recyclerView.adapter == null)
-            recyclerView.adapter = EvaluationListAdapter()
+            recyclerView.adapter = EvaluationListAdapter { }
         val evaluationAdapter = recyclerView.adapter as EvaluationListAdapter
-
-        //Callback
-        evaluationAdapter.setOnItemClickListener(object :
-            EvaluationListAdapter.OnItemClickListener {
-            override fun onItemClick(v: View, lectureId: Long) {
-                val action = NavGraphDirections.actionGlobalLectureInfoFragment(
-                    lectureId = lectureId
-                )
-                v.findNavController().navigate(action)
-            }
-        })
 
         val prevItemSize = evaluationAdapter.evaluationListData.size
         val newItemSize = items.size
