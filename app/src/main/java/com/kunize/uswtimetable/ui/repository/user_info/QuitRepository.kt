@@ -6,7 +6,7 @@ import com.kunize.uswtimetable.retrofit.IRetrofit
 class QuitRepository {
 
     suspend fun quit(id: String, password: String) =
-        IRetrofit.getInstanceWithNoToken().quit(LoginIdPassword(
+        IRetrofit.getInstance().quit(LoginIdPassword(
             loginId = id,
             password = password
         ))
