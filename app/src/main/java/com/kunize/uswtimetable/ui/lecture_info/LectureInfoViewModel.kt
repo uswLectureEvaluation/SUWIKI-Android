@@ -32,7 +32,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
 
     init {
         page.value = 1
-        evaluationList.value = arrayListOf(null)
+        loading()
         _writeBtnText.value = R.string.write_evaluation
         _showNoExamDataLayout.value = false
         _showHideExamDataLayout.value = false
@@ -54,14 +54,13 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         page.value = 1
         changeWriteBtnText(R.string.write_exam)
         evaluationList.value = arrayListOf(null)
-        scrollBottom(lectureId)
+        scrollBottomEvent(lectureId)
     }
 
     private fun getExamList(lectureId: Long) {
         viewModelScope.launch {
             val response =
                 lectureInfoRepository.getLectureDetailExam(lectureId, page.value!!.toInt())
-            Log.d("lectureApi", "시험정보 클릭 ${page.value}")
             delay(delayTime)
             if (response.isSuccessful) {
                 val tmpExamData = response.body()
@@ -100,8 +99,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         }
     }
 
-    fun scrollBottom(lectureId: Long) {
-        Log.d("lectureApi", "무한 스크롤 ${page.value}")
+    fun scrollBottomEvent(lectureId: Long) {
         if (page.value == LAST_PAGE)
             return
         when (_writeBtnText.value) {
@@ -116,9 +114,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 lectureInfoRepository.getLectureDetailEvaluation(lectureId, page.value!!.toInt())
             delay(delayTime)
             if (response.isSuccessful) {
-                val tmpEvaluationData = response.body()?.convertToEvaluationData()
-                Log.d("lectureApi", "강의평가 클릭 $lectureId,${tmpEvaluationData}")
                 deleteLoading()
+                val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 if (!tmpEvaluationData.isNullOrEmpty()) {
                     if (tmpEvaluationData.size == 10)
                         tmpEvaluationData.add(null)

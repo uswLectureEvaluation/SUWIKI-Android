@@ -6,6 +6,7 @@ import com.kunize.uswtimetable.dataclass.EvaluationData
 
 open class BaseRecyclerItemViewModel: ViewModel() {
     val evaluationList = MutableLiveData<ArrayList<EvaluationData?>>()
+    val delayTime = 200L
 
     fun loading() {
         evaluationList.value = arrayListOf(null)

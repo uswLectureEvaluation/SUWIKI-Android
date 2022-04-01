@@ -140,9 +140,9 @@ class WriteFragment : Fragment() {
             var testContent = ""
             testContentCheckBoxList.forEach { checkBox ->
                 if(checkBox.isChecked)
-                    testContent += checkBox.text.toString() + ","
+                    testContent += checkBox.text.toString() + ", "
             }
-            testContent = testContent.dropLast(1)
+            testContent = testContent.dropLast(2)
 
             var testDifficulty = ""
             difficultyRadioBtnList.forEach {

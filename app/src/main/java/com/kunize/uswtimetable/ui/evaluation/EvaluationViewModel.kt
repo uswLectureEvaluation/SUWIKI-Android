@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.ui.common.BaseRecyclerItemViewModel
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRepository
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class EvaluationViewModel(private val evaluationRepository: EvaluationRepository) : BaseRecyclerItemViewModel() {
@@ -14,6 +15,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
         viewModelScope.launch {
             val response = evaluationRepository.getLectureMainList(_selectedType.value.toString())
             if(response.isSuccessful) {
+                delay(delayTime)
                 deleteLoading()
                 evaluationList.value = response.body()?.convertToEvaluationData()
             } else {

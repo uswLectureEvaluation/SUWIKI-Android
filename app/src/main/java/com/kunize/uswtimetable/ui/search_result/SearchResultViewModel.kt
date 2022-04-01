@@ -1,9 +1,7 @@
 package com.kunize.uswtimetable.ui.search_result
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.common.BaseInfiniteRecyclerItemViewModel
 import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
@@ -35,11 +33,10 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
                         tmpEvaluationData.add(null)
                     else
                         page.value = LAST_PAGE
-                    if(page.value == 1) evaluationList.value = tmpEvaluationData!!
-                    else {
-                        evaluationList.value!!.addAll(tmpEvaluationData)
-                        evaluationList.value = evaluationList.value //대입을 해줘야지만 옵저버가 변화를 감지함.
-                    }
+
+                    evaluationList.value!!.addAll(tmpEvaluationData)
+                    evaluationList.value = evaluationList.value
+
                     nextPage()
                 }
             } else {

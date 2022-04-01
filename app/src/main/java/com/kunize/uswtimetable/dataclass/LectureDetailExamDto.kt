@@ -10,7 +10,7 @@ data class LectureDetailExamDto(
         val temp = arrayListOf<EvaluationData?>()
         data.forEach {
             temp.add(EvaluationData(
-                recyclerViewType = LectureItemViewType.LECTURE,
+                recyclerViewType = LectureItemViewType.EXAM,
                 lectureId = it.id,
                 yearSemester = it.semester,
                 testMethod = it.examInfo,

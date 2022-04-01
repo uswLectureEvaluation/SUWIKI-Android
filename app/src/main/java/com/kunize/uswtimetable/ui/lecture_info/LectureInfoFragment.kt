@@ -18,7 +18,6 @@ import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.infiniteScrolls
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 
 class LectureInfoFragment : Fragment() {
 
@@ -48,7 +47,7 @@ class LectureInfoFragment : Fragment() {
             lectureInfoViewModel.setInfoValue(lectureId)
             lectureInfoViewModel.getEvaluationList(args.lectureId)
             binding.infoRecyclerView.infiniteScrolls {
-                lectureInfoViewModel.scrollBottom(args.lectureId)
+                lectureInfoViewModel.scrollBottomEvent(args.lectureId)
             }
         }
 
