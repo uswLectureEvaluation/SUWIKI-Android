@@ -9,7 +9,10 @@
             name="viewModel"
             type="com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel" />
     </data>
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,8 +24,7 @@
             android:layout_height="wrap_content"
             app:liftOnScroll="true">
 
-            <androidx.appcompat.widget.Toolbar
-                style="@style/scroll_enter_always_toolbar_style">
+            <androidx.appcompat.widget.Toolbar style="@style/scroll_enter_always_toolbar_style">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -98,28 +100,29 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-                <androidx.cardview.widget.CardView
-                    style="@style/cardview_style"
+        <androidx.cardview.widget.CardView
+            style="@style/cardview_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/page_padding"
+            android:layout_marginEnd="@dimen/page_padding"
+            android:layout_marginBottom="@dimen/page_padding"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerEvaluation"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="@dimen/page_padding"
-                    android:layout_marginEnd="@dimen/page_padding"
-                    android:layout_marginBottom="@dimen/page_padding"
-                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerEvaluation"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:evaluationList="@{viewModel.evaluationList}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                         />
-                </androidx.cardview.widget.CardView>
-
+                    android:layout_height="match_parent"
+                    app:evaluationList="@{viewModel.evaluationList}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.cardview.widget.CardView>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

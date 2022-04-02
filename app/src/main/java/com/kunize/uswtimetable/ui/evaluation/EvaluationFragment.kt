@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.adapter.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
@@ -31,11 +32,12 @@ import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
-class EvaluationFragment : Fragment() {
+class EvaluationFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var binding: FragmentEvaluationBinding
     private lateinit var adapter: EvaluationListAdapter
     private val evaluationViewModel: EvaluationViewModel by viewModels {ViewModelFactory(requireContext())}
     private var spinnerSel: Int = 0
+    private var spinnerTypeList = listOf(MODIFIED, HONEY, SATISFACTION, LEARNING, BEST)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +51,7 @@ class EvaluationFragment : Fragment() {
         }
 
         binding.recyclerEvaluation.adapter = adapter
+        binding.swipe.setOnRefreshListener(this)
 
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
@@ -96,13 +99,7 @@ class EvaluationFragment : Fragment() {
                     id: Long
                 ) {
                     spinnerSel = position
-                    when (position) {
-                        0 -> evaluationViewModel.changeType(MODIFIED)
-                        1 -> evaluationViewModel.changeType(HONEY)
-                        2 -> evaluationViewModel.changeType(SATISFACTION)
-                        3 -> evaluationViewModel.changeType(LEARNING)
-                        4 -> evaluationViewModel.changeType(BEST)
-                    }
+                    evaluationViewModel.changeType(spinnerTypeList[spinnerSel])
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -111,6 +108,11 @@ class EvaluationFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    override fun onRefresh() {
+        evaluationViewModel.changeType(spinnerTypeList[spinnerSel])
+        binding.swipe.isRefreshing = false
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {
