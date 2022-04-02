@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navigationFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navigationFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNav, navController)
+        binding.bottomNav.setOnItemReselectedListener {  }
 
         binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
         binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
