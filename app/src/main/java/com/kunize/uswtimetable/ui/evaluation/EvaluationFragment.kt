@@ -87,6 +87,7 @@ class EvaluationFragment : Fragment() {
             CustomSpinnerAdapter(requireContext(), spinnerTextList, spinnerImageList)
         binding.spinner.apply {
             adapter = customSpinnerAdapter
+            setSelection(0, false)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
