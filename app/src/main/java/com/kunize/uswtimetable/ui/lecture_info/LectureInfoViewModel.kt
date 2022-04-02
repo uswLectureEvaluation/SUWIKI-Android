@@ -44,14 +44,14 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _showNoExamDataLayout.value = false
         changeWriteBtnText(R.string.write_evaluation)
         loading()
-        scrollBottomEvent()
+        getEvaluationList()
     }
 
     fun examInfoRadioBtnClicked() {
         page.value = 1
         changeWriteBtnText(R.string.write_exam)
-        evaluationList.value = arrayListOf(null)
-        scrollBottomEvent()
+        loading()
+        getExamList()
     }
 
     fun usePointBtnClicked() {
@@ -62,6 +62,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                     _showHideExamDataLayout.value = false
                     page.value = 1
                     loading()
+                    getExamList()
                 }
             }
         }
@@ -110,7 +111,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     fun scrollBottomEvent() {
-        if (page.value == LAST_PAGE)
+        if (page.value!! < 2)
             return
         when (_writeBtnText.value) {
             R.string.write_evaluation -> getEvaluationList()
