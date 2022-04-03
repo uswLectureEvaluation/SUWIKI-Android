@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/gray_ddd">
-    <item android:id="@+id/background"
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/gray_ddd">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/gray_ddd" />
+            <corners android:radius="2dip" />
+        </shape>
+    </item>
+
+    <item android:id="@android:id/background"
         android:bottom="0dp"
         android:end="-2dp"
         android:start="-2dp"
@@ -8,7 +16,13 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="1dp"
-                android:color="#CFCFCF" />
+                android:color="#CFCFCF"/>
+            <gradient
+                android:angle="90"
+                android:endColor="@android:color/transparent"
+                android:startColor="@android:color/transparent"
+                android:type="linear" />
+            <corners android:radius="2dip" />
         </shape>
     </item>
 </ripple>

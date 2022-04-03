@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/recyclerview_padding"
+        android:clickable="true"
+        android:focusable="true"
         android:background="@drawable/custom_ripple_effect_recyclerview">
 
         <include
