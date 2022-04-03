@@ -104,7 +104,7 @@ class UswTimeTable @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 30.dp) / 5
+        timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 34.dp) / 5
         isMeasured = true
     }
 
