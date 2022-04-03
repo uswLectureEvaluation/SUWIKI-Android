@@ -23,7 +23,11 @@ class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
     private lateinit var adapter: EvaluationListAdapter
-    private val lectureInfoViewModel: LectureInfoViewModel by viewModels {ViewModelFactory(requireContext())}
+    private val lectureInfoViewModel: LectureInfoViewModel by viewModels {
+        ViewModelFactory(
+            requireContext()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +55,8 @@ class LectureInfoFragment : Fragment() {
         }
 
         with(binding) {
-            lectureEvaluationRadioBtn.setOnClickListener {
-                lectureInfoViewModel?.lectureInfoRadioBtnClicked()
+            lectureEvaluationRadioBtn.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) lectureInfoViewModel?.lectureInfoRadioBtnClicked()
             }
 
             hideExamDataLayout.usePointBtn.setOnClickListener {
@@ -63,8 +67,8 @@ class LectureInfoFragment : Fragment() {
                 goToWriteFragment()
             }
 
-            examInfoRadioBtn.setOnClickListener {
-                lectureInfoViewModel?.examInfoRadioBtnClicked()
+            examInfoRadioBtn.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) lectureInfoViewModel?.examInfoRadioBtnClicked()
             }
 
             writeBtn.setOnClickListener {
