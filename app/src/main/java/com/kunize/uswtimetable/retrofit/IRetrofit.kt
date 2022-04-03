@@ -80,7 +80,7 @@ interface IRetrofit {
 
     // 비밀번호 재설정 API
     @POST(PASSWORD_RESET)
-    suspend fun resetPassword(@Body password: String): Response<SuccessCheckDto>
+    suspend fun resetPassword(@Body passwords: ResetPasswordDto): Response<SuccessCheckDto>
 
     // 로그인 요청 API
     @POST(LOGIN)

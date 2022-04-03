@@ -18,13 +18,16 @@ import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
-import com.kunize.uswtimetable.ui.user_info.FindIdActivity
-import com.kunize.uswtimetable.ui.user_info.FindPasswordActivity
-import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.ui.user_info.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MyPageFragment : Fragment() {
     private val viewModel: MyPageViewModel by viewModels { ViewModelFactory(requireContext()) }
     private lateinit var binding: FragmentMyPageBinding
+    private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,9 +76,16 @@ class MyPageFragment : Fragment() {
                     viewModel.refresh()
                     true
                 }
+                R.id.action_change_password -> {
+                    resetPassword(requireContext())
+                    true
+                }
+                R.id.action_quit -> {
+                    quit(requireContext())
+                    true
+                }
                 else -> {
-                    Toast.makeText(requireContext(), "${it.title} : 준비 중입니다", Toast.LENGTH_SHORT)
-                        .show()
+                    makeToast("${it.title} : 준비 중입니다")
                     false
                 }
             }
@@ -105,22 +115,19 @@ class MyPageFragment : Fragment() {
     private fun incomplete(context: Context) {
         with(binding) {
             sendFeedbackButton.setOnClickListener {
-                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+                makeToast("준비 중입니다.")
             }
             questionButton.setOnClickListener {
-                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
-            }
-            changePasswordButton.setOnClickListener {
-                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+                makeToast("준비 중입니다.")
             }
             termsOfUseButton.setOnClickListener {
-                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+                makeToast("준비 중입니다.")
             }
             privacyPolicyButton.setOnClickListener {
-                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+                makeToast("준비 중입니다.")
             }
             signOutButton.setOnClickListener {
-                Toast.makeText(context, "준비 중입니다", Toast.LENGTH_SHORT).show()
+                makeToast("준비 중입니다.")
             }
         }
     }
@@ -134,6 +141,9 @@ class MyPageFragment : Fragment() {
             opensourceLicenceButton.setOnClickListener {
                 val intent = Intent(context, OpenSourceActivity::class.java)
                 startActivity(intent)
+            }
+            changePasswordButton.setOnClickListener {
+                resetPassword(context)
             }
         }
     }
@@ -156,5 +166,39 @@ class MyPageFragment : Fragment() {
     private fun logIn(context: Context) {
         val intent = Intent(context, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun resetPassword(context: Context) {
+        if (User.isLoggedIn) {
+            val intent = Intent(context, ResetPasswordActivity::class.java)
+            startActivity(intent)
+        } else {
+            CoroutineScope(Dispatchers.Main).launch {
+                makeToast("로그인 후 가능합니다")
+                delay(2000)
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun quit(context: Context) {
+        if (User.isLoggedIn) {
+            val intent = Intent(context, QuitActivity::class.java)
+            startActivity(intent)
+        } else {
+            CoroutineScope(Dispatchers.Main).launch {
+                makeToast("로그인 후 가능합니다")
+                delay(2000)
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun makeToast(message: String) {
+        toast?.cancel()
+        toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        toast?.show()
     }
 }

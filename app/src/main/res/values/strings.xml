@@ -130,5 +130,8 @@
     <!--common-->
     <string name="hyphen">-</string>
     <string name="email_string">이메일</string>
+    <string name="reset_password">비밀번호 변경</string>
+    <string name="current_password">현재 비밀번호</string>
+    <string name="new_password">새로운 비밀번호</string>
 
 </resources>

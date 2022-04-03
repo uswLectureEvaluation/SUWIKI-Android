@@ -35,6 +35,7 @@ import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.ui.repository.user_info.FindIdRepository
 import com.kunize.uswtimetable.ui.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.ui.repository.user_info.QuitRepository
+import com.kunize.uswtimetable.ui.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpPage1ViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpPage2ViewModel
@@ -42,6 +43,7 @@ import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
 import com.kunize.uswtimetable.ui.user_info.FindPwViewModel
 import com.kunize.uswtimetable.ui.user_info.QuitViewModel
+import com.kunize.uswtimetable.ui.user_info.ResetPasswordViewModel
 import com.kunize.uswtimetable.util.AssetLoader
 
 @Suppress("UNCHECKED_CAST")
@@ -83,6 +85,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             modelClass.isAssignableFrom(QuitViewModel::class.java) -> {
                 val repository = QuitRepository()
                 QuitViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ResetPasswordViewModel::class.java) -> {
+                val repository = ResetPasswordRepository()
+                ResetPasswordViewModel(repository) as T
             }
             modelClass.isAssignableFrom(MyPageViewModel::class.java) -> {
                 val repository = MyPageRepository(MyPageRemoteDataSource())
