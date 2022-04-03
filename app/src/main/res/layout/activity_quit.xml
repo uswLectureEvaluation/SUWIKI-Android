@@ -72,8 +72,7 @@
                 app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/signOutTextView"
-                app:suffixText="@string/school_domain">
+                app:layout_constraintTop_toBottomOf="@id/signOutTextView">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_signOut_id"

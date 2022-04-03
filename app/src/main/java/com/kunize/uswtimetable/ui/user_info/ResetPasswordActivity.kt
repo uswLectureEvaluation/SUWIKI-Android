@@ -33,10 +33,9 @@ class ResetPasswordActivity: AppCompatActivity() {
         viewModel.result.observe(this) { result ->
             when (result) {
                 is Result.Success -> {
-                    // TODO 모달 창 띄우고 3초 뒤 액티비티 종료
                     CoroutineScope(Dispatchers.Main).launch {
                         Toast.makeText(this@ResetPasswordActivity, "성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                        delay(2000)
+                        delay(1500)
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
