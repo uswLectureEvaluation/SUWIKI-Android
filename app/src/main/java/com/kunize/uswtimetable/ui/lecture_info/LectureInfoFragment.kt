@@ -49,26 +49,26 @@ class LectureInfoFragment : Fragment() {
         CoroutineScope(IO).launch {
             lectureInfoViewModel.setInfoValue()
             lectureInfoViewModel.getLectureList()
-            binding.infoRecyclerView.infiniteScrolls {
-                lectureInfoViewModel.scrollBottomEvent()
+            with(binding) {
+                infoRecyclerView.infiniteScrolls {
+                    lectureInfoViewModel?.scrollBottomEvent()
+                }
+                lectureEvaluationRadioBtn.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) lectureInfoViewModel?.lectureInfoRadioBtnClicked()
+                }
+                examInfoRadioBtn.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) lectureInfoViewModel?.examInfoRadioBtnClicked()
+                }
             }
         }
 
         with(binding) {
-            lectureEvaluationRadioBtn.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) lectureInfoViewModel?.lectureInfoRadioBtnClicked()
-            }
-
             hideExamDataLayout.usePointBtn.setOnClickListener {
                 lectureInfoViewModel?.usePointBtnClicked()
             }
 
             noExamDataLayout.writeExamBtn.setOnClickListener {
                 goToWriteFragment()
-            }
-
-            examInfoRadioBtn.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) lectureInfoViewModel?.examInfoRadioBtnClicked()
             }
 
             writeBtn.setOnClickListener {

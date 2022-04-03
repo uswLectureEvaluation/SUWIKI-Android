@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
 import com.kunize.uswtimetable.ui.common.BaseInfiniteRecyclerItemViewModel
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
@@ -31,9 +32,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         get() = _lectureDetailInfoData
 
     init {
-        page.value = 1
         _writeBtnText.value = R.string.write_evaluation
-        loading()
         _showNoExamDataLayout.value = false
         _showHideExamDataLayout.value = false
     }
@@ -105,10 +104,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 deleteLoading()
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 if (!tmpEvaluationData.isNullOrEmpty()) {
-                    if (tmpEvaluationData.size == 10)
-                        tmpEvaluationData.add(null)
-                    else
-                        page.value = LAST_PAGE
+                    isLastData(tmpEvaluationData)
                     evaluationList.value!!.addAll(tmpEvaluationData)
                     evaluationList.value = evaluationList.value
                 }
@@ -129,10 +125,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 val tmpExamData = tmpResponse?.convertToEvaluationData()
                 deleteLoading()
                 if (tmpExamData != null) {
-                    if(tmpExamData.size != 10)
-                        page.value = LAST_PAGE
-                    else
-                        tmpExamData.add(null)
+                    isLastData(tmpExamData)
                     if (tmpExamData.isEmpty() && tmpResponse.examDataExist)
                         _showHideExamDataLayout.value = true
                     else if (!tmpResponse.examDataExist)
