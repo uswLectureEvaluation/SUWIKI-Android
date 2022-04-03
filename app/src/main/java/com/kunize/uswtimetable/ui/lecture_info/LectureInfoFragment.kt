@@ -48,7 +48,7 @@ class LectureInfoFragment : Fragment() {
 
         CoroutineScope(IO).launch {
             lectureInfoViewModel.setInfoValue()
-            lectureInfoViewModel.getEvaluationList()
+            lectureInfoViewModel.getLectureList()
             binding.infoRecyclerView.infiniteScrolls {
                 lectureInfoViewModel.scrollBottomEvent()
             }
