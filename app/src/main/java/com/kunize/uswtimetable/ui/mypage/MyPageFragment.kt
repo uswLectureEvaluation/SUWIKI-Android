@@ -126,9 +126,6 @@ class MyPageFragment : Fragment() {
             privacyPolicyButton.setOnClickListener {
                 makeToast("준비 중입니다.")
             }
-            signOutButton.setOnClickListener {
-                makeToast("준비 중입니다.")
-            }
         }
     }
 
@@ -144,6 +141,9 @@ class MyPageFragment : Fragment() {
             }
             changePasswordButton.setOnClickListener {
                 resetPassword(context)
+            }
+            signOutButton.setOnClickListener {
+                quit(context)
             }
         }
     }
