@@ -25,11 +25,11 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
     }
 
     init {
+        loading()
         changeType(MODIFIED)
     }
 
     fun changeType(option: String) {
-        loading()
         _selectedType.value = option
         loadEvaluationData()
     }

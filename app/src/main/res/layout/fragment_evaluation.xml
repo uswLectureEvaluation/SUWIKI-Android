@@ -97,17 +97,6 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerEvaluation"
                     android:layout_width="match_parent"
@@ -119,10 +108,8 @@
                     android:background="@drawable/background_cardview"
                     android:elevation="2dp"
                     app:evaluationList="@{viewModel.evaluationList}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-            </LinearLayout>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -32,7 +32,7 @@ import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
-class EvaluationFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
     private lateinit var adapter: EvaluationListAdapter
     private val evaluationViewModel: EvaluationViewModel by viewModels {ViewModelFactory(requireContext())}
@@ -51,7 +51,6 @@ class EvaluationFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         binding.recyclerEvaluation.adapter = adapter
-        binding.swipe.setOnRefreshListener(this)
 
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
@@ -108,11 +107,6 @@ class EvaluationFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         }
         return binding.root
-    }
-
-    override fun onRefresh() {
-        evaluationViewModel.changeType(spinnerTypeList[spinnerSel])
-        binding.swipe.isRefreshing = false
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {
