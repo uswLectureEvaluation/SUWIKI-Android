@@ -12,10 +12,12 @@ class ResetPasswordViewModel(private val repository: ResetPasswordRepository) : 
     val currentPassword = MutableLiveData<String>()
     val newPassword = MutableLiveData<String>()
     val result = MutableLiveData<Result<Any>>()
+    val loading = MutableLiveData<Boolean>()
 
     fun resetPassword() {
         val current = currentPassword.value ?: return
         val new = newPassword.value ?: return
+        loading.value = true
         viewModelScope.launch {
             val response = repository.resetPassword(current, new)
             if (response.isSuccessful && response.body()?.success == true) {
@@ -25,6 +27,7 @@ class ResetPasswordViewModel(private val repository: ResetPasswordRepository) : 
                 // 비밀번호 변경 실패
                 result.postValue(Result.Error(IOException("${response.code()}: ${response.message()}")))
             }
+            loading.postValue(false)
         }
     }
 }
