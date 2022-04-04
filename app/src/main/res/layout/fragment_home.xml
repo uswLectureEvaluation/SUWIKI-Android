@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 custom:infoFormat="1"
                 custom:isEmpty="false"
-                custom:yaxisType="4" />
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

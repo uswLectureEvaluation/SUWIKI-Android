@@ -36,19 +36,16 @@ class UswTimeTable @JvmOverloads constructor(
         const val CLASSNAME_LOCATION = 1
         const val CLASSNAME_PROFESSOR = 2
         const val CLASSNAME_PROFESSOR_LOCATION = 3
-        const val PERIOD = 4
-        const val TIME = 5
     }
 
     var view: View = LayoutInflater.from(context).inflate(R.layout.usw_timetable, this, false)
+
     //속성값
     var isEmpty: Boolean
     var infoFormat: Int
-    var yaxisType: Int
 
     private var timeWidth = 0.dp
     private var timeHeight = 50.dp
-    private var isMeasured = false
 
     private val customTimeTable: RelativeLayout
     private val existTimeTable: ConstraintLayout
@@ -72,7 +69,6 @@ class UswTimeTable @JvmOverloads constructor(
         try {
             isEmpty = typedArray.getBoolean(R.styleable.UswTimeTable_isEmpty, false)
             infoFormat = typedArray.getInt(R.styleable.UswTimeTable_infoFormat, 1)
-            yaxisType = typedArray.getInt(R.styleable.UswTimeTable_yaxisType,4)
         } finally {
             typedArray.recycle()
         }
@@ -97,7 +93,7 @@ class UswTimeTable @JvmOverloads constructor(
 
         createTimetableBtn.setOnClickListener {
             val intent = Intent(context, CreateTimeTableActivity::class.java)
-            startActivity(context,intent,null)
+            startActivity(context, intent, null)
         }
 
     }
@@ -136,15 +132,14 @@ class UswTimeTable @JvmOverloads constructor(
                     }
                     startActivity(context, intent, null)
                 }
-                2 ->
-                     {
-                        if (v != null) {
-                            customTimeTable.removeView(v)
-                            tempTimeData.remove(data)
-                            reDrawColumn()
-                        } else
-                            eLearningText.text = ""
-                    }
+                2 -> {
+                    if (v != null) {
+                        customTimeTable.removeView(v)
+                        tempTimeData.remove(data)
+                        reDrawColumn()
+                    } else
+                        eLearningText.text = ""
+                }
             }
         })
         bottomSheet.show((context as AppCompatActivity).supportFragmentManager, bottomSheet.tag)
@@ -180,26 +175,24 @@ class UswTimeTable @JvmOverloads constructor(
             existTimeTable.visibility = GONE
         } else {
 
-            var topMargin = 30.dp
+            val topMargin = 55.dp
 
-            if(yaxisType == TIME) {
-                topMargin = 55.dp
-                findViewById<TextView>(R.id.one).text = "9"
-                findViewById<TextView>(R.id.two).text = "10"
-                findViewById<TextView>(R.id.three).text = "11"
-                findViewById<TextView>(R.id.four).text = "12"
-                findViewById<TextView>(R.id.five).text = "1"
-                findViewById<TextView>(R.id.six).text = "2"
-                findViewById<TextView>(R.id.seven).text = "3"
-                findViewById<TextView>(R.id.eight).text = "4"
-                timeColumnList[0].text = "5"
-                timeColumnList[1].text = "6"
-                timeColumnList[2].text = "7"
-                timeColumnList[3].text = "8"
-                timeColumnList[4].text = "9"
-                timeColumnList[5].text = "10"
-                timeColumnList[6].text = "11"
-            }
+            findViewById<TextView>(R.id.one).text = "9"
+            findViewById<TextView>(R.id.two).text = "10"
+            findViewById<TextView>(R.id.three).text = "11"
+            findViewById<TextView>(R.id.four).text = "12"
+            findViewById<TextView>(R.id.five).text = "1"
+            findViewById<TextView>(R.id.six).text = "2"
+            findViewById<TextView>(R.id.seven).text = "3"
+            findViewById<TextView>(R.id.eight).text = "4"
+            timeColumnList[0].text = "5"
+            timeColumnList[1].text = "6"
+            timeColumnList[2].text = "7"
+            timeColumnList[3].text = "8"
+            timeColumnList[4].text = "9"
+            timeColumnList[5].text = "10"
+            timeColumnList[6].text = "11"
+
 
             emptyTimeTable.visibility = GONE
             existTimeTable.visibility = VISIBLE
@@ -232,7 +225,7 @@ class UswTimeTable @JvmOverloads constructor(
                     params.leftMargin = timeWidth * timeWidthMap[data.day]!! + 30.dp
                     params.topMargin = drawStart + topMargin
 
-                    val tempText = when(infoFormat) {
+                    val tempText = when (infoFormat) {
                         CLASSNAME -> data.name
                         CLASSNAME_LOCATION -> "${data.name}\n${data.location}"
                         CLASSNAME_PROFESSOR -> "${data.name}\n${data.professor}"
@@ -240,8 +233,18 @@ class UswTimeTable @JvmOverloads constructor(
                         else -> "${data.name}\n${data.location}"
                     }
                     val timeText = SpannableString(tempText)
-                    timeText.setSpan(StyleSpan(android.graphics.Typeface.BOLD), 0,data.name.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    timeText.setSpan(AbsoluteSizeSpan(12,true),data.name.length,tempText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    timeText.setSpan(
+                        StyleSpan(android.graphics.Typeface.BOLD),
+                        0,
+                        data.name.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    timeText.setSpan(
+                        AbsoluteSizeSpan(12, true),
+                        data.name.length,
+                        tempText.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
 
                     timeRect.text = timeText
                     timeRect.setTextColor(Color.WHITE)

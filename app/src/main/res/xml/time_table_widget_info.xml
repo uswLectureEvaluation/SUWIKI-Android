@@ -6,4 +6,4 @@
     android:minHeight="200dp"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="86400000"
-    android:widgetCategory="home_screen"></appwidget-provider>
+    android:widgetCategory="home_screen" />

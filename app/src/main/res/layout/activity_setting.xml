@@ -39,22 +39,6 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView7"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:text="시간 표시"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="@+id/timeFormatBtn"
-                app:layout_constraintHeight_percent="0.2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/timeFormatBtn"
-                app:layout_constraintWidth_percent="0.4"
-                app:layout_optimizationLevel="ratio" />
-
-            <TextView
                 android:id="@+id/textView8"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -66,7 +50,6 @@
                 app:layout_constraintBottom_toBottomOf="@+id/classInfoBtn"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/classInfoBtn"
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
@@ -85,22 +68,6 @@
                 app:layout_constraintWidth_percent="0.4" />
 
             <TextView
-                android:id="@+id/timeFormatBtn"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:text="교시"
-                android:textSize="20sp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/classInfoBtn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.2"
-                app:layout_constraintStart_toEndOf="@+id/textView7"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5" />
-
-            <TextView
                 android:id="@+id/classInfoBtn"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -113,7 +80,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.2"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/timeFormatBtn"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.5" />
 
             <TextView

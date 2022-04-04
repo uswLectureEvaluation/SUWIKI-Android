@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -15,8 +14,6 @@ import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME
 import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_LOCATION
 import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR
 import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR_LOCATION
-import com.kunize.uswtimetable.UswTimeTable.Companion.PERIOD
-import com.kunize.uswtimetable.UswTimeTable.Companion.TIME
 import com.kunize.uswtimetable.databinding.ActivitySettingBinding
 import java.io.*
 
@@ -47,14 +44,6 @@ class SettingActivity : AppCompatActivity() {
             }
             text = getPrefInfo("infoFormat", 1)
         }
-
-        binding.timeFormatBtn.apply {
-            setOnClickListener {
-                val list = arrayOf("교시", "시간")
-                showDialog(it, list,"yaxisType")
-            }
-            text = getPrefInfo("yaxisType", 5)
-        }
     }
 
     private fun getPrefInfo(type: String, defValue: Int): String {
@@ -63,8 +52,6 @@ class SettingActivity : AppCompatActivity() {
             CLASSNAME_LOCATION -> "수업명, 장소"
             CLASSNAME_PROFESSOR -> "수업명, 교수명"
             CLASSNAME_PROFESSOR_LOCATION -> "수업명, 교수명, 장소"
-            PERIOD -> "교시"
-            TIME -> "시간"
             else -> ""
         }
     }
@@ -78,8 +65,6 @@ class SettingActivity : AppCompatActivity() {
                 "수업명, 장소" -> CLASSNAME_LOCATION
                 "수업명, 교수명" -> CLASSNAME_PROFESSOR
                 "수업명, 교수명, 장소" -> CLASSNAME_PROFESSOR_LOCATION
-                "교시" -> PERIOD
-                "시간" -> TIME
                 else -> 0
             }
             (v as TextView).text = list[which]

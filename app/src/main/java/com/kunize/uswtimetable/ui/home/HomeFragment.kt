@@ -16,7 +16,6 @@ import com.kunize.uswtimetable.*
 import com.kunize.uswtimetable.MainActivity.Companion.bitmapToString
 import com.kunize.uswtimetable.MainActivity.Companion.jsonToArray
 import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_LOCATION
-import com.kunize.uswtimetable.UswTimeTable.Companion.TIME
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.FragmentHomeBinding
 import com.kunize.uswtimetable.dataclass.TimeData
@@ -119,10 +118,6 @@ class HomeFragment : Fragment() {
                     binding.uswTimeTable.infoFormat = TimeTableSelPref.prefs.getInt(
                         "infoFormat",
                         CLASSNAME_LOCATION
-                    )
-                    binding.uswTimeTable.yaxisType = TimeTableSelPref.prefs.getInt(
-                        "yaxisType",
-                        TIME
                     )
                     binding.uswTimeTable.drawTable()
                 }
