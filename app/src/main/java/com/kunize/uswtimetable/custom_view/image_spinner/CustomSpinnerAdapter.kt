@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.adapter
+package com.kunize.uswtimetable.custom_view.image_spinner
 
 import android.content.Context
 import android.widget.ArrayAdapter

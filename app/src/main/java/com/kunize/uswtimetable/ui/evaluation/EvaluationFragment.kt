@@ -12,24 +12,18 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.kunize.uswtimetable.NavGraphDirections
-import com.kunize.uswtimetable.adapter.CustomSpinnerAdapter
+import com.kunize.uswtimetable.custom_view.image_spinner.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
-import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
 import com.kunize.uswtimetable.util.LectureApiOption.HONEY
 import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
-import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
 class EvaluationFragment : Fragment() {

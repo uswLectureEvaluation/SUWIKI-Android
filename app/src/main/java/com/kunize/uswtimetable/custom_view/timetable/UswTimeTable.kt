@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.custom_view
+package com.kunize.uswtimetable.custom_view.timetable
 
 import android.content.Context
 import android.content.Intent
@@ -21,7 +21,6 @@ import com.kunize.uswtimetable.CreateTimeTableActivity
 import com.kunize.uswtimetable.MainActivity.Companion.dp
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.TimeData
-import com.kunize.uswtimetable.dialog.BottomSheet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

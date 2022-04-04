@@ -15,7 +15,7 @@ import android.widget.Toast
 import com.kunize.uswtimetable.*
 import com.kunize.uswtimetable.MainActivity.Companion.bitmapToString
 import com.kunize.uswtimetable.MainActivity.Companion.jsonToArray
-import com.kunize.uswtimetable.custom_view.UswTimeTable.Companion.CLASSNAME_LOCATION
+import com.kunize.uswtimetable.custom_view.timetable.UswTimeTable.Companion.CLASSNAME_LOCATION
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.FragmentHomeBinding
 import com.kunize.uswtimetable.dataclass.TimeData

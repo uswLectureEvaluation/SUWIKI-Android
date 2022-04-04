@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.dialog
+package com.kunize.uswtimetable.custom_view.timetable
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.DefaultLifecycleObserver
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.TimeTableSelPref
@@ -22,7 +21,7 @@ class BottomSheet(data: TimeData, val callback: (Int) -> Unit) : BottomSheetDial
 {
     lateinit var edit: TextView
     lateinit var delete: TextView
-    var localData: TimeData = data
+    private var localData: TimeData = data
 
     override fun onCreateView(
         inflater: LayoutInflater,
