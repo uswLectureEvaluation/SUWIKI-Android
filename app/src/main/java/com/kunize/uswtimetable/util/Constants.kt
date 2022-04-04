@@ -21,7 +21,7 @@ object API {
     const val BASE_URL: String = "https://api.suwiki.kr"
     const val REQUEST_REFRESH: String = "/user/refresh"
     const val NOTICE_LIST: String = "/notice/findAllList"
-    const val NOTICE: String = "/notice"
+    const val NOTICE: String = "/notice/"
     const val SEARCH: String = "/lecture/findBySearchValue"
     const val EXAM: String = "/lecture/exam"
     const val ID: String = "/user/find-id"

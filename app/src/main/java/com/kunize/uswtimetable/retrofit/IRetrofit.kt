@@ -80,7 +80,7 @@ interface IRetrofit {
 
     // 공지사항 API
     @GET(NOTICE)
-    suspend fun getNotice(@Query("notice_id") id: Long): Response<NoticeDetailDto>
+    suspend fun getNotice(@Query("noticeId") id: Long): Response<NoticeDetailDto>
 
     // 아이디 찾기 API
     @POST(ID)
