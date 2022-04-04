@@ -105,7 +105,6 @@ class UswTimeTable @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 34.dp) / 5
-        isMeasured = true
     }
 
     private fun showBottomSheet(
@@ -205,14 +204,7 @@ class UswTimeTable @JvmOverloads constructor(
             emptyTimeTable.visibility = GONE
             existTimeTable.visibility = VISIBLE
 
-            Log.d("dataIn","$timeTableData")
-
             CoroutineScope(IO).launch {
-                Log.d("dataIn","그리기 시작")
-                do {
-                    //onMeasure가 실행될 때 까지 기다립니다.
-                } while (!isMeasured)
-
                 withContext(Main) {
                     customTimeTable.removeAllViews()
                     eLearningText.text = ""
@@ -222,7 +214,7 @@ class UswTimeTable @JvmOverloads constructor(
                 for (data in timeTableData) {
                     if ((data.location == "이러닝" && data.day == "") || data.day == "토") {
                         eLearningText.text =
-                            data.name + " (" + data.day + " " + data.startTime + "~" + data.endTime + ")"
+                            "${data.name} (${data.day} ${data.startTime}~${data.endTime})"
                         withContext(Main) {
                             eLearningText.setOnClickListener {
                                 if (eLearningText.text.toString() != "")
