@@ -15,7 +15,8 @@ class NoticeAdapter(val onItemClicked: (NoticeDto) -> Unit): ListAdapter<NoticeD
                 onItemClicked(notice)
             }
             binding.titleTextView.text = notice.title
-            binding.dateTextView.text = notice.date.toString()
+            val t = notice.date
+            binding.dateTextView.text = "${t.year}.${t.month.value}.${t.dayOfMonth}"
         }
     }
 
