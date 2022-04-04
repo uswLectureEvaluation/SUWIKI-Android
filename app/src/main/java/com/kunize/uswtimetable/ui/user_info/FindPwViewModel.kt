@@ -14,12 +14,14 @@ class FindPwViewModel(private val repository: FindPwRepository): ViewModel() {
     val userId = MutableLiveData<String>()
     val successMessage = MutableLiveData<String>()
     val errorMessage = MutableLiveData<String>()
+    val loading = MutableLiveData<Boolean>()
 
     fun findPw() {
         if (email.value.isNullOrEmpty() || userId.value.isNullOrEmpty()) return
         val email = email.value!! + SCHOOL_DOMAIN_AT
         val id = userId.value!!
         Log.d(TAG, "FindPwViewModel - findPw($id, $email) called")
+        loading.value = true
         viewModelScope.launch {
             val response = repository.findPw(id, email)
             if (response.isSuccessful && response.body()?.success==true) {
@@ -27,6 +29,7 @@ class FindPwViewModel(private val repository: FindPwRepository): ViewModel() {
             } else {
                 errorMessage.postValue("${response.code()}: ${response.message()}")
             }
+            loading.postValue(false)
         }
     }
 }

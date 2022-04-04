@@ -98,12 +98,12 @@ class LoginActivity : AppCompatActivity() {
             }
 
             userId.afterTextChanged {
-                loginViewModel.loginDataChanged(userId.text.toString(), userPassword.text.toString())
+                loginViewModel.loginDataChanged()
             }
 
             userPassword.apply {
                 afterTextChanged {
-                    loginViewModel.loginDataChanged(userId.text.toString(), userPassword.text.toString())
+                    loginViewModel.loginDataChanged()
                 }
             }
         }

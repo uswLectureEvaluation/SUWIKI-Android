@@ -11,11 +11,13 @@ class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
     val password = MutableLiveData<String>()
     val successMessage = MutableLiveData<String>()
     val errorMessage = MutableLiveData<String>()
+    val loading = MutableLiveData<Boolean>()
 
     fun quit() {
         if (loginId.value?.isEmpty() == true || password.value?.isEmpty() == true) return
         val id = loginId.value ?: return
         val pw = password.value ?: return
+        loading.value = true
         viewModelScope.launch {
             val response = repository.quit(id, pw)
             if (response.isSuccessful && response.body()?.success == true) {
@@ -23,6 +25,7 @@ class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
             } else {
                 errorMessage.postValue("${response.code()}: ${response.message()}")
             }
+            loading.postValue(false)
         }
     }
 }

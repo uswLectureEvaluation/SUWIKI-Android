@@ -83,6 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
+                    android:text="@={viewModel.userId}"
                     android:maxLength="@{Constants.ID_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,6 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
+                    android:text="@={viewModel.userPw}"
                     android:maxLength="@{Constants.PW_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_ripple_skyblue"
-                android:enabled="@{viewModel.loginFormState.dataValid}"
+                android:enabled="@{viewModel.loginFormState.dataValid == true &amp;&amp; viewModel.loading == false}"
                 android:onClick="@{() -> viewModel.login(userId.getText().toString(), userPassword.getText().toString())}"
                 android:text="@string/login_button_text"
                 android:textColor="@color/white"

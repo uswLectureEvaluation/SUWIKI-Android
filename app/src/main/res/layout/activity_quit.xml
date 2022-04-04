@@ -78,8 +78,8 @@
                     android:id="@+id/et_signOut_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewmodel.loginId}"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewmodel.loginId}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -96,11 +96,11 @@
                 app:suffixText="@string/school_domain">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailEditText"
+                    android:id="@+id/et_signOut_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewmodel.password}"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewmodel.password}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -108,10 +108,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/custom_ripple_light_blue_button"
+                android:enabled="@{etSignOutId.text.length() > 0 &amp;&amp; etSignOutPw.text.length() > 0 &amp;&amp; viewmodel.loading == false}"
+                android:onClick="@{() -> viewmodel.quit()}"
                 android:text="@string/sign_out"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:onClick="@{() -> viewmodel.quit()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_signOut_pw" />
