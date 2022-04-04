@@ -25,7 +25,6 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
     }
 
     init {
-        loading()
         changeType(MODIFIED)
     }
 

@@ -23,7 +23,11 @@ class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
     private lateinit var adapter: EvaluationListAdapter
-    private val lectureInfoViewModel: LectureInfoViewModel by viewModels {ViewModelFactory(requireContext())}
+    private val lectureInfoViewModel: LectureInfoViewModel by viewModels {
+        ViewModelFactory(
+            requireContext()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,27 +48,27 @@ class LectureInfoFragment : Fragment() {
 
         CoroutineScope(IO).launch {
             lectureInfoViewModel.setInfoValue()
-            lectureInfoViewModel.getEvaluationList()
-            binding.infoRecyclerView.infiniteScrolls {
-                lectureInfoViewModel.scrollBottomEvent()
+            lectureInfoViewModel.getLectureList()
+            with(binding) {
+                infoRecyclerView.infiniteScrolls {
+                    lectureInfoViewModel?.scrollBottomEvent()
+                }
+                lectureEvaluationRadioBtn.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) lectureInfoViewModel?.lectureInfoRadioBtnClicked()
+                }
+                examInfoRadioBtn.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) lectureInfoViewModel?.examInfoRadioBtnClicked()
+                }
             }
         }
 
         with(binding) {
-            lectureEvaluationRadioBtn.setOnClickListener {
-                lectureInfoViewModel?.lectureInfoRadioBtnClicked()
-            }
-
             hideExamDataLayout.usePointBtn.setOnClickListener {
                 lectureInfoViewModel?.usePointBtnClicked()
             }
 
             noExamDataLayout.writeExamBtn.setOnClickListener {
                 goToWriteFragment()
-            }
-
-            examInfoRadioBtn.setOnClickListener {
-                lectureInfoViewModel?.examInfoRadioBtnClicked()
             }
 
             writeBtn.setOnClickListener {

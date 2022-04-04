@@ -14,9 +14,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     private val _searchValue = MutableLiveData<String>()
 
     init {
-        page.value = 1
         _searchValue.value = ""
-        evaluationList.value = arrayListOf(null)
     }
 
     fun scrollBottomEvent() {
@@ -29,11 +27,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 deleteLoading()
                 if(!tmpEvaluationData.isNullOrEmpty()) {
-                    if(tmpEvaluationData.size == 10)
-                        tmpEvaluationData.add(null)
-                    else
-                        page.value = LAST_PAGE
-
+                    isLastData(tmpEvaluationData)
                     evaluationList.value!!.addAll(tmpEvaluationData)
                     evaluationList.value = evaluationList.value
 

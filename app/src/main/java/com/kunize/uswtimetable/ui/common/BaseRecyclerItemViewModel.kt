@@ -11,6 +11,10 @@ open class BaseRecyclerItemViewModel: ViewModel() {
         get() = evaluationList
     val delayTime = 200L
 
+    init {
+        loading()
+    }
+
     fun loading() {
         evaluationList.value = arrayListOf(null)
     }

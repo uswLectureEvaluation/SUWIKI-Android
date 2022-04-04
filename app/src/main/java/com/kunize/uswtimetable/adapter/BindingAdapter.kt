@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -12,6 +13,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.EvaluationData
 
 object BindingAdapter {
+    @SuppressLint("NotifyDataSetChanged")
     @BindingAdapter("evaluationList")
     @JvmStatic
     fun setList(
