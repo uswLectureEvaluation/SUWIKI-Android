@@ -172,6 +172,7 @@ class UswTimeTable @JvmOverloads constructor(
     }
 
     fun drawTable() {
+        eLearningText.text = ""
         if (isEmpty) {
             emptyTimeTable.visibility = VISIBLE
             existTimeTable.visibility = GONE
