@@ -65,7 +65,6 @@ class ClassInfoActivity : AppCompatActivity() {
         val className = intent.getStringExtra("className")
         val professor = intent.getStringExtra("professor")
         val time = intent.getStringExtra("time")
-        var timeSplit: List<String>
 
         binding.editClassName.setText(className)
         binding.editProfessorName.setText(professor)
@@ -108,9 +107,12 @@ class ClassInfoActivity : AppCompatActivity() {
             val inputClassName = binding.editClassName.text.toString()
             val inputProfessor = binding.editProfessorName.text.toString()
             CoroutineScope(IO).launch {
+                var tempDeleteData = TimeData()
                 try {
-                    if (deleteIdx != -1)
+                    if (deleteIdx != -1) {
+                        tempDeleteData = tempTimeData[deleteIdx]
                         tempTimeData.removeAt(deleteIdx)
+                    }
                     //3.5 UI에서 정보 추출
                     val extractionList =
                         listOf<TextView>(binding.time1, binding.time2, binding.time3)
@@ -124,6 +126,8 @@ class ClassInfoActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                        if (deleteIdx != -1)
+                            tempTimeData.add(deleteIdx, tempDeleteData)
                         return@launch
                     }
                     val addTimeData = mutableListOf<TimeData>()
@@ -174,6 +178,8 @@ class ClassInfoActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
+                            if (deleteIdx != -1)
+                                tempTimeData.add(deleteIdx, tempDeleteData)
                             return@launch
                         }
                     }
@@ -182,11 +188,13 @@ class ClassInfoActivity : AppCompatActivity() {
                     for (newTime in addTimeData) {
                         for (oldTime in tempTimeData) {
                             if (newTime.day == oldTime.day) {
+                                val newStartTime = newTime.startTime.toInt()
+                                val newEndTime = newTime.endTime.toInt()
+                                val oldStartTime = oldTime.startTime.toInt()
+                                val oldEndTime = oldTime.endTime.toInt()
                                 if (
-                                    (newTime.startTime.toInt() <= oldTime.endTime.toInt() && newTime.startTime.toInt() >= oldTime.startTime.toInt()) ||
-                                    (newTime.endTime.toInt() <= oldTime.endTime.toInt() && newTime.endTime.toInt() >= oldTime.startTime.toInt()) ||
-                                    (oldTime.startTime.toInt() <= newTime.endTime.toInt() && oldTime.startTime.toInt() >= newTime.startTime.toInt()) ||
-                                    (oldTime.endTime.toInt() <= newTime.endTime.toInt() && oldTime.endTime.toInt() >= newTime.startTime.toInt())
+                                    (newStartTime in oldStartTime .. oldEndTime) || (newEndTime in oldStartTime .. oldEndTime) ||
+                                    (oldStartTime in newStartTime .. newEndTime) || (oldEndTime in newStartTime .. newEndTime)
                                 ) {
                                     withContext(Main) {
                                         Toast.makeText(
@@ -195,6 +203,8 @@ class ClassInfoActivity : AppCompatActivity() {
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
+                                    if (deleteIdx != -1)
+                                        tempTimeData.add(deleteIdx, tempDeleteData)
                                     return@launch
                                 }
                             }
@@ -226,7 +236,8 @@ class ClassInfoActivity : AppCompatActivity() {
                     intent.flags =
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
                     startActivity(intent)
-                } catch (e: Exception) {
+                }
+                catch (e: Exception) {
                     Log.d("UnKnownError", "$e")
                     withContext(Main) {
                         Toast.makeText(
@@ -234,6 +245,8 @@ class ClassInfoActivity : AppCompatActivity() {
                             "문제가 있어 시간표를 추가할 수 없어요!",
                             Toast.LENGTH_SHORT
                         ).show()
+                        if (deleteIdx != -1)
+                            tempTimeData.add(deleteIdx, tempDeleteData)
                     }
                 }
             }  //Coroutine 끝
