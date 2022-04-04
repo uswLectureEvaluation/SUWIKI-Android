@@ -48,63 +48,63 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="1" />
+                    android:text="9" />
 
                 <TextView
                     android:id="@+id/two"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="2" />
+                    android:text="10" />
 
                 <TextView
                     android:id="@+id/three"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="3" />
+                    android:text="11" />
 
                 <TextView
                     android:id="@+id/four"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="4" />
+                    android:text="12" />
 
                 <TextView
                     android:id="@+id/five"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="5" />
+                    android:text="1" />
 
                 <TextView
                     android:id="@+id/six"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="6" />
+                    android:text="2" />
 
                 <TextView
                     android:id="@+id/seven"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="7" />
+                    android:text="3" />
 
                 <TextView
                     android:id="@+id/eight"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="8" />
+                    android:text="4" />
 
                 <TextView
                     android:id="@+id/nine"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="9"
+                    android:text="5"
                     android:visibility="gone" />
 
                 <TextView
@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="10"
+                    android:text="6"
                     android:visibility="gone" />
 
                 <TextView
@@ -120,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="11"
+                    android:text="7"
                     android:visibility="gone" />
 
                 <TextView
@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="12"
+                    android:text="8"
                     android:visibility="gone" />
 
                 <TextView
@@ -136,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="13"
+                    android:text="9"
                     android:visibility="gone" />
 
                 <TextView
@@ -144,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="14"
+                    android:text="10"
                     android:visibility="gone" />
 
                 <TextView
@@ -152,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="15"
+                    android:text="11"
                     android:visibility="gone" />
 
             </LinearLayout>

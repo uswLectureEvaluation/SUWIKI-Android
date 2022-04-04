@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:padding="20dp">
 
-            <com.kunize.uswtimetable.UswTimeTable
+            <com.kunize.uswtimetable.custom_view.UswTimeTable
                 android:id="@+id/uswTimeTable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

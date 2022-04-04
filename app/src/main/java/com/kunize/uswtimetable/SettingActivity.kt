@@ -10,10 +10,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME
-import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_LOCATION
-import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR
-import com.kunize.uswtimetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR_LOCATION
+import com.kunize.uswtimetable.custom_view.UswTimeTable.Companion.CLASSNAME
+import com.kunize.uswtimetable.custom_view.UswTimeTable.Companion.CLASSNAME_LOCATION
+import com.kunize.uswtimetable.custom_view.UswTimeTable.Companion.CLASSNAME_PROFESSOR
+import com.kunize.uswtimetable.custom_view.UswTimeTable.Companion.CLASSNAME_PROFESSOR_LOCATION
 import com.kunize.uswtimetable.databinding.ActivitySettingBinding
 import java.io.*
 

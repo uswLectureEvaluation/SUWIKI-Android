@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.DefaultLifecycleObserver
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.TimeTableSelPref
@@ -17,8 +18,8 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
-class BottomSheet(data: TimeData, val callback: (Int) -> Unit) : BottomSheetDialogFragment() {
-
+class BottomSheet(data: TimeData, val callback: (Int) -> Unit) : BottomSheetDialogFragment()
+{
     lateinit var edit: TextView
     lateinit var delete: TextView
     var localData: TimeData = data
@@ -32,8 +33,8 @@ class BottomSheet(data: TimeData, val callback: (Int) -> Unit) : BottomSheetDial
         return inflater.inflate(R.layout.bottom_dialog, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         view?.findViewById<TextView>(R.id.bottomName)?.text = localData.name
         view?.findViewById<TextView>(R.id.bottomProfessor)?.text = localData.professor
         view?.findViewById<TextView>(R.id.bottomTime)?.text = localData.location + " (" + localData.day + " " + localData.startTime + "~" +localData.endTime + ")"

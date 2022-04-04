@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable
+package com.kunize.uswtimetable.custom_view
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,6 @@ import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.StyleSpan
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
@@ -17,7 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
+import com.kunize.uswtimetable.ClassInfoActivity
+import com.kunize.uswtimetable.CreateTimeTableActivity
 import com.kunize.uswtimetable.MainActivity.Companion.dp
+import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.dataclass.TimeData
 import com.kunize.uswtimetable.dialog.BottomSheet
 import kotlinx.coroutines.CoroutineScope
@@ -176,23 +178,6 @@ class UswTimeTable @JvmOverloads constructor(
         } else {
 
             val topMargin = 55.dp
-
-            findViewById<TextView>(R.id.one).text = "9"
-            findViewById<TextView>(R.id.two).text = "10"
-            findViewById<TextView>(R.id.three).text = "11"
-            findViewById<TextView>(R.id.four).text = "12"
-            findViewById<TextView>(R.id.five).text = "1"
-            findViewById<TextView>(R.id.six).text = "2"
-            findViewById<TextView>(R.id.seven).text = "3"
-            findViewById<TextView>(R.id.eight).text = "4"
-            timeColumnList[0].text = "5"
-            timeColumnList[1].text = "6"
-            timeColumnList[2].text = "7"
-            timeColumnList[3].text = "8"
-            timeColumnList[4].text = "9"
-            timeColumnList[5].text = "10"
-            timeColumnList[6].text = "11"
-
 
             emptyTimeTable.visibility = GONE
             existTimeTable.visibility = VISIBLE
