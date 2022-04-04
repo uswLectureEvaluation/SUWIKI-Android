@@ -8,6 +8,6 @@
         android:id="@+id/action_change_password"
         android:title="@string/change_password" />
     <item
-        android:id="@+id/action_withdrawal"
+        android:id="@+id/action_quit"
         android:title="@string/withdrawal" />
 </menu>

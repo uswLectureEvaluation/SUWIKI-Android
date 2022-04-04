@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.user_info.FindIdViewModel" />
+            type="com.kunize.uswtimetable.ui.user_info.QuitViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/page_padding"
-        tools:context=".ui.user_info.FindIdActivity">
+        tools:context=".ui.user_info.QuitActivity">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -29,7 +30,7 @@
             style="@style/Headline6.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/find_id"
+            android:text="@string/sign_out"
             app:layout_constraintEnd_toEndOf="@+id/titleTextView"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/titleTextView"
@@ -49,37 +50,57 @@
             app:layout_constraintVertical_bias="0.3">
 
             <TextView
-                android:id="@+id/findIdTextView"
+                android:id="@+id/signOutTextView"
+                style="@style/Headline5.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/find_id"
+                android:text="@string/sign_out"
                 android:textColor="@color/black"
-                style="@style/Headline5.Bold"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/emailLayout"
+                app:layout_constraintBottom_toTopOf="@+id/layout_signOut_id"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailLayout"
+                android:id="@+id/layout_signOut_id"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="16dp"
-                android:hint="학교 메일 입력"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/findIdTextView"
-                app:suffixText="@string/school_domain"
+                android:hint="@string/require_id"
                 app:endIconMode="clear_text"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signOutTextView">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailEditText"
+                    android:id="@+id/et_signOut_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewmodel.email}"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewmodel.loginId}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_signOut_pw"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/require_password"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_signOut_id"
+                app:suffixText="@string/school_domain">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_signOut_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text="@={viewmodel.password}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -87,25 +108,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/custom_ripple_light_blue_button"
-                android:text="@string/find_id"
+                android:enabled="@{etSignOutId.text.length() > 0 &amp;&amp; etSignOutPw.text.length() > 0 &amp;&amp; viewmodel.loading == false}"
+                android:onClick="@{() -> viewmodel.quit()}"
+                android:text="@string/sign_out"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:enabled="@{emailEditText.text.length() == 0? false : true}"
-                android:onClick="@{() -> viewmodel.findId()}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emailLayout" />
+                app:layout_constraintTop_toBottomOf="@id/layout_signOut_pw" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/findPasswordButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/find_password"
-            app:layout_constraintEnd_toEndOf="@id/container"
-            app:layout_constraintTop_toBottomOf="@id/container" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

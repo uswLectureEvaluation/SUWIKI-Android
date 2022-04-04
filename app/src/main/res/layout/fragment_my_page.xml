@@ -10,7 +10,7 @@
 
         <variable
             name="User"
-            type="com.kunize.uswtimetable.ui.login.User" />
+            type="com.kunize.uswtimetable.ui.user_info.User" />
 
         <variable
             name="viewModel"

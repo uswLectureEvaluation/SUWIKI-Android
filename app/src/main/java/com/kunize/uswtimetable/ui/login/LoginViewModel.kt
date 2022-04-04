@@ -15,14 +15,15 @@ import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-    private var job: Job? = null
     val loading = MutableLiveData(false)
+
+    val userId = MutableLiveData<String>()
+    val userPw = MutableLiveData<String>()
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> get() = _loginForm
@@ -55,7 +56,10 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    fun loginDataChanged(id: String, pw: String) {
+    fun loginDataChanged() {
+        val id = userId.value ?: return
+        val pw = userPw.value ?: return
+
         when {
             checkIdLength(id).not() -> {
                 _loginForm.value = LoginFormState(idError = R.string.check_id_length)
@@ -85,10 +89,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     private fun isPwValid(pw: String) = pw.isBlank() || pwPattern.matcher(pw).matches()
 
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
-    }
 }
 
 enum class LoginState {

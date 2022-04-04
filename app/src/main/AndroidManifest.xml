@@ -17,15 +17,21 @@
             android:name=".ui.notice.NoticeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.FindPasswordActivity"
+            android:name=".ui.user_info.FindPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.login.FindIdActivity"
+            android:name=".ui.user_info.FindIdActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.signup.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.user_info.QuitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.user_info.ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
