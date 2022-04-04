@@ -7,6 +7,7 @@ import com.kunize.uswtimetable.dataclass.UserDataDto
 import com.kunize.uswtimetable.ui.repository.mypage.MyPageRepository
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.UserPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -44,12 +45,6 @@ class MyPageViewModel(private val repository: MyPageRepository) : ViewModel() {
         }
     }
 
-    init {
-        _myEvaluationPoint.value = 70
-        _myExamInfoPoint.value = 100
-        _openedExamPoint.value = -40
-    }
-
     fun refresh() {
         viewModelScope.launch {
             val userDataResponse = repository.getUserData()
@@ -74,5 +69,8 @@ class MyPageViewModel(private val repository: MyPageRepository) : ViewModel() {
                 email = userData.email
             )
         )
+        _myEvaluationPoint.value = userData.writtenEvaluation * UserPoint.WRITE_LECTURE
+        _myExamInfoPoint.value = userData.writtenExam * UserPoint.WRITE_EXAM
+        _openedExamPoint.value = userData.viewExam * UserPoint.VIEW_EXAM
     }
 }

@@ -37,7 +37,6 @@ object API {
     const val SIGN_UP: String = "/user/join"
     const val SIGN_UP_ID_CHECK: String = "/user/check-id"
     const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
-    const val SIGN_UP_SCHOOL_CHECK: String = "/user/verify-email"
     const val LECTURE_MAIN: String = "/lecture/findAllList"
     const val LECTURE_DETAIL_INFO = "/lecture"
     const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/findByLectureId"
@@ -56,6 +55,12 @@ object WriteFragmentTitle {
     const val FINISH_EXAM = "완료 (+20p)"
     const val FINISH_EVALUATION = "완료 (+10p)"
     const val FINISH_EDIT = "완료"
+}
+
+object UserPoint {
+    const val WRITE_LECTURE = 10
+    const val WRITE_EXAM = 20
+    const val VIEW_EXAM = -20
 }
 
 object LectureItemViewType {

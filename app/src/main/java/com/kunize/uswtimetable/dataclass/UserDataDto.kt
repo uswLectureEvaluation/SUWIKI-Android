@@ -5,9 +5,9 @@ import java.io.Serializable
 
 data class UserDataDto(
     @SerializedName("loginId") val userId: String,
+    val email: String,
     val point: Int,
-    @SerializedName("written_evaluation") val writtenEvaluation: Int,
-    @SerializedName("written_exam") val writtenExam: Int,
-    @SerializedName("view_exam") val viewExam: Int,
-    val email: String
+    @SerializedName("writtenLecture") val writtenEvaluation: Int,
+    @SerializedName("writtenExam") val writtenExam: Int,
+    @SerializedName("viewExam") val viewExam: Int
 ): Serializable
