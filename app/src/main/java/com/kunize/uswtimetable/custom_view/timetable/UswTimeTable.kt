@@ -109,41 +109,52 @@ class UswTimeTable @JvmOverloads constructor(
         tempTimeData: MutableList<TimeData>,
         v: View?
     ) {
-        val bottomSheet: BottomSheet = BottomSheet(data, callback = {
+        val bottomSheet = BottomSheet(data, callback = {
             when (it) {
-                1 -> {
-                    val deleteIdx = tempTimeData.indexOf(data)
-                    val intent = Intent(context, ClassInfoActivity::class.java)
-                    intent.putExtra("deleteIdx", deleteIdx)
-                    intent.putExtra("className", data.name)
-                    intent.putExtra("professor", data.professor)
-                    intent.putExtra("color", data.color)
-                    var comma = ""
-                    try {
-                        for (add in data.startTime.toInt() until data.endTime.toInt()) {
-                            comma = comma + "$add" + ","
-                        }
-                        comma += data.endTime
-                        intent.putExtra("time", "${data.location}(${data.day}$comma)")
-                    } catch (e: Exception) {
-                        intent.putExtra(
-                            "time",
-                            "${data.location}(${data.day}$comma)".replace("이러닝", "")
-                        )
-                    }
-                    startActivity(context, intent, null)
-                }
-                2 -> {
-                    if (v != null) {
-                        customTimeTable.removeView(v)
-                        tempTimeData.remove(data)
-                        reDrawColumn()
-                    } else
-                        eLearningText.text = ""
-                }
+                1 -> setOnClickEditButton(tempTimeData, data)
+                2 -> setOnClickRemoveButton(v, tempTimeData, data)
             }
         })
         bottomSheet.show((context as AppCompatActivity).supportFragmentManager, bottomSheet.tag)
+    }
+
+    private fun setOnClickRemoveButton(
+        v: View?,
+        tempTimeData: MutableList<TimeData>,
+        data: TimeData
+    ) {
+        if (v != null) {
+            customTimeTable.removeView(v)
+            tempTimeData.remove(data)
+            reDrawColumn()
+        } else
+            eLearningText.text = ""
+    }
+
+    private fun setOnClickEditButton(
+        tempTimeData: MutableList<TimeData>,
+        data: TimeData
+    ) {
+        val deleteIdx = tempTimeData.indexOf(data)
+        val intent = Intent(context, ClassInfoActivity::class.java)
+        intent.putExtra("deleteIdx", deleteIdx)
+        intent.putExtra("className", data.name)
+        intent.putExtra("professor", data.professor)
+        intent.putExtra("color", data.color)
+        var comma = ""
+        try {
+            for (add in data.startTime.toInt() until data.endTime.toInt()) {
+                comma = comma + "$add" + ","
+            }
+            comma += data.endTime
+            intent.putExtra("time", "${data.location}(${data.day}$comma)")
+        } catch (e: Exception) {
+            intent.putExtra(
+                "time",
+                "${data.location}(${data.day}$comma)".replace("이러닝", "")
+            )
+        }
+        startActivity(context, intent, null)
     }
 
     private fun reDrawColumn() {
@@ -175,73 +186,96 @@ class UswTimeTable @JvmOverloads constructor(
         if (isEmpty) {
             emptyTimeTable.visibility = VISIBLE
             existTimeTable.visibility = GONE
-        } else {
+            return
+        }
 
-            val topMargin = 55.dp
+        val topMargin = 55.dp
 
-            emptyTimeTable.visibility = GONE
-            existTimeTable.visibility = VISIBLE
+        emptyTimeTable.visibility = GONE
+        existTimeTable.visibility = VISIBLE
 
-            CoroutineScope(IO).launch {
+        CoroutineScope(IO).launch {
+            withContext(Main) {
+                customTimeTable.removeAllViews()
+                eLearningText.text = ""
+                reDrawColumn()
+            }
+
+            for (data in timeTableData) {
+                if (addeLearningView(data)) continue
+                val timeText = setTimeText(data)
+                val params = setParams(data, topMargin)
+                val timeRect = setTimeRect(timeText, data)
                 withContext(Main) {
-                    customTimeTable.removeAllViews()
-                    eLearningText.text = ""
-                    reDrawColumn()
-                }
-
-                for (data in timeTableData) {
-                    if ((data.location == "이러닝" && data.day == "") || data.day == "토") {
-                        eLearningText.text =
-                            "${data.name} (${data.day} ${data.startTime}~${data.endTime})"
-                        withContext(Main) {
-                            eLearningText.setOnClickListener {
-                                if (eLearningText.text.toString() != "")
-                                    showBottomSheet(data, timeTableData, null)
-                            }
-                        }
-                        continue
-                    }
-
-                    val timeRect = TextView(context)
-                    val drawStart = (data.startTime.toInt() - 1) * timeHeight
-                    val timeHeight =
-                        (data.endTime.toInt() - data.startTime.toInt() + 1) * timeHeight
-                    val params = RelativeLayout.LayoutParams(timeWidth, timeHeight)
-                    params.leftMargin = timeWidth * timeWidthMap[data.day]!! + 30.dp
-                    params.topMargin = drawStart + topMargin
-
-                    val tempText = when (infoFormat) {
-                        CLASSNAME -> data.name
-                        CLASSNAME_LOCATION -> "${data.name}\n${data.location}"
-                        CLASSNAME_PROFESSOR -> "${data.name}\n${data.professor}"
-                        CLASSNAME_PROFESSOR_LOCATION -> "${data.name}\n${data.professor}\n${data.location}"
-                        else -> "${data.name}\n${data.location}"
-                    }
-                    val timeText = SpannableString(tempText)
-                    timeText.setSpan(
-                        StyleSpan(android.graphics.Typeface.BOLD),
-                        0,
-                        data.name.length,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    timeText.setSpan(
-                        AbsoluteSizeSpan(12, true),
-                        data.name.length,
-                        tempText.length,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-
-                    timeRect.text = timeText
-                    timeRect.setTextColor(Color.WHITE)
-                    timeRect.setBackgroundColor(data.color)
-                    timeRect.setOnClickListener { v ->
-                        showBottomSheet(data, timeTableData, v)
-                    }
-                    withContext(Main) {
-                        customTimeTable.addView(timeRect, params)
-                    }
+                    customTimeTable.addView(timeRect, params)
                 }
             }
         }
+
+    }
+
+    private fun setTimeRect(
+        timeText: SpannableString,
+        data: TimeData
+    ): TextView {
+        val timeRect = TextView(context)
+        timeRect.text = timeText
+        timeRect.setTextColor(Color.WHITE)
+        timeRect.setBackgroundColor(data.color)
+        timeRect.setOnClickListener { v ->
+            showBottomSheet(data, timeTableData, v)
+        }
+        return timeRect
+    }
+
+    private fun setParams(
+        data: TimeData,
+        topMargin: Int
+    ): RelativeLayout.LayoutParams {
+        val drawStart = (data.startTime.toInt() - 1) * timeHeight
+        val timeHeight = (data.endTime.toInt() - data.startTime.toInt() + 1) * timeHeight
+        val params = RelativeLayout.LayoutParams(timeWidth, timeHeight)
+        params.leftMargin = timeWidth * timeWidthMap[data.day]!! + 30.dp
+        params.topMargin = drawStart + topMargin
+        return params
+    }
+
+    private fun setTimeText(data: TimeData): SpannableString {
+        val tempText = when (infoFormat) {
+            CLASSNAME -> data.name
+            CLASSNAME_LOCATION -> "${data.name}\n${data.location}"
+            CLASSNAME_PROFESSOR -> "${data.name}\n${data.professor}"
+            CLASSNAME_PROFESSOR_LOCATION -> "${data.name}\n${data.professor}\n${data.location}"
+            else -> "${data.name}\n${data.location}"
+        }
+        val timeText = SpannableString(tempText)
+        timeText.setSpan(
+            StyleSpan(android.graphics.Typeface.BOLD),
+            0,
+            data.name.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        timeText.setSpan(
+            AbsoluteSizeSpan(12, true),
+            data.name.length,
+            tempText.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        return timeText
+    }
+
+    private suspend fun addeLearningView(data: TimeData): Boolean {
+        if ((data.location == "이러닝" && data.day == "") || data.day == "토") {
+            eLearningText.text =
+                "${data.name} (${data.day} ${data.startTime}~${data.endTime})"
+            withContext(Main) {
+                eLearningText.setOnClickListener {
+                    if (eLearningText.text.toString() != "")
+                        showBottomSheet(data, timeTableData, null)
+                }
+            }
+            return true
+        }
+        return false
     }
 }
