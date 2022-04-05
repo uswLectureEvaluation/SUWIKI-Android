@@ -10,6 +10,8 @@ import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -101,7 +103,7 @@ class UswTimeTable @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 34.dp) / 5
+        timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 34.dp - 4.dp) / 5
     }
 
     private fun showBottomSheet(
@@ -234,8 +236,9 @@ class UswTimeTable @JvmOverloads constructor(
     ): RelativeLayout.LayoutParams {
         val drawStart = (data.startTime.toInt() - 1) * timeHeight
         val timeHeight = (data.endTime.toInt() - data.startTime.toInt() + 1) * timeHeight
-        val params = RelativeLayout.LayoutParams(timeWidth, timeHeight)
-        params.leftMargin = timeWidth * timeWidthMap[data.day]!! + 30.dp
+        val params = if(data.day == "금") RelativeLayout.LayoutParams(timeWidth + 1.dp, timeHeight)
+        else RelativeLayout.LayoutParams(timeWidth, timeHeight)
+        params.leftMargin = timeWidth * timeWidthMap[data.day]!! + 30.dp + (timeWidthMap[data.day]!!.dp)
         params.topMargin = drawStart + topMargin
         return params
     }

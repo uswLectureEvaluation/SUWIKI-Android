@@ -168,41 +168,66 @@
 
                 <TextView
                     android:id="@+id/timeColumn"
-                    android:layout_width="30dp"
+                    android:layout_width="29dp"
+                    android:layout_height="match_parent" />
+
+                <View
+                    android:id="@+id/view13"
+                    android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/edge_end" />
+                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/mon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/edge_end"
                     android:text="월" />
+
+                <View
+                    android:id="@+id/view9"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/tue"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/edge_end"
                     android:text="화" />
+
+                <View
+                    android:id="@+id/view10"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/wed"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/edge_end"
                     android:text="수" />
+
+                <View
+                    android:id="@+id/view11"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/thu"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/edge_end"
                     android:text="목" />
+
+                <View
+                    android:id="@+id/view12"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/fri"
