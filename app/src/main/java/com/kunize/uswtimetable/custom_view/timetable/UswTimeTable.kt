@@ -10,9 +10,6 @@ import android.text.style.StyleSpan
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -227,15 +224,15 @@ class UswTimeTable @JvmOverloads constructor(
                     customTimeTable.addView(timeRect, -1)
                     set.clone(customTimeTable)
                     set.connect(timeRect.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-                    val startId = when(data.day) {
-                        "월" -> mon.id
-                        "화" -> tue.id
-                        "수" -> wed.id
-                        "목" -> thu.id
-                        else -> fri.id
+                    val idDp = when(data.day) {
+                        "월" -> Pair(mon.id, 1.dp)
+                        "화" -> Pair(tue.id, 1.dp)
+                        "수" -> Pair(wed.id, 1.dp)
+                        "목" -> Pair(thu.id, 1.dp)
+                        else -> Pair(fri.id, 0)
                     }
-                    set.connect(timeRect.id, ConstraintSet.START, startId, ConstraintSet.START)
-                    set.connect(timeRect.id, ConstraintSet.END, startId, ConstraintSet.END, 1)
+                    set.connect(timeRect.id, ConstraintSet.START, idDp.first, ConstraintSet.START)
+                    set.connect(timeRect.id, ConstraintSet.END, idDp.first, ConstraintSet.END, idDp.second)
                     set.constrainDefaultWidth(timeRect.id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
                     set.applyTo(customTimeTable)
                 }
