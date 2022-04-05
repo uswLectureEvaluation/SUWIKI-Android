@@ -131,7 +131,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                     else if (!tmpResponse.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
-                        evaluationList.value = tmpExamData
+                        evaluationList.value = tmpExamData!!
                         nextPage()
                     }
                 }

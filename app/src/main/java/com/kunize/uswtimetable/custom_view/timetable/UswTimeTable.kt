@@ -212,7 +212,6 @@ class UswTimeTable @JvmOverloads constructor(
 
         CoroutineScope(IO).launch {
             withContext(Main) {
-                //customTimeTable.removeAllViews()
                 customTimeTable.removeViews(22, customTimeTable.size - 22)
                 eLearningText.text = ""
                 reDrawColumn()

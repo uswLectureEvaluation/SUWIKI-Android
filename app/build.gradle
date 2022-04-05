@@ -31,6 +31,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -45,6 +49,9 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    lintOptions {
+        baseline file("lint-baseline.xml")
     }
 }
 
@@ -93,6 +100,7 @@ dependencies {
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation 'androidx.fragment:fragment-ktx:1.2.5'
 
     /* Retrofit */
     def retrofit_version = "2.9.0"
