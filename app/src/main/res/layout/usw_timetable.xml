@@ -35,77 +35,117 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/customTimeTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/day"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:background="@drawable/edge_bottom" />
+                    android:background="@drawable/edge_bottom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/one"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="9" />
+                    android:text="9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/day" />
 
                 <TextView
                     android:id="@+id/two"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="10" />
+                    android:text="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/one" />
 
                 <TextView
                     android:id="@+id/three"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="11" />
+                    android:text="11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/two" />
 
                 <TextView
                     android:id="@+id/four"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="12" />
+                    android:text="12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/three" />
 
                 <TextView
                     android:id="@+id/five"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="1" />
+                    android:text="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/four" />
 
                 <TextView
                     android:id="@+id/six"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="2" />
+                    android:text="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/five" />
 
                 <TextView
                     android:id="@+id/seven"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="3" />
+                    android:text="3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/six" />
 
                 <TextView
                     android:id="@+id/eight"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
-                    android:text="4" />
+                    android:text="4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/seven" />
 
                 <TextView
                     android:id="@+id/nine"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginEnd="0dp"
                     android:background="@drawable/edge_bottom"
                     android:text="5"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/eight" />
 
                 <TextView
                     android:id="@+id/ten"
@@ -113,7 +153,10 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="6"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nine" />
 
                 <TextView
                     android:id="@+id/eleven"
@@ -121,7 +164,10 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="7"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ten" />
 
                 <TextView
                     android:id="@+id/twelve"
@@ -129,7 +175,10 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="8"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/eleven" />
 
                 <TextView
                     android:id="@+id/thirteen"
@@ -137,7 +186,10 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="9"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/twelve" />
 
                 <TextView
                     android:id="@+id/fourteen"
@@ -145,7 +197,10 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="10"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/thirteen" />
 
                 <TextView
                     android:id="@+id/fifteen"
@@ -153,101 +208,82 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="11"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fourteen" />
 
                 <TextView
                     android:id="@+id/timeColumn"
                     android:layout_width="29dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="0dp"
+                    android:background="@drawable/edge_end"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/view13"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/mon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="월" />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/edge_end"
+                    android:text="월"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tue"
+                    app:layout_constraintStart_toEndOf="@id/timeColumn"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/view9"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/tue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="화" />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/edge_end"
+                    android:text="화"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/wed"
+                    app:layout_constraintStart_toEndOf="@id/mon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/view10"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#CFCFCF" />
 
                 <TextView
                     android:id="@+id/wed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="수" />
-
-                <View
-                    android:id="@+id/view11"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#CFCFCF" />
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/edge_end"
+                    android:text="수"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/thu"
+                    app:layout_constraintStart_toEndOf="@id/tue"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/thu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="목" />
-
-                <View
-                    android:id="@+id/view12"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#CFCFCF" />
+                    android:background="@drawable/edge_end"
+                    android:text="목"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/fri"
+                    app:layout_constraintStart_toEndOf="@id/wed"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/fri"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="금" />
+                    android:text="금"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/thu"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/customTimeTable"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

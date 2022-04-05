@@ -17,7 +17,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.size
 import com.kunize.uswtimetable.ClassInfoActivity
 import com.kunize.uswtimetable.CreateTimeTableActivity
 import com.kunize.uswtimetable.MainActivity.Companion.dp
@@ -50,12 +52,18 @@ class UswTimeTable @JvmOverloads constructor(
     private var timeWidth = 0.dp
     private var timeHeight = 50.dp
 
-    private val customTimeTable: RelativeLayout
+    private val customTimeTable: ConstraintLayout
     private val existTimeTable: ConstraintLayout
     private val emptyTimeTable: ConstraintLayout
     private val timeColumnList: List<TextView>
     private val eLearningText: TextView
     private val createTimetableBtn: CardView
+
+    private val mon: TextView
+    private val tue: TextView
+    private val wed: TextView
+    private val thu: TextView
+    private val fri: TextView
 
     var timeTableData = mutableListOf<TimeData>()
 
@@ -94,6 +102,12 @@ class UswTimeTable @JvmOverloads constructor(
         existTimeTable.visibility = View.INVISIBLE
         emptyTimeTable.visibility = View.INVISIBLE
 
+        mon = findViewById(R.id.mon)
+        tue = findViewById(R.id.tue)
+        wed = findViewById(R.id.wed)
+        thu = findViewById(R.id.thu)
+        fri = findViewById(R.id.fri)
+
         createTimetableBtn.setOnClickListener {
             val intent = Intent(context, CreateTimeTableActivity::class.java)
             startActivity(context, intent, null)
@@ -103,7 +117,7 @@ class UswTimeTable @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 34.dp - 4.dp) / 5
+        timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 34.dp) / 5
     }
 
     private fun showBottomSheet(
@@ -198,18 +212,33 @@ class UswTimeTable @JvmOverloads constructor(
 
         CoroutineScope(IO).launch {
             withContext(Main) {
-                customTimeTable.removeAllViews()
+                //customTimeTable.removeAllViews()
+                customTimeTable.removeViews(22, customTimeTable.size - 22)
                 eLearningText.text = ""
                 reDrawColumn()
             }
-
+            val set = ConstraintSet()
             for (data in timeTableData) {
                 if (addeLearningView(data)) continue
                 val timeText = setTimeText(data)
                 val params = setParams(data, topMargin)
                 val timeRect = setTimeRect(timeText, data)
+                timeRect.layoutParams = params
                 withContext(Main) {
-                    customTimeTable.addView(timeRect, params)
+                    customTimeTable.addView(timeRect, -1)
+                    set.clone(customTimeTable)
+                    set.connect(timeRect.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
+                    val startId = when(data.day) {
+                        "월" -> mon.id
+                        "화" -> tue.id
+                        "수" -> wed.id
+                        "목" -> thu.id
+                        else -> fri.id
+                    }
+                    set.connect(timeRect.id, ConstraintSet.START, startId, ConstraintSet.START)
+                    set.connect(timeRect.id, ConstraintSet.END, startId, ConstraintSet.END, 1)
+                    set.constrainDefaultWidth(timeRect.id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
+                    set.applyTo(customTimeTable)
                 }
             }
         }
@@ -221,6 +250,7 @@ class UswTimeTable @JvmOverloads constructor(
         data: TimeData
     ): TextView {
         val timeRect = TextView(context)
+        timeRect.id = View.generateViewId()
         timeRect.text = timeText
         timeRect.setTextColor(Color.WHITE)
         timeRect.setBackgroundColor(data.color)
@@ -233,12 +263,11 @@ class UswTimeTable @JvmOverloads constructor(
     private fun setParams(
         data: TimeData,
         topMargin: Int
-    ): RelativeLayout.LayoutParams {
+    ): ConstraintLayout.LayoutParams {
         val drawStart = (data.startTime.toInt() - 1) * timeHeight
         val timeHeight = (data.endTime.toInt() - data.startTime.toInt() + 1) * timeHeight
-        val params = if(data.day == "금") RelativeLayout.LayoutParams(timeWidth + 1.dp, timeHeight)
-        else RelativeLayout.LayoutParams(timeWidth, timeHeight)
-        params.leftMargin = timeWidth * timeWidthMap[data.day]!! + 30.dp + (timeWidthMap[data.day]!!.dp)
+        val params = ConstraintLayout.LayoutParams(0, timeHeight)
+        //params.leftMargin = timeWidth * timeWidthMap[data.day]!! + (timeWidthMap[data.day]!!.dp) - 1.dp
         params.topMargin = drawStart + topMargin
         return params
     }
