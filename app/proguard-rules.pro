@@ -79,3 +79,4 @@
 -keepnames class androidx.navigation.fragment.NavHostFragment
 -keep class * extends androidx.fragment.app.Fragment{}
 -keepnames class com.kunize.uswtimetable.dataclass.*
+-keep class com.kunize.uswtimetable.dataclass.* { *; }
