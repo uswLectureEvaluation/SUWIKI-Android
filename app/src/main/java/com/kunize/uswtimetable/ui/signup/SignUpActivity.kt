@@ -76,6 +76,9 @@ class SignUpActivity : AppCompatActivity() {
         adapter = SignUpPageAdapter(this@SignUpActivity)
         viewPager.adapter = adapter
         viewPager.isUserInputEnabled = false
+        binding.signUpToolBar.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         indicator = binding.signupIndicator
         indicator.clearFocus()
