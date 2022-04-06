@@ -21,7 +21,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
                 deleteLoading()
                 evaluationList.value = response.body()?.convertToEvaluationData()
             } else {
-                toastMessage = "통신 에러 발생 code: ${response.code()}"
+                toastMessage = "${response.code()} 에러 발생!"
                 _makeToast.value = Event(true)
                 evaluationList.value = arrayListOf()
             }
