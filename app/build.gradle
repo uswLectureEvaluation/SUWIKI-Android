@@ -88,6 +88,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.github.jeffreyliu8:FlexBoxRadioGroup:0.0.8'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
     /* EncryptedSharedPreference */
     implementation "androidx.security:security-crypto:1.0.0"

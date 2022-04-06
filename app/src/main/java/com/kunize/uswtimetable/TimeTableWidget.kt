@@ -6,8 +6,10 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.widget.RemoteViews
+import androidx.annotation.RequiresApi
 import com.kunize.uswtimetable.MainActivity.Companion.stringToBitmap
 import java.lang.Exception
 
@@ -59,7 +61,7 @@ internal fun updateAppWidget(
     }
 
     val intent = Intent(context, StartActivity::class.java) //실행할 액티비티의 클래스
-    val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+    val pendingIntent = PendingIntent.getActivity(context, 0, intent,  PendingIntent.FLAG_MUTABLE);
     views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
 
     // Instruct the widget manager to update the widget
