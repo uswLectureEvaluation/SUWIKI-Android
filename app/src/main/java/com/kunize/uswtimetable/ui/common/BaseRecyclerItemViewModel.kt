@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.dataclass.EvaluationData
 
-open class BaseRecyclerItemViewModel: ViewModel() {
+open class BaseRecyclerItemViewModel: ToastViewModel() {
     val evaluationList = MutableLiveData<ArrayList<EvaluationData?>>()
     val evaluationListAccessor: LiveData<ArrayList<EvaluationData?>>
         get() = evaluationList

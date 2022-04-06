@@ -1,8 +1,10 @@
 package com.kunize.uswtimetable.ui.evaluation
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.ui.common.BaseRecyclerItemViewModel
+import com.kunize.uswtimetable.ui.common.Event
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRepository
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import kotlinx.coroutines.delay
@@ -19,6 +21,8 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
                 deleteLoading()
                 evaluationList.value = response.body()?.convertToEvaluationData()
             } else {
+                toastMessage = "통신 에러 발생 code: ${response.code()}"
+                _makeToast.value = Event(true)
                 evaluationList.value = arrayListOf()
             }
         }

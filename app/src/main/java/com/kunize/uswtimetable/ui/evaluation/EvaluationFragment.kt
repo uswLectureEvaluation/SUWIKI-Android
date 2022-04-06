@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.evaluation
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.kunize.uswtimetable.custom_view.image_spinner.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
 import com.kunize.uswtimetable.util.LectureApiOption.HONEY
@@ -100,6 +102,11 @@ class EvaluationFragment : Fragment() {
                 }
             }
         }
+
+        evaluationViewModel.makeToast.observe(viewLifecycleOwner, EventObserver {
+            Toast.makeText(requireContext(), evaluationViewModel.toastMessage, Toast.LENGTH_LONG).show()
+        })
+
         return binding.root
     }
 
