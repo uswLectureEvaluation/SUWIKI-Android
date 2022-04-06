@@ -13,6 +13,7 @@ import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : BaseInfiniteRecyclerItemViewModel() {
     private val _writeBtnText = MutableLiveData<Int>()
@@ -71,15 +72,17 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _writeBtnText.value = resource
     }
 
-    suspend fun setInfoValue() {
+    suspend fun setInfoValue(): Boolean {
+        val response: Response<LectureDetailInfoDto>
         withContext(viewModelScope.coroutineContext) {
-            val response = lectureInfoRepository.getLectureDetailInfo(lectureId)
+            response = lectureInfoRepository.getLectureDetailInfo(lectureId)
             if (response.isSuccessful) {
                 _lectureDetailInfoData.value = response.body()
             } else {
-                //TODO 통신 실패 처리
+                handleError(response.code())
             }
         }
+        return response.isSuccessful
     }
 
     fun scrollBottomEvent() {
@@ -110,7 +113,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 }
                 nextPage()
             } else {
-                //TODO 통신 실패 로직
+                handleError(response.code())
             }
         }
     }
@@ -136,7 +139,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                     }
                 }
             } else {
-                Log.d("lectureApi", "시험정보 클릭 에러 $lectureId,${response.code()}")
+                handleError(response.code())
             }
         }
     }

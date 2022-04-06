@@ -1,10 +1,13 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,10 +17,14 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.dataclass.LectureProfessorSemester
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.login.LoginActivity
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.infiniteScrolls
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 
 class LectureInfoFragment : Fragment() {
 
@@ -28,6 +35,7 @@ class LectureInfoFragment : Fragment() {
             requireContext()
         )
     }
+    var needLoadInitData = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +53,8 @@ class LectureInfoFragment : Fragment() {
         val args: LectureInfoFragmentArgs by navArgs()
         lectureInfoViewModel.lectureId = args.lectureId
 
-
         CoroutineScope(IO).launch {
-            lectureInfoViewModel.setInfoValue()
-            lectureInfoViewModel.getLectureList()
+            loadInitData()
             with(binding) {
                 infoRecyclerView.infiniteScrolls {
                     lectureInfoViewModel?.scrollBottomEvent()
@@ -61,6 +67,15 @@ class LectureInfoFragment : Fragment() {
                 }
             }
         }
+
+        lectureInfoViewModel.makeToast.observe(viewLifecycleOwner, EventObserver {
+            if (!User.isLoggedIn) {
+                needLoadInitData = true
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+            }
+            else
+                Toast.makeText(requireContext(), lectureInfoViewModel.toastMessage, Toast.LENGTH_LONG).show()
+        })
 
         with(binding) {
             hideExamDataLayout.usePointBtn.setOnClickListener {
@@ -76,6 +91,22 @@ class LectureInfoFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CoroutineScope(IO).launch {
+            if(needLoadInitData) {
+                delay(500L)
+                needLoadInitData = false
+                loadInitData()
+            }
+        }
+    }
+
+    private suspend fun loadInitData() {
+        if (lectureInfoViewModel.setInfoValue())
+            lectureInfoViewModel.getLectureList()
     }
 
     private fun goToWriteFragment() {

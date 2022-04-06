@@ -25,4 +25,10 @@ open class BaseInfiniteRecyclerItemViewModel: BaseRecyclerItemViewModel() {
         else
             page.value = LAST_PAGE
     }
+
+    override fun handleError(errorCode: Int) {
+        toastMessage = "$errorCode 에러 발생!"
+        _makeToast.value = Event(true)
+        deleteLoading()
+    }
 }
