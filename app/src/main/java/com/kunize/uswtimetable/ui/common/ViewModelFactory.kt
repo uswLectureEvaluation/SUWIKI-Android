@@ -22,8 +22,6 @@ import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoAssetDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyExamInfoRepository
 import com.kunize.uswtimetable.ui.repository.my_post.MyPostRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.my_post.MyPostRepository
-import com.kunize.uswtimetable.ui.repository.mypage.MyPageRemoteDataSource
-import com.kunize.uswtimetable.ui.repository.mypage.MyPageRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.repository.notice.NoticeRemoteDataSource
@@ -94,8 +92,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 ResetPasswordViewModel(repository) as T
             }
             modelClass.isAssignableFrom(MyPageViewModel::class.java) -> {
-                val repository = MyPageRepository(MyPageRemoteDataSource())
-                MyPageViewModel(repository) as T
+                MyPageViewModel() as T
             }
             modelClass.isAssignableFrom(MyExamInfoViewModel::class.java) -> {
                 val repository = MyExamInfoRepository(MyExamInfoAssetDataSource(AssetLoader(context)))
