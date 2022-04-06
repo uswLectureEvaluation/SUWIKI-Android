@@ -35,9 +35,9 @@ class MyPageFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.viewmodel = viewModel
 
-        incomplete(requireContext())
+        incomplete()
         initViews(requireContext())
 
         logInStateView()
@@ -73,7 +73,7 @@ class MyPageFragment : Fragment() {
                 }
                 R.id.action_log_out -> {
                     User.logout()
-                    viewModel.refresh()
+//                    viewModel.refresh()
                     true
                 }
                 R.id.action_change_password -> {
@@ -91,28 +91,27 @@ class MyPageFragment : Fragment() {
             }
         }
         binding.myPostButton.setOnClickListener {
-            if (User.isLoggedIn) findNavController().navigate(R.id.action_more_to_myPostFragment)
+            if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_more_to_myPostFragment)
         }
     }
 
-    private fun logInStateView() {
-        viewModel.user.observe(viewLifecycleOwner) { data ->
-            val user = data ?: return@observe
-
-            binding.toolBar.menu.clear()
-            if (user.isLoggedIn)
-                binding.toolBar.inflateMenu(R.menu.more_menu_after)
-            else
-                binding.toolBar.inflateMenu(R.menu.more_menu_before)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         viewModel.refresh()
     }
 
-    private fun incomplete(context: Context) {
+    private fun logInStateView() {
+        viewModel.user.isLoggedIn.observe(viewLifecycleOwner) { loggedIn ->
+            binding.toolBar.menu.clear()
+            if (loggedIn) {
+                binding.toolBar.inflateMenu(R.menu.more_menu_after)
+            } else {
+                binding.toolBar.inflateMenu(R.menu.more_menu_before)
+            }
+        }
+    }
+
+    private fun incomplete() {
         with(binding) {
             sendFeedbackButton.setOnClickListener {
                 makeToast("준비 중입니다.")
@@ -169,7 +168,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun resetPassword(context: Context) {
-        if (User.isLoggedIn) {
+        if (User.isLoggedIn.value == true) {
             val intent = Intent(context, ResetPasswordActivity::class.java)
             startActivity(intent)
         } else {
@@ -183,7 +182,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun quit(context: Context) {
-        if (User.isLoggedIn) {
+        if (User.isLoggedIn.value == true) {
             val intent = Intent(context, QuitActivity::class.java)
             startActivity(intent)
         } else {

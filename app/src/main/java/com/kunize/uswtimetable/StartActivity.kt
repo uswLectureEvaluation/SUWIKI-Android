@@ -66,7 +66,9 @@ class StartActivity : AppCompatActivity() {
         var appVersion: Boolean = false
 
         // 로그인 유지
-        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN).not()) {
+        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN)) {
+            User.login()
+        } else {
             User.logout()
         }
 
