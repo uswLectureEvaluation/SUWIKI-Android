@@ -68,6 +68,15 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (User.isLoggedIn.value == true) {
+            makeToast("이미 로그인되어 있습니다")
+            finish()
+        }
+    }
+
     private fun initViews(context: Context) {
         with(binding) {
             signInButton.setOnClickListener {

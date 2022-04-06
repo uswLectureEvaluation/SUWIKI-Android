@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.ui.repository.login.LoginRepository
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_REGEX
@@ -42,6 +43,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             if (loginResult.isSuccessful) {
                 when (loginResult.code()) {
                     200 -> {
+                        User.login()
                         _loginResult.postValue(LoginState.SUCCESS)
                     }
                     else -> {
