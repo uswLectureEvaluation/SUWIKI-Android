@@ -34,9 +34,8 @@ class LoginActivity : AppCompatActivity() {
 
         binding.viewModel = loginViewModel
 
-        if (User.isLoggedIn) {
-            makeToast("이미 로그인 되어있습니다")
-            finish()
+        User.isLoggedIn.observe(this) {
+            if (it) finish()
         }
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
@@ -67,13 +66,6 @@ class LoginActivity : AppCompatActivity() {
 
         initViews(this)
 
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        if (User.isLoggedIn) {
-            finish()
-        }
     }
 
     private fun initViews(context: Context) {

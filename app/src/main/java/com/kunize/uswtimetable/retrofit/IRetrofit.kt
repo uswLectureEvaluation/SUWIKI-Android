@@ -1,6 +1,9 @@
 package com.kunize.uswtimetable.retrofit
 
 import android.util.Log
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
@@ -45,12 +48,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
+import java.lang.reflect.Type
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 interface IRetrofit {
 
     // Refresh Token
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@Header("RefreshToken")refresh: String): Call<Token>
+    fun requestRefresh(@Header("RefreshToken") refresh: String): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()
@@ -74,7 +80,7 @@ interface IRetrofit {
 
     // 공지사항 API
     @GET(NOTICE)
-    suspend fun getNotice(@Query("notice_id") id: Long): Response<NoticeDetailDto>
+    suspend fun getNotice(@Query("noticeId") id: Long): Response<NoticeDetailDto>
 
     // 아이디 찾기 API
     @POST(ID)
@@ -211,10 +217,20 @@ interface IRetrofit {
         }
 
         private fun getClientWithNoToken(): Retrofit {
+            val gson = GsonBuilder()
+                .registerTypeAdapter(LocalDateTime::class.java, object: JsonDeserializer<LocalDateTime> {
+                    override fun deserialize(
+                        json: JsonElement?,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?
+                    ): LocalDateTime {
+                        return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+                    }
+                })
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(null))
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson.create()))
                 .build()
         }
 
@@ -250,7 +266,10 @@ class AuthenticationInterceptor : Interceptor {
         val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val request = chain.request().newBuilder()
             .addHeader("AccessToken", accessToken).build()
-        Log.d(TAG, "AuthenticationInterceptor - intercept() called / request header: ${request.headers}")
+        Log.d(
+            TAG,
+            "AuthenticationInterceptor - intercept() called / request header: ${request.headers}"
+        )
         return chain.proceed(request)
     }
 }
@@ -260,7 +279,8 @@ class TokenAuthenticator : Authenticator {
 
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
         Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh")
-        val tokenResponse = IRetrofit.getInstanceWithNoToken().requestRefresh(refresh=refresh).execute()
+        val tokenResponse =
+            IRetrofit.getInstanceWithNoToken().requestRefresh(refresh = refresh).execute()
 
         return if (handleResponse(tokenResponse)) {
             Log.d(TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")

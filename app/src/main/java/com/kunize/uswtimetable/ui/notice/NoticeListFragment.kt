@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.notice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.NoticeAdapter
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.Constants.TAG
 
 class NoticeListFragment : Fragment() {
 
@@ -38,6 +40,7 @@ class NoticeListFragment : Fragment() {
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            Log.d(TAG, "NoticeListFragment - onCreateView() called / $message")
             makeToast(message)
         }
 

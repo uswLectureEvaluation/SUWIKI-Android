@@ -9,11 +9,11 @@
         <import type="android.view.View" />
 
         <variable
-            name="User"
-            type="com.kunize.uswtimetable.ui.user_info.User" />
+            name="point"
+            type="com.kunize.uswtimetable.util.UserPoint" />
 
         <variable
-            name="viewModel"
+            name="viewmodel"
             type="com.kunize.uswtimetable.ui.mypage.MyPageViewModel" />
     </data>
 
@@ -63,7 +63,7 @@
                         android:layout_marginVertical="16dp"
                         android:orientation="vertical"
                         android:padding="@dimen/cardview_padding"
-                        android:visibility="@{viewModel.user.loggedIn ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewmodel.user.loggedIn ? View.GONE : View.VISIBLE}"
                         tools:visibility="gone">
 
                         <TextView
@@ -94,7 +94,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:padding="@dimen/cardview_padding"
-                        android:visibility="@{viewModel.user.loggedIn ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewmodel.user.loggedIn ? View.VISIBLE : View.GONE}"
                         tools:visibility="visible">
 
                         <TextView
@@ -120,8 +120,8 @@
                                 android:background="@drawable/border_circle"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="@{@string/total_point(viewModel.user.user.point)}"
-                                android:textColor="#F00"
+                                android:text="@{@string/total_point(viewmodel.user.user.point)}"
+                                android:textColor="@color/red"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="W, 1:1"
                                 app:layout_constraintRight_toLeftOf="@+id/divider"
@@ -167,7 +167,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_evaluation_count(viewModel.user.user.writtenLecture)}"
+                                        android:text="@{@string/my_evaluation_count(viewmodel.user.user.writtenLecture)}"
                                         android:textColor="@color/black"
                                         tools:text="작성한 강의 평가 : 5개" />
 
@@ -176,8 +176,8 @@
                                         style="@style/TextCaption2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{viewModel.myEvaluationPointText}"
-                                        android:textColor="@{viewModel.myEvaluationPoint >= 0 ? @color/red : @color/blue}"
+                                        android:text="@{@string/detail_point_positive(viewmodel.user.user.writtenLecture * point.WRITE_LECTURE)}"
+                                        android:textColor="@color/red"
                                         tools:text="(+100P)"
                                         tools:textColor="#F00" />
 
@@ -198,7 +198,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_exam_info_count(viewModel.user.user.writtenExam)}"
+                                        android:text="@{@string/my_exam_info_count(viewmodel.user.user.writtenExam)}"
                                         android:textColor="@color/black"
                                         tools:text="작성한 시험 정보 : 2개" />
 
@@ -207,8 +207,8 @@
                                         style="@style/TextCaption2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{viewModel.myExamInfoPointText}"
-                                        android:textColor="@{viewModel.myExamInfoPoint >= 0 ? @color/red : @color/blue}"
+                                        android:text="@{@string/detail_point_positive(viewmodel.user.user.writtenExam * point.WRITE_EXAM)}"
+                                        android:textColor="@color/red"
                                         tools:text="(+40P)"
                                         tools:textColor="#F00" />
 
@@ -229,7 +229,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/opened_exam_count(viewModel.user.user.viewExam)}"
+                                        android:text="@{@string/opened_exam_count(viewmodel.user.user.viewExam)}"
                                         android:textColor="@color/black"
                                         tools:text="시험 정보 열람 : 5개" />
 
@@ -238,8 +238,8 @@
                                         style="@style/TextCaption2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{viewModel.openedExamPointText}"
-                                        android:textColor="@{viewModel.openedExamPoint >= 0 ? @color/red : @color/blue}"
+                                        android:text="@{@string/detail_point(viewmodel.user.user.viewExam * point.VIEW_EXAM)}"
+                                        android:textColor="@color/blue"
                                         tools:text="(-40P)"
                                         tools:textColor="#00F" />
                                 </LinearLayout>
@@ -305,7 +305,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="16dp"
-                                android:text="@{viewModel.user.user.userId}"
+                                android:text="@{viewmodel.user.user.userId}"
                                 app:layout_constraintBottom_toBottomOf="@+id/loginIdTextView"
                                 app:layout_constraintEnd_toStartOf="@+id/myPostButton"
                                 app:layout_constraintHorizontal_bias="0"
@@ -330,7 +330,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="16dp"
-                                android:text="@{viewModel.user.user.email}"
+                                android:text="@{viewmodel.user.user.email}"
                                 app:layout_constraintBottom_toBottomOf="@+id/loginEmailTextView"
                                 app:layout_constraintEnd_toStartOf="@+id/myPostButton"
                                 app:layout_constraintHorizontal_bias="0"
@@ -345,7 +345,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/blur_white"
-                            android:visibility="@{viewModel.user.loggedIn ? View.GONE : View.VISIBLE}"
+                            android:visibility="@{viewmodel.user.loggedIn ? View.GONE : View.VISIBLE}"
                             tools:visibility="gone">
 
                             <TextView
