@@ -23,9 +23,9 @@
             app:destination="@id/lectureInfoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_more"
+        android:id="@+id/navigation_my_page"
         android:name="com.kunize.uswtimetable.ui.mypage.MyPageFragment"
-        android:label="fragment_more"
+        android:label="fragment_my_page"
         tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_more_to_myPostFragment"

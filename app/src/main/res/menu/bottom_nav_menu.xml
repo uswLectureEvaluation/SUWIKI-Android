@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_file"
         android:title="@string/evaluation" />
     <item
-        android:id="@+id/navigation_more"
-        android:icon="@drawable/ic_more"
-        android:title="@string/more" />
+        android:id="@+id/navigation_my_page"
+        android:icon="@drawable/ic_person"
+        android:title="@string/my_page" />
 </menu>
