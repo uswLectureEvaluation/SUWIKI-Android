@@ -7,9 +7,9 @@ import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
 import com.kunize.uswtimetable.ui.login.LoginViewModel
+import com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel
 import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
-import com.kunize.uswtimetable.ui.mypage.MyPostViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRemoteDataSource
@@ -52,10 +52,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(MyPostViewModel::class.java) -> {
+            modelClass.isAssignableFrom(MyEvaluationViewModel::class.java) -> {
 //                val repository = MyPostRepository(MyPostAssetDataSource(AssetLoader(context)))
                 val repository = MyPostRepository(MyPostRemoteDataSource())
-                MyPostViewModel(repository) as T
+                MyEvaluationViewModel(repository) as T
             }
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
                 SignUpViewModel() as T

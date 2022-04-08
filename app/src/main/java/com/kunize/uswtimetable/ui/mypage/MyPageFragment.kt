@@ -101,7 +101,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun logInStateView() {
-        viewModel.user.isLoggedIn.observe(viewLifecycleOwner) { loggedIn ->
+        viewModel.user.value?.isLoggedIn?.observe(viewLifecycleOwner) { loggedIn ->
             binding.toolBar.menu.clear()
             if (loggedIn) {
                 binding.toolBar.inflateMenu(R.menu.more_menu_after)
