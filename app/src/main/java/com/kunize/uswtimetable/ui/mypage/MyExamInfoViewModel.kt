@@ -14,10 +14,12 @@ import kotlinx.coroutines.launch
 class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _myExamInfoData = MutableLiveData<List<MyExamInfoDto>>()
     val myExamInfoData: LiveData<List<MyExamInfoDto>> get() = _myExamInfoData
+    val loading = MutableLiveData<Boolean>()
     private val page = MutableLiveData<Int>()
 
     init {
         page.value = 1
+        loading.value = true
         scrollBottomEvent()
     }
 /*
@@ -41,6 +43,7 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
                 Log.d(Constants.TAG, "MyEvaluationViewModel / new data: $newData ")
                 nextPage()
             }
+            loading.postValue(false)
         }
     }
 
