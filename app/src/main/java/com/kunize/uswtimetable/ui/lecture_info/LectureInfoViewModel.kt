@@ -106,7 +106,6 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         viewModelScope.launch {
             val response =
                 lectureInfoRepository.getLectureDetailEvaluation(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
-            delay(commonRecyclerViewViewModel.delayTime)
             if (response.isSuccessful) {
                 commonRecyclerViewViewModel.deleteLoading()
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
@@ -126,7 +125,6 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         viewModelScope.launch {
             val response =
                 lectureInfoRepository.getLectureDetailExam(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
-            delay(commonRecyclerViewViewModel.delayTime)
             if (response.isSuccessful) {
                 val tmpResponse = response.body()
                 val tmpExamData = tmpResponse?.convertToEvaluationData()

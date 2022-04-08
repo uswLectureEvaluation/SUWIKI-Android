@@ -20,7 +20,6 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
         viewModelScope.launch {
             val response = evaluationRepository.getLectureMainList(_selectedType.value.toString())
             if(response.isSuccessful) {
-                delay(commonRecyclerViewViewModel.delayTime)
                 commonRecyclerViewViewModel.deleteLoading()
                 commonRecyclerViewViewModel.changeRecyclerViewData(response.body()?.convertToEvaluationData()!!)
             } else {

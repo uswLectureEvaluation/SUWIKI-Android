@@ -26,7 +26,6 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
             return
         viewModelScope.launch {
             val response = getResponse()
-            delay(commonRecyclerViewViewModel.delayTime)
             if (response.isSuccessful) {
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 commonRecyclerViewViewModel.deleteLoading()

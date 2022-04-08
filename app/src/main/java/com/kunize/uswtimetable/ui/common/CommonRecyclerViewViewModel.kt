@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.dataclass.EvaluationData
 
 class CommonRecyclerViewViewModel: ViewModel() {
-    private val toastViewModel = ToastViewModel()
     private val _evaluationList = MutableLiveData<ArrayList<EvaluationData?>>()
     val evaluationList: LiveData<ArrayList<EvaluationData?>>
         get() = _evaluationList
-    val delayTime = 200L
 
     init {
         loading()
