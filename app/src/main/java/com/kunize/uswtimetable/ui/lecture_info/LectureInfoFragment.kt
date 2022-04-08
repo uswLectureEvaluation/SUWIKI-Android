@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.ui.lecture_info
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +21,10 @@ import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.infiniteScrolls
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LectureInfoFragment : Fragment() {
 
@@ -69,7 +69,7 @@ class LectureInfoFragment : Fragment() {
         }
 
         lectureInfoViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
-            if (!User.isLoggedIn) {
+            if (User.isLoggedIn.value == false){
                 needLoadInitData = true
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
