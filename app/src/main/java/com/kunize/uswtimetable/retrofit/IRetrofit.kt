@@ -117,7 +117,7 @@ interface IRetrofit {
 
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)
-    suspend fun getExamPosts(@Query("page") page: Int): Response<MyExamInfoListDto>
+    suspend fun getExamPosts(@Query("page") page: Int): Response<MyExamListDto>
 
     // 내가 쓴 글 (시험 정보 수정)
     @GET(UPDATE_EXAM_POSTS)
