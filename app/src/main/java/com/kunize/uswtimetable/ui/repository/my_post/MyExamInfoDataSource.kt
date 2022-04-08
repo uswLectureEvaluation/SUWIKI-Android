@@ -1,7 +1,8 @@
 package com.kunize.uswtimetable.ui.repository.my_post
 
-import com.kunize.uswtimetable.dataclass.MyExamInfo
+import com.kunize.uswtimetable.dataclass.MyExamListDto
+import retrofit2.Response
 
 interface MyExamInfoDataSource {
-    fun getMyExamInfoData(): List<MyExamInfo>
+    suspend fun getMyExamInfoData(page: Int): Response<MyExamListDto>
 }

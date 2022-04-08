@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.BUY_EXAM
@@ -56,7 +57,7 @@ interface IRetrofit {
 
     // Refresh Token
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@Header("RefreshToken") refresh: String): Call<Token>
+    fun requestRefresh(@Header(AUTH_HEADER) refresh: String): Call<Token>
 
     // 메인 페이지 요청 API
     @GET()
@@ -116,7 +117,7 @@ interface IRetrofit {
 
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)
-    suspend fun getExamPosts(): Response<MyExamInfoListDto>
+    suspend fun getExamPosts(@Query("page") page: Int): Response<MyExamListDto>
 
     // 내가 쓴 글 (시험 정보 수정)
     @GET(UPDATE_EXAM_POSTS)
@@ -265,7 +266,7 @@ class AuthenticationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
         val request = chain.request().newBuilder()
-            .addHeader("AccessToken", accessToken).build()
+            .addHeader(AUTH_HEADER, accessToken).build()
         Log.d(
             TAG,
             "AuthenticationInterceptor - intercept() called / request header: ${request.headers}"
@@ -280,14 +281,14 @@ class TokenAuthenticator : Authenticator {
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
         Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh")
         val tokenResponse =
-            IRetrofit.getInstanceWithNoToken().requestRefresh(refresh = refresh).execute()
+            IRetrofit.getInstanceWithNoToken().requestRefresh(refresh).execute()
 
         return if (handleResponse(tokenResponse)) {
             Log.d(TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")
             response.request
                 .newBuilder()
-                .removeHeader("AccessToken")
-                .header("AccessToken", TimeTableSelPref.encryptedPrefs.getAccessToken() ?: "")
+                .removeHeader(AUTH_HEADER)
+                .header(AUTH_HEADER, TimeTableSelPref.encryptedPrefs.getAccessToken() ?: "")
                 .build()
         } else {
             null
@@ -304,4 +305,8 @@ class TokenAuthenticator : Authenticator {
             Log.d(TAG, "TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다.")
             false
         }
+
+    companion object {
+        const val AUTH_HEADER = "Authorization"
+    }
 }

@@ -1,9 +1,11 @@
 package com.kunize.uswtimetable.ui.user_info
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.kunize.uswtimetable.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.retrofit.IRetrofit
+import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,14 +17,6 @@ object User {
         private set
 
     val isLoggedIn = MutableLiveData(user != null)
-
-    private fun setUser(userData: LoggedInUser) {
-        if (user != null) {
-            user!!.value = userData
-        } else {
-            user = MutableLiveData(userData)
-        }
-    }
 
     fun login() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -42,6 +36,7 @@ object User {
                     )
                     isLoggedIn.value = true
                 }
+                Log.d(TAG, "User - login Success!")
             }
         }
     }
@@ -53,5 +48,14 @@ object User {
         }
         TimeTableSelPref.encryptedPrefs.saveAccessToken("")
         TimeTableSelPref.encryptedPrefs.saveRefreshToken("")
+        Log.d(TAG, "User - logout Success!")
+    }
+
+    private fun setUser(userData: LoggedInUser) {
+        if (user != null) {
+            user!!.value = userData
+        } else {
+            user = MutableLiveData(userData)
+        }
     }
 }

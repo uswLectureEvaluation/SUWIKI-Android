@@ -9,16 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.adapter.MyExamInfoAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
 import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
 import com.kunize.uswtimetable.util.ItemType
+import com.kunize.uswtimetable.util.infiniteScrolls
 
 class MyExamInfoFragment : Fragment() {
     private var _binding: FragmentMyExamInfoBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
     private val viewModel: MyExamInfoViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     private lateinit var adapter: MyExamInfoAdapter
@@ -44,14 +47,22 @@ class MyExamInfoFragment : Fragment() {
                 }
             }
         }
-        binding.myExamInfoContainer.adapter = adapter
 
+        initRecyclerView()
 
+        return binding.root
+    }
+
+    private fun initRecyclerView() {
+        recyclerView = binding.myExamInfoContainer
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         viewModel.myExamInfoData.observe(viewLifecycleOwner) { myExamInfoList ->
             adapter.submitList(myExamInfoList)
         }
-
-        return binding.root
+        recyclerView.infiniteScrolls {
+            viewModel.scrollBottomEvent()
+        }
     }
 
     private fun gotoWriteFragment(data: MyExamInfo) {

@@ -7,9 +7,9 @@ import com.kunize.uswtimetable.retrofit.IRetrofit
 class MyPostRemoteDataSource: MyPostDataSource {
     private val apiService = IRetrofit.getInstance()
 
-    override suspend fun getMyEvaluations() = apiService.getEvaluatePosts(1)
+    override suspend fun getMyEvaluations(page: Int) = apiService.getEvaluatePosts(page)
 
-    override suspend fun getMyExamInfos() = apiService.getExamPosts()
+    override suspend fun getMyExamInfos(page: Int) = apiService.getExamPosts(page)
 
     override suspend fun editMyEvaluation(request: MyEvaluationEditDto) = apiService.updateEvaluatePost(request)
 

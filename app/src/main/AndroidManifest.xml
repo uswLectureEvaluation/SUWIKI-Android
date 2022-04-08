@@ -26,7 +26,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.signup.SignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.user_info.QuitActivity"
             android:exported="false" />
@@ -36,6 +37,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".SettingActivity" />
 
@@ -54,8 +56,8 @@
         <activity android:name=".OpenSourceActivity" />
         <activity
             android:name=".StartActivity"
-            android:theme="@style/Theme.Uswtimetable.Splash"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Uswtimetable.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
