@@ -40,7 +40,7 @@ class MyExamInfoFragment : Fragment() {
                 }
                 ItemType.EDIT_BUTTON -> {
 //                    Toast.makeText(requireContext(), "아이템${data.id} 수정 버튼 선택됨", Toast.LENGTH_SHORT).show()
-                    gotoWriteFragment(data)
+                    gotoWriteFragment(data.toMyExamInfo())
                 }
                 ItemType.DELETE_BUTTON -> {
                     Toast.makeText(requireContext(), "아이템${data.id} 삭제 버튼 선택됨", Toast.LENGTH_SHORT).show()
