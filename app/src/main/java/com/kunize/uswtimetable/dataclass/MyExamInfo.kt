@@ -10,8 +10,8 @@ data class MyExamInfo(
     val id: String,
     val subject: String,
     val semester: String,
+    val semesterList: String,
     val professor: String,
-    val evaluationType: String,
     val examType: String,
     val examDifficulty: String,
     val content: String
@@ -27,8 +27,8 @@ data class MyExamListDto(
                 id = it.id,
                 subject = it.subject,
                 semester = it.semester,
+                semesterList = it.semesterList,
                 professor = it.professor,
-                evaluationType = it.evaluationType,
                 examType = it.examType,
                 examDifficulty = it.examDifficulty,
                 content = it.content
@@ -41,10 +41,10 @@ data class MyExamListDto(
 data class MyExamDto(
     @SerializedName("id") val id: String,
     @SerializedName("lectureName") val subject: String,
-    @SerializedName("semester") val semester: String,
     @SerializedName("professor") val professor: String,
-    @SerializedName("evaluationType") val evaluationType: String,
-    @SerializedName("examType") val examType: String,
+    @SerializedName("semester") val semester: String,
+    @SerializedName("semesterList") val semesterList: String,
+    @SerializedName("examInfo") val examType: String,
     @SerializedName("examDifficulty") val examDifficulty: String,
     @SerializedName("content") val content: String
 ) : Serializable
