@@ -51,7 +51,7 @@ class LectureInfoFragment : Fragment() {
         binding.infoRecyclerView.adapter = adapter
 
         val args: LectureInfoFragmentArgs by navArgs()
-        lectureInfoViewModel.lectureId = args.lectureId
+        lectureInfoViewModel.pageViewModel.lectureId = args.lectureId
 
         CoroutineScope(IO).launch {
             loadInitData()
@@ -68,13 +68,13 @@ class LectureInfoFragment : Fragment() {
             }
         }
 
-        lectureInfoViewModel.makeToast.observe(viewLifecycleOwner, EventObserver {
+        lectureInfoViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
             if (!User.isLoggedIn) {
                 needLoadInitData = true
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
             else
-                Toast.makeText(requireContext(), lectureInfoViewModel.toastMessage, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), lectureInfoViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
         })
 
         with(binding) {
@@ -117,7 +117,7 @@ class LectureInfoFragment : Fragment() {
                     binding.infoProfessorName.text.toString(),
                     lectureInfoViewModel.lectureDetailInfoData.value?.data?.semester ?: ""
                 ), isEvaluation = !binding.examInfoRadioBtn.isChecked,
-                lectureId = lectureInfoViewModel.lectureId
+                lectureId = lectureInfoViewModel.pageViewModel.lectureId
             )
         findNavController().navigate(action)
     }

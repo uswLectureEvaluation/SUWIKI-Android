@@ -1,15 +1,19 @@
 package com.kunize.uswtimetable.ui.search_result
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.ui.common.BaseInfiniteRecyclerItemViewModel
+import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
+import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchResultViewModel(private val searchResultRepository: SearchResultRepository) :
-    BaseInfiniteRecyclerItemViewModel() {
+    ViewModel() {
+    val pageViewModel = PageViewModel()
+    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel()
     private val _selectedType = MutableLiveData<String>()
     private val _searchValue = MutableLiveData<String>()
 
@@ -18,23 +22,23 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     }
 
     fun scrollBottomEvent() {
-        if(page.value == LAST_PAGE)
+        if(pageViewModel.page.value == LAST_PAGE)
             return
         viewModelScope.launch {
             val response = getResponse()
-            delay(delayTime)
+            delay(commonRecyclerViewViewModel.delayTime)
             if (response.isSuccessful) {
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
-                deleteLoading()
+                commonRecyclerViewViewModel.deleteLoading()
                 if(!tmpEvaluationData.isNullOrEmpty()) {
-                    isLastData(tmpEvaluationData)
-                    evaluationList.value!!.addAll(tmpEvaluationData)
-                    evaluationList.value = evaluationList.value
+                    pageViewModel.isLastData(tmpEvaluationData)
+                    commonRecyclerViewViewModel.evaluationList.value!!.addAll(tmpEvaluationData)
+                    commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.evaluationList.value!!)
 
-                    nextPage()
+                    pageViewModel.nextPage()
                 }
             } else {
-                evaluationList.value = arrayListOf()
+                commonRecyclerViewViewModel.deleteLoading()
             }
         }
     }
@@ -42,25 +46,25 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     private suspend fun getResponse() = if (_searchValue.value.toString().isBlank()) {
         searchResultRepository.getLectureMainList(
             _selectedType.value.toString(),
-            page.value ?: 1
+            pageViewModel.page.value ?: 1
         )
     } else {
         searchResultRepository.getSearchResultList(
             _searchValue.value.toString(),
             _selectedType.value.toString(),
-            page.value ?: 1
+            pageViewModel.page.value ?: 1
         )
     }
 
     fun search(searchValue: String) {
         _searchValue.value = searchValue
-        page.value = 1
-        loading()
+        pageViewModel.resetPage()
+        commonRecyclerViewViewModel.loading()
     }
 
     fun changeType(option: String) {
         _selectedType.value = option
-        page.value = 1
-        loading()
+        pageViewModel.resetPage()
+        commonRecyclerViewViewModel.loading()
     }
 }
