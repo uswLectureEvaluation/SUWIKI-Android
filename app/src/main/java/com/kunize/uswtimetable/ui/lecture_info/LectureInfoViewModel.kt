@@ -1,20 +1,25 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
-import com.kunize.uswtimetable.ui.common.BaseInfiniteRecyclerItemViewModel
+import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
+import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
+import com.kunize.uswtimetable.ui.common.PageViewModel
+import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
-import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
-class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : BaseInfiniteRecyclerItemViewModel() {
+class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel(), HandlingErrorInterface {
+    val pageViewModel = PageViewModel()
+    val toastViewModel = ToastViewModel()
+    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel()
     private val _writeBtnText = MutableLiveData<Int>()
     val writeBtnText: LiveData<Int>
         get() = _writeBtnText
@@ -38,29 +43,29 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     fun lectureInfoRadioBtnClicked() {
-        page.value = 1
+        pageViewModel.resetPage()
         _showHideExamDataLayout.value = false
         _showNoExamDataLayout.value = false
         changeWriteBtnText(R.string.write_evaluation)
-        loading()
+        commonRecyclerViewViewModel.loading()
         getEvaluationList()
     }
 
     fun examInfoRadioBtnClicked() {
-        page.value = 1
+        pageViewModel.resetPage()
         changeWriteBtnText(R.string.write_exam)
-        loading()
+        commonRecyclerViewViewModel.loading()
         getExamList()
     }
 
     fun usePointBtnClicked() {
         viewModelScope.launch {
-            val response = lectureInfoRepository.buyExam(lectureId)
+            val response = lectureInfoRepository.buyExam(pageViewModel.lectureId)
             if(response.isSuccessful) {
                 if(response.body() == "success") {
                     _showHideExamDataLayout.value = false
-                    page.value = 1
-                    loading()
+                    pageViewModel.resetPage()
+                    commonRecyclerViewViewModel.loading()
                     getExamList()
                 }
             }
@@ -71,19 +76,21 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _writeBtnText.value = resource
     }
 
-    suspend fun setInfoValue() {
+    suspend fun setInfoValue(): Boolean {
+        val response: Response<LectureDetailInfoDto>
         withContext(viewModelScope.coroutineContext) {
-            val response = lectureInfoRepository.getLectureDetailInfo(lectureId)
+            response = lectureInfoRepository.getLectureDetailInfo(pageViewModel.lectureId)
             if (response.isSuccessful) {
                 _lectureDetailInfoData.value = response.body()
             } else {
-                //TODO 통신 실패 처리
+                handleError(response.code())
             }
         }
+        return response.isSuccessful
     }
 
     fun scrollBottomEvent() {
-        if (page.value!! < 2)
+        if (pageViewModel.page.value!! < 2)
             return
         getLectureList()
     }
@@ -98,19 +105,19 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     private fun getEvaluationList() {
         viewModelScope.launch {
             val response =
-                lectureInfoRepository.getLectureDetailEvaluation(lectureId, page.value!!.toInt())
-            delay(delayTime)
+                lectureInfoRepository.getLectureDetailEvaluation(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
+            delay(commonRecyclerViewViewModel.delayTime)
             if (response.isSuccessful) {
-                deleteLoading()
+                commonRecyclerViewViewModel.deleteLoading()
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 if (!tmpEvaluationData.isNullOrEmpty()) {
-                    isLastData(tmpEvaluationData)
-                    evaluationList.value!!.addAll(tmpEvaluationData)
-                    evaluationList.value = evaluationList.value
+                    pageViewModel.isLastData(tmpEvaluationData)
+                    commonRecyclerViewViewModel.evaluationList.value!!.addAll(tmpEvaluationData)
+                    commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.evaluationList.value!!)
                 }
-                nextPage()
+                pageViewModel.nextPage()
             } else {
-                //TODO 통신 실패 로직
+                handleError(response.code())
             }
         }
     }
@@ -118,26 +125,32 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     private fun getExamList() {
         viewModelScope.launch {
             val response =
-                lectureInfoRepository.getLectureDetailExam(lectureId, page.value!!.toInt())
-            delay(delayTime)
+                lectureInfoRepository.getLectureDetailExam(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
+            delay(commonRecyclerViewViewModel.delayTime)
             if (response.isSuccessful) {
                 val tmpResponse = response.body()
                 val tmpExamData = tmpResponse?.convertToEvaluationData()
-                deleteLoading()
+                commonRecyclerViewViewModel.deleteLoading()
                 if (tmpExamData != null) {
-                    isLastData(tmpExamData)
+                    pageViewModel.isLastData(tmpExamData)
                     if (tmpExamData.isEmpty() && tmpResponse.examDataExist)
                         _showHideExamDataLayout.value = true
                     else if (!tmpResponse.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
-                        evaluationList.value = tmpExamData!!
-                        nextPage()
+                        commonRecyclerViewViewModel.changeRecyclerViewData(tmpExamData!!)
+                        pageViewModel.nextPage()
                     }
                 }
             } else {
-                Log.d("lectureApi", "시험정보 클릭 에러 $lectureId,${response.code()}")
+                handleError(response.code())
             }
         }
+    }
+
+    override fun handleError(errorCode: Int) {
+        toastViewModel.toastMessage = "$errorCode 에러 발생!"
+        toastViewModel.showToastMsg()
+        commonRecyclerViewViewModel.deleteLoading()
     }
 }

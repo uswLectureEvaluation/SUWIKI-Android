@@ -103,8 +103,8 @@ class EvaluationFragment : Fragment() {
             }
         }
 
-        evaluationViewModel.makeToast.observe(viewLifecycleOwner, EventObserver {
-            Toast.makeText(requireContext(), evaluationViewModel.toastMessage, Toast.LENGTH_LONG).show()
+        evaluationViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
+            Toast.makeText(requireContext(), evaluationViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
         })
 
         return binding.root

@@ -4,8 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-open class ToastViewModel: ViewModel() {
-    protected val _makeToast = MutableLiveData<Event<Boolean>>()
-    val makeToast: LiveData<Event<Boolean>> = _makeToast
+class ToastViewModel: ViewModel() {
+    private val _toastMutableLiveData = MutableLiveData<Event<Boolean>>()
+    val toastLiveData: LiveData<Event<Boolean>> = _toastMutableLiveData
     var toastMessage: String = ""
+
+    fun showToastMsg() {
+        _toastMutableLiveData.value = Event(true)
+    }
 }

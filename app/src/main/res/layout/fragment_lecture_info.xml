@@ -308,7 +308,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:visibility="@{lectureInfoViewModel.evaluationListAccessor.empty ? View.VISIBLE : View.GONE}"/>
+                        android:visibility="@{lectureInfoViewModel.commonRecyclerViewViewModel.evaluationList.empty ? View.VISIBLE : View.GONE}"/>
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -321,7 +321,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:evaluationList="@{lectureInfoViewModel.evaluationListAccessor}"/>
+                        app:evaluationList="@{lectureInfoViewModel.commonRecyclerViewViewModel.evaluationList}"/>
 
 
                     <include
