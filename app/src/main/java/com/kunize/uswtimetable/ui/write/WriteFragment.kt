@@ -222,7 +222,7 @@ class WriteFragment : Fragment() {
 
     private fun setTestContentCheckBox(it: MyExamInfo) {
         for (checkBox in testContentCheckBoxList) {
-            for (dataString in it.examType.split(",")) {
+            for (dataString in it.examType.replace(" ","").split(",")) {
                 if (checkBox.text == dataString)
                     checkBox.isChecked = true
             }
