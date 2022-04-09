@@ -147,7 +147,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     override fun handleError(errorCode: Int) {
-        toastViewModel.toastMessage = "$errorCode 에러 발생!"
+        toastViewModel.toastMessage = if(errorCode == 403) "권한이 없어요! 이용 제한 내역을 확인하거나 문의해주세요!"
+        else "$errorCode 에러 발생!"
         toastViewModel.showToastMsg()
         commonRecyclerViewViewModel.deleteLoading()
     }
