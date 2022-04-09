@@ -205,6 +205,8 @@ class WriteFragment : Fragment() {
             setLectureProfessorName(it)
             setTestContentCheckBox(it)
             setDifficultyRadioBtn(it)
+            val list = it.semesterList.replace(" ","").split(",")
+            setSpinnerList(list)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EXAM
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
@@ -250,7 +252,7 @@ class WriteFragment : Fragment() {
         args.lectureProfessorName?.let {
             binding.writeLectureName.text = it.subject
             binding.writeProfessor.text = it.professor
-            setSpinnerList(args.lectureProfessorName!!.semester.split(","))
+            setSpinnerList(args.lectureProfessorName!!.semester.replace(" ","").split(","))
         }
     }
 
@@ -269,7 +271,7 @@ class WriteFragment : Fragment() {
             setTeamRadioBtn(it)
             setTaskRadioBtn(it)
             setGradeRadioBtn(it)
-            val list = it.semesterList.split(",")
+            val list = it.semesterList.replace(" ","").split(",")
             setSpinnerList(list)
             binding.writeYearSemesterSpinner.setSelection(list.indexOf(it.semester))
             binding.writeContent.setText(it.content)
