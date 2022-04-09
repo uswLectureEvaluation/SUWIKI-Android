@@ -65,15 +65,7 @@ class UswTimeTable @JvmOverloads constructor(
             typedArray.recycle()
         }
         with(binding) {
-            timeColumnList = listOf(
-                nine,
-                ten,
-                eleven,
-                twelve,
-                thirteen,
-                fourteen,
-                fifteen
-            )
+            timeColumnList = listOf(nine, ten, eleven, twelve, thirteen, fourteen, fifteen)
 
             existTimeTable.visibility = View.INVISIBLE
             emptyTimeTable.visibility = View.INVISIBLE
@@ -140,27 +132,15 @@ class UswTimeTable @JvmOverloads constructor(
     }
 
     private fun reDrawColumn() {
-        val maxTime = try {
-            timeTableData.maxOf { it ->
-                when {
-                    it.endTime.isEmpty() -> 0
-                    it.day == "토" -> 0
-                    else -> it.endTime.toInt()
-                }
-            }
-        } catch (e: Exception) {
-            0
+        val maxTime = timeTableData.maxOf {
+            if(it.day == "토") 0
+            else it.endTime.toIntOrNull() ?: 0
         }
-        for (idx in 0..6) {
-            timeColumnList[idx].visibility = View.GONE
-        }
-        for (idx in 0..(maxTime - 8)) {
-            try {
-                timeColumnList[idx].visibility = View.VISIBLE
-            } catch (e: Exception) {
-                timeColumnList[idx - 1].visibility = View.VISIBLE
-            }
-        }
+
+        val params = binding.customTimeTable.layoutParams
+        params.height = if(maxTime < 9)  430.dp
+                        else 30.dp + maxTime * 50.dp + 50.dp
+        binding.customTimeTable.layoutParams = params
     }
 
     fun drawTable() {
@@ -178,7 +158,7 @@ class UswTimeTable @JvmOverloads constructor(
 
         CoroutineScope(IO).launch {
             withContext(Main) {
-                binding.customTimeTable.removeViews(22, binding.customTimeTable.size - 22)
+                binding.customTimeTable.removeViews(23, binding.customTimeTable.size - 23)
                 binding.eLearningText.text = ""
                 reDrawColumn()
             }

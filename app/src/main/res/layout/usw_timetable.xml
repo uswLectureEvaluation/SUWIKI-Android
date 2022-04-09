@@ -28,19 +28,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/customTimeTable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:minHeight="430dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -139,10 +131,9 @@
                     android:id="@+id/nine"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="0dp"
                     android:background="@drawable/edge_bottom"
                     android:text="5"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/eight" />
@@ -153,7 +144,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="6"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/nine" />
@@ -164,7 +155,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="7"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ten" />
@@ -175,7 +166,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="8"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/eleven" />
@@ -186,7 +177,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="9"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/twelve" />
@@ -197,7 +188,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="10"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/thirteen" />
@@ -208,10 +199,21 @@
                     android:layout_height="50dp"
                     android:background="@drawable/edge_bottom"
                     android:text="11"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fourteen" />
+
+                <TextView
+                    android:id="@+id/sixteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edge_bottom"
+                    android:text="12"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fifteen" />
 
                 <TextView
                     android:id="@+id/timeColumn"
