@@ -18,6 +18,7 @@ import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.WriteFragmentTitle
 import com.kunize.uswtimetable.util.seekbarChangeListener
@@ -116,7 +117,7 @@ class WriteFragment : Fragment() {
                     return@launch
                 }
 
-                val success = when(binding.writeType.text.toString()) {
+                val response = when(binding.writeType.text.toString()) {
                     getString(R.string.write_evaluation) -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
                     getString(R.string.write_exam) -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
                     getString(R.string.edit_evaluation) -> writeViewModel.updateLectureEvaluation(lectureId, getLectureEvaluationEditInfo())
@@ -124,14 +125,26 @@ class WriteFragment : Fragment() {
                 }
 
                 withContext(Main) {
-                    if (success)
+                    if (response.isSuccessful) {
                         if (args.myExamInfo == null && args.myEvaluation == null)
                             goToLectureInfoFragment()
                         else
                             goToMyPostFragment()
+                    }
+                    else {
+                        writeViewModel.handleError(response.code())
+                    }
                 }
             }
         }
+
+        writeViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
+            Toast.makeText(
+                requireContext(),
+                writeViewModel.toastViewModel.toastMessage,
+                Toast.LENGTH_LONG
+            ).show()
+        })
 
         return binding.root
     }

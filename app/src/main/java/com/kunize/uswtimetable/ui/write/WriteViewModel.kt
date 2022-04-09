@@ -9,11 +9,14 @@ import com.kunize.uswtimetable.dataclass.LectureEvaluationEditDto
 import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
 import com.kunize.uswtimetable.dataclass.LectureExamEditDto
 import com.kunize.uswtimetable.dataclass.LectureExamPostDto
+import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
+import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.ui.repository.write.WriteRepository
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel() {
+class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel(), HandlingErrorInterface {
+    val toastViewModel = ToastViewModel()
     private val _honeyScore = MutableLiveData<Float>()
     val honeyScore: LiveData<Float>
         get() = _honeyScore
@@ -38,41 +41,50 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         _learningScore.value = value
     }
 
-    suspend fun postLectureEvaluation(lectureId: Long, info: LectureEvaluationPostDto): Boolean {
+    suspend fun postLectureEvaluation(lectureId: Long, info: LectureEvaluationPostDto): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.postLectureEvaluation(lectureId, info)
         }
-        return response.isSuccessful
+        return response
     }
 
-    suspend fun postLectureExam(lectureId: Long, info: LectureExamPostDto): Boolean {
+    suspend fun postLectureExam(lectureId: Long, info: LectureExamPostDto): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.postLectureExam(lectureId, info)
         }
-        return response.isSuccessful
+        return response
     }
 
-    suspend fun updateLectureEvaluation(lectureId: Long, info: LectureEvaluationEditDto): Boolean {
+    suspend fun updateLectureEvaluation(lectureId: Long, info: LectureEvaluationEditDto): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.updateLectureEvaluation(lectureId, info)
         }
-        return response.isSuccessful
+        return response
     }
 
-    suspend fun updateLectureExam(lectureId: Long, info: LectureExamEditDto): Boolean {
+    suspend fun updateLectureExam(lectureId: Long, info: LectureExamEditDto): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.updateLectureExam(lectureId, info)
         }
-        return response.isSuccessful
+        return response
     }
 
     init {
         _honeyScore.value = 0f
         _satisfactionScore.value = 0f
         _learningScore.value = 0f
+    }
+
+    override fun handleError(errorCode: Int) {
+        toastViewModel.toastMessage = when (errorCode) {
+            400 -> "이미 작성한 이력이 있어요!"
+            403 -> "권한이 없어요! 이용 제한 내역을 확인하거나 문의해주세요!"
+            else -> "$errorCode 에러 발생!"
+        }
+        toastViewModel.showToastMsg()
     }
 }
