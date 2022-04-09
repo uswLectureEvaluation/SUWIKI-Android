@@ -20,6 +20,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
@@ -96,9 +97,7 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
             if(prevSel >= 0) {
                 setText(msg)
                 setSelection(msg.length)
-                //TODO 검색 결과에 맞는 데이터 받아온 후, changeData 수행
                 searchResultViewModel.search(msg)
-                //searchResultViewModel.changeData(ArrayList(dummyShortData.subList(0, 0)))
             }
         }
 
@@ -109,7 +108,6 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         }
 
 
-        //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
         binding.searchLecture.setOnEditorActionListener { _, it, _ ->
             var handled = false
             if (it == EditorInfo.IME_ACTION_SEARCH && !isSearchTextLengthNotEnough()) {
@@ -121,6 +119,10 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
             }
             handled
         }
+
+        searchResultViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
+            Toast.makeText(requireContext(), searchResultViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
+        })
 
         return binding.root
     }

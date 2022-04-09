@@ -4,15 +4,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
+import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
+import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchResultViewModel(private val searchResultRepository: SearchResultRepository) :
-    ViewModel() {
-    val pageViewModel = PageViewModel()
+    ViewModel(), HandlingErrorInterface {
+    val toastViewModel = ToastViewModel()
+    private val pageViewModel = PageViewModel()
     val commonRecyclerViewViewModel = CommonRecyclerViewViewModel()
     private val _selectedType = MutableLiveData<String>()
     private val _searchValue = MutableLiveData<String>()
@@ -65,5 +68,11 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
         _selectedType.value = option
         pageViewModel.resetPage()
         commonRecyclerViewViewModel.loading()
+    }
+
+    override fun handleError(errorCode: Int) {
+        toastViewModel.toastMessage = "$errorCode 에러 발생!"
+        toastViewModel.showToastMsg()
+        commonRecyclerViewViewModel.deleteLoading()
     }
 }
