@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -89,12 +90,39 @@ class WriteFragment : Fragment() {
 
         binding.finishButton.setOnClickListener {
             CoroutineScope(IO).launch {
+
+                val emptyMsg = when(binding.writeType.text.toString()) {
+                    getString(R.string.write_evaluation), getString(R.string.edit_evaluation)  -> {
+                        when {
+                            binding.teamRadioGroup.checkedRadioButtonId == -1 -> "조모임을 선택해주세요!"
+                            binding.taskRadioGroup.checkedRadioButtonId == -1 -> "과제를 선택해주세요!"
+                            binding.gradeRadioGroup.checkedRadioButtonId == -1 -> "학점을 선택해주세요!"
+                            binding.writeContent.text.toString().isBlank() -> "내용을 입력해주세요!"
+                            else -> ""
+                        }
+                    }
+                    else -> when {
+                        getTestContentString().isBlank() -> "시험 내용을 선택해주세요!"
+                        binding.difficultyGroup.checkedRadioButtonId == -1 ->"난이도를 선택해주세요!"
+                        binding.writeContent.text.toString().isBlank() -> "내용을 입력해주세요!"
+                        else -> ""
+                    }
+                }
+
+                if(emptyMsg.isNotBlank()) {
+                    withContext(Main) {
+                        Toast.makeText(requireContext(), emptyMsg, Toast.LENGTH_SHORT).show()
+                    }
+                    return@launch
+                }
+
                 val success = when(binding.writeType.text.toString()) {
                     getString(R.string.write_evaluation) -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
                     getString(R.string.write_exam) -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
                     getString(R.string.edit_evaluation) -> writeViewModel.updateLectureEvaluation(lectureId, getLectureEvaluationEditInfo())
                     else -> writeViewModel.updateLectureExam(lectureId, getLectureExamEditInfo())
                 }
+
                 withContext(Main) {
                     if (success)
                         if (args.myExamInfo == null && args.myEvaluation == null)
@@ -137,11 +165,7 @@ class WriteFragment : Fragment() {
     private fun getLectureExamInfo(): LectureExamPostDto {
         val info: LectureExamPostDto
         with(binding) {
-            var testContent = ""
-            testContentCheckBoxList.forEach { checkBox ->
-                if(checkBox.isChecked)
-                    testContent += checkBox.text.toString() + ", "
-            }
+            var testContent = getTestContentString()
             testContent = testContent.dropLast(2)
 
             var testDifficulty = ""
@@ -165,11 +189,7 @@ class WriteFragment : Fragment() {
     private fun getLectureExamEditInfo(): LectureExamEditDto {
         val info: LectureExamEditDto
         with(binding) {
-            var testContent = ""
-            testContentCheckBoxList.forEach { checkBox ->
-                if(checkBox.isChecked)
-                    testContent += checkBox.text.toString() + ", "
-            }
+            var testContent = getTestContentString()
             testContent = testContent.dropLast(2)
 
             var testDifficulty = ""
@@ -186,6 +206,15 @@ class WriteFragment : Fragment() {
             )
         }
         return info
+    }
+
+    private fun getTestContentString(): String {
+        var testContent = ""
+        testContentCheckBoxList.forEach { checkBox ->
+            if (checkBox.isChecked)
+                testContent += checkBox.text.toString() + ", "
+        }
+        return testContent
     }
 
     private fun getLectureEvaluationEditInfo(): LectureEvaluationEditDto {
