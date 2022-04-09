@@ -85,7 +85,7 @@ class WriteFragment : Fragment() {
         setSeekBarProgress()
 
         binding.toolBar.setNavigationOnClickListener {
-            findNavController().popBackStack(R.id.writeFragment, true)
+            findNavController().popBackStack()
         }
 
         binding.finishButton.setOnClickListener {

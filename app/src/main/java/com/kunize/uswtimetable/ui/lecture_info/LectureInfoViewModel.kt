@@ -11,6 +11,7 @@ import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
+import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -96,6 +97,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     fun getLectureList() {
+        if(pageViewModel.page.value!! == LAST_PAGE)
+            return
         when (_writeBtnText.value) {
             R.string.write_evaluation -> getEvaluationList()
             else -> getExamList()
