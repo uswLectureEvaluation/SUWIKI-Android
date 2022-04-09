@@ -67,7 +67,7 @@ class UswTimeTable @JvmOverloads constructor(
         with(binding) {
             timeColumnList = listOf(nine, ten, eleven, twelve, thirteen, fourteen, fifteen)
 
-            existTimeTable.visibility = View.INVISIBLE
+            customTimeTable.visibility = View.INVISIBLE
             emptyTimeTable.visibility = View.INVISIBLE
 
             createTimeTableBtn.setOnClickListener {
@@ -149,14 +149,14 @@ class UswTimeTable @JvmOverloads constructor(
         binding.eLearningText.text = ""
         if (isEmpty) {
             binding.emptyTimeTable.visibility = VISIBLE
-            binding.existTimeTable.visibility = GONE
+            binding.customTimeTable.visibility = GONE
             return
         }
 
         val topMargin = 55.dp
 
         binding.emptyTimeTable.visibility = GONE
-        binding.existTimeTable.visibility = VISIBLE
+        binding.customTimeTable.visibility = VISIBLE
 
         CoroutineScope(IO).launch {
             withContext(Main) {
