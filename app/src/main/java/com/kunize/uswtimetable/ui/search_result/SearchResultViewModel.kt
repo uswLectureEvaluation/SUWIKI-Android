@@ -40,7 +40,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
                     pageViewModel.nextPage()
                 }
             } else {
-                commonRecyclerViewViewModel.deleteLoading()
+                handleError(response.code())
             }
         }
     }
