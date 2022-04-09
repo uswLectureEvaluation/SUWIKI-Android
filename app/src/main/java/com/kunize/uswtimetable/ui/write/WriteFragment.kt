@@ -93,7 +93,7 @@ class WriteFragment : Fragment() {
                     getString(R.string.write_evaluation) -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
                     getString(R.string.write_exam) -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
                     getString(R.string.edit_evaluation) -> writeViewModel.updateLectureEvaluation(lectureId, getLectureEvaluationEditInfo())
-                    else -> {false}
+                    else -> writeViewModel.updateLectureExam(lectureId, getLectureExamEditInfo())
                 }
                 withContext(Main) {
                     if (success)
@@ -153,6 +153,32 @@ class WriteFragment : Fragment() {
             info = LectureExamPostDto(
                 writeLectureName.text.toString(),
                 writeProfessor.text.toString(),
+                writeYearSemesterSpinner.selectedItem.toString(),
+                testContent,
+                testDifficulty,
+                writeContent.text.toString()
+            )
+        }
+        return info
+    }
+
+    private fun getLectureExamEditInfo(): LectureExamEditDto {
+        val info: LectureExamEditDto
+        with(binding) {
+            var testContent = ""
+            testContentCheckBoxList.forEach { checkBox ->
+                if(checkBox.isChecked)
+                    testContent += checkBox.text.toString() + ", "
+            }
+            testContent = testContent.dropLast(2)
+
+            var testDifficulty = ""
+            difficultyRadioBtnList.forEach {
+                if(it.isChecked)
+                    testDifficulty = it.text.toString()
+            }
+
+            info = LectureExamEditDto(
                 writeYearSemesterSpinner.selectedItem.toString(),
                 testContent,
                 testDifficulty,

@@ -68,6 +68,7 @@ class MyExamInfoFragment : Fragment() {
     private fun gotoWriteFragment(data: MyExamInfo) {
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
+                lectureId = data.id.toLong(),
                 myExamInfo = data,
                 isEvaluation = false
             )

@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.repository.write
 
 import com.kunize.uswtimetable.dataclass.LectureEvaluationEditDto
 import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
+import com.kunize.uswtimetable.dataclass.LectureExamEditDto
 import com.kunize.uswtimetable.dataclass.LectureExamPostDto
 import retrofit2.Response
 
@@ -14,5 +15,8 @@ class WriteRepository(private val remoteDataSource: WriteRemoteDataSource) {
     }
     suspend fun updateLectureEvaluation(lectureId: Long, info: LectureEvaluationEditDto): Response<String> {
         return remoteDataSource.updateLectureEvaluation(lectureId, info)
+    }
+    suspend fun updateLectureExam(lectureId: Long, info: LectureExamEditDto): Response<String> {
+        return remoteDataSource.updateLectureExam(lectureId, info)
     }
 }

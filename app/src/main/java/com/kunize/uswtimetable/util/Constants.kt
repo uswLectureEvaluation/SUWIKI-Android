@@ -44,6 +44,7 @@ object API {
     const val WRITE_LECTURE_EVALUATION = "/evaluate-posts/write/"
     const val WRITE_LECTURE_EXAM = "/exam-posts/write/"
     const val EDIT_LECTURE_EVALUATION = "/evaluate-posts/update/"
+    const val EDIT_LECTURE_EXAM = "/exam-posts/update/"
     const val BUY_EXAM = "/exam-posts/buyExamInfo/"
 }
 

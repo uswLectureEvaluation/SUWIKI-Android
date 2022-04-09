@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.LectureEvaluationEditDto
 import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
+import com.kunize.uswtimetable.dataclass.LectureExamEditDto
 import com.kunize.uswtimetable.dataclass.LectureExamPostDto
 import com.kunize.uswtimetable.ui.repository.write.WriteRepository
 import kotlinx.coroutines.withContext
@@ -57,6 +58,14 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.updateLectureEvaluation(lectureId, info)
+        }
+        return response.isSuccessful
+    }
+
+    suspend fun updateLectureExam(lectureId: Long, info: LectureExamEditDto): Boolean {
+        val response: Response<String>
+        withContext(viewModelScope.coroutineContext) {
+            response = writeRepository.updateLectureExam(lectureId, info)
         }
         return response.isSuccessful
     }
