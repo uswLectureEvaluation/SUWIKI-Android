@@ -31,8 +31,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/customTimeTable"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:minHeight="430dp"
+                android:layout_height="430dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -132,13 +132,15 @@ class UswTimeTable @JvmOverloads constructor(
     }
 
     private fun reDrawColumn() {
-        val maxTime = timeTableData.maxOf {
+        val maxTime = if(timeTableData.isEmpty()) 0
+        else
+            timeTableData.maxOf {
             if(it.day == "토") 0
             else it.endTime.toIntOrNull() ?: 0
         }
 
         val params = binding.customTimeTable.layoutParams
-        params.height = if(maxTime < 9)  430.dp
+        params.height = if(maxTime < 8)  430.dp
                         else 30.dp + maxTime * 50.dp + 50.dp
         binding.customTimeTable.layoutParams = params
     }
