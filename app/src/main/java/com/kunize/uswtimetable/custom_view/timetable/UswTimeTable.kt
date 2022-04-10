@@ -21,6 +21,7 @@ import com.kunize.uswtimetable.ClassInfoActivity
 import com.kunize.uswtimetable.CreateTimeTableActivity
 import com.kunize.uswtimetable.MainActivity.Companion.dp
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.databinding.UswTimetableBinding
 import com.kunize.uswtimetable.dataclass.TimeData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -39,35 +40,18 @@ class UswTimeTable @JvmOverloads constructor(
         const val CLASSNAME_PROFESSOR = 2
         const val CLASSNAME_PROFESSOR_LOCATION = 3
     }
-
-    var view: View = LayoutInflater.from(context).inflate(R.layout.usw_timetable, this, false)
+    private val binding = UswTimetableBinding.inflate(LayoutInflater.from(context), this, true)
 
     //속성값
     var isEmpty: Boolean
     var infoFormat: Int
 
-    private var timeWidth = 0.dp
     private var timeHeight = 50.dp
-
-    private val customTimeTable: ConstraintLayout
-    private val existTimeTable: ConstraintLayout
-    private val emptyTimeTable: ConstraintLayout
     private val timeColumnList: List<TextView>
-    private val eLearningText: TextView
-    private val createTimetableBtn: CardView
-
-    private val mon: TextView
-    private val tue: TextView
-    private val wed: TextView
-    private val thu: TextView
-    private val fri: TextView
 
     var timeTableData = mutableListOf<TimeData>()
 
-    private val timeWidthMap = mapOf("월" to 0, "화" to 1, "수" to 2, "목" to 3, "금" to 4)
-
     init {
-        addView(view)
         val typedArray = context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.UswTimeTable,
@@ -80,41 +64,18 @@ class UswTimeTable @JvmOverloads constructor(
         } finally {
             typedArray.recycle()
         }
+        with(binding) {
+            timeColumnList = listOf(nine, ten, eleven, twelve, thirteen, fourteen, fifteen)
 
-        timeColumnList = listOf(
-            findViewById(R.id.nine),
-            findViewById(R.id.ten),
-            findViewById(R.id.eleven),
-            findViewById(R.id.twelve),
-            findViewById(R.id.thirteen),
-            findViewById(R.id.fourteen),
-            findViewById(R.id.fifteen)
-        )
+            customTimeTable.visibility = View.INVISIBLE
+            emptyTimeTable.visibility = View.INVISIBLE
 
-        customTimeTable = findViewById(R.id.customTimeTable)
-        existTimeTable = findViewById(R.id.existTimeTable)
-        emptyTimeTable = findViewById(R.id.emptyTimeTable)
-        eLearningText = findViewById(R.id.eLearningText)
-        createTimetableBtn = findViewById(R.id.createTimeTableBtn)
-        existTimeTable.visibility = View.INVISIBLE
-        emptyTimeTable.visibility = View.INVISIBLE
-
-        mon = findViewById(R.id.mon)
-        tue = findViewById(R.id.tue)
-        wed = findViewById(R.id.wed)
-        thu = findViewById(R.id.thu)
-        fri = findViewById(R.id.fri)
-
-        createTimetableBtn.setOnClickListener {
-            val intent = Intent(context, CreateTimeTableActivity::class.java)
-            startActivity(context, intent, null)
+            createTimeTableBtn.setOnClickListener {
+                val intent = Intent(context, CreateTimeTableActivity::class.java)
+                startActivity(context, intent, null)
+            }
         }
 
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        timeWidth = (MeasureSpec.getSize(widthMeasureSpec) - 34.dp) / 5
     }
 
     private fun showBottomSheet(
@@ -137,11 +98,11 @@ class UswTimeTable @JvmOverloads constructor(
         data: TimeData
     ) {
         if (v != null) {
-            customTimeTable.removeView(v)
+            binding.customTimeTable.removeView(v)
             tempTimeData.remove(data)
             reDrawColumn()
         } else
-            eLearningText.text = ""
+            binding.eLearningText.text = ""
     }
 
     private fun setOnClickEditButton(
@@ -171,46 +132,33 @@ class UswTimeTable @JvmOverloads constructor(
     }
 
     private fun reDrawColumn() {
-        val maxTime = try {
-            timeTableData.maxOf { it ->
-                when {
-                    it.endTime.isEmpty() -> 0
-                    it.day == "토" -> 0
-                    else -> it.endTime.toInt()
-                }
-            }
-        } catch (e: Exception) {
-            0
+        val maxTime = if(timeTableData.isEmpty()) 0
+        else
+            timeTableData.maxOf {
+            if(it.day == "토") 0
+            else it.endTime.toIntOrNull() ?: 0
         }
-        for (idx in 0..6) {
-            timeColumnList[idx].visibility = View.GONE
-        }
-        for (idx in 0..(maxTime - 8)) {
-            try {
-                timeColumnList[idx].visibility = View.VISIBLE
-            } catch (e: Exception) {
-                timeColumnList[idx - 1].visibility = View.VISIBLE
-            }
-        }
+
+        val params = binding.customTimeTable.layoutParams
+        params.height = if(maxTime < 8)  430.dp
+                        else 30.dp + maxTime * 50.dp + 50.dp
+        binding.customTimeTable.layoutParams = params
     }
 
     fun drawTable() {
-        eLearningText.text = ""
+        binding.eLearningText.text = ""
         if (isEmpty) {
-            emptyTimeTable.visibility = VISIBLE
-            existTimeTable.visibility = GONE
+            binding.emptyTimeTable.visibility = VISIBLE
+            binding.customTimeTable.visibility = GONE
             return
         }
 
         val topMargin = 55.dp
 
-        emptyTimeTable.visibility = GONE
-        existTimeTable.visibility = VISIBLE
-
         CoroutineScope(IO).launch {
             withContext(Main) {
-                customTimeTable.removeViews(22, customTimeTable.size - 22)
-                eLearningText.text = ""
+                binding.customTimeTable.removeViews(23, binding.customTimeTable.size - 23)
+                binding.eLearningText.text = ""
                 reDrawColumn()
             }
             val set = ConstraintSet()
@@ -221,21 +169,25 @@ class UswTimeTable @JvmOverloads constructor(
                 val timeRect = setTimeRect(timeText, data)
                 timeRect.layoutParams = params
                 withContext(Main) {
-                    customTimeTable.addView(timeRect, -1)
-                    set.clone(customTimeTable)
+                    binding.customTimeTable.addView(timeRect, -1)
+                    set.clone(binding.customTimeTable)
                     set.connect(timeRect.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
                     val idDp = when(data.day) {
-                        "월" -> Pair(mon.id, 1.dp)
-                        "화" -> Pair(tue.id, 1.dp)
-                        "수" -> Pair(wed.id, 1.dp)
-                        "목" -> Pair(thu.id, 1.dp)
-                        else -> Pair(fri.id, 0)
+                        "월" -> Pair(binding.mon.id, 1.dp)
+                        "화" -> Pair(binding.tue.id, 1.dp)
+                        "수" -> Pair(binding.wed.id, 1.dp)
+                        "목" -> Pair(binding.thu.id, 1.dp)
+                        else -> Pair(binding.fri.id, 0)
                     }
                     set.connect(timeRect.id, ConstraintSet.START, idDp.first, ConstraintSet.START)
                     set.connect(timeRect.id, ConstraintSet.END, idDp.first, ConstraintSet.END, idDp.second)
                     set.constrainDefaultWidth(timeRect.id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
-                    set.applyTo(customTimeTable)
+                    set.applyTo(binding.customTimeTable)
                 }
+            }
+            withContext(Main) {
+                binding.emptyTimeTable.visibility = GONE
+                binding.customTimeTable.visibility = VISIBLE
             }
         }
 
@@ -259,11 +211,10 @@ class UswTimeTable @JvmOverloads constructor(
     private fun setParams(
         data: TimeData,
         topMargin: Int
-    ): ConstraintLayout.LayoutParams {
+    ): LayoutParams {
         val drawStart = (data.startTime.toInt() - 1) * timeHeight
         val timeHeight = (data.endTime.toInt() - data.startTime.toInt() + 1) * timeHeight
-        val params = ConstraintLayout.LayoutParams(0, timeHeight)
-        //params.leftMargin = timeWidth * timeWidthMap[data.day]!! + (timeWidthMap[data.day]!!.dp) - 1.dp
+        val params = LayoutParams(0, timeHeight)
         params.topMargin = drawStart + topMargin
         return params
     }
@@ -294,11 +245,11 @@ class UswTimeTable @JvmOverloads constructor(
 
     private suspend fun addeLearningView(data: TimeData): Boolean {
         if ((data.location == "이러닝" && data.day == "") || data.day == "토") {
-            eLearningText.text =
+            binding.eLearningText.text =
                 "${data.name} (${data.day} ${data.startTime}~${data.endTime})"
             withContext(Main) {
-                eLearningText.setOnClickListener {
-                    if (eLearningText.text.toString() != "")
+                binding.eLearningText.setOnClickListener {
+                    if (binding.eLearningText.text.toString() != "")
                         showBottomSheet(data, timeTableData, null)
                 }
             }
