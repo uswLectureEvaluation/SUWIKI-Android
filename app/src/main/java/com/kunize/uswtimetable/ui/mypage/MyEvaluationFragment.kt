@@ -30,6 +30,8 @@ class MyEvaluationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMyEvaluationBinding.inflate(inflater, container, false)
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         adapter = MyEvaluationAdapter { data, type ->
             when (type) {

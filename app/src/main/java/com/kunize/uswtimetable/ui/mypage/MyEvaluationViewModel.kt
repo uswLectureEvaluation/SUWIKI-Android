@@ -14,9 +14,11 @@ import kotlinx.coroutines.launch
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _myEvaluationData = MutableLiveData<List<MyEvaluationDto>>()
     val myEvaluationData: LiveData<List<MyEvaluationDto>> get() = _myEvaluationData
+    val loading = MutableLiveData<Boolean>()
     private val page = MutableLiveData<Int>()
 
     init {
+        loading.value = true
         page.value = 1
         scrollBottomEvent()
     }
@@ -42,6 +44,7 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
                 nextPage()
             }
         }
+        loading.postValue(false)
     }
 
     private fun nextPage() {

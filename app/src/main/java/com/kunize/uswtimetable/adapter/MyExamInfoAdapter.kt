@@ -8,20 +8,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ItemMyExamInfoBinding
-import com.kunize.uswtimetable.dataclass.MyExamInfo
+import com.kunize.uswtimetable.dataclass.MyExamInfoDto
 import com.kunize.uswtimetable.util.ExamDifficulty
 import com.kunize.uswtimetable.util.ItemType
 
-class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) -> Unit) :
-    ListAdapter<MyExamInfo, MyExamInfoAdapter.ViewHolder>(diffUtil) {
+class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfoDto, type: ItemType) -> Unit) :
+    ListAdapter<MyExamInfoDto, MyExamInfoAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemMyExamInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: MyExamInfo) {
+        fun bind(data: MyExamInfoDto) {
 
             val difficultyType = convertExamDifficulty(data.examDifficulty)
             with(binding) {
-                lectureName.text = data.subject
+                lectureName.text = data.lectureName
                 lectureProfessor.text = data.professor
                 yearSemester.text = data.semester
 
@@ -73,7 +73,7 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
                         )
                     }
                 }
-                tvExamType.text = data.examType
+                tvExamType.text = data.examInfo
                 content.text = data.content
             }
             binding.root.setOnClickListener {
@@ -115,12 +115,12 @@ class MyExamInfoAdapter(val onItemClicked: (data: MyExamInfo, type: ItemType) ->
     }
 
     companion object {
-        private val diffUtil = object : DiffUtil.ItemCallback<MyExamInfo>() {
-            override fun areItemsTheSame(oldItem: MyExamInfo, newItem: MyExamInfo): Boolean {
+        private val diffUtil = object : DiffUtil.ItemCallback<MyExamInfoDto>() {
+            override fun areItemsTheSame(oldItem: MyExamInfoDto, newItem: MyExamInfoDto): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: MyExamInfo, newItem: MyExamInfo): Boolean {
+            override fun areContentsTheSame(oldItem: MyExamInfoDto, newItem: MyExamInfoDto): Boolean {
                 return oldItem == newItem
             }
         }

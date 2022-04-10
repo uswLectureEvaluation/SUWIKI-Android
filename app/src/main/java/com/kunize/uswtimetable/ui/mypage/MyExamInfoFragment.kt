@@ -31,8 +31,11 @@ class MyExamInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMyExamInfoBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
 
-        binding.myExamInfoContainer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.myExamInfoContainer.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adapter = MyExamInfoAdapter { data, type ->
             when (type) {
                 ItemType.ROOT_VIEW -> {
@@ -40,10 +43,11 @@ class MyExamInfoFragment : Fragment() {
                 }
                 ItemType.EDIT_BUTTON -> {
 //                    Toast.makeText(requireContext(), "아이템${data.id} 수정 버튼 선택됨", Toast.LENGTH_SHORT).show()
-                    gotoWriteFragment(data)
+                    gotoWriteFragment(data.toMyExamInfo())
                 }
                 ItemType.DELETE_BUTTON -> {
-                    Toast.makeText(requireContext(), "아이템${data.id} 삭제 버튼 선택됨", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "아이템${data.id} 삭제 버튼 선택됨", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -56,7 +60,8 @@ class MyExamInfoFragment : Fragment() {
     private fun initRecyclerView() {
         recyclerView = binding.myExamInfoContainer
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         viewModel.myExamInfoData.observe(viewLifecycleOwner) { myExamInfoList ->
             adapter.submitList(myExamInfoList)
         }

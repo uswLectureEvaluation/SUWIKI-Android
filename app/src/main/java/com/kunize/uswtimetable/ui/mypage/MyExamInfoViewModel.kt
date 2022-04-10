@@ -5,19 +5,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.dataclass.MyExamInfo
+import com.kunize.uswtimetable.dataclass.MyExamInfoDto
 import com.kunize.uswtimetable.ui.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.launch
 
 class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel() {
-    private val _myExamInfoData = MutableLiveData<List<MyExamInfo>>()
-    val myExamInfoData: LiveData<List<MyExamInfo>> get() = _myExamInfoData
+    private val _myExamInfoData = MutableLiveData<List<MyExamInfoDto>>()
+    val myExamInfoData: LiveData<List<MyExamInfoDto>> get() = _myExamInfoData
+    val loading = MutableLiveData<Boolean>()
     private val page = MutableLiveData<Int>()
 
     init {
         page.value = 1
+        loading.value = true
         scrollBottomEvent()
     }
 /*
@@ -32,8 +34,8 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
         viewModelScope.launch {
             val response = repository.getExamInfos(page.value ?: 1)
             if (response.isSuccessful && response.body() != null) {
-                val newData = response.body()!!.toExamInfoList()
-                if (newData.isEmpty()) return@launch
+                val newData = response.body()?.data ?: return@launch
+                if (newData.isNullOrEmpty()) return@launch
 
                 val currentData = _myExamInfoData.value?.toMutableList() ?: mutableListOf()
                 currentData.addAll(newData)
@@ -41,6 +43,7 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
                 Log.d(Constants.TAG, "MyEvaluationViewModel / new data: $newData ")
                 nextPage()
             }
+            loading.postValue(false)
         }
     }
 
