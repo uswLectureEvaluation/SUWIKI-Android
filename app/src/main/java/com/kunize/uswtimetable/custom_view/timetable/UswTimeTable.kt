@@ -155,9 +155,6 @@ class UswTimeTable @JvmOverloads constructor(
 
         val topMargin = 55.dp
 
-        binding.emptyTimeTable.visibility = GONE
-        binding.customTimeTable.visibility = VISIBLE
-
         CoroutineScope(IO).launch {
             withContext(Main) {
                 binding.customTimeTable.removeViews(23, binding.customTimeTable.size - 23)
@@ -187,6 +184,10 @@ class UswTimeTable @JvmOverloads constructor(
                     set.constrainDefaultWidth(timeRect.id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
                     set.applyTo(binding.customTimeTable)
                 }
+            }
+            withContext(Main) {
+                binding.emptyTimeTable.visibility = GONE
+                binding.customTimeTable.visibility = VISIBLE
             }
         }
 
