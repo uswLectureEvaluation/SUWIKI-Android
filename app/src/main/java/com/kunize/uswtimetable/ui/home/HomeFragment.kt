@@ -103,11 +103,8 @@ class HomeFragment : Fragment() {
 
     private suspend fun existTimetable() {
         val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
-        timeTableSel = timeTableList[0]
-        for (timetable in timeTableList) {
-            if (timetable.createTime == createTime)
-                timeTableSel = timetable
-        }
+        timeTableSel = timeTableList.find { it.createTime == createTime } ?: timeTableList[0]
+
         binding.uswTimeTable.isEmpty = false
         tempTimeData = jsonToArray(timeTableSel!!.timeTableJsonData)
         binding.uswTimeTable.timeTableData = tempTimeData
