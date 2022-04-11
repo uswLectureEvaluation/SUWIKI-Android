@@ -3,30 +3,28 @@ package com.kunize.uswtimetable.ui.signup
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class SignUpFragment1 : Fragment() {
     private var _binding: FragmentSignUp1Binding? = null
     val binding: FragmentSignUp1Binding get() = _binding!!
 
-    private lateinit var activity: SignUpActivity
-    private val viewModel: SignUpPage1ViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val activity by lazy { requireActivity() as SignUpActivity }
+    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
     private lateinit var nextButton: MaterialButton
 
     override fun onCreateView(
@@ -35,19 +33,10 @@ class SignUpFragment1 : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false)
 
-        activity = requireActivity() as SignUpActivity
-
         nextButton = activity.button2
 
         binding.lifecycleOwner = viewLifecycleOwner
-
-        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            if (message.isNullOrBlank()) return@observe
-            activity.makeToast(message)
-        }
-        viewModel.nextButtonEnable.observe(viewLifecycleOwner) { enable ->
-            nextButton.isEnabled = enable
-        }
+        binding.viewmodel = viewModel
 
         return binding.root
     }
@@ -55,7 +44,6 @@ class SignUpFragment1 : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.onResume()
         viewModel.signupFormState.observe(viewLifecycleOwner) {
             val state = it ?: return@observe
 
@@ -85,48 +73,37 @@ class SignUpFragment1 : Fragment() {
             val state = viewModel.signupFormState.value ?: return@setOnClickListener
 
             viewModel.loading.value = true
-            viewModel.saveUserIdAndPw(
-                binding.etId.text.toString(),
-                binding.etPw.text.toString()
-            )
-            activity.saveIdPw(
-                binding.etId.text.toString(),
-                binding.etPw.text.toString()
-            )
-            CoroutineScope(Dispatchers.Main).launch {
-                if (state.isDataValid) {
-                    viewModel.checkId()
-                    delay(500)
-                    if (viewModel.isIdUnique.value == true) {
-                        activity.changePage(1)
-                    } else {
-                        if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                            activity.makeToast(viewModel.errorMessage.value!!)
-                        }
-                    }
+
+            if (state.isDataValid) {
+                viewModel.checkId()
+                if (viewModel.isIdUnique.value == true) {
+                    viewModel.movePage(1)
                 } else {
-                    val msg: String = when {
-                        state.hasBlank != null -> {
-                            resources.getString(state.hasBlank)
-                        }
-                        state.idError != null -> {
-                            resources.getString(state.idError)
-                        }
-                        state.pwError != null -> {
-                            resources.getString(state.pwError)
-                        }
-                        state.pwAgainError != null -> {
-                            resources.getString(state.pwAgainError)
-                        }
-                        state.isTermChecked != null -> {
-                            resources.getString(state.isTermChecked)
-                        }
-                        else -> {
-                            "알 수 없는 에러 발생"
-                        }
-                    }
-                    activity.makeToast(msg)
+                    Log.d(TAG, "SignUpFragment1 - error!")
+                    activity.makeToast(viewModel.errorMessage.value ?: return@setOnClickListener)
                 }
+            } else {
+                val msg: String = when {
+                    state.hasBlank != null -> {
+                        resources.getString(state.hasBlank)
+                    }
+                    state.idError != null -> {
+                        resources.getString(state.idError)
+                    }
+                    state.pwError != null -> {
+                        resources.getString(state.pwError)
+                    }
+                    state.pwAgainError != null -> {
+                        resources.getString(state.pwAgainError)
+                    }
+                    state.isTermChecked != null -> {
+                        resources.getString(state.isTermChecked)
+                    }
+                    else -> {
+                        "알 수 없는 에러 발생"
+                    }
+                }
+                activity.makeToast(msg)
                 viewModel.loading.postValue(false)
             }
         }

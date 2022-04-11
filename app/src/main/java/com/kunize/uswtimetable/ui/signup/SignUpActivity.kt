@@ -32,10 +32,19 @@ class SignUpActivity : AppCompatActivity() {
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
+        binding.viewmodel = viewModel
 
         setContentView(binding.root)
 
         initViews()
+
+        viewModel.errorMessage.observe(this) { message ->
+            if (message.isNullOrBlank()) return@observe
+            makeToast(message)
+        }
+        /*viewModel.nextButtonEnable.observe(this) { enable ->
+            button2.isEnabled = enable
+        }*/
 
         viewModel.currentPage.observe(this) { page ->
             toast?.cancel()
@@ -63,10 +72,6 @@ class SignUpActivity : AppCompatActivity() {
     fun onNextButtonClicked() = viewModel.moveToNextPage()
     fun onPreviousButtonClicked() = viewModel.moveToPreviousPage()
     fun changePage(page: Int) = viewModel.movePage(page)
-    fun saveIdPw(id: String, pw: String) = viewModel.saveIdPw(id, pw)
-    fun saveEmail(email: String) = viewModel.saveEmail(email)
-    fun getId() = viewModel.id
-    fun getPw() = viewModel.pw
 
     private fun initViews() {
         button1 = binding.btnSignup1

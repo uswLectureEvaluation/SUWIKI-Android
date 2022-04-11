@@ -35,7 +35,7 @@ class SignUpFragment3 : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        binding.tvInfo.text = getString(R.string.signup_welcome_info, viewModel.email)
+        binding.tvInfo.text = getString(R.string.signup_welcome_info, viewModel.email.value)
 
         binding.btnCheckMail.setOnClickListener {
             onClickEmailCheckButton()

@@ -8,8 +8,8 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="viewModel"
-            type="com.kunize.uswtimetable.ui.signup.SignUpPage1ViewModel" />
+            name="viewmodel"
+            type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
         <variable
             name="constants"
             type="com.kunize.uswtimetable.util.Constants" />
@@ -44,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
+                    android:text="@={viewmodel.id}"
                     android:inputType="text"
                     android:maxLength="@{constants.ID_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -65,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
+                    android:text="@={viewmodel.pw}"
                     android:maxLength="@{constants.PW_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
+                    android:text="@={viewmodel.pwAgain}"
                     android:maxLength="@{constants.PW_COUNT_LIMIT}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:autoLink="none"
+                android:checked="@={viewmodel.termChecked}"
                 android:text="@string/terms" />
         </LinearLayout>
 
@@ -102,7 +106,7 @@
             android:id="@+id/signup1_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.loading?View.VISIBLE:View.GONE}"
+            android:visibility="@{viewmodel.loading?View.VISIBLE:View.GONE}"
             android:layout_gravity="center" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
