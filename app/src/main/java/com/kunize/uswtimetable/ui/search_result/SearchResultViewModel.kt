@@ -36,6 +36,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
 
 
     init {
+        _radioButtons[0].value = true
         _searchValue.value = ""
         _selectedType.value = MODIFIED
     }
