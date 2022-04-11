@@ -37,32 +37,22 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SearchResultFragment : Fragment(), View.OnClickListener {
+class SearchResultFragment : Fragment() {
 
     lateinit var binding: FragmentSearchResultBinding
     private lateinit var adapter: EvaluationListAdapter
     private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory(requireContext()) }
-    private lateinit var sortBtn: MutableList<RadioButton>
-    val args: SearchResultFragmentArgs by navArgs()
-
-    var msg = ""
-    var prevSel = -1
+    private lateinit var sortBtn: List<RadioButton>
+    private val args: SearchResultFragmentArgs by navArgs()
+    private val sortOptionMap = mapOf("날짜" to 0, "꿀강" to 1, "만족도" to 2, "배움" to 3, "종합" to 4)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //백스택을 통해 프래그먼트가 다시 실행되면 onCreateView()가 호출됨
-        //만약 아래 코드가 onCreateView()에 있는 경우 EvaluationFragment에서 가져온 args.sortType으로 라디오 버튼이 선택됨
-        /*
-        ex)
-        1. EvaluationFragment에서 "만족도" 스피너가 선택된 상태로 SearchResult 프래그먼트 실행
-        2. SearchResult에서 "만족도" 라디오 버튼이 선택됨
-        3. 사용자가 "날짜" 라디오 버튼 선택 후 LectureInfoFragment로 이동
-        4. LectureInfoFragment에서 백스택을 통해 SearchResult로 돌아온 경우
-        5. 아래 코드가 onCreateView()에 있다면 다시 "만족도"가 선택됨
-         */
 
-        msg = args.searchLectureName
-        prevSel = args.sortType
+        if(args.searchLectureName.isBlank())
+            searchResultViewModel.changeType(args.sortType)
+        else
+            searchResultViewModel.search(args.searchLectureName)
     }
 
     override fun onCreateView(
@@ -89,16 +79,15 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
         }
 
         sortBtn.forEach { btn ->
-            btn.setOnClickListener(this)
+            btn.setOnClickListener {
+                searchResultViewModel.changeType(sortOptionMap[btn.text.toString()]!!)
+            }
         }
 
 
         binding.searchLecture.apply {
-            if(prevSel >= 0) {
-                setText(msg)
-                setSelection(msg.length)
-                searchResultViewModel.search(msg)
-            }
+            setText(args.searchLectureName)
+            setSelection(args.searchLectureName.length)
         }
 
 
@@ -133,35 +122,5 @@ class SearchResultFragment : Fragment(), View.OnClickListener {
             return true
         }
         return false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        sortBtn.forEach { btn ->
-            if(prevSel == -1 && btn.isChecked) {
-                btn.text = btn.text.toString() + " ↑"
-            }
-        }
-
-        if(prevSel >= 0) {
-            sortBtn[prevSel].performClick()
-            prevSel = -1
-        }
-    }
-
-    override fun onClick(v: View?) {
-        val radioBtn = v as RadioButton
-        sortBtn.forEach { btn ->
-            btn.text = btn.text.toString().split(" ")[0]
-        }
-        when(radioBtn.text.toString()) {
-            "날짜" -> searchResultViewModel.changeType(MODIFIED)
-            "꿀강" -> searchResultViewModel.changeType(HONEY)
-            "만족도" -> searchResultViewModel.changeType(SATISFACTION)
-            "배움" -> searchResultViewModel.changeType(LEARNING)
-            "종합" -> searchResultViewModel.changeType(BEST)
-            else -> searchResultViewModel.changeType(MODIFIED)
-        }
-        radioBtn.text = radioBtn.text.toString() + " ↑"
     }
 }
