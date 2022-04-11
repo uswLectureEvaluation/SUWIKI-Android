@@ -19,10 +19,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.size
 import com.kunize.uswtimetable.ClassInfoActivity
 import com.kunize.uswtimetable.CreateTimeTableActivity
-import com.kunize.uswtimetable.MainActivity.Companion.dp
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.UswTimetableBinding
 import com.kunize.uswtimetable.dataclass.TimeData
+import com.kunize.uswtimetable.util.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

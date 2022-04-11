@@ -16,7 +16,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kunize.uswtimetable.*
 import com.kunize.uswtimetable.MainActivity.Companion.bitmapToString
-import com.kunize.uswtimetable.MainActivity.Companion.jsonToArray
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.getCurrentTimetable
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.jsonToArray
 import com.kunize.uswtimetable.custom_view.timetable.UswTimeTable.Companion.CLASSNAME_LOCATION
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.FragmentHomeBinding
@@ -92,8 +93,10 @@ class HomeFragment : Fragment() {
         CoroutineScope(IO).launch {
             timeTableList = db.timetableListDao().getAll()
             tempTimeData.clear()
+
             if (timeTableList.isEmpty()) notExistTimetable()
             else existTimetable()
+
             withContext(Main) {
                 delay(200L)
                 try { widgetUpdate() } catch (e: Exception) { }
@@ -102,8 +105,7 @@ class HomeFragment : Fragment() {
     }
 
     private suspend fun existTimetable() {
-        val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
-        timeTableSel = timeTableList.find { it.createTime == createTime } ?: timeTableList[0]
+        timeTableSel = getCurrentTimetable(db)
 
         binding.uswTimeTable.isEmpty = false
         tempTimeData = jsonToArray(timeTableSel!!.timeTableJsonData)

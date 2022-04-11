@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.util
 
+import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -66,3 +67,9 @@ fun SeekBar.seekbarChangeListener(doChangeProgress: (progress: Float) -> Unit) {
 // 문자열 -> json 형태인지 json 배열 형태인지
 fun String?.isJsonObject(): Boolean = this?.startsWith("{") == true && this.endsWith("}")
 fun String?.isJsonArray(): Boolean = this?.startsWith("[") == true && this.endsWith("]")
+
+val Int.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
+val Float.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()

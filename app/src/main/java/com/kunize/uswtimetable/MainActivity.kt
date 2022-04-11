@@ -67,18 +67,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        val Int.dp: Int
-            get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-
-        val Float.dp: Int
-            get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-
-        fun jsonToArray(jsonStr: String): MutableList<TimeData> {
-            val gson = Gson()
-            val convertType = object : TypeToken<MutableList<TimeData>>(){}.type
-            return gson.fromJson(jsonStr.ifBlank { "[]" }, convertType)
-        }
-
         fun bitmapToString(bitmap: Bitmap): String {
             val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)

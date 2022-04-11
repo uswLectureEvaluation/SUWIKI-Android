@@ -10,7 +10,8 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import com.kunize.uswtimetable.MainActivity.Companion.jsonToArray
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.arrayToJson
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.jsonToArray
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.dataclass.TimeData
@@ -215,21 +216,9 @@ class ClassInfoActivity : AppCompatActivity() {
                     for (newTime in addTimeData)
                         tempTimeData.add(newTime)
                     //7. Array를 Json형식으로 변환
-                    var newJsonArray = JSONArray()
-                    for (addData in tempTimeData) {
-                        val addJsonObj = JSONObject()
-                        addJsonObj.put("name", addData.name)
-                        addJsonObj.put("professor", addData.professor)
-                        addJsonObj.put("location", addData.location)
-                        addJsonObj.put("day", addData.day)
-                        addJsonObj.put("startTime", addData.startTime)
-                        addJsonObj.put("endTime", addData.endTime)
-                        addJsonObj.put("color", addData.color)
-                        Log.d("jsonAdd", "추가 될 데이터 ${addJsonObj.toString()}")
-                        newJsonArray.put(addJsonObj)
-                    }
+                    val newJsonArray = arrayToJson(tempTimeData)
                     //8. DB 업데이트
-                    timetableSel.timeTableJsonData = newJsonArray.toString()
+                    timetableSel.timeTableJsonData = newJsonArray
                     db.timetableListDao().update(timetableSel)
                     //9. 시간표 화면으로 이동
                     val intent = Intent(this@ClassInfoActivity, MainActivity::class.java)

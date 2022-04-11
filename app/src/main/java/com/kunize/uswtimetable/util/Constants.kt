@@ -1,5 +1,7 @@
 package com.kunize.uswtimetable.util
 
+import android.content.res.Resources
+
 object Constants {
     const val TAG = "로그"
     const val ID_COUNT_LOWER_LIMIT = 6
