@@ -5,10 +5,10 @@ import com.kunize.uswtimetable.util.LectureItemViewType.SHORT
 
 
 data class LectureMainDto(
-    val data: List<LectureMain>
+    val data: MutableList<LectureMain>
 ) {
-    fun convertToEvaluationData(): ArrayList<EvaluationData?> {
-        val temp = arrayListOf<EvaluationData?>()
+    fun convertToEvaluationData(): MutableList<EvaluationData?> {
+        val temp = mutableListOf<EvaluationData?>()
         data.forEach {
             temp.add(EvaluationData(
                 recyclerViewType = SHORT,
