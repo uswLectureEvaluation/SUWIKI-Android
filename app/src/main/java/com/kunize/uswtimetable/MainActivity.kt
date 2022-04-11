@@ -8,6 +8,8 @@ import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kakao.adfit.ads.AdListener
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
 import com.kunize.uswtimetable.dataclass.TimeData
@@ -71,34 +73,10 @@ class MainActivity : AppCompatActivity() {
         val Float.dp: Int
             get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
-        fun jsonToArray(jsonStr: String?): MutableList<TimeData> {
-            val returnTimeData = mutableListOf<TimeData>()
-            if (jsonStr != "") {
-                val jsonArray = JSONArray(jsonStr)
-                for (idx in 0 until jsonArray.length()) {
-                    val jsonObj = jsonArray.getJSONObject(idx)
-                    val className = jsonObj.getString("name")
-                    val professor = jsonObj.getString("professor")
-                    val location = jsonObj.getString("location")
-                    val day = jsonObj.getString("day")
-                    val startTime = jsonObj.getString("startTime")
-                    val endTime = jsonObj.getString("endTime")
-                    val color = jsonObj.getInt("color")
-
-                    returnTimeData.add(
-                        TimeData(
-                            className,
-                            professor,
-                            location,
-                            day,
-                            startTime,
-                            endTime,
-                            color
-                        )
-                    )
-                }
-            }
-            return returnTimeData
+        fun jsonToArray(jsonStr: String): MutableList<TimeData> {
+            val gson = Gson()
+            val convertType = object : TypeToken<MutableList<TimeData>>(){}.type
+            return gson.fromJson(jsonStr.ifBlank { "[]" }, convertType)
         }
 
         fun bitmapToString(bitmap: Bitmap): String {
