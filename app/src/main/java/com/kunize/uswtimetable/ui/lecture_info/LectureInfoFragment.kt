@@ -74,12 +74,9 @@ class LectureInfoFragment : Fragment() {
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
             else {
-                Toast.makeText(
-                    requireContext(),
-                    lectureInfoViewModel.toastViewModel.toastMessage,
-                    Toast.LENGTH_LONG
-                ).show()
-                findNavController().popBackStack()
+                Toast.makeText(requireContext(), lectureInfoViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
+                if(lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!")
+                    findNavController().popBackStack()
             }
         })
 
