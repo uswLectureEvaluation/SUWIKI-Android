@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
@@ -14,14 +14,14 @@ import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.afterTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class SignUpFragment2 : Fragment() {
     private var _binding: FragmentSignUp2Binding? = null
     val binding: FragmentSignUp2Binding get() = _binding!!
 
-    private val viewModel: SignUpPage2ViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
     private lateinit var activity: SignUpActivity
     private lateinit var signUpButton: MaterialButton
     private lateinit var backButton: MaterialButton
@@ -38,11 +38,31 @@ class SignUpFragment2 : Fragment() {
         signUpButton = activity.button2
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        binding.viewmodel = viewModel
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            if (message.isNullOrBlank()) return@observe
-            activity.makeToast(message)
+        signUpButton.setOnClickListener {
+            viewModel.loading.value = true
+            CoroutineScope(Dispatchers.Main).launch {
+                async { viewModel.checkEmail() }.await()
+                async { viewModel.signUp() }.await()
+                viewModel.loading.postValue(false)
+            }
+        }
+
+        viewModel.signUpResult.observe(viewLifecycleOwner) { result ->
+            if (result.success) {
+                if (viewModel.errorMessage.value.isNullOrBlank().not()) {
+                    activity.onNextButtonClicked()
+                } else {
+                    activity.makeToast(viewModel.errorMessage.value!!)
+                }
+            } else {
+                if (viewModel.errorMessage.value.isNullOrBlank().not()) {
+                    activity.onNextButtonClicked()
+                } else {
+                    activity.makeToast(viewModel.errorMessage.value!!)
+                }
+            }
         }
 
         return binding.root
@@ -52,47 +72,7 @@ class SignUpFragment2 : Fragment() {
         super.onResume()
 
         initViews()
-        viewModel.setIdPw(activity.getId()!!, activity.getPw()!!)
 
-        signUpButton.setOnClickListener {
-            viewModel.setEmail(binding.etMail.text.toString())
-            activity.saveEmail(binding.etMail.text.toString())
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.loading.value = true
-                viewModel.checkEmail()
-                delay(500)
-
-                viewModel.isEmailUnique.observe(viewLifecycleOwner) { emailValid ->
-                    if (emailValid) {
-                        launch {
-                        viewModel.signUp()
-                            delay(2000)
-
-                            viewModel.signUpResult.observe(viewLifecycleOwner) { result ->
-                                if (result.success) {
-                                    if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                                        activity.onNextButtonClicked()
-                                    } else {
-                                        activity.makeToast(viewModel.errorMessage.value!!)
-                                    }
-                                } else {
-                                    if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                                        activity.onNextButtonClicked()
-                                    } else {
-                                        activity.makeToast(viewModel.errorMessage.value!!)
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                            activity.makeToast(viewModel.errorMessage.value!!)
-                        }
-                    }
-                }
-                viewModel.loading.postValue(false)
-            }
-        }
         backButton.setOnClickListener { activity.onPreviousButtonClicked() }
     }
 

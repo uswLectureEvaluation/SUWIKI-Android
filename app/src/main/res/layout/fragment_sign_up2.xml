@@ -7,9 +7,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="viewModel"
-            type="com.kunize.uswtimetable.ui.signup.SignUpPage2ViewModel" />
+            name="viewmodel"
+            type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
 
         <variable
             name="constants"
@@ -46,14 +48,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionSend"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="@={viewmodel.email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ProgressBar
                 android:id="@+id/signup_progress"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

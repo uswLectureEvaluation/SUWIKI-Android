@@ -35,8 +35,6 @@ import com.kunize.uswtimetable.ui.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.ui.repository.write.WriteRemoteDataSource
 import com.kunize.uswtimetable.ui.repository.write.WriteRepository
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
-import com.kunize.uswtimetable.ui.signup.SignUpPage1ViewModel
-import com.kunize.uswtimetable.ui.signup.SignUpPage2ViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
 import com.kunize.uswtimetable.ui.user_info.FindPwViewModel
@@ -51,17 +49,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
         return when {
             // SignUp
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
-                SignUpViewModel() as T
-            }
-            modelClass.isAssignableFrom(SignUpPage1ViewModel::class.java) -> {
                 val apiService = IRetrofit.getInstanceWithNoToken()
                 val repository = SignUpRepository(SignUpRemoteDataSource(apiService))
-                SignUpPage1ViewModel(repository) as T
-            }
-            modelClass.isAssignableFrom(SignUpPage2ViewModel::class.java) -> {
-                val apiService = IRetrofit.getInstanceWithNoToken()
-                val repository = SignUpRepository(SignUpRemoteDataSource(apiService))
-                SignUpPage2ViewModel(repository) as T
+                SignUpViewModel(repository) as T
             }
             // User Info
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {

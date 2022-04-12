@@ -7,6 +7,10 @@
     <data>
 
         <variable
+            name="viewmodel"
+            type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
+
+        <variable
             name="constants"
             type="com.kunize.uswtimetable.util.Constants" />
     </data>
@@ -51,11 +55,11 @@
             <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
                 android:id="@+id/signup_indicator"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:dotsColor="@color/custom_blue"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/btn_signup_1"
-                android:layout_height="wrap_content" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_signup_1"
@@ -75,8 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:enabled="@{viewmodel.nextButtonEnable ? true : false}"
                 android:text="@string/btn_next"
-                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

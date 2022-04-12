@@ -21,7 +21,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
 
     private fun getNotices() {
         loading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             val response = noticeRepository.getNotices()
             Log.d(TAG, "NoticeViewModel - getNotices() called -> ${response.body()}")
 

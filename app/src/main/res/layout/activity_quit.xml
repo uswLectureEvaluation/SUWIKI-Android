@@ -89,17 +89,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/require_password"
-                app:endIconMode="clear_text"
+                app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_signOut_id"
-                app:suffixText="@string/school_domain">
+                app:layout_constraintTop_toBottomOf="@id/layout_signOut_id">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_signOut_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textPassword"
                     android:text="@={viewmodel.password}" />
             </com.google.android.material.textfield.TextInputLayout>
 
