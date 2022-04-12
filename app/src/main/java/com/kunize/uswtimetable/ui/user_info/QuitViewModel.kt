@@ -22,6 +22,7 @@ class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
             val response = repository.quit(id, pw)
             if (response.isSuccessful && response.body()?.success == true) {
                 successMessage.postValue("성공적으로 탈퇴처리 되었습니다. ㅠㅠ")
+                User.logout()
             } else {
                 errorMessage.postValue("${response.code()}: ${response.message()}")
             }
