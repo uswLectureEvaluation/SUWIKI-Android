@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.util
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.SeekBar
 import androidx.core.widget.NestedScrollView
@@ -37,11 +38,8 @@ fun RecyclerView.infiniteScrolls(doScrollBottom: () -> Unit) {
             val lastVisibleItemPosition =
                 (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
             val itemTotalCount = recyclerView.adapter!!.itemCount - 1 // 어댑터에 등록된 아이템의 총 개수 -1
-            // 스크롤이 끝에 도달했는지 확인
             if (lastVisibleItemPosition == itemTotalCount) {
-                //viewModel.deleteLoading()를 호출 해 로딩 바 제거
-                //val newData = 서버에서 새 데이터를 받아오는 로직
-                //viewModel.addData(받아온 데이터 추가)
+                Log.d("infiniteScrolls", "하단 감지")
                 doScrollBottom()
             }
         }
