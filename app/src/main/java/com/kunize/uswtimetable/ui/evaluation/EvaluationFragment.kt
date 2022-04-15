@@ -38,8 +38,13 @@ class EvaluationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         adapter = EvaluationListAdapter { id ->
             val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
@@ -107,7 +112,6 @@ class EvaluationFragment : Fragment() {
             Toast.makeText(requireContext(), evaluationViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
         })
 
-        return binding.root
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {
