@@ -7,15 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.afterTextChanged
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class SignUpFragment2 : Fragment() {
     private var _binding: FragmentSignUp2Binding? = null
@@ -23,8 +18,6 @@ class SignUpFragment2 : Fragment() {
 
     private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
     private lateinit var activity: SignUpActivity
-    private lateinit var signUpButton: MaterialButton
-    private lateinit var backButton: MaterialButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,34 +27,18 @@ class SignUpFragment2 : Fragment() {
 
         activity = requireActivity() as SignUpActivity
 
-        backButton = activity.button1
-        signUpButton = activity.button2
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
 
-        signUpButton.setOnClickListener {
-            viewModel.loading.value = true
-            CoroutineScope(Dispatchers.Main).launch {
-                async { viewModel.checkEmail() }.await()
-                async { viewModel.signUp() }.await()
-                viewModel.loading.postValue(false)
+        viewModel.isEmailUnique.observe(viewLifecycleOwner) { unique ->
+            if (!unique && viewModel.errorMessage.value.isNullOrBlank().not()) {
+                activity.makeToast(viewModel.errorMessage.value!!)
             }
         }
 
-        viewModel.signUpResult.observe(viewLifecycleOwner) { result ->
-            if (result.success) {
-                if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                    activity.onNextButtonClicked()
-                } else {
-                    activity.makeToast(viewModel.errorMessage.value!!)
-                }
-            } else {
-                if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                    activity.onNextButtonClicked()
-                } else {
-                    activity.makeToast(viewModel.errorMessage.value!!)
-                }
+        viewModel.signUpResult.observe(viewLifecycleOwner) { success ->
+            if (!success && viewModel.errorMessage.value.isNullOrBlank().not()) {
+                activity.makeToast(viewModel.errorMessage.value!!)
             }
         }
 
@@ -70,20 +47,14 @@ class SignUpFragment2 : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        initViews()
-
-        backButton.setOnClickListener { activity.onPreviousButtonClicked() }
-    }
-
-    private fun initViews() {
-
         binding.etMail.afterTextChanged {
-            signUpButton.isEnabled = isFullInput()
+            dataChanged()
         }
     }
 
-    private fun isFullInput(): Boolean = binding.etMail.text.isNullOrBlank().not()
+    private fun dataChanged() {
+        viewModel.setNextButtonEnable()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

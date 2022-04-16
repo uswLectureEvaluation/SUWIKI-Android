@@ -1,155 +1,60 @@
 package com.kunize.uswtimetable.ui.signup
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.SuccessCheckDto
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
+import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
+    // User Input
     val id = MutableLiveData<String>()
     val pw = MutableLiveData<String>()
     val pwAgain = MutableLiveData<String>()
     val email = MutableLiveData<String>()
     val termChecked = MutableLiveData<Boolean>()
 
+    // Button
+    val previousButtonVisibility = MutableLiveData<Boolean>()
     val nextButtonEnable = MutableLiveData(false)
-    val signUpResult = MutableLiveData<SuccessCheckDto>()
+    val previousButtonText = MutableLiveData<String>()
+    val nextButtonText = MutableLiveData<String>()
 
+    // State
+    val loading = MutableLiveData<Boolean>()
     private var _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> get() = _currentPage
-
-    // ADDED FROM VIEWMODEL 1
     val errorMessage = MutableLiveData("")
-    val loading = MutableLiveData<Boolean>()
-
-    val isIdUnique = MutableLiveData(false)
-    val isEmailUnique = MutableLiveData(false)
-
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
 
+    // Response
+    val isIdUnique = MutableLiveData(false)
+    val isEmailUnique = MutableLiveData(false)
+    val signUpResult = MutableLiveData<Boolean>()
+
+    // Pattern
     private val idPattern: Pattern = Pattern.compile(Constants.ID_REGEX)
     private val pwPattern: Pattern = Pattern.compile(Constants.PW_REGEX)
-    // END
-
 
     init {
         _currentPage.value = 0
         loading.value = false
-        setButtonAvailable()
+        setButtonAttr()
+        setNextButtonEnable()
     }
 
-    fun moveToNextPage() {
-        _currentPage.value = when (currentPage.value) {
-            0 -> {
-                _currentPage.value?.plus(1)
-            }
-            1 -> {
-                _currentPage.value?.plus(1)
-            }
-            else -> _currentPage.value
-        }
-        setButtonAvailable()
-    }
-
-    fun moveToPreviousPage() {
+    fun onNextButtonClick() {
         when (currentPage.value) {
-            1 -> {
-                isIdUnique.value = false
-                _currentPage.value?.minus(1)
-            }
-            2 -> {
-                isEmailUnique.value = false
-                _currentPage.value?.minus(1)
-            }
-        }
-        setButtonAvailable()
-    }
-
-    private fun setButtonAvailable() {
-        nextButtonEnable.value = when (currentPage.value) {
-            0 -> { // 아이디, 비밀번호, 비밀번호 다시, 약관 동의
-                (loading.value == false) && (signupFormState.value?.isDataValid == true)
-            }
-            1 -> { // 이메일
-                (loading.value == false) && (isIdUnique.value == true) && (email.value?.isNotBlank() == true)
-            }
-            else -> false
-        }
-    }
-
-    /*fun movePage(page: Int) {
-        if (page in 0..2) _currentPage.value = page
-        setButtonAvailable()
-    }*/
-
-    fun checkId() {
-        val userId = id.value ?: return
-        loading.value = true
-        viewModelScope.launch {
-            val response = repository.checkId(userId)
-            if (response.isSuccessful) {
-                isIdUnique.postValue(response.body()?.overlap == false)
-                if (response.body()?.overlap == true) {
-                    onError("이미 가입된 아이디입니다.")
-                }
-            } else {
-                onError("${response.code()} Error: ${response.errorBody()}")
-            }
-            loading.postValue(false)
-        }
-    }
-
-    fun checkEmail() {
-        val userEmail = email.value?.plus(SCHOOL_DOMAIN_AT) ?: return
-        loading.value = true
-        viewModelScope.launch {
-            val response = repository.checkEmail(userEmail)
-            if (response.isSuccessful) {
-                isEmailUnique.postValue(response.body()?.overlap == false)
-                if (response.body()?.overlap == true) {
-                    onError("이미 가입된 이메일입니다.")
-                }
-            } else {
-                onError("${response.code()} Error: ${response.errorBody()}")
-            }
-            loading.postValue(false)
-        }
-    }
-    
-    fun signUp() {
-        val userId = id.value ?: return
-        val userPw = pw.value ?: return
-        val userEmail = email.value?.plus(SCHOOL_DOMAIN_AT) ?: return
-        if (isIdUnique.value != true) {
-            onError("이미 가입된 아이디입니다.")
-            return
-        }
-        if (isEmailUnique.value != true) {
-            onError("이미 가입된 이메일입니다.")
-            return
-        }
-        viewModelScope.launch {
-            val response = repository.signUp(userId, userPw, userEmail)
-            if (response.isSuccessful) {
-                if (response.body()?.success == true) {
-                    // TODO 회원 가입 성공
-                    signUpResult.postValue(response.body())
-                } else {
-                    signUpResult.postValue(response.body())
-                    onError("회원 가입 실패 : ${response.message()}")
-                }
-            } else {
-                signUpResult.postValue(response.body())
-                onError("${response.code()} Error: ${response.errorBody()}")
-            }
+            0 -> checkId()
+            1 -> signUp()
         }
     }
 
@@ -183,7 +88,150 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
             }
             else -> _signupForm.value = SignUpFormState(isDataValid = true)
         }
-        setButtonAvailable()
+        setNextButtonEnable()
+    }
+
+    fun moveToPreviousPage() {
+        _currentPage.value = when (currentPage.value) {
+            1 -> {
+                isIdUnique.value = false
+                _currentPage.value?.minus(1)
+            }
+            2 -> {
+                isEmailUnique.value = false
+                _currentPage.value?.minus(1)
+            }
+            else -> _currentPage.value
+        }
+        setButtonAttr()
+        setNextButtonEnable()
+    }
+
+    fun setNextButtonEnable() {
+        nextButtonEnable.value = when (currentPage.value) {
+            0 -> (loading.value == false) && (signupFormState.value?.isDataValid == true) // 아이디, 비밀번호, 비밀번호 다시, 약관 동의
+            1 -> (loading.value == false) && (isIdUnique.value == true) && (email.value?.isNotBlank() == true) // 이메일
+            2 -> true
+            else -> false
+        }
+        Log.d(TAG, "SignUpViewModel - setNextButtonEnable() called / ${nextButtonEnable.value}")
+    }
+
+    private fun moveToNextPage() {
+        _currentPage.value = when (currentPage.value) {
+            0 -> {
+                _currentPage.value?.plus(1)
+            }
+            1 -> {
+                _currentPage.value?.plus(1)
+            }
+            else -> _currentPage.value
+        }
+        setButtonAttr()
+        setNextButtonEnable()
+    }
+
+    private fun setButtonAttr() {
+        // 페이지 변경 시에만 호출
+        when (currentPage.value) {
+            0 -> {
+                previousButtonText.value = "이전"
+                nextButtonText.value = "다음"
+                previousButtonVisibility.value = false
+            }
+            1 -> {
+                previousButtonText.value = "이전"
+                nextButtonText.value = "회원 가입"
+                previousButtonVisibility.value = true
+            }
+            2 -> {
+                previousButtonText.value = "닫기"
+                nextButtonText.value = "로그인"
+                previousButtonVisibility.value = true
+            }
+        }
+    }
+
+
+
+    private fun checkId() {
+        val userId = id.value ?: return
+        loading.value = true
+        viewModelScope.launch {
+            val response = repository.checkId(userId)
+            if (response.isSuccessful) {
+                isIdUnique.postValue(response.body()?.overlap == false)
+                if (response.body()?.overlap == true) {
+                    onError("이미 가입된 아이디입니다.")
+                } else {
+                    moveToNextPage()
+                }
+            } else {
+                onError("${response.code()} Error: ${response.errorBody()}")
+            }
+            loading.postValue(false)
+        }
+    }
+
+    private fun checkEmail() {
+        val userEmail = email.value?.plus(SCHOOL_DOMAIN_AT) ?: return
+        loading.value = true
+        viewModelScope.launch {
+            val response = repository.checkEmail(userEmail)
+            if (response.isSuccessful) {
+                isEmailUnique.postValue(response.body()?.overlap == false)
+                if (response.body()?.overlap == true) {
+                    onError("이미 가입된 이메일입니다.")
+                }
+            } else {
+                onError("${response.code()} Error: ${response.errorBody()}")
+            }
+            loading.postValue(false)
+        }
+    }
+
+    private fun signUp() {
+        val userId = id.value ?: return
+        val userPw = pw.value ?: return
+        val userEmail = email.value?.plus(SCHOOL_DOMAIN_AT) ?: return
+        if (isIdUnique.value != true) {
+            onError("이미 가입된 아이디입니다.")
+            return
+        }
+        loading.value = true
+        viewModelScope.launch {
+            // 이메일 중복 확인
+            val emailResponse = repository.checkEmail(userEmail)
+            if (emailResponse.isSuccessful) {
+                isEmailUnique.postValue(emailResponse.body()?.overlap == false)
+                if (emailResponse.body()?.overlap == true) {
+                    loading.postValue(false)
+                    onError("이미 가입된 이메일입니다.")
+                    return@launch
+                }
+            } else {
+                onError("이메일 중복 확인 에러: ${emailResponse.errorBody()}")
+                loading.postValue(false)
+                return@launch
+            }
+            // 회원 가입
+            val signUpResponse = repository.signUp(userId, userPw, userEmail)
+            if (signUpResponse.isSuccessful) {
+                signUpResult.postValue(signUpResponse.body()?.success == true)
+                if (signUpResponse.body()?.success == true) {
+                    moveToNextPage()
+                } else {
+                    onError("회원 가입 실패: ${signUpResponse.message()}")
+                    loading.postValue(false)
+                    return@launch
+                }
+            } else {
+                onError("회원 가입 에러: ${signUpResponse.errorBody()}")
+                loading.postValue(false)
+                return@launch
+            }
+            loading.postValue(false)
+        }
     }
 
     private fun isIdValid(id: String): Boolean {
@@ -217,5 +265,4 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     private fun onError(message: String) {
         errorMessage.value = message
     }
-
 }

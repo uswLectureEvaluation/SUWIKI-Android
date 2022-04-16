@@ -13,6 +13,8 @@
         <variable
             name="constants"
             type="com.kunize.uswtimetable.util.Constants" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -67,10 +69,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/btn_previous"
-                android:visibility="invisible"
+                android:text="@{viewmodel.previousButtonText}"
+                android:visibility="@{viewmodel.previousButtonVisibility? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:onClick="@{() -> viewmodel.moveToPreviousPage()}"
+                tools:text="이전"
                 tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
@@ -80,10 +84,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:enabled="@{viewmodel.nextButtonEnable ? true : false}"
-                android:onClick="@{()->viewmodel.checkId()}"
-                android:text="@string/btn_next"
+                android:onClick="@{() -> viewmodel.onNextButtonClick()}"
+                android:text="@{viewmodel.nextButtonText}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="다음" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

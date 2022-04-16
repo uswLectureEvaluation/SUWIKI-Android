@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.button.MaterialButton
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
@@ -23,7 +22,6 @@ class SignUpFragment1 : Fragment() {
 
     private val activity by lazy { requireActivity() as SignUpActivity }
     private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
-    private lateinit var nextButton: MaterialButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,16 +29,8 @@ class SignUpFragment1 : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false)
 
-        nextButton = activity.button2
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         viewModel.signupFormState.observe(viewLifecycleOwner) {
             val state = it ?: return@observe
@@ -54,57 +44,17 @@ class SignUpFragment1 : Fragment() {
             state.pwAgainError?.let { errMsg ->
                 binding.passwordAgainEditText.error = resources.getString(errMsg)
             }
-
-            with(binding) {
-                idEditText.isErrorEnabled = state.idError != null
-                passwordEditText.isErrorEnabled = state.pwError != null
-                passwordAgainEditText.isErrorEnabled = state.pwAgainError != null
-            }
         }
 
         viewModel.isIdUnique.observe(viewLifecycleOwner) { isUnique ->
-            if (isUnique) {
-                viewModel.moveToNextPage()
-            } else {
-                if (viewModel.errorMessage.value.isNullOrBlank().not()) {
-                    activity.makeToast(viewModel.errorMessage.value!!)
-                }
+            if (isUnique == false && viewModel.errorMessage.value.isNullOrBlank().not()) {
+                activity.makeToast(viewModel.errorMessage.value!!)
             }
         }
 
         initViews()
-//        initButton()
-    }
 
-    private fun initButton() {
-        nextButton.setOnClickListener {
-            val state = viewModel.signupFormState.value ?: return@setOnClickListener
-
-            if (state.isDataValid) {
-            } else {
-                val msg: String = when {
-                    state.hasBlank != null -> {
-                        resources.getString(state.hasBlank)
-                    }
-                    state.idError != null -> {
-                        resources.getString(state.idError)
-                    }
-                    state.pwError != null -> {
-                        resources.getString(state.pwError)
-                    }
-                    state.pwAgainError != null -> {
-                        resources.getString(state.pwAgainError)
-                    }
-                    state.isTermChecked != null -> {
-                        resources.getString(state.isTermChecked)
-                    }
-                    else -> {
-                        "알 수 없는 에러 발생"
-                    }
-                }
-                activity.makeToast(msg)
-            }
-        }
+        return binding.root
     }
 
     private fun initViews() {
@@ -122,7 +72,7 @@ class SignUpFragment1 : Fragment() {
                 dataChanged()
                 inputLimitAlert(it.toString(), Constants.PW_COUNT_LIMIT)
             }
-            terms.setOnCheckedChangeListener { _, _ ->
+            terms.setOnClickListener {
                 dataChanged()
             }
 
@@ -133,7 +83,7 @@ class SignUpFragment1 : Fragment() {
                 if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
-                getParentActivity().makeToast("소문자와 숫자만 입력 가능합니다: $source")
+                activity.makeToast("소문자와 숫자만 입력 가능합니다: $source")
                 source.dropLast(1)
             })
 
@@ -144,7 +94,7 @@ class SignUpFragment1 : Fragment() {
                 if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
-                getParentActivity().makeToast("입력할 수 없는 문자입니다: $source")
+                activity.makeToast("입력할 수 없는 문자입니다: $source")
                 ""
             })
         }
@@ -163,18 +113,12 @@ class SignUpFragment1 : Fragment() {
             pwAgain = binding.etPwAgain.text.toString(),
             term = binding.terms.isChecked
         )
-
     }
 
     private fun inputLimitAlert(str: String, limit: Int) {
         if (str.length >= limit) {
-            val activity = requireActivity() as SignUpActivity
             activity.makeToast("입력할 수 있는 최대 길이입니다")
         }
-    }
-
-    private fun getParentActivity(): SignUpActivity {
-        return requireActivity() as SignUpActivity
     }
 
     override fun onDestroyView() {

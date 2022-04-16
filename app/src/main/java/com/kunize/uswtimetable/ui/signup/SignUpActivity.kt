@@ -1,13 +1,11 @@
 package com.kunize.uswtimetable.ui.signup
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
-import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.adapter.SignUpPageAdapter
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
@@ -45,30 +43,9 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.currentPage.observe(this) { page ->
             toast?.cancel()
-            when (page) {
-                0 -> {
-                    button1.visibility = View.INVISIBLE
-                    button1.text = getString(R.string.btn_previous)
-                    button2.text = getString(R.string.btn_next)
-                }
-                1 -> {
-                    button1.visibility = View.VISIBLE
-                    button1.text = getString(R.string.btn_previous)
-                    button2.text = getString(R.string.sign_in)
-                }
-                2 -> {
-                    button1.visibility = View.VISIBLE
-                    button1.text = getString(R.string.btn_exit)
-                    button2.text = getString(R.string.login)
-                }
-            }
             viewPager.currentItem = page
         }
     }
-
-    fun onNextButtonClicked() = viewModel.moveToNextPage()
-    fun onPreviousButtonClicked() = viewModel.moveToPreviousPage()
-//    fun changePage(page: Int) = viewModel.movePage(page)
 
     private fun initViews() {
         button1 = binding.btnSignup1

@@ -7,6 +7,10 @@
         <variable
             name="fragment"
             type="com.kunize.uswtimetable.ui.signup.SignUpFragment3" />
+
+        <variable
+            name="viewmodel"
+            type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +39,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:paddingHorizontal="30dp"
+            android:text="@{@string/signup_welcome_info(viewmodel.email)}"
             app:layout_constraintBottom_toTopOf="@id/btn_check_mail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

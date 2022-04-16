@@ -6,10 +6,13 @@
     tools:context=".ui.signup.SignUpFragment1">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
+
         <variable
             name="constants"
             type="com.kunize.uswtimetable.util.Constants" />
@@ -37,6 +40,7 @@
                 android:hint="@string/id"
                 app:counterEnabled="true"
                 app:counterMaxLength="@{constants.ID_COUNT_LIMIT}"
+                app:errorEnabled="@{viewmodel.signupFormState.idError!=null}"
                 app:helperTextEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -44,9 +48,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:text="@={viewmodel.id}"
                     android:inputType="text"
-                    android:maxLength="@{constants.ID_COUNT_LIMIT}" />
+                    android:maxLength="@{constants.ID_COUNT_LIMIT}"
+                    android:text="@={viewmodel.id}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -58,7 +62,8 @@
                 android:hint="@string/require_password"
                 app:counterEnabled="true"
                 app:counterMaxLength="@{constants.PW_COUNT_LIMIT}"
-                app:endIconMode="password_toggle">
+                app:endIconMode="password_toggle"
+                app:errorEnabled="@{viewmodel.signupFormState.pwError!=null}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_pw"
@@ -66,8 +71,8 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
-                    android:text="@={viewmodel.pw}"
-                    android:maxLength="@{constants.PW_COUNT_LIMIT}" />
+                    android:maxLength="@{constants.PW_COUNT_LIMIT}"
+                    android:text="@={viewmodel.pw}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +84,8 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="@{constants.PW_COUNT_LIMIT}"
                 app:endIconMode="password_toggle"
-                app:errorContentDescription="비밀번호와 일치하지 않습니다" >
+                app:errorContentDescription="비밀번호와 일치하지 않습니다"
+                app:errorEnabled="@{viewmodel.signupFormState.pwAgainError!=null}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_pw_again"
@@ -87,8 +93,8 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    android:text="@={viewmodel.pwAgain}"
-                    android:maxLength="@{constants.PW_COUNT_LIMIT}" />
+                    android:maxLength="@{constants.PW_COUNT_LIMIT}"
+                    android:text="@={viewmodel.pwAgain}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
@@ -106,7 +112,7 @@
             android:id="@+id/signup1_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewmodel.loading?View.VISIBLE:View.GONE}"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:visibility="@{viewmodel.loading?View.VISIBLE:View.GONE}" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
