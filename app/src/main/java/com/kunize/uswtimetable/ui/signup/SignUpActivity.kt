@@ -42,9 +42,6 @@ class SignUpActivity : AppCompatActivity() {
             if (message.isNullOrBlank()) return@observe
             makeToast(message)
         }
-        /*viewModel.nextButtonEnable.observe(this) { enable ->
-            button2.isEnabled = enable
-        }*/
 
         viewModel.currentPage.observe(this) { page ->
             toast?.cancel()
@@ -71,7 +68,7 @@ class SignUpActivity : AppCompatActivity() {
 
     fun onNextButtonClicked() = viewModel.moveToNextPage()
     fun onPreviousButtonClicked() = viewModel.moveToPreviousPage()
-    fun changePage(page: Int) = viewModel.movePage(page)
+//    fun changePage(page: Int) = viewModel.movePage(page)
 
     private fun initViews() {
         button1 = binding.btnSignup1

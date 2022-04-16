@@ -3,7 +3,6 @@ package com.kunize.uswtimetable.ui.signup
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
-import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
@@ -64,24 +62,25 @@ class SignUpFragment1 : Fragment() {
             }
         }
 
+        viewModel.isIdUnique.observe(viewLifecycleOwner) { isUnique ->
+            if (isUnique) {
+                viewModel.moveToNextPage()
+            } else {
+                if (viewModel.errorMessage.value.isNullOrBlank().not()) {
+                    activity.makeToast(viewModel.errorMessage.value!!)
+                }
+            }
+        }
+
         initViews()
-        initButton()
+//        initButton()
     }
 
     private fun initButton() {
         nextButton.setOnClickListener {
             val state = viewModel.signupFormState.value ?: return@setOnClickListener
 
-            viewModel.loading.value = true
-
             if (state.isDataValid) {
-                viewModel.checkId()
-                if (viewModel.isIdUnique.value == true) {
-                    viewModel.movePage(1)
-                } else {
-                    Log.d(TAG, "SignUpFragment1 - error!")
-                    activity.makeToast(viewModel.errorMessage.value ?: return@setOnClickListener)
-                }
             } else {
                 val msg: String = when {
                     state.hasBlank != null -> {
@@ -104,7 +103,6 @@ class SignUpFragment1 : Fragment() {
                     }
                 }
                 activity.makeToast(msg)
-                viewModel.loading.postValue(false)
             }
         }
     }

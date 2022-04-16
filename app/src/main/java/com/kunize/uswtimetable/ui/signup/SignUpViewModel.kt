@@ -47,24 +47,33 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     fun moveToNextPage() {
-        _currentPage.value?.let { page ->
-            if (page < 2) {
-                _currentPage.value = page + 1
+        _currentPage.value = when (currentPage.value) {
+            0 -> {
+                _currentPage.value?.plus(1)
             }
+            1 -> {
+                _currentPage.value?.plus(1)
+            }
+            else -> _currentPage.value
         }
         setButtonAvailable()
     }
 
     fun moveToPreviousPage() {
-        _currentPage.value?.let { page ->
-            if (page > 0) {
-                _currentPage.value = page - 1
+        when (currentPage.value) {
+            1 -> {
+                isIdUnique.value = false
+                _currentPage.value?.minus(1)
+            }
+            2 -> {
+                isEmailUnique.value = false
+                _currentPage.value?.minus(1)
             }
         }
         setButtonAvailable()
     }
 
-    fun setButtonAvailable() {
+    private fun setButtonAvailable() {
         nextButtonEnable.value = when (currentPage.value) {
             0 -> { // 아이디, 비밀번호, 비밀번호 다시, 약관 동의
                 (loading.value == false) && (signupFormState.value?.isDataValid == true)
@@ -76,10 +85,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         }
     }
 
-    fun movePage(page: Int) {
+    /*fun movePage(page: Int) {
         if (page in 0..2) _currentPage.value = page
         setButtonAvailable()
-    }
+    }*/
 
     fun checkId() {
         val userId = id.value ?: return
