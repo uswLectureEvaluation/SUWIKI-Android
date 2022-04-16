@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.kunize.uswtimetable.dataclass.SuccessCheckDto
 import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
-import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -69,8 +67,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     fun setButtonAvailable() {
         nextButtonEnable.value = when (currentPage.value) {
             0 -> { // 아이디, 비밀번호, 비밀번호 다시, 약관 동의
-                Log.d(TAG, "SignUpViewModel - setButtonAvailable(0) called / loading : ${loading.value}, state: ${signupFormState.value}")
-                Log.d(TAG, "SignUpViewModel - setButtonAvailable(0) called / available: ${(loading.value == false) && (signupFormState.value?.isDataValid == true)}")
                 (loading.value == false) && (signupFormState.value?.isDataValid == true)
             }
             1 -> { // 이메일
@@ -78,7 +74,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
             }
             else -> false
         }
-        Log.d(TAG, "SignUpViewModel - setButtonAvailable() called / buttonEnabled: ${nextButtonEnable.value}")
     }
 
     fun movePage(page: Int) {
@@ -179,8 +174,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
             }
             else -> _signupForm.value = SignUpFormState(isDataValid = true)
         }
-//        nextButtonEnable.value = signupFormState.value?.isDataValid == true
-        Log.d(TAG, "SignUpViewModel - signUpDataChanged() called")
         setButtonAvailable()
     }
 
