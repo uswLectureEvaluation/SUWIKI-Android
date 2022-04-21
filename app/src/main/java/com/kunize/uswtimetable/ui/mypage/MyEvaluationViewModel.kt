@@ -15,12 +15,11 @@ import kotlinx.coroutines.launch
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _myEvaluationData = MutableLiveData<List<MyEvaluationDto>>()
     val myEvaluationData: LiveData<List<MyEvaluationDto>> get() = _myEvaluationData
-    val loading = MutableLiveData<Boolean>()
+    val loading = MutableLiveData(true)
     private val page = MutableLiveData<Int>()
     private var loadFinished = false
 
     init {
-        loading.value = true
         page.value = 1
         scrollBottomEvent()
     }
@@ -30,6 +29,7 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
         Log.d(TAG, "MyEvaluationViewModel - scrollBottomEvent(${page.value}) called / loadFinished : $loadFinished")
 
         viewModelScope.launch {
+            loading.postValue(true)
             val response = repository.getEvaluations(page.value ?: 1)
             if (response.isSuccessful) {
                 val responseData = response.body() ?: return@launch
@@ -42,8 +42,8 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
                 else nextPage()
                 Log.d(TAG, "data size: ${responseData.data.size}")
             }
+            loading.postValue(false)
         }
-        loading.postValue(false)
     }
 
     private fun nextPage() {
