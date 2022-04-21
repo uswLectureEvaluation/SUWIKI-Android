@@ -113,3 +113,6 @@ enum class ExamDifficulty {
 
 //무한 스크롤
 const val LAST_PAGE = 0
+object LIST_CONFIG {
+    const val ONCE_REQUEST_SIZE = 10
+}

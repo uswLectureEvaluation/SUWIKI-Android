@@ -80,9 +80,11 @@ class MyEvaluationFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        toast?.cancel()
     }
 
     private fun makeToast(message: String) {
+        toast?.cancel()
         toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
         toast?.show()
     }
