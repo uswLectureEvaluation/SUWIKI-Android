@@ -40,7 +40,6 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
 
                 if (responseData.data.size < ONCE_REQUEST_SIZE) loadFinished = true
                 else nextPage()
-                Log.d(TAG, "data size: ${responseData.data.size}")
             }
             loading.postValue(false)
         }
