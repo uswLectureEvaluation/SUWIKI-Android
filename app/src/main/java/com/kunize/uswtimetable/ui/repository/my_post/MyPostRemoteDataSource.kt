@@ -14,4 +14,12 @@ class MyPostRemoteDataSource: MyPostDataSource {
     override suspend fun editMyEvaluation(request: MyEvaluationEditDto) = apiService.updateEvaluatePost(request)
 
     override suspend fun editMyExamInfo(request: MyExamInfoEditDto) = apiService.updateExamPost(request)
+
+    override suspend fun deleteMyEvaluation(id: Long) {
+        apiService.deleteEvaluation(id)
+    }
+
+    override suspend fun deleteMyExamInfo(id: Long) {
+        apiService.deleteExamInfo(id)
+    }
 }

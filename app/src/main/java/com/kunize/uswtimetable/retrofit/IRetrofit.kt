@@ -11,6 +11,8 @@ import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.BUY_EXAM
+import com.kunize.uswtimetable.util.API.DELETE_EVALUATE_POST
+import com.kunize.uswtimetable.util.API.DELETE_EXAM_POSTS
 import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EXAM
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
@@ -123,6 +125,12 @@ interface IRetrofit {
     // 내가 쓴 글 (시험 정보 수정)
     @GET(UPDATE_EXAM_POSTS)
     suspend fun updateExamPost(@Body info: MyExamInfoEditDto)
+
+    @DELETE(DELETE_EVALUATE_POST)
+    suspend fun deleteEvaluation(@Query("evaluateIdx") id: Long)
+
+    @DELETE(DELETE_EXAM_POSTS)
+    suspend fun deleteExamInfo(@Query("examIdx") id: Long)
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)

@@ -19,6 +19,11 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
 
     init {
         loading.value = true
+        initLoad()
+    }
+
+    fun initLoad() {
+        _myEvaluationData.value = emptyList()
         page.value = 1
         scrollBottomEvent()
     }
@@ -50,5 +55,12 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
     private fun nextPage() {
         if (page.value == LAST_PAGE) return
         page.postValue(page.value?.plus(1))
+    }
+
+    fun deletePost(id: Long) {
+        viewModelScope.launch {
+            repository.deleteEvaluation(id)
+            initLoad()
+        }
     }
 }

@@ -43,7 +43,8 @@ class MyEvaluationFragment : Fragment() {
                     gotoWriteFragment(data)
                 }
                 ItemType.DELETE_BUTTON -> {
-                    makeToast("${data.id} 아이템 삭제 클릭")
+                    makeToast("${data.id} 아이템 삭제 - 사용자에게 확인하는 메시지 보여줘야함")
+                    viewModel.deletePost(data.id)
                 }
             }
         }

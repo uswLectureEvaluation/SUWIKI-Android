@@ -12,4 +12,6 @@ class MyPostRepository(private val dataSource: MyPostRemoteDataSource) {
         withContext(Dispatchers.IO){ dataSource.editMyEvaluation(request) }
     suspend fun editExamInfo(request: MyExamInfoEditDto) =
         withContext(Dispatchers.IO) { dataSource.editMyExamInfo(request) }
+    suspend fun deleteEvaluation(id: Long) = withContext(Dispatchers.IO) { dataSource.deleteMyEvaluation(id)}
+    suspend fun deleteExamInfo(id: Long) = withContext(Dispatchers.IO) { dataSource.deleteMyEvaluation(id)}
 }
