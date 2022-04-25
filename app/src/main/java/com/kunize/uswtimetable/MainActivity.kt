@@ -8,6 +8,8 @@ import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kakao.adfit.ads.AdListener
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
 import com.kunize.uswtimetable.dataclass.TimeData
@@ -29,22 +31,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemReselectedListener {  }
 
         binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
-        binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
-
-            override fun onAdLoaded() {
-                // 배너 광고 노출 완료 시 호출
-            }
-
-            override fun onAdFailed(errorCode: Int) {
-                // 배너 광고 노출 실패 시 호출
-            }
-
-            override fun onAdClicked() {
-                // 배너 광고 클릭 시 호출
-            }
-
-        })
-
         binding.bannerAdView.loadAd()
     }
 
@@ -62,60 +48,5 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         binding.bannerAdView.resume()
-    }
-
-    companion object {
-        val Int.dp: Int
-            get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-
-        val Float.dp: Int
-            get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
-
-        fun jsonToArray(jsonStr: String?): MutableList<TimeData> {
-            val returnTimeData = mutableListOf<TimeData>()
-            if (jsonStr != "") {
-                val jsonArray = JSONArray(jsonStr)
-                for (idx in 0 until jsonArray.length()) {
-                    val jsonObj = jsonArray.getJSONObject(idx)
-                    val className = jsonObj.getString("name")
-                    val professor = jsonObj.getString("professor")
-                    val location = jsonObj.getString("location")
-                    val day = jsonObj.getString("day")
-                    val startTime = jsonObj.getString("startTime")
-                    val endTime = jsonObj.getString("endTime")
-                    val color = jsonObj.getInt("color")
-
-                    returnTimeData.add(
-                        TimeData(
-                            className,
-                            professor,
-                            location,
-                            day,
-                            startTime,
-                            endTime,
-                            color
-                        )
-                    )
-                }
-            }
-            return returnTimeData
-        }
-
-        fun bitmapToString(bitmap: Bitmap): String {
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-            val byte = baos.toByteArray()
-            return Base64.encodeToString(byte, Base64.DEFAULT)
-        }
-
-        fun stringToBitmap(encodedString: String): Bitmap? {
-            return try {
-                val byte = Base64.decode(encodedString, Base64.DEFAULT)
-                BitmapFactory.decodeByteArray(byte, 0, byte.size)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
-        }
     }
 }

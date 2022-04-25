@@ -27,6 +27,7 @@ import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
+import com.kunize.uswtimetable.util.onItemSelected
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
@@ -38,8 +39,13 @@ class EvaluationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         adapter = EvaluationListAdapter { id ->
             val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
@@ -86,20 +92,9 @@ class EvaluationFragment : Fragment() {
         binding.spinner.apply {
             adapter = customSpinnerAdapter
             setSelection(0, false)
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    spinnerSel = position
-                    evaluationViewModel.changeType(spinnerTypeList[spinnerSel])
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
+            onItemSelected { position ->
+                spinnerSel = position
+                evaluationViewModel.changeType(spinnerTypeList[spinnerSel])
             }
         }
 
@@ -107,7 +102,6 @@ class EvaluationFragment : Fragment() {
             Toast.makeText(requireContext(), evaluationViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
         })
 
-        return binding.root
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {

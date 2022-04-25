@@ -80,7 +80,9 @@ class SearchResultFragment : Fragment() {
 
         sortBtn.forEach { btn ->
             btn.setOnClickListener {
-                searchResultViewModel.changeType(sortOptionMap[btn.text.toString()]!!)
+                sortOptionMap[btn.text.toString()]?.let {
+                    searchResultViewModel.changeType(it)
+                }
             }
         }
 

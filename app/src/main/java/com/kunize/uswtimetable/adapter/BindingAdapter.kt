@@ -18,7 +18,7 @@ object BindingAdapter {
     @JvmStatic
     fun setList(
         recyclerView: RecyclerView,
-        items: java.util.ArrayList<EvaluationData?>
+        items: MutableList<EvaluationData?>
     ) {
         if (recyclerView.adapter == null)
             recyclerView.adapter = EvaluationListAdapter { }

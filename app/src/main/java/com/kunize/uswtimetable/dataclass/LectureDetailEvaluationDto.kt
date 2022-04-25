@@ -3,10 +3,10 @@ package com.kunize.uswtimetable.dataclass
 import com.kunize.uswtimetable.util.LectureItemViewType
 
 data class LectureDetailEvaluationDto(
-    val data: List<LectureDetailEvaluation>
+    val data: MutableList<LectureDetailEvaluation>
 ) {
-    fun convertToEvaluationData(): ArrayList<EvaluationData?> {
-        val temp = arrayListOf<EvaluationData?>()
+    fun convertToEvaluationData(): MutableList<EvaluationData?> {
+        val temp = mutableListOf<EvaluationData?>()
         data.forEach {
             temp.add(EvaluationData(
                 recyclerViewType = LectureItemViewType.LECTURE,
