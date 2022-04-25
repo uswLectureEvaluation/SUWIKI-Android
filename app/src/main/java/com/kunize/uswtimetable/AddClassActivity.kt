@@ -137,33 +137,55 @@ class AddClassActivity : AppCompatActivity() {
 
     private fun filterData() {
         val changeData = mutableListOf<TimeTableData>()
-        if (majorSel == "전부" && gradeSel == "전부") {
-            searchAdapter.filteredData = timetableData as MutableList<TimeTableData>
-            searchAdapter.unfilteredData = timetableData as MutableList<TimeTableData>
-        } else if (majorSel != "전부" && gradeSel == "전부") {
-            for (data in timetableData) {
-                if (majorSel == data.major)
-                    changeData.add(data)
-            }
-            searchAdapter.filteredData = changeData
-            searchAdapter.unfilteredData = changeData
-        } else if (majorSel == "전부" && gradeSel != "전부") {
-            for (data in timetableData) {
-                if (gradeSel == data.grade)
-                    changeData.add(data)
-            }
-            searchAdapter.filteredData = changeData
-            searchAdapter.unfilteredData = changeData
-        } else {
-            for (data in timetableData) {
-                if (majorSel == data.major && gradeSel == data.grade)
-                    changeData.add(data)
-            }
-            searchAdapter.filteredData = changeData
-            searchAdapter.unfilteredData = changeData
+        when {
+            majorSel == "전부" && gradeSel == "전부" -> changeFilterData(timetableData)
+            majorSel != "전부" && gradeSel == "전부" -> setFilterDataByMajor(changeData)
+            majorSel == "전부" && gradeSel != "전부" -> setFilterDataByGrade(changeData)
+            else -> setFilterDataByAll(changeData)
         }
         searchAdapter.notifyDataSetChanged()
         binding.searchClass.setText("")
+    }
+
+    private fun setFilterDataByAll(changeData: MutableList<TimeTableData>) {
+        addSameGradeMajor(changeData)
+        changeFilterData(changeData)
+    }
+
+    private fun setFilterDataByGrade(changeData: MutableList<TimeTableData>) {
+        addSameGrade(changeData)
+        changeFilterData(changeData)
+    }
+
+    private fun setFilterDataByMajor(changeData: MutableList<TimeTableData>) {
+        addSameMajor(changeData)
+        changeFilterData(changeData)
+    }
+
+    private fun addSameGradeMajor(changeData: MutableList<TimeTableData>) {
+        for (data in timetableData) {
+            if (majorSel == data.major && gradeSel == data.grade)
+                changeData.add(data)
+        }
+    }
+
+    private fun addSameGrade(changeData: MutableList<TimeTableData>) {
+        for (data in timetableData) {
+            if (gradeSel == data.grade)
+                changeData.add(data)
+        }
+    }
+
+    private fun addSameMajor(changeData: MutableList<TimeTableData>) {
+        for (data in timetableData) {
+            if (majorSel == data.major)
+                changeData.add(data)
+        }
+    }
+
+    private fun changeFilterData(changeData: MutableList<TimeTableData>) {
+        searchAdapter.filteredData = changeData
+        searchAdapter.unfilteredData = changeData
     }
 
     override fun onResume() {
