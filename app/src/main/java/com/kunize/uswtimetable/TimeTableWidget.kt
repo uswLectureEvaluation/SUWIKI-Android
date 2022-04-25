@@ -10,7 +10,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
-import com.kunize.uswtimetable.MainActivity.Companion.stringToBitmap
+import com.kunize.uswtimetable.custom_view.timetable.BitmapConverter.stringToBitmap
 import java.lang.Exception
 
 /**

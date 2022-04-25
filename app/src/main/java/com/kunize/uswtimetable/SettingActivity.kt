@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.kunize.uswtimetable.custom_view.timetable.BitmapConverter.stringToBitmap
 import com.kunize.uswtimetable.custom_view.timetable.UswTimeTable.Companion.CLASSNAME
 import com.kunize.uswtimetable.custom_view.timetable.UswTimeTable.Companion.CLASSNAME_LOCATION
 import com.kunize.uswtimetable.custom_view.timetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR
@@ -26,7 +27,7 @@ class SettingActivity : AppCompatActivity() {
 
         binding.shareKakaoBtn.setOnClickListener {
             val strBit = TimeTableSelPref.prefs.getString("image", "")
-            val bitmap = MainActivity.stringToBitmap(strBit)
+            val bitmap = stringToBitmap(strBit)
 
             val dir = getImageUri(this, bitmap!!)
 

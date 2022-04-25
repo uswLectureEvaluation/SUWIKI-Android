@@ -49,23 +49,4 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         binding.bannerAdView.resume()
     }
-
-    companion object {
-        fun bitmapToString(bitmap: Bitmap): String {
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-            val byte = baos.toByteArray()
-            return Base64.encodeToString(byte, Base64.DEFAULT)
-        }
-
-        fun stringToBitmap(encodedString: String): Bitmap? {
-            return try {
-                val byte = Base64.decode(encodedString, Base64.DEFAULT)
-                BitmapFactory.decodeByteArray(byte, 0, byte.size)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
-        }
-    }
 }
