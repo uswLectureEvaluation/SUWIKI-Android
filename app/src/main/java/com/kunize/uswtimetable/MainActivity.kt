@@ -31,22 +31,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemReselectedListener {  }
 
         binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
-        binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
-
-            override fun onAdLoaded() {
-                // 배너 광고 노출 완료 시 호출
-            }
-
-            override fun onAdFailed(errorCode: Int) {
-                // 배너 광고 노출 실패 시 호출
-            }
-
-            override fun onAdClicked() {
-                // 배너 광고 클릭 시 호출
-            }
-
-        })
-
         binding.bannerAdView.loadAd()
     }
 
