@@ -11,38 +11,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.kunize.uswtimetable.custom_view.timetable.DBManager.arrayToJson
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.getCurrentTimetableInfo
 import com.kunize.uswtimetable.custom_view.timetable.DBManager.jsonToArray
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.dataclass.TimeData
 import com.kunize.uswtimetable.dataclass.TimeTableList
 import com.kunize.uswtimetable.dialog.EditTimeDialog
+import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONObject
-import java.util.*
 
 class ClassInfoActivity : AppCompatActivity() {
-    companion object {
-        val colorMap = mapOf<String, Int>(
-            "Pink" to Color.rgb(254, 136, 136), //핑크
-            "Orange" to Color.rgb(255, 193, 82), //주황
-            "Purple" to Color.rgb(204, 154, 243), //보라
-            "Sky" to Color.rgb(137, 200, 254), //하늘
-            "Green" to Color.rgb(165, 220, 129), //연두
-            "Brown" to Color.rgb(194, 143, 98), //갈색
-            "Gray" to Color.rgb(194, 193, 189), //회색
-            "Navy" to Color.rgb(67, 87, 150), //남색
-            "darkGreen" to Color.rgb(107, 143, 84), //진녹색
-            "lightBrown" to Color.rgb(255, 187, 128), //연갈색
-            "darkPurple" to Color.rgb(161, 121, 192), //진보라색
-            "darkGray" to Color.rgb(143, 142, 139) //진회색
-        )
-    }
 
     var colorSel: Int = Color.rgb(255, 193, 82)
     private val binding by lazy { ActivityClassInfoBinding.inflate(layoutInflater) }
@@ -71,31 +54,12 @@ class ClassInfoActivity : AppCompatActivity() {
         binding.editProfessorName.setText(professor)
 
         CoroutineScope(IO).launch {
-            //1. 해당 시간에 맞는 TimeTableList DB 불러옴
             db = TimeTableListDatabase.getInstance(applicationContext)!!
-            val tempTimetableList = db.timetableListDao().getAll()
-            timetableSel = tempTimetableList[0]
-            val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
-            for (empty in tempTimetableList) {
-                if (empty.createTime == createTime)
-                    timetableSel = empty
-            }
-            //2. DB의 Json String 불러옴
+            timetableSel = getCurrentTimetableInfo(db)
             jsonStr = timetableSel.timeTableJsonData
-
             tempTimeData = jsonToArray(jsonStr)
 
-            var randomColor = intent.getIntExtra("color", -1)
-
-            if (randomColor == -1) {
-                val randomNum = MutableList(12) { i -> i }.shuffled().toMutableList()
-                do {
-                    randomColor = colorMap.values.toIntArray()[randomNum.removeLast()]
-                } while (jsonStr.contains("$randomColor") && (tempTimeData.size < 12))
-            }
-
-            colorSel = randomColor
-
+            val randomColor = setTimeTableCellColor()
             withContext(Main) {
                 binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
             }
@@ -114,134 +78,21 @@ class ClassInfoActivity : AppCompatActivity() {
                         tempDeleteData = tempTimeData[deleteIdx]
                         tempTimeData.removeAt(deleteIdx)
                     }
-                    //3.5 UI에서 정보 추출
-                    val extractionList =
-                        listOf<TextView>(binding.time1, binding.time2, binding.time3)
-                    if (binding.time1.text.toString().isEmpty() && binding.time2.text.toString()
-                            .isEmpty() && binding.time3.text.toString().isEmpty()
-                    ) {
-                        withContext(Main) {
-                            Toast.makeText(
-                                this@ClassInfoActivity,
-                                "시간 및 장소를 입력해주세요!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        if (deleteIdx != -1)
-                            tempTimeData.add(deleteIdx, tempDeleteData)
-                        return@launch
-                    }
-                    val addTimeData = mutableListOf<TimeData>()
-                    for (extraction in extractionList) {
-                        var tempSplit: List<String>
-                        if (extraction.text.toString() == "이러닝") {
-                            addTimeData.add(
-                                TimeData(
-                                    inputClassName,
-                                    inputProfessor,
-                                    "이러닝",
-                                    "",
-                                    "",
-                                    "",
-                                    colorSel
-                                )
-                            )
-                        } else if (extraction.text.toString() != "") {
-                            tempSplit = extraction.text.toString().split("(")
-                            val location = tempSplit[0]
-                            val day = tempSplit[1][0].toString()
-                            val onlyTime = tempSplit[1].substring(1).replace(")", "").split(",")
-                            val startTime = onlyTime[0]
-                            val endTime = onlyTime.last()
-                            addTimeData.add(
-                                TimeData(
-                                    inputClassName,
-                                    inputProfessor,
-                                    location,
-                                    day,
-                                    startTime,
-                                    endTime,
-                                    colorSel
-                                )
-                            )
-                        }
-                    }
-                    //3.7 이러닝 여부 확인
-                    for (newTime in addTimeData) {
-                        if ((newTime.name.contains("이러닝") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) && jsonStr.contains(
-                                "이러닝"
-                            ) && deleteIdx == -1
-                        ) {
-                            withContext(Main) {
-                                Toast.makeText(
-                                    this@ClassInfoActivity,
-                                    "이러닝은 하나만 들을 수 있어요!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            if (deleteIdx != -1)
-                                tempTimeData.add(deleteIdx, tempDeleteData)
-                            return@launch
-                        }
-                    }
-                    //4. 추가하려는 요일의 Array를 추출
-                    //5. 겹치는 시간이 있는지 확인 -> 있으면 return
-                    for (newTime in addTimeData) {
-                        for (oldTime in tempTimeData) {
-                            if (newTime.day == oldTime.day) {
-                                val newStartTime = newTime.startTime.toInt()
-                                val newEndTime = newTime.endTime.toInt()
-                                val oldStartTime = oldTime.startTime.toInt()
-                                val oldEndTime = oldTime.endTime.toInt()
-                                if (
-                                    (newStartTime in oldStartTime .. oldEndTime) || (newEndTime in oldStartTime .. oldEndTime) ||
-                                    (oldStartTime in newStartTime .. newEndTime) || (oldEndTime in newStartTime .. newEndTime)
-                                ) {
-                                    withContext(Main) {
-                                        Toast.makeText(
-                                            this@ClassInfoActivity,
-                                            "겹치는 시간이 있어요!\n${oldTime.name} (${oldTime.day}${oldTime.startTime} ~ ${oldTime.endTime})",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                    if (deleteIdx != -1)
-                                        tempTimeData.add(deleteIdx, tempDeleteData)
-                                    return@launch
-                                }
-                            }
-                        }
-                        //에러 발생 시 여기 수정 addTime내에서도 겹치는지 확인하고 tempTimeDAta.add부분을 밖으로 빼면 될듯?
-                    }
-                    //6. 없을 경우 Array에 추가
-                    for (newTime in addTimeData)
-                        tempTimeData.add(newTime)
-                    //7. Array를 Json형식으로 변환
-                    val newJsonArray = arrayToJson(tempTimeData)
-                    //8. DB 업데이트
-                    timetableSel.timeTableJsonData = newJsonArray
+                    val extractionList = listOf(binding.time1, binding.time2, binding.time3)
+                    if (checkInputDataEmpty(deleteIdx, tempDeleteData)) return@launch
+                    val addTimeData = extractData(extractionList, inputClassName, inputProfessor)
+                    if (checkeLearning(addTimeData, deleteIdx, tempDeleteData)) return@launch
+                    if (checkOverlapTime(addTimeData, deleteIdx, tempDeleteData)) return@launch
+                    tempTimeData.addAll(addTimeData)
+                    timetableSel.timeTableJsonData = arrayToJson(tempTimeData)
                     db.timetableListDao().update(timetableSel)
-                    //9. 시간표 화면으로 이동
-                    val intent = Intent(this@ClassInfoActivity, MainActivity::class.java)
-                    intent.flags =
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
-                    startActivity(intent)
+                    goToMainActivity()
                 }
                 catch (e: Exception) {
-                    Log.d("UnKnownError", "$e")
-                    withContext(Main) {
-                        Toast.makeText(
-                            this@ClassInfoActivity,
-                            "문제가 있어 시간표를 추가할 수 없어요!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        if (deleteIdx != -1)
-                            tempTimeData.add(deleteIdx, tempDeleteData)
-                    }
+                    unknownError(e, deleteIdx, tempDeleteData)
                 }
-            }  //Coroutine 끝
-        } //끝
-
-        //TODO deleteIdx != -1 일 경우 로직 수정해야함 (장소에 띄어쓰기가 있을 경우 장소명이 "이러닝"으로 변함)
+            }
+        }
 
         try {
             // deleteIdx가 -1이 아닌 경우에만 문자열 분리
@@ -335,6 +186,163 @@ class ClassInfoActivity : AppCompatActivity() {
             })
             dlg.start()
         }
+    }
+
+    private fun goToMainActivity() {
+        val intent = Intent(this@ClassInfoActivity, MainActivity::class.java)
+        intent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
+        startActivity(intent)
+    }
+
+    private suspend fun unknownError(
+        e: Exception,
+        deleteIdx: Int,
+        tempDeleteData: TimeData
+    ) {
+        Log.d("UnKnownError", "$e")
+        withContext(Main) {
+            Toast.makeText(
+                this@ClassInfoActivity,
+                "문제가 있어 시간표를 추가할 수 없어요!",
+                Toast.LENGTH_SHORT
+            ).show()
+            if (deleteIdx != -1)
+                tempTimeData.add(deleteIdx, tempDeleteData)
+        }
+    }
+
+    private suspend fun checkOverlapTime(
+        addTimeData: MutableList<TimeData>,
+        deleteIdx: Int,
+        tempDeleteData: TimeData
+    ): Boolean {
+        for (newTime in addTimeData) {
+            for (oldTime in tempTimeData) {
+                if (newTime.day == oldTime.day) {
+                    val newStartTime = newTime.startTime.toInt()
+                    val newEndTime = newTime.endTime.toInt()
+                    val oldStartTime = oldTime.startTime.toInt()
+                    val oldEndTime = oldTime.endTime.toInt()
+                    if (
+                        (newStartTime in oldStartTime..oldEndTime) || (newEndTime in oldStartTime..oldEndTime) ||
+                        (oldStartTime in newStartTime..newEndTime) || (oldEndTime in newStartTime..newEndTime)
+                    ) {
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@ClassInfoActivity,
+                                "겹치는 시간이 있어요!\n${oldTime.name} (${oldTime.day}${oldTime.startTime} ~ ${oldTime.endTime})",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        if (deleteIdx != -1)
+                            tempTimeData.add(deleteIdx, tempDeleteData)
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    private suspend fun checkeLearning(
+        addTimeData: MutableList<TimeData>,
+        deleteIdx: Int,
+        tempDeleteData: TimeData
+    ): Boolean {
+        for (newTime in addTimeData) {
+            if ((newTime.name.contains("이러닝") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) && jsonStr.contains(
+                    "이러닝"
+                ) && deleteIdx == -1
+            ) {
+                withContext(Main) {
+                    Toast.makeText(
+                        this@ClassInfoActivity,
+                        "이러닝은 하나만 들을 수 있어요!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                if (deleteIdx != -1)
+                    tempTimeData.add(deleteIdx, tempDeleteData)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun extractData(
+        extractionList: List<TextView>,
+        inputClassName: String,
+        inputProfessor: String
+    ): MutableList<TimeData> {
+        val addTimeData = mutableListOf<TimeData>()
+        for (extraction in extractionList) {
+            var tempSplit: List<String>
+            if (extraction.text.toString() == "이러닝") {
+                addTimeData.add(
+                    TimeData(
+                        inputClassName,
+                        inputProfessor,
+                        "이러닝",
+                        color = colorSel
+                    )
+                )
+            } else if (extraction.text.toString() != "") {
+                tempSplit = extraction.text.toString().split("(")
+                val location = tempSplit[0]
+                val day = tempSplit[1][0].toString()
+                val onlyTime = tempSplit[1].substring(1).replace(")", "").split(",")
+                val startTime = onlyTime[0]
+                val endTime = onlyTime.last()
+                addTimeData.add(
+                    TimeData(
+                        inputClassName,
+                        inputProfessor,
+                        location,
+                        day,
+                        startTime,
+                        endTime,
+                        colorSel
+                    )
+                )
+            }
+        }
+        return addTimeData
+    }
+
+    private suspend fun checkInputDataEmpty(
+        deleteIdx: Int,
+        tempDeleteData: TimeData
+    ): Boolean {
+        if (binding.time1.text.toString().isEmpty() && binding.time2.text.toString()
+                .isEmpty() && binding.time3.text.toString().isEmpty()
+        ) {
+            withContext(Main) {
+                Toast.makeText(
+                    this@ClassInfoActivity,
+                    "시간 및 장소를 입력해주세요!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            if (deleteIdx != -1)
+                tempTimeData.add(deleteIdx, tempDeleteData)
+            return true
+        }
+        return false
+    }
+
+    private fun setTimeTableCellColor(): Int {
+        var randomColor = intent.getIntExtra("color", -1)
+
+        if (randomColor == -1) {
+            val randomNum = MutableList(12) { i -> i }.shuffled().toMutableList()
+            do {
+                randomColor = colorMap.values.toIntArray()[randomNum.removeLast()]
+            } while (jsonStr.contains("$randomColor") && (tempTimeData.size < 12))
+        }
+
+        colorSel = randomColor
+        return randomColor
     }
 
     private fun splitTime(

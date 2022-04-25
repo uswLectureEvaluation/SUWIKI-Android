@@ -12,7 +12,7 @@ object DBManager {
     val gson = Gson()
     private val convertType = object : TypeToken<MutableList<TimeData>>(){}.type
 
-    fun getCurrentTimetable(db: TimeTableListDatabase): TimeTableList {
+    fun getCurrentTimetableInfo(db: TimeTableListDatabase): TimeTableList {
         val timeTableList = db.timetableListDao().getAll()
         val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
         return timeTableList.find { it.createTime == createTime } ?: timeTableList[0]
@@ -20,7 +20,7 @@ object DBManager {
 
     fun deleteTime(context: Context, data: TimeData) {
         val db = TimeTableListDatabase.getInstance(context)
-        val timetableSel = getCurrentTimetable(db!!)
+        val timetableSel = getCurrentTimetableInfo(db!!)
         val jsonStr = timetableSel.timeTableJsonData
         val tempTimeData = jsonToArray(jsonStr)
         tempTimeData.remove(data)

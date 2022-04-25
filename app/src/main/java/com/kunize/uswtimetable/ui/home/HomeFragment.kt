@@ -6,17 +6,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.kunize.uswtimetable.*
 import com.kunize.uswtimetable.MainActivity.Companion.bitmapToString
-import com.kunize.uswtimetable.custom_view.timetable.DBManager.getCurrentTimetable
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.getCurrentTimetableInfo
 import com.kunize.uswtimetable.custom_view.timetable.DBManager.jsonToArray
 import com.kunize.uswtimetable.custom_view.timetable.UswTimeTable.Companion.CLASSNAME_LOCATION
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
@@ -105,7 +102,7 @@ class HomeFragment : Fragment() {
     }
 
     private suspend fun existTimetable() {
-        timeTableSel = getCurrentTimetable(db)
+        timeTableSel = getCurrentTimetableInfo(db)
 
         binding.uswTimeTable.isEmpty = false
         tempTimeData = jsonToArray(timeTableSel!!.timeTableJsonData)

@@ -8,7 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
-import com.kunize.uswtimetable.ClassInfoActivity.Companion.colorMap
+import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
 
 class EditColorDialog(context: Context) : View.OnClickListener {
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
