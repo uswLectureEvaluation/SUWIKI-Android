@@ -16,6 +16,7 @@ import com.kunize.uswtimetable.adapter.ClassSearchAdapter
 import com.kunize.uswtimetable.databinding.ActivityAddClassBinding
 import com.kunize.uswtimetable.dataclass.TimeTableData
 import com.kunize.uswtimetable.dao_database.TimeTableDatabase
+import com.kunize.uswtimetable.util.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -75,20 +76,7 @@ class AddClassActivity : AppCompatActivity() {
             }
         }
 
-
-        binding.searchClass.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //Do Nothing
-            }
-
-            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                searchAdapter.filter?.filter(charSequence)
-            }
-
-            override fun afterTextChanged(charSequence: Editable?) {
-                //
-            }
-        })
+        binding.searchClass.onTextChanged { searchAdapter.filter.filter(it) }
 
         binding.majorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
