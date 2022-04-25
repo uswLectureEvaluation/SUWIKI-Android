@@ -16,6 +16,7 @@ import com.kunize.uswtimetable.adapter.ClassSearchAdapter
 import com.kunize.uswtimetable.databinding.ActivityAddClassBinding
 import com.kunize.uswtimetable.dataclass.TimeTableData
 import com.kunize.uswtimetable.dao_database.TimeTableDatabase
+import com.kunize.uswtimetable.util.onItemSelected
 import com.kunize.uswtimetable.util.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -78,38 +79,16 @@ class AddClassActivity : AppCompatActivity() {
 
         binding.searchClass.onTextChanged { searchAdapter.filter.filter(it) }
 
-        binding.majorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                majorSel = spinnerData[position]
-                TimeTableSelPref.prefs.setInt("majorSel", position)
-                filterData()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+        binding.majorSpinner.onItemSelected { position ->
+            majorSel = spinnerData[position]
+            TimeTableSelPref.prefs.setInt("majorSel", position)
+            filterData()
         }
 
-        binding.gradeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                gradeSel = gradeList[position]
-                TimeTableSelPref.prefs.setInt("gradeSel", position)
-                filterData()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+        binding.gradeSpinner.onItemSelected { position ->
+            gradeSel = gradeList[position]
+            TimeTableSelPref.prefs.setInt("gradeSel", position)
+            filterData()
         }
 
         searchAdapter.setItemClickListener(object : ClassSearchAdapter.ItemClickListener {

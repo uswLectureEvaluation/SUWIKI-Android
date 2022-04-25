@@ -4,11 +4,15 @@ import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.SeekBar
+import android.widget.Spinner
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kunize.uswtimetable.TimeTableSelPref
 
 fun EditText.afterTextChanged(completion: (Editable?) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -70,6 +74,21 @@ fun SeekBar.seekbarChangeListener(doChangeProgress: (progress: Float) -> Unit) {
         override fun onStopTrackingTouch(p0: SeekBar?) {
         }
     }))
+}
+
+fun Spinner.onItemSelected(doSpinnerSelected: (position: Int) -> Unit) {
+    this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            doSpinnerSelected(position)
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
 }
 
 // 문자열 -> json 형태인지 json 배열 형태인지
