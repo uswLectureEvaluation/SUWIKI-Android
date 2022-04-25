@@ -137,5 +137,7 @@
     <string name="reset_password">비밀번호 변경</string>
     <string name="current_password">현재 비밀번호</string>
     <string name="new_password">새로운 비밀번호</string>
+    <string name="webview_close_button_description">webview_close_button</string>
+    <string name="SUWIKI_WEB">https://suwiki.netlify.app/</string>
 
 </resources>
