@@ -1,9 +1,6 @@
 package com.kunize.uswtimetable.ui.repository.my_post
 
-import com.kunize.uswtimetable.dataclass.MyEvaluationEditDto
-import com.kunize.uswtimetable.dataclass.MyEvaluationListDto
-import com.kunize.uswtimetable.dataclass.MyExamInfoEditDto
-import com.kunize.uswtimetable.dataclass.MyExamInfoListDto
+import com.kunize.uswtimetable.dataclass.*
 import retrofit2.Response
 
 interface MyPostDataSource {
@@ -13,4 +10,5 @@ interface MyPostDataSource {
     suspend fun editMyExamInfo(request: MyExamInfoEditDto)
     suspend fun deleteMyEvaluation(id: Long)
     suspend fun deleteMyExamInfo(id: Long)
+    suspend fun getPurchaseHistory(): Response<List<PurchaseHistoryDto>>
 }

@@ -29,6 +29,7 @@ import com.kunize.uswtimetable.util.API.NOTICE
 import com.kunize.uswtimetable.util.API.NOTICE_LIST
 import com.kunize.uswtimetable.util.API.PASSWORD
 import com.kunize.uswtimetable.util.API.PASSWORD_RESET
+import com.kunize.uswtimetable.util.API.PURCHASE_HISTORY
 import com.kunize.uswtimetable.util.API.QUIT
 import com.kunize.uswtimetable.util.API.REQUEST_REFRESH
 import com.kunize.uswtimetable.util.API.SEARCH
@@ -131,6 +132,10 @@ interface IRetrofit {
 
     @DELETE(DELETE_EXAM_POSTS)
     suspend fun deleteExamInfo(@Query("examIdx") id: Long)
+
+    // 시험정보 구매 이력
+    @POST(PURCHASE_HISTORY)
+    suspend fun getPurchaseHistory(): Response<List<PurchaseHistoryDto>>
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)

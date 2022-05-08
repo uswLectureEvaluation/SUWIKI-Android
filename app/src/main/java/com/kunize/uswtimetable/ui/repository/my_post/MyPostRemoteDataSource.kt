@@ -22,4 +22,6 @@ class MyPostRemoteDataSource: MyPostDataSource {
     override suspend fun deleteMyExamInfo(id: Long) {
         apiService.deleteExamInfo(id)
     }
+
+    override suspend fun getPurchaseHistory() = apiService.getPurchaseHistory()
 }

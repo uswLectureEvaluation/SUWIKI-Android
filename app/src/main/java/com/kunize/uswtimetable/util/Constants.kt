@@ -36,6 +36,7 @@ object API {
     const val EXAM_POSTS: String = "/exam-posts/findByUserIdx"
     const val UPDATE_EXAM_POSTS: String = "/exam-posts/findByUserIdx"
     const val DELETE_EXAM_POSTS: String = "/exam-posts/delete/"
+    const val PURCHASE_HISTORY: String = "/exam-posts/purchase-history"
     const val SIGN_UP: String = "/user/join"
     const val SIGN_UP_ID_CHECK: String = "/user/check-id"
     const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"

@@ -199,7 +199,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun showPurchaseHistory() {
-
+        findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment)
     }
 
     private fun makeToast(message: String) {
