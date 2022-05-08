@@ -73,7 +73,6 @@ class MyPageFragment : Fragment() {
                 }
                 R.id.action_log_out -> {
                     User.logout()
-//                    viewModel.refresh()
                     true
                 }
                 R.id.action_change_password -> {
@@ -82,6 +81,10 @@ class MyPageFragment : Fragment() {
                 }
                 R.id.action_quit -> {
                     quit(requireContext())
+                    true
+                }
+                R.id.menu_purchase_history -> {
+                    showPurchaseHistory()
                     true
                 }
                 else -> {
@@ -193,6 +196,10 @@ class MyPageFragment : Fragment() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun showPurchaseHistory() {
+
     }
 
     private fun makeToast(message: String) {
