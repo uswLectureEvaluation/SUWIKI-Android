@@ -10,5 +10,5 @@ interface MyPostDataSource {
     suspend fun editMyExamInfo(request: MyExamInfoEditDto)
     suspend fun deleteMyEvaluation(id: Long)
     suspend fun deleteMyExamInfo(id: Long)
-    suspend fun getPurchaseHistory(): Response<List<PurchaseHistoryDto>>
+    suspend fun getPurchaseHistory(): Response<PurchaseHistoryDto>
 }

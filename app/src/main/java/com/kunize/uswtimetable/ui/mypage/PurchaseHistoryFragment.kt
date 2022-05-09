@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.adapter.PurchaseHistoryAdapter
 import com.kunize.uswtimetable.databinding.PurchaseHistoryFragmentBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.Constants.TAG
 
 class PurchaseHistoryFragment : Fragment() {
     private val viewModel: PurchaseHistoryViewModel by viewModels { ViewModelFactory(requireContext()) }
@@ -46,6 +48,7 @@ class PurchaseHistoryFragment : Fragment() {
             adapter = historyAdapter
         }
         viewModel.historyList.observe(viewLifecycleOwner) { histories ->
+            Log.d(TAG, "PurchaseHistoryFragment - initRecyclerView() called / $histories")
             historyAdapter.submitList(histories)
         }
     }

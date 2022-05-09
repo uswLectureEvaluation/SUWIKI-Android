@@ -6,14 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemRecyclerPurchaseBinding
-import com.kunize.uswtimetable.dataclass.PurchaseHistoryDto
+import com.kunize.uswtimetable.dataclass.PurchaseHistory
+import java.time.format.DateTimeFormatter
 
-class PurchaseHistoryAdapter: ListAdapter<PurchaseHistoryDto, PurchaseHistoryAdapter.ViewHolder>(diffUtil) {
+class PurchaseHistoryAdapter: ListAdapter<PurchaseHistory, PurchaseHistoryAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemRecyclerPurchaseBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(history: PurchaseHistoryDto) {
+        fun bind(history: PurchaseHistory) {
             binding.tvItemTitle.text = history.lectureName
             binding.tvItemMajor.text = history.majorType
             binding.tvItemProfessor.text = history.professor
+            binding.tvDate.text = history.createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         }
     }
 
@@ -26,12 +28,12 @@ class PurchaseHistoryAdapter: ListAdapter<PurchaseHistoryDto, PurchaseHistoryAda
     }
 
     companion object {
-        val diffUtil = object: DiffUtil.ItemCallback<PurchaseHistoryDto>() {
-            override fun areItemsTheSame(oldItem: PurchaseHistoryDto, newItem: PurchaseHistoryDto): Boolean {
-                return oldItem == newItem // TODO 아이디를 내려주면 아이디 비교로 변경
+        val diffUtil = object: DiffUtil.ItemCallback<PurchaseHistory>() {
+            override fun areItemsTheSame(oldItem: PurchaseHistory, newItem: PurchaseHistory): Boolean {
+                return oldItem.id== newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: PurchaseHistoryDto, newItem: PurchaseHistoryDto): Boolean {
+            override fun areContentsTheSame(oldItem: PurchaseHistory, newItem: PurchaseHistory): Boolean {
                 return oldItem == newItem
             }
         }

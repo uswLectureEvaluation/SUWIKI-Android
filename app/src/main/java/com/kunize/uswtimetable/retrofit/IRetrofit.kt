@@ -54,7 +54,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 import java.lang.reflect.Type
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 interface IRetrofit {
@@ -134,8 +136,8 @@ interface IRetrofit {
     suspend fun deleteExamInfo(@Query("examIdx") id: Long)
 
     // 시험정보 구매 이력
-    @POST(PURCHASE_HISTORY)
-    suspend fun getPurchaseHistory(): Response<List<PurchaseHistoryDto>>
+    @GET(PURCHASE_HISTORY)
+    suspend fun getPurchaseHistory(): Response<PurchaseHistoryDto>
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)
@@ -235,25 +237,32 @@ interface IRetrofit {
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(TokenAuthenticator()))
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(gsonConverterFactory())
                 .build()
         }
 
         private fun getClientWithNoToken(): Retrofit {
             val gson = GsonBuilder()
-                .registerTypeAdapter(LocalDateTime::class.java, object: JsonDeserializer<LocalDateTime> {
-                    override fun deserialize(
-                        json: JsonElement?,
-                        typeOfT: Type?,
-                        context: JsonDeserializationContext?
-                    ): LocalDateTime {
-                        return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
-                    }
-                })
+                .registerTypeAdapter(
+                    LocalDateTime::class.java,
+                    object : JsonDeserializer<LocalDateTime> {
+                        override fun deserialize(
+                            json: JsonElement?,
+                            typeOfT: Type?,
+                            context: JsonDeserializationContext?
+                        ): LocalDateTime {
+                            return LocalDateTime.parse(
+                                json?.asString,
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+                            )
+                        }
+                    })
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(null))
-                .addConverterFactory(GsonConverterFactory.create(gson.create()))
+//                .addConverterFactory(GsonConverterFactory.create(gson.create()))
+                .addConverterFactory(gsonConverterFactory())
                 .build()
         }
 
@@ -280,6 +289,39 @@ interface IRetrofit {
             }
 
             return client.build()
+        }
+
+        private fun gsonConverterFactory(): GsonConverterFactory {
+            val gson = GsonBuilder()
+                .registerTypeAdapter(LocalDateTime::class.java, object: JsonDeserializer<LocalDateTime> {
+                    override fun deserialize(
+                        json: JsonElement?,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?
+                    ): LocalDateTime {
+                        return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+                    }
+                })
+                .registerTypeAdapter(LocalDate::class.java, object: JsonDeserializer<LocalDate> {
+                    override fun deserialize(
+                        json: JsonElement?,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?
+                    ): LocalDate {
+                        return LocalDate.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                    }
+                })
+                .registerTypeAdapter(LocalTime::class.java, object: JsonDeserializer<LocalTime> {
+                    override fun deserialize(
+                        json: JsonElement?,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?
+                    ): LocalTime {
+                        return LocalTime.parse(json?.asString, DateTimeFormatter.ofPattern("HH:mm:ss"))
+                    }
+                })
+                .create()
+            return GsonConverterFactory.create(gson)
         }
     }
 }
