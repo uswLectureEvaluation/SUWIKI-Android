@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.dataclass
 
+import com.google.gson.annotations.SerializedName
 import com.kunize.uswtimetable.util.LectureItemViewType
 
 data class LectureDetailEvaluationDto(
@@ -28,7 +29,7 @@ data class LectureDetailEvaluationDto(
 
 data class LectureDetailEvaluation(
     val id: Long,
-    val semester: String,
+    @SerializedName("selectedSemester") val semester: String,
     val totalAvg: Float,
     val satisfaction: Float,
     val learning: Float,
