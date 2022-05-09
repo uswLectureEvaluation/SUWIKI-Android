@@ -16,6 +16,8 @@ import com.kunize.uswtimetable.adapter.ClassSearchAdapter
 import com.kunize.uswtimetable.databinding.ActivityAddClassBinding
 import com.kunize.uswtimetable.dataclass.TimeTableData
 import com.kunize.uswtimetable.dao_database.TimeTableDatabase
+import com.kunize.uswtimetable.util.onItemSelected
+import com.kunize.uswtimetable.util.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -36,19 +38,6 @@ class AddClassActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
-        binding.bannerAdView.setAdListener(object : AdListener {  // optional :: 광고 수신 리스너 설정
-            override fun onAdLoaded() {
-                // 배너 광고 노출 완료 시 호출
-            }
-
-            override fun onAdFailed(errorCode: Int) {
-                // 배너 광고 노출 실패 시 호출
-            }
-
-            override fun onAdClicked() {
-                // 배너 광고 클릭 시 호출
-            }
-        })
         binding.bannerAdView.loadAd()
 
         searchAdapter = ClassSearchAdapter()
@@ -88,53 +77,18 @@ class AddClassActivity : AppCompatActivity() {
             }
         }
 
+        binding.searchClass.onTextChanged { searchAdapter.filter.filter(it) }
 
-        binding.searchClass.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //Do Nothing
-            }
-
-            override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                searchAdapter.filter?.filter(charSequence)
-            }
-
-            override fun afterTextChanged(charSequence: Editable?) {
-                //
-            }
-        })
-
-        binding.majorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                majorSel = spinnerData[position]
-                TimeTableSelPref.prefs.setInt("majorSel", position)
-                filterData()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+        binding.majorSpinner.onItemSelected { position ->
+            majorSel = spinnerData[position]
+            TimeTableSelPref.prefs.setInt("majorSel", position)
+            filterData()
         }
 
-        binding.gradeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                gradeSel = gradeList[position]
-                TimeTableSelPref.prefs.setInt("gradeSel", position)
-                filterData()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+        binding.gradeSpinner.onItemSelected { position ->
+            gradeSel = gradeList[position]
+            TimeTableSelPref.prefs.setInt("gradeSel", position)
+            filterData()
         }
 
         searchAdapter.setItemClickListener(object : ClassSearchAdapter.ItemClickListener {
@@ -150,33 +104,55 @@ class AddClassActivity : AppCompatActivity() {
 
     private fun filterData() {
         val changeData = mutableListOf<TimeTableData>()
-        if (majorSel == "전부" && gradeSel == "전부") {
-            searchAdapter.filteredData = timetableData as MutableList<TimeTableData>
-            searchAdapter.unfilteredData = timetableData as MutableList<TimeTableData>
-        } else if (majorSel != "전부" && gradeSel == "전부") {
-            for (data in timetableData) {
-                if (majorSel == data.major)
-                    changeData.add(data)
-            }
-            searchAdapter.filteredData = changeData
-            searchAdapter.unfilteredData = changeData
-        } else if (majorSel == "전부" && gradeSel != "전부") {
-            for (data in timetableData) {
-                if (gradeSel == data.grade)
-                    changeData.add(data)
-            }
-            searchAdapter.filteredData = changeData
-            searchAdapter.unfilteredData = changeData
-        } else {
-            for (data in timetableData) {
-                if (majorSel == data.major && gradeSel == data.grade)
-                    changeData.add(data)
-            }
-            searchAdapter.filteredData = changeData
-            searchAdapter.unfilteredData = changeData
+        when {
+            majorSel == "전부" && gradeSel == "전부" -> changeFilterData(timetableData)
+            majorSel != "전부" && gradeSel == "전부" -> setFilterDataByMajor(changeData)
+            majorSel == "전부" && gradeSel != "전부" -> setFilterDataByGrade(changeData)
+            else -> setFilterDataByAll(changeData)
         }
         searchAdapter.notifyDataSetChanged()
         binding.searchClass.setText("")
+    }
+
+    private fun setFilterDataByAll(changeData: MutableList<TimeTableData>) {
+        addSameGradeMajor(changeData)
+        changeFilterData(changeData)
+    }
+
+    private fun setFilterDataByGrade(changeData: MutableList<TimeTableData>) {
+        addSameGrade(changeData)
+        changeFilterData(changeData)
+    }
+
+    private fun setFilterDataByMajor(changeData: MutableList<TimeTableData>) {
+        addSameMajor(changeData)
+        changeFilterData(changeData)
+    }
+
+    private fun addSameGradeMajor(changeData: MutableList<TimeTableData>) {
+        for (data in timetableData) {
+            if (majorSel == data.major && gradeSel == data.grade)
+                changeData.add(data)
+        }
+    }
+
+    private fun addSameGrade(changeData: MutableList<TimeTableData>) {
+        for (data in timetableData) {
+            if (gradeSel == data.grade)
+                changeData.add(data)
+        }
+    }
+
+    private fun addSameMajor(changeData: MutableList<TimeTableData>) {
+        for (data in timetableData) {
+            if (majorSel == data.major)
+                changeData.add(data)
+        }
+    }
+
+    private fun changeFilterData(changeData: MutableList<TimeTableData>) {
+        searchAdapter.filteredData = changeData
+        searchAdapter.unfilteredData = changeData
     }
 
     override fun onResume() {

@@ -1,13 +1,18 @@
 package com.kunize.uswtimetable.util
 
+import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.SeekBar
+import android.widget.Spinner
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kunize.uswtimetable.TimeTableSelPref
 
 fun EditText.afterTextChanged(completion: (Editable?) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -16,6 +21,14 @@ fun EditText.afterTextChanged(completion: (Editable?) -> Unit) {
         override fun afterTextChanged(p0: Editable?) {
             completion(p0)
         }
+    })
+}
+
+fun EditText.onTextChanged(completion: (CharSequence?) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { completion(p0) }
+        override fun afterTextChanged(p0: Editable?) {}
     })
 }
 
@@ -63,6 +76,27 @@ fun SeekBar.seekbarChangeListener(doChangeProgress: (progress: Float) -> Unit) {
     }))
 }
 
+fun Spinner.onItemSelected(doSpinnerSelected: (position: Int) -> Unit) {
+    this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            doSpinnerSelected(position)
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
+}
+
 // 문자열 -> json 형태인지 json 배열 형태인지
 fun String?.isJsonObject(): Boolean = this?.startsWith("{") == true && this.endsWith("}")
 fun String?.isJsonArray(): Boolean = this?.startsWith("[") == true && this.endsWith("]")
+
+val Int.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
+val Float.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()

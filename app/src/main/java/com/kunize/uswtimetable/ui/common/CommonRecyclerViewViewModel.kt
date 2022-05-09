@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.dataclass.EvaluationData
 
 class CommonRecyclerViewViewModel: ViewModel() {
-    private val _evaluationList = MutableLiveData<ArrayList<EvaluationData?>>()
-    val evaluationList: LiveData<ArrayList<EvaluationData?>>
+    private val _evaluationList = MutableLiveData<MutableList<EvaluationData?>>()
+    val evaluationList: LiveData<MutableList<EvaluationData?>>
         get() = _evaluationList
 
     init {
@@ -15,7 +15,7 @@ class CommonRecyclerViewViewModel: ViewModel() {
     }
 
     fun loading() {
-        _evaluationList.value = arrayListOf(null)
+        _evaluationList.value = mutableListOf(null)
     }
 
     fun deleteLoading() {
@@ -27,7 +27,7 @@ class CommonRecyclerViewViewModel: ViewModel() {
         }
     }
 
-    fun changeRecyclerViewData(data: ArrayList<EvaluationData?>) {
+    fun changeRecyclerViewData(data: MutableList<EvaluationData?>) {
         _evaluationList.value = data
     }
 }

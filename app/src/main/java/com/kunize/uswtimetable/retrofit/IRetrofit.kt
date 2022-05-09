@@ -174,7 +174,8 @@ interface IRetrofit {
     @GET(LECTURE_MAIN)
     suspend fun getLectureMainList(
         @Query("option") option: String,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("majorType") majorType: String = ""
     ): Response<LectureMainDto>
 
     //강의평가 쓰기

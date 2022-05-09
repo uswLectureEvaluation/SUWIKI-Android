@@ -1,14 +1,15 @@
 package com.kunize.uswtimetable.dataclass
 
+import com.google.gson.annotations.SerializedName
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.LectureItemViewType.SHORT
 
 
 data class LectureMainDto(
-    val data: List<LectureMain>
+    val data: MutableList<LectureMain>
 ) {
-    fun convertToEvaluationData(): ArrayList<EvaluationData?> {
-        val temp = arrayListOf<EvaluationData?>()
+    fun convertToEvaluationData(): MutableList<EvaluationData?> {
+        val temp = mutableListOf<EvaluationData?>()
         data.forEach {
             temp.add(EvaluationData(
                 recyclerViewType = SHORT,
@@ -29,8 +30,9 @@ data class LectureMainDto(
 
 data class LectureMain(
     val id: Long,
-    val semester: String,
+    @SerializedName("selectedSemester") val semester: String,
     val professor: String,
+    val majorType: String,
     val lectureType: String,
     val lectureName: String,
     val lectureTotalAvg: Float,

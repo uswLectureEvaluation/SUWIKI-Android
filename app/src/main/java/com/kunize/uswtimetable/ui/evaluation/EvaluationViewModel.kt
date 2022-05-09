@@ -40,6 +40,6 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
     override fun handleError(errorCode: Int) {
         toastViewModel.toastMessage = "$errorCode 에러 발생!"
         toastViewModel.showToastMsg()
-        commonRecyclerViewViewModel.changeRecyclerViewData(arrayListOf())
+        commonRecyclerViewViewModel.changeRecyclerViewData(mutableListOf())
     }
 }

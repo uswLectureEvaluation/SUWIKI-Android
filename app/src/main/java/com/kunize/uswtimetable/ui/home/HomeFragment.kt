@@ -6,15 +6,15 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.kunize.uswtimetable.*
-import com.kunize.uswtimetable.MainActivity.Companion.bitmapToString
-import com.kunize.uswtimetable.MainActivity.Companion.jsonToArray
+import com.kunize.uswtimetable.custom_view.timetable.BitmapConverter.bitmapToString
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.getCurrentTimetableInfo
+import com.kunize.uswtimetable.custom_view.timetable.DBManager.jsonToArray
 import com.kunize.uswtimetable.custom_view.timetable.UswTimeTable.Companion.CLASSNAME_LOCATION
 import com.kunize.uswtimetable.dao_database.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.FragmentHomeBinding
@@ -90,47 +90,39 @@ class HomeFragment : Fragment() {
         CoroutineScope(IO).launch {
             timeTableList = db.timetableListDao().getAll()
             tempTimeData.clear()
-            if (timeTableList.isEmpty()) { //시간표가 없을 경우
-                timeTableSel = null
-                binding.uswTimeTable.isEmpty = true
-                withContext(Main) {
-                    binding.textTitle.text = ""
-                    binding.uswTimeTable.drawTable()
-                }
-            } else { //시간표가 있을 경우
-                val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
-                timeTableSel = timeTableList[0]
-                for (empty in timeTableList) {
-                    if (empty.createTime == createTime)
-                        timeTableSel = empty
-                }
-                Log.d("change", "바뀐 데이터 : $timeTableSel")
-                binding.uswTimeTable.isEmpty = false
-                withContext(Main) {
-                    binding.textTitle.text = timeTableSel?.timeTableName
-                }
 
-                val jsonStr = timeTableSel?.timeTableJsonData
-                //3. Json을 Array로 변환
-                tempTimeData = jsonToArray(jsonStr)
-                withContext(Main) {
-                    binding.uswTimeTable.timeTableData = tempTimeData
-                    binding.uswTimeTable.infoFormat = TimeTableSelPref.prefs.getInt(
-                        "infoFormat",
-                        CLASSNAME_LOCATION
-                    )
-                    binding.uswTimeTable.drawTable()
-                }
-            }
+            if (timeTableList.isEmpty()) notExistTimetable()
+            else existTimetable()
+
             withContext(Main) {
                 delay(200L)
-                try {
-                    widgetUpdate()
-                } catch (e: Exception) {
-
-                }
-
+                try { widgetUpdate() } catch (e: Exception) { }
             }
+        }
+    }
+
+    private suspend fun existTimetable() {
+        timeTableSel = getCurrentTimetableInfo(db)
+
+        binding.uswTimeTable.isEmpty = false
+        tempTimeData = jsonToArray(timeTableSel!!.timeTableJsonData)
+        binding.uswTimeTable.timeTableData = tempTimeData
+        binding.uswTimeTable.infoFormat = TimeTableSelPref.prefs.getInt(
+            "infoFormat",
+            CLASSNAME_LOCATION
+        )
+        withContext(Main) {
+            binding.textTitle.text = timeTableSel?.timeTableName
+            binding.uswTimeTable.drawTable()
+        }
+    }
+
+    private suspend fun notExistTimetable() {
+        timeTableSel = null
+        binding.uswTimeTable.isEmpty = true
+        withContext(Main) {
+            binding.textTitle.text = ""
+            binding.uswTimeTable.drawTable()
         }
     }
 

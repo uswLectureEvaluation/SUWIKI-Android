@@ -27,7 +27,7 @@ class PageViewModel : ViewModel() {
         _page.value = 1
     }
 
-    fun isLastData(tmpEvaluationData: ArrayList<EvaluationData?>) {
+    fun isLastData(tmpEvaluationData: MutableList<EvaluationData?>) {
         if (tmpEvaluationData.size == 10)
             tmpEvaluationData.add(null)
         else
