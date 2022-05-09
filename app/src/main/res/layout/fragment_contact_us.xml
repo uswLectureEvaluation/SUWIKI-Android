@@ -28,7 +28,7 @@
         android:text="@string/hint_contact_us_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/et_title"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:enabled="false"
         android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@+id/close_handle" />
 
