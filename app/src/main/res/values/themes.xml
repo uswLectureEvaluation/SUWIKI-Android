@@ -25,6 +25,9 @@
     <style name="ThemeOverlay.Uswtimetable.AppWidgetContainer" parent="">
         <item name="appWidgetBackgroundColor">@color/light_blue_600</item>
         <item name="appWidgetTextColor">@color/light_blue_50</item>
+    </style>
 
+    <style name="Theme.Design.BottomSheetDialog.TopCorner16" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="background">@drawable/dialog_background</item>
     </style>
 </resources>

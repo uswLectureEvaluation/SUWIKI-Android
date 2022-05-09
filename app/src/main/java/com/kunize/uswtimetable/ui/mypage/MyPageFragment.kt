@@ -120,7 +120,8 @@ class MyPageFragment : Fragment() {
                 makeToast("준비 중입니다.")
             }
             questionButton.setOnClickListener {
-                makeToast("준비 중입니다.")
+                val dialogFragment = ContactUsFragment()
+                dialogFragment.show(parentFragmentManager, dialogFragment.tag)
             }
             termsOfUseButton.setOnClickListener {
                 makeToast("준비 중입니다.")
@@ -200,6 +201,10 @@ class MyPageFragment : Fragment() {
 
     private fun showPurchaseHistory() {
         findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment)
+    }
+
+    private fun sendQuestion() {
+
     }
 
     private fun makeToast(message: String) {

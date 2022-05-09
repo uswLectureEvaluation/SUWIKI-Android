@@ -139,5 +139,19 @@
     <string name="new_password">새로운 비밀번호</string>
     <string name="webview_close_button_description">webview_close_button</string>
     <string name="SUWIKI_WEB">https://suwiki.netlify.app/</string>
+    <string name="hint_contact_us_content">문의 내용</string>
+    <string name="hint_contact_us_title">제목</string>
+    <string name="hint_contact_us_button">보내기</string>
+
+    <string-array name="contact_us">
+        <item>--카테고리 선택--</item>
+        <item>시간표 기능</item>
+        <item>강의 평가 기능</item>
+        <item>내 정보</item>
+        <item>포인트</item>
+        <item>서버 오류</item>
+        <item>응원하기 💕</item>
+        <item>기타 문의 사항</item>
+    </string-array>
 
 </resources>
