@@ -14,6 +14,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/background</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <!-- Splash 화면 테마 -->
@@ -27,7 +28,7 @@
         <item name="appWidgetTextColor">@color/light_blue_50</item>
     </style>
 
-    <style name="Theme.Design.BottomSheetDialog.TopCorner16" parent="Theme.Material3.Light.BottomSheetDialog">
-        <item name="background">@drawable/dialog_background</item>
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="background">@drawable/bottom_sheet_background</item>
     </style>
 </resources>

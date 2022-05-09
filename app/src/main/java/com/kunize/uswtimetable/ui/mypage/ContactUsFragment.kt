@@ -36,6 +36,14 @@ class ContactUsFragment: BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnSend.setOnClickListener {
+            // TODO 문의 내용 보내기
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

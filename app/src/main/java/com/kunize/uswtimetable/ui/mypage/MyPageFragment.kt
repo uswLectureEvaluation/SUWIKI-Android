@@ -203,10 +203,6 @@ class MyPageFragment : Fragment() {
         findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment)
     }
 
-    private fun sendQuestion() {
-
-    }
-
     private fun makeToast(message: String) {
         toast?.cancel()
         toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
