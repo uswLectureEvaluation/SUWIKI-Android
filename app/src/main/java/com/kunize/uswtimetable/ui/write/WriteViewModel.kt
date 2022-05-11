@@ -1,17 +1,16 @@
 package com.kunize.uswtimetable.ui.write
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.dataclass.LectureEvaluationEditDto
-import com.kunize.uswtimetable.dataclass.LectureEvaluationPostDto
-import com.kunize.uswtimetable.dataclass.LectureExamEditDto
-import com.kunize.uswtimetable.dataclass.LectureExamPostDto
+import com.kunize.uswtimetable.data.remote.LectureEvaluationEditDto
+import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
+import com.kunize.uswtimetable.data.remote.LectureExamEditDto
+import com.kunize.uswtimetable.data.remote.LectureExamPostDto
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.ToastViewModel
-import com.kunize.uswtimetable.ui.repository.write.WriteRepository
+import com.kunize.uswtimetable.repository.write.WriteRepository
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 

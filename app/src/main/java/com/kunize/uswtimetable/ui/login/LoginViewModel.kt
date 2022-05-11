@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.ui.repository.login.LoginRepository
+import com.kunize.uswtimetable.repository.login.LoginRepository
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT

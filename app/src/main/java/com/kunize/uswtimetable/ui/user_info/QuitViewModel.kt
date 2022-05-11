@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.ui.user_info
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.ui.repository.user_info.QuitRepository
+import com.kunize.uswtimetable.repository.user_info.QuitRepository
 import kotlinx.coroutines.launch
 
 class QuitViewModel(private val repository: QuitRepository) : ViewModel() {

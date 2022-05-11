@@ -2,22 +2,19 @@ package com.kunize.uswtimetable.ui.evaluation
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.NavGraphDirections
-import com.kunize.uswtimetable.custom_view.image_spinner.CustomSpinnerAdapter
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.adapter.EvaluationListAdapter
+import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory

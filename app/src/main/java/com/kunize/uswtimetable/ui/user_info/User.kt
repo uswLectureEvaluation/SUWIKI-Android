@@ -2,7 +2,7 @@ package com.kunize.uswtimetable.ui.user_info
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.kunize.uswtimetable.TimeTableSelPref
+import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.util.Constants.TAG

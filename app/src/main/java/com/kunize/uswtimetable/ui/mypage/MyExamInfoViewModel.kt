@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.MyExamInfoDto
-import com.kunize.uswtimetable.ui.repository.my_post.MyPostRepository
+import com.kunize.uswtimetable.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.launch

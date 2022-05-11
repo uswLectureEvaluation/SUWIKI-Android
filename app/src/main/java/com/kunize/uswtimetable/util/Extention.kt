@@ -12,7 +12,6 @@ import android.widget.Spinner
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.TimeTableSelPref
 
 fun EditText.afterTextChanged(completion: (Editable?) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {

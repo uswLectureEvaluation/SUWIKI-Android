@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.data.remote.LectureEvaluationEditDto
+import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
+import com.kunize.uswtimetable.data.remote.LectureExamEditDto
+import com.kunize.uswtimetable.data.remote.LectureExamPostDto
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.ui.common.EventObserver
@@ -26,7 +29,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 

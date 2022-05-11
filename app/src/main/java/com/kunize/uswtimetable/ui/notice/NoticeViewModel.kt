@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.NoticeDto
-import com.kunize.uswtimetable.ui.repository.notice.NoticeRepository
+import com.kunize.uswtimetable.repository.notice.NoticeRepository
 import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

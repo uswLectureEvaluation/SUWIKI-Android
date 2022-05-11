@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.search_result
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,25 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.adapter.EvaluationListAdapter
+import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
-import com.kunize.uswtimetable.dataclass.EvaluationData
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.ItemType
-import com.kunize.uswtimetable.util.LectureApiOption.BEST
-import com.kunize.uswtimetable.util.LectureApiOption.HONEY
-import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
-import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
-import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.infiniteScrolls
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.collections.ArrayList
 
 class SearchResultFragment : Fragment() {
 

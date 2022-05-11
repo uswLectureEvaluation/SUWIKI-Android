@@ -10,10 +10,10 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.autofit.et.lib.AutoFitEditText
-import com.kunize.uswtimetable.CreateTimeTableActivity.Companion.semesterList
+import com.kunize.uswtimetable.ui.create_timetable.CreateTimeTableActivity.Companion.semesterList
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.DateUtil.Companion.getYearList
-import com.kunize.uswtimetable.dataclass.TimeTableList
+import com.kunize.uswtimetable.util.DateUtil.Companion.getYearList
+import com.kunize.uswtimetable.data.local.TimeTableList
 
 class EditTimetableDialog(context: Context) {
     private val localContext = context

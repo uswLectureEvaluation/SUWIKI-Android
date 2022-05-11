@@ -7,7 +7,7 @@
 
         <variable
             name="evaluationData"
-            type="com.kunize.uswtimetable.dataclass.EvaluationData" />
+            type="com.kunize.uswtimetable.data.local.EvaluationData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

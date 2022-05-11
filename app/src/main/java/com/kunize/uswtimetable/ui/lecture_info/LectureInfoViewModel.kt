@@ -5,14 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.dataclass.LectureDetailInfoDto
+import com.kunize.uswtimetable.data.remote.LectureDetailInfoDto
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.common.ToastViewModel
-import com.kunize.uswtimetable.ui.repository.lecture_info.LectureInfoRepository
+import com.kunize.uswtimetable.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response

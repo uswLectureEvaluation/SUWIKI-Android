@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".SettingActivity">
+    tools:context=".ui.timetable_setting.SettingActivity">
 
     <TextView
         android:id="@+id/textView2"

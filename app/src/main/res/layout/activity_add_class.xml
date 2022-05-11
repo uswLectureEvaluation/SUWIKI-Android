@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".AddClassActivity">
+    tools:context=".ui.add_class.AddClassActivity">
 
     <com.kakao.adfit.ads.ba.BannerAdView
         android:id="@+id/bannerAdView"

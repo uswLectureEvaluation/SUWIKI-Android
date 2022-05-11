@@ -6,9 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.ToastViewModel
-import com.kunize.uswtimetable.ui.repository.evaluation.EvaluationRepository
+import com.kunize.uswtimetable.repository.evaluation.EvaluationRepository
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class EvaluationViewModel(private val evaluationRepository: EvaluationRepository) : ViewModel(), HandlingErrorInterface {

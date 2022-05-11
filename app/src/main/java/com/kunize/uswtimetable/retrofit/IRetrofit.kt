@@ -5,7 +5,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import com.kunize.uswtimetable.TimeTableSelPref
+import com.kunize.uswtimetable.data.remote.*
+import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.user_info.User

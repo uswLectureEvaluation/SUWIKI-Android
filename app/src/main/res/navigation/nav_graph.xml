@@ -121,7 +121,7 @@
             android:defaultValue="true" />
         <argument
             android:name="lectureProfessorName"
-            app:argType="com.kunize.uswtimetable.dataclass.LectureProfessorSemester"
+            app:argType="com.kunize.uswtimetable.data.local.LectureProfessorSemester"
             app:nullable="true"
             android:defaultValue="@null" />
         <argument

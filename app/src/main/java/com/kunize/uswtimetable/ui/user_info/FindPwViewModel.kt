@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.ui.repository.user_info.FindPwRepository
+import com.kunize.uswtimetable.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.launch

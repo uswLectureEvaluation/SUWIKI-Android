@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.ui.user_info
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.ui.repository.user_info.ResetPasswordRepository
+import com.kunize.uswtimetable.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.util.Result
 import kotlinx.coroutines.launch
 import java.io.IOException

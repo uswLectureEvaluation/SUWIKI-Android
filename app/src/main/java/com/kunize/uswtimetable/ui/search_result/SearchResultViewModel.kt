@@ -8,11 +8,9 @@ import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.common.ToastViewModel
-import com.kunize.uswtimetable.ui.repository.search_result.SearchResultRepository
-import com.kunize.uswtimetable.util.LAST_PAGE
+import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.util.LectureApiOption
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchResultViewModel(private val searchResultRepository: SearchResultRepository) :

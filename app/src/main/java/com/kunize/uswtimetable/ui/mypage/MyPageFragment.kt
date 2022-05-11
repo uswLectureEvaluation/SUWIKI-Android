@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.kunize.uswtimetable.OpenSourceActivity
+import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMyPageBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory

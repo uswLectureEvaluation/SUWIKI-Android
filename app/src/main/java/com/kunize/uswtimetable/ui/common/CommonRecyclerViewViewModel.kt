@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.ui.common
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.dataclass.EvaluationData
+import com.kunize.uswtimetable.data.local.EvaluationData
 
 class CommonRecyclerViewViewModel: ViewModel() {
     private val _evaluationList = MutableLiveData<MutableList<EvaluationData?>>()

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.ui.repository.signup.SignUpRepository
+import com.kunize.uswtimetable.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.kunize.uswtimetable.util.Constants.TAG
