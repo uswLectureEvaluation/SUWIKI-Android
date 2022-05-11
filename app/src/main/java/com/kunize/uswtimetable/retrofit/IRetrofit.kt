@@ -237,31 +237,14 @@ interface IRetrofit {
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(TokenAuthenticator()))
                 .addConverterFactory(ScalarsConverterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(gsonConverterFactory())
                 .build()
         }
 
         private fun getClientWithNoToken(): Retrofit {
-            val gson = GsonBuilder()
-                .registerTypeAdapter(
-                    LocalDateTime::class.java,
-                    object : JsonDeserializer<LocalDateTime> {
-                        override fun deserialize(
-                            json: JsonElement?,
-                            typeOfT: Type?,
-                            context: JsonDeserializationContext?
-                        ): LocalDateTime {
-                            return LocalDateTime.parse(
-                                json?.asString,
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-                            )
-                        }
-                    })
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(null))
-//                .addConverterFactory(GsonConverterFactory.create(gson.create()))
                 .addConverterFactory(gsonConverterFactory())
                 .build()
         }
