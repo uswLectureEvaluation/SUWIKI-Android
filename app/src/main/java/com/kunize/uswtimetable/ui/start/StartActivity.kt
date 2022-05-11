@@ -31,7 +31,6 @@ import kotlinx.coroutines.withContext
 class StartActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
-    private lateinit var appUpdateManager: AppUpdateManager
     var toUpdate = false
 
     companion object {
@@ -41,8 +40,6 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        appUpdateManager = AppUpdateManagerFactory.create(this)
 
         binding.showProgress.text = "시간표 DB 버전 확인 중"
 
@@ -65,7 +62,6 @@ class StartActivity : AppCompatActivity() {
         var originData: String
         var done = false
         var update: Boolean? = null
-        var appVersion: Boolean = false
 
         // 로그인 유지
         if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN)) {
@@ -78,31 +74,6 @@ class StartActivity : AppCompatActivity() {
         val intent = Intent(this@StartActivity, MainActivity::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
-
-        appUpdateManager.let {
-            it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                Log.d(
-                    "appUpdate", "${
-                        appUpdateInfo.updateAvailability() ==
-                                UpdateAvailability.UPDATE_AVAILABLE
-                    } ${appUpdateInfo.updateAvailability()}")
-                if (appUpdateInfo.updateAvailability() ==
-                    UpdateAvailability.UPDATE_AVAILABLE
-                ) {
-                    appUpdateManager.startUpdateFlowForResult(
-                        appUpdateInfo,
-                        IMMEDIATE,
-                        this,
-                        MY_REQUEST_CODE
-                    )
-                    toUpdate = true
-                }
-                appVersion = true
-            }.addOnFailureListener {
-                Log.d("appUpdate", "실패!, $it")
-                appVersion = true
-            }
-        }
 
         database = FirebaseDatabase.getInstance()
 
@@ -122,10 +93,10 @@ class StartActivity : AppCompatActivity() {
 
         CoroutineScope(IO).launch {
             while (true) {
-                if (update != null && appVersion && !toUpdate)
+                if (update != null && !toUpdate)
                     break
                 delay(500L)
-                Log.d("update123","$update $appVersion")
+                Log.d("update123","$update")
             } //update 값이 입력될 때 까지 무한 루프
             if (update == true) {
                 Log.d("firebase", "업데이트 실행 $version")
@@ -177,42 +148,6 @@ class StartActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 startActivity(intent)
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        appUpdateManager
-            .appUpdateInfo
-            .addOnSuccessListener {
-                appUpdateInfo->
-                if(appUpdateInfo.updateAvailability() ==
-                        UpdateAvailability
-                            .DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                    appUpdateManager.startUpdateFlowForResult(
-                        appUpdateInfo,
-                        IMMEDIATE,
-                        this,
-                        MY_REQUEST_CODE
-                    )
-                }
-            }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == MY_REQUEST_CODE) {
-            if(resultCode != RESULT_OK) {
-                MaterialAlertDialogBuilder(this)
-                    .setPositiveButton("확인") {
-                        _,_ ->
-                    }
-                    .setMessage("원활한 앱 사용을 위해 업데이트를 권장합니다.")
-                    .show()
-                toUpdate = false
             }
         }
     }
