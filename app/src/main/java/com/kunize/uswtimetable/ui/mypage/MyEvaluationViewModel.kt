@@ -9,46 +9,58 @@ import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.LAST_PAGE
+import com.kunize.uswtimetable.util.LIST_CONFIG.ONCE_REQUEST_SIZE
 import kotlinx.coroutines.launch
 
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _myEvaluationData = MutableLiveData<List<MyEvaluationDto>>()
     val myEvaluationData: LiveData<List<MyEvaluationDto>> get() = _myEvaluationData
-    val loading = MutableLiveData<Boolean>()
+    val loading = MutableLiveData(true)
     private val page = MutableLiveData<Int>()
+    private var loadFinished = false
 
     init {
-        loading.value = true
         page.value = 1
         scrollBottomEvent()
     }
 
-    fun getMyEvaluationDetail(id: Long) = myEvaluationData.value?.find { evaluation ->
-        evaluation.id == id
-    }
-
     fun scrollBottomEvent() {
-        Log.d(TAG, "MyEvaluationViewModel - scrollBottomEvent(${page.value}) called")
-        if (page.value == LAST_PAGE) return
+        if (loadFinished || page.value == LAST_PAGE) return
+        Log.d(TAG, "MyEvaluationViewModel - scrollBottomEvent(${page.value}) called / loadFinished : $loadFinished")
 
         viewModelScope.launch {
+            loading.postValue(true)
             val response = repository.getEvaluations(page.value ?: 1)
-            if (response.isSuccessful && response.body() != null) {
-                val responseData = response.body()?:return@launch
-                if (responseData.data.isEmpty()) return@launch
+            if (response.isSuccessful) {
+                val responseData = response.body() ?: return@launch
 
                 val currentData = _myEvaluationData.value?.toMutableList() ?: mutableListOf()
                 currentData.addAll(responseData.data)
                 _myEvaluationData.postValue(currentData)
-                Log.d(TAG, "MyEvaluationViewModel / new data: ${responseData.data} ")
-                nextPage()
+
+                if (responseData.data.size < ONCE_REQUEST_SIZE) loadFinished = true
+                else nextPage()
             }
+            loading.postValue(false)
         }
-        loading.postValue(false)
     }
 
     private fun nextPage() {
         if (page.value == LAST_PAGE) return
         page.postValue(page.value?.plus(1))
+    }
+
+    fun deletePost(id: Long) {
+        viewModelScope.launch {
+            repository.deleteEvaluation(id)
+            initList()
+        }
+    }
+
+    private fun initList() {
+        loadFinished = false
+        _myEvaluationData.value = emptyList()
+        page.value = 1
+        scrollBottomEvent()
     }
 }

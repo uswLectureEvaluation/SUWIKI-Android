@@ -35,8 +35,11 @@ object API {
     const val MY_PAGE: String = "/user/my-page"
     const val EVALUATE_POST: String = "/evaluate-posts/findByUserIdx"
     const val UPDATE_EVALUATE_POST: String = "/evaluate-posts/update"
+    const val DELETE_EVALUATE_POST: String = "/evaluate-posts/delete/"
     const val EXAM_POSTS: String = "/exam-posts/findByUserIdx"
     const val UPDATE_EXAM_POSTS: String = "/exam-posts/findByUserIdx"
+    const val DELETE_EXAM_POSTS: String = "/exam-posts/delete/"
+    const val PURCHASE_HISTORY: String = "/exam-posts/purchase-history"
     const val SIGN_UP: String = "/user/join"
     const val SIGN_UP_ID_CHECK: String = "/user/check-id"
     const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
@@ -130,4 +133,7 @@ object TimetableCellColor {
         "darkPurple" to Color.rgb(161, 121, 192), //진보라색
         "darkGray" to Color.rgb(143, 142, 139) //진회색
     )
+}
+object LIST_CONFIG {
+    const val ONCE_REQUEST_SIZE = 10
 }

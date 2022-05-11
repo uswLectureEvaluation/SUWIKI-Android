@@ -9,6 +9,7 @@ import com.kunize.uswtimetable.dataclass.MyExamInfoDto
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.LAST_PAGE
+import com.kunize.uswtimetable.util.LIST_CONFIG.ONCE_REQUEST_SIZE
 import kotlinx.coroutines.launch
 
 class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel() {
@@ -16,32 +17,29 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
     val myExamInfoData: LiveData<List<MyExamInfoDto>> get() = _myExamInfoData
     val loading = MutableLiveData<Boolean>()
     private val page = MutableLiveData<Int>()
+    private var loadFinished = false
 
     init {
         page.value = 1
-        loading.value = true
         scrollBottomEvent()
     }
-/*
-    fun getMyExamInfoDetail(id: String): MyExamInfo? = myExamInfoData.value?.find { evaluation ->
-        evaluation.id == id
-    }*/
 
     fun scrollBottomEvent() {
-        Log.d(Constants.TAG, "MyEvaluationViewModel - scrollBottomEvent(${page.value}) called")
-        if (page.value == LAST_PAGE) return
+        if (loadFinished || page.value == LAST_PAGE) return
+        Log.d(Constants.TAG, "MyEvaluationViewModel - scrollBottomEvent(${page.value}) called / loadFinished : $loadFinished")
 
         viewModelScope.launch {
+            loading.postValue(true)
             val response = repository.getExamInfos(page.value ?: 1)
-            if (response.isSuccessful && response.body() != null) {
+            if (response.isSuccessful) {
                 val newData = response.body()?.data ?: return@launch
-                if (newData.isNullOrEmpty()) return@launch
 
                 val currentData = _myExamInfoData.value?.toMutableList() ?: mutableListOf()
                 currentData.addAll(newData)
                 _myExamInfoData.postValue(currentData)
-                Log.d(Constants.TAG, "MyEvaluationViewModel / new data: $newData ")
-                nextPage()
+
+                if (newData.size < ONCE_REQUEST_SIZE) loadFinished = true
+                else nextPage()
             }
             loading.postValue(false)
         }
@@ -50,5 +48,19 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
     private fun nextPage() {
         if (page.value == LAST_PAGE) return
         page.postValue(page.value?.plus(1))
+    }
+
+    fun deletePost(id: Long) {
+        viewModelScope.launch {
+            repository.deleteExamInfo(id)
+            initList()
+        }
+    }
+
+    private fun initList() {
+        loadFinished = false
+        _myExamInfoData.value = emptyList()
+        page.value = 1
+        scrollBottomEvent()
     }
 }

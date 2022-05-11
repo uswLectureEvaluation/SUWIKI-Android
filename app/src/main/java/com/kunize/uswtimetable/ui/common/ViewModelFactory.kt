@@ -10,6 +10,7 @@ import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel
 import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
+import com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.repository.evaluation.EvaluationRemoteDataSource
@@ -80,12 +81,19 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 MyPageViewModel() as T
             }
             modelClass.isAssignableFrom(MyEvaluationViewModel::class.java) -> {
-                val repository = MyPostRepository(MyPostRemoteDataSource())
+                val apiService = IRetrofit.getInstance()
+                val repository = MyPostRepository(MyPostRemoteDataSource(apiService))
                 MyEvaluationViewModel(repository) as T
             }
             modelClass.isAssignableFrom(MyExamInfoViewModel::class.java) -> {
-                val repository = MyPostRepository(MyPostRemoteDataSource())
+                val apiService = IRetrofit.getInstance()
+                val repository = MyPostRepository(MyPostRemoteDataSource(apiService))
                 MyExamInfoViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(PurchaseHistoryViewModel::class.java) -> {
+                val apiService = IRetrofit.getInstance()
+                val repository = MyPostRepository(MyPostRemoteDataSource(apiService))
+                PurchaseHistoryViewModel(repository) as T
             }
             // Notice
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {

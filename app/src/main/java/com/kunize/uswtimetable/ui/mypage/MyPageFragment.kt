@@ -73,7 +73,6 @@ class MyPageFragment : Fragment() {
                 }
                 R.id.action_log_out -> {
                     User.logout()
-//                    viewModel.refresh()
                     true
                 }
                 R.id.action_change_password -> {
@@ -82,6 +81,10 @@ class MyPageFragment : Fragment() {
                 }
                 R.id.action_quit -> {
                     quit(requireContext())
+                    true
+                }
+                R.id.menu_purchase_history -> {
+                    showPurchaseHistory()
                     true
                 }
                 else -> {
@@ -117,7 +120,8 @@ class MyPageFragment : Fragment() {
                 makeToast("준비 중입니다.")
             }
             questionButton.setOnClickListener {
-                makeToast("준비 중입니다.")
+                val dialogFragment = ContactUsFragment()
+                dialogFragment.show(parentFragmentManager, dialogFragment.tag)
             }
             termsOfUseButton.setOnClickListener {
                 makeToast("준비 중입니다.")
@@ -193,6 +197,10 @@ class MyPageFragment : Fragment() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun showPurchaseHistory() {
+        findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment)
     }
 
     private fun makeToast(message: String) {

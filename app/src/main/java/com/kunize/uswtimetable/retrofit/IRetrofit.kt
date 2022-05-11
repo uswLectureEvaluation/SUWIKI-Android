@@ -12,6 +12,8 @@ import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.BUY_EXAM
+import com.kunize.uswtimetable.util.API.DELETE_EVALUATE_POST
+import com.kunize.uswtimetable.util.API.DELETE_EXAM_POSTS
 import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EXAM
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
@@ -28,6 +30,7 @@ import com.kunize.uswtimetable.util.API.NOTICE
 import com.kunize.uswtimetable.util.API.NOTICE_LIST
 import com.kunize.uswtimetable.util.API.PASSWORD
 import com.kunize.uswtimetable.util.API.PASSWORD_RESET
+import com.kunize.uswtimetable.util.API.PURCHASE_HISTORY
 import com.kunize.uswtimetable.util.API.QUIT
 import com.kunize.uswtimetable.util.API.REQUEST_REFRESH
 import com.kunize.uswtimetable.util.API.SEARCH
@@ -52,7 +55,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 import java.lang.reflect.Type
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 interface IRetrofit {
@@ -124,6 +129,16 @@ interface IRetrofit {
     // 내가 쓴 글 (시험 정보 수정)
     @GET(UPDATE_EXAM_POSTS)
     suspend fun updateExamPost(@Body info: MyExamInfoEditDto)
+
+    @DELETE(DELETE_EVALUATE_POST)
+    suspend fun deleteEvaluation(@Query("evaluateIdx") id: Long)
+
+    @DELETE(DELETE_EXAM_POSTS)
+    suspend fun deleteExamInfo(@Query("examIdx") id: Long)
+
+    // 시험정보 구매 이력
+    @GET(PURCHASE_HISTORY)
+    suspend fun getPurchaseHistory(): Response<PurchaseHistoryDto>
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)
@@ -223,25 +238,15 @@ interface IRetrofit {
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(TokenAuthenticator()))
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(gsonConverterFactory())
                 .build()
         }
 
         private fun getClientWithNoToken(): Retrofit {
-            val gson = GsonBuilder()
-                .registerTypeAdapter(LocalDateTime::class.java, object: JsonDeserializer<LocalDateTime> {
-                    override fun deserialize(
-                        json: JsonElement?,
-                        typeOfT: Type?,
-                        context: JsonDeserializationContext?
-                    ): LocalDateTime {
-                        return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
-                    }
-                })
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(null))
-                .addConverterFactory(GsonConverterFactory.create(gson.create()))
+                .addConverterFactory(gsonConverterFactory())
                 .build()
         }
 
@@ -268,6 +273,39 @@ interface IRetrofit {
             }
 
             return client.build()
+        }
+
+        private fun gsonConverterFactory(): GsonConverterFactory {
+            val gson = GsonBuilder()
+                .registerTypeAdapter(LocalDateTime::class.java, object: JsonDeserializer<LocalDateTime> {
+                    override fun deserialize(
+                        json: JsonElement?,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?
+                    ): LocalDateTime {
+                        return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+                    }
+                })
+                .registerTypeAdapter(LocalDate::class.java, object: JsonDeserializer<LocalDate> {
+                    override fun deserialize(
+                        json: JsonElement?,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?
+                    ): LocalDate {
+                        return LocalDate.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                    }
+                })
+                .registerTypeAdapter(LocalTime::class.java, object: JsonDeserializer<LocalTime> {
+                    override fun deserialize(
+                        json: JsonElement?,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?
+                    ): LocalTime {
+                        return LocalTime.parse(json?.asString, DateTimeFormatter.ofPattern("HH:mm:ss"))
+                    }
+                })
+                .create()
+            return GsonConverterFactory.create(gson)
         }
     }
 }

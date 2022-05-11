@@ -48,6 +48,7 @@ class MyExamInfoFragment : Fragment() {
                 ItemType.DELETE_BUTTON -> {
                     Toast.makeText(requireContext(), "아이템${data.id} 삭제 버튼 선택됨", Toast.LENGTH_SHORT)
                         .show()
+                    viewModel.deletePost(data.id)
                 }
             }
         }

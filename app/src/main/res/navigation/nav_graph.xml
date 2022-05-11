@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_more_to_myPostFragment"
             app:destination="@id/myPostFragment" />
+        <action
+            android:id="@+id/action_navigation_my_page_to_purchaseHistoryFragment"
+            app:destination="@id/purchaseHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
@@ -138,4 +141,9 @@
         app:destination="@id/myPostFragment"
         app:popUpTo="@id/myPostFragment"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/purchaseHistoryFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.PurchaseHistoryFragment"
+        android:label="purchase_history_fragment"
+        tools:layout="@layout/purchase_history_fragment" />
 </navigation>
