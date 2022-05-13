@@ -9,7 +9,7 @@ data class LectureDetailInfoDto(
 
 data class LectureDetailInfoDataDto(
     val id: Long,
-    @SerializedName("selectedSemester") val semester: String,
+    @SerializedName("semesterList") val semester: String,
     val professor: String,
     val majorType: String,
     val lectureType: String,

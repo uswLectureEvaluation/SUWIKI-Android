@@ -32,7 +32,7 @@ data class LectureMainDto(
 
 data class LectureMain(
     val id: Long,
-    @SerializedName("selectedSemester") val semester: String,
+    @SerializedName("semesterList") val semester: String,
     val professor: String,
     val majorType: String,
     val lectureType: String,

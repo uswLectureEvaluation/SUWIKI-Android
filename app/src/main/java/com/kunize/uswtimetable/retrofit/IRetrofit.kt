@@ -66,10 +66,6 @@ interface IRetrofit {
     @POST(REQUEST_REFRESH)
     fun requestRefresh(@Header(AUTH_HEADER) refresh: String): Call<Token>
 
-    // 메인 페이지 요청 API
-    @GET()
-    fun getMain(): Call<JsonElement>
-
     // 회원가입 요청 API
     @POST(SIGN_UP)
     suspend fun signUp(@Body info: SignUpFormat): Response<SuccessCheckDto>

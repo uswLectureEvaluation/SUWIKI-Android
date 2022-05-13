@@ -1,7 +1,7 @@
 package com.kunize.uswtimetable.data.remote
 
 data class LectureEvaluationEditDto(
-    val semester: String,
+    val selectedSemester: String,
     val satisfaction: Float,
     val learning: Float,
     val honey: Float,
@@ -14,7 +14,7 @@ data class LectureEvaluationEditDto(
 data class LectureEvaluationPostDto(
     val lectureName: String,
     val professor: String,
-    val semester: String,
+    val selectedSemester: String,
     val satisfaction: Float,
     val learning: Float,
     val honey: Float,
