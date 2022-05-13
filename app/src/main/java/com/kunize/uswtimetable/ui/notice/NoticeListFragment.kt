@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.adapter.NoticeAdapter
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants.TAG

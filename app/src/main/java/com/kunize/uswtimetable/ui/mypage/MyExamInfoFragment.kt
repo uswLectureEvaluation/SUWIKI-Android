@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.adapter.MyExamInfoAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
 import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.ViewModelFactory

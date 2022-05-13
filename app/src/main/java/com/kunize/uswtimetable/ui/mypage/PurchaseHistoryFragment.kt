@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kunize.uswtimetable.adapter.PurchaseHistoryAdapter
 import com.kunize.uswtimetable.databinding.PurchaseHistoryFragmentBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants.TAG

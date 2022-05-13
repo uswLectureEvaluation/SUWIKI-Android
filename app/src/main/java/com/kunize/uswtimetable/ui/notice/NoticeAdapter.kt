@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.adapter
+package com.kunize.uswtimetable.ui.notice
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemNoticeBinding
 import com.kunize.uswtimetable.dataclass.NoticeDto
 
-class NoticeAdapter(val onItemClicked: (NoticeDto) -> Unit): ListAdapter<NoticeDto, NoticeAdapter.ViewHolder>(diffUtil) {
+class NoticeAdapter(val onItemClicked: (NoticeDto) -> Unit): ListAdapter<NoticeDto, NoticeAdapter.ViewHolder>(
+    diffUtil
+) {
     inner class ViewHolder(private val binding: ItemNoticeBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(notice: NoticeDto) {
             binding.root.setOnClickListener {

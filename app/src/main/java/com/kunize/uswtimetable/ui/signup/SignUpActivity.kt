@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
-import com.kunize.uswtimetable.adapter.SignUpPageAdapter
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.BackKeyManager
