@@ -81,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
         with(binding) {
             signInButton.setOnClickListener {
                 startActivity(Intent(context, SignUpActivity::class.java))
+                finish()
             }
             findIdButton.setOnClickListener {
                 startActivity(Intent(context, FindIdActivity::class.java))

@@ -20,7 +20,6 @@ class SignUpFragment1 : Fragment() {
     private var _binding: FragmentSignUp1Binding? = null
     val binding: FragmentSignUp1Binding get() = _binding!!
 
-    private val activity by lazy { requireActivity() as SignUpActivity }
     private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
@@ -28,6 +27,12 @@ class SignUpFragment1 : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
@@ -48,13 +53,11 @@ class SignUpFragment1 : Fragment() {
 
         viewModel.isIdUnique.observe(viewLifecycleOwner) { isUnique ->
             if (isUnique == false && viewModel.errorMessage.value.isNullOrBlank().not()) {
-                activity.makeToast(viewModel.errorMessage.value!!)
+                viewModel.setToastMessage(viewModel.errorMessage.value!!)
             }
         }
 
         initViews()
-
-        return binding.root
     }
 
     private fun initViews() {
@@ -83,7 +86,7 @@ class SignUpFragment1 : Fragment() {
                 if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
-                activity.makeToast("소문자와 숫자만 입력 가능합니다: $source")
+                viewModel.setToastMessage("소문자와 숫자만 입력 가능합니다: $source")
                 source.dropLast(1)
             })
 
@@ -94,7 +97,7 @@ class SignUpFragment1 : Fragment() {
                 if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
                     return@InputFilter source
                 }
-                activity.makeToast("입력할 수 없는 문자입니다: $source")
+                viewModel.setToastMessage("입력할 수 없는 문자입니다: $source")
                 ""
             })
         }
@@ -117,7 +120,7 @@ class SignUpFragment1 : Fragment() {
 
     private fun inputLimitAlert(str: String, limit: Int) {
         if (str.length >= limit) {
-            activity.makeToast("입력할 수 있는 최대 길이입니다")
+            viewModel.setToastMessage("입력할 수 있는 최대 길이입니다")
         }
     }
 

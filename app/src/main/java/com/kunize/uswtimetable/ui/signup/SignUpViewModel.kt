@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.repository.signup.SignUpRepository
+import com.kunize.uswtimetable.ui.common.Event
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -31,7 +32,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val loading = MutableLiveData<Boolean>()
     private var _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> get() = _currentPage
-    val errorMessage = MutableLiveData("")
+    private val _toastMessage = MutableLiveData<String>()
+    val toastMessage: LiveData<String> get() = _toastMessage
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _errorMessage
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
 
@@ -44,18 +48,19 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     private val idPattern: Pattern = Pattern.compile(Constants.ID_REGEX)
     private val pwPattern: Pattern = Pattern.compile(Constants.PW_REGEX)
 
+    // Event
+    private val _eventCheckMail = MutableLiveData<Event<Boolean>>()
+    val eventCheckMail: LiveData<Event<Boolean>> get() = _eventCheckMail
+    private val _eventLoginButton = MutableLiveData<Event<Boolean>>()
+    val eventLoginButton: LiveData<Event<Boolean>> get() = _eventLoginButton
+    private val _eventCloseButton = MutableLiveData<Event<Boolean>>()
+    val eventCloseButton: LiveData<Event<Boolean>> get() = _eventCloseButton
+
     init {
         _currentPage.value = 0
         loading.value = false
         setButtonAttr()
         setNextButtonEnable()
-    }
-
-    fun onNextButtonClick() {
-        when (currentPage.value) {
-            0 -> checkId()
-            1 -> signUp()
-        }
     }
 
     fun signUpDataChanged(
@@ -91,6 +96,14 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         setNextButtonEnable()
     }
 
+    fun onNextButtonClick() {
+        when (currentPage.value) {
+            0 -> checkId()
+            1 -> signUp()
+            2 -> _eventLoginButton.value = Event(true)
+        }
+    }
+
     fun moveToPreviousPage() {
         _currentPage.value = when (currentPage.value) {
             1 -> {
@@ -98,8 +111,8 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                 _currentPage.value?.minus(1)
             }
             2 -> {
-                isEmailUnique.value = false
-                _currentPage.value?.minus(1)
+                _eventCloseButton.value = Event(true)
+                _currentPage.value
             }
             else -> _currentPage.value
         }
@@ -115,6 +128,14 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
             else -> false
         }
         Log.d(TAG, "SignUpViewModel - setNextButtonEnable() called / ${nextButtonEnable.value}")
+    }
+
+    fun onClickCheckMail() {
+        _eventCheckMail.value = Event(true)
+    }
+
+    fun setToastMessage(message: String) {
+        _toastMessage.value = message
     }
 
     private fun moveToNextPage() {
@@ -165,23 +186,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                     onError("이미 가입된 아이디입니다.")
                 } else {
                     moveToNextPage()
-                }
-            } else {
-                onError("${response.code()} Error: ${response.errorBody()}")
-            }
-            loading.postValue(false)
-        }
-    }
-
-    private fun checkEmail() {
-        val userEmail = email.value?.plus(SCHOOL_DOMAIN_AT) ?: return
-        loading.value = true
-        viewModelScope.launch {
-            val response = repository.checkEmail(userEmail)
-            if (response.isSuccessful) {
-                isEmailUnique.postValue(response.body()?.overlap == false)
-                if (response.body()?.overlap == true) {
-                    onError("이미 가입된 이메일입니다.")
                 }
             } else {
                 onError("${response.code()} Error: ${response.errorBody()}")
@@ -263,6 +267,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     private fun onError(message: String) {
-        errorMessage.value = message
+        _errorMessage.value = message
     }
 }

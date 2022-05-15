@@ -18,6 +18,7 @@ object Constants {
     const val PW_REGEX = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
 
     const val KEY_NOTICE_ID = "notice_id"
+    const val KEY_URL = "url"
 }
 
 object API {

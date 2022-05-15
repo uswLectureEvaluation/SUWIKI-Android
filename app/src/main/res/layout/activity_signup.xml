@@ -10,10 +10,6 @@
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
 
-        <variable
-            name="constants"
-            type="com.kunize.uswtimetable.util.Constants" />
-
         <import type="android.view.View" />
     </data>
 
@@ -48,6 +44,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/signup_view_pager"
                 android:layout_width="0dp"
+                android:focusable="false"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/signup_indicator"
                 app:layout_constraintEnd_toEndOf="parent"
