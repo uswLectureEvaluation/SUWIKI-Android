@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.databinding.FragmentNoticeDetailBinding
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
 
 class NoticeDetailFragment : Fragment() {
     private var _binding: FragmentNoticeDetailBinding? = null
@@ -20,20 +22,22 @@ class NoticeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNoticeDetailBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-
-        arguments?.getLong("noticeId")?.let { viewModel.getNotice(it) }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener {
-            view.findNavController().popBackStack()
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
+
+        requireArguments().getLong(KEY_NOTICE_ID).let {
+            viewModel.getNotice(it)
         }
+
+        viewModel.eventBack.observe(viewLifecycleOwner, EventObserver {
+            if (it) findNavController().navigateUp()
+        })
     }
 
     override fun onDestroyView() {
