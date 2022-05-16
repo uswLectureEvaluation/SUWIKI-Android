@@ -168,16 +168,16 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_evaluation_count(viewmodel.user.user.writtenLecture)}"
+                                        android:text="@{@string/my_evaluation_count(viewmodel.user.user.writtenEvaluation)}"
                                         android:textColor="@color/black"
                                         tools:text="작성한 강의 평가 : 5개" />
 
                                     <TextView
                                         android:id="@+id/myEvaluationsPoint"
                                         style="@style/TextCaption2"
+                                        point="@{viewmodel.user.user.writtenEvaluation * point.WRITE_EVALUATION}"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{@string/detail_point_positive(viewmodel.user.user.writtenLecture * point.WRITE_LECTURE)}"
                                         android:textColor="@color/red"
                                         tools:text="(+100P)"
                                         tools:textColor="#F00" />
@@ -206,10 +206,9 @@
                                     <TextView
                                         android:id="@+id/myExamInformationPoint"
                                         style="@style/TextCaption2"
+                                        point="@{viewmodel.user.user.writtenExam * point.WRITE_EXAM}"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{@string/detail_point_positive(viewmodel.user.user.writtenExam * point.WRITE_EXAM)}"
-                                        android:textColor="@color/red"
                                         tools:text="(+40P)"
                                         tools:textColor="#F00" />
 
@@ -237,10 +236,9 @@
                                     <TextView
                                         android:id="@+id/openedExamPoint"
                                         style="@style/TextCaption2"
+                                        point="@{viewmodel.user.user.viewExam * point.VIEW_EXAM}"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{@string/detail_point(viewmodel.user.user.viewExam * point.VIEW_EXAM)}"
-                                        android:textColor="@color/blue"
                                         tools:text="(-40P)"
                                         tools:textColor="#00F" />
                                 </LinearLayout>
