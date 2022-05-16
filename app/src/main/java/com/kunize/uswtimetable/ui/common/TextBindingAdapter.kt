@@ -15,10 +15,10 @@ fun applyDateTime(view: TextView, dateTime: LocalDateTime) {
 @BindingAdapter("point")
 fun applyUserPoint(view: TextView, point: Int) {
     if (point >= 0) {
-        view.text = "(+$point)"
+        view.text = view.resources.getString(R.string.detail_point_positive, point)
         view.setTextColor(ContextCompat.getColor(view.context, R.color.custom_red))
     } else {
-        view.text = "($point)"
+        view.text = view.resources.getString(R.string.detail_point, point)
         view.setTextColor(ContextCompat.getColor(view.context, R.color.custom_blue))
     }
 }
