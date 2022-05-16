@@ -14,7 +14,7 @@ data class MyEvaluationDto(
     val id: Long,
     val lectureName: String, //과목이름
     val professor: String, //교수이름
-    val semester: String,
+    val selectedSemester: String,
     val semesterList: String,
     val totalAvg: Float, //총점
     val satisfaction: Float, //만족도

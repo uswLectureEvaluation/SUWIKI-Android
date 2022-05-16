@@ -20,7 +20,8 @@ import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
 import com.kunize.uswtimetable.data.remote.LectureExamEditDto
 import com.kunize.uswtimetable.data.remote.LectureExamPostDto
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
-import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.dataclass.MyEvaluationDto
+import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.WriteFragmentTitle
@@ -53,7 +54,7 @@ class WriteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_write, container, false)
 
         binding.viewModel = writeViewModel
@@ -343,7 +344,7 @@ class WriteFragment : Fragment() {
             setGradeRadioBtn(it)
             val list = it.semesterList.replace(" ","").split(",")
             setSpinnerList(list)
-            binding.writeYearSemesterSpinner.setSelection(list.indexOf(it.semester))
+            binding.writeYearSemesterSpinner.setSelection(list.indexOf(it.selectedSemester))
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EVALUATION
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT

@@ -24,7 +24,7 @@ class MyEvaluationAdapter(val onItemClicked: (data: MyEvaluationDto, type: ItemT
         fun bind(data: MyEvaluationDto) {
             with(binding) {
                 lectureName.text = data.lectureName
-                yearSemester.text = data.semester
+                yearSemester.text = data.selectedSemester
                 lectureProfessor.text = data.professor
                 averRatingBar.rating = data.totalAvg
                 averScore.text = data.totalAvg.toString()
