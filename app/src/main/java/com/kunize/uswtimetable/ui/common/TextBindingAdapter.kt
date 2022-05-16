@@ -18,7 +18,7 @@ fun applyUserPoint(view: TextView, point: Int) {
         view.text = "(+$point)"
         view.setTextColor(ContextCompat.getColor(view.context, R.color.custom_red))
     } else {
-        view.text = "${(point)}"
+        view.text = "($point)"
         view.setTextColor(ContextCompat.getColor(view.context, R.color.custom_blue))
     }
 }
