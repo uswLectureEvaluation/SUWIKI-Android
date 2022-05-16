@@ -8,7 +8,6 @@ object Constants {
     const val PW_COUNT_LOWER_LIMIT = 8
     const val ID_COUNT_LIMIT = 20
     const val PW_COUNT_LIMIT = 24
-    const val SCHOOL_DOMAIN = "suwon.ac.kr"
     const val SCHOOL_DOMAIN_AT = "@suwon.ac.kr"
     const val SCHOOL_HOMEPAGE = "https://portal.suwon.ac.kr"
     const val NUMBER_OF_YEAR = 6
@@ -16,7 +15,7 @@ object Constants {
     const val SEMESTER_1_END = 6
     const val ID_REGEX = """^[a-z0-9]*$"""
     const val PW_REGEX = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
-
+    // Key of Intent or Bundle
     const val KEY_NOTICE_ID = "notice_id"
     const val KEY_URL = "url"
 }
@@ -66,7 +65,7 @@ object WriteFragmentTitle {
 }
 
 object UserPoint {
-    const val WRITE_LECTURE = 10
+    const val WRITE_EVALUATION = 10
     const val WRITE_EXAM = 20
     const val VIEW_EXAM = -20
 }
