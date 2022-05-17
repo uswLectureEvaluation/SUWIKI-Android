@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.dataclass
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class MyEvaluationListDto(
@@ -41,7 +42,7 @@ data class MyExamInfoDto(
     val id: Long,
     val lectureName: String, //과목 이름
     val professor: String, //교수이름
-    val semester: String,
+    @SerializedName("selectedSemester") val semester: String,
     val semesterList: String,
     val examInfo: String, //시험 방식
     val examDifficulty: String, //시험 난이도

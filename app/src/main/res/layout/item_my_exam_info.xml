@@ -3,25 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="data"
+            type="com.kunize.uswtimetable.dataclass.MyExamInfoDto" />
+
+        <variable
+            name="viewType"
+            type="com.kunize.uswtimetable.util.ItemType" />
+
+        <variable
+            name="viewmodel"
+            type="com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel" />
+
+        <variable
+            name="contentTextView"
+            type="android.widget.TextView" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemLayout"
+        expandable="@{contentTextView}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_effect_recyclerview"
+        android:onClick="@{() -> viewmodel.onItemClicked(viewType.ROOT_VIEW, data)}"
         android:padding="@dimen/recyclerview_padding">
 
         <TextView
             android:id="@+id/lectureName"
             style="@style/lecture_name_middle_style"
             android:layout_marginTop="4dp"
+            android:text="@string/title_item_my_exam_info_lecture_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/yearSemester"
-            tools:text="강의 이름" />
+            app:layout_constraintTop_toBottomOf="@id/yearSemester" />
 
         <TextView
             android:id="@+id/lectureProfessor"
             style="@style/professor_middle_style"
             android:layout_marginStart="8dp"
+            android:text="@{data.professor}"
             app:layout_constraintBottom_toBottomOf="@+id/lectureName"
             app:layout_constraintStart_toEndOf="@+id/lectureName"
             tools:text="교수 이름" />
@@ -30,7 +52,7 @@
             android:id="@+id/tv_exam_type_title"
             style="@style/default_black_bold_textview_style"
             android:layout_marginTop="8dp"
-            android:text="시험 방식"
+            android:text="@string/title_item_my_exam_info_exam_type"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lectureName" />
 
@@ -40,6 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:text="@{data.examInfo}"
             android:textColor="@color/custom_blue"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_exam_type_title"
@@ -52,15 +75,17 @@
             android:id="@+id/tv_exam_difficulty_title"
             style="@style/default_black_bold_textview_style"
             android:layout_marginTop="8dp"
-            android:text="난이도"
+            android:text="@string/text_item_my_exam_info_difficulty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_exam_type_title" />
 
         <TextView
             android:id="@+id/tv_exam_difficulty"
             style="@style/TextBody1"
+            difficultColor="@{data.examDifficulty}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@{data.examDifficulty}"
             android:textColor="@color/custom_blue"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tv_exam_difficulty_title"
@@ -72,6 +97,7 @@
         <TextView
             android:id="@+id/deleteBtn"
             style="@style/recyclerview_evaluation_rounding_text_style"
+            android:onClick="@{() -> viewmodel.onItemClicked(viewType.DELETE_BUTTON, data)}"
             android:text="@string/delete"
             android:textColor="@color/custom_red"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +107,7 @@
             android:id="@+id/editBtn"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:layout_marginEnd="16dp"
+            android:onClick="@{() -> viewmodel.onItemClicked(viewType.EDIT_BUTTON, data)}"
             android:text="@string/edit"
             android:textColor="@color/blue"
             app:layout_constraintEnd_toStartOf="@id/deleteBtn"
@@ -93,6 +120,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="2"
+            android:text="@{data.content}"
             android:textColor="@color/custom_dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +130,7 @@
         <TextView
             android:id="@+id/yearSemester"
             style="@style/recyclerview_evaluation_rounding_text_style"
-            android:textColor="@color/black"
+            android:text="@{data.semester}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2020-1" />

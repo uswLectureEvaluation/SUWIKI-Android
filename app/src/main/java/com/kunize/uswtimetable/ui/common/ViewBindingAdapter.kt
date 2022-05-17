@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("group", "content")
-fun applyExpandOrFoldView(view: View, group: ConstraintLayout, content: TextView) {
+fun applyExpandOrFoldLayout(view: View, group: ConstraintLayout, content: TextView) {
     view.setOnClickListener {
         if (group.isVisible) {
             group.visibility = View.GONE
@@ -16,5 +16,12 @@ fun applyExpandOrFoldView(view: View, group: ConstraintLayout, content: TextView
             group.visibility = View.VISIBLE
             content.maxLines = 100
         }
+    }
+}
+
+@BindingAdapter("expandable")
+fun applyExpandOrFoldText(view: View, content: TextView) {
+    view.setOnClickListener {
+        content.maxLines = if (content.maxLines == 2) 100 else 2
     }
 }
