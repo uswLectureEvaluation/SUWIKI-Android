@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="data"
+            type="com.kunize.uswtimetable.dataclass.MyEvaluationDto" />
+
+        <variable
+            name="mapper"
+            type="com.kunize.uswtimetable.util.PostData" />
+
+        <variable
+            name="type"
+            type="com.kunize.uswtimetable.util.PostData.PostDataType" />
+
+        <variable
+            name="viewmodel"
+            type="com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel" />
+
+        <variable
+            name="viewType"
+            type="com.kunize.uswtimetable.util.ItemType" />
+
+        <variable
+            name="contentTextView"
+            type="android.widget.TextView" />
+
+        <variable
+            name="group"
+            type="androidx.constraintlayout.widget.ConstraintLayout" />
+
+        <import type="android.view.View" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemLayout"
+        content="@{contentTextView}"
+        group="@{group}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_ripple_effect_recyclerview"
@@ -14,6 +50,7 @@
             android:id="@+id/lectureName"
             style="@style/lecture_name_middle_style"
             android:layout_marginTop="4dp"
+            android:text="@{data.lectureName}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/yearSemester"
             tools:text="강의 이름" />
@@ -22,6 +59,7 @@
             android:id="@+id/lectureProfessor"
             style="@style/professor_middle_style"
             android:layout_marginStart="8dp"
+            android:text="@{data.professor}"
             app:layout_constraintBottom_toBottomOf="@+id/lectureName"
             app:layout_constraintStart_toEndOf="@+id/lectureName"
             tools:text="교수 이름" />
@@ -38,7 +76,7 @@
             android:id="@+id/averRatingBar"
             style="@style/CustomRatingBar"
             android:layout_marginStart="8dp"
-            android:rating="0"
+            android:rating="@{data.totalAvg}"
             app:layout_constraintBottom_toBottomOf="@+id/textViewAver"
             app:layout_constraintStart_toEndOf="@+id/textViewAver"
             app:layout_constraintTop_toTopOf="@+id/textViewAver" />
@@ -46,6 +84,7 @@
         <TextView
             android:id="@+id/averScore"
             style="@style/score_textview_style"
+            floatText="@{data.totalAvg}"
             android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/averRatingBar"
             app:layout_constraintStart_toEndOf="@+id/averRatingBar"
@@ -95,6 +134,7 @@
             <TextView
                 android:id="@+id/satisfactionScore"
                 style="@style/score_textview_style"
+                floatText="@{data.satisfaction}"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewSatisfaction"
                 app:layout_constraintStart_toEndOf="@+id/textViewSatisfaction"
@@ -103,6 +143,7 @@
             <TextView
                 android:id="@+id/honeyScore"
                 style="@style/score_textview_style"
+                floatText="@{data.honey}"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewHoney"
                 app:layout_constraintStart_toEndOf="@+id/textViewHoney"
@@ -111,6 +152,7 @@
             <TextView
                 android:id="@+id/learningScore"
                 style="@style/score_textview_style"
+                floatText="@{data.learning}"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewLearning"
                 app:layout_constraintStart_toEndOf="@+id/textViewLearning"
@@ -145,6 +187,8 @@
             <TextView
                 android:id="@+id/teamMeeting"
                 style="@style/score_textview_style"
+                postData="@{data.team}"
+                postDataType="@{type.TEAM}"
                 android:layout_marginStart="8dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewMeeting"
@@ -162,6 +206,8 @@
             <TextView
                 android:id="@+id/task"
                 style="@style/score_textview_style"
+                postData="@{data.homework}"
+                postDataType="@{type.HOMEWORK}"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewTask"
                 app:layout_constraintStart_toEndOf="@+id/textViewTask"
@@ -178,6 +224,8 @@
             <TextView
                 android:id="@+id/grade"
                 style="@style/score_textview_style"
+                postData="@{data.difficulty}"
+                postDataType="@{type.DIFFICULTY}"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewGrade"
                 app:layout_constraintStart_toEndOf="@+id/textViewGrade"
@@ -197,6 +245,7 @@
         <TextView
             android:id="@+id/deleteBtn"
             style="@style/recyclerview_evaluation_rounding_text_style"
+            android:onClick="@{() -> viewmodel.itemClicked(viewType.DELETE_BUTTON, data)}"
             android:text="@string/delete"
             android:textColor="@color/custom_red"
             app:layout_constraintEnd_toEndOf="parent"
@@ -206,6 +255,7 @@
             android:id="@+id/editBtn"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:layout_marginEnd="16dp"
+            android:onClick="@{() -> viewmodel.itemClicked(viewType.EDIT_BUTTON, data)}"
             android:text="@string/edit"
             android:textColor="@color/blue"
             app:layout_constraintEnd_toStartOf="@id/deleteBtn"
@@ -218,6 +268,7 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="2"
+            android:text="@{data.content}"
             android:textColor="@color/custom_dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -227,6 +278,7 @@
         <TextView
             android:id="@+id/yearSemester"
             style="@style/recyclerview_evaluation_rounding_text_style"
+            android:text="@{data.selectedSemester}"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

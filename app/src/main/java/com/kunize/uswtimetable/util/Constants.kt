@@ -79,6 +79,16 @@ object LectureItemViewType {
     const val HIDE_EXAM = 5 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
 }
 
+object PostData {
+    val team = mapOf(0 to "없음", 1 to "있음")
+    val difficulty = mapOf(0 to "까다로움", 1 to "보통", 2 to "학점느님")
+    val homework = mapOf(0 to "없음", 1 to "보통", 2 to "많음")
+
+    enum class PostDataType {
+        TEAM, DIFFICULTY, HOMEWORK
+    }
+}
+
 object TextLength {
     const val MIN_SEARCH_TEXT_LENGTH = 2
 }
