@@ -11,14 +11,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMyPageBinding
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
+import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
 import com.kunize.uswtimetable.ui.user_info.*
+import com.kunize.uswtimetable.util.MyPageViewType.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -34,25 +36,23 @@ class MyPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
-        binding.lifecycleOwner = this
-        binding.viewmodel = viewModel
-
-        incomplete()
-        initViews(requireContext())
-
-        logInStateView()
-
-        binding.loginButton.setOnClickListener {
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = this
+        binding.viewmodel = viewModel
+        binding.user = User
+        binding.executePendingBindings()
+
+        logInStateView()
+        setOnViewClicked()
+        setOnMenuClicked()
+    }
+
+    private fun setOnMenuClicked() {
         binding.toolBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_login -> {
@@ -93,18 +93,32 @@ class MyPageFragment : Fragment() {
                 }
             }
         }
-        binding.myPostButton.setOnClickListener {
-            if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_more_to_myPostFragment)
-        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refresh()
+    private fun setOnViewClicked() {
+        viewModel.eventClick.observe(viewLifecycleOwner, EventObserver { type ->
+            val context = requireContext()
+            when (type) {
+                BTN_LOGIN -> logIn(context)
+                BTN_MY_POST -> showMyPosts()
+                MENU_NOTICE -> showNoticePage(context)
+                MENU_FEEDBACK -> makeToast("준비 중입니다.")
+                MENU_QUESTION -> showQuestionPage()
+                MENU_CHANGE_PW -> resetPassword(context)
+                MENU_TERMS -> makeToast("준비 중입니다.")
+                MENU_PRIVACY_POLICY -> makeToast("준비 중입니다.")
+                MENU_SIGN_OUT -> quit(context)
+                MENU_OPENSOURCE -> showOpenSourcePage(context)
+            }
+        })
+    }
+
+    private fun showMyPosts() {
+        if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_more_to_myPostFragment)
     }
 
     private fun logInStateView() {
-        viewModel.user.value?.isLoggedIn?.observe(viewLifecycleOwner) { loggedIn ->
+        User.isLoggedIn.observe(viewLifecycleOwner) { loggedIn ->
             binding.toolBar.menu.clear()
             if (loggedIn) {
                 binding.toolBar.inflateMenu(R.menu.more_menu_after)
@@ -114,41 +128,19 @@ class MyPageFragment : Fragment() {
         }
     }
 
-    private fun incomplete() {
-        with(binding) {
-            sendFeedbackButton.setOnClickListener {
-                makeToast("준비 중입니다.")
-            }
-            questionButton.setOnClickListener {
-                val dialogFragment = ContactUsFragment()
-                dialogFragment.show(parentFragmentManager, dialogFragment.tag)
-            }
-            termsOfUseButton.setOnClickListener {
-                makeToast("준비 중입니다.")
-            }
-            privacyPolicyButton.setOnClickListener {
-                makeToast("준비 중입니다.")
-            }
-        }
+    private fun showQuestionPage() {
+        val dialogFragment = ContactUsFragment()
+        dialogFragment.show(parentFragmentManager, dialogFragment.tag)
     }
 
-    private fun initViews(context: Context) {
-        with(binding) {
-            noticeButton.setOnClickListener {
-                val intent = Intent(context, NoticeActivity::class.java)
-                startActivity(intent)
-            }
-            opensourceLicenceButton.setOnClickListener {
-                val intent = Intent(context, OpenSourceActivity::class.java)
-                startActivity(intent)
-            }
-            changePasswordButton.setOnClickListener {
-                resetPassword(context)
-            }
-            signOutButton.setOnClickListener {
-                quit(context)
-            }
-        }
+    private fun showNoticePage(context: Context) {
+        val intent = Intent(context, NoticeActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun showOpenSourcePage(context: Context) {
+        val intent = Intent(context, OpenSourceActivity::class.java)
+        startActivity(intent)
     }
 
     private fun signIn(context: Context) {
@@ -179,8 +171,6 @@ class MyPageFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 makeToast("로그인 후 가능합니다")
                 delay(2000)
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
             }
         }
     }

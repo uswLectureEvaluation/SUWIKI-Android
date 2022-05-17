@@ -89,6 +89,19 @@ object PostData {
     }
 }
 
+enum class MyPageViewType {
+    BTN_LOGIN,
+    BTN_MY_POST,
+    MENU_NOTICE,
+    MENU_FEEDBACK,
+    MENU_QUESTION,
+    MENU_CHANGE_PW,
+    MENU_TERMS,
+    MENU_PRIVACY_POLICY,
+    MENU_SIGN_OUT,
+    MENU_OPENSOURCE
+}
+
 object TextLength {
     const val MIN_SEARCH_TEXT_LENGTH = 2
 }

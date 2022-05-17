@@ -1,14 +1,16 @@
 package com.kunize.uswtimetable.ui.mypage
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.ui.common.Event
+import com.kunize.uswtimetable.util.MyPageViewType
 
 class MyPageViewModel : ViewModel() {
-    var user = MutableLiveData(User)
+    private val _eventClick = MutableLiveData<Event<MyPageViewType>>()
+    val eventClick: LiveData<Event<MyPageViewType>> get() = _eventClick
 
-    fun refresh() {
-        User.login()
-        user.postValue(User)
+    fun onClick(type: MyPageViewType) {
+        _eventClick.value = Event(type)
     }
 }
