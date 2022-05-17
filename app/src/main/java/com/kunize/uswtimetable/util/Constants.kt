@@ -130,14 +130,6 @@ enum class ItemType {
     DELETE_BUTTON
 }
 
-enum class ExamDifficulty {
-    VERY_EASY,
-    EASY,
-    NORMAL,
-    DIFFICULT,
-    VERY_DIFFICULT
-}
-
 //무한 스크롤
 const val LAST_PAGE = 0
 
