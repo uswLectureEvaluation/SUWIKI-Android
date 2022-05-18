@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.EvaluationData
 
+//TODO 싱글톤 제거, + JvmStatic 제거
 object BindingAdapter {
     @SuppressLint("NotifyDataSetChanged")
     @BindingAdapter("evaluationList")

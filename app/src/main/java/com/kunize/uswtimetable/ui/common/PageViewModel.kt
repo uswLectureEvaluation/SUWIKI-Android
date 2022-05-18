@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.util.LAST_PAGE
 
-class PageViewModel : ViewModel() {
+class PageViewModel {
     private val _page = MutableLiveData<Int>()
     val page: LiveData<Int>
         get() = _page
@@ -27,7 +27,7 @@ class PageViewModel : ViewModel() {
         _page.value = 1
     }
 
-    fun isLastData(tmpEvaluationData: MutableList<EvaluationData?>) {
+    fun <T> isLastData(tmpEvaluationData: MutableList<T?>) {
         if (tmpEvaluationData.size == 10)
             tmpEvaluationData.add(null)
         else

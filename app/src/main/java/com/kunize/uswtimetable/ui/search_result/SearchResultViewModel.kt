@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
@@ -17,7 +18,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     ViewModel(), HandlingErrorInterface {
     val toastViewModel = ToastViewModel()
     private val pageViewModel = PageViewModel()
-    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel()
+    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
     private val _selectedType = MutableLiveData<String>()
     private val _searchValue = MutableLiveData<String>()
 
@@ -54,8 +55,8 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
             commonRecyclerViewViewModel.deleteLoading()
             if (!tmpEvaluationData.isNullOrEmpty()) {
                 pageViewModel.isLastData(tmpEvaluationData)
-                commonRecyclerViewViewModel.evaluationList.value!!.addAll(tmpEvaluationData)
-                commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.evaluationList.value!!)
+                commonRecyclerViewViewModel.itemList.value!!.addAll(tmpEvaluationData)
+                commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.itemList.value!!)
                 pageViewModel.nextPage()
             }
         } else {

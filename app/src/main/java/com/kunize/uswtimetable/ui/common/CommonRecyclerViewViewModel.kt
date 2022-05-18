@@ -3,31 +3,30 @@ package com.kunize.uswtimetable.ui.common
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.data.local.EvaluationData
 
-class CommonRecyclerViewViewModel: ViewModel() {
-    private val _evaluationList = MutableLiveData<MutableList<EvaluationData?>>()
-    val evaluationList: LiveData<MutableList<EvaluationData?>>
-        get() = _evaluationList
+class CommonRecyclerViewViewModel<T> {
+    private val _itemList = MutableLiveData<MutableList<T?>>()
+    val itemList: LiveData<MutableList<T?>>
+        get() = _itemList
 
     init {
         loading()
     }
 
     fun loading() {
-        _evaluationList.value = mutableListOf(null)
+        _itemList.value = mutableListOf(null)
     }
 
     fun deleteLoading() {
-        if(_evaluationList.value?.isEmpty() == true)
+        if(_itemList.value?.isEmpty() == true)
             return
-        if(_evaluationList.value?.get(_evaluationList.value?.size!! - 1) == null) {
-            _evaluationList.value?.removeAt(_evaluationList.value?.size!! - 1)
-            _evaluationList.value = _evaluationList.value
+        if(_itemList.value?.get(_itemList.value?.size!! - 1) == null) {
+            _itemList.value?.removeLast()
+            _itemList.value = _itemList.value
         }
     }
 
-    fun changeRecyclerViewData(data: MutableList<EvaluationData?>) {
-        _evaluationList.value = data
+    fun changeRecyclerViewData(data: MutableList<T?>) {
+        _itemList.value = data
     }
 }

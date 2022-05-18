@@ -152,13 +152,13 @@
 
             <TextView
                 style="@style/no_data_textview_style"
-                android:visibility="@{viewModel.commonRecyclerViewViewModel.evaluationList.empty ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{viewModel.commonRecyclerViewViewModel.itemList.empty ? View.VISIBLE : View.GONE}" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSearchResult"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:evaluationList="@{viewModel.commonRecyclerViewViewModel.evaluationList}"
+                app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </androidx.cardview.widget.CardView>
 

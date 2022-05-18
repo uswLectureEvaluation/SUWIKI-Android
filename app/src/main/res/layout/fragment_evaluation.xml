@@ -107,7 +107,7 @@
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/background_cardview"
                     android:elevation="2dp"
-                    app:evaluationList="@{viewModel.commonRecyclerViewViewModel.evaluationList}"
+                    app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 

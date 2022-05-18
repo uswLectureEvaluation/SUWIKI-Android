@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.ui.evaluation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.ToastViewModel
@@ -11,7 +12,7 @@ import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import kotlinx.coroutines.launch
 
 class EvaluationViewModel(private val evaluationRepository: EvaluationRepository) : ViewModel(), HandlingErrorInterface {
-    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel()
+    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
     val toastViewModel = ToastViewModel()
     private val _selectedType = MutableLiveData<String>()
 

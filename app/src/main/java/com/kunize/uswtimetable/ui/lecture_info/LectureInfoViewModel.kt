@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.data.remote.LectureDetailInfoDto
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
@@ -19,7 +20,7 @@ import retrofit2.Response
 class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel(), HandlingErrorInterface {
     val pageViewModel = PageViewModel()
     val toastViewModel = ToastViewModel()
-    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel()
+    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
     private val _writeBtnText = MutableLiveData<Int>()
     val writeBtnText: LiveData<Int>
         get() = _writeBtnText
@@ -113,8 +114,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 if (!tmpEvaluationData.isNullOrEmpty()) {
                     pageViewModel.isLastData(tmpEvaluationData)
-                    commonRecyclerViewViewModel.evaluationList.value!!.addAll(tmpEvaluationData)
-                    commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.evaluationList.value!!)
+                    commonRecyclerViewViewModel.itemList.value!!.addAll(tmpEvaluationData)
+                    commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.itemList.value!!)
                 }
                 pageViewModel.nextPage()
             } else {
