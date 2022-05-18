@@ -5,6 +5,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.util.PostData
+import com.kunize.uswtimetable.util.PostData.difficulty
+import com.kunize.uswtimetable.util.PostData.homework
+import com.kunize.uswtimetable.util.PostData.team
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.round
@@ -31,36 +34,22 @@ fun applyFloatToText(view: TextView, value: Float) {
 }
 
 @BindingAdapter("postData", "postDataType")
-fun applyPostDataText(view: TextView, postData: Int, type: PostData.PostDataType) {
-    when (type) {
-        PostData.PostDataType.TEAM -> {
-            view.text = PostData.team[postData]
-            val color = when (postData) {
-                0 -> ContextCompat.getColor(view.context, R.color.custom_light_gray)
-                1 -> ContextCompat.getColor(view.context, R.color.custom_dark_gray)
-                else -> ContextCompat.getColor(view.context, R.color.black)
-            }
-            view.setTextColor(color)
-        }
-        PostData.PostDataType.DIFFICULTY -> {
-            view.text = PostData.difficulty[postData]
-            val color = when (postData) {
-                0 -> ContextCompat.getColor(view.context, R.color.custom_light_gray)
-                1 -> ContextCompat.getColor(view.context, R.color.custom_dark_gray)
-                2 -> ContextCompat.getColor(view.context, R.color.custom_red)
-                else -> ContextCompat.getColor(view.context, R.color.black)
-            }
-            view.setTextColor(color)
-        }
-        PostData.PostDataType.HOMEWORK -> {
-            view.text = PostData.homework[postData]
-            val color = when (postData) {
-                0 -> ContextCompat.getColor(view.context, R.color.custom_red)
-                1 -> ContextCompat.getColor(view.context, R.color.custom_dark_gray)
-                2 -> ContextCompat.getColor(view.context, R.color.custom_light_gray)
-                else -> ContextCompat.getColor(view.context, R.color.black)
-            }
-            view.setTextColor(color)
-        }
+fun applyPostData(view: TextView, level: Int, type: PostData.PostDataType) {
+    applyTextColor(view, level)
+    view.text = when (type) {
+        PostData.PostDataType.TEAM -> team[level]
+        PostData.PostDataType.HOMEWORK -> homework[level]
+        PostData.PostDataType.DIFFICULTY -> difficulty[level]
     }
+}
+
+@BindingAdapter("textColorLevel")
+fun applyTextColor(view: TextView, level: Int) {
+    val color = when(level) {
+        0 -> ContextCompat.getColor(view.context, R.color.custom_light_gray)
+        1 -> ContextCompat.getColor(view.context, R.color.custom_dark_gray)
+        2 -> ContextCompat.getColor(view.context, R.color.custom_red)
+        else -> ContextCompat.getColor(view.context, R.color.black)
+    }
+    view.setTextColor(color)
 }
