@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ResetPasswordDto(
-//    val currentPassword: String,
-    @SerializedName("password") val newPassword: String
+    @SerializedName("prePassword") val currentPassword: String,
+    @SerializedName("newPassword") val newPassword: String
 ): Serializable
