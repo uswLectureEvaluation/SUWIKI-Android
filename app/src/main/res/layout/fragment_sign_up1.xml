@@ -19,12 +19,11 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/SignUpFragment1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/signUp1Container"
+            android:id="@+id/layout_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -33,7 +32,7 @@
             android:padding="@dimen/page_padding">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idEditText"
+                android:id="@+id/layout_input_id"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +43,7 @@
                 app:helperTextEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_id"
+                    android:id="@+id/et_input_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -54,7 +53,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordEditText"
+                android:id="@+id/layout_input_pw"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,7 +65,7 @@
                 app:errorEnabled="@{viewmodel.signupFormState.pwError!=null}">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_pw"
+                    android:id="@+id/et_input_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -76,7 +75,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordAgainEditText"
+                android:id="@+id/layout_input_pw_again"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +87,7 @@
                 app:errorEnabled="@{viewmodel.signupFormState.pwAgainError!=null}">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_pw_again"
+                    android:id="@+id/et_input_pw_again"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
@@ -98,7 +97,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
-                android:id="@+id/terms"
+                android:id="@+id/cb_terms"
                 style="@style/TextCaption1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,7 +108,7 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/signup1_progress"
+            android:id="@+id/progress_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

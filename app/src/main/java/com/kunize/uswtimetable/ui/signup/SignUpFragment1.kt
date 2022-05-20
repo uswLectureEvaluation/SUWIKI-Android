@@ -41,13 +41,13 @@ class SignUpFragment1 : Fragment() {
             val state = it ?: return@observe
 
             state.idError?.let { errMsg ->
-                binding.idEditText.error = resources.getString(errMsg)
+                binding.layoutInputId.error = resources.getString(errMsg)
             }
             state.pwError?.let { errMsg ->
-                binding.passwordEditText.error = resources.getString(errMsg)
+                binding.layoutInputPw.error = resources.getString(errMsg)
             }
             state.pwAgainError?.let { errMsg ->
-                binding.passwordAgainEditText.error = resources.getString(errMsg)
+                binding.layoutInputPwAgain.error = resources.getString(errMsg)
             }
         }
 
@@ -63,24 +63,24 @@ class SignUpFragment1 : Fragment() {
     private fun initViews() {
 
         with(binding) {
-            etId.afterTextChanged {
+            etInputId.afterTextChanged {
                 dataChanged()
                 inputLimitAlert(it.toString(), Constants.ID_COUNT_LIMIT)
             }
-            etPw.afterTextChanged {
+            etInputPw.afterTextChanged {
                 dataChanged()
                 inputLimitAlert(it.toString(), Constants.PW_COUNT_LIMIT)
             }
-            etPwAgain.afterTextChanged {
+            etInputPwAgain.afterTextChanged {
                 dataChanged()
                 inputLimitAlert(it.toString(), Constants.PW_COUNT_LIMIT)
             }
-            terms.setOnClickListener {
+            cbTerms.setOnClickListener {
                 dataChanged()
             }
 
             // 아이디: 소문자와 숫자만 입력 가능
-            etId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
+            etInputId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                 val idRegex = """^[a-z0-9]*$"""
                 val idPattern = Pattern.compile(idRegex)
                 if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
@@ -91,7 +91,7 @@ class SignUpFragment1 : Fragment() {
             })
 
             // 패스워드: 알파벳, 숫자, 특정 특수 문자 입력 가능
-            etPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
+            etInputPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
                 val pwRegex = """^[0-9a-zA-Z!@#$%^+\-=]*$"""
                 val pwPattern = Pattern.compile(pwRegex)
                 if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
@@ -105,16 +105,16 @@ class SignUpFragment1 : Fragment() {
         val link1 = Pattern.compile("이용약관")
         val link2 = Pattern.compile("개인정보처리방침")
         // TODO 이용약관, 개인정보처리방침 링크 연결
-        Linkify.addLinks(binding.terms, link1, "")
-        Linkify.addLinks(binding.terms, link2, "")
+        Linkify.addLinks(binding.cbTerms, link1, "")
+        Linkify.addLinks(binding.cbTerms, link2, "")
     }
 
     private fun dataChanged() {
         viewModel.signUpDataChanged(
-            id = binding.etId.text.toString(),
-            pw = binding.etPw.text.toString(),
-            pwAgain = binding.etPwAgain.text.toString(),
-            term = binding.terms.isChecked
+            id = binding.etInputId.text.toString(),
+            pw = binding.etInputPw.text.toString(),
+            pwAgain = binding.etInputPwAgain.text.toString(),
+            term = binding.cbTerms.isChecked
         )
     }
 
