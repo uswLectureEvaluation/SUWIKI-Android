@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="fragment"
-            type="com.kunize.uswtimetable.ui.signup.SignUpFragment3" />
 
         <variable
             name="viewmodel"
@@ -40,25 +37,26 @@
             android:gravity="center"
             android:paddingHorizontal="30dp"
             android:text="@{@string/signup_welcome_info(viewmodel.email)}"
+            android:textColor="@color/alert"
             app:layout_constraintBottom_toTopOf="@id/btn_check_mail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_welcome"
-            android:textColor="@color/alert"
             tools:text="test@suwon.ac.kr로 이메일이 발송되었습니다.\n로그인 하기 위해서 이메일로 발송된 링크를 클릭해주세요" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_check_mail"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_info"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0"
-            android:text="@string/check_mail"
             android:layout_marginTop="30dp"
-            style="@style/Widget.MaterialComponents.Button" />
+            android:onClick="@{() -> viewmodel.onClickCheckMail()}"
+            android:text="@string/check_mail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_info"
+            app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

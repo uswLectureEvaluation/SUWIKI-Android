@@ -17,7 +17,6 @@ class SignUpFragment2 : Fragment() {
     val binding: FragmentSignUp2Binding get() = _binding!!
 
     private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
-    private lateinit var activity: SignUpActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,29 +24,31 @@ class SignUpFragment2 : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up2, container, false)
 
-        activity = requireActivity() as SignUpActivity
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
 
         viewModel.isEmailUnique.observe(viewLifecycleOwner) { unique ->
             if (!unique && viewModel.errorMessage.value.isNullOrBlank().not()) {
-                activity.makeToast(viewModel.errorMessage.value!!)
+                viewModel.setToastMessage(viewModel.errorMessage.value!!)
             }
         }
 
         viewModel.signUpResult.observe(viewLifecycleOwner) { success ->
             if (!success && viewModel.errorMessage.value.isNullOrBlank().not()) {
-                activity.makeToast(viewModel.errorMessage.value!!)
+                viewModel.setToastMessage(viewModel.errorMessage.value!!)
             }
         }
-
-        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        binding.etMail.afterTextChanged {
+        binding.etInputEmail.afterTextChanged {
             dataChanged()
         }
     }

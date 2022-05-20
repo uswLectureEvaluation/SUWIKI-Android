@@ -7,7 +7,7 @@ data class UserDataDto(
     @SerializedName("loginId") val userId: String,
     val email: String,
     val point: Int,
-    @SerializedName("writtenLecture") val writtenEvaluation: Int,
+    @SerializedName("writtenEvaluation") val writtenEvaluation: Int,
     @SerializedName("writtenExam") val writtenExam: Int,
     @SerializedName("viewExam") val viewExam: Int
 ): Serializable

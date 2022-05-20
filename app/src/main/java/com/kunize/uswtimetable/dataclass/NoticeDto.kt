@@ -5,7 +5,7 @@ import java.io.Serializable
 import java.time.LocalDateTime
 
 data class NoticeDto(
-    val id: String,
+    val id: Long,
     val title: String,
     @SerializedName("modifiedDate") val date: LocalDateTime
 ): Serializable

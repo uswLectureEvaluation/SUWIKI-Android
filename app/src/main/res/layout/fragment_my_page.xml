@@ -13,8 +13,16 @@
             type="com.kunize.uswtimetable.util.UserPoint" />
 
         <variable
+            name="user"
+            type="com.kunize.uswtimetable.ui.user_info.User" />
+
+        <variable
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.mypage.MyPageViewModel" />
+
+        <variable
+            name="viewType"
+            type="com.kunize.uswtimetable.util.MyPageViewType" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -64,7 +72,7 @@
                         android:layout_marginVertical="16dp"
                         android:orientation="vertical"
                         android:padding="@dimen/cardview_padding"
-                        android:visibility="@{viewmodel.user.loggedIn ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{user.loggedIn ? View.GONE : View.VISIBLE}"
                         tools:visibility="gone">
 
                         <TextView
@@ -78,6 +86,7 @@
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/loginButton"
                             android:layout_width="wrap_content"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.BTN_LOGIN)}"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="16dp"
@@ -95,7 +104,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:padding="@dimen/cardview_padding"
-                        android:visibility="@{viewmodel.user.loggedIn ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{user.loggedIn ? View.VISIBLE : View.GONE}"
                         tools:visibility="visible">
 
                         <TextView
@@ -121,7 +130,7 @@
                                 android:background="@drawable/border_circle"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="@{@string/total_point(viewmodel.user.user.point)}"
+                                android:text="@{@string/total_point(user.user.point)}"
                                 android:textColor="@color/red"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="W, 1:1"
@@ -168,16 +177,16 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_evaluation_count(viewmodel.user.user.writtenLecture)}"
+                                        android:text="@{@string/my_evaluation_count(user.user.writtenEvaluation)}"
                                         android:textColor="@color/black"
                                         tools:text="작성한 강의 평가 : 5개" />
 
                                     <TextView
                                         android:id="@+id/myEvaluationsPoint"
                                         style="@style/TextCaption2"
+                                        point="@{user.user.writtenEvaluation * point.WRITE_EVALUATION}"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{@string/detail_point_positive(viewmodel.user.user.writtenLecture * point.WRITE_LECTURE)}"
                                         android:textColor="@color/red"
                                         tools:text="(+100P)"
                                         tools:textColor="#F00" />
@@ -199,17 +208,16 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_exam_info_count(viewmodel.user.user.writtenExam)}"
+                                        android:text="@{@string/my_exam_info_count(user.user.writtenExam)}"
                                         android:textColor="@color/black"
                                         tools:text="작성한 시험 정보 : 2개" />
 
                                     <TextView
                                         android:id="@+id/myExamInformationPoint"
                                         style="@style/TextCaption2"
+                                        point="@{user.user.writtenExam * point.WRITE_EXAM}"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{@string/detail_point_positive(viewmodel.user.user.writtenExam * point.WRITE_EXAM)}"
-                                        android:textColor="@color/red"
                                         tools:text="(+40P)"
                                         tools:textColor="#F00" />
 
@@ -230,17 +238,16 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="4dp"
-                                        android:text="@{@string/opened_exam_count(viewmodel.user.user.viewExam)}"
+                                        android:text="@{@string/opened_exam_count(user.user.viewExam)}"
                                         android:textColor="@color/black"
                                         tools:text="시험 정보 열람 : 5개" />
 
                                     <TextView
                                         android:id="@+id/openedExamPoint"
                                         style="@style/TextCaption2"
+                                        point="@{user.user.viewExam * point.VIEW_EXAM}"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{@string/detail_point(viewmodel.user.user.viewExam * point.VIEW_EXAM)}"
-                                        android:textColor="@color/blue"
                                         tools:text="(-40P)"
                                         tools:textColor="#00F" />
                                 </LinearLayout>
@@ -280,6 +287,7 @@
                                 android:focusable="true"
                                 android:gravity="center"
                                 android:minHeight="48dp"
+                                android:onClick="@{() -> viewmodel.onClick(viewType.BTN_MY_POST)}"
                                 android:paddingHorizontal="4dp"
                                 android:paddingVertical="2dp"
                                 android:text="@string/my_evaluate"
@@ -306,7 +314,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="16dp"
-                                android:text="@{viewmodel.user.user.userId}"
+                                android:text="@{user.user.userId}"
                                 app:layout_constraintBottom_toBottomOf="@+id/loginIdTextView"
                                 app:layout_constraintEnd_toStartOf="@+id/myPostButton"
                                 app:layout_constraintHorizontal_bias="0"
@@ -331,7 +339,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="16dp"
-                                android:text="@{viewmodel.user.user.email}"
+                                android:text="@{user.user.email}"
                                 app:layout_constraintBottom_toBottomOf="@+id/loginEmailTextView"
                                 app:layout_constraintEnd_toStartOf="@+id/myPostButton"
                                 app:layout_constraintHorizontal_bias="0"
@@ -346,7 +354,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@color/blur_white"
-                            android:visibility="@{viewmodel.user.loggedIn ? View.GONE : View.VISIBLE}"
+                            android:visibility="@{user.loggedIn ? View.GONE : View.VISIBLE}"
                             tools:visibility="gone">
 
                             <TextView
@@ -382,6 +390,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_NOTICE)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/notice"
                             android:textColor="@color/black" />
@@ -396,6 +405,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_FEEDBACK)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/send_feedback"
                             android:textColor="@color/black" />
@@ -410,6 +420,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_QUESTION)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/question"
                             android:textColor="@color/black" />
@@ -424,6 +435,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_CHANGE_PW)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/change_password"
                             android:textColor="@color/black" />
@@ -438,6 +450,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_TERMS)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/terms_of_use"
                             android:textColor="@color/black" />
@@ -452,6 +465,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_PRIVACY_POLICY)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/privacy_policy"
                             android:textColor="@color/black" />
@@ -466,6 +480,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_SIGN_OUT)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/sign_out"
                             android:textColor="@color/black" />
@@ -480,6 +495,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:minHeight="48dp"
+                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_OPENSOURCE)}"
                             android:paddingHorizontal="@dimen/cardview_padding"
                             android:text="@string/opensource_licence"
                             android:textColor="@color/black" />

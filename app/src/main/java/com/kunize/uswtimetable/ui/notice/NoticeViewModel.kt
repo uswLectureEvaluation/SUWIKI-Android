@@ -1,11 +1,13 @@
 package com.kunize.uswtimetable.ui.notice
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.repository.notice.NoticeRepository
+import com.kunize.uswtimetable.ui.common.Event
 import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,9 +16,15 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
     val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val notices = MutableLiveData<List<NoticeDto>>()
+    private val _eventNotice = MutableLiveData<Event<Long>>()
+    val eventNotice: LiveData<Event<Long>> get() = _eventNotice
 
     init {
         getNotices()
+    }
+
+    fun moveToNoticeDetail(noticeId: Long) {
+        _eventNotice.value = Event(noticeId)
     }
 
     private fun getNotices() {

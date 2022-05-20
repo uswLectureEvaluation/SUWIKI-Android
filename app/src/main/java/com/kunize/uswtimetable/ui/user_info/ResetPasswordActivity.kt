@@ -50,11 +50,9 @@ class ResetPasswordActivity: AppCompatActivity() {
     }
 
     private fun initViews() {
-        with(binding) {
-            buttonResetPwFindPassword.setOnClickListener {
-                val intent = Intent(this@ResetPasswordActivity, FindPasswordActivity::class.java)
-                startActivity(intent)
-            }
+        binding.tvFindPwBtn.setOnClickListener {
+            val intent = Intent(this@ResetPasswordActivity, FindPasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 }

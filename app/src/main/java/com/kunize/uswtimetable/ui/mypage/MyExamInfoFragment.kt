@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.adapter.MyExamInfoAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
 import com.kunize.uswtimetable.dataclass.MyExamInfo
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
 import com.kunize.uswtimetable.util.ItemType
@@ -31,41 +29,41 @@ class MyExamInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMyExamInfoBinding.inflate(inflater, container, false)
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
 
-        binding.myExamInfoContainer.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        adapter = MyExamInfoAdapter { data, type ->
+        adapter = MyExamInfoAdapter(viewModel)
+
+        viewModel.eventClicked.observe(viewLifecycleOwner, EventObserver { (type, data) ->
             when (type) {
-                ItemType.ROOT_VIEW -> {
-//                    Toast.makeText(requireContext(), "$data 선택됨", Toast.LENGTH_SHORT).show()
-                }
-                ItemType.EDIT_BUTTON -> {
-//                    Toast.makeText(requireContext(), "아이템${data.id} 수정 버튼 선택됨", Toast.LENGTH_SHORT).show()
-                    gotoWriteFragment(data.toMyExamInfo())
-                }
+                ItemType.ROOT_VIEW -> {}
+                ItemType.EDIT_BUTTON -> { gotoWriteFragment(data.toMyExamInfo()) }
                 ItemType.DELETE_BUTTON -> {
-                    Toast.makeText(requireContext(), "아이템${data.id} 삭제 버튼 선택됨", Toast.LENGTH_SHORT)
-                        .show()
+                    // TODO 삭제 확인 다이얼로그 띄우기
                     viewModel.deletePost(data.id)
                 }
             }
-        }
+        })
 
         initRecyclerView()
-
-        return binding.root
     }
 
     private fun initRecyclerView() {
         recyclerView = binding.myExamInfoContainer
         recyclerView.adapter = adapter
-        recyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         viewModel.myExamInfoData.observe(viewLifecycleOwner) { myExamInfoList ->
             adapter.submitList(myExamInfoList)
         }
+
         recyclerView.infiniteScrolls {
             viewModel.scrollBottomEvent()
         }

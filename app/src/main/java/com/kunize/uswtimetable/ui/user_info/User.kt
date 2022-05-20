@@ -2,10 +2,10 @@ package com.kunize.uswtimetable.ui.user_info
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.TimeTableSelPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ object User {
                         LoggedInUser(
                             userId = info.userId,
                             point = info.point,
-                            writtenLecture = info.writtenEvaluation,
+                            writtenEvaluation = info.writtenEvaluation,
                             writtenExam = info.writtenExam,
                             viewExam = info.viewExam,
                             email = info.email

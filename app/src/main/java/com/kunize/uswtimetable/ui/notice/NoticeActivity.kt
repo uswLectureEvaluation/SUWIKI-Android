@@ -1,7 +1,7 @@
 package com.kunize.uswtimetable.ui.notice
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.kunize.uswtimetable.R
@@ -20,7 +20,7 @@ class NoticeActivity : AppCompatActivity() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding.toolBar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             finish()
         }
     }
@@ -29,11 +29,11 @@ class NoticeActivity : AppCompatActivity() {
         super.onResume()
         navHostFragment.childFragmentManager.addOnBackStackChangedListener {
             if (navHostFragment.childFragmentManager.backStackEntryCount == 0) {
-                binding.toolBar.setNavigationOnClickListener {
+                binding.toolbar.setNavigationOnClickListener {
                     finish()
                 }
             } else {
-                binding.toolBar.setNavigationOnClickListener {
+                binding.toolbar.setNavigationOnClickListener {
                     navController.popBackStack()
                 }
             }

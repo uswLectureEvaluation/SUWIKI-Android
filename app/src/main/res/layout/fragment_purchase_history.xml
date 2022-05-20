@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel" />
@@ -35,7 +36,7 @@
                 app:titleEnabled="false">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolBar"
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/recyclerview_padding"
@@ -51,14 +52,16 @@
             android:id="@+id/rv_purchase_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             tools:listitem="@layout/item_recycler_purchase" />
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

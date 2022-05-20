@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.kunize.uswtimetable.databinding.FragmentSignUp3Binding
+import com.kunize.uswtimetable.ui.common.EventObserver
+import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.common.WebviewActivity
-import com.kunize.uswtimetable.ui.login.LoginActivity
+import com.kunize.uswtimetable.util.Constants.KEY_URL
 import com.kunize.uswtimetable.util.Constants.SCHOOL_HOMEPAGE
 
 class SignUpFragment3 : Fragment() {
     private var _binding: FragmentSignUp3Binding? = null
     private val binding get() = _binding!!
-    private lateinit var activity: SignUpActivity
-    private lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,37 +25,23 @@ class SignUpFragment3 : Fragment() {
     ): View {
         _binding = FragmentSignUp3Binding.inflate(inflater, container, false)
 
-        activity = requireActivity() as SignUpActivity
-        viewModel = activity.viewModel
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
 
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.btnCheckMail.setOnClickListener {
-            onClickEmailCheckButton()
-        }
-
-        activity.button1.setOnClickListener {
-            activity.finish()
-        }
-
-        activity.button2.setOnClickListener {
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
-            activity.finish()
-        }
+        viewModel.eventCheckMail.observe(viewLifecycleOwner, EventObserver { clicked ->
+            if (clicked) onClickEmailCheckButton()
+        })
     }
 
     private fun onClickEmailCheckButton() {
-//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SCHOOL_HOMEPAGE))
-//        startActivity(intent)
-        val intent = Intent(getActivity(), WebviewActivity::class.java).apply {
-            putExtra("url", SCHOOL_HOMEPAGE)
+        val intent = Intent(requireContext(), WebviewActivity::class.java).apply {
+            putExtra(KEY_URL, SCHOOL_HOMEPAGE)
         }
         startActivity(intent)
     }

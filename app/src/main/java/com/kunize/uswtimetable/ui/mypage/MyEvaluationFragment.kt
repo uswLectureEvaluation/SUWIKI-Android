@@ -8,11 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.adapter.MyEvaluationAdapter
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
+import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.infiniteScrolls
@@ -30,28 +29,29 @@ class MyEvaluationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMyEvaluationBinding.inflate(inflater, container, false)
+        return _binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        adapter = MyEvaluationAdapter { data, type ->
+        adapter = MyEvaluationAdapter(viewModel)
+
+        initRecyclerView()
+
+        viewModel.eventClicked.observe(viewLifecycleOwner, EventObserver { (type, data) ->
             when (type) {
-                ItemType.ROOT_VIEW -> {
-//                    makeToast("$data 선택됨")
-                }
-                ItemType.EDIT_BUTTON -> {
-//                    makeToast("${data.id} 아이템 수정 클릭")
-                    gotoWriteFragment(data)
-                }
+                ItemType.ROOT_VIEW -> {}
+                ItemType.EDIT_BUTTON -> { gotoWriteFragment(data) }
                 ItemType.DELETE_BUTTON -> {
                     makeToast("${data.id} 아이템 삭제 - 사용자에게 확인하는 메시지 보여줘야함")
                     viewModel.deletePost(data.id)
                 }
             }
-        }
-
-        initRecyclerView()
-
-        return _binding?.root
+        })
     }
 
     private fun gotoWriteFragment(data: MyEvaluationDto) {
@@ -67,8 +67,6 @@ class MyEvaluationFragment : Fragment() {
     private fun initRecyclerView() {
         recyclerView = binding.myEvaluationList
         recyclerView.adapter = adapter
-        recyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         viewModel.myEvaluationData.observe(viewLifecycleOwner) { evaluations ->
             adapter.submitList(evaluations)
         }

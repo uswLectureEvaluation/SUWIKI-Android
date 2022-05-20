@@ -142,6 +142,9 @@
     <string name="hint_contact_us_content">문의 내용</string>
     <string name="hint_contact_us_title">제목</string>
     <string name="hint_contact_us_button">보내기</string>
+    <string name="text_item_my_exam_info_difficulty">난이도</string>
+    <string name="title_item_my_exam_info_exam_type">시험 방식</string>
+    <string name="title_item_my_exam_info_lecture_name">강의 이름</string>
 
     <string-array name="contact_us">
         <item>--카테고리 선택--</item>

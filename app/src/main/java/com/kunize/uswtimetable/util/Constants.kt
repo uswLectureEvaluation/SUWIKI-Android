@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.util
 
-import android.content.res.Resources
 import android.graphics.Color
 
 object Constants {
@@ -9,7 +8,6 @@ object Constants {
     const val PW_COUNT_LOWER_LIMIT = 8
     const val ID_COUNT_LIMIT = 20
     const val PW_COUNT_LIMIT = 24
-    const val SCHOOL_DOMAIN = "suwon.ac.kr"
     const val SCHOOL_DOMAIN_AT = "@suwon.ac.kr"
     const val SCHOOL_HOMEPAGE = "https://portal.suwon.ac.kr"
     const val NUMBER_OF_YEAR = 6
@@ -17,7 +15,9 @@ object Constants {
     const val SEMESTER_1_END = 6
     const val ID_REGEX = """^[a-z0-9]*$"""
     const val PW_REGEX = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
-
+    // Key of Intent or Bundle
+    const val KEY_NOTICE_ID = "notice_id"
+    const val KEY_URL = "url"
 }
 
 object API {
@@ -65,7 +65,7 @@ object WriteFragmentTitle {
 }
 
 object UserPoint {
-    const val WRITE_LECTURE = 10
+    const val WRITE_EVALUATION = 10
     const val WRITE_EXAM = 20
     const val VIEW_EXAM = -20
 }
@@ -77,6 +77,29 @@ object LectureItemViewType {
     const val LECTURE = 3 //세부 강의평가 정보
     const val EXAM = 4 //세부 시험정보
     const val HIDE_EXAM = 5 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
+}
+
+object PostData {
+    val team = mapOf(0 to "없음", 1 to "있음")
+    val difficulty = mapOf(0 to "학점느님", 1 to "보통", 2 to "까다로움")
+    val homework = mapOf(0 to "없음", 1 to "보통", 2 to "많음")
+
+    enum class PostDataType {
+        TEAM, DIFFICULTY, HOMEWORK
+    }
+}
+
+enum class MyPageViewType {
+    BTN_LOGIN,
+    BTN_MY_POST,
+    MENU_NOTICE,
+    MENU_FEEDBACK,
+    MENU_QUESTION,
+    MENU_CHANGE_PW,
+    MENU_TERMS,
+    MENU_PRIVACY_POLICY,
+    MENU_SIGN_OUT,
+    MENU_OPENSOURCE
 }
 
 object TextLength {
@@ -105,14 +128,6 @@ enum class ItemType {
     ROOT_VIEW,
     EDIT_BUTTON,
     DELETE_BUTTON
-}
-
-enum class ExamDifficulty {
-    VERY_EASY,
-    EASY,
-    NORMAL,
-    DIFFICULT,
-    VERY_DIFFICULT
 }
 
 //무한 스크롤
