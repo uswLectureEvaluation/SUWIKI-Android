@@ -48,7 +48,7 @@ class SignUpFragment2 : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.etMail.afterTextChanged {
+        binding.etInputEmail.afterTextChanged {
             dataChanged()
         }
     }

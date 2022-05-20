@@ -17,7 +17,7 @@
         tools:context=".ui.user_info.QuitActivity">
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/tv_logo"
             style="@style/title_textview_style"
             android:fontFamily="@font/godom"
             android:text="@string/app_name"
@@ -26,15 +26,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/subtitleTextView"
+            android:id="@+id/tv_current_page_title"
             style="@style/Headline6.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_out"
-            app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+            app:layout_constraintEnd_toEndOf="@+id/tv_logo"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@+id/titleTextView"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+            app:layout_constraintStart_toStartOf="@+id/tv_logo"
+            app:layout_constraintTop_toBottomOf="@+id/tv_logo" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
@@ -46,24 +46,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subtitleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_current_page_title"
             app:layout_constraintVertical_bias="0.3">
 
             <TextView
-                android:id="@+id/signOutTextView"
+                android:id="@+id/tv_sign_out"
                 style="@style/Headline5.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_out"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/layout_signOut_id"
+                app:layout_constraintBottom_toTopOf="@+id/layout_input_id"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_signOut_id"
+                android:id="@+id/layout_input_id"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -72,10 +72,10 @@
                 app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/signOutTextView">
+                app:layout_constraintTop_toBottomOf="@id/tv_sign_out">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_signOut_id"
+                    android:id="@+id/et_input_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -83,7 +83,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_signOut_pw"
+                android:id="@+id/layout_input_pw"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -92,10 +92,10 @@
                 app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_signOut_id">
+                app:layout_constraintTop_toBottomOf="@id/layout_input_id">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_signOut_pw"
+                    android:id="@+id/et_input_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -107,14 +107,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/custom_ripple_light_blue_button"
-                android:enabled="@{etSignOutId.text.length() > 0 &amp;&amp; etSignOutPw.text.length() > 0 &amp;&amp; viewmodel.loading == false}"
+                android:enabled="@{etInputId.text.length() > 0 &amp;&amp; etInputPw.text.length() > 0 &amp;&amp; viewmodel.loading == false}"
                 android:onClick="@{() -> viewmodel.quit()}"
                 android:text="@string/sign_out"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_signOut_pw" />
+                app:layout_constraintTop_toBottomOf="@id/layout_input_pw" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

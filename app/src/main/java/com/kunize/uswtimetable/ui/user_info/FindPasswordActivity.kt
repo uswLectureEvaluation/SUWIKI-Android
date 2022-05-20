@@ -46,7 +46,7 @@ class FindPasswordActivity : AppCompatActivity() {
 
     private fun initViews(context: Context) {
         with(binding) {
-            findIdButton.setOnClickListener {
+            tvFindIdBtn.setOnClickListener {
                 startActivity(Intent(context, FindIdActivity::class.java))
             }
         }

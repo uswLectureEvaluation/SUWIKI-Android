@@ -16,7 +16,7 @@
         tools:context=".ui.notice.NoticeListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/noticeRecyclerView"
+            android:id="@+id/rv_notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -25,7 +25,7 @@
             tools:listitem="@layout/item_notice" />
 
         <ProgressBar
-            android:id="@+id/loading"
+            android:id="@+id/progress_loading"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:visibility="@{viewModel.loading?View.VISIBLE:View.GONE}"

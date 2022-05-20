@@ -42,10 +42,10 @@ class LoginActivity : AppCompatActivity() {
             val loginState = it ?: return@Observer
 
             if (loginState.idError != null) {
-                binding.userIdContainer.error = getString(loginState.idError)
+                binding.layoutInputId.error = getString(loginState.idError)
             }
             if (loginState.pwError != null) {
-                binding.passwordContainer.error = getString(loginState.pwError)
+                binding.layoutInputPw.error = getString(loginState.pwError)
             }
         })
 
@@ -79,34 +79,32 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initViews(context: Context) {
         with(binding) {
-            signInButton.setOnClickListener {
+            tvSignInBtn.setOnClickListener {
                 startActivity(Intent(context, SignUpActivity::class.java))
                 finish()
             }
-            findIdButton.setOnClickListener {
+            tvFindIdBtn.setOnClickListener {
                 startActivity(Intent(context, FindIdActivity::class.java))
             }
-            findPasswordButton.setOnClickListener {
+            tvFindPwBtn.setOnClickListener {
                 startActivity(Intent(context, FindPasswordActivity::class.java))
             }
-            rememberLogin.setOnCheckedChangeListener { _, isChecked ->
+            cbRememberLogin.setOnCheckedChangeListener { _, isChecked ->
                 PreferenceManager.setBoolean(context, REMEMBER_LOGIN, isChecked)
             }
             try {
-                rememberLogin.isChecked = PreferenceManager.getBoolean(context, REMEMBER_LOGIN)
+                cbRememberLogin.isChecked = PreferenceManager.getBoolean(context, REMEMBER_LOGIN)
             } catch (e: ClassCastException) {
                 Log.d(TAG, "LoginActivity - \"로그인 유지\" 값이 저장되지 않음: $e")
-                rememberLogin.isChecked = true
+                cbRememberLogin.isChecked = true
             }
 
-            userId.afterTextChanged {
+            etInputId.afterTextChanged {
                 loginViewModel.loginDataChanged()
             }
 
-            userPassword.apply {
-                afterTextChanged {
-                    loginViewModel.loginDataChanged()
-                }
+            etInputPw.afterTextChanged {
+                loginViewModel.loginDataChanged()
             }
         }
     }

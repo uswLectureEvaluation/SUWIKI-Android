@@ -56,7 +56,7 @@ class NoticeListFragment : Fragment() {
 
     private fun setRecyclerView() {
         val adapter = NoticeAdapter()
-        binding.noticeRecyclerView.adapter = adapter
+        binding.rvNotice.adapter = adapter
 
         viewModel.notices.observe(viewLifecycleOwner) { notices ->
             adapter.submitList(notices)

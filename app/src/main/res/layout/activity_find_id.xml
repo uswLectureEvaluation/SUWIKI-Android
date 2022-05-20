@@ -16,7 +16,7 @@
         tools:context=".ui.user_info.FindIdActivity">
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/tv_logo"
             style="@style/title_textview_style"
             android:fontFamily="@font/godom"
             android:text="@string/app_name"
@@ -25,15 +25,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/subtitleTextView"
+            android:id="@+id/tv_current_page_title"
             style="@style/Headline6.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/find_id"
-            app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+            app:layout_constraintEnd_toEndOf="@+id/tv_logo"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@+id/titleTextView"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+            app:layout_constraintStart_toStartOf="@+id/tv_logo"
+            app:layout_constraintTop_toBottomOf="@+id/tv_logo" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
@@ -45,37 +45,37 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subtitleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_current_page_title"
             app:layout_constraintVertical_bias="0.3">
 
             <TextView
-                android:id="@+id/findIdTextView"
+                android:id="@+id/tv_find_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/find_id"
                 android:textColor="@color/black"
                 style="@style/Headline5.Bold"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/emailLayout"
+                app:layout_constraintBottom_toTopOf="@+id/layout_input_email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailLayout"
+                android:id="@+id/layout_input_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="16dp"
                 android:hint="학교 메일 입력"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/findIdTextView"
+                app:layout_constraintTop_toBottomOf="@id/tv_find_id"
                 app:suffixText="@string/school_domain"
                 app:endIconMode="clear_text"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailEditText"
+                    android:id="@+id/et_input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewmodel.email}"
@@ -91,15 +91,15 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:enabled="@{emailEditText.text.length() == 0? false : true}"
+                android:enabled="@{etInputEmail.text.length() == 0? false : true}"
                 android:onClick="@{() -> viewmodel.findId()}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emailLayout" />
+                app:layout_constraintTop_toBottomOf="@id/layout_input_email" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/findPasswordButton"
+            android:id="@+id/tv_find_pw_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

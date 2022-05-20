@@ -31,7 +31,7 @@
             android:padding="@dimen/page_padding">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailEditText"
+                android:id="@+id/layout_input_email"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 app:suffixText="@{constants.SCHOOL_DOMAIN_AT}">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_mail"
+                    android:id="@+id/et_input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -52,7 +52,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ProgressBar
-                android:id="@+id/signup_progress"
+                android:id="@+id/progress_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}"
