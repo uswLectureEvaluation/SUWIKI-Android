@@ -17,6 +17,11 @@ fun applyDateTime(view: TextView, dateTime: LocalDateTime) {
     view.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 }
 
+@BindingAdapter("date")
+fun applyDate(view: TextView, dateTime: LocalDateTime) {
+    view.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+}
+
 @BindingAdapter("point")
 fun applyUserPoint(view: TextView, point: Int) {
     if (point >= 0) {

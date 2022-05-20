@@ -7,17 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemRecyclerPurchaseBinding
 import com.kunize.uswtimetable.dataclass.PurchaseHistory
-import java.time.format.DateTimeFormatter
 
 class PurchaseHistoryAdapter : ListAdapter<PurchaseHistory, PurchaseHistoryAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemRecyclerPurchaseBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(history: PurchaseHistory) {
-            binding.tvItemTitle.text = history.lectureName
-            binding.tvItemMajor.text = history.majorType
-            binding.tvItemProfessor.text = history.professor
-            binding.tvDate.text =
-                history.createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+            binding.data = history
+            binding.executePendingBindings()
         }
     }
 
