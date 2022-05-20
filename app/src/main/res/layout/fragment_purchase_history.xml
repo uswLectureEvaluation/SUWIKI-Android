@@ -36,7 +36,7 @@
                 app:titleEnabled="false">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolBar"
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/recyclerview_padding"

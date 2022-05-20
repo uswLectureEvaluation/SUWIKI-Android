@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.kunize.uswtimetable.databinding.PurchaseHistoryFragmentBinding
+import com.kunize.uswtimetable.databinding.FragmentPurchaseHistoryBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 
 class PurchaseHistoryFragment : Fragment() {
     private val viewModel: PurchaseHistoryViewModel by viewModels { ViewModelFactory(requireContext()) }
-    private var _binding: PurchaseHistoryFragmentBinding? = null
+    private var _binding: FragmentPurchaseHistoryBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = PurchaseHistoryFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentPurchaseHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -33,7 +33,7 @@ class PurchaseHistoryFragment : Fragment() {
     }
 
     private fun initViews() {
-        binding.toolBar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             it.findNavController().popBackStack()
         }
     }

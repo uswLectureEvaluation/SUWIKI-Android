@@ -22,15 +22,15 @@ class MyPostFragment : Fragment() {
     ): View {
         _binding = FragmentMyPostBinding.inflate(inflater, container, false)
 
-        binding.toolBar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-        binding.viewPager.isUserInputEnabled = false
-        binding.viewPager.adapter = MyPostPageAdapter(this)
+        binding.vpContainer.isUserInputEnabled = false
+        binding.vpContainer.adapter = MyPostPageAdapter(this)
 
-        tab = binding.tabLayout
+        tab = binding.layoutTab
 
-        TabLayoutMediator(tab, binding.viewPager) { tab, position ->
+        TabLayoutMediator(tab, binding.vpContainer) { tab, position ->
             when (position) {
                 0 -> tab.text = "강의 평가"
                 1 -> tab.text = "시험 정보"

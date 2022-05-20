@@ -16,7 +16,7 @@ class MyExamInfoAdapter(private val viewModel: MyExamInfoViewModel) :
         fun bind(data: MyExamInfoDto) {
             binding.viewmodel = viewModel
             binding.data = data
-            binding.contentTextView = binding.content
+            binding.contentTextView = binding.tvContent
             binding.executePendingBindings()
         }
     }

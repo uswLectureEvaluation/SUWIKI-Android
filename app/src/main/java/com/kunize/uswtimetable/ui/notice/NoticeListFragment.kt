@@ -46,7 +46,7 @@ class NoticeListFragment : Fragment() {
             makeToast(message)
         }
 
-        viewModel.eventNotice.observe(viewLifecycleOwner, EventObserver() { noticeId ->
+        viewModel.eventNotice.observe(viewLifecycleOwner, EventObserver { noticeId ->
             findNavController(this).navigate(
                 R.id.action_noticeListFragment_to_noticeDetailFragment,
                 bundleOf(KEY_NOTICE_ID to noticeId)

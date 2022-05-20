@@ -2,7 +2,6 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_my_post"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
@@ -25,7 +24,7 @@
             app:titleEnabled="false">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolBar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/recyclerview_padding"
@@ -37,14 +36,14 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+            android:id="@+id/layout_tab"
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
             app:tabIndicatorHeight="0dp" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+        android:id="@+id/vp_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />

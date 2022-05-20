@@ -19,8 +19,8 @@ class MyEvaluationAdapter(private val viewModel: MyEvaluationViewModel) :
             binding.data = data
             binding.mapper = PostData
             binding.viewmodel = viewModel
-            binding.contentTextView = binding.content
-            binding.group = binding.detailScoreLayout
+            binding.contentTextView = binding.tvContent
+            binding.group = binding.layoutDetailScore
             binding.executePendingBindings()
         }
     }

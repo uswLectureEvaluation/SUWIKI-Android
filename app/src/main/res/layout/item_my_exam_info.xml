@@ -23,7 +23,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/itemLayout"
+        android:id="@+id/layout_container"
         expandable="@{contentTextView}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,20 +32,20 @@
         android:padding="@dimen/recyclerview_padding">
 
         <TextView
-            android:id="@+id/lectureName"
+            android:id="@+id/tv_lecture_name"
             style="@style/lecture_name_middle_style"
             android:layout_marginTop="4dp"
             android:text="@string/title_item_my_exam_info_lecture_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/yearSemester" />
+            app:layout_constraintTop_toBottomOf="@id/tv_semester" />
 
         <TextView
-            android:id="@+id/lectureProfessor"
+            android:id="@+id/tv_professor"
             style="@style/professor_middle_style"
             android:layout_marginStart="8dp"
             android:text="@{data.professor}"
-            app:layout_constraintBottom_toBottomOf="@+id/lectureName"
-            app:layout_constraintStart_toEndOf="@+id/lectureName"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_lecture_name"
+            app:layout_constraintStart_toEndOf="@+id/tv_lecture_name"
             tools:text="교수 이름" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/title_item_my_exam_info_exam_type"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lectureName" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_lecture_name" />
 
         <TextView
             android:id="@+id/tv_exam_type"
@@ -95,7 +95,7 @@
             tools:text="보통" />
 
         <TextView
-            android:id="@+id/deleteBtn"
+            android:id="@+id/tv_delete_btn"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:onClick="@{() -> viewmodel.onItemClicked(viewType.DELETE_BUTTON, data)}"
             android:text="@string/delete"
@@ -104,17 +104,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/editBtn"
+            android:id="@+id/tv_edit_btn"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:layout_marginEnd="16dp"
             android:onClick="@{() -> viewmodel.onItemClicked(viewType.EDIT_BUTTON, data)}"
             android:text="@string/edit"
             android:textColor="@color/blue"
-            app:layout_constraintEnd_toStartOf="@id/deleteBtn"
+            app:layout_constraintEnd_toStartOf="@id/tv_delete_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/tv_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -128,7 +128,7 @@
             tools:text="와 이 강의 개꿀. 그냥 출석하고 교수 눈에만 안 띄면 A+ 가능 ㅋㅋ 무조건 들어라 애들아" />
 
         <TextView
-            android:id="@+id/yearSemester"
+            android:id="@+id/tv_semester"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:text="@{data.semester}"
             app:layout_constraintStart_toStartOf="parent"

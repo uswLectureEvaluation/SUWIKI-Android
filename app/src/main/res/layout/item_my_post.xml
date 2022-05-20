@@ -38,7 +38,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/itemLayout"
         content="@{contentTextView}"
         group="@{group}"
         android:layout_width="match_parent"
@@ -47,203 +46,193 @@
         android:padding="@dimen/recyclerview_padding">
 
         <TextView
-            android:id="@+id/lectureName"
+            android:id="@+id/tv_lecture_name"
             style="@style/lecture_name_middle_style"
             android:layout_marginTop="4dp"
             android:text="@{data.lectureName}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/yearSemester"
+            app:layout_constraintTop_toBottomOf="@id/tv_semester"
             tools:text="강의 이름" />
 
         <TextView
-            android:id="@+id/lectureProfessor"
+            android:id="@+id/tv_professor"
             style="@style/professor_middle_style"
             android:layout_marginStart="8dp"
             android:text="@{data.professor}"
-            app:layout_constraintBottom_toBottomOf="@+id/lectureName"
-            app:layout_constraintStart_toEndOf="@+id/lectureName"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_lecture_name"
+            app:layout_constraintStart_toEndOf="@+id/tv_lecture_name"
             tools:text="교수 이름" />
 
         <TextView
-            android:id="@+id/textViewAver"
+            android:id="@+id/tv_average_title"
             style="@style/default_black_bold_textview_style"
             android:layout_marginTop="8dp"
             android:text="@string/average_index"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lectureName" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_lecture_name" />
 
         <RatingBar
-            android:id="@+id/averRatingBar"
+            android:id="@+id/rb_average"
             style="@style/CustomRatingBar"
             android:layout_marginStart="8dp"
             android:rating="@{data.totalAvg}"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewAver"
-            app:layout_constraintStart_toEndOf="@+id/textViewAver"
-            app:layout_constraintTop_toTopOf="@+id/textViewAver" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_average_title"
+            app:layout_constraintStart_toEndOf="@+id/tv_average_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_average_title" />
 
         <TextView
-            android:id="@+id/averScore"
+            android:id="@+id/tv_average"
             style="@style/score_textview_style"
             floatText="@{data.totalAvg}"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/averRatingBar"
-            app:layout_constraintStart_toEndOf="@+id/averRatingBar"
+            app:layout_constraintBottom_toBottomOf="@+id/rb_average"
+            app:layout_constraintStart_toEndOf="@+id/rb_average"
             tools:text="5" />
 
         <TextView
-            android:id="@+id/textViewNum6"
             style="@style/slash5_textview_style"
-            app:layout_constraintBottom_toBottomOf="@+id/averScore"
-            app:layout_constraintStart_toEndOf="@+id/averScore" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_average"
+            app:layout_constraintStart_toEndOf="@+id/tv_average" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/detailScoreLayout"
+            android:id="@+id/layout_detail_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/averScore"
+            app:layout_constraintTop_toBottomOf="@+id/tv_average"
             tools:visibility="visible">
 
             <TextView
-                android:id="@+id/textViewLearning"
+                android:id="@+id/tv_learning_title"
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginStart="24dp"
                 android:text="@string/learning_score"
-                app:layout_constraintEnd_toStartOf="@+id/learningScore"
-                app:layout_constraintStart_toEndOf="@+id/textViewNum2"
+                app:layout_constraintEnd_toStartOf="@+id/tv_learning"
+                app:layout_constraintStart_toEndOf="@+id/tv_honey_max"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewHoney"
+                android:id="@+id/tv_honey_title"
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginStart="24dp"
                 android:text="@string/honey_score"
-                app:layout_constraintStart_toEndOf="@+id/textViewNum1"
+                app:layout_constraintStart_toEndOf="@+id/tv_satisfaction_max"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewSatisfaction"
+                android:id="@+id/tv_satisfaction_title"
                 style="@style/recyclerview_evaluation_text_info"
                 android:text="@string/satisfaction"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/satisfactionScore"
+                android:id="@+id/tv_satisfaction"
                 style="@style/score_textview_style"
                 floatText="@{data.satisfaction}"
                 android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewSatisfaction"
-                app:layout_constraintStart_toEndOf="@+id/textViewSatisfaction"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_satisfaction_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_satisfaction_title"
                 tools:text="5" />
 
             <TextView
-                android:id="@+id/honeyScore"
+                android:id="@+id/tv_honey"
                 style="@style/score_textview_style"
                 floatText="@{data.honey}"
                 android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewHoney"
-                app:layout_constraintStart_toEndOf="@+id/textViewHoney"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_honey_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_honey_title"
                 tools:text="5" />
 
             <TextView
-                android:id="@+id/learningScore"
+                android:id="@+id/tv_learning"
                 style="@style/score_textview_style"
                 floatText="@{data.learning}"
                 android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewLearning"
-                app:layout_constraintStart_toEndOf="@+id/textViewLearning"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_learning_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_learning_title"
                 tools:text="5" />
 
             <TextView
-                android:id="@+id/textViewNum1"
+                android:id="@+id/tv_satisfaction_max"
                 style="@style/slash5_textview_style"
-                app:layout_constraintBottom_toBottomOf="@+id/satisfactionScore"
-                app:layout_constraintStart_toEndOf="@+id/satisfactionScore" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_satisfaction"
+                app:layout_constraintStart_toEndOf="@+id/tv_satisfaction" />
 
             <TextView
-                android:id="@+id/textViewNum2"
+                android:id="@+id/tv_honey_max"
                 style="@style/slash5_textview_style"
-                app:layout_constraintBottom_toBottomOf="@+id/honeyScore"
-                app:layout_constraintStart_toEndOf="@+id/honeyScore" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_honey"
+                app:layout_constraintStart_toEndOf="@+id/tv_honey" />
 
             <TextView
-                android:id="@+id/textViewNum5"
+                android:id="@+id/tv_learning_max"
                 style="@style/slash5_textview_style"
-                app:layout_constraintBottom_toBottomOf="@+id/learningScore"
-                app:layout_constraintStart_toEndOf="@+id/learningScore" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_learning"
+                app:layout_constraintStart_toEndOf="@+id/tv_learning" />
 
             <TextView
-                android:id="@+id/textViewMeeting"
+                android:id="@+id/tv_meeting_title"
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginTop="4dp"
                 android:text="@string/team_meeting"
-                app:layout_constraintStart_toStartOf="@+id/textViewSatisfaction"
-                app:layout_constraintTop_toBottomOf="@+id/textViewSatisfaction" />
+                app:layout_constraintStart_toStartOf="@+id/tv_satisfaction_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_satisfaction_title" />
 
             <TextView
-                android:id="@+id/teamMeeting"
+                android:id="@+id/tv_meeting"
                 style="@style/score_textview_style"
                 postData="@{data.team}"
                 postDataType="@{type.TEAM}"
                 android:layout_marginStart="8dp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewMeeting"
-                app:layout_constraintStart_toEndOf="@+id/textViewMeeting"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_meeting_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_meeting_title"
                 tools:text="없음" />
 
             <TextView
-                android:id="@+id/textViewTask"
+                android:id="@+id/tv_task_title"
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginTop="4dp"
                 android:text="@string/task"
-                app:layout_constraintStart_toStartOf="@+id/textViewHoney"
-                app:layout_constraintTop_toBottomOf="@+id/textViewHoney" />
+                app:layout_constraintStart_toStartOf="@+id/tv_honey_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_honey_title" />
 
             <TextView
-                android:id="@+id/task"
+                android:id="@+id/tv_task"
                 style="@style/score_textview_style"
                 postData="@{data.homework}"
                 postDataType="@{type.HOMEWORK}"
                 android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewTask"
-                app:layout_constraintStart_toEndOf="@+id/textViewTask"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_task_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_task_title"
                 tools:text="많음" />
 
             <TextView
-                android:id="@+id/textViewGrade"
+                android:id="@+id/tv_grade_title"
                 style="@style/recyclerview_evaluation_text_info"
                 android:layout_marginTop="4dp"
                 android:text="@string/grade"
-                app:layout_constraintStart_toStartOf="@+id/textViewLearning"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLearning" />
+                app:layout_constraintStart_toStartOf="@+id/tv_learning_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_learning_title" />
 
             <TextView
-                android:id="@+id/grade"
+                android:id="@+id/tv_grade"
                 style="@style/score_textview_style"
                 postData="@{data.difficulty}"
                 postDataType="@{type.DIFFICULTY}"
                 android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewGrade"
-                app:layout_constraintStart_toEndOf="@+id/textViewGrade"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_grade_title"
+                app:layout_constraintStart_toEndOf="@+id/tv_grade_title"
                 tools:text="까다로움" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/etcInfoGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:constraint_referenced_ids="textViewTask, textViewMeeting, textViewGrade, task, teamMeeting, grade"
-                tools:layout_editor_absoluteX="10dp"
-                tools:layout_editor_absoluteY="10dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/deleteBtn"
+            android:id="@+id/tv_delete_btn"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:onClick="@{() -> viewmodel.itemClicked(viewType.DELETE_BUTTON, data)}"
             android:text="@string/delete"
@@ -252,17 +241,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/editBtn"
+            android:id="@+id/tv_edit_btn"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:layout_marginEnd="16dp"
             android:onClick="@{() -> viewmodel.itemClicked(viewType.EDIT_BUTTON, data)}"
             android:text="@string/edit"
             android:textColor="@color/blue"
-            app:layout_constraintEnd_toStartOf="@id/deleteBtn"
+            app:layout_constraintEnd_toStartOf="@id/tv_delete_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -272,11 +261,11 @@
             android:textColor="@color/custom_dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailScoreLayout"
+            app:layout_constraintTop_toBottomOf="@id/layout_detail_score"
             tools:text="와 이 강의 개꿀. 그냥 출석하고 교수 눈에만 안 띄면 A+ 가능 ㅋㅋ 무조건 들어라 애들아" />
 
         <TextView
-            android:id="@+id/yearSemester"
+            android:id="@+id/tv_semester"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:text="@{data.selectedSemester}"
             android:textColor="@color/black"
