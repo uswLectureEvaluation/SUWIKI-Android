@@ -73,26 +73,26 @@ class SearchResultFragment : Fragment() {
         }
 
 
-        binding.searchLecture.apply {
+        binding.etSearch.apply {
             setText(args.searchLectureName)
             setSelection(args.searchLectureName.length)
         }
 
 
-        binding.searchBtn.setOnClickListener {
+        binding.btnSearch.setOnClickListener {
             if (isSearchTextLengthNotEnough()) return@setOnClickListener
-            searchResultViewModel.search(binding.searchLecture.text.toString())
+            searchResultViewModel.search(binding.etSearch.text.toString())
         }
 
 
-        binding.searchLecture.setOnEditorActionListener { _, it, _ ->
+        binding.etSearch.setOnEditorActionListener { _, it, _ ->
             var handled = false
             if (it == EditorInfo.IME_ACTION_SEARCH && !isSearchTextLengthNotEnough()) {
                 val inputMethodManager =
                     requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(binding.searchLecture.windowToken, 0)
+                inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
                 handled = true
-                searchResultViewModel.search(binding.searchLecture.text.toString())
+                searchResultViewModel.search(binding.etSearch.text.toString())
             }
             handled
         }
@@ -105,7 +105,7 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {
-        if (binding.searchLecture.text.toString().length < MIN_SEARCH_TEXT_LENGTH) {
+        if (binding.etSearch.text.toString().length < MIN_SEARCH_TEXT_LENGTH) {
             Toast.makeText(requireContext(), "2글자 이상 입력해주세요!", Toast.LENGTH_SHORT).show()
             return true
         }

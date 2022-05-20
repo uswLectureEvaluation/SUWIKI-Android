@@ -64,19 +64,19 @@ class EvaluationFragment : Fragment() {
             goToSearchResult("", spinnerSel)
         }
 
-        binding.searchBtn.setOnClickListener {
+        binding.btnSearch.setOnClickListener {
             if (isSearchTextLengthNotEnough()) return@setOnClickListener
             goToSearchResult()
         }
 
 
         //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
-        binding.searchLecture.setOnEditorActionListener { _, it, _ ->
+        binding.etSearch.setOnEditorActionListener { _, it, _ ->
             var handled = false
             if (it == EditorInfo.IME_ACTION_SEARCH && !isSearchTextLengthNotEnough()) {
                 val inputMethodManager =
                     requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(binding.searchLecture.windowToken, 0)
+                inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
                 goToSearchResult()
                 handled = true
             }
@@ -102,7 +102,7 @@ class EvaluationFragment : Fragment() {
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {
-        if (binding.searchLecture.text.toString().length < MIN_SEARCH_TEXT_LENGTH) {
+        if (binding.etSearch.text.toString().length < MIN_SEARCH_TEXT_LENGTH) {
             Toast.makeText(requireContext(), "2글자 이상 입력해주세요!", Toast.LENGTH_SHORT).show()
             return true
         }
@@ -110,7 +110,7 @@ class EvaluationFragment : Fragment() {
     }
 
     private fun goToSearchResult(
-        msg: String = binding.searchLecture.text.toString(),
+        msg: String = binding.etSearch.text.toString(),
         now: Int = 0
     ) {
         val action =

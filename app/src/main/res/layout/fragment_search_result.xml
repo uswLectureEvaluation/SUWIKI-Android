@@ -46,18 +46,18 @@
                             android:background="@color/search_result_bar">
 
                             <EditText
-                                android:id="@+id/searchLecture"
+                                android:id="@+id/et_search"
                                 style="@style/search_style"
                                 android:background="@android:color/transparent"
                                 android:hint="@string/search_evaluation_hint"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@id/searchBtn"
+                                app:layout_constraintEnd_toStartOf="@id/btn_search"
                                 app:layout_constraintHorizontal_chainStyle="packed"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
-                                android:id="@+id/searchBtn"
+                                android:id="@+id/btn_search"
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
                                 android:paddingStart="10dp"
@@ -65,7 +65,7 @@
                                 android:src="@drawable/ic_baseline_search_24"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/searchLecture"
+                                app:layout_constraintStart_toEndOf="@id/et_search"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
