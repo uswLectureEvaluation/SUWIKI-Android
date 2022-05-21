@@ -65,8 +65,8 @@ class EvaluationFragment : Fragment() {
 
         val spinnerTextList = listOf("최근 올라온 강의", "꿀 강의", "만족도가 높은 강의", "배울게 많은 강의", "Best 강의")
         val spinnerImageList = listOf(
-            R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
-            R.drawable.ic_book_24, R.drawable.ic_best_24
+            R.drawable.ic_fire, R.drawable.ic_honey, R.drawable.ic_thumbs,
+            R.drawable.ic_book, R.drawable.ic_1st
         )
 
         binding.btnSearch.setOnClickListener {
