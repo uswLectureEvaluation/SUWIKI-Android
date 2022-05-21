@@ -12,6 +12,9 @@ import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
 import com.kunize.uswtimetable.data.local.TimeTableData
+import com.kunize.uswtimetable.repository.start.OpenMajorRemoteDataSource
+import com.kunize.uswtimetable.repository.start.OpenMajorRepository
+import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.PreferenceManager
@@ -39,6 +42,10 @@ class StartActivity : AppCompatActivity() {
         binding.showProgress.text = "시간표 DB 버전 확인 중"
         setPercentage(0)
 
+        //retrofit2
+        val apiService = IRetrofit.getInstanceWithNoToken()
+        val openMajorRepository = OpenMajorRepository(OpenMajorRemoteDataSource(apiService))
+
         //firebase 설정
         val database: FirebaseDatabase?
         val firebaseVersion: DatabaseReference?
@@ -47,6 +54,7 @@ class StartActivity : AppCompatActivity() {
         //Preferences 설정
         val versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
         var version = versionPreferences.getString("version", "202107271830")
+        val openMajorVersion = versionPreferences.getFloat("openMajorVersion", 0f)
         TimeTableSelPref.prefs.setInt("majorSel", 0)
         TimeTableSelPref.prefs.setInt("gradeSel", 0)
 
@@ -55,7 +63,6 @@ class StartActivity : AppCompatActivity() {
 
         //기타
         val localDataList = mutableListOf<TimeTableData>()
-        var originData: String
         var done = false
         var update: Boolean? = null
 
@@ -78,7 +85,6 @@ class StartActivity : AppCompatActivity() {
         firebaseVersion.get().addOnSuccessListener {
             update = it.value.toString().toLong() > version!!.toLong()
             version = it.value.toString()
-            Log.d("firebase", "$update ${it.value.toString().toLong()} // ${version!!.toLong()}")
             binding.showProgress.text = "시간표 DB 버전 확인 완료"
             setPercentage(25)
         }.addOnFailureListener {
@@ -124,8 +130,6 @@ class StartActivity : AppCompatActivity() {
                     Log.d("firebase", "추가 완료")
                 }
 
-
-
                 db!!.timetableDao().deleteAll()
 
                 while (true) {
@@ -135,7 +139,7 @@ class StartActivity : AppCompatActivity() {
                         }
                         for (i in localDataList.indices) {
                             db.timetableDao().insert(localDataList[i])
-                            val percent = 25 + ((i.toDouble() / localDataList.size) * 74).toInt()
+                            val percent = 25 + ((i.toDouble() / localDataList.size) * 70).toInt()
                             withContext(Main) {
                                 setPercentage(percent)
                             }
@@ -148,15 +152,28 @@ class StartActivity : AppCompatActivity() {
                     delay(1000L)
                 }
                 withContext(Main) {
+                    updateOpenMajorList(openMajorRepository, openMajorVersion)
                     setPercentage(100)
                 }
                 startActivity(intent)
             } else {
                 withContext(Main) {
+                    updateOpenMajorList(openMajorRepository, openMajorVersion)
                     setPercentage(100)
                 }
                 startActivity(intent)
             }
+        }
+    }
+
+    private suspend fun updateOpenMajorList(
+        openMajorRepository: OpenMajorRepository,
+        openMajorVersion: Float
+    ) {
+        val response = openMajorRepository.getOpenMajorVersion()
+        Log.d("openMajorVersion", "${response.isSuccessful}")
+        if (response.isSuccessful && (response.body()!!.version > openMajorVersion)) {
+            //TODO 개설학과 리스트 업데이트
         }
     }
 
