@@ -51,7 +51,7 @@
 
                         <EditText
                             android:id="@+id/et_search"
-                            style="@style/SuwikiTextSubTitle"
+                            style="@style/SuwikiTextBody1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:background="@null"

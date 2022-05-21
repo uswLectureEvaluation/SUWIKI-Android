@@ -411,11 +411,77 @@
 
     <style name="SuwikiTextSubTitle" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/suwiki_black_700</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SuwikiTextSubTitle.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
     </style>
 
     <style name="SuwikiTextSubTitle.Gray">
         <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="SuwikiTextSubTitle.Bold" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SuwikiTextSubTitle.Bold.Blue" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="SuwikiTextBody1" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SuwikiTextBody1.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="SuwikiTextBody1.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="SuwikiTextBody2" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="SuwikiTextBody2.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SuwikiTextBody2.Bold.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="SuwikiTextBody2.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="SuwikiTextBody2.Purple">
+        <item name="android:textColor">@color/suwiki_purple</item>
+    </style>
+
+    <style name="SuwikiTextBody2.White">
+        <item name="android:textColor">@color/suwiki_white</item>
+    </style>
+
+    <style name="SuwikiTextBody3" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="SuwikiTextBody3.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SuwikiTextBody3.Bold.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="SuwikiTextBody3.Bold.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 </resources>
