@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
 import android.graphics.Color
-import android.util.Log
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,7 +23,7 @@ object LectureInfoBindingAdapter {
             textView.text = item.replace(" ", "")
             textView.textSize = 12f
             textView.setTextColor(Color.BLACK)
-            textView.setBackgroundResource(R.drawable.rounding_light_gray_background)
+            textView.setBackgroundResource(R.drawable.bg_round_stroke_gray_300)
             val lp = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT

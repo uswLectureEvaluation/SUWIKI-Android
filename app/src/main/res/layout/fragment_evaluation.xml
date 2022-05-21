@@ -26,55 +26,71 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/page_padding">
+                    android:paddingBottom="4dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="16dp">
 
                     <TextView
-                        android:id="@+id/textView18"
-                        style="@style/title_textview_style"
+                        android:id="@+id/tv_title"
+                        style="@style/SuwikiTextTitle.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/evaluation"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView"
-                        style="@style/cardview_style"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_search"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView18">
+                        app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                        <EditText
+                            android:id="@+id/et_search"
+                            style="@style/SuwikiTextSubTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:ellipsize="end"
+                            android:ems="10"
+                            android:textColorHint="@color/suwiki_gray_700"
+                            android:hint="@string/search_evaluation_hint"
+                            android:imeActionLabel="검색"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"
+                            android:paddingTop="14dp"
+                            android:paddingBottom="14dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/btn_search"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <EditText
-                                android:id="@+id/searchLecture"
-                                style="@style/search_style"
-                                android:background="@null"
-                                android:hint="@string/search_evaluation_hint"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@id/searchBtn"
-                                app:layout_constraintHorizontal_chainStyle="packed"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                        <ImageView
+                            android:id="@+id/btn_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:src="@drawable/ic_search"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/et_search"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageView
-                                android:id="@+id/searchBtn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="@drawable/ic_baseline_search_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/searchLecture"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:background="@color/suwiki_gray_900"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    </androidx.cardview.widget.CardView>
 
                     <Spinner
                         android:id="@+id/spinner"
@@ -82,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cardView" />
+                        app:layout_constraintTop_toBottomOf="@id/cl_search" />
 
                     <TextView
                         android:id="@+id/moreBtn"
@@ -97,19 +113,17 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerEvaluation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/background_cardview"
-                    android:elevation="2dp"
-                    app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerEvaluation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
