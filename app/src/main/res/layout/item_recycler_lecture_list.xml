@@ -117,7 +117,7 @@
             style="@style/SuwikiTextBody2.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:padding="6dp"
             android:text="@string/see_detail"
             app:layout_constraintBottom_toBottomOf="@id/tv_average"
             app:layout_constraintStart_toEndOf="@id/tv_average"
