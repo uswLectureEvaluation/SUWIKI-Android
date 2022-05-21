@@ -23,13 +23,18 @@ import com.kunize.uswtimetable.util.LectureApiOption.HONEY
 import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
+import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.onItemSelected
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
     private lateinit var adapter: EvaluationAdapter
-    private val evaluationViewModel: EvaluationViewModel by viewModels {ViewModelFactory(requireContext())}
+    private val evaluationViewModel: EvaluationViewModel by viewModels {
+        ViewModelFactory(
+            requireContext()
+        )
+    }
     private var spinnerSel: Int = 0
     private var spinnerTypeList = listOf(MODIFIED, HONEY, SATISFACTION, LEARNING, BEST)
 
@@ -45,6 +50,10 @@ class EvaluationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = EvaluationAdapter { id ->
+            if (id == LectureItemViewType.FOOTER.toLong()) {
+                goToSearchResult("", spinnerSel)
+                return@EvaluationAdapter
+            }
             val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
             findNavController().navigate(action)
         }
@@ -59,10 +68,6 @@ class EvaluationFragment : Fragment() {
             R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
             R.drawable.ic_book_24, R.drawable.ic_best_24
         )
-
-        binding.moreBtn.setOnClickListener {
-            goToSearchResult("", spinnerSel)
-        }
 
         binding.btnSearch.setOnClickListener {
             if (isSearchTextLengthNotEnough()) return@setOnClickListener
@@ -96,7 +101,11 @@ class EvaluationFragment : Fragment() {
         }
 
         evaluationViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
-            Toast.makeText(requireContext(), evaluationViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                evaluationViewModel.toastViewModel.toastMessage,
+                Toast.LENGTH_LONG
+            ).show()
         })
 
     }

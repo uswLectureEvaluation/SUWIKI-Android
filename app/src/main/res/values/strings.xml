@@ -158,5 +158,6 @@
     </string-array>
     
     <string name="open_major">개설학과</string>
+    <string name="simple_see_more">더보기</string>
 
 </resources>

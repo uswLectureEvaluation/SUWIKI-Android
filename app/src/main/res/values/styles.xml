@@ -419,7 +419,7 @@
         <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 
-    <style name="SuwikiTextSubTitle.Bold" parent="TextAppearance.AppCompat.Title">
+    <style name="SuwikiTextSubTitle.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 

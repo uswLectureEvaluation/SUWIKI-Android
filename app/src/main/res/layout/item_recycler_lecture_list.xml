@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/SuwikiTextTitle.Bold"
+            style="@style/SuwikiTextSubTitle.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

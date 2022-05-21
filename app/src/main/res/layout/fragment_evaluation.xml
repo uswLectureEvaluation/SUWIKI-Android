@@ -95,26 +95,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="34dp"
                         android:layout_marginTop="24dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:padding="8dp"
                         android:background="@drawable/bg_rounded_10"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cl_search">
 
                         <TextView
                             android:id="@+id/tv_open_major"
+                            style="@style/SuwikiTextBody2.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/SuwikiTextBody2.Bold"
                             android:text="@string/open_major"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
                             android:id="@+id/spinner_open_major"
-                            android:background="@drawable/selector_custom_spinner_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/selector_custom_spinner_arrow"
                             android:spinnerMode="dialog"
                             app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
                             app:layout_constraintStart_toEndOf="@id/tv_open_major"
@@ -126,52 +126,54 @@
                         android:id="@+id/cl_sort"
                         android:layout_width="wrap_content"
                         android:layout_height="34dp"
-                        android:layout_marginTop="24dp"
                         android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toEndOf="@id/cl_open_major"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="8dp"
+                        android:layout_marginTop="24dp"
                         android:background="@drawable/bg_rounded_10"
+                        android:paddingStart="4dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="4dp"
+                        app:layout_constraintStart_toEndOf="@id/cl_open_major"
                         app:layout_constraintTop_toBottomOf="@id/cl_search">
 
                         <Spinner
                             android:id="@+id/spinner_sort"
                             android:layout_width="0dp"
-                            android:background="@drawable/selector_custom_spinner_arrow"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/selector_custom_spinner_arrow"
                             android:spinnerMode="dialog"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/moreBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/see_more"
-                        app:layout_constraintBottom_toBottomOf="@+id/cl_open_major"
-                        app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerEvaluation"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerEvaluation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
