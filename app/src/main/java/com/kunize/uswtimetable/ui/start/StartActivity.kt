@@ -6,11 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.kunize.uswtimetable.ui.main.MainActivity
@@ -42,6 +37,7 @@ class StartActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.showProgress.text = "시간표 DB 버전 확인 중"
+        setPercentage(0)
 
         //firebase 설정
         val database: FirebaseDatabase?
@@ -84,8 +80,10 @@ class StartActivity : AppCompatActivity() {
             version = it.value.toString()
             Log.d("firebase", "$update ${it.value.toString().toLong()} // ${version!!.toLong()}")
             binding.showProgress.text = "시간표 DB 버전 확인 완료"
+            setPercentage(25)
         }.addOnFailureListener {
             binding.showProgress.text = "시간표 DB 버전 확인 실패"
+            setPercentage(100)
             startActivity(intent)
         }
 
@@ -96,16 +94,16 @@ class StartActivity : AppCompatActivity() {
                 if (update != null && !toUpdate)
                     break
                 delay(500L)
-                Log.d("update123","$update")
+                Log.d("update123", "$update")
             } //update 값이 입력될 때 까지 무한 루프
             if (update == true) {
                 Log.d("firebase", "업데이트 실행 $version")
-                withContext(Main){
+                withContext(Main) {
                     binding.showProgress.text = "서버로부터 시간표 DB 불러오는 중"
                 }
                 firebaseTimetableData.get().addOnSuccessListener {
                     var index = 1L
-                    for(data in it.children) {
+                    for (data in it.children) {
                         val emptyData = TimeTableData()
                         val tempData = data.value as HashMap<*, *>
                         emptyData.number = index
@@ -132,11 +130,15 @@ class StartActivity : AppCompatActivity() {
 
                 while (true) {
                     if (done) {
-                        withContext(Main){
+                        withContext(Main) {
                             binding.showProgress.text = "시간표 DB 저장 중"
                         }
-                        for (i in localDataList) {
-                            db.timetableDao().insert(i)
+                        for (i in localDataList.indices) {
+                            db.timetableDao().insert(localDataList[i])
+                            val percent = 25 + ((i.toDouble() / localDataList.size) * 74).toInt()
+                            withContext(Main) {
+                                setPercentage(percent)
+                            }
                         }
                         versionPreferences.edit(true) {
                             putString("version", version)
@@ -145,10 +147,21 @@ class StartActivity : AppCompatActivity() {
                     } //시간표를 업데이트 완료 전까지 무한 루프
                     delay(1000L)
                 }
+                withContext(Main) {
+                    setPercentage(100)
+                }
                 startActivity(intent)
             } else {
+                withContext(Main) {
+                    setPercentage(100)
+                }
                 startActivity(intent)
             }
         }
+    }
+
+    private fun setPercentage(percentage: Int) {
+        binding.tvProgress.text = "$percentage%"
+        binding.progressBar.progress = percentage
     }
 }

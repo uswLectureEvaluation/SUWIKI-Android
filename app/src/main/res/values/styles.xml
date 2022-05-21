@@ -474,6 +474,10 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="SuwikiTextBody3.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
     <style name="SuwikiTextBody3.Bold">
         <item name="android:textStyle">bold</item>
     </style>
