@@ -14,8 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
+import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
@@ -28,7 +28,7 @@ import com.kunize.uswtimetable.util.onItemSelected
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
-    private lateinit var adapter: EvaluationListAdapter
+    private lateinit var adapter: EvaluationAdapter
     private val evaluationViewModel: EvaluationViewModel by viewModels {ViewModelFactory(requireContext())}
     private var spinnerSel: Int = 0
     private var spinnerTypeList = listOf(MODIFIED, HONEY, SATISFACTION, LEARNING, BEST)
@@ -44,7 +44,7 @@ class EvaluationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EvaluationListAdapter { id ->
+        adapter = EvaluationAdapter { id ->
             val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
             findNavController().navigate(action)
         }
@@ -86,7 +86,7 @@ class EvaluationFragment : Fragment() {
         //spinner 설정
         val customSpinnerAdapter =
             CustomSpinnerAdapter(requireContext(), spinnerTextList, spinnerImageList)
-        binding.spinner.apply {
+        binding.spinnerSort.apply {
             adapter = customSpinnerAdapter
             setSelection(0, false)
             onItemSelected { position ->

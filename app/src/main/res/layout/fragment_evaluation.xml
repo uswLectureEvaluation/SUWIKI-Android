@@ -26,10 +26,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
                     android:paddingStart="16dp"
+                    android:paddingTop="16dp"
                     android:paddingEnd="16dp"
-                    android:paddingTop="16dp">
+                    android:paddingBottom="4dp">
 
                     <TextView
                         android:id="@+id/tv_title"
@@ -57,13 +57,13 @@
                             android:background="@null"
                             android:ellipsize="end"
                             android:ems="10"
-                            android:textColorHint="@color/suwiki_gray_700"
                             android:hint="@string/search_evaluation_hint"
                             android:imeActionLabel="검색"
                             android:imeOptions="actionSearch"
                             android:inputType="text"
                             android:paddingTop="14dp"
                             android:paddingBottom="14dp"
+                            android:textColorHint="@color/suwiki_gray_700"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/btn_search"
                             app:layout_constraintHorizontal_chainStyle="packed"
@@ -75,7 +75,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
                             android:src="@drawable/ic_search"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -85,27 +84,76 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="1dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/suwiki_gray_900"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:background="@color/suwiki_gray_900"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    <Spinner
-                        android:id="@+id/spinner"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_open_major"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="34dp"
+                        android:layout_marginTop="24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cl_search" />
+                        android:padding="8dp"
+                        android:background="@drawable/bg_rounded_10"
+                        app:layout_constraintTop_toBottomOf="@id/cl_search">
+
+                        <TextView
+                            android:id="@+id/tv_open_major"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/SuwikiTextBody2.Bold"
+                            android:text="@string/open_major"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <Spinner
+                            android:id="@+id/spinner_open_major"
+                            android:background="@drawable/selector_custom_spinner_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dialog"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
+                            app:layout_constraintStart_toEndOf="@id/tv_open_major"
+                            app:layout_constraintTop_toTopOf="@id/tv_open_major" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/cl_open_major"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="8dp"
+                        android:background="@drawable/bg_rounded_10"
+                        app:layout_constraintTop_toBottomOf="@id/cl_search">
+
+                        <Spinner
+                            android:id="@+id/spinner_sort"
+                            android:layout_width="wrap_content"
+                            android:background="@drawable/selector_custom_spinner_arrow"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dialog"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/moreBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/see_more"
-                        app:layout_constraintBottom_toBottomOf="@+id/spinner"
+                        app:layout_constraintBottom_toBottomOf="@+id/cl_open_major"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"

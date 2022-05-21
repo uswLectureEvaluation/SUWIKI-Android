@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.data.local.EvaluationData
+import com.kunize.uswtimetable.data.remote.LectureMain
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.ToastViewModel
@@ -12,7 +13,7 @@ import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import kotlinx.coroutines.launch
 
 class EvaluationViewModel(private val evaluationRepository: EvaluationRepository) : ViewModel(), HandlingErrorInterface {
-    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
+    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<LectureMain>()
     val toastViewModel = ToastViewModel()
     private val _selectedType = MutableLiveData<String>()
 
@@ -21,7 +22,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
             val response = evaluationRepository.getLectureMainList(_selectedType.value.toString())
             if(response.isSuccessful) {
                 commonRecyclerViewViewModel.deleteLoading()
-                commonRecyclerViewViewModel.changeRecyclerViewData(response.body()?.convertToEvaluationData()!!)
+                commonRecyclerViewViewModel.changeRecyclerViewData(response.body()!!.data)
             } else {
                 handleError(response.code())
             }
