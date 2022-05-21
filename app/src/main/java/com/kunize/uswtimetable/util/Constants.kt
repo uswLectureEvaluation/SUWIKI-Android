@@ -53,6 +53,7 @@ object API {
     const val EDIT_LECTURE_EXAM = "/exam-posts/update/"
     const val BUY_EXAM = "/exam-posts/buyExamInfo/"
     const val OPEN_MAJOR_VERSION = "/suwiki-version/"
+    const val OPEN_MAJOR_LIST_UPDATE = "/version-update/"
 }
 
 object WriteFragmentTitle {

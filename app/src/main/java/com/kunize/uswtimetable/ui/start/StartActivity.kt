@@ -170,10 +170,11 @@ class StartActivity : AppCompatActivity() {
         openMajorRepository: OpenMajorRepository,
         openMajorVersion: Float
     ) {
-        val response = openMajorRepository.getOpenMajorVersion()
-        Log.d("openMajorVersion", "${response.isSuccessful}")
-        if (response.isSuccessful && (response.body()!!.version > openMajorVersion)) {
-            //TODO 개설학과 리스트 업데이트
+        val majorVersionResponse = openMajorRepository.getOpenMajorVersion()
+        Log.d("openMajorVersion", "${majorVersionResponse.isSuccessful}")
+        if (majorVersionResponse.isSuccessful && (majorVersionResponse.body()!!.version > openMajorVersion)) {
+            val majorListResponse = openMajorRepository.getOpenMajorList()
+            Log.d("openMajor","${majorListResponse.body()!!.data}")
         }
     }
 
