@@ -2,12 +2,15 @@ package com.kunize.uswtimetable.ui.start
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.kunize.uswtimetable.data.local.OpenMajorData
+import com.kunize.uswtimetable.data.local.OpenMajorDatabase
 import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
@@ -29,6 +32,7 @@ import kotlinx.coroutines.withContext
 class StartActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
+    private lateinit var versionPreferences: SharedPreferences
     var toUpdate = false
 
     companion object {
@@ -52,7 +56,7 @@ class StartActivity : AppCompatActivity() {
         val firebaseTimetableData: DatabaseReference?
 
         //Preferences 설정
-        val versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
+        versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
         var version = versionPreferences.getString("version", "202107271830")
         val openMajorVersion = versionPreferences.getFloat("openMajorVersion", 0f)
         TimeTableSelPref.prefs.setInt("majorSel", 0)
@@ -174,7 +178,16 @@ class StartActivity : AppCompatActivity() {
         Log.d("openMajorVersion", "${majorVersionResponse.isSuccessful}")
         if (majorVersionResponse.isSuccessful && (majorVersionResponse.body()!!.version > openMajorVersion)) {
             val majorListResponse = openMajorRepository.getOpenMajorList()
-            Log.d("openMajor","${majorListResponse.body()!!.data}")
+            withContext(IO) {
+                val db = OpenMajorDatabase.getInstance(applicationContext)
+                db!!.openMajorDao().deleteAll()
+                val data = majorListResponse.body()!!.convertToOpenMajorData()
+                data.add(0, OpenMajorData("전부"))
+                db.openMajorDao().insertAll(data)
+                versionPreferences.edit {
+                    putFloat("openMajorVersion", majorVersionResponse.body()!!.version)
+                }
+            }
         }
     }
 
