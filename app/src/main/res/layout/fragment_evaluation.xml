@@ -138,7 +138,7 @@
 
                         <Spinner
                             android:id="@+id/spinner_sort"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:background="@drawable/selector_custom_spinner_arrow"
                             android:layout_height="wrap_content"
                             android:spinnerMode="dialog"
