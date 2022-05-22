@@ -23,7 +23,7 @@ object LectureInfoBindingAdapter {
             textView.text = item.replace(" ", "")
             textView.textSize = 12f
             textView.setTextColor(Color.BLACK)
-            textView.setBackgroundResource(R.drawable.bg_rounded_10)
+            textView.setBackgroundResource(R.drawable.bg_rounded_10_gray_500)
             val lp = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
