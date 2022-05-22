@@ -66,7 +66,7 @@
     <string name="require_password_again">비밀번호 다시 입력</string>
     <string name="find_id">아이디 찾기</string>
     <string name="find_password">비밀번호 찾기</string>
-    <string name="login_button_text">로그인하기</string>
+    <string name="login_button_text">로그인</string>
     <string name="login_id">로그인 아이디</string>
     <string name="login_to_check_point">포인트를 확인하려면 로그인하세요</string>
     <string name="need_login">로그인이 필요합니다</string>
@@ -145,6 +145,7 @@
     <string name="text_item_my_exam_info_difficulty">난이도</string>
     <string name="title_item_my_exam_info_exam_type">시험 방식</string>
     <string name="title_item_my_exam_info_lecture_name">강의 이름</string>
+    <string name="app_logo">app logo</string>
 
     <string-array name="contact_us">
         <item>--카테고리 선택--</item>

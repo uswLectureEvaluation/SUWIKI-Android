@@ -7,6 +7,7 @@
     <data>
 
         <import type="android.view.View" />
+
         <import type="com.kunize.uswtimetable.util.Constants" />
 
         <variable
@@ -19,150 +20,150 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        android:padding="@dimen/page_padding"
+        android:paddingHorizontal="@dimen/page_padding"
         tools:context=".ui.login.LoginActivity">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_top"
+        <ImageView
+            android:id="@+id/iv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            android:layout_marginTop="54dp"
+            android:contentDescription="@string/app_logo"
+            android:src="@drawable/ic_logo_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_below_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3" />
-
-        <LinearLayout
-            android:id="@+id/logoLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:weightSum="4"
-            app:layout_constraintBottom_toBottomOf="@+id/guide_below_logo"
-            app:layout_constraintTop_toBottomOf="@+id/guide_top">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:fontFamily="@font/godom"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textColor="@color/custom_blue"
-                app:autoSizeTextType="uniform" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_input_id"
+            style="@style/SuwikiEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/border_corner8_gray"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="32dp"
-            app:layout_constraintTop_toBottomOf="@id/guide_below_logo">
+            android:layout_marginTop="74dp"
+            android:hint="@string/id"
+            app:errorEnabled="@{viewModel.loginFormState.idError != null ? true : false}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_input_id"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_input_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/id"
-                app:errorEnabled="@{viewModel.loginFormState.idError != null ? true : false}">
+                android:inputType="text"
+                android:maxLength="@{Constants.ID_COUNT_LIMIT}"
+                android:text="@={viewModel.userId}"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_input_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text="@={viewModel.userId}"
-                    android:maxLength="@{Constants.ID_COUNT_LIMIT}" />
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_input_pw"
+            style="@style/SuwikiEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/password"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="@{viewModel.loginFormState.pwError != null ? true : false}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_input_id">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_input_pw"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_input_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:hint="@string/password"
-                app:endIconMode="password_toggle"
-                app:errorEnabled="@{viewModel.loginFormState.pwError != null ? true : false}">
+                android:inputType="textPassword"
+                android:maxLength="@{Constants.PW_COUNT_LIMIT}"
+                android:text="@={viewModel.userPw}"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_input_pw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:text="@={viewModel.userPw}"
-                    android:maxLength="@{Constants.PW_COUNT_LIMIT}" />
-            </com.google.android.material.textfield.TextInputLayout>
+        <CheckBox
+            android:id="@+id/cb_remember_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/keep_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_input_pw" />
 
-            <CheckBox
-                android:id="@+id/cb_remember_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/keep_login" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/button_suwiki_main"
+            android:enabled="@{viewModel.loginFormState.dataValid == true &amp;&amp; viewModel.loading == false}"
+            android:onClick="@{() -> viewModel.login(etInputId.getText().toString(), etInputPw.getText().toString())}"
+            android:text="@string/login_button_text"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_find_id_btn" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_ripple_skyblue"
-                android:enabled="@{viewModel.loginFormState.dataValid == true &amp;&amp; viewModel.loading == false}"
-                android:onClick="@{() -> viewModel.login(etInputId.getText().toString(), etInputPw.getText().toString())}"
-                android:text="@string/login_button_text"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_find_id_btn"
+            style="@style/TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:layout_marginBottom="67dp"
+            android:gravity="center"
+            android:text="@string/find_id"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/divider_1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
+        <View
+            android:id="@+id/divider_1"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="@id/tv_find_id_btn"
+            app:layout_constraintEnd_toStartOf="@+id/tv_find_pw_btn"
+            app:layout_constraintStart_toEndOf="@id/tv_find_id_btn"
+            app:layout_constraintTop_toTopOf="@id/tv_find_id_btn" />
 
-                <TextView
-                    android:id="@+id/tv_find_id_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/find_id"
-                    android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tv_find_pw_btn"
+            style="@style/TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/find_password"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/divider_2"
+            app:layout_constraintStart_toEndOf="@id/divider_1"
+            app:layout_constraintTop_toTopOf="@id/tv_find_id_btn" />
 
-                <TextView
-                    android:id="@+id/tv_find_pw_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/find_password"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="@id/tv_find_id_btn"
+            app:layout_constraintEnd_toStartOf="@id/tv_sign_in_btn"
+            app:layout_constraintStart_toEndOf="@+id/tv_find_pw_btn"
+            app:layout_constraintTop_toTopOf="@id/tv_find_id_btn" />
 
         <TextView
             android:id="@+id/tv_sign_in_btn"
+            style="@style/TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="end"
-            android:layout_marginVertical="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="70dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/sign_in"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/layout_content"
-            app:layout_constraintTop_toBottomOf="@id/layout_content" />
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider_2"
+            app:layout_constraintTop_toTopOf="@id/tv_find_pw_btn" />
 
         <ProgressBar
             android:id="@+id/progress_loading"
