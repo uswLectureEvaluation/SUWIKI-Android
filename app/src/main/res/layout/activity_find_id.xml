@@ -19,8 +19,6 @@
             android:id="@+id/appbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/background"
-            app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -71,12 +69,10 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="109dp"
-            android:background="@drawable/button_suwiki_main"
+            style="@style/SuwikiMainButton"
             android:enabled="@{etInputEmail.text.length() == 0? false : true}"
             android:onClick="@{() -> viewmodel.findId()}"
             android:text="@string/find_id"
-            android:textColor="@color/white"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
