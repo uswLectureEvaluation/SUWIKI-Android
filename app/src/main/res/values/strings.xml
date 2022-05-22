@@ -146,6 +146,7 @@
     <string name="title_item_my_exam_info_exam_type">시험 방식</string>
     <string name="title_item_my_exam_info_lecture_name">강의 이름</string>
     <string name="app_logo">app logo</string>
+    <string name="hint_input_school_email">학교 이메일 입력</string>
 
     <string-array name="contact_us">
         <item>--카테고리 선택--</item>

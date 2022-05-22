@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.user_info.FindIdViewModel" />
@@ -12,100 +13,73 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/page_padding"
         tools:context=".ui.user_info.FindIdActivity">
 
-        <TextView
-            android:id="@+id/tv_logo"
-            style="@style/title_textview_style"
-            android:fontFamily="@font/godom"
-            android:text="@string/app_name"
-            android:textColor="@color/custom_blue"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_current_page_title"
-            style="@style/Headline6.Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/find_id"
-            app:layout_constraintEnd_toEndOf="@+id/tv_logo"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@+id/tv_logo"
-            app:layout_constraintTop_toBottomOf="@+id/tv_logo" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_corner8_gray"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/background"
+            app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_current_page_title"
-            app:layout_constraintVertical_bias="0.3">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_find_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/find_id"
-                android:textColor="@color/black"
-                style="@style/Headline5.Bold"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/layout_input_email"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="50dp"
+                android:paddingBottom="17dp"
+                app:navigationIcon="@drawable/ic_back">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_input_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="16dp"
-                android:hint="학교 메일 입력"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_find_id"
-                app:suffixText="@string/school_domain"
-                app:endIconMode="clear_text"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_input_email"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_current_page_title"
+                    style="@style/TextSubtitle1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@={viewmodel.email}"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/find_id" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/custom_ripple_light_blue_button"
-                android:text="@string/find_id"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:enabled="@{etInputEmail.text.length() == 0? false : true}"
-                android:onClick="@{() -> viewmodel.findId()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_input_email" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_find_pw_btn"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_input_email"
+            style="@style/SuwikiEditText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/find_password"
-            app:layout_constraintEnd_toEndOf="@id/container"
-            app:layout_constraintTop_toBottomOf="@id/container" />
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar"
+            app:suffixText="@string/school_domain">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_input_school_email"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:text="@={viewmodel.email}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="109dp"
+            android:background="@drawable/button_suwiki_main"
+            android:enabled="@{etInputEmail.text.length() == 0? false : true}"
+            android:onClick="@{() -> viewmodel.findId()}"
+            android:text="@string/find_id"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

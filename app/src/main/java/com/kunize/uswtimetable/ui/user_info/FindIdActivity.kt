@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.user_info
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -26,9 +25,9 @@ class FindIdActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
-
-
-        initViews(this)
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     override fun onResume() {
@@ -48,16 +47,6 @@ class FindIdActivity : AppCompatActivity() {
         toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
         toast?.show()
     }
-
-    private fun initViews(context: Context) {
-        with(binding) {
-            tvFindPwBtn.setOnClickListener {
-                startActivity(Intent(context, FindPasswordActivity::class.java))
-            }
-        }
-    }
-
-
 
     override fun onBackPressed() {
         super.onBackPressed()
