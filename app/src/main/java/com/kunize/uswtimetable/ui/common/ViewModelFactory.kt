@@ -3,16 +3,6 @@ package com.kunize.uswtimetable.ui.common
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
-import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
-import com.kunize.uswtimetable.ui.login.LoginViewModel
-import com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel
-import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
-import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
-import com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel
-import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
-import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.repository.evaluation.EvaluationRemoteDataSource
 import com.kunize.uswtimetable.repository.evaluation.EvaluationRepository
 import com.kunize.uswtimetable.repository.lecture_info.LectureInfoRemoteDataSource
@@ -35,8 +25,19 @@ import com.kunize.uswtimetable.repository.user_info.QuitRepository
 import com.kunize.uswtimetable.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.repository.write.WriteRemoteDataSource
 import com.kunize.uswtimetable.repository.write.WriteRepository
+import com.kunize.uswtimetable.retrofit.IRetrofit
+import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
+import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
+import com.kunize.uswtimetable.ui.login.LoginViewModel
+import com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel
+import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
+import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
+import com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel
+import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
+import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
+import com.kunize.uswtimetable.ui.signup.WelcomeSignUpViewModel
 import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
 import com.kunize.uswtimetable.ui.user_info.FindPwViewModel
 import com.kunize.uswtimetable.ui.user_info.QuitViewModel
@@ -53,6 +54,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 val apiService = IRetrofit.getInstanceWithNoToken()
                 val repository = SignUpRepository(SignUpRemoteDataSource(apiService))
                 SignUpViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(WelcomeSignUpViewModel::class.java) -> {
+                WelcomeSignUpViewModel() as T
             }
             // User Info
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {

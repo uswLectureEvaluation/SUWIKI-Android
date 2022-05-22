@@ -9,7 +9,7 @@ object Constants {
     const val ID_COUNT_LIMIT = 20
     const val PW_COUNT_LIMIT = 24
     const val SCHOOL_DOMAIN_AT = "@suwon.ac.kr"
-    const val SCHOOL_HOMEPAGE = "https://portal.suwon.ac.kr"
+    const val SCHOOL_HOMEPAGE = "https://portal.suwon.ac.kr/enview/"
     const val NUMBER_OF_YEAR = 6
     const val SEMESTER_1_START = 1
     const val SEMESTER_1_END = 6
@@ -18,6 +18,7 @@ object Constants {
     // Key of Intent or Bundle
     const val KEY_NOTICE_ID = "notice_id"
     const val KEY_URL = "url"
+    const val KEY_EMAIL = "register_email"
 }
 
 object API {

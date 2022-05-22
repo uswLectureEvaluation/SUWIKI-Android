@@ -10,19 +10,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kunize.uswtimetable.databinding.ActivitySignupBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.BackKeyManager
+import com.kunize.uswtimetable.util.Constants.KEY_EMAIL
 import com.kunize.uswtimetable.util.Constants.TAG
-import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class SignUpActivity : AppCompatActivity() {
     lateinit var binding: ActivitySignupBinding
     val viewModel: SignUpViewModel by viewModels { ViewModelFactory(this) }
     private var toast: Toast? = null
-
     lateinit var viewPager: ViewPager2
-    private lateinit var indicator: WormDotsIndicator
-
     private val backKeyManager = BackKeyManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,37 +32,35 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        viewModel.errorMessage.observe(this) { message ->
-            if (message.isNullOrBlank()) return@observe
+        viewModel.errorMessage.observe(this, EventObserver { message ->
+            if (message.isBlank()) return@EventObserver
             makeToast(message)
-        }
+        })
 
-        viewModel.toastMessage.observe(this) { message ->
-            if (message.isNullOrBlank()) return@observe
+        viewModel.toastMessage.observe(this, EventObserver { message ->
+            if (message.isBlank()) return@EventObserver
             makeToast(message)
-        }
+        })
 
         viewModel.currentPage.observe(this) { page ->
             toast?.cancel()
             viewPager.currentItem = page
         }
 
-        viewModel.eventLoginButton.observe(this, EventObserver { clicked ->
-            if (!clicked) return@EventObserver
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        })
-
-        viewModel.eventCloseButton.observe(this, EventObserver { clicked ->
-            if (!clicked) return@EventObserver
-            Log.d(TAG, "SignUpActivity - observeData() called / 닫기 버튼 클릭")
-            finish()
-        })
-
         viewModel.loading.observe(this) {
             viewModel.setNextButtonEnable()
         }
+
+        viewModel.success.observe(this, EventObserver { success ->
+            if (success) {
+                val intent = Intent(this, WelcomeSignUpActivity::class.java).apply {
+                    Log.d(TAG, "SignUpActivity - observeData() called: ${viewModel.email.value}")
+                    putExtra(KEY_EMAIL, viewModel.email.value)
+                }
+                startActivity(intent)
+                this@SignUpActivity.finish()
+            }
+        })
     }
 
     private fun initViews() {
@@ -75,14 +69,12 @@ class SignUpActivity : AppCompatActivity() {
         viewPager = binding.signupViewPager
         viewPager.adapter = SignUpPageAdapter(this@SignUpActivity)
         viewPager.isUserInputEnabled = false
-        binding.signUpToolBar.setNavigationOnClickListener {
-            onBackPressed()
+        binding.toolbar.setNavigationOnClickListener {
+            when(viewModel.currentPage.value) {
+                1 -> viewModel.moveToPreviousPage()
+                2 -> onBackPressed()
+            }
         }
-
-        indicator = binding.signupIndicator
-        indicator.clearFocus()
-        indicator.dotsClickable = false
-        indicator.setViewPager2(viewPager)
     }
 
     override fun onBackPressed() {

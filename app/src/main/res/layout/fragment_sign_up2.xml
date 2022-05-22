@@ -7,8 +7,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.signup.SignUpViewModel" />
@@ -18,47 +16,31 @@
             type="com.kunize.uswtimetable.util.Constants" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/page_padding">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_container"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_input_email"
+            style="@style/SuwikiEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="@dimen/page_padding">
+            android:layout_marginTop="61dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:suffixText="@{constants.SCHOOL_DOMAIN_AT}">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_input_email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_input_email"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/school_email"
-                app:helperText="메일로 인증 번호를 전송합니다"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:suffixText="@{constants.SCHOOL_DOMAIN_AT}">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_input_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text="@={viewmodel.email}" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                android:hint="@string/hint_input_school_email"
+                android:inputType="text"
+                android:text="@={viewmodel.email}" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 </layout>

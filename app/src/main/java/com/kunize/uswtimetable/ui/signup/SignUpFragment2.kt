@@ -34,14 +34,14 @@ class SignUpFragment2 : Fragment() {
         binding.viewmodel = viewModel
 
         viewModel.isEmailUnique.observe(viewLifecycleOwner) { unique ->
-            if (!unique && viewModel.errorMessage.value.isNullOrBlank().not()) {
-                viewModel.setToastMessage(viewModel.errorMessage.value!!)
+            if (!unique && viewModel.errorMessage.value?.peekContent().isNullOrBlank().not()) {
+                viewModel.setToastMessage(viewModel.errorMessage.value?.peekContent()!!)
             }
         }
 
         viewModel.signUpResult.observe(viewLifecycleOwner) { success ->
-            if (!success && viewModel.errorMessage.value.isNullOrBlank().not()) {
-                viewModel.setToastMessage(viewModel.errorMessage.value!!)
+            if (!success && viewModel.errorMessage.value?.peekContent().isNullOrBlank().not()) {
+                viewModel.setToastMessage(viewModel.errorMessage.value?.peekContent()!!)
             }
         }
     }

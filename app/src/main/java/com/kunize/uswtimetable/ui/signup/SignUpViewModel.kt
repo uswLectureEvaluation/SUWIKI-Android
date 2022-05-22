@@ -23,19 +23,17 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val termChecked = MutableLiveData<Boolean>()
 
     // Button
-    val previousButtonVisibility = MutableLiveData<Boolean>()
     val nextButtonEnable = MutableLiveData(false)
-    val previousButtonText = MutableLiveData<String>()
     val nextButtonText = MutableLiveData<String>()
 
     // State
     val loading = MutableLiveData<Boolean>()
     private var _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> get() = _currentPage
-    private val _toastMessage = MutableLiveData<String>()
-    val toastMessage: LiveData<String> get() = _toastMessage
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> get() = _errorMessage
+    private val _toastMessage = MutableLiveData<Event<String>>()
+    val toastMessage: LiveData<Event<String>> get() = _toastMessage
+    private val _errorMessage = MutableLiveData<Event<String>>()
+    val errorMessage: LiveData<Event<String>> get() = _errorMessage
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
 
@@ -44,17 +42,13 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val isEmailUnique = MutableLiveData(false)
     val signUpResult = MutableLiveData<Boolean>()
 
+    // Event
+    private val _success = MutableLiveData<Event<Boolean>>()
+    val success: LiveData<Event<Boolean>> get() = _success
+
     // Pattern
     private val idPattern: Pattern = Pattern.compile(Constants.ID_REGEX)
     private val pwPattern: Pattern = Pattern.compile(Constants.PW_REGEX)
-
-    // Event
-    private val _eventCheckMail = MutableLiveData<Event<Boolean>>()
-    val eventCheckMail: LiveData<Event<Boolean>> get() = _eventCheckMail
-    private val _eventLoginButton = MutableLiveData<Event<Boolean>>()
-    val eventLoginButton: LiveData<Event<Boolean>> get() = _eventLoginButton
-    private val _eventCloseButton = MutableLiveData<Event<Boolean>>()
-    val eventCloseButton: LiveData<Event<Boolean>> get() = _eventCloseButton
 
     init {
         _currentPage.value = 0
@@ -100,7 +94,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         when (currentPage.value) {
             0 -> checkId()
             1 -> signUp()
-            2 -> _eventLoginButton.value = Event(true)
+            else -> throw IllegalArgumentException("Invalid sign up page: ${currentPage.value}")
         }
     }
 
@@ -110,11 +104,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                 isIdUnique.value = false
                 _currentPage.value?.minus(1)
             }
-            2 -> {
-                _eventCloseButton.value = Event(true)
-                _currentPage.value
-            }
-            else -> _currentPage.value
+            else -> throw IllegalArgumentException("Invalid sign up page: ${currentPage.value}")
         }
         setButtonAttr()
         setNextButtonEnable()
@@ -130,23 +120,15 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         Log.d(TAG, "SignUpViewModel - setNextButtonEnable() called / ${nextButtonEnable.value}")
     }
 
-    fun onClickCheckMail() {
-        _eventCheckMail.value = Event(true)
-    }
-
     fun setToastMessage(message: String) {
-        _toastMessage.value = message
+        _toastMessage.value = Event(message)
     }
 
     private fun moveToNextPage() {
         _currentPage.value = when (currentPage.value) {
-            0 -> {
-                _currentPage.value?.plus(1)
-            }
-            1 -> {
-                _currentPage.value?.plus(1)
-            }
-            else -> _currentPage.value
+            0 -> _currentPage.value?.plus(1)
+            1 -> _currentPage.value?.plus(1)
+            else -> throw IllegalArgumentException("Invalid sign up page: ${currentPage.value}")
         }
         setButtonAttr()
         setNextButtonEnable()
@@ -155,25 +137,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     private fun setButtonAttr() {
         // 페이지 변경 시에만 호출
         when (currentPage.value) {
-            0 -> {
-                previousButtonText.value = "이전"
-                nextButtonText.value = "다음"
-                previousButtonVisibility.value = false
-            }
-            1 -> {
-                previousButtonText.value = "이전"
-                nextButtonText.value = "회원 가입"
-                previousButtonVisibility.value = true
-            }
-            2 -> {
-                previousButtonText.value = "닫기"
-                nextButtonText.value = "로그인"
-                previousButtonVisibility.value = true
-            }
+            0 -> nextButtonText.value = "다음"
+            1 -> nextButtonText.value = "회원가입"
         }
     }
-
-
 
     private fun checkId() {
         val userId = id.value ?: return
@@ -223,7 +190,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
             if (signUpResponse.isSuccessful) {
                 signUpResult.postValue(signUpResponse.body()?.success == true)
                 if (signUpResponse.body()?.success == true) {
-                    moveToNextPage()
+                    successSignUp()
                 } else {
                     onError("회원 가입 실패: ${signUpResponse.message()}")
                     loading.postValue(false)
@@ -267,6 +234,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     private fun onError(message: String) {
-        _errorMessage.value = message
+        _errorMessage.value = Event(message)
+    }
+
+    private fun successSignUp() {
+        _success.value = Event(true)
     }
 }

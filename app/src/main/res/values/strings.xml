@@ -62,7 +62,7 @@
     <string name="id">아이디</string>
     <string name="keep_login">로그인 유지</string>
     <string name="require_id">아이디 입력</string>
-    <string name="require_password">비밀번호 입력</string>
+    <string name="require_password">비밀번호(영문, 숫자, 특수문자 조합 8~20자)</string>
     <string name="require_password_again">비밀번호 다시 입력</string>
     <string name="find_id">아이디 찾기</string>
     <string name="find_password">비밀번호 찾기</string>
@@ -78,7 +78,8 @@
     <string name="invalid_pw_again">비밀번호와 일치하지 않습니다</string>
     <string name="unchecked_term">약관이 동의되어야 합니다</string>
     <string name="check_mail">메일 확인하기</string>
-    <string name="terms">동의 및 회원가입을 누르면 SWLE 이용약관 및 개인정보처리방침에 동의하게 됩니다.</string>
+    <string name="terms_title">약관에 동의합니다.</string>
+    <string name="terms">약관에 동의시 SWLE 이용약관 및 개인정보처리방침에 동의하게 됩니다.</string>
 
     <!-- Data binding -->
     <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
@@ -88,7 +89,7 @@
     <string name="detail_point_positive">(+%dP)</string>
     <string name="detail_point">(%dP)</string>
     <string name="signup_welcome_message">가입을 환영합니다</string>
-    <string name="signup_welcome_info">"<b>"%s@suwon.ac.kr"</b>"로 이메일이 발송되었습니다.\n로그인하기 위해서 이메일로 발송된 링크를 클릭해주세요</string>
+    <string name="signup_welcome_info">"<b>"%s@suwon.ac.kr"</b>"로 링크를 발송했습니다. 로그인을 위해서 이메일로 발송된 인증 링크를 클릭해주세요.</string>
     <string name="floatToStr">%.1f</string>
     <string name="notice_date_format">%d.%d.%d</string>
 
@@ -160,5 +161,15 @@
         <item>응원하기 💕</item>
         <item>기타 문의 사항</item>
     </string-array>
+    <string name="title_activity_welcome_sign_up">WelcomeSignUpActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hint_send_link_to_email">학교 메일로 인증 링크를 전송합니다.</string>
 
 </resources>

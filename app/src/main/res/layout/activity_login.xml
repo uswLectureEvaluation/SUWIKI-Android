@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="54dp"
             android:contentDescription="@string/app_logo"
-            android:src="@drawable/ic_logo_login"
+            android:src="@drawable/ic_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
