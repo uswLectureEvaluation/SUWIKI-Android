@@ -7,20 +7,18 @@
 
     <ImageView
         android:id="@+id/imageview_spinner_image"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textview_spinner_name"
+        style="@style/SuwikiTextBody2.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:paddingEnd="16dp"
         android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageview_spinner_image"
         app:layout_constraintStart_toEndOf="@+id/imageview_spinner_image"
         app:layout_constraintTop_toTopOf="@+id/imageview_spinner_image" />

@@ -28,6 +28,8 @@ import com.kunize.uswtimetable.util.API.LOGIN
 import com.kunize.uswtimetable.util.API.MY_PAGE
 import com.kunize.uswtimetable.util.API.NOTICE
 import com.kunize.uswtimetable.util.API.NOTICE_LIST
+import com.kunize.uswtimetable.util.API.OPEN_MAJOR_LIST_UPDATE
+import com.kunize.uswtimetable.util.API.OPEN_MAJOR_VERSION
 import com.kunize.uswtimetable.util.API.PASSWORD
 import com.kunize.uswtimetable.util.API.PASSWORD_RESET
 import com.kunize.uswtimetable.util.API.PURCHASE_HISTORY
@@ -208,6 +210,12 @@ interface IRetrofit {
         @Query("examIdx") lectureId: Long,
         @Body info: LectureExamEditDto
     ): Response<String>
+
+    @GET(OPEN_MAJOR_VERSION)
+    suspend fun getOpenMajorVersion(): Response<OpenMajorVersion>
+
+    @GET(OPEN_MAJOR_LIST_UPDATE)
+    suspend fun getOpenMajorList(): Response<OpenMajorList>
 
     companion object {
         private var retrofitService: IRetrofit? = null

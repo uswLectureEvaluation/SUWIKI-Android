@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.data.local.EvaluationData
+import com.kunize.uswtimetable.data.remote.LectureMain
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel

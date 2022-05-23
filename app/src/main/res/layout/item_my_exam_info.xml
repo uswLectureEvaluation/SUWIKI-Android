@@ -27,7 +27,7 @@
         expandable="@{contentTextView}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_ripple_effect_recyclerview"
+        android:background="@drawable/bg_rounded_ripple_border_line_gray_500"
         android:onClick="@{() -> viewmodel.onItemClicked(viewType.ROOT_VIEW, data)}"
         android:padding="@dimen/recyclerview_padding">
 

@@ -10,7 +10,7 @@
     <string name="school_email">학교 인증 메일</string>
     <string name="my_evaluate">내가 쓴 글</string>
     <string name="my_point">보유 포인트</string>
-    <string name="search_evaluation_hint">과목명, 교수명으로 원하는 강의평가를 찾아보세요!</string>
+    <string name="search_evaluation_hint">강의명, 교수명으로 원하는 강의평가를 찾아보세요</string>
     <string name="see_more"><u>더보기 ></u></string>
     <string name="search_result">검색 결과</string>
     <string name="sort">정렬</string>
@@ -23,8 +23,8 @@
     <string name="delete">삭제</string>
     <string name="edit">수정</string>
     <string name="slash5">/5</string>
-    <string name="honey_score">꿀강 지수</string>
-    <string name="learning_score">배움 지수</string>
+    <string name="honey_score">꿀강지수</string>
+    <string name="learning_score">배움지수</string>
     <string name="team_meeting">조모임</string>
     <string name="task">과제</string>
     <string name="grade">학점</string>
@@ -46,9 +46,9 @@
     <string name="privacy_policy">개인정보 처리 방침</string>
     <string name="sign_out">회원 탈퇴</string>
     <string name="opensource_licence">오픈소스 라이선스</string>
-    <string name="see_detail"><u>자세히 보기></u></string>
+    <string name="see_detail"><u>자세히</u></string>
     <string name="average_index">평균 지수</string>
-    <string name="see_short"><u>간략히 보기></u></string>
+    <string name="see_short"><u>간략히</u></string>
     <string name="no_exam_info">등록된 시험정보가 없어요</string>
     <string name="show_exam_info">시험 정보를 보려면</string>
     <string name="exam_point">20 POINT</string>
@@ -160,5 +160,15 @@
         <item>응원하기 💕</item>
         <item>기타 문의 사항</item>
     </string-array>
+
+    <string name="open_major">개설학과</string>
+    <string name="simple_see_more">더보기</string>
+    <string name="recent_lecture">최근 올라온 강의</string>
+    <string name="lecture_honey">꿀 강의</string>
+    <string name="lecture_satisfaction">만족도가 높은 강의</string>
+    <string name="lecture_learning">배울게 많은 강의</string>
+    <string name="lecture_best">BEST 강의</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
