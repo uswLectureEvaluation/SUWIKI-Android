@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
