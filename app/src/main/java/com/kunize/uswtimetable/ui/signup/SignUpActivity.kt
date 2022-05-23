@@ -72,7 +72,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             when(viewModel.currentPage.value) {
                 1 -> viewModel.moveToPreviousPage()
-                2 -> onBackPressed()
+                else -> onBackPressed()
             }
         }
     }
