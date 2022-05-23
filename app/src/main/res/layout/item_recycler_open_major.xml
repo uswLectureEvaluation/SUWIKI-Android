@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.kunize.uswtimetable.data.local.OpenMajorItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp">
+
+        <CheckBox
+            android:id="@+id/cb_star"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/selector_star"
+            android:button="@android:color/transparent"
+            android:checked="@{data.checked}" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/SuwikiTextSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:layout_marginStart="8dp"
+            android:text="@{data.title}"
+            tools:text="환경에너지공학" />
+
+    </LinearLayout>
+</layout>

@@ -62,6 +62,10 @@ class EvaluationFragment : Fragment() {
             goToSearchResult()
         }
 
+        binding.clOpenMajor.setOnClickListener {
+            goToSelectOpenMajorFragment()
+        }
+
         //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
         binding.etSearch.setOnEditorActionListener { _, it, _ ->
             var handled = false
@@ -109,6 +113,12 @@ class EvaluationFragment : Fragment() {
     ) {
         val action =
             EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(msg, now)
+        findNavController().navigate(action)
+    }
+
+    private fun goToSelectOpenMajorFragment() {
+        val action =
+            EvaluationFragmentDirections.globalOpenMajor()
         findNavController().navigate(action)
     }
 }

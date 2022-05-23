@@ -31,6 +31,14 @@ fun EditText.onTextChanged(completion: (CharSequence?) -> Unit) {
     })
 }
 
+fun EditText.afterEditTextChanged(completion: (Editable?) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+        override fun afterTextChanged(p0: Editable?) { completion(p0) }
+    })
+}
+
 fun NestedScrollView.infiniteScrolls(doScrollBottom: () -> Unit) {
     this.setOnScrollChangeListener { v, _, _, _, _ ->
         if (!v.canScrollVertically(1)) {

@@ -116,7 +116,6 @@
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_ripple_skyblue"
                 android:enabled="@{viewModel.loginFormState.dataValid == true &amp;&amp; viewModel.loading == false}"
                 android:onClick="@{() -> viewModel.login(etInputId.getText().toString(), etInputPw.getText().toString())}"
                 android:text="@string/login_button_text"

@@ -8,19 +8,19 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:paddingTop="8dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
         tools:context=".ui.select_open_major.SelectOpenMajorFragment">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:background="@color/suwiki_white"
             android:id="@+id/ab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/suwiki_white"
             app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,8 +99,8 @@
                 android:paddingEnd="8dp"
                 android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintStart_toEndOf="@id/et_search"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
@@ -114,53 +114,60 @@
 
         <RadioGroup
             android:id="@+id/rg"
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_search">
 
             <RadioButton
-                android:minWidth="0dp"
                 style="@style/radiobutton_text_style.Small"
-                android:paddingEnd="4dp"
+                android:checked="true"
+                android:minWidth="0dp"
                 android:paddingTop="8dp"
+                android:paddingEnd="4dp"
                 android:paddingBottom="8dp"
-                android:text="@string/all"
-                android:checked="true" />
+                android:text="@string/all" />
 
             <RadioButton
-                android:minWidth="0dp"
                 style="@style/radiobutton_text_style.Small"
+                android:minWidth="0dp"
                 android:paddingStart="4dp"
-                android:paddingEnd="4dp"
                 android:paddingTop="8dp"
+                android:paddingEnd="4dp"
                 android:paddingBottom="8dp"
                 android:text="@string/bookmark" />
 
         </RadioGroup>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_open_major"
+        <LinearLayout
+            android:id="@+id/layout_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_ripple_border_line_gray_500"
-            app:layout_constraintTop_toBottomOf="@id/rg"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="293dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_open_major"
+                android:layout_width="match_parent"
+                android:layout_height="293dp" />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/SuwikiTextSubTitle.Bold.White"
-            android:layout_marginTop="36dp"
-            android:text="@string/okay"
-            app:layout_constraintTop_toBottomOf="@id/rv_open_major"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
             android:background="@drawable/button_suwiki_main"
+            android:text="@string/okay"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layout_rv" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
