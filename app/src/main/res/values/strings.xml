@@ -156,7 +156,7 @@
         <item>응원하기 💕</item>
         <item>기타 문의 사항</item>
     </string-array>
-    
+
     <string name="open_major">개설학과</string>
     <string name="simple_see_more">더보기</string>
     <string name="recent_lecture">최근 올라온 강의</string>
@@ -164,5 +164,7 @@
     <string name="lecture_satisfaction">만족도가 높은 강의</string>
     <string name="lecture_learning">배울게 많은 강의</string>
     <string name="lecture_best">BEST 강의</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
