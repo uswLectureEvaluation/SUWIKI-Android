@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.main
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         val navController = navigationFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNav, navController)
         binding.bottomNav.setOnItemReselectedListener {  }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.navigation_home || destination.id == R.id.navigation_evaluation || destination.id == R.id.navigation_my_page)
+                binding.bottomNav.visibility = View.VISIBLE
+            else
+                binding.bottomNav.visibility = View.GONE
+        }
 
         binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
         binding.bannerAdView.loadAd()
