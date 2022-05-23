@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/recyclerview_padding"
-        android:background="@drawable/custom_ripple_effect_recyclerview">
+        android:background="@drawable/bg_rounded_ripple_border_line_gray_500">
 
         <include
             android:id="@+id/semesterReport"

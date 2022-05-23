@@ -9,29 +9,28 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.LectureApiOption.BEST
-import com.kunize.uswtimetable.util.LectureApiOption.HONEY
-import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
-import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
-import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
+import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
-import com.kunize.uswtimetable.util.onItemSelected
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
-    private lateinit var adapter: EvaluationListAdapter
-    private val evaluationViewModel: EvaluationViewModel by viewModels {ViewModelFactory(requireContext())}
+    private lateinit var adapter: EvaluationAdapter
+    private val evaluationViewModel: EvaluationViewModel by viewModels {
+        ViewModelFactory(
+            requireContext()
+        )
+    }
+    private var customSortDialog: CustomSortDialog? = null
     private var spinnerSel: Int = 0
-    private var spinnerTypeList = listOf(MODIFIED, HONEY, SATISFACTION, LEARNING, BEST)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +43,11 @@ class EvaluationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EvaluationListAdapter { id ->
+        adapter = EvaluationAdapter { id ->
+            if (id == LectureItemViewType.FOOTER.toLong()) {
+                goToSearchResult("", spinnerSel)
+                return@EvaluationAdapter
+            }
             val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
             findNavController().navigate(action)
         }
@@ -54,21 +57,10 @@ class EvaluationFragment : Fragment() {
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this
 
-        val spinnerTextList = listOf("최근 올라온 강의", "꿀 강의", "만족도가 높은 강의", "배울게 많은 강의", "Best 강의")
-        val spinnerImageList = listOf(
-            R.drawable.ic_fire_24, R.drawable.ic_thumb_up_24, R.drawable.ic_star_24,
-            R.drawable.ic_book_24, R.drawable.ic_best_24
-        )
-
-        binding.moreBtn.setOnClickListener {
-            goToSearchResult("", spinnerSel)
-        }
-
         binding.btnSearch.setOnClickListener {
             if (isSearchTextLengthNotEnough()) return@setOnClickListener
             goToSearchResult()
         }
-
 
         //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
         binding.etSearch.setOnEditorActionListener { _, it, _ ->
@@ -84,19 +76,21 @@ class EvaluationFragment : Fragment() {
         }
 
         //spinner 설정
-        val customSpinnerAdapter =
-            CustomSpinnerAdapter(requireContext(), spinnerTextList, spinnerImageList)
-        binding.spinner.apply {
-            adapter = customSpinnerAdapter
-            setSelection(0, false)
-            onItemSelected { position ->
-                spinnerSel = position
-                evaluationViewModel.changeType(spinnerTypeList[spinnerSel])
-            }
+        binding.clSort.setOnClickListener {
+            customSortDialog = CustomSortDialog(context as AppCompatActivity, evaluationViewModel)
+            customSortDialog?.show()
         }
 
+        evaluationViewModel.dialogItemClickEvent.observe(viewLifecycleOwner, EventObserver {
+            customSortDialog?.dismiss()
+        })
+
         evaluationViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
-            Toast.makeText(requireContext(), evaluationViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                evaluationViewModel.toastViewModel.toastMessage,
+                Toast.LENGTH_LONG
+            ).show()
         })
 
     }

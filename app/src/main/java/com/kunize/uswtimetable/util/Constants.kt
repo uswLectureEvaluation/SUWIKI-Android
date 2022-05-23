@@ -52,6 +52,8 @@ object API {
     const val EDIT_LECTURE_EVALUATION = "/evaluate-posts/update/"
     const val EDIT_LECTURE_EXAM = "/exam-posts/update/"
     const val BUY_EXAM = "/exam-posts/buyExamInfo/"
+    const val OPEN_MAJOR_VERSION = "/suwiki-version/"
+    const val OPEN_MAJOR_LIST_UPDATE = "/version-update/"
 }
 
 object WriteFragmentTitle {
@@ -72,11 +74,11 @@ object UserPoint {
 
 object LectureItemViewType {
     const val SHORT = 0 //강의평가 목록
-    const val USER_LECTURE = 1 //내가 쓴 강의평가
+    const val LOADING = 1 //내가 쓴 강의평가
     const val USER_EXAM = 2 //내가 쓴 시험정보
     const val LECTURE = 3 //세부 강의평가 정보
     const val EXAM = 4 //세부 시험정보
-    const val HIDE_EXAM = 5 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
+    const val FOOTER = -1 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
 }
 
 object PostData {

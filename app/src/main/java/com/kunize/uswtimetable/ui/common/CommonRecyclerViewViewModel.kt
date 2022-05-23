@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.ui.common
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kunize.uswtimetable.data.remote.LectureMain
 
 class CommonRecyclerViewViewModel<T> {
     private val _itemList = MutableLiveData<MutableList<T?>>()
