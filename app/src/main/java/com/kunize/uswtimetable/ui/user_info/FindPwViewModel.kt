@@ -21,8 +21,8 @@ class FindPwViewModel(private val repository: FindPwRepository): ViewModel() {
         val email = email.value!! + SCHOOL_DOMAIN_AT
         val id = userId.value!!
         Log.d(TAG, "FindPwViewModel - findPw($id, $email) called")
-        loading.value = true
         viewModelScope.launch {
+            loading.postValue(true)
             val response = repository.findPw(id, email)
             if (response.isSuccessful && response.body()?.success==true) {
                 successMessage.postValue("${email}로 임시 비밀번호가 전송되었습니다")

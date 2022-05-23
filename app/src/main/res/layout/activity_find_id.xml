@@ -8,6 +8,8 @@
         <variable
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.user_info.FindIdViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,18 +60,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_input_school_email"
-                android:textSize="14sp"
                 android:inputType="text"
-                android:text="@={viewmodel.email}" />
+                android:text="@={viewmodel.email}"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            style="@style/SuwikiMainButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="109dp"
-            style="@style/SuwikiMainButton"
             android:enabled="@{etInputEmail.text.length() == 0? false : true}"
             android:onClick="@{() -> viewmodel.findId()}"
             android:text="@string/find_id"
@@ -77,6 +79,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.loading?View.VISIBLE:View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
