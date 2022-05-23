@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="34dp"
                         android:layout_marginTop="24dp"
-                        android:background="@drawable/bg_rounded_10_gray_500"
+                        android:background="@drawable/bg_rounded_border_line_10_gray_500"
                         android:padding="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cl_search">
@@ -128,7 +128,7 @@
                         android:layout_height="34dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="24dp"
-                        android:background="@drawable/bg_rounded_10_gray_500"
+                        android:background="@drawable/bg_rounded_border_line_10_gray_500"
                         android:paddingStart="4dp"
                         android:paddingTop="4dp"
                         android:paddingEnd="8dp"

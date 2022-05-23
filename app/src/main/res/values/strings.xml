@@ -166,5 +166,9 @@
     <string name="lecture_best">BEST 강의</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_open_major">개설 학과를 검색하세요</string>
+    <string name="all">전체</string>
+    <string name="bookmark">즐겨찾기</string>
+    <string name="okay">확인</string>
 
 </resources>
