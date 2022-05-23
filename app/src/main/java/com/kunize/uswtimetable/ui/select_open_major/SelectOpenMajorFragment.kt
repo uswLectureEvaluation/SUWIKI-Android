@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.select_open_major
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,21 +53,17 @@ class SelectOpenMajorFragment : Fragment() {
                 binding.rvOpenMajor.adapter = adapter
                 binding.rvOpenMajor.layoutManager = LinearLayoutManager(requireContext())
                 binding.rvOpenMajor.itemAnimator = null
-                binding.rvOpenMajor.visibility = View.INVISIBLE
                 binding.etSearch.afterEditTextChanged {
-                    if (binding.etSearch.text.toString().isEmpty()) {
-                        binding.rvOpenMajor.visibility = View.INVISIBLE
-                    } else {
-                        binding.rvOpenMajor.visibility = View.VISIBLE
-                    }
                     adapter.filter.filter(it)
                 }
             }
         }
 
         adapter.setItemClickListener(object : SelectOpenMajorAdapter.ItemClickListener {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onClick(view: View, data: OpenMajorItem) {
-                //
+                adapter.selectedItemTitle = data.title
+                adapter.notifyDataSetChanged()
             }
         })
     }

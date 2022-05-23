@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.ItemRecyclerOpenMajorBinding
+import com.kunize.uswtimetable.ui.user_info.User
 import java.util.*
 
 
@@ -99,10 +101,6 @@ class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.Searc
 
             binding.data = data
 
-            binding.tvTitle.setOnClickListener {
-                selectedItemTitle = data.title
-                notifyDataSetChanged()
-            }
 
             val startIdx = data.title.indexOf(searchText)
             if(startIdx >= 0) {
@@ -119,8 +117,15 @@ class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.Searc
             }
 
             binding.cbStar.setOnClickListener {
-                filteredData.find { it.title == data.title }!!.isChecked = binding.cbStar.isChecked
-                unfilteredData.find { it.title == data.title }!!.isChecked = binding.cbStar.isChecked
+                if(User.isLoggedIn.value == false) {
+                    Toast.makeText(binding.root.context,"먼저 로그인 해주세요!",Toast.LENGTH_SHORT).show()
+                    binding.cbStar.isChecked = false
+                } else {
+                    filteredData.find { it.title == data.title }!!.isChecked =
+                        binding.cbStar.isChecked
+                    unfilteredData.find { it.title == data.title }!!.isChecked =
+                        binding.cbStar.isChecked
+                }
             }
         }
     }
