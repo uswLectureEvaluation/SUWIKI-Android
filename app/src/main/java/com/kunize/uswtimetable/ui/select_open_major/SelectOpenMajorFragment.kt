@@ -51,6 +51,7 @@ class SelectOpenMajorFragment : Fragment() {
             withContext(Main) {
                 binding.rvOpenMajor.adapter = adapter
                 binding.rvOpenMajor.layoutManager = LinearLayoutManager(requireContext())
+                binding.rvOpenMajor.itemAnimator = null
                 binding.rvOpenMajor.visibility = View.INVISIBLE
                 binding.etSearch.afterEditTextChanged {
                     if (binding.etSearch.text.toString().isEmpty()) {

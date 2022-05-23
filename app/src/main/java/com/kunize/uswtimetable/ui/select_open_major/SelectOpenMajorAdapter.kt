@@ -1,7 +1,9 @@
 package com.kunize.uswtimetable.ui.select_open_major
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.graphics.Color
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +15,12 @@ import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.ItemRecyclerOpenMajorBinding
 import java.util.*
 
+
 class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.SearchHolder>(), Filterable {
     var filteredData = mutableListOf<OpenMajorItem>()
     var unfilteredData = mutableListOf<OpenMajorItem>()
     var selectedItemTitle = ""
+    var searchText = ""
     private lateinit var itemClickListener: ItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
@@ -30,7 +34,7 @@ class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.Searc
 
     override fun onBindViewHolder(holder: SearchHolder, position: Int) {
         val data = filteredData[position]
-        holder.setData(data, position)
+        holder.setData(data)
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, data)
         }
@@ -43,6 +47,7 @@ class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.Searc
     private val customFilter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             filteredData = mutableListOf()
+            searchText = constraint.toString()
             if (constraint == null || constraint.isEmpty()) {
                 filteredData.addAll(unfilteredData)
             } else {
@@ -85,18 +90,34 @@ class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.Searc
     inner class SearchHolder(private val binding: ItemRecyclerOpenMajorBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("NotifyDataSetChanged")
-        fun setData(data: OpenMajorItem, position: Int) {
+        fun setData(data: OpenMajorItem) {
             if(selectedItemTitle == data.title) {
                 binding.layout.setBackgroundColor(binding.root.context.getColor(R.color.suwiki_blue_100))
             } else {
-                binding.layout.setBackgroundColor(binding.root.context.getColor(R.color.suwiki_white))
+                binding.layout.setBackgroundColor(binding.root.context.getColor(R.color.transparent))
             }
+
+            binding.data = data
 
             binding.tvTitle.setOnClickListener {
                 selectedItemTitle = data.title
                 notifyDataSetChanged()
             }
-            binding.data = data
+
+            val startIdx = data.title.indexOf(searchText)
+            if(startIdx >= 0) {
+                val endIdx = startIdx + searchText.length
+                val spanString =
+                    Spannable.Factory.getInstance().newSpannable(data.title)
+                spanString.setSpan(
+                    ForegroundColorSpan(binding.root.context.getColor(R.color.suwiki_blue_900)),
+                    startIdx,
+                    endIdx,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.tvTitle.text = spanString
+            }
+
             binding.cbStar.setOnClickListener {
                 filteredData.find { it.title == data.title }!!.isChecked = binding.cbStar.isChecked
                 unfilteredData.find { it.title == data.title }!!.isChecked = binding.cbStar.isChecked
