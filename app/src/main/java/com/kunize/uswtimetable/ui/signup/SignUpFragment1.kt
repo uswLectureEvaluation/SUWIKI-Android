@@ -52,8 +52,8 @@ class SignUpFragment1 : Fragment() {
         }
 
         viewModel.isIdUnique.observe(viewLifecycleOwner) { isUnique ->
-            if (isUnique == false && viewModel.errorMessage.value.isNullOrBlank().not()) {
-                viewModel.setToastMessage(viewModel.errorMessage.value!!)
+            if (isUnique == false && viewModel.errorMessage.value?.peekContent().isNullOrBlank().not()) {
+                viewModel.setToastMessage(viewModel.errorMessage.value!!.peekContent())
             }
         }
 
@@ -105,8 +105,8 @@ class SignUpFragment1 : Fragment() {
         val link1 = Pattern.compile("이용약관")
         val link2 = Pattern.compile("개인정보처리방침")
         // TODO 이용약관, 개인정보처리방침 링크 연결
-        Linkify.addLinks(binding.cbTerms, link1, "")
-        Linkify.addLinks(binding.cbTerms, link2, "")
+        Linkify.addLinks(binding.tvTerms, link1, "")
+        Linkify.addLinks(binding.tvTerms, link2, "")
     }
 
     private fun dataChanged() {

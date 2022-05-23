@@ -52,6 +52,11 @@ class MyPageFragment : Fragment() {
         setOnMenuClicked()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.user = User
+    }
+
     private fun setOnMenuClicked() {
         binding.toolBar.setOnMenuItemClickListener {
             when (it.itemId) {

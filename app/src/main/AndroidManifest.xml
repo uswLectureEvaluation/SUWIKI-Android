@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Uswtimetable">
         <activity
+            android:name=".ui.signup.WelcomeSignUpActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Uswtimetable.NoActionBar" />
+        <activity
             android:name=".ui.common.WebviewActivity"
             android:exported="false" />
         <activity
