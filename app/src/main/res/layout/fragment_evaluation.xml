@@ -136,15 +136,36 @@
                         app:layout_constraintStart_toEndOf="@id/cl_open_major"
                         app:layout_constraintTop_toBottomOf="@id/cl_search">
 
-                        <Spinner
-                            android:id="@+id/spinner_sort"
-                            android:layout_width="0dp"
+                        <ImageView
+                            android:id="@+id/iv_sort_icon"
+                            setImage="@{viewModel.sortImgId}"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/selector_custom_spinner_arrow"
-                            android:spinnerMode="dialog"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/ic_fire" />
+
+                        <TextView
+                            android:id="@+id/tv_sort"
+                            style="@style/SuwikiTextBody2.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@{viewModel.sortText}"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_sort_icon"
+                            app:layout_constraintStart_toEndOf="@id/iv_sort_icon"
+                            app:layout_constraintTop_toTopOf="@id/iv_sort_icon"
+                            tools:text="최근 올라온 강의" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_down_arrow"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_sort"
+                            app:layout_constraintStart_toEndOf="@id/tv_sort"
+                            app:layout_constraintTop_toTopOf="@id/tv_sort" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

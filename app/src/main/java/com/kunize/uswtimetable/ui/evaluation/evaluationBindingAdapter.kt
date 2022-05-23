@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.evaluation
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.data.local.EvaluationData
@@ -33,4 +34,12 @@ fun setList(
         )
         else -> evaluationAdapter.notifyDataSetChanged()
     }
+}
+
+@BindingAdapter("setImage")
+fun setImage(
+    imageView: ImageView,
+    imgId: Int
+) {
+    imageView.setImageResource(imgId)
 }

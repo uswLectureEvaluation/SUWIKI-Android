@@ -26,4 +26,8 @@ class CustomSortDialog(private val context: AppCompatActivity, private val viewM
 
         dlg.show()
     }
+
+    fun dismiss() {
+        dlg.dismiss()
+    }
 }
