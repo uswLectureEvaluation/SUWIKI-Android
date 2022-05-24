@@ -31,7 +31,7 @@ class SelectOpenMajorFragment : Fragment() {
     private lateinit var binding: FragmentSelectOpenMajorBinding
     private lateinit var adapter: SelectOpenMajorAdapter
     private lateinit var tempOpenMajorList: List<OpenMajorData>
-    val openMajorList = mutableListOf<OpenMajorItem>()
+    var openMajorList = mutableListOf<OpenMajorItem>()
     private val viewModel: SelectOpenMajorViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
@@ -60,6 +60,24 @@ class SelectOpenMajorFragment : Fragment() {
                 binding.rvOpenMajor.itemAnimator = null
                 binding.etSearch.afterEditTextChanged {
                     adapter.filter.filter(it)
+                }
+            }
+        }
+
+        binding.rbAll.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) CoroutineScope(IO).launch {
+                getAllMajorList()
+                withContext(Main) {
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+        binding.rbBookmark.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) CoroutineScope(IO).launch {
+                getBookmarkList()
+                withContext(Main) {
+                    adapter.notifyDataSetChanged()
                 }
             }
         }
@@ -99,8 +117,19 @@ class SelectOpenMajorFragment : Fragment() {
 
     private suspend fun getAllMajorList() {
         val tempBookmarkMajorList = viewModel.getBookmarkList()
+        openMajorList = mutableListOf()
         tempOpenMajorList.forEach {
             openMajorList.add(OpenMajorItem(it.name in tempBookmarkMajorList, it.name))
+        }
+        adapter.filteredData = openMajorList
+        adapter.unfilteredData = openMajorList
+    }
+
+    private suspend fun getBookmarkList() {
+        val tempBookmarkMajorList = viewModel.getBookmarkList()
+        openMajorList = mutableListOf()
+        tempBookmarkMajorList.forEach {
+            openMajorList.add(OpenMajorItem(true, it))
         }
         adapter.filteredData = openMajorList
         adapter.unfilteredData = openMajorList
