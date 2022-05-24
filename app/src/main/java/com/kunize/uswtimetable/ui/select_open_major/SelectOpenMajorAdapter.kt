@@ -18,7 +18,8 @@ import com.kunize.uswtimetable.ui.user_info.User
 import java.util.*
 
 
-class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.SearchHolder>(), Filterable {
+class SelectOpenMajorAdapter(val viewModel: SelectOpenMajorViewModel) :
+    RecyclerView.Adapter<SelectOpenMajorAdapter.SearchHolder>(), Filterable {
     var filteredData = mutableListOf<OpenMajorItem>()
     var unfilteredData = mutableListOf<OpenMajorItem>()
     var selectedItemTitle = ""
@@ -91,42 +92,17 @@ class SelectOpenMajorAdapter : RecyclerView.Adapter<SelectOpenMajorAdapter.Searc
 
     inner class SearchHolder(private val binding: ItemRecyclerOpenMajorBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("NotifyDataSetChanged")
         fun setData(data: OpenMajorItem) {
-            if(selectedItemTitle == data.title) {
+            if (selectedItemTitle == data.title) {
                 binding.layout.setBackgroundColor(binding.root.context.getColor(R.color.suwiki_blue_100))
             } else {
                 binding.layout.setBackgroundColor(binding.root.context.getColor(R.color.transparent))
             }
 
             binding.data = data
-
-
-            val startIdx = data.title.indexOf(searchText)
-            if(startIdx >= 0) {
-                val endIdx = startIdx + searchText.length
-                val spanString =
-                    Spannable.Factory.getInstance().newSpannable(data.title)
-                spanString.setSpan(
-                    ForegroundColorSpan(binding.root.context.getColor(R.color.suwiki_blue_900)),
-                    startIdx,
-                    endIdx,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                binding.tvTitle.text = spanString
-            }
-
-            binding.cbStar.setOnClickListener {
-                if(User.isLoggedIn.value == false) {
-                    Toast.makeText(binding.root.context,"먼저 로그인 해주세요!",Toast.LENGTH_SHORT).show()
-                    binding.cbStar.isChecked = false
-                } else {
-                    filteredData.find { it.title == data.title }!!.isChecked =
-                        binding.cbStar.isChecked
-                    unfilteredData.find { it.title == data.title }!!.isChecked =
-                        binding.cbStar.isChecked
-                }
-            }
+            binding.viewModel = viewModel
+            binding.isLoggedIn = User.isLoggedIn.value
+            binding.searchText = searchText
         }
     }
 }

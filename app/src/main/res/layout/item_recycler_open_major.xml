@@ -3,6 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="searchText"
+            type="String" />
+        <variable
+            name="isLoggedIn"
+            type="Boolean" />
+
+        <variable
+            name="viewModel"
+            type="com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorViewModel" />
 
         <variable
             name="data"
@@ -24,7 +34,9 @@
             android:layout_marginStart="12dp"
             android:background="@drawable/selector_star"
             android:button="@android:color/transparent"
-            android:checked="@{data.checked}" />
+            android:onClick="@{() -> viewModel.starClick(data.title)}"
+            android:checked="@{data.checked}"
+            bookmark_enabled="@{isLoggedIn}"/>
 
         <TextView
             android:id="@+id/tv_title"
@@ -34,7 +46,8 @@
             android:layout_gravity="center"
             android:gravity="center|start"
             android:layout_marginStart="8dp"
-            android:text="@{data.title}"
+            text="@{data.title}"
+            searchText="@{searchText}"
             tools:text="환경에너지공학" />
 
     </LinearLayout>
