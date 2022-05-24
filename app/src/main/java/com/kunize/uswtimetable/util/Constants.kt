@@ -54,6 +54,7 @@ object API {
     const val BUY_EXAM = "/exam-posts/buyExamInfo/"
     const val OPEN_MAJOR_VERSION = "/suwiki-version/"
     const val OPEN_MAJOR_LIST_UPDATE = "/version-update/"
+    const val BOOKMARK = "/user/favorite-major/"
 }
 
 object WriteFragmentTitle {

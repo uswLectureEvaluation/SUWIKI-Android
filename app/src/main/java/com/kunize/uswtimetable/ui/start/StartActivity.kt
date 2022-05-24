@@ -15,8 +15,8 @@ import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
 import com.kunize.uswtimetable.data.local.TimeTableData
-import com.kunize.uswtimetable.repository.start.OpenMajorRemoteDataSource
-import com.kunize.uswtimetable.repository.start.OpenMajorRepository
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
 import com.kunize.uswtimetable.ui.user_info.User

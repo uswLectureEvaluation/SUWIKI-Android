@@ -29,8 +29,8 @@ import com.kunize.uswtimetable.repository.search_result.SearchResultRemoteDataSo
 import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.repository.signup.SignUpRemoteDataSource
 import com.kunize.uswtimetable.repository.signup.SignUpRepository
-import com.kunize.uswtimetable.repository.start.OpenMajorRemoteDataSource
-import com.kunize.uswtimetable.repository.start.OpenMajorRepository
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.repository.user_info.FindIdRepository
 import com.kunize.uswtimetable.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.repository.user_info.QuitRepository
@@ -38,7 +38,6 @@ import com.kunize.uswtimetable.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.repository.write.WriteRemoteDataSource
 import com.kunize.uswtimetable.repository.write.WriteRepository
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
-import com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorFragment
 import com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.user_info.FindIdViewModel

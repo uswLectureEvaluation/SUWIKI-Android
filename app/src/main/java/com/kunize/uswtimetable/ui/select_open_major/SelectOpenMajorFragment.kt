@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.ui.select_open_major
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.ItemAnimator
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.OpenMajorDatabase
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.afterEditTextChanged
 import kotlinx.coroutines.CoroutineScope
@@ -49,6 +45,7 @@ class SelectOpenMajorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = SelectOpenMajorAdapter(viewModel)
         val db = OpenMajorDatabase.getInstance(requireContext())
+
         CoroutineScope(IO).launch {
             val temp = db!!.openMajorDao().getAll()
             val data = mutableListOf<OpenMajorItem>()
@@ -75,9 +72,20 @@ class SelectOpenMajorFragment : Fragment() {
                 val filteredDataIndex = filteredData.indexOfFirst { it.title == title }
                 val unfilteredDataIndex = unfilteredData.indexOfFirst { it.title == title }
 
-                val changeValue = !filteredData[filteredDataIndex].isChecked
-                filteredData[filteredDataIndex].isChecked = changeValue
-                unfilteredData[unfilteredDataIndex].isChecked = changeValue
+                if(filteredDataIndex == -1 || unfilteredDataIndex == -1)
+                    return@EventObserver
+
+                val checkedType = !filteredData[filteredDataIndex].isChecked
+                filteredData[filteredDataIndex].isChecked = checkedType
+                unfilteredData[unfilteredDataIndex].isChecked = checkedType
+
+                CoroutineScope(IO).launch {
+                    if (checkedType) {
+                        viewModel.bookmarkMajor("\"$title\"")
+                    } else {
+                        viewModel.clearBookmarkMajor("\"$title\"")
+                    }
+                }
             }
         })
 

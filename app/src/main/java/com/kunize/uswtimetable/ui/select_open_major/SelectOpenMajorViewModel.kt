@@ -3,10 +3,12 @@ package com.kunize.uswtimetable.ui.select_open_major
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.data.local.OpenMajorItem
-import com.kunize.uswtimetable.repository.start.OpenMajorRepository
-import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.gson.JsonObject
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.ui.common.Event
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorRepository) : ViewModel() {
     private val _starClickEvent = MutableLiveData<Event<String>>()
@@ -15,5 +17,26 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
 
     fun starClick(data: String) {
         _starClickEvent.value = Event(data)
+    }
+
+    suspend fun bookmarkMajor(majorName: String) {
+        viewModelScope.launch {
+            openMajorRepository.bookmarkMajor(majorName)
+        }
+    }
+
+    suspend fun clearBookmarkMajor(majorName: String) {
+        viewModelScope.launch {
+            openMajorRepository.clearBookmarkMajor(majorName)
+        }
+    }
+
+    suspend fun getBookmarkList(): List<String> {
+        var bookmarkList = listOf<String>()
+        viewModelScope.launch {
+            val response = openMajorRepository.getBookmarkMajorList()
+            if(response.isSuccessful) bookmarkList = response.body()!!.data
+        }
+        return bookmarkList
     }
 }
