@@ -33,10 +33,8 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
 
     suspend fun getBookmarkList(): List<String> {
         var bookmarkList = listOf<String>()
-        viewModelScope.launch {
-            val response = openMajorRepository.getBookmarkMajorList()
-            if(response.isSuccessful) bookmarkList = response.body()!!.data
-        }
+        val response = openMajorRepository.getBookmarkMajorList()
+        if (response.isSuccessful) bookmarkList = response.body()!!.data
         return bookmarkList
     }
 }

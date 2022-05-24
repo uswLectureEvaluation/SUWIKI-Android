@@ -228,6 +228,7 @@ interface IRetrofit {
     @GET(BOOKMARK)
     suspend fun getBookmarkMajorList(): Response<OpenMajorList>
 
+    @Headers("Content-Type: application/json")
     @DELETE(BOOKMARK)
     suspend fun clearBookmarkMajor(
         @Body majorName: String

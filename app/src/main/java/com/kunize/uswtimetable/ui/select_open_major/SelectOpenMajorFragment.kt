@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.select_open_major
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.data.local.OpenMajorData
 import com.kunize.uswtimetable.data.local.OpenMajorDatabase
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
@@ -28,6 +30,8 @@ class SelectOpenMajorFragment : Fragment() {
 
     private lateinit var binding: FragmentSelectOpenMajorBinding
     private lateinit var adapter: SelectOpenMajorAdapter
+    private lateinit var tempOpenMajorList: List<OpenMajorData>
+    val openMajorList = mutableListOf<OpenMajorItem>()
     private val viewModel: SelectOpenMajorViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
@@ -47,13 +51,8 @@ class SelectOpenMajorFragment : Fragment() {
         val db = OpenMajorDatabase.getInstance(requireContext())
 
         CoroutineScope(IO).launch {
-            val temp = db!!.openMajorDao().getAll()
-            val data = mutableListOf<OpenMajorItem>()
-            temp.forEach {
-                data.add(OpenMajorItem(false, it.name))
-            }
-            adapter.filteredData = data
-            adapter.unfilteredData = data
+            tempOpenMajorList = db!!.openMajorDao().getAll()
+            getAllMajorList()
             adapter.setHasStableIds(true)
             withContext(Main) {
                 binding.rvOpenMajor.adapter = adapter
@@ -72,7 +71,7 @@ class SelectOpenMajorFragment : Fragment() {
                 val filteredDataIndex = filteredData.indexOfFirst { it.title == title }
                 val unfilteredDataIndex = unfilteredData.indexOfFirst { it.title == title }
 
-                if(filteredDataIndex == -1 || unfilteredDataIndex == -1)
+                if (filteredDataIndex == -1 || unfilteredDataIndex == -1)
                     return@EventObserver
 
                 val checkedType = !filteredData[filteredDataIndex].isChecked
@@ -96,5 +95,14 @@ class SelectOpenMajorFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         })
+    }
+
+    private suspend fun getAllMajorList() {
+        val tempBookmarkMajorList = viewModel.getBookmarkList()
+        tempOpenMajorList.forEach {
+            openMajorList.add(OpenMajorItem(it.name in tempBookmarkMajorList, it.name))
+        }
+        adapter.filteredData = openMajorList
+        adapter.unfilteredData = openMajorList
     }
 }
