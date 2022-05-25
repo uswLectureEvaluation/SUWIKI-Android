@@ -6,7 +6,11 @@ import retrofit2.Response
 
 class EvaluationRemoteDataSource(private val apiService: IRetrofit): EvaluationDataSource {
 
-    override suspend fun getEvaluationDataSource(option: String, page: Int): Response<LectureMainDto> {
-        return apiService.getLectureMainList(option)
+    override suspend fun getEvaluationDataSource(
+        option: String,
+        page: Int,
+        majorType: String
+    ): Response<LectureMainDto> {
+        return apiService.getLectureMainList(option, majorType = majorType)
     }
 }
