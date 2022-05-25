@@ -170,5 +170,6 @@
     <string name="all">전체</string>
     <string name="bookmark">즐겨찾기</string>
     <string name="okay">확인</string>
+    <string name="no_search_result">\'%s\'에 대한\n검색결과가 없습니다.</string>
 
 </resources>

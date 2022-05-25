@@ -27,7 +27,10 @@ fun EditText.afterTextChanged(completion: (Editable?) -> Unit) {
 fun EditText.onTextChanged(completion: (CharSequence?) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { completion(p0) }
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            completion(p0)
+        }
+
         override fun afterTextChanged(p0: Editable?) {}
     })
 }
@@ -38,18 +41,18 @@ fun EditText.afterEditTextChanged(completion: (Editable?) -> Unit) {
     val uiScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun afterTextChanged(p0: Editable?) {
             val newInput = p0.toString()
             debounceJob?.cancel()
-            if(lastInput != newInput) {
-                lastInput = newInput
-                debounceJob = uiScope.launch {
-                    delay(200L)
-                    if(lastInput == newInput)
-                        completion(p0)
-                }
+
+            lastInput = newInput
+            debounceJob = uiScope.launch {
+                delay(200L)
+                if (lastInput == newInput)
+                    completion(p0)
             }
+
         }
     })
 }

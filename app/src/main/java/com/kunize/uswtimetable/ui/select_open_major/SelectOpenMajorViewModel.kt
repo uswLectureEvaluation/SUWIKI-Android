@@ -15,6 +15,18 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
     val starClickEvent: LiveData<Event<String>>
         get() = _starClickEvent
 
+    private val _showNeedLoginLayout = MutableLiveData<Boolean>()
+    val showNeedLoginLayout: LiveData<Boolean>
+        get() = _showNeedLoginLayout
+
+    val _showNoSearchResultText = MutableLiveData<String>()
+    val showNoSearchResultText: LiveData<String>
+        get() = _showNoSearchResultText
+
+    init {
+        _showNoSearchResultText.value = ""
+    }
+
     fun starClick(data: String) {
         _starClickEvent.value = Event(data)
     }

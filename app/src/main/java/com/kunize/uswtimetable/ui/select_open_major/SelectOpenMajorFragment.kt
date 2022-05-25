@@ -20,6 +20,7 @@ import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.afterEditTextChanged
+import com.kunize.uswtimetable.util.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -59,10 +60,16 @@ class SelectOpenMajorFragment : Fragment() {
                 binding.rvOpenMajor.adapter = adapter
                 binding.rvOpenMajor.layoutManager = LinearLayoutManager(requireContext())
                 binding.rvOpenMajor.itemAnimator = null
-                binding.etSearch.afterEditTextChanged {
-                    adapter.filter.filter(it)
-                }
             }
+        }
+
+        binding.etSearch.afterEditTextChanged { searchText ->
+            adapter.filter.filter(searchText)
+            val num = adapter.unfilteredData.find { it.title.contains(searchText.toString()) }
+            if(num == null && !binding.rbBookmark.isChecked && searchText?.isNotEmpty() == true)
+                viewModel._showNoSearchResultText.value = searchText.toString()
+            else
+                viewModel._showNoSearchResultText.value = ""
         }
 
         binding.rbAll.setOnCheckedChangeListener { _, isChecked ->
