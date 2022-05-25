@@ -67,14 +67,15 @@ class SelectOpenMajorFragment : Fragment() {
             adapter.filter.filter(searchText)
             val num = adapter.unfilteredData.find { it.title.contains(searchText.toString()) }
             if(num == null && !binding.rbBookmark.isChecked && searchText?.isNotEmpty() == true)
-                viewModel._showNoSearchResultText.value = searchText.toString()
+                viewModel.setNoSearchResultText(searchText.toString())
             else
-                viewModel._showNoSearchResultText.value = ""
+                viewModel.setNoSearchResultText("")
         }
 
         binding.rbAll.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) CoroutineScope(IO).launch {
                 getAllMajorList()
+                viewModel.hideNeedLoginLayout()
                 withContext(Main) {
                     adapter.notifyDataSetChanged()
                 }
@@ -82,10 +83,11 @@ class SelectOpenMajorFragment : Fragment() {
         }
 
         binding.rbBookmark.setOnCheckedChangeListener { _, isChecked ->
-            if(User.isLoggedIn.value == false) {
-                return@setOnCheckedChangeListener
-            }
             if(isChecked) CoroutineScope(IO).launch {
+                if(User.isLoggedIn.value == false) {
+                    viewModel.showNeedLoginLayout()
+                    return@launch
+                }
                 getBookmarkList()
                 withContext(Main) {
                     adapter.notifyDataSetChanged()

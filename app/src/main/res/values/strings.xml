@@ -171,5 +171,6 @@
     <string name="bookmark">즐겨찾기</string>
     <string name="okay">확인</string>
     <string name="no_search_result">\'%s\'에 대한\n검색결과가 없습니다.</string>
+    <string name="use_after_login">로그인 후 사용할 수 있습니다!</string>
 
 </resources>

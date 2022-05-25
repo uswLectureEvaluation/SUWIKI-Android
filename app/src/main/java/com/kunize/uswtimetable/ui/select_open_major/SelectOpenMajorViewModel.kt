@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonObject
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.ui.common.Event
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorRepository) : ViewModel() {
@@ -15,16 +17,28 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
     val starClickEvent: LiveData<Event<String>>
         get() = _starClickEvent
 
-    private val _showNeedLoginLayout = MutableLiveData<Boolean>()
-    val showNeedLoginLayout: LiveData<Boolean>
-        get() = _showNeedLoginLayout
+    private val _needLoginLayout = MutableLiveData<Boolean>()
+    val needLoginLayout: LiveData<Boolean>
+        get() = _needLoginLayout
 
-    val _showNoSearchResultText = MutableLiveData<String>()
+    private val _showNoSearchResultText = MutableLiveData<String>()
     val showNoSearchResultText: LiveData<String>
         get() = _showNoSearchResultText
 
     init {
         _showNoSearchResultText.value = ""
+    }
+
+    suspend fun showNeedLoginLayout() = withContext(Main) {
+        _needLoginLayout.value = true
+    }
+
+    suspend fun hideNeedLoginLayout() = withContext(Main) {
+        _needLoginLayout.value = false
+    }
+
+    fun setNoSearchResultText(text: String) {
+        _showNoSearchResultText.value = text
     }
 
     fun starClick(data: String) {
