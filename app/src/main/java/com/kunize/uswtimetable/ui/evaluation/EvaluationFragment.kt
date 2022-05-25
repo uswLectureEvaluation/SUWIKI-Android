@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.ui.evaluation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +22,10 @@ import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
+import com.kunize.uswtimetable.util.TimeTableSelPref
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
@@ -34,6 +37,12 @@ class EvaluationFragment : Fragment() {
     }
     private var customSortDialog: CustomSortDialog? = null
     private var spinnerSel: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        evaluationViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전부")
+        evaluationViewModel.changeType(0)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +67,8 @@ class EvaluationFragment : Fragment() {
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
         }
+
+        binding.tvSelectedOpenMajor.text = evaluationViewModel.majorType
 
         binding.recyclerEvaluation.adapter = adapter
 
@@ -125,7 +136,7 @@ class EvaluationFragment : Fragment() {
 
     private fun goToSelectOpenMajorFragment() {
         val action =
-            EvaluationFragmentDirections.globalOpenMajor()
+            EvaluationFragmentDirections.globalOpenMajor(FragmentType.EVALUATION)
         findNavController().navigate(action)
     }
 }

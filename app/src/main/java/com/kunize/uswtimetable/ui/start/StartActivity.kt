@@ -61,6 +61,7 @@ class StartActivity : AppCompatActivity() {
         val openMajorVersion = versionPreferences.getFloat("openMajorVersion", 0f)
         TimeTableSelPref.prefs.setInt("majorSel", 0)
         TimeTableSelPref.prefs.setInt("gradeSel", 0)
+        TimeTableSelPref.prefs.setString("openMajorSel", "전부")
 
         //Room 설정
         val db = TimeTableDatabase.getInstance(applicationContext)

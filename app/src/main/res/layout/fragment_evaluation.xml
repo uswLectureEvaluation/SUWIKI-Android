@@ -110,15 +110,28 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <Spinner
-                            android:id="@+id/spinner_open_major"
+                        <TextView
+                            android:layout_marginStart="8dp"
+                            style="@style/SuwikiTextBody2.Bold.Blue"
+                            android:id="@+id/tv_selected_open_major"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/selector_custom_spinner_arrow"
-                            android:spinnerMode="dialog"
+                            android:maxEms="5"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
                             app:layout_constraintStart_toEndOf="@id/tv_open_major"
-                            app:layout_constraintTop_toTopOf="@id/tv_open_major" />
+                            app:layout_constraintTop_toTopOf="@id/tv_open_major"
+                            tools:text="전부전부전부전부전부"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_down_arrow"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_selected_open_major"
+                            app:layout_constraintStart_toEndOf="@id/tv_selected_open_major"
+                            app:layout_constraintTop_toTopOf="@id/tv_selected_open_major" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

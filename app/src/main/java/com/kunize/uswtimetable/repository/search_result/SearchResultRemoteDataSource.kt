@@ -16,8 +16,9 @@ class SearchResultRemoteDataSource(private val apiService: IRetrofit) : SearchRe
 
     override suspend fun getEvaluationDataSource(
         option: String,
-        page: Int
+        page: Int,
+        majorType: String
     ): Response<LectureMainDto> {
-        return apiService.getLectureMainList(option, page)
+        return apiService.getLectureMainList(option, page, majorType)
     }
 }

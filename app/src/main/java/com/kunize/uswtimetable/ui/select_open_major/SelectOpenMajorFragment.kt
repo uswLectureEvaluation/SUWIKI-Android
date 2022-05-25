@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.OpenMajorData
@@ -19,6 +20,7 @@ import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.afterEditTextChanged
 import com.kunize.uswtimetable.util.onTextChanged
 import kotlinx.coroutines.CoroutineScope
@@ -126,6 +128,12 @@ class SelectOpenMajorFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         })
+
+        binding.btnOk.setOnClickListener {
+            TimeTableSelPref.prefs.setString("openMajorSel",adapter.selectedItemTitle)
+            val action = SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation()
+            findNavController().navigate(action)
+        }
     }
 
     private suspend fun getAllMajorList() {

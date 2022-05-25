@@ -16,8 +16,9 @@ class SearchResultRepository(
 
     suspend fun getLectureMainList(
         option: String,
-        page: Int
+        page: Int,
+        majorType: String = ""
     ): Response<LectureMainDto> {
-        return remoteDataSource.getEvaluationDataSource(option, page)
+        return remoteDataSource.getEvaluationDataSource(option, page, majorType)
     }
 }

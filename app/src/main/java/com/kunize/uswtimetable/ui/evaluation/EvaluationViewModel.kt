@@ -30,6 +30,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
         R.drawable.ic_fire, R.drawable.ic_honey, R.drawable.ic_thumbs,
         R.drawable.ic_book, R.drawable.ic_1st
     )
+    var majorType = "전부"
 
     val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<LectureMain>()
     val toastViewModel = ToastViewModel()
@@ -47,13 +48,9 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
     val dialogItemClickEvent: LiveData<Event<Boolean>>
         get() = _dialogItemClickEvent
 
-    init {
-        changeType(0)
-    }
-
     private fun loadEvaluationData() {
         viewModelScope.launch {
-            val response = evaluationRepository.getLectureMainList(_selectedType.value.toString())
+            val response = evaluationRepository.getLectureMainList(_selectedType.value.toString(), if(majorType == "전부") "" else majorType)
             if (response.isSuccessful) {
                 commonRecyclerViewViewModel.deleteLoading()
                 commonRecyclerViewViewModel.changeRecyclerViewData(response.body()!!.data)
@@ -67,7 +64,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
         changeType(position)
     }
 
-    private fun changeType(position: Int) {
+    fun changeType(position: Int) {
         _selectedType.value = spinnerTypeList[position]
         _sortImgId.value = spinnerImageList[position]
         _sortText.value = spinnerTextList[position]

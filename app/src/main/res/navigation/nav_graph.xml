@@ -149,7 +149,22 @@
     <fragment
         android:id="@+id/selectOpenMajorFragment"
         android:name="com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorFragment"
-        android:label="SelectOpenMajorFragment" />
+        android:label="SelectOpenMajorFragment"
+        tools:layout="@layout/fragment_select_open_major">
+        <action
+            android:id="@+id/action_selectOpenMajorFragment_to_navigation_evaluation"
+            app:destination="@id/navigation_evaluation"
+            app:popUpTo="@id/navigation_evaluation"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_selectOpenMajorFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment"
+            app:popUpTo="@id/searchResultFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="prevFragment"
+            app:argType="integer" />
+    </fragment>
     <action
         android:id="@+id/global_open_major"
         app:destination="@id/selectOpenMajorFragment" />

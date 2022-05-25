@@ -155,3 +155,8 @@ object TimetableCellColor {
 object LIST_CONFIG {
     const val ONCE_REQUEST_SIZE = 10
 }
+
+object FragmentType {
+    const val EVALUATION = 1
+    const val SEARCH_RESULT = 2
+}
