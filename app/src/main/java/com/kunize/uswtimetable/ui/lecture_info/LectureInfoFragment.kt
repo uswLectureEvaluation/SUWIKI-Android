@@ -35,7 +35,6 @@ class LectureInfoFragment : Fragment() {
             requireContext()
         )
     }
-    var needLoadInitData = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,17 +67,18 @@ class LectureInfoFragment : Fragment() {
             }
         }
 
-        lectureInfoViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
-            if (User.isLoggedIn.value == false){
-                needLoadInitData = true
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
-            }
-            else {
-                Toast.makeText(requireContext(), lectureInfoViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
-                if(lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!")
+        lectureInfoViewModel.toastViewModel.toastLiveData.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                Toast.makeText(
+                    requireContext(),
+                    lectureInfoViewModel.toastViewModel.toastMessage,
+                    Toast.LENGTH_LONG
+                ).show()
+                if (lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!")
                     findNavController().popBackStack()
-            }
-        })
+
+            })
 
         with(binding) {
             hideExamDataLayout.usePointBtn.setOnClickListener {
@@ -94,17 +94,6 @@ class LectureInfoFragment : Fragment() {
             }
         }
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        CoroutineScope(IO).launch {
-            if(needLoadInitData) {
-                delay(500L)
-                needLoadInitData = false
-                loadInitData()
-            }
-        }
     }
 
     private suspend fun loadInitData() {

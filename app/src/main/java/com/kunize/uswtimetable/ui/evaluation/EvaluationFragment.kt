@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.evaluation
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,8 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.login.LoginActivity
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
@@ -48,8 +51,12 @@ class EvaluationFragment : Fragment() {
                 goToSearchResult("", spinnerSel)
                 return@EvaluationAdapter
             }
-            val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
-            findNavController().navigate(action)
+            if(User.isLoggedIn.value == true) {
+                val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
+                findNavController().navigate(action)
+            } else {
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+            }
         }
 
         binding.recyclerEvaluation.adapter = adapter

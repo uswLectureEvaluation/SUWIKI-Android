@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorViewModel" />
@@ -150,7 +151,7 @@
 
             </RadioGroup>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,8 +165,12 @@
                     android:id="@+id/rv_open_major"
                     android:layout_width="match_parent"
                     android:layout_height="293dp"
-                    android:layout_marginBottom="16dp" />
-            </LinearLayout>
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 style="@style/SuwikiTextSubTitle.Bold.White"
