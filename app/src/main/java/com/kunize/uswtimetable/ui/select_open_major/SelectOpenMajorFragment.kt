@@ -65,6 +65,10 @@ class SelectOpenMajorFragment : Fragment() {
             }
         }
 
+        binding.ivClose.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.etSearch.afterEditTextChanged { searchText ->
             adapter.filter.filter(searchText)
             val num = adapter.unfilteredData.find { it.title.contains(searchText.toString()) }
