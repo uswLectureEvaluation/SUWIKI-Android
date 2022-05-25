@@ -12,7 +12,7 @@
     <string name="my_point">보유 포인트</string>
     <string name="search_evaluation_hint">강의명, 교수명으로 원하는 강의평가를 찾아보세요</string>
     <string name="see_more"><u>더보기 ></u></string>
-    <string name="search_result">검색 결과</string>
+    <string name="search_result">강의평가 검색</string>
     <string name="sort">정렬</string>
     <string name="satisfaction">만족도</string>
     <string name="honey">꿀강</string>
@@ -187,5 +187,6 @@
     <string name="okay">확인</string>
     <string name="no_search_result">\'%s\'에 대한\n검색결과가 없습니다.</string>
     <string name="use_after_login">로그인 후 사용할 수 있습니다!</string>
+    <string name="search_evaluation">강의평가 검색</string>
 
 </resources>

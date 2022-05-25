@@ -3,7 +3,6 @@ package com.kunize.uswtimetable.ui.evaluation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +28,7 @@ import com.kunize.uswtimetable.util.TimeTableSelPref
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
-    private lateinit var adapter: EvaluationAdapter
+    private lateinit var evaluationFooterAdapter: EvaluationFooterAdapter
     private val evaluationViewModel: EvaluationViewModel by viewModels {
         ViewModelFactory(
             requireContext()
@@ -55,10 +54,10 @@ class EvaluationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EvaluationAdapter { id ->
+        evaluationFooterAdapter = EvaluationFooterAdapter { id ->
             if (id == LectureItemViewType.FOOTER.toLong()) {
                 goToSearchResult("", spinnerSel)
-                return@EvaluationAdapter
+                return@EvaluationFooterAdapter
             }
             if(User.isLoggedIn.value == true) {
                 val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
@@ -70,7 +69,7 @@ class EvaluationFragment : Fragment() {
 
         binding.tvSelectedOpenMajor.text = evaluationViewModel.majorType
 
-        binding.recyclerEvaluation.adapter = adapter
+        binding.recyclerEvaluation.adapter = evaluationFooterAdapter
 
         binding.viewModel = evaluationViewModel
         binding.lifecycleOwner = this

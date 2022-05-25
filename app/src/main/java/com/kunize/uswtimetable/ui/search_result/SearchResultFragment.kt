@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -17,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
@@ -29,9 +27,9 @@ import com.kunize.uswtimetable.util.infiniteScrolls
 class SearchResultFragment : Fragment() {
 
     lateinit var binding: FragmentSearchResultBinding
-    private lateinit var adapter: EvaluationListAdapter
+    private lateinit var searchResultAdapter: SearchResultAdapter
     private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory(requireContext()) }
-    private lateinit var sortBtn: List<RadioButton>
+    //private lateinit var sortBtn: List<RadioButton>
     private val args: SearchResultFragmentArgs by navArgs()
     private val sortOptionMap = mapOf("날짜" to 0, "꿀강" to 1, "만족도" to 2, "배움" to 3, "종합" to 4)
 
@@ -52,7 +50,7 @@ class SearchResultFragment : Fragment() {
         binding.viewModel = searchResultViewModel
         binding.lifecycleOwner = this
 
-        adapter = EvaluationListAdapter { id ->
+        searchResultAdapter = SearchResultAdapter { id ->
             if(User.isLoggedIn.value == true) {
                 val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
                 findNavController().navigate(action)
@@ -61,24 +59,27 @@ class SearchResultFragment : Fragment() {
             }
         }
 
-        binding.recyclerSearchResult.adapter = adapter
+        binding.recyclerSearchResult.adapter = searchResultAdapter
 
         binding.recyclerSearchResult.infiniteScrolls {
             searchResultViewModel.scrollBottomEvent()
         }
 
-        with(binding) {
-            sortBtn = mutableListOf(dateBtn, honeyBtn, satisfactionBtn , learningBtn, totalBtn)
-        }
+//        with(binding) {
+//            sortBtn = mutableListOf(dateBtn, honeyBtn, satisfactionBtn , learningBtn, totalBtn)
+//        }
 
-        sortBtn.forEach { btn ->
-            btn.setOnClickListener {
-                sortOptionMap[btn.text.toString()]?.let {
-                    searchResultViewModel.changeType(it)
-                }
-            }
-        }
+//        sortBtn.forEach { btn ->
+//            btn.setOnClickListener {
+//                sortOptionMap[btn.text.toString()]?.let {
+//                    searchResultViewModel.changeType(it)
+//                }
+//            }
+//        }
 
+        binding.ivClose.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.etSearch.apply {
             setText(args.searchLectureName)

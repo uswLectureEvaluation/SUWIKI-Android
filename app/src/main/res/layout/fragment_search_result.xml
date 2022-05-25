@@ -28,109 +28,172 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/page_padding">
+                    android:paddingTop="24dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="4dp">
 
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView"
-                        style="@style/cardview_style"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/TextSubtitle1.Bold"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/search_evaluation"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textView29">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/search_result_bar">
-
-                            <EditText
-                                android:id="@+id/et_search"
-                                style="@style/search_style"
-                                android:background="@android:color/transparent"
-                                android:hint="@string/search_evaluation_hint"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@id/btn_search"
-                                app:layout_constraintHorizontal_chainStyle="packed"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/btn_search"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:paddingStart="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="@drawable/ic_baseline_search_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/et_search"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <RadioGroup
-                        android:id="@+id/radioGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="@id/textView31"
-                        app:layout_constraintStart_toEndOf="@id/textView31"
-                        app:layout_constraintTop_toTopOf="@id/textView31">
-
-                        <RadioButton
-                            android:id="@+id/dateBtn"
-                            style="@style/sort_radiobutton_style"
-                            radioBtnClicked="@{viewModel.radioButtons.get(0)}"
-                            android:text="@string/date" />
-
-                        <RadioButton
-                            android:id="@+id/honeyBtn"
-                            style="@style/sort_radiobutton_style"
-                            radioBtnClicked="@{viewModel.radioButtons.get(1)}"
-                            android:text="@string/honey" />
-
-                        <RadioButton
-                            android:id="@+id/satisfactionBtn"
-                            style="@style/sort_radiobutton_style"
-                            radioBtnClicked="@{viewModel.radioButtons.get(2)}"
-                            android:text="@string/satisfaction" />
-
-                        <RadioButton
-                            android:id="@+id/learningBtn"
-                            style="@style/sort_radiobutton_style"
-                            radioBtnClicked="@{viewModel.radioButtons.get(3)}"
-                            android:text="@string/learning" />
-
-                        <RadioButton
-                            android:id="@+id/totalBtn"
-                            style="@style/sort_radiobutton_style"
-                            radioBtnClicked="@{viewModel.radioButtons.get(4)}"
-                            android:text="@string/total" />
-                    </RadioGroup>
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/sort"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cardView" />
-
-                    <TextView
-                        android:id="@+id/textView29"
-                        style="@style/title_textview_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/search_result"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_close_line"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+                        <com.kunize.uswtimetable.ui.common.ClearEditText
+                            android:id="@+id/et_search"
+                            style="@style/SuwikiTextBody1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:ellipsize="end"
+                            android:ems="10"
+                            android:hint="@string/search_evaluation_hint"
+                            android:imeActionLabel="검색"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"
+                            android:paddingTop="14dp"
+                            android:paddingBottom="14dp"
+                            android:textColorHint="@color/suwiki_gray_700"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toEndOf="@id/btn_search"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/btn_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:paddingEnd="8dp"
+                            android:src="@drawable/ic_search"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/et_search"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:background="@color/suwiki_gray_900"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_open_major"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/bg_rounded_border_line_10_gray_500"
+                        android:padding="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/cl_search">
+
+                        <TextView
+                            android:id="@+id/tv_open_major"
+                            style="@style/SuwikiTextBody2.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/open_major"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_marginStart="8dp"
+                            style="@style/SuwikiTextBody2.Bold.Blue"
+                            android:id="@+id/tv_selected_open_major"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxEms="5"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
+                            app:layout_constraintStart_toEndOf="@id/tv_open_major"
+                            app:layout_constraintTop_toTopOf="@id/tv_open_major"
+                            tools:text="전부전부전부전부전부"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_down_arrow"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_selected_open_major"
+                            app:layout_constraintStart_toEndOf="@id/tv_selected_open_major"
+                            app:layout_constraintTop_toTopOf="@id/tv_selected_open_major" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/bg_rounded_border_line_10_gray_500"
+                        android:paddingStart="8dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="4dp"
+                        app:layout_constraintStart_toEndOf="@id/cl_open_major"
+                        app:layout_constraintTop_toBottomOf="@id/cl_search">
+
+                        <TextView
+                            style="@style/SuwikiTextBody2.Bold"
+                            android:id="@+id/tv_sort"
+                            android:text="정렬"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/ic_fire" />
+
+                        <TextView
+                            android:id="@+id/tv_sort_selected"
+                            style="@style/SuwikiTextBody2.Bold.Blue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_sort"
+                            app:layout_constraintStart_toEndOf="@id/tv_sort"
+                            app:layout_constraintTop_toTopOf="@id/tv_sort"
+                            tools:text="종합" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_down_arrow"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_sort_selected"
+                            app:layout_constraintStart_toEndOf="@id/tv_sort_selected"
+                            app:layout_constraintTop_toTopOf="@id/tv_sort_selected" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
@@ -138,29 +201,39 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-        <androidx.cardview.widget.CardView
-            style="@style/cardview_style"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/page_padding"
-            android:layout_marginEnd="@dimen/page_padding"
-            android:layout_marginBottom="@dimen/page_padding"
+            android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 style="@style/no_data_textview_style"
                 android:visibility="@{viewModel.commonRecyclerViewViewModel.itemList.empty ? View.VISIBLE : View.GONE}" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerSearchResult"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:evaluationList="@{viewModel.commonRecyclerViewViewModel.itemList}"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/recyclerSearchResult"
+                app:searchResultList="@{viewModel.commonRecyclerViewViewModel.itemList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

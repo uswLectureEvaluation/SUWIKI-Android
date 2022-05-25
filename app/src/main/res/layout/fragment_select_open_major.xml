@@ -38,7 +38,6 @@
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:background="@color/suwiki_white"
                     app:contentInsetStart="0dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout

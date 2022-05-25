@@ -12,7 +12,7 @@ import com.kunize.uswtimetable.databinding.ItemRecyclerProgressBinding
 import com.kunize.uswtimetable.databinding.ItemRecyclerSeeMoreFooterBinding
 import com.kunize.uswtimetable.util.LectureItemViewType
 
-class EvaluationAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var evaluationListData = mutableListOf<LectureMain?>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

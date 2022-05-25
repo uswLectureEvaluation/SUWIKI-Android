@@ -5,9 +5,7 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.data.remote.LectureMain
-import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 
 
 @SuppressLint("NotifyDataSetChanged")
@@ -17,8 +15,8 @@ fun setList(
     items: MutableList<LectureMain?>
 ) {
     if (recyclerView.adapter == null)
-        recyclerView.adapter = EvaluationAdapter { }
-    val evaluationAdapter = recyclerView.adapter as EvaluationAdapter
+        recyclerView.adapter = EvaluationFooterAdapter { }
+    val evaluationAdapter = recyclerView.adapter as EvaluationFooterAdapter
 
     val prevItemSize = evaluationAdapter.evaluationListData.size
     val newItemSize = items.size

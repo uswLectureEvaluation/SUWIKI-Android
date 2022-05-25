@@ -19,7 +19,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     ViewModel(), HandlingErrorInterface {
     val toastViewModel = ToastViewModel()
     private val pageViewModel = PageViewModel()
-    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
+    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<LectureMain>()
     private val _selectedType = MutableLiveData<String>()
     private val _searchValue = MutableLiveData<String>()
 
@@ -52,7 +52,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     private suspend fun SearchResultViewModel.getData() {
         val response = getResponse()
         if (response.isSuccessful) {
-            val tmpEvaluationData = response.body()?.convertToEvaluationData()
+            val tmpEvaluationData = response.body()?.data
             commonRecyclerViewViewModel.deleteLoading()
             if (!tmpEvaluationData.isNullOrEmpty()) {
                 pageViewModel.isLastData(tmpEvaluationData)
