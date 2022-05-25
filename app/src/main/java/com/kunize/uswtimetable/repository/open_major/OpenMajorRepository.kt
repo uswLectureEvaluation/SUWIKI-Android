@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.repository.start
+package com.kunize.uswtimetable.repository.open_major
 
 import com.kunize.uswtimetable.data.remote.OpenMajorList
 import com.kunize.uswtimetable.data.remote.OpenMajorVersion
@@ -13,5 +13,17 @@ class OpenMajorRepository(
 
     suspend fun getOpenMajorList() : Response<OpenMajorList> {
         return remoteDataSource.getOpenMajorList()
+    }
+
+    suspend fun bookmarkMajor(majorName: String): Response<String> {
+        return remoteDataSource.bookmarkMajor(majorName)
+    }
+
+    suspend fun getBookmarkMajorList(): Response<OpenMajorList> {
+        return remoteDataSource.getBookmarkMajorList()
+    }
+
+    suspend fun clearBookmarkMajor(majorName: String): Response<String> {
+        return remoteDataSource.clearBookmarkMajor(majorName)
     }
 }

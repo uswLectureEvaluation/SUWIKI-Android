@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.search_result
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +21,8 @@ import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.login.LoginActivity
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.infiniteScrolls
 
@@ -50,8 +53,12 @@ class SearchResultFragment : Fragment() {
         binding.lifecycleOwner = this
 
         adapter = EvaluationListAdapter { id ->
-            val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
-            findNavController().navigate(action)
+            if(User.isLoggedIn.value == true) {
+                val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
+                findNavController().navigate(action)
+            } else {
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
+            }
         }
 
         binding.recyclerSearchResult.adapter = adapter

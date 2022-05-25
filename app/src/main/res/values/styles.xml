@@ -124,12 +124,21 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="radiobutton_text_style.Small">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="write_radiobutton_text_style" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:paddingStart">5dp</item>
         <item name="android:paddingEnd">5dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:button">@null</item>
-        <item name="android:background">@drawable/bg_rounded_10_gray_500</item>
+        <item name="android:background">@drawable/bg_rounded_border_line_10_gray_500</item>
         <item name="android:textColor">@drawable/selector_write_radio_text</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">28dp</item>
@@ -438,6 +447,7 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+
     <style name="SuwikiTextSubTitle.Blue">
         <item name="android:textColor">@color/suwiki_blue_900</item>
     </style>
@@ -450,9 +460,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="SuwikiTextSubTitle.Bold.Blue" parent="TextAppearance.AppCompat.Title">
+    <style name="SuwikiTextSubTitle.Bold.Blue">
         <item name="android:textColor">@color/suwiki_blue_900</item>
     </style>
+
+    <style name="SuwikiTextSubTitle.Bold.White">
+        <item name="android:textColor">@color/suwiki_white</item>
+    </style>
+
 
     <style name="SuwikiTextBody1" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/suwiki_black_700</item>

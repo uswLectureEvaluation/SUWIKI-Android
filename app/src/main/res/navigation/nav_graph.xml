@@ -146,4 +146,11 @@
         android:name="com.kunize.uswtimetable.ui.mypage.PurchaseHistoryFragment"
         android:label="purchase_history_fragment"
         tools:layout="@layout/fragment_purchase_history" />
+    <fragment
+        android:id="@+id/selectOpenMajorFragment"
+        android:name="com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorFragment"
+        android:label="SelectOpenMajorFragment" />
+    <action
+        android:id="@+id/global_open_major"
+        app:destination="@id/selectOpenMajorFragment" />
 </navigation>

@@ -33,6 +33,7 @@
     <color name="start_yellow">#EADB80</color>
     <color name="search_result_bar">#F2F2F2</color>
     <color name="custom_dark_gray">#676767</color>
+    <color name="transparent">#00000000</color>
 
     <!-- design color -->
     <color name="suwiki_black_900">#000000</color>
