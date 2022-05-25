@@ -32,6 +32,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_setting.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_timetable.xml" value="0.38461538461538464" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/line.xml" value="0.196" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/rounding_background.xml" value="0.278125" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/rounding_blue_background.xml" value="0.162" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/selector_sort_radio_button.xml" value="0.23072916666666668" />
@@ -58,6 +59,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_start.xml" value="0.18614130434782608" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_webview.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_welcome_sign_up.xml" value="0.3531047265987025" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/custom_suffix_edittext.xml" value="0.3609375" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_contact_us.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_evaluation.xml" value="0.31657608695652173" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_home.xml" value="0.31657608695652173" />
