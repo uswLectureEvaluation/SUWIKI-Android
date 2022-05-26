@@ -166,13 +166,6 @@ interface IRetrofit {
         @Query("page") page: Int
     ): Response<LectureMainDto>
 
-    // 시험 정보 보기 API
-    @GET(EXAM)
-    fun getExamInfo(
-        @Query("subjtNmname") subjectName: String,
-        @Query("reprPrfsEnoNm") professorName: String
-    ): Call<JsonElement>
-
     // 메인 페이지
     @GET(LECTURE_MAIN)
     suspend fun getLectureMainList(
