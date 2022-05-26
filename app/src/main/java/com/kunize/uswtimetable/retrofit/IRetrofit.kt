@@ -212,19 +212,17 @@ interface IRetrofit {
     @GET(OPEN_MAJOR_LIST_UPDATE)
     suspend fun getOpenMajorList(): Response<OpenMajorList>
 
-    @Headers("Content-Type: application/json")
     @POST(BOOKMARK)
     suspend fun bookmarkMajor(
-        @Body majorName: String
+        @Body majorName: MajorType
     ): Response<String>
 
     @GET(BOOKMARK)
     suspend fun getBookmarkMajorList(): Response<OpenMajorList>
 
-    @Headers("Content-Type: application/json")
     @DELETE(BOOKMARK)
     suspend fun clearBookmarkMajor(
-        @Body majorName: String
+        @Query("majorType") majorName: String
     ): Response<String>
 
 

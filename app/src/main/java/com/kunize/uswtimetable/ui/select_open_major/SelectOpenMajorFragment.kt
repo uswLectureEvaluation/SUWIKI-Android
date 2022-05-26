@@ -117,9 +117,9 @@ class SelectOpenMajorFragment : Fragment() {
 
                 CoroutineScope(IO).launch {
                     if (checkedType) {
-                        viewModel.bookmarkMajor("\"$title\"")
+                        viewModel.bookmarkMajor(title)
                     } else {
-                        viewModel.clearBookmarkMajor("\"$title\"")
+                        viewModel.clearBookmarkMajor(title)
                     }
                 }
             }

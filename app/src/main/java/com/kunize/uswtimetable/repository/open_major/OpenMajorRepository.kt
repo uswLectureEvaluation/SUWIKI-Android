@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.repository.open_major
 
+import com.kunize.uswtimetable.data.remote.MajorType
 import com.kunize.uswtimetable.data.remote.OpenMajorList
 import com.kunize.uswtimetable.data.remote.OpenMajorVersion
 import retrofit2.Response
@@ -15,7 +16,7 @@ class OpenMajorRepository(
         return remoteDataSource.getOpenMajorList()
     }
 
-    suspend fun bookmarkMajor(majorName: String): Response<String> {
+    suspend fun bookmarkMajor(majorName: MajorType): Response<String> {
         return remoteDataSource.bookmarkMajor(majorName)
     }
 

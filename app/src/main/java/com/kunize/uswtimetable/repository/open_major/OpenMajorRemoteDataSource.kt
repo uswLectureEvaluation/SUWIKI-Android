@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.repository.open_major
 
+import com.kunize.uswtimetable.data.remote.MajorType
 import com.kunize.uswtimetable.data.remote.OpenMajorList
 import com.kunize.uswtimetable.data.remote.OpenMajorVersion
 import com.kunize.uswtimetable.retrofit.IRetrofit
@@ -17,7 +18,7 @@ class OpenMajorRemoteDataSource(private val apiService: IRetrofit): OpenMajorDat
         return apiService.getOpenMajorList()
     }
 
-    override suspend fun bookmarkMajor(majorName: String): Response<String> {
+    override suspend fun bookmarkMajor(majorName: MajorType): Response<String> {
         return apiService.bookmarkMajor(majorName)
     }
 

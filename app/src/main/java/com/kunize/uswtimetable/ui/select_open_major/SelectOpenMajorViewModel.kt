@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonObject
+import com.kunize.uswtimetable.data.remote.MajorType
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.ui.common.Event
 import kotlinx.coroutines.Dispatchers.Main
@@ -47,7 +48,7 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
 
     suspend fun bookmarkMajor(majorName: String) {
         viewModelScope.launch {
-            openMajorRepository.bookmarkMajor(majorName)
+            openMajorRepository.bookmarkMajor(MajorType(majorName))
         }
     }
 

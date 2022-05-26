@@ -17,3 +17,7 @@ data class OpenMajorList(
         return tmp
     }
 }
+
+data class MajorType(
+    val majorType: String
+)
