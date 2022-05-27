@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.kunize.uswtimetable.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.ui.common.Event
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
-import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -101,10 +99,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     fun moveToPreviousPage() {
         _currentPage.value = when (currentPage.value) {
-            1 -> {
-                isIdUnique.value = false
-                _currentPage.value?.minus(1)
-            }
+            1 -> _currentPage.value?.minus(1)
             else -> throw IllegalArgumentException("Invalid sign up page: ${currentPage.value}")
         }
         setButtonAttr()
@@ -113,12 +108,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     fun setNextButtonEnable() {
         nextButtonEnable.value = when (currentPage.value) {
-            0 -> (loading.value == false) && (signupFormState.value?.isDataValid == true) // 아이디, 비밀번호, 비밀번호 다시, 약관 동의
+            0 -> (loading.value == false) && (signupFormState.value?.isDataValid == true) && (isIdUnique.value == true) // 아이디, 비밀번호, 비밀번호 다시, 약관 동의
             1 -> (loading.value == false) && (isIdUnique.value == true) && (email.value?.isNotBlank() == true) // 이메일
-            2 -> true
             else -> false
         }
-        Log.d(TAG, "SignUpViewModel - setNextButtonEnable() called / ${nextButtonEnable.value}")
     }
 
     fun setToastMessage(message: String) {
@@ -213,7 +206,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     private fun isIdValid(id: String): Boolean {
-        showCheckIdButton()
         return id.isBlank() || idPattern.matcher(id).matches()
     }
 

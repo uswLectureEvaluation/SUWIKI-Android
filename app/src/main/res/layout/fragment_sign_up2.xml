@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="61dp"
+            app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_input_school_email"
                 android:inputType="text"
-                android:text="@={viewmodel.email}" />
+                android:text="@={viewmodel.email}"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </layout>
