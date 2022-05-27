@@ -24,10 +24,12 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                 app:contentInsetStart="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -63,245 +65,248 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/writeType" />
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toBottomOf="@id/writeType"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/page_padding"
+                        android:background="@drawable/bg_rounded_border_line_15_gray_500"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tv_lecture_name"
+                            style="@style/SuwikiTextSubTitle.Bold"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureName}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="강의 이름" />
+
+                        <TextView
+                            android:id="@+id/tv_professor_name"
+                            style="@style/SuwikiTextBody2"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.professor}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_lecture_name"
+                            app:layout_constraintTop_toBottomOf="@id/tv_lecture_name"
+                            tools:text="교수명" />
+
+                        <View
+                            android:id="@+id/view_vertical_divider"
+                            android:layout_width="1dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@color/suwiki_gray_500"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_professor_name"
+                            app:layout_constraintStart_toEndOf="@id/tv_professor_name"
+                            app:layout_constraintTop_toTopOf="@id/tv_professor_name" />
+
+                        <TextView
+                            android:id="@+id/tv_major_name"
+                            style="@style/SuwikiTextBody2"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.majorType}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintBottom_toBottomOf="@id/view_vertical_divider"
+                            app:layout_constraintStart_toEndOf="@id/view_vertical_divider"
+                            app:layout_constraintTop_toTopOf="@id/view_vertical_divider"
+                            tools:text="전공명" />
+
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:id="@+id/yearSemesterLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:alignContent="stretch"
+                            app:alignItems="stretch"
+                            app:flexWrap="wrap"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_professor_name"
+                            app:yearSemesterList="@{lectureInfoViewModel.lectureDetailInfoData.data.semester}">
+
+                        </com.google.android.flexbox.FlexboxLayout>
+
+                        <TextView
+                            android:id="@+id/infoEvaluationType"
+                            style="@style/recyclerview_evaluation_rounding_text_style"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureType}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/infoHoneyTextView"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="26dp"
+                            android:text="@string/honey_score"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/yearSemesterLayout" />
+
+                        <TextView
+                            android:id="@+id/infoLearningTextView"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/learning_score"
+                            app:layout_constraintStart_toStartOf="@id/infoHoneyTextView"
+                            app:layout_constraintTop_toBottomOf="@id/infoHoneyTextView" />
+
+                        <TextView
+                            android:id="@+id/infoSatisfactionTextView"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/satisfaction"
+                            app:layout_constraintStart_toStartOf="@id/infoLearningTextView"
+                            app:layout_constraintTop_toBottomOf="@id/infoLearningTextView" />
+
+                        <TextView
+                            android:id="@+id/infoHoneyScore"
+                            style="@style/SuwikiTextBody1.Blue.Bold"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureHoneyAvg)}"
+                            app:layout_constraintBottom_toBottomOf="@id/infoHoneyTextView"
+                            app:layout_constraintStart_toEndOf="@id/infoHoneyTextView"
+                            tools:text="4.2" />
+
+                        <TextView
+                            android:id="@+id/slash1"
+                            style="@style/SuwikiTextBody1.Gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/slash5"
+                            app:layout_constraintBottom_toBottomOf="@id/infoHoneyScore"
+                            app:layout_constraintStart_toEndOf="@id/infoHoneyScore" />
+
+                        <TextView
+                            android:id="@+id/infoLearningScore"
+                            style="@style/SuwikiTextBody1.Blue.Bold"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureLearningAvg)}"
+                            app:layout_constraintBottom_toBottomOf="@id/infoLearningTextView"
+                            app:layout_constraintStart_toEndOf="@id/infoLearningTextView"
+                            tools:text="4.5" />
+
+                        <TextView
+                            android:id="@+id/slash2"
+                            style="@style/SuwikiTextBody1.Gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/slash5"
+                            app:layout_constraintBottom_toBottomOf="@id/infoLearningScore"
+                            app:layout_constraintStart_toEndOf="@id/infoLearningScore" />
+
+                        <TextView
+                            android:id="@+id/infoSatisfactionScore"
+                            style="@style/SuwikiTextBody1.Blue.Bold"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureSatisfactionAvg)}"
+                            app:layout_constraintBottom_toBottomOf="@+id/infoSatisfactionTextView"
+                            app:layout_constraintStart_toStartOf="@id/infoLearningScore"
+                            tools:text="4.5" />
+
+                        <TextView
+                            android:id="@+id/slash3"
+                            style="@style/SuwikiTextBody1.Gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/slash5"
+                            app:layout_constraintBottom_toBottomOf="@id/infoSatisfactionScore"
+                            app:layout_constraintStart_toEndOf="@id/infoSatisfactionScore" />
+
+                        <TextView
+                            android:id="@+id/infoMeetingTextView"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="26dp"
+                            android:text="@string/team_meeting"
+                            app:layout_constraintStart_toEndOf="@id/slash1"
+                            app:layout_constraintTop_toBottomOf="@id/yearSemesterLayout" />
+
+                        <TextView
+                            android:id="@+id/infoTaskTextView"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/task"
+                            app:layout_constraintStart_toEndOf="@id/slash2"
+                            app:layout_constraintTop_toBottomOf="@id/infoMeetingTextView" />
+
+                        <TextView
+                            android:id="@+id/infoGradeTextView"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="12dp"
+                            android:text="학점 비율"
+                            app:layout_constraintStart_toEndOf="@id/slash3"
+                            app:layout_constraintTop_toBottomOf="@id/infoTaskTextView" />
+
+                        <TextView
+                            android:id="@+id/infoMeeting"
+                            style="@style/SuwikiTextBody2"
+                            lectureTeamAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTeamAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintBottom_toBottomOf="@id/infoMeetingTextView"
+                            app:layout_constraintStart_toEndOf="@id/infoGradeTextView"
+                            tools:text="없음" />
+
+                        <TextView
+                            android:id="@+id/infoTask"
+                            style="@style/SuwikiTextBody2"
+                            lectureHomeworkAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureHomeworkAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintBottom_toBottomOf="@id/infoTaskTextView"
+                            app:layout_constraintStart_toEndOf="@id/infoGradeTextView"
+                            tools:text="많음" />
+
+                        <TextView
+                            android:id="@+id/infoGrade"
+                            style="@style/SuwikiTextBody2"
+                            lectureDifficultyAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureDifficultyAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintBottom_toBottomOf="@id/infoGradeTextView"
+                            app:layout_constraintStart_toEndOf="@id/infoGradeTextView"
+                            tools:text="까다로움" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.appcompat.widget.Toolbar>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/page_padding"
-                android:background="@drawable/bg_rounded_border_line_15_gray_500"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tv_lecture_name"
-                    style="@style/SuwikiTextSubTitle.Bold"
-                    text="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureName}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="강의 이름" />
-
-                <TextView
-                    android:id="@+id/tv_professor_name"
-                    style="@style/SuwikiTextBody2"
-                    text="@{lectureInfoViewModel.lectureDetailInfoData.data.professor}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintStart_toStartOf="@+id/tv_lecture_name"
-                    app:layout_constraintTop_toBottomOf="@id/tv_lecture_name"
-                    tools:text="교수명" />
-
-                <View
-                    android:id="@+id/view_vertical_divider"
-                    android:layout_width="1dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@color/suwiki_gray_500"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_professor_name"
-                    app:layout_constraintStart_toEndOf="@id/tv_professor_name"
-                    app:layout_constraintTop_toTopOf="@id/tv_professor_name" />
-
-                <TextView
-                    android:id="@+id/tv_major_name"
-                    style="@style/SuwikiTextBody2"
-                    text="@{lectureInfoViewModel.lectureDetailInfoData.data.majorType}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@id/view_vertical_divider"
-                    app:layout_constraintStart_toEndOf="@id/view_vertical_divider"
-                    app:layout_constraintTop_toTopOf="@id/view_vertical_divider"
-                    tools:text="전공명" />
-
-                <com.google.android.flexbox.FlexboxLayout
-                    android:id="@+id/yearSemesterLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:alignContent="stretch"
-                    app:alignItems="stretch"
-                    app:flexWrap="wrap"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_professor_name"
-                    app:yearSemesterList="@{lectureInfoViewModel.lectureDetailInfoData.data.semester}">
-
-                </com.google.android.flexbox.FlexboxLayout>
-
-                <TextView
-                    android:id="@+id/infoEvaluationType"
-                    style="@style/recyclerview_evaluation_rounding_text_style"
-                    text="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureType}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/infoHoneyTextView"
-                    style="@style/SuwikiTextBody2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="26dp"
-                    android:text="@string/honey_score"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/yearSemesterLayout" />
-
-                <TextView
-                    android:id="@+id/infoLearningTextView"
-                    style="@style/SuwikiTextBody2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/learning_score"
-                    app:layout_constraintStart_toStartOf="@id/infoHoneyTextView"
-                    app:layout_constraintTop_toBottomOf="@id/infoHoneyTextView" />
-
-                <TextView
-                    android:id="@+id/infoSatisfactionTextView"
-                    style="@style/SuwikiTextBody2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/satisfaction"
-                    app:layout_constraintStart_toStartOf="@id/infoLearningTextView"
-                    app:layout_constraintTop_toBottomOf="@id/infoLearningTextView" />
-
-                <TextView
-                    android:id="@+id/infoHoneyScore"
-                    style="@style/SuwikiTextBody1.Blue.Bold"
-                    lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureHoneyAvg)}"
-                    app:layout_constraintBottom_toBottomOf="@id/infoHoneyTextView"
-                    app:layout_constraintStart_toEndOf="@id/infoHoneyTextView"
-                    tools:text="4.2" />
-
-                <TextView
-                    android:id="@+id/slash1"
-                    style="@style/SuwikiTextBody1.Gray"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/slash5"
-                    app:layout_constraintBottom_toBottomOf="@id/infoHoneyScore"
-                    app:layout_constraintStart_toEndOf="@id/infoHoneyScore" />
-
-                <TextView
-                    android:id="@+id/infoLearningScore"
-                    style="@style/SuwikiTextBody1.Blue.Bold"
-                    lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureLearningAvg)}"
-                    app:layout_constraintBottom_toBottomOf="@id/infoLearningTextView"
-                    app:layout_constraintStart_toEndOf="@id/infoLearningTextView"
-                    tools:text="4.5" />
-
-                <TextView
-                    android:id="@+id/slash2"
-                    style="@style/SuwikiTextBody1.Gray"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/slash5"
-                    app:layout_constraintBottom_toBottomOf="@id/infoLearningScore"
-                    app:layout_constraintStart_toEndOf="@id/infoLearningScore" />
-
-                <TextView
-                    android:id="@+id/infoSatisfactionScore"
-                    style="@style/SuwikiTextBody1.Blue.Bold"
-                    lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureSatisfactionAvg)}"
-                    app:layout_constraintBottom_toBottomOf="@+id/infoSatisfactionTextView"
-                    app:layout_constraintStart_toStartOf="@id/infoLearningScore"
-                    tools:text="4.5" />
-
-                <TextView
-                    android:id="@+id/slash3"
-                    style="@style/SuwikiTextBody1.Gray"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/slash5"
-                    app:layout_constraintBottom_toBottomOf="@id/infoSatisfactionScore"
-                    app:layout_constraintStart_toEndOf="@id/infoSatisfactionScore" />
-
-                <TextView
-                    android:id="@+id/infoMeetingTextView"
-                    style="@style/SuwikiTextBody2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="26dp"
-                    android:text="@string/team_meeting"
-                    app:layout_constraintStart_toEndOf="@id/slash1"
-                    app:layout_constraintTop_toBottomOf="@id/yearSemesterLayout" />
-
-                <TextView
-                    android:id="@+id/infoTaskTextView"
-                    style="@style/SuwikiTextBody2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/task"
-                    app:layout_constraintStart_toEndOf="@id/slash2"
-                    app:layout_constraintTop_toBottomOf="@id/infoMeetingTextView" />
-
-                <TextView
-                    android:id="@+id/infoGradeTextView"
-                    style="@style/SuwikiTextBody2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    android:text="학점 비율"
-                    app:layout_constraintStart_toEndOf="@id/slash3"
-                    app:layout_constraintTop_toBottomOf="@id/infoTaskTextView" />
-
-                <TextView
-                    android:id="@+id/infoMeeting"
-                    style="@style/SuwikiTextBody2"
-                    lectureTeamAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTeamAvg}"
-                    lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@id/infoMeetingTextView"
-                    app:layout_constraintStart_toEndOf="@id/infoGradeTextView"
-                    tools:text="없음" />
-
-                <TextView
-                    android:id="@+id/infoTask"
-                    style="@style/SuwikiTextBody2"
-                    lectureHomeworkAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureHomeworkAvg}"
-                    lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@id/infoTaskTextView"
-                    app:layout_constraintStart_toEndOf="@id/infoGradeTextView"
-                    tools:text="많음" />
-
-                <TextView
-                    android:id="@+id/infoGrade"
-                    style="@style/SuwikiTextBody2"
-                    lectureDifficultyAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureDifficultyAvg}"
-                    lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="@id/infoGradeTextView"
-                    app:layout_constraintStart_toEndOf="@id/infoGradeTextView"
-                    tools:text="까다로움" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -375,10 +380,10 @@
                     android:id="@+id/infoRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                     app:evaluationList="@{lectureInfoViewModel.commonRecyclerViewViewModel.itemList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constrainedHeight="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

@@ -13,6 +13,7 @@ import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
+import com.kunize.uswtimetable.util.LectureItemViewType
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
