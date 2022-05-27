@@ -26,9 +26,8 @@
     <style name="SuwikiMiniButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/button_suwiki_mini</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">0dp</item>
         <item name="android:textAppearance">@style/TextCaption2</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="title_textview_style" parent="@android:style/Widget.TextView">
