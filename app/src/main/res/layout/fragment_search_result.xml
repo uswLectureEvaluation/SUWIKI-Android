@@ -211,11 +211,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="304dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/no_search_data"
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="64dp"
+                android:paddingTop="64dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 style="@style/no_data_textview_style"

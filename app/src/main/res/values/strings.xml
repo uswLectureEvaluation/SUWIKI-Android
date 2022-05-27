@@ -192,5 +192,6 @@
     <string name="no_exam_data">아직 등록된 시험정보가 없습니다.</string>
     <string name="use_point_20p">포인트 사용하기 -20P</string>
     <string name="detail_info">과목 상세</string>
+    <string name="no_search_data">검색결과가 없습니다.</string>
 
 </resources>
