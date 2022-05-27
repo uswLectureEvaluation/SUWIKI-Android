@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.afterTextChanged
 
 class SignUpFragment2 : Fragment() {
     private var _binding: FragmentSignUp2Binding? = null
@@ -44,17 +43,6 @@ class SignUpFragment2 : Fragment() {
                 viewModel.setToastMessage(viewModel.errorMessage.value?.peekContent()!!)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.etInputEmail.afterTextChanged {
-            dataChanged()
-        }
-    }
-
-    private fun dataChanged() {
-        viewModel.setNextButtonEnable()
     }
 
     override fun onDestroyView() {

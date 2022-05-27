@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_input_school_email"
                 android:inputType="text"
+                afterTextChanged="@{() -> viewmodel.setNextButtonEnable()}"
                 android:text="@={viewmodel.email}"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
