@@ -80,6 +80,8 @@
     <string name="check_mail">메일 확인하기</string>
     <string name="terms_title">약관에 동의합니다.</string>
     <string name="terms">약관에 동의시 SWLE 이용약관 및 개인정보처리방침에 동의하게 됩니다.</string>
+    <string name="hint_send_link_to_email">학교 메일로 인증 링크를 전송합니다.</string>
+    <string name="text_check_id_btn">중복확인</string>
 
     <!-- Data binding -->
     <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
@@ -168,8 +170,6 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="hint_send_link_to_email">학교 메일로 인증 링크를 전송합니다.</string>
+
 
 </resources>

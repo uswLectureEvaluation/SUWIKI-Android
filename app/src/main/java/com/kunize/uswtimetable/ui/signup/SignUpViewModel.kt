@@ -36,6 +36,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val errorMessage: LiveData<Event<String>> get() = _errorMessage
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
+    val idCheckButtonEnabled = MutableLiveData(true)
 
     // Response
     val isIdUnique = MutableLiveData(false)
@@ -124,6 +125,11 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         _toastMessage.value = Event(message)
     }
 
+    fun showCheckIdButton() {
+        isIdUnique.value = false
+        idCheckButtonEnabled.value = true
+    }
+
     private fun moveToNextPage() {
         _currentPage.value = when (currentPage.value) {
             0 -> _currentPage.value?.plus(1)
@@ -142,7 +148,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         }
     }
 
-    private fun checkId() {
+    fun checkId() {
         val userId = id.value ?: return
         loading.value = true
         viewModelScope.launch {
@@ -152,6 +158,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                 if (response.body()?.overlap == true) {
                     onError("이미 가입된 아이디입니다.")
                 } else {
+                    idCheckButtonEnabled.postValue(false)
                     moveToNextPage()
                 }
             } else {
@@ -206,6 +213,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     private fun isIdValid(id: String): Boolean {
+        idCheckButtonEnabled.value = (id.length >= 6 && idPattern.matcher(id).matches()).not()
         return id.isBlank() || idPattern.matcher(id).matches()
     }
 

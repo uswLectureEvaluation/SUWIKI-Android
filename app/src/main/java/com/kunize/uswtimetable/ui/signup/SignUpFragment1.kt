@@ -65,6 +65,7 @@ class SignUpFragment1 : Fragment() {
         with(binding) {
             etInputId.afterTextChanged {
                 dataChanged()
+                viewModel.showCheckIdButton()
                 inputLimitAlert(it.toString(), Constants.ID_COUNT_LIMIT)
             }
             etInputPw.afterTextChanged {

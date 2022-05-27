@@ -30,13 +30,12 @@
             android:id="@+id/layout_input_id"
             style="@style/SuwikiEditText"
             android:layout_width="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="61dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="61dp"
             app:errorEnabled="@{viewmodel.signupFormState.idError!=null}"
-            app:helperTextEnabled="false">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_input_id"
@@ -46,20 +45,34 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLength="@{constants.ID_COUNT_LIMIT}"
-                android:text="@={viewmodel.id}" />
+                android:text="@={viewmodel.id}"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_width="68dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="12dp"
+            style="@style/SuwikiMiniButton"
+            android:enabled="@{viewmodel.idCheckButtonEnabled}"
+            android:text="@string/text_check_id_btn"
+            android:textColor="@{viewmodel.idCheckButtonEnabled?@color/suwiki_white:@color/suwiki_gray_700}"
+            android:visibility="@{viewmodel.isIdUnique?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/layout_input_id"
+            android:onClick="@{() -> viewmodel.checkId()}"
+            app:layout_constraintEnd_toEndOf="@id/layout_input_id" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_input_pw"
             style="@style/SuwikiEditText"
             android:layout_width="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_input_id"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             app:endIconMode="password_toggle"
-            app:errorEnabled="@{viewmodel.signupFormState.pwError!=null}">
+            app:errorEnabled="@{viewmodel.signupFormState.pwError!=null}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_input_id">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_input_pw"
@@ -69,20 +82,21 @@
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLength="@{constants.PW_COUNT_LIMIT}"
-                android:text="@={viewmodel.pw}" />
+                android:text="@={viewmodel.pw}"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_input_pw_again"
             style="@style/SuwikiEditText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_input_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             app:errorContentDescription="비밀번호와 일치하지 않습니다"
-            app:errorEnabled="@{viewmodel.signupFormState.pwAgainError!=null}">
+            app:errorEnabled="@{viewmodel.signupFormState.pwAgainError!=null}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_input_pw">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_input_pw_again"
@@ -92,7 +106,8 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLength="@{constants.PW_COUNT_LIMIT}"
-                android:text="@={viewmodel.pwAgain}" />
+                android:text="@={viewmodel.pwAgain}"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
