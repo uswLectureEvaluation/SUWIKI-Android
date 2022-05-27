@@ -159,6 +159,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                     onError("이미 가입된 아이디입니다.")
                 } else {
                     idCheckButtonEnabled.postValue(false)
+                    _toastMessage.postValue(Event("사용 가능한 아이디입니다."))
                 }
             } else {
                 onError("${response.code()} Error: ${response.errorBody()}")
