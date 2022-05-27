@@ -25,7 +25,7 @@
         <activity
             android:name=".ui.user_info.FindPasswordActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.user_info.FindIdActivity"
             android:exported="false"

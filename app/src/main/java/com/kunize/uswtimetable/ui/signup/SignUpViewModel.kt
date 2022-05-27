@@ -36,6 +36,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val errorMessage: LiveData<Event<String>> get() = _errorMessage
     private var _signupForm = MutableLiveData<SignUpFormState>()
     val signupFormState: LiveData<SignUpFormState> get() = _signupForm
+    val idCheckButtonEnabled = MutableLiveData(false)
 
     // Response
     val isIdUnique = MutableLiveData(false)
@@ -92,7 +93,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     fun onNextButtonClick() {
         when (currentPage.value) {
-            0 -> checkId()
+            0 -> if (isIdUnique.value == true) moveToNextPage()
             1 -> signUp()
             else -> throw IllegalArgumentException("Invalid sign up page: ${currentPage.value}")
         }
@@ -124,6 +125,11 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         _toastMessage.value = Event(message)
     }
 
+    fun showCheckIdButton() {
+        idCheckButtonEnabled.value = id.value?.length!! >= 6 && idPattern.matcher(id.value!!).matches()
+        isIdUnique.value = false
+    }
+
     private fun moveToNextPage() {
         _currentPage.value = when (currentPage.value) {
             0 -> _currentPage.value?.plus(1)
@@ -142,7 +148,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         }
     }
 
-    private fun checkId() {
+    fun checkId() {
         val userId = id.value ?: return
         loading.value = true
         viewModelScope.launch {
@@ -152,7 +158,8 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                 if (response.body()?.overlap == true) {
                     onError("이미 가입된 아이디입니다.")
                 } else {
-                    moveToNextPage()
+                    idCheckButtonEnabled.postValue(false)
+                    _toastMessage.postValue(Event("사용 가능한 아이디입니다."))
                 }
             } else {
                 onError("${response.code()} Error: ${response.errorBody()}")
@@ -206,6 +213,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     private fun isIdValid(id: String): Boolean {
+        showCheckIdButton()
         return id.isBlank() || idPattern.matcher(id).matches()
     }
 
