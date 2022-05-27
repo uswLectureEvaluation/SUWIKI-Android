@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="data"
-            type="com.kunize.uswtimetable.data.remote.LectureMain" />
+            type="com.kunize.uswtimetable.data.local.EvaluationData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,88 +15,35 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/bg_rounded_ripple_border_line_gray_500"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical"
-        android:paddingBottom="12dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/SuwikiTextSubTitle.Bold"
+            style="@style/SuwikiTextBody2"
+            android:background="@drawable/bg_rounded_gray_300_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:ellipsize="end"
-            android:maxEms="10"
-            android:maxLines="1"
-            android:text="@{data.lectureName}"
+            android:text="@{data.yearSemester}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="학문과 사고 학문과 사고학문과 사고" />
+            tools:text="2021-1" />
 
         <TextView
             android:id="@+id/tv_report"
-            style="@style/SuwikiTextBody2"
+            style="@style/SuwikiTextBody3.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_rounded_gray_300_30"
-            android:maxEms="10"
-            android:text="@{data.lectureType}"
+            android:text="@string/report"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="기교" />
-
-        <TextView
-            android:id="@+id/tv_major"
-            style="@style/SuwikiTextBody2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:maxEms="10"
-            android:maxLines="1"
-            android:text="@{data.majorType}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            tools:text="교양대학" />
-
-        <View
-            android:id="@+id/view_vertical_divider"
-            android:layout_width="1dp"
-            android:layout_height="12dp"
-            android:layout_marginStart="8dp"
-            android:background="@color/suwiki_gray_500"
-            app:layout_constraintBottom_toBottomOf="@id/tv_major"
-            app:layout_constraintStart_toEndOf="@id/tv_major"
-            app:layout_constraintTop_toTopOf="@id/tv_major" />
-
-        <TextView
-            android:id="@+id/tv_professor"
-            style="@style/SuwikiTextBody2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:ellipsize="end"
-            android:maxEms="10"
-            android:maxLines="1"
-            android:text="@{data.professor}"
-            app:layout_constraintBottom_toBottomOf="@id/view_vertical_divider"
-            app:layout_constraintStart_toEndOf="@id/view_vertical_divider"
-            app:layout_constraintTop_toTopOf="@id/view_vertical_divider"
-            tools:text="이다미" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RatingBar
             android:id="@+id/rb_average"
             style="@style/CustomRatingBar"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="6dp"
-            android:rating="@{data.lectureTotalAvg}"
+            android:layout_marginTop="12dp"
+            android:rating="@{data.aver}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_major" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
             android:id="@+id/tv_average"
@@ -106,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:text="@{@string/floatToStr(data.lectureTotalAvg)}"
+            android:text="@{@string/floatToStr(data.aver)}"
             app:layout_constraintBottom_toBottomOf="@id/rb_average"
             app:layout_constraintStart_toEndOf="@id/rb_average"
             app:layout_constraintTop_toTopOf="@id/rb_average"
@@ -127,33 +72,19 @@
             android:id="@+id/cl_detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:visibility="gone"
             tools:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rb_average">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginEnd="1dp"
-                android:background="@color/suwiki_gray_500"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_satisfaction"
                 style="@style/SuwikiTextBody2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
                 android:text="@string/satisfaction"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -162,8 +93,8 @@
                 style="@style/SuwikiTextBody1.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@{@string/floatToStr(data.lectureSatisfactionAvg)}"
+                android:layout_marginStart="8dp"
+                android:text="@{@string/floatToStr(data.satisfaction)}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_satisfaction"
                 app:layout_constraintStart_toEndOf="@id/tv_satisfaction"
                 app:layout_constraintTop_toTopOf="@id/tv_satisfaction"
@@ -175,9 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
                 android:text="@string/honey_score"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_satisfaction_value"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -186,8 +115,8 @@
                 style="@style/SuwikiTextBody1.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@{@string/floatToStr(data.lectureHoneyAvg)}"
+                android:layout_marginStart="8dp"
+                android:text="@{@string/floatToStr(data.honey)}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_honey"
                 app:layout_constraintStart_toEndOf="@id/tv_honey"
                 app:layout_constraintTop_toTopOf="@id/tv_honey"
@@ -199,9 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
                 android:text="@string/learning_score"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_honey_value"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -210,14 +137,95 @@
                 style="@style/SuwikiTextBody1.Blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@{@string/floatToStr(data.lectureLearningAvg)}"
+                android:layout_marginStart="8dp"
+                android:text="@{@string/floatToStr(data.learning)}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_learning"
                 app:layout_constraintStart_toEndOf="@id/tv_learning"
                 app:layout_constraintTop_toTopOf="@id/tv_learning"
                 tools:text="3.5" />
 
+            <TextView
+                android:id="@+id/tv_team"
+                style="@style/SuwikiTextBody2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/team_meeting"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_satisfaction"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_team_value"
+                style="@style/SuwikiTextBody2"
+                lectureTeamAvg="@{data.teamMeeting}"
+                lectureTotalAvg="@{data.aver}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_team"
+                app:layout_constraintStart_toEndOf="@id/tv_team"
+                app:layout_constraintTop_toTopOf="@id/tv_team"
+                tools:text="없음" />
+
+            <TextView
+                android:id="@+id/tv_task"
+                style="@style/SuwikiTextBody2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/task"
+                app:layout_constraintTop_toBottomOf="@id/tv_honey"
+                app:layout_constraintStart_toStartOf="@id/tv_honey"/>
+
+            <TextView
+                android:id="@+id/tv_task_value"
+                style="@style/SuwikiTextBody2"
+                lectureHomeworkAvg="@{data.task}"
+                lectureTotalAvg="@{data.aver}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_task"
+                app:layout_constraintStart_toEndOf="@id/tv_task"
+                app:layout_constraintTop_toTopOf="@id/tv_task"
+                tools:text="없음" />
+
+            <TextView
+                android:id="@+id/tv_grade"
+                style="@style/SuwikiTextBody2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/grade"
+                app:layout_constraintTop_toBottomOf="@id/tv_learning"
+                app:layout_constraintStart_toStartOf="@id/tv_learning"/>
+
+            <TextView
+                android:id="@+id/tv_grade_value"
+                style="@style/SuwikiTextBody2"
+                lectureDifficultyAvg="@{data.task}"
+                lectureTotalAvg="@{data.aver}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_grade"
+                app:layout_constraintStart_toEndOf="@id/tv_grade"
+                app:layout_constraintTop_toTopOf="@id/tv_grade"
+                tools:text="없음" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            style="@style/SuwikiTextBody1"
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cl_detail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="@{data.content}"
+            tools:text="12312312312312312312312312313123123"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -27,7 +27,7 @@
     <string name="learning_score">배움지수</string>
     <string name="team_meeting">조모임</string>
     <string name="task">과제</string>
-    <string name="grade">학점</string>
+    <string name="grade">학점비율</string>
     <string name="add">추가</string>
     <string name="complete">완료</string>
     <string name="write_evaluation">강의평가 작성 +10P</string>
