@@ -6,7 +6,8 @@ import com.kunize.uswtimetable.util.LectureItemViewType
 
 data class LectureDetailExamDto(
     val data: MutableList<LectureDetailExam>,
-    val examDataExist: Boolean
+    val examDataExist: Boolean,
+    val written: Boolean
 ) {
     fun convertToEvaluationData(): MutableList<EvaluationData?> {
         val temp = mutableListOf<EvaluationData?>()
@@ -31,7 +32,7 @@ data class LectureDetailExam(
     val id: Long,
     @SerializedName("selectedSemester") val semester: String,
     val examInfo: String,
-    val examType: String,
+    val examType: String?,
     val examDifficulty: String,
     val content: String
 )

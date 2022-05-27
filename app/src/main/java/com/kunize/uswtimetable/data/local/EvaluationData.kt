@@ -18,5 +18,5 @@ data class EvaluationData (
     var testMethod: String = "", //시험 방식
     var lectureId: Long = 0,
     var majorType: String = "",
-    val examType: String = "",
+    val examType: String? = "",
 )

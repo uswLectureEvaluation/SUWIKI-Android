@@ -328,6 +328,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:enabled="@{!lectureInfoViewModel.written}"
                         android:id="@+id/writeBtn"
                         style="@style/SuwikiMainButton.Small"
                         android:layout_width="wrap_content"
