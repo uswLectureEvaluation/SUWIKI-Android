@@ -86,6 +86,11 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
         }
     }
 
+    fun initType() {
+        selectedType = sortTypeList[0]
+        _sortText.value = spinnerTextList[0]
+    }
+
     fun dialogItemClick(text: String) {
         changeType(spinnerTextList.indexOf(text))
     }

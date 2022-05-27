@@ -92,7 +92,7 @@ class EvaluationFragment : Fragment() {
                 val inputMethodManager =
                     requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
-                goToSearchResult()
+                goToSearchResult(now = evaluationViewModel.spinnerTextList.indexOf(evaluationViewModel.sortText.value))
                 handled = true
             }
             handled

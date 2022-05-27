@@ -41,6 +41,7 @@ class SearchResultFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        searchResultViewModel.initType()
         searchResultViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전부")
         if(args.searchLectureName.isBlank())
             searchResultViewModel.changeType(args.sortType)
