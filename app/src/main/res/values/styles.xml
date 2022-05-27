@@ -15,6 +15,17 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="SuwikiMainButton.Small">
+        <item name="android:background">@drawable/button_suwiki_main</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="SuwikiSecondaryButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/ripple_suwiki_white</item>
         <item name="android:textColor">?attr/colorPrimary</item>
@@ -113,15 +124,13 @@
     </style>
 
     <style name="radiobutton_text_style" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:paddingStart">5dp</item>
-        <item name="android:paddingEnd">5dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:button">@null</item>
         <item name="android:textColor">@drawable/selector_radio_text</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">24dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="radiobutton_text_style.Small">
@@ -252,15 +261,10 @@
     </style>
 
     <style name="blue_button_style">
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">30dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:minWidth">0dp</item>
-        <item name="android:background">@drawable/rounding_blue_background</item>
+        <item name="android:paddingStart">11dp</item>
+        <item name="android:paddingEnd">11dp</item>
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+        <item name="android:background">@drawable/bg_rounded_border_line_15_blue_900</item>
     </style>
 
     <style name="scroll_enter_always_toolbar_style" parent="Widget.AppCompat.Toolbar">
@@ -273,20 +277,16 @@
     </style>
 
     <style name="no_data_textview_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:layout_marginBottom">20dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:text">@string/no_data</item>
-        <item name="android:textColor">@color/custom_light_gray</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">32dp</item>
+        <item name="android:background">@drawable/bg_rounded_border_line_15_gray_500</item>
+        <item name="android:gravity">center|top</item>
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="exam_type_layout_style">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">304dp</item>
         <item name="android:paddingTop">@dimen/exam_type_padding</item>
         <item name="android:paddingBottom">@dimen/exam_type_padding</item>
         <item name="android:background">@color/blur_white</item>
@@ -480,6 +480,10 @@
 
     <style name="SuwikiTextBody1.Blue">
         <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="SuwikiTextBody1.Blue.Bold">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="SuwikiTextBody2" parent="TextAppearance.AppCompat.Title">

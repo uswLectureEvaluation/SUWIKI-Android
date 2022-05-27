@@ -85,10 +85,6 @@ class LectureInfoFragment : Fragment() {
                 lectureInfoViewModel?.usePointBtnClicked()
             }
 
-            noExamDataLayout.writeExamBtn.setOnClickListener {
-                goToWriteFragment()
-            }
-
             writeBtn.setOnClickListener {
                 goToWriteFragment()
             }
@@ -105,8 +101,8 @@ class LectureInfoFragment : Fragment() {
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
                 lectureProfessorName = LectureProfessorSemester(
-                    binding.infoLectureName.text.toString(),
-                    binding.infoProfessorName.text.toString(),
+                    binding.tvLectureName.text.toString(),
+                    binding.tvProfessorName.text.toString(),
                     lectureInfoViewModel.lectureDetailInfoData.value?.data?.semester ?: ""
                 ), isEvaluation = !binding.examInfoRadioBtn.isChecked,
                 lectureId = lectureInfoViewModel.pageViewModel.lectureId
