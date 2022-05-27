@@ -26,7 +26,7 @@ object API {
     const val REQUEST_REFRESH: String = "/user/refresh"
     const val NOTICE_LIST: String = "/notice/all"
     const val NOTICE: String = "/notice/"
-    const val SEARCH: String = "/lecture/search"
+    const val SEARCH: String = "/lecture/search/"
     const val EXAM: String = "/lecture/exam"
     const val ID: String = "/user/find-id"
     const val PASSWORD: String = "/user/find-pw"

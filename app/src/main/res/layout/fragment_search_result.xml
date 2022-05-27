@@ -181,6 +181,7 @@
                             app:layout_constraintBottom_toBottomOf="@id/tv_sort"
                             app:layout_constraintStart_toEndOf="@id/tv_sort"
                             app:layout_constraintTop_toTopOf="@id/tv_sort"
+                            android:text="@{viewModel.sortText}"
                             tools:text="종합" />
 
                         <ImageView

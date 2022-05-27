@@ -14,12 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
+import com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorFragmentArgs
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.LectureItemViewType
@@ -29,18 +31,18 @@ import com.kunize.uswtimetable.util.TimeTableSelPref
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
     private lateinit var evaluationFooterAdapter: EvaluationFooterAdapter
+    private val args: EvaluationFragmentArgs by navArgs()
     private val evaluationViewModel: EvaluationViewModel by viewModels {
         ViewModelFactory(
             requireContext()
         )
     }
-    private var customSortDialog: CustomSortDialog? = null
-    private var spinnerSel: Int = 0
+    private var imageSortDialog: ImageSortDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         evaluationViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전부")
-        evaluationViewModel.changeType(0)
+        evaluationViewModel.changeType(args.sortType)
     }
 
     override fun onCreateView(
@@ -56,7 +58,7 @@ class EvaluationFragment : Fragment() {
 
         evaluationFooterAdapter = EvaluationFooterAdapter { id ->
             if (id == LectureItemViewType.FOOTER.toLong()) {
-                goToSearchResult("", spinnerSel)
+                goToSearchResult("", evaluationViewModel.spinnerSel)
                 return@EvaluationFooterAdapter
             }
             if(User.isLoggedIn.value == true) {
@@ -98,12 +100,12 @@ class EvaluationFragment : Fragment() {
 
         //spinner 설정
         binding.clSort.setOnClickListener {
-            customSortDialog = CustomSortDialog(context as AppCompatActivity, evaluationViewModel)
-            customSortDialog?.show()
+            imageSortDialog = ImageSortDialog(context as AppCompatActivity, evaluationViewModel)
+            imageSortDialog?.show()
         }
 
         evaluationViewModel.dialogItemClickEvent.observe(viewLifecycleOwner, EventObserver {
-            customSortDialog?.dismiss()
+            imageSortDialog?.dismiss()
         })
 
         evaluationViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
@@ -135,7 +137,8 @@ class EvaluationFragment : Fragment() {
 
     private fun goToSelectOpenMajorFragment() {
         val action =
-            EvaluationFragmentDirections.globalOpenMajor(FragmentType.EVALUATION)
+            EvaluationFragmentDirections.globalOpenMajor(FragmentType.EVALUATION,
+                prevSortType = evaluationViewModel.spinnerTextList.indexOf(evaluationViewModel.sortText.value))
         findNavController().navigate(action)
     }
 }

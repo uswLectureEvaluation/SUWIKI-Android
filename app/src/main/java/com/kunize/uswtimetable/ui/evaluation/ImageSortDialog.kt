@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.DialogSortBinding
 
-class CustomSortDialog(private val context: AppCompatActivity, private val viewModel: EvaluationViewModel) {
+class ImageSortDialog(private val context: AppCompatActivity, private val viewModel: EvaluationViewModel) {
     private lateinit var binding: DialogSortBinding
     private val dlg = Dialog(context)
 

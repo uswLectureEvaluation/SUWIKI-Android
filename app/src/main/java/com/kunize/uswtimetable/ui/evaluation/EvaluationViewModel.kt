@@ -25,12 +25,13 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
     HandlingErrorInterface {
 
     private var spinnerTypeList = listOf(MODIFIED, HONEY, SATISFACTION, LEARNING, BEST)
-    private val spinnerTextList = listOf("최근 올라온 강의", "꿀 강의", "만족도가 높은 강의", "배울게 많은 강의", "Best 강의")
+    val spinnerTextList = listOf("최근 올라온 강의", "꿀 강의", "만족도가 높은 강의", "배울게 많은 강의", "Best 강의")
     private val spinnerImageList = listOf(
         R.drawable.ic_fire, R.drawable.ic_honey, R.drawable.ic_thumbs,
         R.drawable.ic_book, R.drawable.ic_1st
     )
     var majorType = "전부"
+    var spinnerSel = 0
 
     val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<LectureMain>()
     val toastViewModel = ToastViewModel()
@@ -65,6 +66,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
     }
 
     fun changeType(position: Int) {
+        spinnerSel = position
         _selectedType.value = spinnerTypeList[position]
         _sortImgId.value = spinnerImageList[position]
         _sortText.value = spinnerTextList[position]

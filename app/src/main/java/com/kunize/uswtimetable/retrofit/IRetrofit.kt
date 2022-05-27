@@ -163,7 +163,8 @@ interface IRetrofit {
     suspend fun getSearchResultDetail(
         @Query("searchValue") searchValue: String,
         @Query("option") option: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("majorType") majorType: String
     ): Response<LectureMainDto>
 
     // 메인 페이지

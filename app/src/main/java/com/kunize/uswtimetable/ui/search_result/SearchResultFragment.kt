@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,9 +20,15 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.evaluation.EvaluationFragmentDirections
+import com.kunize.uswtimetable.ui.evaluation.ImageSortDialog
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.util.FragmentType
+import com.kunize.uswtimetable.util.LectureApiOption
+import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
+import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.infiniteScrolls
 
 class SearchResultFragment : Fragment() {
@@ -29,13 +36,12 @@ class SearchResultFragment : Fragment() {
     lateinit var binding: FragmentSearchResultBinding
     private lateinit var searchResultAdapter: SearchResultAdapter
     private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory(requireContext()) }
-    //private lateinit var sortBtn: List<RadioButton>
     private val args: SearchResultFragmentArgs by navArgs()
-    private val sortOptionMap = mapOf("날짜" to 0, "꿀강" to 1, "만족도" to 2, "배움" to 3, "종합" to 4)
+    private var sortDialog: SortDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        searchResultViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전부")
         if(args.searchLectureName.isBlank())
             searchResultViewModel.changeType(args.sortType)
         else
@@ -59,11 +65,31 @@ class SearchResultFragment : Fragment() {
             }
         }
 
+        binding.tvSelectedOpenMajor.text = searchResultViewModel.majorType
+        binding.clOpenMajor.setOnClickListener {
+            val action =
+                SearchResultFragmentDirections.globalOpenMajor(
+                    FragmentType.SEARCH_RESULT,
+                    searchResultViewModel.searchValue,
+                    searchResultViewModel.spinnerTextList.indexOf(searchResultViewModel.sortText.value)
+                )
+            findNavController().navigate(action)
+        }
+
         binding.recyclerSearchResult.adapter = searchResultAdapter
 
         binding.recyclerSearchResult.infiniteScrolls {
             searchResultViewModel.scrollBottomEvent()
         }
+
+        binding.clSort.setOnClickListener {
+            sortDialog = SortDialog(context as AppCompatActivity, searchResultViewModel, searchResultViewModel.spinnerTextList)
+            sortDialog?.show()
+        }
+
+        searchResultViewModel.dialogItemClickEvent.observe(viewLifecycleOwner, EventObserver {
+            sortDialog?.dismiss()
+        })
 
 //        with(binding) {
 //            sortBtn = mutableListOf(dateBtn, honeyBtn, satisfactionBtn , learningBtn, totalBtn)

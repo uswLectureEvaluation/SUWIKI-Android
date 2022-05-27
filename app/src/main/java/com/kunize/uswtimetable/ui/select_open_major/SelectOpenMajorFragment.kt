@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.OpenMajorData
@@ -19,7 +20,9 @@ import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.search_result.SearchResultFragmentArgs
 import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.afterEditTextChanged
 import com.kunize.uswtimetable.util.onTextChanged
@@ -34,6 +37,7 @@ class SelectOpenMajorFragment : Fragment() {
 
     private lateinit var binding: FragmentSelectOpenMajorBinding
     private lateinit var adapter: SelectOpenMajorAdapter
+    private val args: SelectOpenMajorFragmentArgs by navArgs()
     private lateinit var tempOpenMajorList: List<OpenMajorData>
     var openMajorList = mutableListOf<OpenMajorItem>()
     private val viewModel: SelectOpenMajorViewModel by viewModels { ViewModelFactory(requireContext()) }
@@ -135,7 +139,8 @@ class SelectOpenMajorFragment : Fragment() {
 
         binding.btnOk.setOnClickListener {
             TimeTableSelPref.prefs.setString("openMajorSel",adapter.selectedItemTitle)
-            val action = SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation()
+            val action = if(args.prevFragment == FragmentType.EVALUATION) SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation(sortType = args.prevSortType)
+            else SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToSearchResultFragment(searchLectureName = args.prevSearch, sortType = args.prevSortType)
             findNavController().navigate(action)
         }
     }

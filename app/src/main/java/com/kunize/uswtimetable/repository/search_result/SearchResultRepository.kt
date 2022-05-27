@@ -9,9 +9,10 @@ class SearchResultRepository(
     suspend fun getSearchResultList(
         name: String,
         option: String,
-        page: Int
+        page: Int,
+        majorType: String
     ): Response<LectureMainDto> {
-        return remoteDataSource.getSearchResultDataSource(name, option, page)
+        return remoteDataSource.getSearchResultDataSource(name, option, page, majorType)
     }
 
     suspend fun getLectureMainList(
