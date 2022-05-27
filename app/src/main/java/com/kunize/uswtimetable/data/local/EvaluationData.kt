@@ -17,5 +17,6 @@ data class EvaluationData (
     var difficulty: String = "", //시험 난이도
     var testMethod: String = "", //시험 방식
     var lectureId: Long = 0,
-    var majorType: String = ""
+    var majorType: String = "",
+    val examType: String = "",
 )
