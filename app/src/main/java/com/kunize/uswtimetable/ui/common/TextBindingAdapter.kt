@@ -38,10 +38,11 @@ fun applyUserPoint(view: TextView, point: Int) {
 }
 
 @BindingAdapter("count")
-fun applyCount(view: TextView, count: Int) {
+fun applyCount(view: TextView, count: Int?) {
+    count?:return
     val ssb = SpannableStringBuilder(count.toString()+"개")
     val color = if (count >= 0) "#346CFD" else "#7800FF"
-    ssb.setSpan(ForegroundColorSpan(Color.parseColor(color)), 0, count.toString().length-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    ssb.setSpan(ForegroundColorSpan(Color.parseColor(color)), 0, count.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     view.text = ssb
 }
 

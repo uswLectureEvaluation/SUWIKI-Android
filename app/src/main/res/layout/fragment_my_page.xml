@@ -23,10 +23,6 @@
         <variable
             name="viewType"
             type="com.kunize.uswtimetable.util.MyPageViewType" />
-
-        <variable
-            name="userPoint"
-            type="com.kunize.uswtimetable.util.UserPoint" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -37,15 +33,15 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:liftOnScroll="true">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="91dp"
                 android:background="@color/background"
-                app:contentInsetStart="0dp">
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -68,6 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.BTN_MY_POST)}"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
                         android:text="@string/my_evaluate"
@@ -214,12 +211,11 @@
                         point="@{user.user.writtenEvaluation * point.WRITE_EVALUATION}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/red"
+                        android:textColor="@color/suwiki_blue_900"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_my_evaluations"
                         app:layout_constraintEnd_toEndOf="@id/tv_total_point"
                         app:layout_constraintTop_toTopOf="@+id/tv_my_evaluations"
-                        tools:text="+100"
-                        tools:textColor="@color/suwiki_blue_900" />
+                        tools:text="+100" />
 
                     <TextView
                         android:id="@+id/tv_my_exam_infos_text"
@@ -231,8 +227,7 @@
                         android:text="@string/my_exam_info_count"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_my_evaluations_title"
-                        tools:text="작성한 시험 정보" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_my_evaluations_title" />
 
                     <TextView
                         android:id="@+id/tv_my_exam_infos"
@@ -251,11 +246,11 @@
                         point="@{user.user.writtenExam * point.WRITE_EXAM}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/suwiki_blue_900"
                         app:layout_constraintBottom_toBottomOf="@id/tv_my_exam_infos"
                         app:layout_constraintEnd_toEndOf="@id/tv_my_evaluations_point"
                         app:layout_constraintTop_toTopOf="@id/tv_my_exam_infos"
-                        tools:text="+40"
-                        tools:textColor="@color/suwiki_blue_900" />
+                        tools:text="+40" />
 
                     <TextView
                         android:id="@+id/tv_opened_exam_infos_title"
@@ -267,8 +262,7 @@
                         android:text="@string/opened_exam_count"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_my_exam_infos_text"
-                        tools:text="시험 정보 열람" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_my_exam_infos_text" />
 
                     <TextView
                         android:id="@+id/tv_opened_exam_infos"
@@ -286,11 +280,11 @@
                         point="@{user.user.viewExam * point.VIEW_EXAM}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/suwiki_purple"
                         app:layout_constraintBottom_toBottomOf="@id/tv_opened_exam_infos"
                         app:layout_constraintEnd_toEndOf="@id/tv_my_exam_infos_point"
                         app:layout_constraintTop_toTopOf="@id/tv_opened_exam_infos"
-                        tools:text="-40"
-                        tools:textColor="@color/suwiki_purple" />
+                        tools:text="-40" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -399,13 +393,14 @@
 
                     <TextView
                         style="@style/TextBody12"
-                        point="@{userPoint.WRITE_EVALUATION}"
+                        point="@{point.WRITE_EVALUATION}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_blue_900"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_obtain_point_evaluation"
                         app:layout_constraintStart_toEndOf="@+id/tv_obtain_point_evaluation"
                         app:layout_constraintTop_toTopOf="@+id/tv_obtain_point_evaluation"
+                        app:layout_constraintVertical_bias="0.0"
                         tools:text="+10P" />
 
                     <TextView
@@ -420,7 +415,7 @@
 
                     <TextView
                         style="@style/TextBody12"
-                        point="@{userPoint.WRITE_EXAM}"
+                        point="@{point.WRITE_EXAM}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_blue_900"
@@ -441,7 +436,7 @@
 
                     <TextView
                         style="@style/TextBody12"
-                        point="@{userPoint.REPORT}"
+                        point="@{point.REPORT}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_blue_900"
@@ -472,7 +467,7 @@
 
                     <TextView
                         style="@style/TextBody12"
-                        point="@{userPoint.VIEW_EXAM}"
+                        point="@{point.VIEW_EXAM}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_purple"
@@ -493,7 +488,7 @@
 
                     <TextView
                         style="@style/TextBody12"
-                        point="@{userPoint.DELETE_POST}"
+                        point="@{point.DELETE_POST}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_purple"
