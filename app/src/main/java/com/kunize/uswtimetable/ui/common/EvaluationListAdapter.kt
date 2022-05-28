@@ -14,16 +14,8 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
     var evaluationListData = mutableListOf<EvaluationData?>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            LectureItemViewType.SHORT -> {
-                val binding = ItemRecyclerLectureSearchBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-                LectureSearchHolder(binding)
-            }
             LectureItemViewType.LECTURE -> {
-                val binding = ItemRecyclerLectureInfoBinding.inflate(
+                val binding = ItemRecyclerLectureDetailBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -31,7 +23,7 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
                 LectureInfoHolder(binding)
             }
             LectureItemViewType.EXAM -> {
-                val binding = ItemRecyclerExamInfoBinding.inflate(
+                val binding = ItemRecyclerExamDetailBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -97,21 +89,21 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
         }
     }
 
-    inner class LectureInfoHolder(private val binding: ItemRecyclerLectureInfoBinding) :
+    inner class LectureInfoHolder(private val binding: ItemRecyclerLectureDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
             with(binding) {
-                evaluationData = data
-                averageSeeDetail.seeDetail.setOnClickListener {
-                    if (scoresEtc.layout.isVisible) {
-                        averageSeeDetail.seeDetail.setText(R.string.see_detail)
-                        scoresEtc.layout.visibility = View.GONE
+                this.data = data
+                tvDetail.setOnClickListener {
+                    if (clDetail.isVisible) {
+                        tvDetail.setText(R.string.see_detail)
+                        clDetail.visibility = View.GONE
                     } else {
-                        averageSeeDetail.seeDetail.setText(R.string.see_short)
-                        scoresEtc.layout.visibility = View.VISIBLE
+                        tvDetail.setText(R.string.see_short)
+                        clDetail.visibility = View.VISIBLE
                     }
                 }
-                semesterReport.reportBtn.setOnClickListener {
+                tvReport.setOnClickListener {
                     onItemClicked(data.lectureId)
                 }
                 executePendingBindings()
@@ -119,12 +111,12 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
         }
     }
 
-    inner class ExamInfoHolder(private val binding: ItemRecyclerExamInfoBinding) :
+    inner class ExamInfoHolder(private val binding: ItemRecyclerExamDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
             with(binding) {
-                evaluationData = data
-                semesterReport.reportBtn.setOnClickListener {
+                this.data = data
+                tvReport.setOnClickListener {
                     onItemClicked(data.lectureId)
                 }
                 executePendingBindings()

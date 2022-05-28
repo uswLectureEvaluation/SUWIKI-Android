@@ -3,21 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable-hdpi/button_suwiki_secondary.xml" value="0.162" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable-hdpi/ripple_suwiki_white.xml" value="0.1" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable-nodpi/custom_ripple_effect_recyclerview.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/background_corner16_white.xml" value="0.278125" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/background_corner8_white.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/border_circle.xml" value="0.278125" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/border_corner8_gray.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_alert.xml" value="0.278125" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_check_id.xml" value="0.313" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_disabled.xml" value="0.244" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_enabled.xml" value="0.101" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_ripple_skyblue.xml" value="0.101" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_suwiki_main.xml" value="0.329" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_suwiki_mini.xml" value="0.329" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/button_transparent.xml" value="0.329" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/clrcle.xml" value="0.23177083333333334" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/custom_light_blue_button.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/custom_ripple_effect.xml" value="0.278125" />
@@ -31,15 +25,10 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_file.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_link.xml" value="0.38461538461538464" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_logo.xml" value="0.162" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_logo_login.xml" value="0.1935" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_setting.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ic_timetable.xml" value="0.38461538461538464" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/line.xml" value="0.196" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/ripple_suwiki_blue900.xml" value="0.1495" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/rounding_background.xml" value="0.278125" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/rounding_blue_background.xml" value="0.162" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/selector_sort_radio_button.xml" value="0.23072916666666668" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/drawable/test_ripple.xml" value="0.38461538461538464" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout-v26/fragment_sign_up3.xml" value="0.37447916666666664" />
@@ -50,7 +39,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_create_time_table.xml" value="0.18614130434782608" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_find_id.xml" value="0.264" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_find_password.xml" value="0.31431159420289856" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_login.xml" value="0.36216779572694113" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_main.xml" value="0.12635869565217392" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_notice.xml" value="0.4" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_open_source.xml" value="0.37447916666666664" />
@@ -63,8 +52,6 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_signup_backup.xml" value="0.26197916666666665" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_start.xml" value="0.18614130434782608" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_webview.xml" value="0.3619791666666667" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/activity_welcome_sign_up.xml" value="0.3531047265987025" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/custom_suffix_edittext.xml" value="0.3609375" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_contact_us.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_evaluation.xml" value="0.31657608695652173" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_home.xml" value="0.31657608695652173" />
@@ -77,7 +64,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_notice_detail.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_notice_list.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_search_result.xml" value="0.30434782608695654" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_sign_up1.xml" value="0.4" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_sign_up1.xml" value="0.264" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_sign_up2.xml" value="0.264" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_sign_up3.xml" value="0.3622448979591837" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_write.xml" value="0.159375" />
@@ -103,41 +90,92 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/more_menu_after.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/more_menu_before.xml" value="0.1890625" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/refresh_menu.xml" value="0.3619791666666667" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-hdpi/bg_rounded_border_line_15_blue_700.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-hdpi/bg_rounded_border_line_15_gray_500.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-hdpi/bg_rounded_gray_300_15.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-mdpi/bg_baseline_ripple_blue.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-mdpi/bg_rounded_blue_15.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-nodpi/bg_rounded_ripple_border_line_gray_300.xml" value="0.152" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-nodpi/bg_rounded_ripple_border_line_gray_500.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-nodpi/custom_ripple_effect_recyclerview.xml" value="0.144" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/background_cardview.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/background_cardview.xml" value="0.176" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_round_stroke_gray_300.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_10.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_10_gray_500.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_border_line_10_gray_500.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_border_line_gray_300.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_gray_300_30.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_stroke_gray_300.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_white_10.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/border_corner8_gray.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/button_suwiki_main.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_light_blue_button.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_effect.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_effect_gray.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_effect_skyblue.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_light_blue_button.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/edge_end.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_back.xml" value="0.2375" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_delete.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_emptystar.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_main_foreground.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_star_24.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_timetable.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/insect.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ll_custom_progress_bar.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ll_rating.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ll_ratingstars.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/rounding_blue_background.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/rounding_light_gray_background.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/selector_custom_spinner_arrow.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/selector_radio_text.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/selector_rating_empty.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/selector_sort_radio_button.xml" value="0.2375" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/selector_star.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/test.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_add_class.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_login.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_setting.xml" value="0.2" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_evaluation.xml" value="0.2" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_signup.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_start.xml" value="0.4" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/color_dialog.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/dialog_sort.xml" value="0.264" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/dialog_spinner.xml" value="0.2" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_evaluation.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_home.xml" value="0.14605263157894738" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_lecture_info.xml" value="0.1" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_lecture_info.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_more.xml" value="0.1" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_evaluation.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_exam_info.xml" value="0.264" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_search_result.xml" value="0.1" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_page.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_search_result.xml" value="0.176" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_select_open_major.xml" value="0.16799999999999998" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_sign_up3.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_write.xml" value="0.264" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/hide_exam_info.xml" value="0.2" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_dialog_spinner.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_my_exam_info.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_class_info.xml" value="0.14605263157894738" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_evaluation.xml" value="0.3763702801461632" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_evaluation.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_evaluation_search.xml" value="0.264" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_exam_detail.xml" value="0.264" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_exam_info.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_detail.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_info.xml" value="0.2" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_search.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_list.xml" value="0.3191637630662021" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_search.xml" value="0.264" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_search_re.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_open_major.xml" value="0.264" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_progress.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_purchase.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_see_more_footer.xml" value="0.176" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_test_info.xml" value="0.2" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_timetable.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_spinner.xml" value="0.14462540716612377" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_spinner_evaluation.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/no_exam_info.xml" value="0.1" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_average_see_detail.xml" value="0.27222562844880444" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_lecture_professor_lecture_type.xml" value="0.1" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_lecture_professor_lecture_type.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_scores.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_scores_etc.xml" value="0.3648315529991783" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_semester_report.xml" value="0.4" />
@@ -152,7 +190,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

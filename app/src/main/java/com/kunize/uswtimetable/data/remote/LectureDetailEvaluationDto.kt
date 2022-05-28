@@ -5,7 +5,8 @@ import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.util.LectureItemViewType
 
 data class LectureDetailEvaluationDto(
-    val data: MutableList<LectureDetailEvaluation>
+    val data: MutableList<LectureDetailEvaluation>,
+    val written: Boolean
 ) {
     fun convertToEvaluationData(): MutableList<EvaluationData?> {
         val temp = mutableListOf<EvaluationData?>()
