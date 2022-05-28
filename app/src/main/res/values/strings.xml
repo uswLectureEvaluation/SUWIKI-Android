@@ -194,5 +194,8 @@
     <string name="detail_info">과목 상세</string>
     <string name="no_search_data">검색결과가 없습니다.</string>
     <string name="test_type">시험유형</string>
+    <string name="write_lecture">강의평가 작성</string>
+    <string name="course_semester">수강학기</string>
+    <string name="test_kind">시험종류</string>
 
 </resources>

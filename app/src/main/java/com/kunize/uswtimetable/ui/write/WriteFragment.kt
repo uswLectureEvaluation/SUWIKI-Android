@@ -74,11 +74,9 @@ class WriteFragment : Fragment() {
         )
 
         difficultyRadioBtnList = listOf(
-            binding.veryEasyRadioButton,
             binding.easyRadioButton,
             binding.normalRadioButton,
-            binding.difficultRadioButton,
-            binding.veryDifficultRadioButton
+            binding.difficultRadioButton
         )
 
         setInitValueWhenWrite(args)
@@ -162,10 +160,11 @@ class WriteFragment : Fragment() {
                 if (taskNotExistRadioButton.isChecked) 0 else if (taskNormalRadioButton.isChecked) 1 else 2
 
 
+            //TODO 수정
             info = LectureEvaluationPostDto(
-                writeLectureName.text.toString(),
-                writeProfessor.text.toString(),
-                writeYearSemesterSpinner.selectedItem.toString(),
+                "",
+                "",
+                "",
                 writeViewModel.satisfactionScore.value!!.toFloat(),
                 writeViewModel.learningScore.value!!.toFloat(),
                 writeViewModel.honeyScore.value!!.toFloat(),
@@ -190,10 +189,11 @@ class WriteFragment : Fragment() {
                     testDifficulty = it.text.toString()
             }
 
+            //TODO 수정
             info = LectureExamPostDto(
-                writeLectureName.text.toString(),
-                writeProfessor.text.toString(),
-                writeYearSemesterSpinner.selectedItem.toString(),
+                "",
+                "",
+                "",
                 testContent,
                 testDifficulty,
                 writeContent.text.toString()
@@ -214,8 +214,9 @@ class WriteFragment : Fragment() {
                     testDifficulty = it.text.toString()
             }
 
+            //TODO 수정
             info = LectureExamEditDto(
-                writeYearSemesterSpinner.selectedItem.toString(),
+                "",
                 testContent,
                 testDifficulty,
                 writeContent.text.toString()
@@ -243,8 +244,9 @@ class WriteFragment : Fragment() {
                 if (taskNotExistRadioButton.isChecked) 0 else if (taskNormalRadioButton.isChecked) 1 else 2
 
 
+            //TODO 수정
             info = LectureEvaluationEditDto(
-                writeYearSemesterSpinner.selectedItem.toString(),
+                "",
                 writeViewModel.satisfactionScore.value!!.toFloat(),
                 writeViewModel.learningScore.value!!.toFloat(),
                 writeViewModel.honeyScore.value!!.toFloat(),
@@ -302,13 +304,14 @@ class WriteFragment : Fragment() {
         }
     }
 
+    //TODO 제거
     private fun setLectureProfessorName(it: MyExamInfo) {
-        binding.writeLectureName.text = it.subject
-        binding.writeProfessor.text = it.professor
     }
 
     private fun setFragmentViewType(args: WriteFragmentArgs) {
         if (args.isEvaluation) {
+            binding.tvTestType.visibility = View.GONE
+            binding.clSelectTestType.visibility = View.GONE
             binding.testGroup.visibility = View.GONE
             binding.writeType.text = WriteFragmentTitle.WRITE_EVALUATION
             binding.finishButton.text = WriteFragmentTitle.FINISH_EVALUATION
@@ -321,18 +324,17 @@ class WriteFragment : Fragment() {
 
     private fun setInitValueWhenWrite(args: WriteFragmentArgs) {
         args.lectureProfessorName?.let {
-            binding.writeLectureName.text = it.subject
-            binding.writeProfessor.text = it.professor
             setSpinnerList(args.lectureProfessorName!!.semester.replace(" ","").split(","))
         }
     }
 
+    //TODO 제거
     private fun setSpinnerList(list: List<String>) {
         val spinnerAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
             list)
-        binding.writeYearSemesterSpinner.adapter = spinnerAdapter
+        //binding.writeYearSemesterSpinner.adapter = spinnerAdapter
     }
 
     private fun setInitValueWhenEditMyEvaluation(args: WriteFragmentArgs) {
@@ -342,9 +344,10 @@ class WriteFragment : Fragment() {
             setTeamRadioBtn(it)
             setTaskRadioBtn(it)
             setGradeRadioBtn(it)
-            val list = it.semesterList.replace(" ","").split(",")
-            setSpinnerList(list)
-            binding.writeYearSemesterSpinner.setSelection(list.indexOf(it.selectedSemester))
+            //TODO 수정
+//            val list = it.semesterList.replace(" ","").split(",")
+//            setSpinnerList(list)
+//            binding.writeYearSemesterSpinner.setSelection(list.indexOf(it.selectedSemester))
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EVALUATION
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
@@ -381,9 +384,9 @@ class WriteFragment : Fragment() {
         defaultSatisfactionProgress = (it.satisfaction * 2).roundToInt()
     }
 
+    //TODO 제거
     private fun setLectureProfessorName(it: MyEvaluationDto) {
-        binding.writeLectureName.text = it.lectureName
-        binding.writeProfessor.text = it.professor
+
     }
 
     private fun setSeekBarProgress() {
