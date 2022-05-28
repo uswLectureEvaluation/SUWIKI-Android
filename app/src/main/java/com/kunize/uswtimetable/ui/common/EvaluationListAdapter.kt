@@ -23,7 +23,7 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
                 LectureInfoHolder(binding)
             }
             LectureItemViewType.EXAM -> {
-                val binding = ItemRecyclerExamInfoBinding.inflate(
+                val binding = ItemRecyclerExamDetailBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -111,12 +111,12 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
         }
     }
 
-    inner class ExamInfoHolder(private val binding: ItemRecyclerExamInfoBinding) :
+    inner class ExamInfoHolder(private val binding: ItemRecyclerExamDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
             with(binding) {
-                evaluationData = data
-                semesterReport.reportBtn.setOnClickListener {
+                this.data = data
+                tvReport.setOnClickListener {
                     onItemClicked(data.lectureId)
                 }
                 executePendingBindings()

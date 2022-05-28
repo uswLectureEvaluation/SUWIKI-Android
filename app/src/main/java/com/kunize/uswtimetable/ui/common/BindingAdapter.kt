@@ -45,19 +45,19 @@ object BindingAdapter {
             "쉬움", "매우 쉬움" -> textView.setTextColor(
                 ContextCompat.getColor(
                     textView.context,
-                    R.color.custom_yellow
+                    R.color.suwiki_blue_900
                 )
             )
             "보통" -> textView.setTextColor(
                 ContextCompat.getColor(
                     textView.context,
-                    R.color.custom_blue
+                    R.color.suwiki_black_700
                 )
             )
             else -> textView.setTextColor(
                 ContextCompat.getColor(
                     textView.context,
-                    R.color.custom_red
+                    R.color.suwiki_purple
                 )
             )
         }
