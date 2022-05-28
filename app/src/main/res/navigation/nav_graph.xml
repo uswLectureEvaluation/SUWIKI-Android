@@ -21,6 +21,10 @@
         <action
             android:id="@+id/action_navigation_evaluation_to_lectureInfoFragment"
             app:destination="@id/lectureInfoFragment" />
+        <argument
+            android:name="sortType"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/navigation_my_page"
@@ -41,11 +45,11 @@
         tools:layout="@layout/fragment_search_result">
         <argument
             android:name="searchLectureName"
-            android:defaultValue='""'
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue=" " />
         <argument
             android:name="sortType"
-            android:defaultValue="-1"
+            android:defaultValue="0"
             app:argType="integer" />
         <action
             android:id="@+id/action_searchResultFragment_to_lectureInfoFragment"
@@ -146,4 +150,34 @@
         android:name="com.kunize.uswtimetable.ui.mypage.PurchaseHistoryFragment"
         android:label="purchase_history_fragment"
         tools:layout="@layout/fragment_purchase_history" />
+    <fragment
+        android:id="@+id/selectOpenMajorFragment"
+        android:name="com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorFragment"
+        android:label="SelectOpenMajorFragment"
+        tools:layout="@layout/fragment_select_open_major">
+        <action
+            android:id="@+id/action_selectOpenMajorFragment_to_navigation_evaluation"
+            app:destination="@id/navigation_evaluation"
+            app:popUpTo="@id/navigation_evaluation"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_selectOpenMajorFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment"
+            app:popUpTo="@id/searchResultFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="prevFragment"
+            app:argType="integer" />
+        <argument
+            android:name="prevSearch"
+            app:argType="string"
+            android:defaultValue=" " />
+        <argument
+            android:name="prevSortType"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <action
+        android:id="@+id/global_open_major"
+        app:destination="@id/selectOpenMajorFragment" />
 </navigation>

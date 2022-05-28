@@ -24,9 +24,9 @@ object Constants {
 object API {
     const val BASE_URL: String = "https://api.suwiki.kr"
     const val REQUEST_REFRESH: String = "/user/refresh"
-    const val NOTICE_LIST: String = "/notice/findAllList"
+    const val NOTICE_LIST: String = "/notice/all"
     const val NOTICE: String = "/notice/"
-    const val SEARCH: String = "/lecture/findBySearchValue"
+    const val SEARCH: String = "/lecture/search/"
     const val EXAM: String = "/lecture/exam"
     const val ID: String = "/user/find-id"
     const val PASSWORD: String = "/user/find-pw"
@@ -34,25 +34,28 @@ object API {
     const val LOGIN: String = "/user/login"
     const val QUIT: String = "/user/quit"
     const val MY_PAGE: String = "/user/my-page"
-    const val EVALUATE_POST: String = "/evaluate-posts/findByUserIdx"
-    const val UPDATE_EVALUATE_POST: String = "/evaluate-posts/update"
-    const val DELETE_EVALUATE_POST: String = "/evaluate-posts/delete/"
-    const val EXAM_POSTS: String = "/exam-posts/findByUserIdx"
-    const val UPDATE_EXAM_POSTS: String = "/exam-posts/findByUserIdx"
-    const val DELETE_EXAM_POSTS: String = "/exam-posts/delete/"
-    const val PURCHASE_HISTORY: String = "/exam-posts/purchase-history"
+    const val EVALUATE_POST: String = "/evaluate-posts/written"
+    const val UPDATE_EVALUATE_POST: String = "/evaluate-posts/"
+    const val DELETE_EVALUATE_POST: String = "/evaluate-posts/"
+    const val EXAM_POSTS: String = "/exam-posts/written"
+    const val UPDATE_EXAM_POSTS: String = "/exam-posts/"
+    const val DELETE_EXAM_POSTS: String = "/exam-posts/"
+    const val PURCHASE_HISTORY: String = "/exam-posts/purchase"
     const val SIGN_UP: String = "/user/join"
     const val SIGN_UP_ID_CHECK: String = "/user/check-id"
     const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
-    const val LECTURE_MAIN: String = "/lecture/findAllList"
-    const val LECTURE_DETAIL_INFO = "/lecture"
-    const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/findByLectureId"
-    const val LECTURE_DETAIL_EXAM = "/exam-posts/findByLectureId"
-    const val WRITE_LECTURE_EVALUATION = "/evaluate-posts/write/"
-    const val WRITE_LECTURE_EXAM = "/exam-posts/write/"
-    const val EDIT_LECTURE_EVALUATION = "/evaluate-posts/update/"
-    const val EDIT_LECTURE_EXAM = "/exam-posts/update/"
-    const val BUY_EXAM = "/exam-posts/buyExamInfo/"
+    const val LECTURE_MAIN: String = "/lecture/all/"
+    const val LECTURE_DETAIL_INFO = "/lecture/"
+    const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/"
+    const val LECTURE_DETAIL_EXAM = "/exam-posts/"
+    const val WRITE_LECTURE_EVALUATION = "/evaluate-posts/"
+    const val WRITE_LECTURE_EXAM = "/exam-posts/"
+    const val EDIT_LECTURE_EVALUATION = "/evaluate-posts/"
+    const val EDIT_LECTURE_EXAM = "/exam-posts/"
+    const val BUY_EXAM = "/exam-posts/purchase/"
+    const val OPEN_MAJOR_VERSION = "/suwiki/version/"
+    const val OPEN_MAJOR_LIST_UPDATE = "/suwiki/majorType"
+    const val BOOKMARK = "/user/favorite-major/"
 }
 
 object WriteFragmentTitle {
@@ -75,11 +78,11 @@ object UserPoint {
 
 object LectureItemViewType {
     const val SHORT = 0 //강의평가 목록
-    const val USER_LECTURE = 1 //내가 쓴 강의평가
+    const val LOADING = 1 //내가 쓴 강의평가
     const val USER_EXAM = 2 //내가 쓴 시험정보
     const val LECTURE = 3 //세부 강의평가 정보
     const val EXAM = 4 //세부 시험정보
-    const val HIDE_EXAM = 5 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
+    const val FOOTER = -1 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
 }
 
 object PostData {
@@ -156,4 +159,9 @@ object TimetableCellColor {
 }
 object LIST_CONFIG {
     const val ONCE_REQUEST_SIZE = 10
+}
+
+object FragmentType {
+    const val EVALUATION = 1
+    const val SEARCH_RESULT = 2
 }

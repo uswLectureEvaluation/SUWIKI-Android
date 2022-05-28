@@ -19,6 +19,8 @@ import com.kunize.uswtimetable.repository.search_result.SearchResultRemoteDataSo
 import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.repository.signup.SignUpRemoteDataSource
 import com.kunize.uswtimetable.repository.signup.SignUpRepository
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.repository.user_info.FindIdRepository
 import com.kunize.uswtimetable.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.repository.user_info.QuitRepository
@@ -36,6 +38,7 @@ import com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
+import com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.signup.WelcomeSignUpViewModel
 import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
@@ -128,6 +131,11 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
                 val apiService = IRetrofit.getInstance()
                 val repository = WriteRepository(WriteRemoteDataSource(apiService))
                 WriteViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(SelectOpenMajorViewModel::class.java) -> {
+                val apiService = IRetrofit.getInstance()
+                val repository = OpenMajorRepository(OpenMajorRemoteDataSource(apiService))
+                SelectOpenMajorViewModel(repository) as T
             }
             else -> {
                 throw IllegalArgumentException("Unknown ViewModel: ${modelClass.name}")

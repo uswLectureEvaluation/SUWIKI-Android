@@ -10,9 +10,9 @@
     <string name="school_email">학교 인증 메일</string>
     <string name="my_evaluate">내 글 관리</string>
     <string name="my_point">현재 보유 포인트</string>
-    <string name="search_evaluation_hint">과목명, 교수명으로 원하는 강의평가를 찾아보세요!</string>
+    <string name="search_evaluation_hint">강의명, 교수명으로 원하는 강의평가를 찾아보세요!</string>
     <string name="see_more"><u>더보기 ></u></string>
-    <string name="search_result">검색 결과</string>
+    <string name="search_result">강의평가 검색</string>
     <string name="sort">정렬</string>
     <string name="satisfaction">만족도</string>
     <string name="honey">꿀강</string>
@@ -23,17 +23,17 @@
     <string name="delete">삭제</string>
     <string name="edit">수정</string>
     <string name="slash5">/5</string>
-    <string name="honey_score">꿀강 지수</string>
-    <string name="learning_score">배움 지수</string>
+    <string name="honey_score">꿀강지수</string>
+    <string name="learning_score">배움지수</string>
     <string name="team_meeting">조모임</string>
     <string name="task">과제</string>
-    <string name="grade">학점</string>
+    <string name="grade">학점비율</string>
     <string name="add">추가</string>
     <string name="complete">완료</string>
-    <string name="write_evaluation">강의평가 쓰기</string>
-    <string name="lecture_evaluation">강의 평가</string>
-    <string name="exam_info">시험 정보</string>
-    <string name="write_exam">시험 정보 쓰기</string>
+    <string name="write_evaluation">강의평가 작성 +10P</string>
+    <string name="lecture_evaluation">강의평가</string>
+    <string name="exam_info">시험정보</string>
+    <string name="write_exam">시험정보 작성 +20P</string>
     <string name="use_point">포인트 사용</string>
     <string name="edit_evaluation">강의평가 수정</string>
 
@@ -46,14 +46,14 @@
     <string name="privacy_policy">개인정보 처리 방침</string>
     <string name="sign_out">회원 탈퇴</string>
     <string name="opensource_licence">오픈소스 라이선스</string>
-    <string name="see_detail"><u>자세히 보기></u></string>
+    <string name="see_detail"><u>자세히</u></string>
     <string name="average_index">평균 지수</string>
-    <string name="see_short"><u>간략히 보기></u></string>
+    <string name="see_short"><u>간략히</u></string>
     <string name="no_exam_info">등록된 시험정보가 없어요</string>
-    <string name="show_exam_info">시험 정보를 보려면</string>
-    <string name="exam_point">20 POINT</string>
-    <string name="need">가 필요해요</string>
-    <string name="no_data">데이터가 없어요</string>
+    <string name="show_exam_info">시험 정보 열람시</string>
+    <string name="exam_point">20포인트</string>
+    <string name="need">가 차감됩니다.</string>
+    <string name="no_data">아직 등록된 강의평가가 없습니다.</string>
 
     <!-- Login & Sign in -->
     <string name="login">로그인</string>
@@ -122,7 +122,7 @@
     <string name="normal">보통</string>
     <string name="many">많음</string>
     <string name="picky">까다로움</string>
-    <string name="good">잘 줌</string>
+    <string name="good">너그러움</string>
     <string name="genealogy">족보</string>
     <string name="textbook">교재</string>
     <string name="ppt">PPT</string>
@@ -185,5 +185,26 @@
     <string name="limit_history">이용 제한 내역</string>
     <string name="purchase_history">구매 이력</string>
 
+
+    <string name="open_major">개설학과</string>
+    <string name="simple_see_more">더보기</string>
+    <string name="recent_lecture">최근 올라온 강의</string>
+    <string name="lecture_honey">꿀 강의</string>
+    <string name="lecture_satisfaction">만족도가 높은 강의</string>
+    <string name="lecture_learning">배울게 많은 강의</string>
+    <string name="lecture_best">BEST 강의</string>
+    <string name="search_open_major">개설 학과를 검색하세요</string>
+    <string name="all">전체</string>
+    <string name="bookmark">즐겨찾기</string>
+    <string name="okay">확인</string>
+    <string name="no_search_result">\'%s\'에 대한\n검색결과가 없습니다.</string>
+    <string name="use_after_login">로그인 후 사용할 수 있습니다!</string>
+    <string name="search_evaluation">강의평가 검색</string>
+    <string name="no_evaluation_data">아직 등록된 강의평가가 없습니다.</string>
+    <string name="no_exam_data">아직 등록된 시험정보가 없습니다.</string>
+    <string name="use_point_20p">포인트 사용하기 -20P</string>
+    <string name="detail_info">과목 상세</string>
+    <string name="no_search_data">검색결과가 없습니다.</string>
+    <string name="test_type">시험유형</string>
 
 </resources>

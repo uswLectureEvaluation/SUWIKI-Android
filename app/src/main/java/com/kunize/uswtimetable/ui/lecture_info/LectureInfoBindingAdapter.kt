@@ -22,8 +22,8 @@ object LectureInfoBindingAdapter {
             val textView = TextView(flexBox.context)
             textView.text = item.replace(" ", "")
             textView.textSize = 12f
-            textView.setTextColor(Color.BLACK)
-            textView.setBackgroundResource(R.drawable.bg_round_stroke_gray_300)
+            textView.setTextColor(ContextCompat.getColor(flexBox.context, R.color.suwiki_black_900))
+            textView.setBackgroundResource(R.drawable.bg_rounded_gray_300_15)
             val lp = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -51,11 +51,11 @@ object LectureInfoBindingAdapter {
         when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.not_exist
-                colorId = R.color.custom_light_gray
+                colorId = R.color.suwiki_blue_900
             }
             else -> {
                 textId = R.string.exist
-                colorId = R.color.custom_dark_gray
+                colorId = R.color.suwiki_purple
             }
         }
         textView.text = textView.context.getString(textId)
@@ -70,15 +70,15 @@ object LectureInfoBindingAdapter {
         when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.good
-                colorId = R.color.custom_light_gray
+                colorId = R.color.suwiki_blue_900
             }
             1 -> {
                 textId = R.string.normal
-                colorId = R.color.custom_dark_gray
+                colorId = R.color.suwiki_black_900
             }
             else -> {
                 textId = R.string.picky
-                colorId = R.color.custom_red
+                colorId = R.color.suwiki_purple
             }
         }
         textView.text = textView.context.getString(textId)
@@ -93,15 +93,15 @@ object LectureInfoBindingAdapter {
         when (value.toFloat().roundToInt()) {
             0 -> {
                 textId = R.string.not_exist
-                colorId = R.color.custom_light_gray
+                colorId = R.color.suwiki_blue_900
             }
             1 -> {
                 textId = R.string.normal
-                colorId = R.color.custom_dark_gray
+                colorId = R.color.suwiki_black_900
             }
             else -> {
                 textId = R.string.many
-                colorId = R.color.custom_red
+                colorId = R.color.suwiki_purple
             }
         }
         textView.text = textView.context.getString(textId)

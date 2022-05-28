@@ -6,11 +6,11 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.data.remote.*
-import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.API.BASE_URL
+import com.kunize.uswtimetable.util.API.BOOKMARK
 import com.kunize.uswtimetable.util.API.BUY_EXAM
 import com.kunize.uswtimetable.util.API.DELETE_EVALUATE_POST
 import com.kunize.uswtimetable.util.API.DELETE_EXAM_POSTS
@@ -28,6 +28,8 @@ import com.kunize.uswtimetable.util.API.LOGIN
 import com.kunize.uswtimetable.util.API.MY_PAGE
 import com.kunize.uswtimetable.util.API.NOTICE
 import com.kunize.uswtimetable.util.API.NOTICE_LIST
+import com.kunize.uswtimetable.util.API.OPEN_MAJOR_LIST_UPDATE
+import com.kunize.uswtimetable.util.API.OPEN_MAJOR_VERSION
 import com.kunize.uswtimetable.util.API.PASSWORD
 import com.kunize.uswtimetable.util.API.PASSWORD_RESET
 import com.kunize.uswtimetable.util.API.PURCHASE_HISTORY
@@ -42,6 +44,7 @@ import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EXAM
 import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.isJsonArray
 import com.kunize.uswtimetable.util.isJsonObject
 import okhttp3.*
@@ -54,6 +57,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
+import retrofit2.http.Headers
 import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -159,15 +163,9 @@ interface IRetrofit {
     suspend fun getSearchResultDetail(
         @Query("searchValue") searchValue: String,
         @Query("option") option: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("majorType") majorType: String
     ): Response<LectureMainDto>
-
-    // 시험 정보 보기 API
-    @GET(EXAM)
-    fun getExamInfo(
-        @Query("subjtNmname") subjectName: String,
-        @Query("reprPrfsEnoNm") professorName: String
-    ): Call<JsonElement>
 
     // 메인 페이지
     @GET(LECTURE_MAIN)
@@ -208,6 +206,26 @@ interface IRetrofit {
         @Query("examIdx") lectureId: Long,
         @Body info: LectureExamEditDto
     ): Response<String>
+
+    @GET(OPEN_MAJOR_VERSION)
+    suspend fun getOpenMajorVersion(): Response<OpenMajorVersion>
+
+    @GET(OPEN_MAJOR_LIST_UPDATE)
+    suspend fun getOpenMajorList(): Response<OpenMajorList>
+
+    @POST(BOOKMARK)
+    suspend fun bookmarkMajor(
+        @Body majorName: MajorType
+    ): Response<String>
+
+    @GET(BOOKMARK)
+    suspend fun getBookmarkMajorList(): Response<OpenMajorList>
+
+    @DELETE(BOOKMARK)
+    suspend fun clearBookmarkMajor(
+        @Query("majorType") majorName: String
+    ): Response<String>
+
 
     companion object {
         private var retrofitService: IRetrofit? = null

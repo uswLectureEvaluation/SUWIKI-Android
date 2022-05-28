@@ -13,6 +13,7 @@ import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
+import com.kunize.uswtimetable.util.LectureItemViewType
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -21,9 +22,14 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     val pageViewModel = PageViewModel()
     val toastViewModel = ToastViewModel()
     val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
+
     private val _writeBtnText = MutableLiveData<Int>()
     val writeBtnText: LiveData<Int>
         get() = _writeBtnText
+
+    private val _written = MutableLiveData<Boolean>()
+    val written: LiveData<Boolean>
+        get() = _written
 
     private val _showNoExamDataLayout = MutableLiveData<Boolean>()
     val showNoExamDataLayout: LiveData<Boolean>
@@ -75,6 +81,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
 
     private fun changeWriteBtnText(resource: Int) {
         _writeBtnText.value = resource
+        _written.value = true
     }
 
     suspend fun setInfoValue(): Boolean {
@@ -110,6 +117,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
             val response =
                 lectureInfoRepository.getLectureDetailEvaluation(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
             if (response.isSuccessful) {
+                _written.value = response.body()?.written
                 commonRecyclerViewViewModel.deleteLoading()
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
                 if (!tmpEvaluationData.isNullOrEmpty()) {
@@ -129,6 +137,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
             val response =
                 lectureInfoRepository.getLectureDetailExam(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
             if (response.isSuccessful) {
+                _written.value = response.body()?.written
                 val tmpResponse = response.body()
                 val tmpExamData = tmpResponse?.convertToEvaluationData()
                 commonRecyclerViewViewModel.deleteLoading()

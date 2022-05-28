@@ -6,8 +6,8 @@ import retrofit2.Response
 class EvaluationRepository(
     private val remoteDataSource: EvaluationRemoteDataSource
 ) {
-    suspend fun getLectureMainList(option: String): Response<LectureMainDto> {
-        return remoteDataSource.getEvaluationDataSource(option)
+    suspend fun getLectureMainList(option: String, majorType: String): Response<LectureMainDto> {
+        return remoteDataSource.getEvaluationDataSource(option, majorType = majorType)
     }
 }
 

@@ -13,9 +13,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.data.local.LectureProfessorSemester
+import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
@@ -35,7 +35,6 @@ class LectureInfoFragment : Fragment() {
             requireContext()
         )
     }
-    var needLoadInitData = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,25 +67,22 @@ class LectureInfoFragment : Fragment() {
             }
         }
 
-        lectureInfoViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
-            if (User.isLoggedIn.value == false){
-                needLoadInitData = true
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
-            }
-            else {
-                Toast.makeText(requireContext(), lectureInfoViewModel.toastViewModel.toastMessage, Toast.LENGTH_LONG).show()
-                if(lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!")
+        lectureInfoViewModel.toastViewModel.toastLiveData.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                Toast.makeText(
+                    requireContext(),
+                    lectureInfoViewModel.toastViewModel.toastMessage,
+                    Toast.LENGTH_LONG
+                ).show()
+                if (lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!")
                     findNavController().popBackStack()
-            }
-        })
+
+            })
 
         with(binding) {
             hideExamDataLayout.usePointBtn.setOnClickListener {
                 lectureInfoViewModel?.usePointBtnClicked()
-            }
-
-            noExamDataLayout.writeExamBtn.setOnClickListener {
-                goToWriteFragment()
             }
 
             writeBtn.setOnClickListener {
@@ -94,17 +90,6 @@ class LectureInfoFragment : Fragment() {
             }
         }
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        CoroutineScope(IO).launch {
-            if(needLoadInitData) {
-                delay(500L)
-                needLoadInitData = false
-                loadInitData()
-            }
-        }
     }
 
     private suspend fun loadInitData() {
@@ -116,8 +101,8 @@ class LectureInfoFragment : Fragment() {
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
                 lectureProfessorName = LectureProfessorSemester(
-                    binding.infoLectureName.text.toString(),
-                    binding.infoProfessorName.text.toString(),
+                    binding.tvLectureName.text.toString(),
+                    binding.tvProfessorName.text.toString(),
                     lectureInfoViewModel.lectureDetailInfoData.value?.data?.semester ?: ""
                 ), isEvaluation = !binding.examInfoRadioBtn.isChecked,
                 lectureId = lectureInfoViewModel.pageViewModel.lectureId
