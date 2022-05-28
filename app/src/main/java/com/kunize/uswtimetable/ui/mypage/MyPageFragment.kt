@@ -58,7 +58,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun setOnMenuClicked() {
-        binding.toolBar.setOnMenuItemClickListener {
+        binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_login -> {
                     logIn(requireContext())
@@ -114,6 +114,7 @@ class MyPageFragment : Fragment() {
                 MENU_PRIVACY_POLICY -> makeToast("준비 중입니다.")
                 MENU_SIGN_OUT -> quit(context)
                 MENU_OPENSOURCE -> showOpenSourcePage(context)
+                else -> {}
             }
         })
     }
@@ -124,11 +125,11 @@ class MyPageFragment : Fragment() {
 
     private fun logInStateView() {
         User.isLoggedIn.observe(viewLifecycleOwner) { loggedIn ->
-            binding.toolBar.menu.clear()
+            binding.toolbar.menu.clear()
             if (loggedIn) {
-                binding.toolBar.inflateMenu(R.menu.more_menu_after)
+                binding.toolbar.inflateMenu(R.menu.more_menu_after)
             } else {
-                binding.toolBar.inflateMenu(R.menu.more_menu_before)
+                binding.toolbar.inflateMenu(R.menu.more_menu_before)
             }
         }
     }

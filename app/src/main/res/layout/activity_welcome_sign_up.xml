@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/tv_welcome"
-            style="@style/Headline6.Bold"
+            style="@style/TextBody20.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="61dp"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/tv_info"
-            style="@style/TextBody2"
+            style="@style/TextBody"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="62dp"

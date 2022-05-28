@@ -1,5 +1,9 @@
 package com.kunize.uswtimetable.ui.common
 
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -26,11 +30,19 @@ fun applyDate(view: TextView, dateTime: LocalDateTime) {
 fun applyUserPoint(view: TextView, point: Int) {
     if (point >= 0) {
         view.text = view.resources.getString(R.string.detail_point_positive, point)
-        view.setTextColor(ContextCompat.getColor(view.context, R.color.custom_red))
+        view.setTextColor(ContextCompat.getColor(view.context, R.color.suwiki_blue_900))
     } else {
         view.text = view.resources.getString(R.string.detail_point, point)
-        view.setTextColor(ContextCompat.getColor(view.context, R.color.custom_blue))
+        view.setTextColor(ContextCompat.getColor(view.context, R.color.suwiki_purple))
     }
+}
+
+@BindingAdapter("count")
+fun applyCount(view: TextView, count: Int) {
+    val ssb = SpannableStringBuilder(count.toString()+"개")
+    val color = if (count >= 0) "#346CFD" else "#7800FF"
+    ssb.setSpan(ForegroundColorSpan(Color.parseColor(color)), 0, count.toString().length-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    view.text = ssb
 }
 
 @BindingAdapter("floatText")

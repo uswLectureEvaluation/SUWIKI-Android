@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tv_current_page_title"
-            style="@style/Headline6.Bold"
+            style="@style/TextSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_out"
@@ -51,7 +51,7 @@
 
             <TextView
                 android:id="@+id/tv_sign_out"
-                style="@style/Headline5.Bold"
+                style="@style/TextSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_out"

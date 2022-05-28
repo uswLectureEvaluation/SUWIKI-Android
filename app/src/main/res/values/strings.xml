@@ -6,10 +6,10 @@
     <string name="timetable">시간표</string>
     <string name="evaluation">강의평가</string>
     <string name="more">더보기</string>
-    <string name="my_information">내 정보</string>
+    <string name="my_account">내 계정</string>
     <string name="school_email">학교 인증 메일</string>
-    <string name="my_evaluate">내가 쓴 글</string>
-    <string name="my_point">보유 포인트</string>
+    <string name="my_evaluate">내 글 관리</string>
+    <string name="my_point">현재 보유 포인트</string>
     <string name="search_evaluation_hint">과목명, 교수명으로 원하는 강의평가를 찾아보세요!</string>
     <string name="see_more"><u>더보기 ></u></string>
     <string name="search_result">검색 결과</string>
@@ -84,12 +84,12 @@
     <string name="text_check_id_btn">중복확인</string>
 
     <!-- Data binding -->
-    <string name="my_evaluation_count">작성한 강의 평가 : %d개</string>
-    <string name="my_exam_info_count">작성한 시험 정보 : %d개</string>
-    <string name="opened_exam_count">시험 정보 열람 : %d개</string>
+    <string name="my_evaluation_count">작성한 강의평가</string>
+    <string name="my_exam_info_count">작성한 시험정보</string>
+    <string name="opened_exam_count">시험정보 열람 횟수</string>
     <string name="total_point">%d P</string>
-    <string name="detail_point_positive">(+%dP)</string>
-    <string name="detail_point">(%dP)</string>
+    <string name="detail_point_positive">+%dP</string>
+    <string name="detail_point">%dP</string>
     <string name="signup_welcome_message">가입을 환영합니다</string>
     <string name="signup_welcome_info">"<b>"%s@suwon.ac.kr"</b>"로 링크를 발송했습니다. 로그인을 위해서 이메일로 발송된 인증 링크를 클릭해주세요.</string>
     <string name="floatToStr">%.1f</string>
@@ -136,7 +136,7 @@
 
     <!--common-->
     <string name="hyphen">-</string>
-    <string name="email_string">이메일</string>
+    <string name="email_string">학교 인증 메일</string>
     <string name="reset_password">비밀번호 변경</string>
     <string name="current_password">현재 비밀번호</string>
     <string name="new_password">새로운 비밀번호</string>
@@ -169,7 +169,21 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string name="title_point_system_guide">포인트 제도 안내</string>
+    <string name="dash">-</string>
+    <string name="point_guide_1">다른 계정으로 학교 인증 시 해당 계정으로 포인트가 합산 되며, 기존 계정의 포인트는 초기화 됩니다.</string>
+    <string name="point_guide_2">포인트 획득을 위해 허위/중복/성의없는 정보를 작성할 경우, 서비스 이용이 영구 제한될 수 있습니다.</string>
+    <string name="point_guide_3">허위 신고를 남용하는 이용자 또한 제재가 가해질 수 있습니다.</string>
+    <string name="title_obtain_point">포인트 획득</string>
+    <string name="title_obtain_point_write_evaluation">- 강의평 작성: </string>
+    <string name="title_obtain_point_share_exam_info">- 시험정보 공유 : </string>
+    <string name="title_obtain_point_report">- 신고 보상 : </string>
+    <string name="title_deduct_point">포인트 차감</string>
+    <string name="title_deduct_point_open_exam_info">- 시험정보 조회 : </string>
+    <string name="title_deduct_point_deletion_post">- 강의평가/시험정보 삭제 : </string>
+    <string name="title_guidance">이용 안내</string>
+    <string name="limit_history">이용 제한 내역</string>
+    <string name="purchase_history">구매 이력</string>
 
 
 </resources>
