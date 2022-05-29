@@ -5,18 +5,17 @@ import android.util.Log
 import android.view.ViewGroup
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import com.kunize.uswtimetable.databinding.DialogSortBinding
-import com.kunize.uswtimetable.databinding.DialogSpinnerBinding
+import com.kunize.uswtimetable.databinding.DialogSpinnerSortBinding
 
 class SortDialog(
     private val context: AppCompatActivity, private val viewModel: SearchResultViewModel,
     private val spinnerList: List<String>
 ) {
-    private lateinit var binding: DialogSpinnerBinding
+    private lateinit var binding: DialogSpinnerSortBinding
     private val dlg = Dialog(context)
 
     fun show() {
-        binding = DialogSpinnerBinding.inflate(context.layoutInflater)
+        binding = DialogSpinnerSortBinding.inflate(context.layoutInflater)
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dlg.setContentView(binding.root)
         dlg.window?.setLayout(
