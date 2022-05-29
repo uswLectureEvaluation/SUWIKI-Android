@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/tv_welcome"
-            style="@style/TextBody20.Bold"
+            style="@style/TextBold.20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="61dp"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/tv_info"
-            style="@style/TextBody"
+            style="@style/TextRegular.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="62dp"
@@ -65,8 +65,7 @@
             android:text="@string/login"
             app:layout_constraintBottom_toTopOf="@id/btn_check_mail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_check_mail"
@@ -79,8 +78,7 @@
             android:text="@string/check_mail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

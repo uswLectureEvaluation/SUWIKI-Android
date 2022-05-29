@@ -19,6 +19,16 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="TextBold">
+        <item name="android:fontFamily">@font/notosans_bold</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextBold.20">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="TextMedium.10">
         <item name="android:textSize">10sp</item>
     </style>
@@ -49,6 +59,10 @@
 
     <style name="TextMedium.16">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextMedium.16.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
     </style>
 
     <style name="TextRegular.10">
@@ -98,8 +112,8 @@
 
     <style name="SuwikiEditText" parent="@style/Widget.Design.TextInputLayout">
         <item name="hintEnabled">false</item>
-        <item name="android:textSize">14sp</item>
         <item name="errorTextColor">@color/suwiki_purple</item>
+        <item name="errorTextAppearance">@style/TextRegular.12</item>
     </style>
 
     <style name="SuwikiMainButton" parent="Widget.AppCompat.Button">
@@ -109,23 +123,11 @@
         <item name="android:textAppearance">@style/TextMedium.16</item>
     </style>
 
-    <style name="SuwikiMainButton.Small">
-        <item name="android:background">@drawable/button_suwiki_main</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingStart">12dp</item>
-        <item name="android:paddingEnd">12dp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
     <style name="SuwikiSecondaryButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/ripple_suwiki_white</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:gravity">center</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:textAppearance">@style/TextSubtitle</item>
+        <item name="android:textAppearance">@style/TextMedium.16.Blue</item>
         <item name="android:textSize">16sp</item>
     </style>
 

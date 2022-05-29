@@ -37,13 +37,13 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_input_email"
+                style="@style/TextRegular.14"
+                afterTextChanged="@{() -> viewmodel.setNextButtonEnable()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_input_school_email"
                 android:inputType="text"
-                afterTextChanged="@{() -> viewmodel.setNextButtonEnable()}"
-                android:text="@={viewmodel.email}"
-                android:textSize="14sp" />
+                android:text="@={viewmodel.email}" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </layout>
