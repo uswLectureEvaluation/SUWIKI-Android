@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,8 +41,10 @@ class WriteFragment : Fragment() {
     private val writeViewModel: WriteViewModel by viewModels { ViewModelFactory(requireContext()) }
     private var semesterDialog: SemesterDialog? = null
     private var testDialog: TestDialog? = null
+    private val args: WriteFragmentArgs by navArgs()
+    private var lectureName = ""
+    private var professorName = ""
 
-    private lateinit var taskRadioBtnList: List<RadioButton>
     private lateinit var gradeRadioBtnList: List<RadioButton>
 
     private lateinit var testContentCheckBoxList: List<CheckBox>
@@ -62,7 +65,6 @@ class WriteFragment : Fragment() {
         binding.viewModel = writeViewModel
         binding.lifecycleOwner = this
 
-        val args: WriteFragmentArgs by navArgs()
         lectureId = args.lectureId
 
         testContentCheckBoxList = listOf(
@@ -81,6 +83,10 @@ class WriteFragment : Fragment() {
             binding.difficultRadioButton
         )
 
+        binding.ivClose.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         setInitValueWhenWrite(args)
         setFragmentViewType(args)
         setInitValueWhenEditMyEvaluation(args)
@@ -96,7 +102,7 @@ class WriteFragment : Fragment() {
             CoroutineScope(IO).launch {
 
                 val emptyMsg = when(binding.writeType.text.toString()) {
-                    getString(R.string.write_evaluation), getString(R.string.edit_evaluation)  -> {
+                    WriteFragmentTitle.WRITE_EVALUATION, WriteFragmentTitle.EDIT_MY_EVALUATION  -> {
                         when {
                             binding.teamRadioGroup.checkedRadioButtonId == -1 -> "조모임을 선택해주세요!"
                             binding.taskRadioGroup.checkedRadioButtonId == -1 -> "과제를 선택해주세요!"
@@ -121,9 +127,9 @@ class WriteFragment : Fragment() {
                 }
 
                 val response = when(binding.writeType.text.toString()) {
-                    getString(R.string.write_evaluation) -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
-                    getString(R.string.write_exam) -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
-                    getString(R.string.edit_evaluation) -> writeViewModel.updateLectureEvaluation(lectureId, getLectureEvaluationEditInfo())
+                    WriteFragmentTitle.WRITE_EVALUATION -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
+                    WriteFragmentTitle.WRITE_EXAM -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
+                    WriteFragmentTitle.EDIT_MY_EVALUATION -> writeViewModel.updateLectureEvaluation(lectureId, getLectureEvaluationEditInfo())
                     else -> writeViewModel.updateLectureExam(lectureId, getLectureExamEditInfo())
                 }
 
@@ -161,12 +167,10 @@ class WriteFragment : Fragment() {
             val homework =
                 if (taskNotExistRadioButton.isChecked) 0 else if (taskNormalRadioButton.isChecked) 1 else 2
 
-
-            //TODO 수정
             info = LectureEvaluationPostDto(
-                "",
-                "",
-                "",
+                lectureName,
+                professorName,
+                writeViewModel.semesterText.value!!,
                 writeViewModel.satisfactionScore.value!!.toFloat(),
                 writeViewModel.learningScore.value!!.toFloat(),
                 writeViewModel.honeyScore.value!!.toFloat(),
@@ -193,9 +197,9 @@ class WriteFragment : Fragment() {
 
             //TODO 수정
             info = LectureExamPostDto(
-                "",
-                "",
-                "",
+                lectureName,
+                professorName,
+                writeViewModel.semesterText.value!!,
                 testContent,
                 testDifficulty,
                 writeContent.text.toString()
@@ -218,7 +222,7 @@ class WriteFragment : Fragment() {
 
             //TODO 수정
             info = LectureExamEditDto(
-                "",
+                writeViewModel.semesterText.value!!,
                 testContent,
                 testDifficulty,
                 writeContent.text.toString()
@@ -245,10 +249,8 @@ class WriteFragment : Fragment() {
             val homework =
                 if (taskNotExistRadioButton.isChecked) 0 else if (taskNormalRadioButton.isChecked) 1 else 2
 
-
-            //TODO 수정
             info = LectureEvaluationEditDto(
-                "",
+                writeViewModel.semesterText.value!!,
                 writeViewModel.satisfactionScore.value!!.toFloat(),
                 writeViewModel.learningScore.value!!.toFloat(),
                 writeViewModel.honeyScore.value!!.toFloat(),
@@ -282,6 +284,8 @@ class WriteFragment : Fragment() {
             setDifficultyRadioBtn(it)
             val list = it.semesterList.replace(" ","").split(",")
             setSemesterSpinnerList(list)
+            //TODO MyExamInfo 수정되면 선택한 시험 종류 설정 ("기말고사" 선택 시 -> spinner 항목 기말고사 선택되게 해야함)
+            writeViewModel.initSemesterText(it.semester)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EXAM
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
@@ -306,8 +310,9 @@ class WriteFragment : Fragment() {
         }
     }
 
-    //TODO 제거
     private fun setLectureProfessorName(it: MyExamInfo) {
+        lectureName = it.subject
+        professorName = it.professor
     }
 
     private fun setFragmentViewType(args: WriteFragmentArgs) {
@@ -317,15 +322,19 @@ class WriteFragment : Fragment() {
             binding.testGroup.visibility = View.GONE
             binding.writeType.text = WriteFragmentTitle.WRITE_EVALUATION
             binding.finishButton.text = WriteFragmentTitle.FINISH_EVALUATION
+            binding.writeContent.hint = "강의평가를 작성해주세요."
         } else {
             binding.lectureGroup.visibility = View.GONE
             binding.writeType.text = WriteFragmentTitle.WRITE_EXAM
             binding.finishButton.text = WriteFragmentTitle.FINISH_EXAM
+            binding.writeContent.hint = "시험에 대한 정보, 공부법, 문제유형 등을 자유롭게 작성해주세요."
         }
     }
 
     private fun setInitValueWhenWrite(args: WriteFragmentArgs) {
         args.lectureProfessorName?.let {
+            lectureName = it.subject
+            professorName = it.professor
             setSemesterSpinnerList(args.lectureProfessorName!!.semester.replace(" ","").split(","))
         }
         setTestSpinnerList(listOf("중간고사","기말고사","쪽지","기타"))
@@ -364,10 +373,10 @@ class WriteFragment : Fragment() {
             setTeamRadioBtn(it)
             setTaskRadioBtn(it)
             setGradeRadioBtn(it)
-            //TODO 수정
-//            val list = it.semesterList.replace(" ","").split(",")
-//            setSpinnerList(list)
-//            binding.writeYearSemesterSpinner.setSelection(list.indexOf(it.selectedSemester))
+
+            val list = it.semesterList.replace(" ","").split(",")
+            setSemesterSpinnerList(list)
+            writeViewModel.initSemesterText(it.selectedSemester)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EVALUATION
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
@@ -404,9 +413,9 @@ class WriteFragment : Fragment() {
         defaultSatisfactionProgress = (it.satisfaction * 2).roundToInt()
     }
 
-    //TODO 제거
     private fun setLectureProfessorName(it: MyEvaluationDto) {
-
+        lectureName = it.lectureName
+        professorName = it.professor
     }
 
     private fun setSeekBarProgress() {

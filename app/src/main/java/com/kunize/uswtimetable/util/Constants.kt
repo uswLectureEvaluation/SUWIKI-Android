@@ -65,7 +65,7 @@ object WriteFragmentTitle {
     const val WRITE_EXAM = "시험정보 작성"
     const val FINISH_EXAM = "작성하기 +20P"
     const val FINISH_EVALUATION = "작성하기 +10P"
-    const val FINISH_EDIT = "완료"
+    const val FINISH_EDIT = "수정하기"
 }
 
 object UserPoint {
