@@ -26,9 +26,9 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:paddingStart="@dimen/recyclerview_padding"
-                android:paddingEnd="@dimen/recyclerview_padding"
+                android:layout_height="wrap_content"
+                android:paddingTop="24dp"
+                android:paddingBottom="16dp"
                 app:layout_collapseMode="parallax"
                 app:navigationIcon="@drawable/ic_back"
                 app:titleTextAppearance="@style/TextTitle.Bold">
