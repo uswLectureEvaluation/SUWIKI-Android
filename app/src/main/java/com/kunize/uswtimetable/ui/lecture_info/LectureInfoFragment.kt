@@ -52,6 +52,14 @@ class LectureInfoFragment : Fragment() {
         val args: LectureInfoFragmentArgs by navArgs()
         lectureInfoViewModel.pageViewModel.lectureId = args.lectureId
 
+        binding.ivPrev.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.btnClose.setOnClickListener {
+            findNavController().popBackStack(R.id.navigation_evaluation, false)
+        }
+
         CoroutineScope(IO).launch {
             loadInitData()
             with(binding) {
