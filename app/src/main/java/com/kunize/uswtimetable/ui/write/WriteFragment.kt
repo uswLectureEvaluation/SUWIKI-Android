@@ -201,6 +201,7 @@ class WriteFragment : Fragment() {
                 professorName,
                 writeViewModel.semesterText.value!!,
                 testContent,
+                writeViewModel.testText.value!!,
                 testDifficulty,
                 writeContent.text.toString()
             )

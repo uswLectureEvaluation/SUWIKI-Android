@@ -12,6 +12,7 @@ data class LectureExamPostDto(
     val professor: String,
     val selectedSemester: String,
     val examInfo: String,
+    val examType: String,
     val examDifficulty: String,
     val content: String
 )
