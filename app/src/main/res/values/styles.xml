@@ -104,10 +104,9 @@
 
     <style name="SuwikiMainButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/button_suwiki_main</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/suwiki_white</item>
         <item name="android:gravity">center</item>
-        <item name="android:textAppearance">@style/TextSubtitle</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textAppearance">@style/TextMedium.16</item>
     </style>
 
     <style name="SuwikiMainButton.Small">
@@ -125,6 +124,7 @@
         <item name="android:background">@drawable/ripple_suwiki_white</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textAppearance">@style/TextSubtitle</item>
         <item name="android:textSize">16sp</item>
     </style>
@@ -132,9 +132,8 @@
     <style name="SuwikiMiniButton">
         <item name="android:background">@drawable/button_suwiki_mini</item>
         <item name="android:gravity">center</item>
-        <item name="android:fontFamily">@font/notosans_regular</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textAppearance">@style/TextRegular.12</item>
         <item name="android:paddingHorizontal">12dp</item>
         <item name="android:paddingVertical">4dp</item>
         <item name="android:textColor">@color/suwiki_white</item>
