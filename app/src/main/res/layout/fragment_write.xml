@@ -111,6 +111,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+                            android:text="@{viewModel.semesterText}"
                             tools:text="2021-2" />
 
                         <ImageView
@@ -156,6 +157,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+                            android:text="@{viewModel.testText}"
                             tools:text="중간고사" />
 
                         <ImageView

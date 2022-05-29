@@ -11,6 +11,7 @@ import com.kunize.uswtimetable.data.remote.LectureExamPostDto
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.repository.write.WriteRepository
+import com.kunize.uswtimetable.ui.common.Event
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
@@ -19,6 +20,40 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
     private val _honeyScore = MutableLiveData<Float>()
     val honeyScore: LiveData<Float>
         get() = _honeyScore
+
+    private val _semesterText = MutableLiveData<String>()
+    val semesterText: LiveData<String>
+        get() = _semesterText
+
+    private val _testText = MutableLiveData<String>()
+    val testText: LiveData<String>
+        get() = _testText
+
+    private val _dialogSemesterClickEvent = MutableLiveData<Event<Boolean>>()
+    val dialogSemesterClickEvent: LiveData<Event<Boolean>>
+        get() = _dialogSemesterClickEvent
+
+    private val _dialogTestClickEvent = MutableLiveData<Event<Boolean>>()
+    val dialogTestClickEvent: LiveData<Event<Boolean>>
+        get() = _dialogTestClickEvent
+
+    fun initSemesterText(text: String) {
+        _semesterText.value = text
+    }
+
+    fun initTestText(text: String) {
+        _testText.value = text
+    }
+
+    fun dialogSemesterClick(text: String) {
+        _semesterText.value = text
+        _dialogSemesterClickEvent.value = Event(true)
+    }
+
+    fun dialogTestClick(text: String) {
+        _testText.value = text
+        _dialogTestClickEvent.value = Event(true)
+    }
 
     fun changeHoneyScore(value: Float) {
         _honeyScore.value = value

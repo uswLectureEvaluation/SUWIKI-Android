@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,6 +38,8 @@ class WriteFragment : Fragment() {
     lateinit var binding: FragmentWriteBinding
 
     private val writeViewModel: WriteViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private var semesterDialog: SemesterDialog? = null
+    private var testDialog: TestDialog? = null
 
     private lateinit var taskRadioBtnList: List<RadioButton>
     private lateinit var gradeRadioBtnList: List<RadioButton>
@@ -279,7 +281,7 @@ class WriteFragment : Fragment() {
             setTestContentCheckBox(it)
             setDifficultyRadioBtn(it)
             val list = it.semesterList.replace(" ","").split(",")
-            setSpinnerList(list)
+            setSemesterSpinnerList(list)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EXAM
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
@@ -324,17 +326,35 @@ class WriteFragment : Fragment() {
 
     private fun setInitValueWhenWrite(args: WriteFragmentArgs) {
         args.lectureProfessorName?.let {
-            setSpinnerList(args.lectureProfessorName!!.semester.replace(" ","").split(","))
+            setSemesterSpinnerList(args.lectureProfessorName!!.semester.replace(" ","").split(","))
         }
+        setTestSpinnerList(listOf("중간고사","기말고사","쪽지","기타"))
     }
 
-    //TODO 제거
-    private fun setSpinnerList(list: List<String>) {
-        val spinnerAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            list)
-        //binding.writeYearSemesterSpinner.adapter = spinnerAdapter
+    private fun setTestSpinnerList(list: List<String>) {
+        writeViewModel.initTestText(list[0])
+
+        binding.clSelectTestType.setOnClickListener {
+            testDialog = TestDialog(context as AppCompatActivity, writeViewModel, list)
+            testDialog?.show()
+        }
+
+        writeViewModel.dialogTestClickEvent.observe(viewLifecycleOwner, EventObserver {
+            testDialog?.dismiss()
+        })
+    }
+
+    private fun setSemesterSpinnerList(list: List<String>) {
+        writeViewModel.initSemesterText(list[0])
+
+        binding.clSelectSemester.setOnClickListener {
+            semesterDialog = SemesterDialog(context as AppCompatActivity, writeViewModel, list)
+            semesterDialog?.show()
+        }
+
+        writeViewModel.dialogSemesterClickEvent.observe(viewLifecycleOwner, EventObserver {
+            semesterDialog?.dismiss()
+        })
     }
 
     private fun setInitValueWhenEditMyEvaluation(args: WriteFragmentArgs) {

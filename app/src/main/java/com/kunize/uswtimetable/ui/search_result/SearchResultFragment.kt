@@ -92,18 +92,6 @@ class SearchResultFragment : Fragment() {
             sortDialog?.dismiss()
         })
 
-//        with(binding) {
-//            sortBtn = mutableListOf(dateBtn, honeyBtn, satisfactionBtn , learningBtn, totalBtn)
-//        }
-
-//        sortBtn.forEach { btn ->
-//            btn.setOnClickListener {
-//                sortOptionMap[btn.text.toString()]?.let {
-//                    searchResultViewModel.changeType(it)
-//                }
-//            }
-//        }
-
         binding.ivClose.setOnClickListener {
             findNavController().popBackStack()
         }
