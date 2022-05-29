@@ -262,7 +262,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:background">@drawable/bg_rounded_gray_300_30</item>
+        <item name="android:background">@drawable/bg_rounded_gray_300_15</item>
     </style>
 
     <style name="year_semester_text_style" parent="recyclerview_evaluation_rounding_text_style">
@@ -425,7 +425,6 @@
         <item name="android:textColor">@color/suwiki_white</item>
     </style>
 
-
     <style name="SuwikiTextBody1" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:textSize">14sp</item>
@@ -494,6 +493,15 @@
     </style>
 
     <style name="SuwikiTextBody3.Bold.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="SuwikiTextBody10" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="SuwikiTextBody10.Gray">
         <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 </resources>
