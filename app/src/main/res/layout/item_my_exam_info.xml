@@ -27,9 +27,51 @@
         expandable="@{contentTextView}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_ripple_border_line_gray_500"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_rounded_border_line_15_gray_500"
         android:onClick="@{() -> viewmodel.onItemClicked(viewType.ROOT_VIEW, data)}"
-        android:padding="@dimen/recyclerview_padding">
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_semester"
+            style="@style/recyclerview_evaluation_rounding_text_style"
+            android:layout_marginTop="2dp"
+            android:text="@{data.semester}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2020-1" />
+
+        <TextView
+            android:id="@+id/tv_exam_term"
+            style="@style/recyclerview_evaluation_rounding_text_style"
+            android:layout_marginStart="8dp"
+            android:text="@{data.semester}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_semester"
+            app:layout_constraintStart_toEndOf="@id/tv_semester"
+            app:layout_constraintTop_toTopOf="@id/tv_semester"
+            tools:text="중간고사" />
+
+        <TextView
+            android:id="@+id/tv_edit_btn"
+            style="@style/TextRegular.10.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{() -> viewmodel.onItemClicked(viewType.EDIT_BUTTON, data)}"
+            android:text="@string/edit"
+            app:layout_constraintEnd_toStartOf="@id/tv_delete_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_delete_btn"
+            style="@style/TextRegular.10.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewmodel.onItemClicked(viewType.DELETE_BUTTON, data)}"
+            android:text="@string/delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_lecture_name"
@@ -48,23 +90,48 @@
             app:layout_constraintStart_toEndOf="@+id/tv_lecture_name"
             tools:text="교수 이름" />
 
+
+        <TextView
+            android:id="@+id/tv_exam_difficulty_title"
+            style="@style/TextMedium.12.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_item_my_exam_info_difficulty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_lecture_name" />
+
+        <TextView
+            android:id="@+id/tv_exam_difficulty"
+            style="@style/TextRegular.12.Blue"
+            difficultColor="@{data.examDifficulty}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{data.examDifficulty}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_exam_difficulty_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_exam_difficulty_title"
+            app:layout_constraintTop_toTopOf="@id/tv_exam_difficulty_title"
+            tools:text="보통" />
+
         <TextView
             android:id="@+id/tv_exam_type_title"
-            style="@style/default_black_bold_textview_style"
+            style="@style/TextMedium.12.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/title_item_my_exam_info_exam_type"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_lecture_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_exam_difficulty_title" />
 
         <TextView
             android:id="@+id/tv_exam_type"
-            style="@style/TextBody1"
+            style="@style/TextRegular.12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{data.examInfo}"
-            android:textColor="@color/custom_blue"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_exam_type_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_exam_type_title"
@@ -72,68 +139,16 @@
             tools:text="족보, 교재, PPT" />
 
         <TextView
-            android:id="@+id/tv_exam_difficulty_title"
-            style="@style/default_black_bold_textview_style"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_item_my_exam_info_difficulty"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_exam_type_title" />
-
-        <TextView
-            android:id="@+id/tv_exam_difficulty"
-            style="@style/TextBody1"
-            difficultColor="@{data.examDifficulty}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{data.examDifficulty}"
-            android:textColor="@color/custom_blue"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tv_exam_difficulty_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_exam_type"
-            app:layout_constraintTop_toTopOf="@id/tv_exam_difficulty_title"
-            tools:text="보통" />
-
-        <TextView
-            android:id="@+id/tv_delete_btn"
-            style="@style/recyclerview_evaluation_rounding_text_style"
-            android:onClick="@{() -> viewmodel.onItemClicked(viewType.DELETE_BUTTON, data)}"
-            android:text="@string/delete"
-            android:textColor="@color/custom_red"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_edit_btn"
-            style="@style/recyclerview_evaluation_rounding_text_style"
-            android:layout_marginEnd="16dp"
-            android:onClick="@{() -> viewmodel.onItemClicked(viewType.EDIT_BUTTON, data)}"
-            android:text="@string/edit"
-            android:textColor="@color/blue"
-            app:layout_constraintEnd_toStartOf="@id/tv_delete_btn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/tv_content"
+            style="@style/TextRegular.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="2"
             android:text="@{data.content}"
-            android:textColor="@color/custom_dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_exam_difficulty_title"
-            tools:text="와 이 강의 개꿀. 그냥 출석하고 교수 눈에만 안 띄면 A+ 가능 ㅋㅋ 무조건 들어라 애들아" />
-
-        <TextView
-            android:id="@+id/tv_semester"
-            style="@style/recyclerview_evaluation_rounding_text_style"
-            android:text="@{data.semester}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2020-1" />
+            app:layout_constraintTop_toBottomOf="@id/tv_exam_type_title"
+            tools:text="1. 수업자료 시간 실습자료 강의자료만 외우세요. 수업시간 실습자료 강의자료만 외우세요 수업시간 실습자료 강의자료만 외우세요." />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
