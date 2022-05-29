@@ -37,15 +37,16 @@
         detailOrShortButton="@{detailOrShortButton}"
         group="@{group}"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_ripple_border_line_gray_500"
+        android:background="@drawable/bg_rounded_border_line_15_gray_500"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_semester"
             style="@style/recyclerview_evaluation_rounding_text_style"
+            android:layout_marginTop="2dp"
             android:text="@{data.selectedSemester}"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +55,7 @@
 
         <TextView
             android:id="@+id/tv_edit_btn"
-            style="@style/SuwikiTextBody10.Gray"
+            style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -66,7 +67,7 @@
 
         <TextView
             android:id="@+id/tv_delete_btn"
-            style="@style/SuwikiTextBody10.Gray"
+            style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewmodel.itemClicked(viewType.DELETE_BUTTON, data)}"
@@ -103,7 +104,7 @@
 
         <TextView
             android:id="@+id/tv_average"
-            style="@style/SuwikiTextBody1.Blue"
+            style="@style/TextMedium.14.Blue"
             floatText="@{data.totalAvg}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,7 +116,7 @@
 
         <TextView
             android:id="@+id/tv_detail_short_button"
-            style="@style/SuwikiTextBody2.Gray"
+            style="@style/TextRegular.12.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
@@ -138,14 +139,16 @@
 
             <TextView
                 android:id="@+id/tv_honey_title"
-                style="@style/recyclerview_evaluation_text_info"
+                style="@style/TextRegular.12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/honey_score"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_honey"
-                style="@style/SuwikiTextBody1.Blue"
+                style="@style/TextMedium.14.Blue"
                 floatText="@{data.honey}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -157,7 +160,9 @@
 
             <TextView
                 android:id="@+id/tv_learning_title"
-                style="@style/recyclerview_evaluation_text_info"
+                style="@style/TextRegular.12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/learning_score"
                 app:layout_constraintBottom_toBottomOf="@id/tv_honey"
@@ -166,7 +171,7 @@
 
             <TextView
                 android:id="@+id/tv_learning"
-                style="@style/SuwikiTextBody1.Blue"
+                style="@style/TextMedium.14.Blue"
                 floatText="@{data.learning}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -178,7 +183,9 @@
 
             <TextView
                 android:id="@+id/tv_satisfaction_title"
-                style="@style/recyclerview_evaluation_text_info"
+                style="@style/TextRegular.12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/satisfaction"
                 app:layout_constraintBottom_toBottomOf="@id/tv_learning"
@@ -187,7 +194,7 @@
 
             <TextView
                 android:id="@+id/tv_satisfaction"
-                style="@style/SuwikiTextBody1.Blue"
+                style="@style/TextMedium.14.Blue"
                 floatText="@{data.satisfaction}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -199,7 +206,9 @@
 
             <TextView
                 android:id="@+id/tv_meeting_title"
-                style="@style/recyclerview_evaluation_text_info"
+                style="@style/TextRegular.12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/team_meeting"
                 app:layout_constraintStart_toStartOf="@id/tv_honey_title"
@@ -207,7 +216,7 @@
 
             <TextView
                 android:id="@+id/tv_meeting"
-                style="@style/SuwikiTextBody2.Blue"
+                style="@style/TextRegular.12.Blue"
                 postData="@{data.team}"
                 postDataType="@{type.TEAM}"
                 android:layout_width="wrap_content"
@@ -221,7 +230,9 @@
 
             <TextView
                 android:id="@+id/tv_task_title"
-                style="@style/recyclerview_evaluation_text_info"
+                style="@style/TextRegular.12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/task"
                 app:layout_constraintBottom_toBottomOf="@id/tv_meeting"
                 app:layout_constraintStart_toStartOf="@id/tv_learning_title"
@@ -229,7 +240,7 @@
 
             <TextView
                 android:id="@+id/tv_task"
-                style="@style/SuwikiTextBody2.Blue"
+                style="@style/TextRegular.12.Blue"
                 postData="@{data.homework}"
                 postDataType="@{type.HOMEWORK}"
                 android:layout_width="wrap_content"
@@ -242,7 +253,9 @@
 
             <TextView
                 android:id="@+id/tv_grade_title"
-                style="@style/recyclerview_evaluation_text_info"
+                style="@style/TextRegular.12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/grade"
                 app:layout_constraintBottom_toBottomOf="@id/tv_task"
                 app:layout_constraintStart_toStartOf="@id/tv_satisfaction_title"
@@ -250,7 +263,7 @@
 
             <TextView
                 android:id="@+id/tv_grade"
-                style="@style/SuwikiTextBody2.Blue"
+                style="@style/TextRegular.12.Blue"
                 postData="@{data.difficulty}"
                 postDataType="@{type.DIFFICULTY}"
                 android:layout_width="wrap_content"
@@ -265,10 +278,10 @@
 
         <TextView
             android:id="@+id/tv_content"
+            style="@style/TextRegular.14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            style="@style/SuwikiTextBody1"
             android:text="@{data.content}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
