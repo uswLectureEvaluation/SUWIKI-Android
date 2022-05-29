@@ -1,5 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <style name="TextMedium">
+        <item name="android:fontFamily">@font/notosans_medium</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextLight">
+        <item name="android:fontFamily">@font/notosans_light</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextRegular">
+        <item name="android:fontFamily">@font/notosans_regular</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextMedium.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextMedium.12">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextMedium.12.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="TextMedium.12.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="TextMedium.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextMedium.14.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="TextMedium.16">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextRegular.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextRegular.10.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="TextRegular.12">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextRegular.12.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="TextRegular.12.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="TextRegular.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextRegular.16">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextLight.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextLight.12">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
     <style name="SuwikiEditText" parent="@style/Widget.Design.TextInputLayout">
         <item name="hintEnabled">false</item>
         <item name="android:textSize">14sp</item>
@@ -263,6 +347,8 @@
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/bg_rounded_gray_300_15</item>
+        <item name="fontFamily">@font/notosans_regular</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="year_semester_text_style" parent="recyclerview_evaluation_rounding_text_style">
@@ -369,12 +455,12 @@
     </style>
 
     <style name="TextCaption1.Gray" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textColor">@color/custom_gray</item>
+        <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 
     <style name="TextCaption2" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textSize">11sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
     </style>
 
     <style name="TextCaption2.Gray">
