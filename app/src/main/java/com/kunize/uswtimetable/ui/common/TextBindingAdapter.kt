@@ -64,10 +64,10 @@ fun applyPostData(view: TextView, level: Int, type: PostData.PostDataType) {
 @BindingAdapter("textColorLevel")
 fun applyTextColor(view: TextView, level: Int) {
     val color = when(level) {
-        0 -> ContextCompat.getColor(view.context, R.color.custom_light_gray)
+        0 -> ContextCompat.getColor(view.context, R.color.suwiki_blue_900)
         1 -> ContextCompat.getColor(view.context, R.color.custom_dark_gray)
-        2 -> ContextCompat.getColor(view.context, R.color.custom_red)
-        else -> ContextCompat.getColor(view.context, R.color.black)
+        2 -> ContextCompat.getColor(view.context, R.color.suwiki_purple)
+        else -> ContextCompat.getColor(view.context, R.color.suwiki_black_700)
     }
     view.setTextColor(color)
 }

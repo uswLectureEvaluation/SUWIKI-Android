@@ -6,17 +6,18 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.util.afterTextChanged
 
-@BindingAdapter("group", "content")
+@BindingAdapter("group", "detailOrShortButton")
 fun applyExpandOrFoldLayout(view: View, group: ConstraintLayout, content: TextView) {
     view.setOnClickListener {
         if (group.isVisible) {
             group.visibility = View.GONE
-            content.maxLines = 2
+            content.text = content.context.resources.getString(R.string.see_detail)
         } else {
             group.visibility = View.VISIBLE
-            content.maxLines = 100
+            content.text = content.context.resources.getString(R.string.see_short)
         }
     }
 }

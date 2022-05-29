@@ -11,10 +11,6 @@
             type="com.kunize.uswtimetable.dataclass.MyEvaluationDto" />
 
         <variable
-            name="mapper"
-            type="com.kunize.uswtimetable.util.PostData" />
-
-        <variable
             name="type"
             type="com.kunize.uswtimetable.util.PostData.PostDataType" />
 
@@ -27,7 +23,7 @@
             type="com.kunize.uswtimetable.util.ItemType" />
 
         <variable
-            name="contentTextView"
+            name="detailOrShortButton"
             type="android.widget.TextView" />
 
         <variable
@@ -38,9 +34,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        content="@{contentTextView}"
+        detailOrShortButton="@{detailOrShortButton}"
         group="@{group}"
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_ripple_border_line_gray_500"
         android:padding="16dp">
@@ -113,9 +111,10 @@
             app:layout_constraintBottom_toBottomOf="@+id/rb_average"
             app:layout_constraintStart_toEndOf="@+id/rb_average"
             app:layout_constraintTop_toTopOf="@id/rb_average"
-            tools:text="5" />
+            tools:text="3.5" />
 
         <TextView
+            android:id="@+id/tv_detail_short_button"
             style="@style/SuwikiTextBody2.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,7 +153,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_honey_title"
                 app:layout_constraintStart_toEndOf="@id/tv_honey_title"
                 app:layout_constraintTop_toTopOf="@id/tv_honey_title"
-                tools:text="5" />
+                tools:text="3.0" />
 
             <TextView
                 android:id="@+id/tv_learning_title"
@@ -175,7 +174,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_learning_title"
                 app:layout_constraintStart_toEndOf="@id/tv_learning_title"
                 app:layout_constraintTop_toTopOf="@id/tv_learning_title"
-                tools:text="5" />
+                tools:text="4.0" />
 
             <TextView
                 android:id="@+id/tv_satisfaction_title"
@@ -196,7 +195,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_satisfaction_title"
                 app:layout_constraintStart_toEndOf="@id/tv_satisfaction_title"
                 app:layout_constraintTop_toTopOf="@id/tv_satisfaction_title"
-                tools:text="5" />
+                tools:text="5.0" />
 
             <TextView
                 android:id="@+id/tv_meeting_title"
