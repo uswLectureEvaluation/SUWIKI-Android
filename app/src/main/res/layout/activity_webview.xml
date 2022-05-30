@@ -10,7 +10,6 @@
         android:id="@+id/webview_topBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,10 +22,23 @@
             android:contentDescription="@string/webview_close_button_description"
             android:src="@drawable/ic_close"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        tools:progress="70"
+        android:minHeight="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/webview_topBar"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <WebView
         android:id="@+id/webView"
@@ -35,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/webview_topBar">
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar">
 
     </WebView>
 
