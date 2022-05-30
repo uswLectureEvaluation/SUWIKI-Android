@@ -22,14 +22,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    viewBinding {
-        enabled = true
-    }
-
-    dataBinding {
-        enabled = true
-    }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -44,6 +36,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
+        dataBinding true
         viewBinding true
     }
     lintOptions {
