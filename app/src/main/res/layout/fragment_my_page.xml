@@ -526,7 +526,7 @@
                         android:gravity="center_vertical"
                         android:onClick="@{() -> viewmodel.onClick(viewType.MENU_LIMIT_HISTORY)}"
                         android:paddingVertical="8dp"
-                        android:text="@string/limit_history" />
+                        android:text="@string/suspension_history" />
 
                     <TextView
                         android:id="@+id/tv_purchase_history_button"

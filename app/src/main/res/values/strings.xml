@@ -104,7 +104,7 @@
     <string name="check_id_length">6자 이상 입력하세요</string>
     <string name="check_pw_length">8자 이상 입력하세요</string>
     <string name="has_blank">빈 칸이 있습니다</string>
-    <string name="back_to_list">목록으로</string>
+    <string name="back_to_list">목록</string>
 
     <string name="btn_back">뒤로</string>
     <string name="btn_next">다음</string>
@@ -182,7 +182,7 @@
     <string name="title_deduct_point_open_exam_info">- 시험정보 조회 : </string>
     <string name="title_deduct_point_deletion_post">- 강의평가/시험정보 삭제 : </string>
     <string name="title_guidance">이용 안내</string>
-    <string name="limit_history">이용 제한 내역</string>
+    <string name="suspension_history">이용 제한 내역</string>
     <string name="purchase_history">구매 이력</string>
 
 
