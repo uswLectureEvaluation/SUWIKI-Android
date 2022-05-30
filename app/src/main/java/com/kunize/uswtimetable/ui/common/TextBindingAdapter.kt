@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.common
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -23,7 +24,7 @@ fun applyDateTime(view: TextView, dateTime: LocalDateTime) {
 
 @BindingAdapter("date")
 fun applyDate(view: TextView, dateTime: LocalDateTime) {
-    view.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    view.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
 }
 
 @BindingAdapter("point")
@@ -70,4 +71,10 @@ fun applyTextColor(view: TextView, level: Int) {
         else -> ContextCompat.getColor(view.context, R.color.suwiki_black_700)
     }
     view.setTextColor(color)
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("major", "professor")
+fun applyMajorAndProfessorText(view: TextView, major: String, professor: String) {
+    view.text = "$major | $professor"
 }
