@@ -55,10 +55,13 @@ class MyPageFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.user = User
+        if (User.isLoggedIn.value?.not() == true) {
+            logIn(requireContext())
+        }
     }
 
     private fun setOnMenuClicked() {
-        binding.toolBar.setOnMenuItemClickListener {
+        binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_login -> {
                     logIn(requireContext())
@@ -88,10 +91,6 @@ class MyPageFragment : Fragment() {
                     quit(requireContext())
                     true
                 }
-                R.id.menu_purchase_history -> {
-                    showPurchaseHistory()
-                    true
-                }
                 else -> {
                     makeToast("${it.title} : 준비 중입니다")
                     false
@@ -114,6 +113,8 @@ class MyPageFragment : Fragment() {
                 MENU_PRIVACY_POLICY -> makeToast("준비 중입니다.")
                 MENU_SIGN_OUT -> quit(context)
                 MENU_OPENSOURCE -> showOpenSourcePage(context)
+                MENU_LIMIT_HISTORY -> makeToast("준비 중입니다.")
+                MENU_PURCHASE_HISTORY -> showPurchaseHistory()
             }
         })
     }
@@ -124,11 +125,12 @@ class MyPageFragment : Fragment() {
 
     private fun logInStateView() {
         User.isLoggedIn.observe(viewLifecycleOwner) { loggedIn ->
-            binding.toolBar.menu.clear()
+            binding.toolbar.menu.clear()
             if (loggedIn) {
-                binding.toolBar.inflateMenu(R.menu.more_menu_after)
+                binding.toolbar.inflateMenu(R.menu.more_menu_after)
             } else {
-                binding.toolBar.inflateMenu(R.menu.more_menu_before)
+                logIn(requireContext())
+                binding.toolbar.inflateMenu(R.menu.more_menu_before)
             }
         }
     }

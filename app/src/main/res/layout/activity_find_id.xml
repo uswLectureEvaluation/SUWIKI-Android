@@ -35,7 +35,7 @@
 
                 <TextView
                     android:id="@+id/tv_current_page_title"
-                    style="@style/TextSubtitle1"
+                    style="@style/TextMedium.16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -58,12 +58,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_input_email"
+                style="@style/TextRegular.14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_input_school_email"
                 android:inputType="text"
-                android:text="@={viewmodel.email}"
-                android:textSize="14sp" />
+                android:text="@={viewmodel.email}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton

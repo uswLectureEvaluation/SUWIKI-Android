@@ -71,7 +71,9 @@ object WriteFragmentTitle {
 object UserPoint {
     const val WRITE_EVALUATION = 10
     const val WRITE_EXAM = 20
+    const val REPORT = 1
     const val VIEW_EXAM = -20
+    const val DELETE_POST = -30
 }
 
 object LectureItemViewType {
@@ -96,6 +98,8 @@ object PostData {
 enum class MyPageViewType {
     BTN_LOGIN,
     BTN_MY_POST,
+    MENU_LIMIT_HISTORY,
+    MENU_PURCHASE_HISTORY,
     MENU_NOTICE,
     MENU_FEEDBACK,
     MENU_QUESTION,

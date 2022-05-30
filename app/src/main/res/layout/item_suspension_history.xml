@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_rounded_border_line_15_gray_500"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_reason"
+        style="@style/TextMedium.14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="중복 정보 신고 누적으로 인한 제한 안내" />
+
+    <TextView
+        android:id="@+id/tv_suspension_start_date"
+        style="@style/TextRegular.12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_reason"
+        tools:text="제한 일시 : 2022.04.10" />
+
+    <TextView
+        android:id="@+id/tv_suspension_end_date"
+        style="@style/TextRegular.12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_suspension_start_date"
+        tools:text="제한 기간 : 2022.04.17까지 (7일)" />
+
+    <TextView
+        android:id="@+id/tv_restrictions"
+        style="@style/TextRegular.12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_suspension_end_date"
+        tools:text="제한 조치 : 강의 평가 작성 불가" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

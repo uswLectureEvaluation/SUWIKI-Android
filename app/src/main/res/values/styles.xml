@@ -1,44 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="TextMedium">
+        <item name="android:fontWeight">500</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextLight">
+        <item name="android:fontWeight">100</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextRegular">
+        <item name="android:fontWeight">400</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextBold">
+        <item name="android:fontWeight">700</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="TextBold.20">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextMedium.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextMedium.12">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextMedium.12.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="TextMedium.12.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="TextMedium.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextMedium.14.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="TextMedium.18">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextMedium.16">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextMedium.16.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="TextRegular.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextRegular.10.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="TextRegular.12">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextRegular.12.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
+    <style name="TextRegular.12.Purple">
+        <item name="android:textColor">@color/suwiki_purple</item>
+    </style>
+
+    <style name="TextRegular.12.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="TextRegular.12.DarkGray">
+        <item name="android:textColor">@color/suwiki_gray_900</item>
+    </style>
+
+    <style name="TextRegular.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextRegular.16">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextLight.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextLight.12">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextLight.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
     <style name="SuwikiEditText" parent="@style/Widget.Design.TextInputLayout">
         <item name="hintEnabled">false</item>
-        <item name="android:textSize">14sp</item>
         <item name="errorTextColor">@color/suwiki_purple</item>
+        <item name="errorTextAppearance">@style/TextRegular.12</item>
     </style>
 
     <style name="SuwikiMainButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/button_suwiki_main</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/suwiki_white</item>
         <item name="android:gravity">center</item>
-        <item name="android:textAppearance">@style/TextMedium</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="SuwikiMainButton.Small">
-        <item name="android:background">@drawable/button_suwiki_main</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingStart">12dp</item>
-        <item name="android:paddingEnd">12dp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textAppearance">@style/TextMedium.16</item>
     </style>
 
     <style name="SuwikiSecondaryButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/ripple_suwiki_white</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:gravity">center</item>
-        <item name="android:textAppearance">@style/TextMedium</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textAppearance">@style/TextMedium.16.Blue</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="SuwikiMiniButton" parent="Widget.AppCompat.Button">
+    <style name="SuwikiSecondaryButton.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="SuwikiMiniButton">
         <item name="android:background">@drawable/button_suwiki_mini</item>
         <item name="android:gravity">center</item>
-        <item name="android:textAppearance">@style/TextCaption2</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textAppearance">@style/TextRegular.12</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">4dp</item>
+        <item name="android:textColor">@color/suwiki_white</item>
     </style>
 
     <style name="title_textview_style" parent="@android:style/Widget.TextView">
@@ -69,8 +178,8 @@
     <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:maxHeight">16dp</item>
-        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16.5dp</item>
+        <item name="android:minHeight">16.5dp</item>
         <item name="android:stepSize">0.1</item>
         <item name="android:isIndicator">true</item>
         <item name="android:numStars">5</item>
@@ -285,9 +394,9 @@
     <style name="recyclerview_evaluation_rounding_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/suwiki_black_700</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:background">@drawable/bg_rounded_gray_300_30</item>
+        <item name="android:background">@drawable/bg_rounded_gray_300_15</item>
+        <item name="android:textAppearance">@style/TextRegular.12</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="year_semester_text_style" parent="recyclerview_evaluation_rounding_text_style">
@@ -338,91 +447,47 @@
     </style>
 
     <!-- Text Styles  -->
-    <style name="Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Headline4.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Headline5.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="Headline6.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Logo" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="android:text">@string/app_name</item>
-        <item name="android:textColor">@color/custom_blue</item>
-    </style>
-
     <style name="TextTitle" parent="TextAppearance.AppCompat.Title">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextTitle.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextSubtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textColor">@color/black</item>
+    <style name="TextBody20" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="TextSubtitle1.Bold">
+    <style name="TextBody20.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextSubtitle1.White">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="TextSubtitle1.White.Bold">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="TextSubtitle1.Gray">
-        <item name="android:textColor">@color/custom_gray</item>
-    </style>
-
-    <style name="TextMedium" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextMedium.Purple">
-        <item name="android:textColor">@color/custom_purple</item>
-    </style>
-
-    <style name="TextMedium.Purple.Bold">
-        <item name="android:textStyle">bold</item>
+    <style name="TextSubtitle" parent="TextTitle">
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
     </style>
 
-    <style name="TextSubtitle2.Gray" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textColor">@color/custom_gray</item>
+    <style name="TextBody" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/suwiki_black_700</item>
     </style>
 
-    <style name="TextSubtitle3">
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/black</item>
+    <style name="TextBody.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
     </style>
 
-    <style name="TextSubtitle3.Gray">
-        <item name="android:textColor">@color/custom_gray</item>
+    <style name="TextBody.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextBody12" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/suwiki_black_700</item>
     </style>
 
     <style name="TextBody1" parent="TextAppearance.MaterialComponents.Body1">
@@ -433,25 +498,17 @@
         <item name="android:textColor">@color/custom_dark_gray</item>
     </style>
 
-    <style name="TextBody2" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="TextBody2.Gray">
-        <item name="android:textColor">@color/custom_gray</item>
-    </style>
-
     <style name="TextCaption1" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="TextCaption1.Gray" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textColor">@color/custom_gray</item>
+        <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 
     <style name="TextCaption2" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textSize">11sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
     </style>
 
     <style name="TextCaption2.Gray">
@@ -459,7 +516,7 @@
     </style>
 
     <style name="Button" parent="TextAppearance.MaterialComponents.Button">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/suwiki_black_700</item>
     </style>
 
     <style name="Button.Bold">
@@ -501,7 +558,6 @@
     <style name="SuwikiTextSubTitle.Bold.White">
         <item name="android:textColor">@color/suwiki_white</item>
     </style>
-
 
     <style name="SuwikiTextBody1" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/suwiki_black_700</item>
@@ -571,6 +627,15 @@
     </style>
 
     <style name="SuwikiTextBody3.Bold.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="SuwikiTextBody10" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/suwiki_black_700</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="SuwikiTextBody10.Gray">
         <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 </resources>

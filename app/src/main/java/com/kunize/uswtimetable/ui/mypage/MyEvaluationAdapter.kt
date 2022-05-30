@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
-import com.kunize.uswtimetable.util.PostData
 
 class MyEvaluationAdapter(private val viewModel: MyEvaluationViewModel) :
     ListAdapter<MyEvaluationDto, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
@@ -17,9 +16,8 @@ class MyEvaluationAdapter(private val viewModel: MyEvaluationViewModel) :
 
         fun bind(data: MyEvaluationDto) {
             binding.data = data
-            binding.mapper = PostData
             binding.viewmodel = viewModel
-            binding.contentTextView = binding.tvContent
+            binding.detailOrShortButton = binding.tvDetailShortButton
             binding.group = binding.layoutDetailScore
             binding.executePendingBindings()
         }

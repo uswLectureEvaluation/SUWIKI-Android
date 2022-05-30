@@ -17,12 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background"
+            android:paddingBottom="16dp"
+            android:paddingTop="24dp"
             app:navigationIcon="@drawable/ic_back">
 
             <TextView
-                style="@style/TextTitle"
+                android:id="@+id/tv_toolbar_title"
+                style="@style/TextMedium.16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/notice" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

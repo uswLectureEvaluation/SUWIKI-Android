@@ -34,19 +34,46 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:liftOnScroll="true">
+            app:liftOnScroll="false">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolBar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background">
+                android:layout_height="91dp"
+                android:background="@color/background"
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
-                <TextView
-                    style="@style/TextTitle.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/my_page" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        style="@style/TextMedium.18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/my_page"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_my_post_button"
+                        style="@style/SuwikiMiniButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.BTN_MY_POST)}"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="4dp"
+                        android:text="@string/my_evaluate"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -61,446 +88,555 @@
                 android:orientation="vertical"
                 android:padding="@dimen/page_padding">
 
-                <androidx.cardview.widget.CardView
-                    style="@style/cardview_style"
-                    android:layout_marginVertical="16dp">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_border_line_15_gray_500"
+                    android:padding="@dimen/cardview_padding">
 
-                    <LinearLayout
-                        android:id="@+id/beforeLoginLayoutWithButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginVertical="16dp"
+                    <TextView
+                        android:id="@+id/tv_my_account_title"
+                        style="@style/TextMedium.16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_account"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_login_id_title"
+                        style="@style/TextRegular.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/login_id"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="@+id/tv_my_account_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_my_account_title" />
+
+                    <TextView
+                        android:id="@+id/tv_login_id"
+                        style="@style/TextLight.14"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="20dp"
+                        android:text="@{user.user.userId}"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_login_id_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_login_id_title"
+                        app:layout_constraintTop_toTopOf="@+id/tv_login_id_title"
+                        tools:text="pmb0836" />
+
+                    <TextView
+                        android:id="@+id/tv_school_email_title"
+                        style="@style/TextRegular.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/email_string"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="@+id/tv_login_id_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_login_id_title" />
+
+                    <TextView
+                        android:id="@+id/tv_school_email"
+                        style="@style/TextLight.14"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="20dp"
+                        android:text="@{user.user.email}"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_school_email_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toEndOf="@+id/tv_school_email_title"
+                        app:layout_constraintTop_toTopOf="@+id/tv_school_email_title"
+                        tools:text="pmb0836@suwon.ac.kr" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_corner16_grey"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_total_point_title"
+                        style="@style/TextMedium.16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/my_point"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_total_point"
+                        style="@style/TextMedium.14.Blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="@{@string/detail_point(user.user.point)}"
+                        android:textColor="@color/suwiki_blue_900"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="0 p" />
+
+                    <TextView
+                        android:id="@+id/tv_my_evaluations_title"
+                        style="@style/TextRegular.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/my_evaluation_count"
+                        android:textColor="@color/suwiki_black_700"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_total_point_title" />
+
+                    <TextView
+                        android:id="@+id/tv_my_evaluations"
+                        style="@style/TextRegular.14"
+                        count="@{user.user.writtenEvaluation}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_my_evaluations_title"
+                        app:layout_constraintStart_toEndOf="@id/tv_my_evaluations_title"
+                        app:layout_constraintTop_toTopOf="@id/tv_my_evaluations_title"
+                        tools:text="5개" />
+
+                    <TextView
+                        android:id="@+id/tv_my_evaluations_point"
+                        style="@style/TextRegular.14"
+                        point="@{user.user.writtenEvaluation * point.WRITE_EVALUATION}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/suwiki_blue_900"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_my_evaluations"
+                        app:layout_constraintEnd_toEndOf="@id/tv_total_point"
+                        app:layout_constraintTop_toTopOf="@+id/tv_my_evaluations"
+                        tools:text="+100" />
+
+                    <TextView
+                        android:id="@+id/tv_my_exam_infos_text"
+                        style="@style/TextRegular.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/my_exam_info_count"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_my_evaluations_title" />
+
+                    <TextView
+                        android:id="@+id/tv_my_exam_infos"
+                        style="@style/TextRegular.14"
+                        count="@{user.user.writtenExam}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_my_exam_infos_text"
+                        app:layout_constraintEnd_toEndOf="@id/tv_my_evaluations"
+                        app:layout_constraintStart_toStartOf="@id/tv_my_evaluations"
+                        app:layout_constraintTop_toTopOf="@+id/tv_my_exam_infos_text"
+                        tools:text="2개" />
+
+                    <TextView
+                        android:id="@+id/tv_my_exam_infos_point"
+                        style="@style/TextRegular.14"
+                        point="@{user.user.writtenExam * point.WRITE_EXAM}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/suwiki_blue_900"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_my_exam_infos"
+                        app:layout_constraintEnd_toEndOf="@id/tv_my_evaluations_point"
+                        app:layout_constraintTop_toTopOf="@id/tv_my_exam_infos"
+                        tools:text="+40" />
+
+                    <TextView
+                        android:id="@+id/tv_opened_exam_infos_title"
+                        style="@style/TextRegular.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/opened_exam_count"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_my_exam_infos_text" />
+
+                    <TextView
+                        android:id="@+id/tv_opened_exam_infos"
+                        style="@style/TextRegular.14"
+                        count="@{user.user.viewExam}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_opened_exam_infos_title"
+                        app:layout_constraintEnd_toEndOf="@id/tv_my_exam_infos"
+                        app:layout_constraintTop_toTopOf="@id/tv_opened_exam_infos_title"
+                        tools:text="5개" />
+
+                    <TextView
+                        android:id="@+id/tv_opened_exam_point"
+                        style="@style/TextRegular.14"
+                        point="@{user.user.viewExam * point.VIEW_EXAM}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/suwiki_purple"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_opened_exam_infos"
+                        app:layout_constraintEnd_toEndOf="@id/tv_my_exam_infos_point"
+                        app:layout_constraintTop_toTopOf="@id/tv_opened_exam_infos"
+                        tools:text="-40" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_rounded_border_line_15_gray_500"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_point_system_guide_title"
+                        style="@style/TextMedium.16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_point_system_guide"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guide_end_dash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
                         android:orientation="vertical"
-                        android:padding="@dimen/cardview_padding"
-                        android:visibility="@{user.loggedIn ? View.GONE : View.VISIBLE}"
-                        tools:visibility="gone">
+                        app:layout_constraintGuide_begin="6dp"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/login_to_check_point"
-                            android:textColor="@color/alert"
-                            android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tv_dash_1"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/dash"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_point_system_guide_title" />
 
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/loginButton"
-                            android:layout_width="wrap_content"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.BTN_LOGIN)}"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/button_alert"
-                            android:paddingHorizontal="32dp"
-                            android:text="@string/login_button_text"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_point_system_guide_1"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/point_guide_1"
+                        app:layout_constraintStart_toEndOf="@id/guide_end_dash"
+                        app:layout_constraintTop_toTopOf="@id/tv_dash_1" />
 
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_dash_2"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/dash"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_point_system_guide_1" />
 
-                    <LinearLayout
-                        android:id="@+id/pointInfoLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/cardview_padding"
-                        android:visibility="@{user.loggedIn ? View.VISIBLE : View.GONE}"
-                        tools:visibility="visible">
+                    <TextView
+                        android:id="@+id/tv_point_system_guide_2"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/point_guide_2"
+                        app:layout_constraintStart_toEndOf="@id/guide_end_dash"
+                        app:layout_constraintTop_toTopOf="@id/tv_dash_2" />
 
-                        <TextView
-                            style="@style/TextSubtitle1.Bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/my_point"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tv_dash_3"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/dash"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_point_system_guide_2" />
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_point_system_guide_3"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/point_guide_3"
+                        app:layout_constraintStart_toEndOf="@id/guide_end_dash"
+                        app:layout_constraintTop_toTopOf="@id/tv_dash_3" />
 
-                            <TextView
-                                android:id="@+id/totalPoint"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:autoSizeMaxTextSize="24sp"
-                                android:autoSizeMinTextSize="12sp"
-                                android:autoSizeTextType="uniform"
-                                android:background="@drawable/border_circle"
-                                android:gravity="center"
-                                android:maxLines="1"
-                                android:text="@{@string/total_point(user.user.point)}"
-                                android:textColor="@color/red"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintDimensionRatio="W, 1:1"
-                                app:layout_constraintRight_toLeftOf="@+id/divider"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintWidth_max="100dp"
-                                app:layout_constraintWidth_min="70dp"
-                                tools:targetApi="o"
-                                tools:text="0 p" />
+                    <TextView
+                        android:id="@+id/tv_obtain_point_title"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/title_obtain_point"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_point_system_guide_3" />
 
-                            <View
-                                android:id="@+id/divider"
-                                android:layout_width="1dp"
-                                android:layout_height="0dp"
-                                android:background="?android:attr/listDivider"
-                                android:foreground="@color/black"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toRightOf="@+id/totalPoint"
-                                app:layout_constraintRight_toLeftOf="@id/pointDetailInfoLayout"
-                                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tv_obtain_point_evaluation"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_obtain_point_write_evaluation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_obtain_point_title" />
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/pointDetailInfoLayout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="@id/divider"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                        style="@style/TextRegular.12.Blue"
+                        point="@{point.WRITE_EVALUATION}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_obtain_point_evaluation"
+                        app:layout_constraintStart_toEndOf="@+id/tv_obtain_point_evaluation"
+                        app:layout_constraintTop_toTopOf="@+id/tv_obtain_point_evaluation"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="+10P" />
 
-                                <LinearLayout
-                                    android:id="@+id/info1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    app:layout_constraintBottom_toTopOf="@+id/info2"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                        android:id="@+id/tv_obtain_point_exam_info"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_obtain_point_share_exam_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_obtain_point_evaluation" />
 
-                                    <TextView
-                                        android:id="@+id/numberOfEvaluations"
-                                        style="@style/TextBody2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_evaluation_count(user.user.writtenEvaluation)}"
-                                        android:textColor="@color/black"
-                                        tools:text="작성한 강의 평가 : 5개" />
+                    <TextView
+                        style="@style/TextRegular.12.Blue"
+                        point="@{point.WRITE_EXAM}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_obtain_point_exam_info"
+                        app:layout_constraintStart_toEndOf="@+id/tv_obtain_point_exam_info"
+                        app:layout_constraintTop_toTopOf="@+id/tv_obtain_point_exam_info"
+                        tools:text="+20P" />
 
-                                    <TextView
-                                        android:id="@+id/myEvaluationsPoint"
-                                        style="@style/TextCaption2"
-                                        point="@{user.user.writtenEvaluation * point.WRITE_EVALUATION}"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/red"
-                                        tools:text="(+100P)"
-                                        tools:textColor="#F00" />
+                    <TextView
+                        android:id="@+id/tv_obtain_point_report"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_obtain_point_report"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_obtain_point_exam_info" />
 
-                                </LinearLayout>
+                    <TextView
+                        style="@style/TextRegular.12.Blue"
+                        point="@{point.REPORT}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/suwiki_blue_900"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_obtain_point_report"
+                        app:layout_constraintStart_toEndOf="@+id/tv_obtain_point_report"
+                        app:layout_constraintTop_toTopOf="@+id/tv_obtain_point_report"
+                        tools:text="+1P" />
 
-                                <LinearLayout
-                                    android:id="@+id/info2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    app:layout_constraintBottom_toTopOf="@+id/info3"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/info1">
+                    <TextView
+                        android:id="@+id/tv_deduct_point_title"
+                        style="@style/TextMedium.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/title_deduct_point"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_obtain_point_report" />
 
-                                    <TextView
-                                        android:id="@+id/numberOfExamInformation"
-                                        style="@style/TextBody2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="4dp"
-                                        android:text="@{@string/my_exam_info_count(user.user.writtenExam)}"
-                                        android:textColor="@color/black"
-                                        tools:text="작성한 시험 정보 : 2개" />
+                    <TextView
+                        android:id="@+id/tv_deduct_point_open"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_deduct_point_open_exam_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_deduct_point_title" />
 
-                                    <TextView
-                                        android:id="@+id/myExamInformationPoint"
-                                        style="@style/TextCaption2"
-                                        point="@{user.user.writtenExam * point.WRITE_EXAM}"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:text="(+40P)"
-                                        tools:textColor="#F00" />
+                    <TextView
+                        style="@style/TextRegular.12.Purple"
+                        point="@{point.VIEW_EXAM}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_deduct_point_open"
+                        app:layout_constraintStart_toEndOf="@+id/tv_deduct_point_open"
+                        app:layout_constraintTop_toTopOf="@+id/tv_deduct_point_open"
+                        tools:text="-20P" />
 
-                                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_deduct_point_deletion"
+                        style="@style/TextRegular.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_deduct_point_deletion_post"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_deduct_point_open" />
 
-                                <LinearLayout
-                                    android:id="@+id/info3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/info2">
+                    <TextView
+                        style="@style/TextRegular.12.Purple"
+                        point="@{point.DELETE_POST}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_deduct_point_deletion"
+                        app:layout_constraintStart_toEndOf="@+id/tv_deduct_point_deletion"
+                        app:layout_constraintTop_toTopOf="@+id/tv_deduct_point_deletion"
+                        tools:text="-30P" />
 
-                                    <TextView
-                                        android:id="@+id/numberOfOpenedExamInfo"
-                                        style="@style/TextBody2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginEnd="4dp"
-                                        android:text="@{@string/opened_exam_count(user.user.viewExam)}"
-                                        android:textColor="@color/black"
-                                        tools:text="시험 정보 열람 : 5개" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                    <TextView
-                                        android:id="@+id/openedExamPoint"
-                                        style="@style/TextCaption2"
-                                        point="@{user.user.viewExam * point.VIEW_EXAM}"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        tools:text="(-40P)"
-                                        tools:textColor="#00F" />
-                                </LinearLayout>
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_rounded_border_line_15_gray_500"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
 
-                <androidx.cardview.widget.CardView
-                    style="@style/cardview_style"
-                    android:layout_marginBottom="16dp">
+                    <TextView
+                        style="@style/TextMedium.16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/title_guidance" />
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/cardview_padding">
-
-                            <TextView
-                                android:id="@+id/myInformationTextView"
-                                style="@style/TextSubtitle1.Bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/my_information"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/myPostButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/custom_ripple_effect_gray"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:gravity="center"
-                                android:minHeight="48dp"
-                                android:onClick="@{() -> viewmodel.onClick(viewType.BTN_MY_POST)}"
-                                android:paddingHorizontal="4dp"
-                                android:paddingVertical="2dp"
-                                android:text="@string/my_evaluate"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/loginIdTextView"
-                                style="@style/TextSubtitle2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/login_id"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toStartOf="@+id/myInformationTextView"
-                                app:layout_constraintTop_toBottomOf="@+id/myInformationTextView" />
-
-                            <TextView
-                                android:id="@+id/loginId"
-                                style="@style/TextBody2.Gray"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginStart="16dp"
-                                android:text="@{user.user.userId}"
-                                app:layout_constraintBottom_toBottomOf="@+id/loginIdTextView"
-                                app:layout_constraintEnd_toStartOf="@+id/myPostButton"
-                                app:layout_constraintHorizontal_bias="0"
-                                app:layout_constraintStart_toEndOf="@+id/loginIdTextView"
-                                app:layout_constraintTop_toTopOf="@+id/loginIdTextView"
-                                tools:text="pmb0836" />
-
-                            <TextView
-                                android:id="@+id/loginEmailTextView"
-                                style="@style/TextSubtitle2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/email_string"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toStartOf="@+id/loginIdTextView"
-                                app:layout_constraintTop_toBottomOf="@+id/loginIdTextView" />
-
-                            <TextView
-                                android:id="@+id/loginEmail"
-                                style="@style/TextBody2.Gray"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginStart="16dp"
-                                android:text="@{user.user.email}"
-                                app:layout_constraintBottom_toBottomOf="@+id/loginEmailTextView"
-                                app:layout_constraintEnd_toStartOf="@+id/myPostButton"
-                                app:layout_constraintHorizontal_bias="0"
-                                app:layout_constraintStart_toEndOf="@+id/loginEmailTextView"
-                                app:layout_constraintTop_toTopOf="@+id/loginEmailTextView"
-                                tools:text="pmb0836@suwon.ac.kr" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/beforeLoginLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/blur_white"
-                            android:visibility="@{user.loggedIn ? View.GONE : View.VISIBLE}"
-                            tools:visibility="gone">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:text="@string/need_login"
-                                android:textColor="@color/alert"
-                                android:textSize="16sp" />
-                        </RelativeLayout>
-                    </FrameLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    style="@style/cardview_style"
-                    android:layout_marginBottom="16dp">
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_limit_history_button"
+                        style="@style/TextRegular.14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:divider="?android:listDivider"
-                        android:orientation="vertical"
-                        android:showDividers="middle">
+                        android:layout_marginTop="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_LIMIT_HISTORY)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/suspension_history" />
 
-                        <TextView
-                            android:id="@+id/noticeButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_NOTICE)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/notice"
-                            android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_purchase_history_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_PURCHASE_HISTORY)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/purchase_history" />
 
-                        <TextView
-                            android:id="@+id/sendFeedbackButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_FEEDBACK)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/send_feedback"
-                            android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_notice_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_NOTICE)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/notice" />
 
-                        <TextView
-                            android:id="@+id/questionButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_QUESTION)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/question"
-                            android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_send_feedback_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_FEEDBACK)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/send_feedback" />
 
-                        <TextView
-                            android:id="@+id/changePasswordButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_CHANGE_PW)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/change_password"
-                            android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_question_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_QUESTION)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/question" />
 
-                        <TextView
-                            android:id="@+id/termsOfUseButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_TERMS)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/terms_of_use"
-                            android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_terms_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_TERMS)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/terms_of_use" />
 
-                        <TextView
-                            android:id="@+id/privacyPolicyButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_PRIVACY_POLICY)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/privacy_policy"
-                            android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_privacy_policy_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_PRIVACY_POLICY)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/privacy_policy" />
 
-                        <TextView
-                            android:id="@+id/signOutButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_SIGN_OUT)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/sign_out"
-                            android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/opensource_licence_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_OPENSOURCE)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/opensource_licence" />
 
-                        <TextView
-                            android:id="@+id/opensourceLicenceButton"
-                            style="@style/Button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/custom_ripple_effect"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:minHeight="48dp"
-                            android:onClick="@{() -> viewmodel.onClick(viewType.MENU_OPENSOURCE)}"
-                            android:paddingHorizontal="@dimen/cardview_padding"
-                            android:text="@string/opensource_licence"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/change_password_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_CHANGE_PW)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/change_password" />
+
+                    <TextView
+                        android:id="@+id/sign_out_button"
+                        style="@style/TextRegular.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_SIGN_OUT)}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/sign_out" />
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

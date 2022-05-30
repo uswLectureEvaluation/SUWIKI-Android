@@ -54,7 +54,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/usePointBtn"
-            style="@style/blue_button_style"
+            style="@style/SuwikiSecondaryButton.Small"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:layout_width="wrap_content"

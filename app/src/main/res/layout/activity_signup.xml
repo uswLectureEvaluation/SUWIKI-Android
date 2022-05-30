@@ -34,7 +34,7 @@
 
                 <TextView
                     android:id="@+id/tv_current_page_title"
-                    style="@style/TextSubtitle1"
+                    style="@style/TextMedium.16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -76,7 +76,7 @@
 
             <TextView
                 android:id="@+id/tv_helper_text"
-                style="@style/TextBody2"
+                style="@style/TextRegular.14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
