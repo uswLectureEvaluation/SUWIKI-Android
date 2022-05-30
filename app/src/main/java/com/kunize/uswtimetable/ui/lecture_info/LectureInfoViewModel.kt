@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -140,6 +141,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 _written.value = response.body()?.written
                 val tmpResponse = response.body()
                 val tmpExamData = tmpResponse?.convertToEvaluationData()
+                Log.d("test","$tmpExamData")
                 commonRecyclerViewViewModel.deleteLoading()
                 if (tmpExamData != null) {
                     pageViewModel.isLastData(tmpExamData)

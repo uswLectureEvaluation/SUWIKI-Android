@@ -23,35 +23,34 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background"
-                app:navigationIcon="@drawable/ic_back">
+                android:layout_height="64dp"
+                app:contentInsetStart="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
                     android:focusable="true"
                     android:focusableInTouchMode="true">
 
                     <TextView
                         android:id="@+id/writeType"
-                        style="@style/TextTitle"
+                        style="@style/SuwikiTextSubTitle.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/write_evaluation"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/write_lecture"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <ImageView
+                        android:id="@+id/iv_close"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/finishButton"
-                        style="@style/blue_button_style"
-                        android:text="@string/write_lecture_info"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_close"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/writeType" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -72,146 +71,182 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/page_padding">
 
-                <TextView
-                    android:id="@+id/writeLectureName"
-                    style="@style/lecture_name_large_style"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="강의 이름" />
-
-                <TextView
-                    android:id="@+id/writeProfessor"
-                    style="@style/professor_large_style"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/writeLectureName"
-                    app:layout_constraintStart_toEndOf="@id/writeLectureName"
-                    app:layout_constraintTop_toTopOf="@id/writeLectureName"
-                    tools:text="교수 이름" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/writeDetailLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/edge_bottom"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/writeProfessor">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/writeSelYearTextView"
-                        style="@style/detail_info_bold_textview_style"
-                        android:text="@string/sel_year"
+                        style="@style/SuwikiTextBody2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/course_semester"
+                        app:layout_constraintBottom_toBottomOf="@+id/cl_select_semester"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/cl_select_semester" />
 
-                    <Spinner
-                        android:id="@+id/writeYearSemesterSpinner"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_select_semester"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeSelYearTextView"
-                        app:layout_constraintStart_toEndOf="@+id/writeSelYearTextView"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:background="@drawable/bg_rounded_border_line_10_gray_500"
+                        android:paddingStart="16dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="4dp"
+                        app:layout_constraintStart_toEndOf="@id/writeSelYearTextView"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_selected_semester"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@{viewModel.semesterText}"
+                            tools:text="2021-2" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_down_arrow"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_selected_semester"
+                            app:layout_constraintStart_toEndOf="@id/tv_selected_semester"
+                            app:layout_constraintTop_toTopOf="@id/tv_selected_semester" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/tv_test_type"
+                        style="@style/SuwikiTextBody2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_kind"
+                        app:layout_constraintBottom_toBottomOf="@+id/cl_select_test_type"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/cl_select_test_type" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_select_test_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_rounded_border_line_10_gray_500"
+                        android:paddingStart="16dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="4dp"
+                        app:layout_constraintStart_toEndOf="@id/tv_test_type"
+                        app:layout_constraintTop_toBottomOf="@id/cl_select_semester">
+
+                        <TextView
+                            android:id="@+id/tv_selected_test_type"
+                            style="@style/SuwikiTextBody2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@{viewModel.testText}"
+                            tools:text="중간고사" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_down_arrow"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_selected_test_type"
+                            app:layout_constraintStart_toEndOf="@id/tv_selected_test_type"
+                            app:layout_constraintTop_toTopOf="@id/tv_selected_test_type" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/lectureGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="writeHoneyTextView,honeySeekBar,taskRadioGroup,writeGradeTextView,teamRadioGroup,writeTaskTextView,satisfactionSeekBar,writeSatisfactionTextView,writeLearningTextView,gradeRadioGroup,writeTeamTextView,learningSeekBar,scoreTextView,writeSatisfactionScore,scoreTextView1,scoreTextView2,writeLearningScore,writeHoneyScore" />
+                        app:constraint_referenced_ids="writeHoneyTextView,honeySeekBar,taskRadioGroup,writeGradeTextView,teamRadioGroup,writeTaskTextView,satisfactionSeekBar,writeSatisfactionTextView,writeLearningTextView,gradeRadioGroup,writeTeamTextView,learningSeekBar,writeSatisfactionScore,writeLearningScore,writeHoneyScore" />
 
                     <TextView
                         android:id="@+id/writeHoneyTextView"
-                        style="@style/detail_info_bold_textview_style"
-                        android:layout_marginTop="16dp"
+                        style="@style/SuwikiTextBody2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
                         android:text="@string/honey_score"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/writeSelYearTextView" />
 
                     <TextView
-                        android:id="@+id/scoreTextView"
-                        style="@style/slash5_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/score"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeLearningScore"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
                         android:id="@+id/writeSatisfactionScore"
-                        style="@style/score_textview_style_large"
+                        style="@style/SuwikiTextBody1.Blue.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginEnd="10dp"
                         android:text="@{@string/floatToStr(viewModel.satisfactionScore)}"
-                        android:textColor="@color/custom_blue"
                         app:layout_constraintBottom_toBottomOf="@+id/satisfactionSeekBar"
-                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/satisfactionSeekBar"
                         tools:text="3.5" />
 
                     <TextView
-                        android:id="@+id/scoreTextView1"
-                        style="@style/slash5_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/score"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeHoneyScore"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
-                        android:id="@+id/scoreTextView2"
-                        style="@style/slash5_textview_style_large"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/score"
-                        app:layout_constraintBottom_toBottomOf="@+id/writeSatisfactionScore"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
                         android:id="@+id/writeLearningScore"
-                        style="@style/score_textview_style_large"
+                        style="@style/SuwikiTextBody1.Blue.Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginEnd="10dp"
                         android:text="@{@string/floatToStr(viewModel.learningScore)}"
-                        android:textColor="@color/custom_red"
                         app:layout_constraintBottom_toBottomOf="@+id/learningSeekBar"
-                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/learningSeekBar"
                         tools:text="3.5" />
 
                     <TextView
                         android:id="@+id/writeHoneyScore"
-                        style="@style/score_textview_style_large"
-                        android:layout_marginEnd="4dp"
+                        style="@style/SuwikiTextBody1.Blue.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
                         android:minHeight="0dp"
                         android:text="@{@string/floatToStr(viewModel.honeyScore)}"
-                        android:textColor="@color/custom_yellow"
                         app:layout_constraintBottom_toBottomOf="@+id/honeySeekBar"
-                        app:layout_constraintEnd_toStartOf="@+id/scoreTextView1"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/honeySeekBar"
                         tools:text="3.5" />
 
                     <TextView
                         android:id="@+id/writeLearningTextView"
-                        style="@style/detail_info_bold_textview_style"
-                        android:layout_marginTop="16dp"
+                        style="@style/SuwikiTextBody2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="@string/learning_score"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/writeHoneyTextView" />
 
                     <TextView
                         android:id="@+id/writeSatisfactionTextView"
-                        style="@style/detail_info_bold_textview_style"
-                        android:layout_marginTop="16dp"
+                        style="@style/SuwikiTextBody2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="@string/satisfaction"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/writeLearningTextView" />
 
                     <TextView
                         android:id="@+id/writeTeamTextView"
-                        style="@style/detail_info_bold_textview_style"
+                        style="@style/SuwikiTextBody2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
@@ -221,7 +256,7 @@
 
                     <TextView
                         android:id="@+id/writeTaskTextView"
-                        style="@style/detail_info_bold_textview_style"
+                        style="@style/SuwikiTextBody2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -231,7 +266,7 @@
 
                     <TextView
                         android:id="@+id/writeGradeTextView"
-                        style="@style/detail_info_bold_textview_style"
+                        style="@style/SuwikiTextBody2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -252,19 +287,19 @@
 
                         <RadioButton
                             android:id="@+id/gradeGoodRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:layout_marginEnd="16dp"
+                            style="@style/write_radiobutton_text_style.Blue"
+                            android:layout_marginEnd="8dp"
                             android:text="@string/good" />
 
                         <RadioButton
                             android:id="@+id/gradeNormalRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:layout_marginEnd="16dp"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
                             android:text="@string/normal" />
 
                         <RadioButton
                             android:id="@+id/gradeDifficultRadioButton"
-                            style="@style/write_radiobutton_text_style"
+                            style="@style/write_radiobutton_text_style.Purple"
                             android:text="@string/picky" />
 
                     </RadioGroup>
@@ -277,17 +312,16 @@
 
                     <TextView
                         android:id="@+id/testContentsTextView"
-                        style="@style/detail_info_bold_textview_style"
+                        style="@style/SuwikiTextBody2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:text="시험 내용"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/writeGradeTextView" />
+                        app:layout_constraintTop_toTopOf="@+id/testContentsGroup" />
 
                     <TextView
                         android:id="@+id/multSelectTextView"
-                        style="@style/professor_middle_style"
+                        style="@style/SuwikiTextBody3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="(복수 선택)"
@@ -299,57 +333,72 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
                         app:alignContent="stretch"
                         app:alignItems="stretch"
                         app:flexWrap="wrap"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/testContentsTextView"
-                        app:layout_constraintTop_toTopOf="@+id/testContentsTextView">
+                        app:layout_constraintTop_toBottomOf="@id/difficultyGroup">
 
                         <CheckBox
                             android:id="@+id/genealogyCheckBox"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/genealogy" />
 
                         <CheckBox
                             android:id="@+id/textbookCheckBox"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/textbook" />
 
                         <CheckBox
                             android:id="@+id/pptCheckBox"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/ppt" />
 
                         <CheckBox
                             android:id="@+id/noteCheckBox"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/note" />
 
                         <CheckBox
                             android:id="@+id/applicationCheckBox"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/application" />
 
                         <CheckBox
                             android:id="@+id/practiceCheckBox"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/practice" />
 
                         <CheckBox
                             android:id="@+id/taskCheckBox"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/task" />
                     </com.google.android.flexbox.FlexboxLayout>
 
                     <TextView
                         android:id="@+id/difficultyTextView"
-                        style="@style/detail_info_bold_textview_style"
+                        style="@style/SuwikiTextBody2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="64dp"
                         android:text="난이도"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/testContentsGroup" />
+                        app:layout_constraintTop_toBottomOf="@id/writeGradeTextView" />
 
                     <com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup
                         android:id="@+id/difficultyGroup"
@@ -357,43 +406,42 @@
                         android:layout_height="wrap_content"
                         app:alignItems="flex_start"
                         app:flexWrap="wrap"
+                        app:layout_constraintBottom_toBottomOf="@+id/difficultyTextView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/testContentsGroup"
                         app:layout_constraintTop_toTopOf="@+id/difficultyTextView">
 
 
                         <RadioButton
-                            android:id="@+id/veryEasyRadioButton"
-                            style="@style/write_checkbox_style"
-                            android:text="@string/veryEasy" />
-
-                        <RadioButton
                             android:id="@+id/easyRadioButton"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Blue"
                             android:text="@string/easy" />
 
                         <RadioButton
                             android:id="@+id/normalRadioButton"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginStart="8dp"
                             android:text="@string/normal" />
 
                         <RadioButton
                             android:id="@+id/difficultRadioButton"
-                            style="@style/write_checkbox_style"
+                            style="@style/write_radiobutton_text_style.Purple"
+                            android:layout_marginStart="8dp"
                             android:text="@string/difficult" />
 
-                        <RadioButton
-                            android:id="@+id/veryDifficultRadioButton"
-                            style="@style/write_checkbox_style"
-                            android:text="@string/veryDifficult" />
                     </com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup>
 
                     <SeekBar
                         android:id="@+id/honeySeekBar"
-                        style="@style/custom_seekbar_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:progressDrawable="@drawable/honey_progress"
+                        android:layout_marginEnd="8dp"
+                        android:max="10"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="8dp"
+                        android:progressDrawable="@drawable/ll_seek_bar"
+                        android:thumb="@drawable/shape_seek_thumb"
                         app:layout_constraintBottom_toBottomOf="@+id/writeHoneyTextView"
                         app:layout_constraintEnd_toStartOf="@+id/writeHoneyScore"
                         app:layout_constraintStart_toEndOf="@+id/writeHoneyTextView"
@@ -402,10 +450,15 @@
 
                     <SeekBar
                         android:id="@+id/learningSeekBar"
-                        style="@style/custom_seekbar_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:progressDrawable="@drawable/learning_progress"
+                        android:layout_marginEnd="8dp"
+                        android:max="10"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="8dp"
+                        android:progressDrawable="@drawable/ll_seek_bar"
+                        android:thumb="@drawable/shape_seek_thumb"
                         app:layout_constraintBottom_toBottomOf="@+id/writeLearningTextView"
                         app:layout_constraintEnd_toStartOf="@+id/writeLearningScore"
                         app:layout_constraintStart_toEndOf="@+id/writeLearningTextView"
@@ -414,8 +467,13 @@
 
                     <SeekBar
                         android:id="@+id/satisfactionSeekBar"
-                        style="@style/custom_seekbar_style"
-                        android:progressDrawable="@drawable/satisfaction_progress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:max="10"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="8dp"
+                        android:progressDrawable="@drawable/ll_seek_bar"
+                        android:thumb="@drawable/shape_seek_thumb"
                         app:layout_constraintBottom_toBottomOf="@+id/writeSatisfactionTextView"
                         app:layout_constraintEnd_toEndOf="@+id/learningSeekBar"
                         app:layout_constraintStart_toStartOf="@+id/learningSeekBar"
@@ -433,13 +491,13 @@
 
                         <RadioButton
                             android:id="@+id/teamNotExistRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:layout_marginEnd="16dp"
+                            style="@style/write_radiobutton_text_style.Blue"
+                            android:layout_marginEnd="8dp"
                             android:text="@string/not_exist" />
 
                         <RadioButton
                             android:id="@+id/teamExistRadioButton"
-                            style="@style/write_radiobutton_text_style"
+                            style="@style/write_radiobutton_text_style.Purple"
                             android:text="@string/exist" />
                     </RadioGroup>
 
@@ -454,19 +512,19 @@
 
                         <RadioButton
                             android:id="@+id/taskNotExistRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:layout_marginEnd="16dp"
+                            style="@style/write_radiobutton_text_style.Blue"
+                            android:layout_marginEnd="8dp"
                             android:text="@string/not_exist" />
 
                         <RadioButton
                             android:id="@+id/taskNormalRadioButton"
-                            style="@style/write_radiobutton_text_style"
-                            android:layout_marginEnd="16dp"
+                            style="@style/write_radiobutton_text_style.Black"
+                            android:layout_marginEnd="8dp"
                             android:text="@string/normal" />
 
                         <RadioButton
                             android:id="@+id/taskManyRadioButton"
-                            style="@style/write_radiobutton_text_style"
+                            style="@style/write_radiobutton_text_style.Purple"
                             android:text="@string/many" />
                     </RadioGroup>
 
@@ -474,21 +532,32 @@
 
                 <EditText
                     android:id="@+id/writeContent"
+                    style="@style/SuwikiTextBody1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:minHeight="224dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/border_corner8_gray"
+                    android:background="@drawable/bg_rounded_border_line_15_gray_500"
                     android:ems="10"
                     android:gravity="top"
                     android:inputType="textMultiLine"
-                    android:minHeight="400dp"
-                    android:padding="@dimen/cardview_short_padding"
-                    android:textSize="16sp"
                     android:maxLength="1000"
+                    android:padding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/writeDetailLayout"
                     tools:hint="샘플 힌트 입니다 ~" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/finishButton"
+                    style="@style/SuwikiMainButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/writeContent"
+                    tools:text="작성하기 (+10P)" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

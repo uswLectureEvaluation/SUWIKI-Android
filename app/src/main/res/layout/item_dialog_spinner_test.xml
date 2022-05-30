@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kunize.uswtimetable.ui.write.WriteViewModel" />
+
+        <variable
+            name="text"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:onClick="@{() -> viewModel.dialogTestClick(text)}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_baseline_ripple_blue"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            style="@style/SuwikiTextSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@{text}"
+            tools:text="종합" />
+    </LinearLayout>
+</layout>
