@@ -39,12 +39,18 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/recyclerview_padding"
-                    android:paddingEnd="@dimen/recyclerview_padding"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="16dp"
                     app:layout_collapseMode="parallax"
-                    app:navigationIcon="@drawable/ic_back"
-                    app:title="구매 기록"
-                    app:titleTextAppearance="@style/TextTitle.Bold" />
+                    app:navigationIcon="@drawable/ic_back">
+
+                    <TextView
+                        style="@style/TextMedium.16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/purchase_history" />
+                </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -55,6 +61,7 @@
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:itemCount="3"
             tools:listitem="@layout/item_recycler_purchase" />
 
         <ProgressBar

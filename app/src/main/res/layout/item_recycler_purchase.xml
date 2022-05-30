@@ -13,49 +13,52 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/tv_item_title"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{data.lectureName}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="과목 이름이 들어가는 부분" />
-
-        <TextView
-            android:id="@+id/tv_item_professor"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@{data.professor}"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_item_title"
-            app:layout_constraintStart_toEndOf="@id/tv_item_title"
-            tools:text="교수 이름" />
-
-        <TextView
-            android:id="@+id/tv_item_major"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{data.majorType}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_title"
-            tools:text="정보보호학과" />
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_rounded_border_line_15_gray_500"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_date"
+            style="@style/TextRegular.12.Gray"
             date="@{data.createDate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_item_major"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="2022/12/21" />
+
+        <TextView
+            android:id="@+id/tv_item_title"
+            style="@style/TextMedium.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:maxLines="1"
+            android:text="@{data.lectureName}"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_major_and_professor"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            tools:text="기술과 디자인 디지털 세계의 양손" />
+
+        <TextView
+            android:id="@+id/tv_item_major_and_professor"
+            style="@style/TextRegular.12.DarkGray"
+            major="@{data.majorType}"
+            professor="@{data.professor}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:maxLines="1"
+            app:layout_constraintWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/tv_item_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_title"
+            tools:text="샌드박스 | 노성산" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
