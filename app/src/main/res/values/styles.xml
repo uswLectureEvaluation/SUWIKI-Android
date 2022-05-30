@@ -2,25 +2,25 @@
 <resources>
 
     <style name="TextMedium">
-        <item name="android:fontFamily">@font/notosans_medium</item>
+        <item name="android:fontWeight">500</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextLight">
-        <item name="android:fontFamily">@font/notosans_light</item>
+        <item name="android:fontWeight">100</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextRegular">
-        <item name="android:fontFamily">@font/notosans_regular</item>
+        <item name="android:fontWeight">400</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextBold">
-        <item name="android:fontFamily">@font/notosans_bold</item>
+        <item name="android:fontWeight">700</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:includeFontPadding">false</item>
     </style>
@@ -87,6 +87,10 @@
 
     <style name="TextRegular.12.Gray">
         <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="TextRegular.12.DarkGray">
+        <item name="android:textColor">@color/suwiki_gray_900</item>
     </style>
 
     <style name="TextRegular.14">
@@ -363,10 +367,8 @@
     <style name="recyclerview_evaluation_rounding_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/suwiki_black_700</item>
-        <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/bg_rounded_gray_300_15</item>
-        <item name="fontFamily">@font/notosans_regular</item>
+        <item name="android:textAppearance">@style/TextRegular.12</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
