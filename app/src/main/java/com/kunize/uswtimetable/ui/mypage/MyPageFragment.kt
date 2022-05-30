@@ -42,6 +42,10 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (User.isLoggedIn.value?.not() == true) {
+            logIn(requireContext())
+        }
+
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
         binding.user = User
@@ -54,10 +58,8 @@ class MyPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        User.login()
         binding.user = User
-        if (User.isLoggedIn.value?.not() == true) {
-            logIn(requireContext())
-        }
     }
 
     private fun setOnMenuClicked() {
