@@ -30,7 +30,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
     private fun getNotices() {
         loading.value = true
         viewModelScope.launch(Dispatchers.Main) {
-            val response = noticeRepository.getNotices()
+            val response = noticeRepository.getNotices(1) // TODO 페이지네이션 구현
             Log.d(TAG, "NoticeViewModel - getNotices() called -> ${response.body()}")
 
             if (response.isSuccessful) {

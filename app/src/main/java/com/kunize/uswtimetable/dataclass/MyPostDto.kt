@@ -15,6 +15,7 @@ data class MyEvaluationDto(
     val id: Long,
     val lectureName: String, //과목이름
     val professor: String, //교수이름
+    val majorType: String, // 개설학과
     val selectedSemester: String,
     val semesterList: String,
     val totalAvg: Float, //총점
@@ -42,6 +43,7 @@ data class MyExamInfoDto(
     val id: Long,
     val lectureName: String, //과목 이름
     val professor: String, //교수이름
+    val majorType: String, //개설학과
     @SerializedName("selectedSemester") val semester: String,
     val semesterList: String,
     val examInfo: String, //시험 방식
@@ -52,6 +54,7 @@ data class MyExamInfoDto(
         MyExamInfo(
             id = this.id,
             subject = this.lectureName,
+            major = this.majorType,
             semester = this.semester,
             semesterList = this.semesterList,
             professor = this.professor,
@@ -62,7 +65,7 @@ data class MyExamInfoDto(
 }
 
 data class MyExamInfoEditDto(
-    val semester: String,
+    @SerializedName("selectedSemester") val semester: String,
     val examInfo: String,
     val examDifficulty: String,
     val content: String,
@@ -71,6 +74,7 @@ data class MyExamInfoEditDto(
 data class MyExamInfo(
     val id: Long,
     val subject: String,
+    val major: String,
     val semester: String,
     val semesterList: String,
     val professor: String,

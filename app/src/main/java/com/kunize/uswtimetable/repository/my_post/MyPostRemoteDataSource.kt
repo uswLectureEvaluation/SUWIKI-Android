@@ -10,9 +10,9 @@ class MyPostRemoteDataSource(private val apiService: IRetrofit): MyPostDataSourc
 
     override suspend fun getMyExamInfos(page: Int) = apiService.getExamPosts(page)
 
-    override suspend fun editMyEvaluation(request: MyEvaluationEditDto) = apiService.updateEvaluatePost(request)
+    override suspend fun editMyEvaluation(id: Long, request: MyEvaluationEditDto) = apiService.updateEvaluatePost(id, request)
 
-    override suspend fun editMyExamInfo(request: MyExamInfoEditDto) = apiService.updateExamPost(request)
+    override suspend fun editMyExamInfo(id: Long, request: MyExamInfoEditDto) = apiService.updateExamPost(id, request)
 
     override suspend fun deleteMyEvaluation(id: Long) {
         apiService.deleteEvaluation(id)

@@ -17,7 +17,6 @@ import com.kunize.uswtimetable.util.API.DELETE_EXAM_POSTS
 import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.EDIT_LECTURE_EXAM
 import com.kunize.uswtimetable.util.API.EVALUATE_POST
-import com.kunize.uswtimetable.util.API.EXAM
 import com.kunize.uswtimetable.util.API.EXAM_POSTS
 import com.kunize.uswtimetable.util.API.ID
 import com.kunize.uswtimetable.util.API.LECTURE_DETAIL_EVALUATION
@@ -57,7 +56,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
-import retrofit2.http.Headers
 import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -84,7 +82,7 @@ interface IRetrofit {
 
     // 공지사항 리스트 API
     @GET(NOTICE_LIST)
-    suspend fun getNoticeList(): Response<NoticeListDto>
+    suspend fun getNoticeList(@Query("page") page: Int): Response<NoticeListDto>
 
     // 공지사항 API
     @GET(NOTICE)
@@ -119,16 +117,16 @@ interface IRetrofit {
     suspend fun getEvaluatePosts(@Query("page") page: Int): Response<MyEvaluationListDto>
 
     // 내가 쓴 글 (강의평가 수정)
-    @GET(UPDATE_EVALUATE_POST)
-    suspend fun updateEvaluatePost(@Body info: MyEvaluationEditDto)
+    @PUT(UPDATE_EVALUATE_POST)
+    suspend fun updateEvaluatePost(@Query("evaluateIdx") id: Long, @Body info: MyEvaluationEditDto)
 
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)
     suspend fun getExamPosts(@Query("page") page: Int): Response<MyExamInfoListDto>
 
     // 내가 쓴 글 (시험 정보 수정)
-    @GET(UPDATE_EXAM_POSTS)
-    suspend fun updateExamPost(@Body info: MyExamInfoEditDto)
+    @PUT(UPDATE_EXAM_POSTS)
+    suspend fun updateExamPost(@Query("examIdx") id: Long, @Body info: MyExamInfoEditDto)
 
     @DELETE(DELETE_EVALUATE_POST)
     suspend fun deleteEvaluation(@Query("evaluateIdx") id: Long)
@@ -190,7 +188,7 @@ interface IRetrofit {
     ): Response<String>
 
     //강의평가 수정
-    @POST(EDIT_LECTURE_EVALUATION)
+    @PUT(EDIT_LECTURE_EVALUATION)
     suspend fun updateLectureEvaluation(
         @Query("evaluateIdx") lectureId: Long,
         @Body info: LectureEvaluationEditDto
@@ -201,7 +199,7 @@ interface IRetrofit {
     suspend fun buyExam(@Query("lectureId") lectureId: Long): Response<String>
 
     //시험 정보 수정
-    @POST(EDIT_LECTURE_EXAM)
+    @PUT(EDIT_LECTURE_EXAM)
     suspend fun updateLectureExam(
         @Query("examIdx") lectureId: Long,
         @Body info: LectureExamEditDto
