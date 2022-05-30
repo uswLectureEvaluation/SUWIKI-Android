@@ -58,6 +58,7 @@
             android:id="@+id/rv_purchase_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/purchase_history"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
