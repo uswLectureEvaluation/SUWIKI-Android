@@ -30,9 +30,11 @@ class NoticeDetailFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
-
         requireArguments().getLong(KEY_NOTICE_ID).let {
             viewModel.getNotice(it)
+        }
+        viewModel.notice.observe(viewLifecycleOwner) {
+            binding.notice = it
         }
 
         viewModel.eventBack.observe(viewLifecycleOwner, EventObserver {
