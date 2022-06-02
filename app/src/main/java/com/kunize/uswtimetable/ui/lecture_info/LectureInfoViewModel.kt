@@ -7,14 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.EvaluationData
-import com.kunize.uswtimetable.data.remote.LectureDetailInfoDto
+import com.kunize.uswtimetable.data.remote.DataDto
+import com.kunize.uswtimetable.data.remote.LectureDetailInfoDataDto
+import com.kunize.uswtimetable.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.common.ToastViewModel
-import com.kunize.uswtimetable.repository.lecture_info.LectureInfoRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
-import com.kunize.uswtimetable.util.LectureItemViewType
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -40,8 +40,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     val showHideExamDataLayout: LiveData<Boolean>
         get() = _showHideExamDataLayout
 
-    private val _lectureDetailInfoData = MutableLiveData<LectureDetailInfoDto>()
-    val lectureDetailInfoData: LiveData<LectureDetailInfoDto>
+    private val _lectureDetailInfoData = MutableLiveData<LectureDetailInfoDataDto>()
+    val lectureDetailInfoData: LiveData<LectureDetailInfoDataDto>
         get() = _lectureDetailInfoData
 
     init {
@@ -86,11 +86,11 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
     }
 
     suspend fun setInfoValue(): Boolean {
-        val response: Response<LectureDetailInfoDto>
+        val response: Response<DataDto<LectureDetailInfoDataDto>>
         withContext(viewModelScope.coroutineContext) {
             response = lectureInfoRepository.getLectureDetailInfo(pageViewModel.lectureId)
             if (response.isSuccessful) {
-                _lectureDetailInfoData.value = response.body()
+                _lectureDetailInfoData.value = response.body()?.data?:return@withContext
             } else {
                 handleError(response.code())
             }
@@ -150,7 +150,7 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                     else if (!tmpResponse.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
-                        commonRecyclerViewViewModel.changeRecyclerViewData(tmpExamData!!)
+                        commonRecyclerViewViewModel.changeRecyclerViewData(tmpExamData)
                         pageViewModel.nextPage()
                     }
                 }

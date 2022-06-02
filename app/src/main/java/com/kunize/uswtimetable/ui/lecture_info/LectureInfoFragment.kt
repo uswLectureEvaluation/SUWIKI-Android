@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,33 +12,26 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.data.local.LectureProfessorSemester
+import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.login.LoginActivity
-import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.infiniteScrolls
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
     private lateinit var adapter: EvaluationListAdapter
-    private val lectureInfoViewModel: LectureInfoViewModel by viewModels {
-        ViewModelFactory(
-            requireContext()
-        )
-    }
+    private val lectureInfoViewModel: LectureInfoViewModel by viewModels { ViewModelFactory(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_lecture_info, container, false)
 
@@ -111,7 +103,7 @@ class LectureInfoFragment : Fragment() {
                 lectureProfessorName = LectureProfessorSemester(
                     binding.tvLectureName.text.toString(),
                     binding.tvProfessorName.text.toString(),
-                    lectureInfoViewModel.lectureDetailInfoData.value?.data?.semester ?: ""
+                    lectureInfoViewModel.lectureDetailInfoData.value?.semester ?: ""
                 ), isEvaluation = !binding.examInfoRadioBtn.isChecked,
                 lectureId = lectureInfoViewModel.pageViewModel.lectureId
             )

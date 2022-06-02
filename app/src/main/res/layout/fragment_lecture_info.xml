@@ -25,8 +25,8 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                app:contentInsetStart="0dp">
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_toolbar"
@@ -38,11 +38,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="9dp"
+                        android:contentDescription="@string/btn_back"
                         android:src="@drawable/ic_back"
                         app:layout_constraintBottom_toBottomOf="@id/writeType"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/writeType"
-                        android:contentDescription="@string/btn_back" />
+                        app:layout_constraintTop_toTopOf="@id/writeType" />
 
                     <TextView
                         android:id="@+id/writeType"
@@ -62,24 +62,25 @@
                         android:layout_gravity="end"
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/ic_close"
+                        android:contentDescription="@string/description_close_button"
                         app:layout_constraintBottom_toBottomOf="@id/writeType"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/writeType" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        app:layout_constraintTop_toBottomOf="@id/writeType"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/page_padding"
                         android:background="@drawable/bg_rounded_border_line_15_gray_500"
-                        android:padding="16dp">
+                        android:padding="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/writeType">
 
                         <TextView
                             android:id="@+id/tv_lecture_name"
                             style="@style/SuwikiTextSubTitle.Bold"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureName}"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.lectureName}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +90,7 @@
                         <TextView
                             android:id="@+id/tv_professor_name"
                             style="@style/SuwikiTextBody2"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.professor}"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.professor}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -110,7 +111,7 @@
                         <TextView
                             android:id="@+id/tv_major_name"
                             style="@style/SuwikiTextBody2"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.majorType}"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.majorType}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -129,14 +130,14 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_professor_name"
-                            app:yearSemesterList="@{lectureInfoViewModel.lectureDetailInfoData.data.semester}">
+                            app:yearSemesterList="@{lectureInfoViewModel.lectureDetailInfoData.semester}">
 
                         </com.google.android.flexbox.FlexboxLayout>
 
                         <TextView
                             android:id="@+id/infoEvaluationType"
                             style="@style/recyclerview_evaluation_rounding_text_style"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureType}"
+                            text="@{lectureInfoViewModel.lectureDetailInfoData.lectureType}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -173,11 +174,11 @@
                         <TextView
                             android:id="@+id/infoHoneyScore"
                             style="@style/SuwikiTextBody1.Blue.Bold"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureHoneyAvg)}"
+                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.lectureHoneyAvg)}"
                             app:layout_constraintBottom_toBottomOf="@id/infoHoneyTextView"
                             app:layout_constraintStart_toEndOf="@id/infoHoneyTextView"
                             tools:text="4.2" />
@@ -194,11 +195,11 @@
                         <TextView
                             android:id="@+id/infoLearningScore"
                             style="@style/SuwikiTextBody1.Blue.Bold"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureLearningAvg)}"
+                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.lectureLearningAvg)}"
                             app:layout_constraintBottom_toBottomOf="@id/infoLearningTextView"
                             app:layout_constraintStart_toEndOf="@id/infoLearningTextView"
                             tools:text="4.5" />
@@ -215,10 +216,10 @@
                         <TextView
                             android:id="@+id/infoSatisfactionScore"
                             style="@style/SuwikiTextBody1.Blue.Bold"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.data.lectureSatisfactionAvg)}"
+                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.lectureSatisfactionAvg)}"
                             app:layout_constraintBottom_toBottomOf="@+id/infoSatisfactionTextView"
                             app:layout_constraintStart_toStartOf="@id/infoLearningScore"
                             tools:text="4.5" />
@@ -268,8 +269,8 @@
                         <TextView
                             android:id="@+id/infoMeeting"
                             style="@style/SuwikiTextBody2"
-                            lectureTeamAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTeamAvg}"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            lectureTeamAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTeamAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -280,8 +281,8 @@
                         <TextView
                             android:id="@+id/infoTask"
                             style="@style/SuwikiTextBody2"
-                            lectureHomeworkAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureHomeworkAvg}"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            lectureHomeworkAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureHomeworkAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -292,8 +293,8 @@
                         <TextView
                             android:id="@+id/infoGrade"
                             style="@style/SuwikiTextBody2"
-                            lectureDifficultyAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureDifficultyAvg}"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.data.lectureTotalAvg}"
+                            lectureDifficultyAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureDifficultyAvg}"
+                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -329,12 +330,12 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:enabled="@{!lectureInfoViewModel.written}"
                         android:id="@+id/writeBtn"
                         style="@style/SuwikiMiniButton"
                         android:layout_width="wrap_content"
                         android:layout_height="26dp"
                         android:layout_marginBottom="16dp"
+                        android:enabled="@{!lectureInfoViewModel.written}"
                         android:text="@{lectureInfoViewModel.writeBtnText}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -422,8 +423,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
-
-
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

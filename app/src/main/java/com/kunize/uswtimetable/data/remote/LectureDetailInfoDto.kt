@@ -3,10 +3,6 @@ package com.kunize.uswtimetable.data.remote
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class LectureDetailInfoDto(
-    val data: LectureDetailInfoDataDto
-)
-
 data class LectureDetailInfoDataDto(
     val id: Long,
     @SerializedName("semesterList") val semester: String,
