@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.dataclass.MyExamInfoDto
+import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.ui.common.Event
 import com.kunize.uswtimetable.util.Constants
@@ -15,11 +15,11 @@ import com.kunize.uswtimetable.util.LIST_CONFIG.ONCE_REQUEST_SIZE
 import kotlinx.coroutines.launch
 
 class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel() {
-    private val _myExamInfoData = MutableLiveData<List<MyExamInfoDto>>()
-    val myExamInfoData: LiveData<List<MyExamInfoDto>> get() = _myExamInfoData
+    private val _myExamInfoData = MutableLiveData<List<LectureExamDto>>()
+    val myExamInfoData: LiveData<List<LectureExamDto>> get() = _myExamInfoData
     val loading = MutableLiveData<Boolean>()
-    private val _eventClicked = MutableLiveData<Event<Pair<ItemType, MyExamInfoDto>>>()
-    val eventClicked: LiveData<Event<Pair<ItemType, MyExamInfoDto>>> get() = _eventClicked
+    private val _eventClicked = MutableLiveData<Event<Pair<ItemType, LectureExamDto>>>()
+    val eventClicked: LiveData<Event<Pair<ItemType, LectureExamDto>>> get() = _eventClicked
     private val page = MutableLiveData<Int>()
     private var loadFinished = false
 
@@ -28,7 +28,7 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
         scrollBottomEvent()
     }
 
-    fun onItemClicked(type: ItemType, data: MyExamInfoDto) {
+    fun onItemClicked(type: ItemType, data: LectureExamDto) {
         _eventClicked.value = Event(type to data)
     }
 

@@ -1,14 +1,15 @@
 package com.kunize.uswtimetable.repository.my_post
 
-import com.kunize.uswtimetable.dataclass.MyEvaluationListDto
-import com.kunize.uswtimetable.dataclass.MyExamInfoListDto
-import com.kunize.uswtimetable.dataclass.PurchaseHistoryDto
+import com.kunize.uswtimetable.data.remote.DataDto
+import com.kunize.uswtimetable.data.remote.LectureExamDto
+import com.kunize.uswtimetable.dataclass.MyEvaluationDto
+import com.kunize.uswtimetable.dataclass.PurchaseHistory
 import retrofit2.Response
 
 interface MyPostDataSource {
-    suspend fun getMyEvaluations(page: Int): Response<MyEvaluationListDto>
-    suspend fun getMyExamInfos(page: Int): Response<MyExamInfoListDto>
+    suspend fun getMyEvaluations(page: Int): Response<DataDto<List<MyEvaluationDto>>>
+    suspend fun getMyExamInfos(page: Int): Response<DataDto<List<LectureExamDto>>>
     suspend fun deleteMyEvaluation(id: Long)
     suspend fun deleteMyExamInfo(id: Long)
-    suspend fun getPurchaseHistory(): Response<PurchaseHistoryDto>
+    suspend fun getPurchaseHistory(): Response<DataDto<List<PurchaseHistory>>>
 }

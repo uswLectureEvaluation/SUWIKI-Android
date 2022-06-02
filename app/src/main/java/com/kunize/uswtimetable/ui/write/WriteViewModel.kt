@@ -6,12 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.data.remote.LectureEvaluationEditDto
 import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
-import com.kunize.uswtimetable.data.remote.LectureExamEditDto
-import com.kunize.uswtimetable.data.remote.LectureExamPostDto
-import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
-import com.kunize.uswtimetable.ui.common.ToastViewModel
+import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.repository.write.WriteRepository
 import com.kunize.uswtimetable.ui.common.Event
+import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
+import com.kunize.uswtimetable.ui.common.ToastViewModel
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
@@ -83,7 +82,7 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         return response
     }
 
-    suspend fun postLectureExam(lectureId: Long, info: LectureExamPostDto): Response<String> {
+    suspend fun postLectureExam(lectureId: Long, info: LectureExamDto): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.postLectureExam(lectureId, info)
@@ -99,7 +98,7 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         return response
     }
 
-    suspend fun updateLectureExam(lectureId: Long, info: LectureExamEditDto): Response<String> {
+    suspend fun updateLectureExam(lectureId: Long, info: LectureExamDto): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.updateLectureExam(lectureId, info)

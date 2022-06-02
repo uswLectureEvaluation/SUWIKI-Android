@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.kunize.uswtimetable.dataclass.MyExamInfoDto" />
+            type="com.kunize.uswtimetable.data.remote.LectureExamDto" />
 
         <variable
             name="viewType"
@@ -37,7 +37,7 @@
             android:id="@+id/tv_semester"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:layout_marginTop="2dp"
-            android:text="@{data.semester}"
+            android:text="@{data.selectedSemester}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2020-1" />
@@ -46,7 +46,7 @@
             android:id="@+id/tv_exam_term"
             style="@style/recyclerview_evaluation_rounding_text_style"
             android:layout_marginStart="8dp"
-            android:text="@{data.semester}"
+            android:text="@{data.examType}"
             app:layout_constraintBottom_toBottomOf="@id/tv_semester"
             app:layout_constraintStart_toEndOf="@id/tv_semester"
             app:layout_constraintTop_toTopOf="@id/tv_semester"

@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,11 +17,9 @@ import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.remote.LectureEvaluationEditDto
 import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
-import com.kunize.uswtimetable.data.remote.LectureExamEditDto
-import com.kunize.uswtimetable.data.remote.LectureExamPostDto
+import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
-import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.WriteFragmentTitle
@@ -183,8 +180,8 @@ class WriteFragment : Fragment() {
         return info
     }
 
-    private fun getLectureExamInfo(): LectureExamPostDto {
-        val info: LectureExamPostDto
+    private fun getLectureExamInfo(): LectureExamDto {
+        val info: LectureExamDto
         with(binding) {
             var testContent = getTestContentString()
             testContent = testContent.dropLast(2)
@@ -196,21 +193,21 @@ class WriteFragment : Fragment() {
             }
 
             //TODO 수정
-            info = LectureExamPostDto(
-                lectureName,
-                professorName,
-                writeViewModel.semesterText.value!!,
-                testContent,
-                writeViewModel.testText.value!!,
-                testDifficulty,
-                writeContent.text.toString()
+            info = LectureExamDto(
+                lectureName = lectureName,
+                professor = professorName,
+                selectedSemester = writeViewModel.semesterText.value!!,
+                examInfo = testContent,
+                examType = writeViewModel.testText.value!!,
+                examDifficulty = testDifficulty,
+                content = writeContent.text.toString()
             )
         }
         return info
     }
 
-    private fun getLectureExamEditInfo(): LectureExamEditDto {
-        val info: LectureExamEditDto
+    private fun getLectureExamEditInfo(): LectureExamDto {
+        val info: LectureExamDto
         with(binding) {
             var testContent = getTestContentString()
             testContent = testContent.dropLast(2)
@@ -222,11 +219,11 @@ class WriteFragment : Fragment() {
             }
 
             //TODO 수정
-            info = LectureExamEditDto(
-                writeViewModel.semesterText.value!!,
-                testContent,
-                testDifficulty,
-                writeContent.text.toString()
+            info = LectureExamDto(
+                selectedSemester = writeViewModel.semesterText.value!!,
+                examInfo = testContent,
+                examDifficulty = testDifficulty,
+                content = writeContent.text.toString()
             )
         }
         return info
@@ -283,17 +280,17 @@ class WriteFragment : Fragment() {
             setLectureProfessorName(it)
             setTestContentCheckBox(it)
             setDifficultyRadioBtn(it)
-            val list = it.semesterList.replace(" ","").split(",")
+            val list = it.semesterList?.replace(" ","")?.split(",")?:return@let
             setSemesterSpinnerList(list)
             //TODO MyExamInfo 수정되면 선택한 시험 종류 설정 ("기말고사" 선택 시 -> spinner 항목 기말고사 선택되게 해야함)
-            writeViewModel.initSemesterText(it.semester)
+            writeViewModel.initSemesterText(it.selectedSemester?:return@let)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EXAM
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
         }
     }
 
-    private fun setDifficultyRadioBtn(it: MyExamInfo) {
+    private fun setDifficultyRadioBtn(it: LectureExamDto) {
         for (radioButton in difficultyRadioBtnList) {
             if (it.examDifficulty == radioButton.text.toString()) {
                 radioButton.isChecked = true
@@ -302,18 +299,18 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setTestContentCheckBox(it: MyExamInfo) {
+    private fun setTestContentCheckBox(it: LectureExamDto) {
         for (checkBox in testContentCheckBoxList) {
-            for (dataString in it.examType.replace(" ","").split(",")) {
+            for (dataString in it.examType?.replace(" ","")?.split(",")!!) {
                 if (checkBox.text == dataString)
                     checkBox.isChecked = true
             }
         }
     }
 
-    private fun setLectureProfessorName(it: MyExamInfo) {
-        lectureName = it.subject
-        professorName = it.professor
+    private fun setLectureProfessorName(it: LectureExamDto) {
+        lectureName = it.lectureName?:return
+        professorName = it.professor?:return
     }
 
     private fun setFragmentViewType(args: WriteFragmentArgs) {

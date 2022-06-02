@@ -115,7 +115,7 @@
             android:defaultValue="@null" />
         <argument
             android:name="myExamInfo"
-            app:argType="com.kunize.uswtimetable.dataclass.MyExamInfo"
+            app:argType="com.kunize.uswtimetable.data.remote.LectureExamDto"
             app:nullable="true"
             android:defaultValue="@null" />
         <action

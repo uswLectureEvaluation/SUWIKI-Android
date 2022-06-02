@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
-import com.kunize.uswtimetable.dataclass.MyExamInfo
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
@@ -45,10 +45,10 @@ class MyExamInfoFragment : Fragment() {
         viewModel.eventClicked.observe(viewLifecycleOwner, EventObserver { (type, data) ->
             when (type) {
                 ItemType.ROOT_VIEW -> {}
-                ItemType.EDIT_BUTTON -> { gotoWriteFragment(data.toMyExamInfo()) }
+                ItemType.EDIT_BUTTON -> { gotoWriteFragment(data) }
                 ItemType.DELETE_BUTTON -> {
                     // TODO 삭제 확인 다이얼로그 띄우기
-                    viewModel.deletePost(data.id)
+                    viewModel.deletePost(data.id?:return@EventObserver)
                 }
             }
         })
@@ -69,10 +69,10 @@ class MyExamInfoFragment : Fragment() {
         }
     }
 
-    private fun gotoWriteFragment(data: MyExamInfo) {
+    private fun gotoWriteFragment(data: LectureExamDto) {
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
-                lectureId = data.id,
+                lectureId = data.id?:return,
                 myExamInfo = data,
                 isEvaluation = false
             )
