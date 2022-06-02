@@ -16,6 +16,4 @@ data class TimeTableData(
     var time: String = "", //장소,시간,요일 split ')' -> 장소 2군데 걸러줌  , ' ' -> 요일 2군데 걸러줌 ,
     // 교시를 다 읽어온 후 12345... 순서로 증가하는지 확인
     var credit: String = ""
-) {
-
-}
+)

@@ -23,7 +23,7 @@ object User {
             val response = IRetrofit.getInstance().getUserData()
             if (response.isSuccessful && response.body() != null) {
                 withContext(Dispatchers.Main) {
-                    val info = response.body()!!
+                    val info = response.body()?:return@withContext
                     setUser(
                         LoggedInUser(
                             userId = info.userId,

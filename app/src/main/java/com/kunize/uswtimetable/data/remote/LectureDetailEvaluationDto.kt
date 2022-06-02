@@ -13,18 +13,18 @@ data class LectureDetailEvaluationDto(
         data.forEach {
             temp.add(
                 EvaluationData(
-                recyclerViewType = LectureItemViewType.LECTURE,
-                lectureId = it.id,
-                yearSemester = it.semester,
-                aver = it.totalAvg,
-                satisfaction = it.satisfaction,
-                learning = it.learning,
-                honey = it.honey,
-                teamMeeting = it.team,
-                grade = it.difficulty,
-                task = it.homework,
-                content = it.content
-            )
+                    recyclerViewType = LectureItemViewType.LECTURE,
+                    lectureId = it.id,
+                    yearSemester = it.semester,
+                    aver = it.totalAvg,
+                    satisfaction = it.satisfaction,
+                    learning = it.learning,
+                    honey = it.honey,
+                    teamMeeting = it.team,
+                    grade = it.difficulty,
+                    task = it.homework,
+                    content = it.content
+                )
             )
         }
         return temp
