@@ -9,7 +9,7 @@
 
         <variable
             name="notice"
-            type="com.kunize.uswtimetable.dataclass.NoticeDetailData" />
+            type="com.kunize.uswtimetable.dataclass.NoticeDetailDto" />
 
         <variable
             name="viewmodel"
