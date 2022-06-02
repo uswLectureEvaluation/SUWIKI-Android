@@ -80,11 +80,11 @@ interface IRetrofit {
 
     // 공지사항 리스트 API
     @GET(NOTICE_LIST)
-    suspend fun getNoticeList(@Query("page") page: Int): Response<NoticeListDto>
+    suspend fun getNoticeList(@Query("page") page: Int): Response<DataDto<List<NoticeDto>>>
 
     // 공지사항 API
     @GET(NOTICE)
-    suspend fun getNotice(@Query("noticeId") id: Long): Response<NoticeDetailDto>
+    suspend fun getNotice(@Query("noticeId") id: Long): Response<DataDto<NoticeDetailDto>>
 
     // 아이디 찾기 API
     @POST(ID)
@@ -112,11 +112,11 @@ interface IRetrofit {
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
-    suspend fun getEvaluatePosts(@Query("page") page: Int): Response<MyEvaluationListDto>
+    suspend fun getEvaluatePosts(@Query("page") page: Int): Response<DataDto<List<MyEvaluationDto>>>
 
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)
-    suspend fun getExamPosts(@Query("page") page: Int): Response<MyExamInfoListDto>
+    suspend fun getExamPosts(@Query("page") page: Int): Response<DataDto<List<LectureExamDto>>>
 
     @DELETE(DELETE_EVALUATE_POST)
     suspend fun deleteEvaluation(@Query("evaluateIdx") id: Long)
@@ -126,11 +126,11 @@ interface IRetrofit {
 
     // 시험정보 구매 이력
     @GET(PURCHASE_HISTORY)
-    suspend fun getPurchaseHistory(): Response<PurchaseHistoryDto>
+    suspend fun getPurchaseHistory(): Response<DataDto<List<PurchaseHistory>>>
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)
-    suspend fun getLectureDetailInfo(@Query("lectureId") lectureId: Long): Response<LectureDetailInfoDto>
+    suspend fun getLectureDetailInfo(@Query("lectureId") lectureId: Long): Response<DataDto<LectureDetailInfoDataDto>>
 
     // 검색결과 자세히 보기 (Evaluation)
     @GET(LECTURE_DETAIL_EVALUATION)
@@ -153,7 +153,7 @@ interface IRetrofit {
         @Query("option") option: String,
         @Query("page") page: Int,
         @Query("majorType") majorType: String
-    ): Response<LectureMainDto>
+    ): Response<DataDto<MutableList<LectureMain?>>>
 
     // 메인 페이지
     @GET(LECTURE_MAIN)
@@ -161,7 +161,7 @@ interface IRetrofit {
         @Query("option") option: String,
         @Query("page") page: Int = 1,
         @Query("majorType") majorType: String = ""
-    ): Response<LectureMainDto>
+    ): Response<DataDto<MutableList<LectureMain?>>>
 
     //강의평가 쓰기
     @POST(WRITE_LECTURE_EVALUATION)
@@ -174,7 +174,7 @@ interface IRetrofit {
     @POST(WRITE_LECTURE_EXAM)
     suspend fun postLectureExam(
         @Query("lectureId") lectureId: Long,
-        @Body info: LectureExamPostDto
+        @Body info: LectureExamDto
     ): Response<String>
 
     //강의평가 수정
@@ -192,7 +192,7 @@ interface IRetrofit {
     @PUT(EDIT_LECTURE_EXAM)
     suspend fun updateLectureExam(
         @Query("examIdx") lectureId: Long,
-        @Body info: LectureExamEditDto
+        @Body info: LectureExamDto
     ): Response<String>
 
     @GET(OPEN_MAJOR_VERSION)
