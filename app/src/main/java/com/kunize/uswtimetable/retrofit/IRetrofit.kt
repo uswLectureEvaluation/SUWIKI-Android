@@ -38,8 +38,6 @@ import com.kunize.uswtimetable.util.API.SEARCH
 import com.kunize.uswtimetable.util.API.SIGN_UP
 import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
-import com.kunize.uswtimetable.util.API.UPDATE_EVALUATE_POST
-import com.kunize.uswtimetable.util.API.UPDATE_EXAM_POSTS
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EXAM
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -116,17 +114,9 @@ interface IRetrofit {
     @GET(EVALUATE_POST)
     suspend fun getEvaluatePosts(@Query("page") page: Int): Response<MyEvaluationListDto>
 
-    // 내가 쓴 글 (강의평가 수정)
-    @PUT(UPDATE_EVALUATE_POST)
-    suspend fun updateEvaluatePost(@Query("evaluateIdx") id: Long, @Body info: MyEvaluationEditDto)
-
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)
     suspend fun getExamPosts(@Query("page") page: Int): Response<MyExamInfoListDto>
-
-    // 내가 쓴 글 (시험 정보 수정)
-    @PUT(UPDATE_EXAM_POSTS)
-    suspend fun updateExamPost(@Query("examIdx") id: Long, @Body info: MyExamInfoEditDto)
 
     @DELETE(DELETE_EVALUATE_POST)
     suspend fun deleteEvaluation(@Query("evaluateIdx") id: Long)

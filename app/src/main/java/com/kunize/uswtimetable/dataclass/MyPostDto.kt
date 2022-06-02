@@ -28,17 +28,6 @@ data class MyEvaluationDto(
     val content: String
 ) : Serializable
 
-data class MyEvaluationEditDto(
-    val semester: String,
-    val satisfaction: Float,
-    val learning: Float,
-    val honey: Float,
-    val team: Int,
-    val difficulty: Int,
-    val homework: Int,
-    val content: String
-)
-
 data class MyExamInfoDto(
     val id: Long,
     val lectureName: String, //과목 이름
@@ -63,13 +52,6 @@ data class MyExamInfoDto(
             content = this.content
         )
 }
-
-data class MyExamInfoEditDto(
-    @SerializedName("selectedSemester") val semester: String,
-    val examInfo: String,
-    val examDifficulty: String,
-    val content: String,
-): Serializable
 
 data class MyExamInfo(
     val id: Long,
