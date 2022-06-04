@@ -139,8 +139,8 @@ class UswTimeTable @JvmOverloads constructor(
         }
 
         val params = binding.customTimeTable.layoutParams
-        params.height = if(maxTime < 8)  430.dp
-                        else 30.dp + maxTime * 50.dp + 50.dp
+        params.height = if(maxTime < 8)  425.dp
+                        else 25.dp + maxTime * 50.dp + 50.dp
         binding.customTimeTable.layoutParams = params
     }
 
@@ -156,7 +156,7 @@ class UswTimeTable @JvmOverloads constructor(
 
         CoroutineScope(IO).launch {
             withContext(Main) {
-                binding.customTimeTable.removeViews(23, binding.customTimeTable.size - 23)
+                binding.customTimeTable.removeViews(28, binding.customTimeTable.size - 28)
                 binding.eLearningText.text = ""
                 reDrawColumn()
             }

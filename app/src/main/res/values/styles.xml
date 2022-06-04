@@ -97,6 +97,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextRegular.14.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
     <style name="TextRegular.16">
         <item name="android:textSize">16sp</item>
     </style>

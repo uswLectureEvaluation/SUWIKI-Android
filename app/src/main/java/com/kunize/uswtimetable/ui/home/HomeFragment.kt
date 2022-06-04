@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.kunize.uswtimetable.*
 import com.kunize.uswtimetable.ui.home.timetable.BitmapConverter.bitmapToString
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.getCurrentTimetableInfo
@@ -48,6 +49,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.toolBar.inflateMenu(R.menu.home_menu) // AppBar에 메뉴 설정
+        binding.toolBar.overflowIcon = ContextCompat.getDrawable(requireContext(),R.drawable.ic_setting_line)
 
         db = TimeTableListDatabase.getInstance(requireActivity().applicationContext)!!
 

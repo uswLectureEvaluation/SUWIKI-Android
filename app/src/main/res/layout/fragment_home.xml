@@ -15,12 +15,13 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="76dp"
+            android:paddingTop="24dp"
             android:background="@color/background">
 
             <TextView
                 android:id="@+id/textTitle"
-                style="@style/TextTitle.Bold"
+                style="@style/TextMedium.18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="시간표1" />
@@ -36,7 +37,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp">
+            android:paddingTop="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <com.kunize.uswtimetable.ui.home.timetable.UswTimeTable
                 android:id="@+id/uswTimeTable"

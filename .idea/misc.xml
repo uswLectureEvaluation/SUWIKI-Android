@@ -97,7 +97,7 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_sign_up2.xml" value="0.264" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_sign_up3.xml" value="0.3622448979591837" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_suspension_history.xml" value="0.29713552800342025" />
-        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_write.xml" value="0.4" />
+        <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/fragment_write.xml" value="0.159375" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/hide_exam_info.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/item_my_exam_info.xml" value="0.38333333333333336" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/layout/item_my_post.xml" value="0.4106145251396648" />
@@ -123,17 +123,27 @@
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/more_menu_before.xml" value="0.1890625" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/menu/refresh_menu.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/audqj/AndroidStudioProjects/uswLectureEvaluation/app/src/main/res/xml/network_security_config.xml" value="0.8800000000000001" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-hdpi/ripple_suwiki_white.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-nodpi/custom_ripple_effect_recyclerview.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-v24/ll_bottom_line.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/background_cardview.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_border_line_10_gray_500.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/border_corner8_gray.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/button_suwiki_mini.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/button_transparent.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_light_blue_button.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_effect.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_effect_gray.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_effect_skyblue.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/custom_ripple_light_blue_button.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/edge_bottom.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/edge_end.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_baseline_format_list_bulleted_24.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_main_foreground.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_setting.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ic_timetable.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ll_end_line.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ll_top_line.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/rounding_blue_background.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/test.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_login.xml" value="0.14605263157894738" />
@@ -163,16 +173,16 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_semester_report.xml" value="0.4" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_test_content_difficulty.xml" value="0.536" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/semester_report.xml" value="0.264" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/usw_timetable.xml" value="0.2" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/usw_timetable.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/menu/bottom_nav_menu.xml" value="0.14605263157894738" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/menu/home_menu.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/menu/home_menu.xml" value="0.176" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/menu/more_menu_after.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/mipmap-anydpi-v26/ic_main.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/mipmap-anydpi-v26/ic_main_round.xml" value="0.144" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
