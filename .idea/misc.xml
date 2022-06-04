@@ -145,12 +145,15 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ll_end_line.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/ll_top_line.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/rounding_blue_background.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/selector_custom_spinner_arrow.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/selector_spinner_arrow.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/test.xml" value="0.144" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_create_time_table.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_login.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_setting.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_evaluation.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_home.xml" value="0.14605263157894738" />
-        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_lecture_info.xml" value="0.1" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_lecture_info.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_more.xml" value="0.1" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_evaluation.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_exam_info.xml" value="0.264" />
@@ -164,6 +167,7 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_info.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_lecture_search.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_recycler_test_info.xml" value="0.2" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_spinner.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_spinner_evaluation.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/no_exam_info.xml" value="0.1" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/part_average_see_detail.xml" value="0.27222562844880444" />

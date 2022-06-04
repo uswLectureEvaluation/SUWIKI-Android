@@ -214,5 +214,8 @@
     <string name="description_close_button">닫기 버튼</string>
     <string name="no_timetable">시간표가 없습니다.</string>
     <string name="crate_timetable">시간표 생성</string>
+    <string name="finish">완료</string>
+    <string name="year">년</string>
+    <string name="semester">학기</string>
 
 </resources>

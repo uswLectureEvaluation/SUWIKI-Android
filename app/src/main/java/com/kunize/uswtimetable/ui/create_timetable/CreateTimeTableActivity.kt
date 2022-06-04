@@ -41,6 +41,10 @@ class CreateTimeTableActivity : AppCompatActivity() {
         if (yearIndex != -1) binding.yearSpinner.setSelection(yearIndex) // yearList에 찾는 값(thisYear)이 없다면 -1을 반환하므로 if문으로 체크
         binding.semesterSpinner.setSelection(thisSemester-1) // 현재 학기에서 1을 뺀 것이 스피너에서의 위치
 
+        binding.ivClose.setOnClickListener {
+            finish()
+        }
+
         val db = TimeTableListDatabase.getInstance(applicationContext)!!
         binding.finishButton.setOnClickListener {
             if(binding.editName.text.toString() == "") {
