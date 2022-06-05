@@ -138,7 +138,8 @@ class SelectOpenMajorFragment : Fragment() {
         })
 
         binding.btnOk.setOnClickListener {
-            TimeTableSelPref.prefs.setString("openMajorSel",adapter.selectedItemTitle)
+            TimeTableSelPref.prefs.setString("openMajorSel",
+                adapter.selectedItemTitle.ifBlank { "전체" })
             val action = when (args.prevFragment) {
                 FragmentType.EVALUATION -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation(sortType = args.prevSortType)
                 FragmentType.SEARCH_RESULT -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToSearchResultFragment(searchLectureName = args.prevSearch, sortType = args.prevSortType)

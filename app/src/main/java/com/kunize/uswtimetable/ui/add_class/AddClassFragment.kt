@@ -18,6 +18,7 @@ import com.kunize.uswtimetable.data.local.TimeTableData
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.FragmentAddClassBinding
 import com.kunize.uswtimetable.databinding.FragmentHomeBinding
+import com.kunize.uswtimetable.ui.evaluation.ImageSortDialog
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.onItemSelected
@@ -58,6 +59,19 @@ class AddClassFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.clSort.setOnClickListener {
+            val dialog = GradeSortDialog(context as AppCompatActivity)
+            dialog.setDialogListener(object : GradeSortDialog.ItemClickListener {
+                override fun onClick(text: String) {
+                    binding.tvSortSelected.text = text
+                    gradeSel = text
+                    TimeTableSelPref.prefs.setInt("gradeSel", gradeList.indexOf(text))
+                    filterData()
+                }
+            })
+            dialog.show()
+        }
+
 
         CoroutineScope(IO).launch {
             timetableData = db!!.timetableDao().getAll().toMutableList()
@@ -76,6 +90,8 @@ class AddClassFragment : Fragment() {
                 binding.searchClass.visibility = View.VISIBLE
                 majorSel = TimeTableSelPref.prefs.getString("openMajorSel", "전체")
                 majorSel = majorSel.replace("-","·")
+                gradeSel = gradeList[TimeTableSelPref.prefs.getInt("gradeSel", 0)]
+                binding.tvSortSelected.text = gradeSel
                 binding.tvSelectedOpenMajor.text = majorSel
                 filterData()
             }
@@ -90,8 +106,7 @@ class AddClassFragment : Fragment() {
 //        }
 //
 //        binding.gradeSpinner.onItemSelected { position ->
-//            gradeSel = gradeList[position]
-//            TimeTableSelPref.prefs.setInt("gradeSel", position)
+
 //            filterData()
 //        }
 
