@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.util.HangulUtils
 import com.kunize.uswtimetable.databinding.ItemRecyclerClassInfoBinding
 import com.kunize.uswtimetable.data.local.TimeTableData
+import com.kunize.uswtimetable.util.TimeStringFormatter
 import java.util.*
 
 class ClassSearchAdapter : RecyclerView.Adapter<SearchHolder>(), Filterable {
@@ -83,8 +84,8 @@ class SearchHolder(private val binding: ItemRecyclerClassInfoBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun setData(data: TimeTableData) {
         binding.className.text = data.className
-        binding.major.text = data.major
-        binding.time.text = data.time
-        binding.etc.text = data.grade + ", " + data.classification + ", " + data.professor
+        binding.professor.text = data.professor
+        binding.time.text = TimeStringFormatter().splitTimeForItem(data.time).joinToString(", ")
+        binding.etc.text = data.grade + " " + data.classification + ", " + data.major
     }
 }

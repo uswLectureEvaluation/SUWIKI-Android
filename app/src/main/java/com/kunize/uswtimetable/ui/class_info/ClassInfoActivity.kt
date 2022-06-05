@@ -107,7 +107,7 @@ class ClassInfoActivity : AppCompatActivity() {
             } else if (time!! == "None") {
                 binding.time1.text = "이러닝"
             } else {
-                val timeListSplitByDay = TimeStringFormatter().splitTime(time)
+                val timeListSplitByDay = TimeStringFormatter().splitTimeForClassInfo(time)
                 for (i in timeListSplitByDay.indices) {
                     setVisibilityTime(View.VISIBLE, i + 1)
                     bindingTimeList[i][0].text = timeListSplitByDay[i]
