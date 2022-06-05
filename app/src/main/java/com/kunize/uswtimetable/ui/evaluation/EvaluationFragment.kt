@@ -41,7 +41,7 @@ class EvaluationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        evaluationViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전부")
+        evaluationViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전체")
         evaluationViewModel.changeType(args.sortType)
     }
 

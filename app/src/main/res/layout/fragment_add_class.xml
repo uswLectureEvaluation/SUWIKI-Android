@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.add_class.AddClassActivity">
+    tools:context=".ui.add_class.AddClassFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
                         app:layout_constraintStart_toEndOf="@id/tv_open_major"
                         app:layout_constraintTop_toTopOf="@id/tv_open_major"
-                        tools:text="전부" />
+                        android:text="@string/all" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -115,11 +115,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="@{viewModel.sortText}"
                         app:layout_constraintBottom_toBottomOf="@id/tv_sort"
                         app:layout_constraintStart_toEndOf="@id/tv_sort"
                         app:layout_constraintTop_toTopOf="@id/tv_sort"
-                        tools:text="전부" />
+                        android:text="@string/all" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -134,6 +133,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
+                    android:padding="8dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/bg_rounded_gray_300_20"
@@ -154,13 +154,12 @@
                         android:id="@+id/searchClass"
                         style="@style/TextRegular.14"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_marginStart="8dp"
                         android:background="@null"
                         android:hint="@string/search_class"
                         android:inputType="text"
                         android:textColorHint="@color/suwiki_gray_700"
-                        android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_search"
@@ -173,16 +172,6 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.kakao.adfit.ads.ba.BannerAdView
-        android:id="@+id/bannerAdView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="gone" />
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerClass"
         android:layout_width="match_parent"
@@ -190,7 +179,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="70dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

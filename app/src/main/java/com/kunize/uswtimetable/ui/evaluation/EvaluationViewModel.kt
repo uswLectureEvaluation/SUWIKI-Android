@@ -30,7 +30,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
         R.drawable.ic_fire, R.drawable.ic_honey, R.drawable.ic_thumbs,
         R.drawable.ic_book, R.drawable.ic_1st
     )
-    var majorType = "전부"
+    var majorType = "전체"
     var spinnerSel = 0
 
     val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<LectureMain>()
@@ -51,7 +51,7 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
 
     private fun loadEvaluationData() {
         viewModelScope.launch {
-            val response = evaluationRepository.getLectureMainList(_selectedType.value.toString(), if(majorType == "전부") "" else majorType)
+            val response = evaluationRepository.getLectureMainList(_selectedType.value.toString(), if(majorType == "전체") "" else majorType)
             if (response.isSuccessful) {
                 commonRecyclerViewViewModel.deleteLoading()
                 commonRecyclerViewViewModel.changeRecyclerViewData(response.body()!!.data)

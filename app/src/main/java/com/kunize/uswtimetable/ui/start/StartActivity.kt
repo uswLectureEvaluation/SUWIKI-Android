@@ -59,9 +59,8 @@ class StartActivity : AppCompatActivity() {
         versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
         var version = versionPreferences.getString("version", "202107271830")
         val openMajorVersion = versionPreferences.getFloat("openMajorVersion", 0f)
-        TimeTableSelPref.prefs.setInt("majorSel", 0)
         TimeTableSelPref.prefs.setInt("gradeSel", 0)
-        TimeTableSelPref.prefs.setString("openMajorSel", "전부")
+        TimeTableSelPref.prefs.setString("openMajorSel", "전체")
 
         //Room 설정
         val db = TimeTableDatabase.getInstance(applicationContext)
@@ -183,7 +182,7 @@ class StartActivity : AppCompatActivity() {
                 val db = OpenMajorDatabase.getInstance(applicationContext)
                 db!!.openMajorDao().deleteAll()
                 val data = majorListResponse.body()!!.convertToOpenMajorData()
-                data.add(0, OpenMajorData("전부"))
+                data.add(0, OpenMajorData("전체"))
                 db.openMajorDao().insertAll(data)
                 versionPreferences.edit {
                     putFloat("openMajorVersion", majorVersionResponse.body()!!.version)

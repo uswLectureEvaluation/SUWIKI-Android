@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.kunize.uswtimetable.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_addClassActivity"
+            app:destination="@id/addClassFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_evaluation"
         android:name="com.kunize.uswtimetable.ui.evaluation.EvaluationFragment"
@@ -176,8 +180,18 @@
             android:name="prevSortType"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_selectOpenMajorFragment_to_addClassFragment"
+            app:destination="@id/addClassFragment"
+            app:popUpTo="@id/addClassFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <action
         android:id="@+id/global_open_major"
         app:destination="@id/selectOpenMajorFragment" />
+    <fragment
+        android:id="@+id/addClassFragment"
+        android:name="com.kunize.uswtimetable.ui.add_class.AddClassFragment"
+        android:label="activity_add_class"
+        tools:layout="@layout/fragment_add_class" />
 </navigation>

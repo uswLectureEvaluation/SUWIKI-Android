@@ -139,8 +139,11 @@ class SelectOpenMajorFragment : Fragment() {
 
         binding.btnOk.setOnClickListener {
             TimeTableSelPref.prefs.setString("openMajorSel",adapter.selectedItemTitle)
-            val action = if(args.prevFragment == FragmentType.EVALUATION) SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation(sortType = args.prevSortType)
-            else SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToSearchResultFragment(searchLectureName = args.prevSearch, sortType = args.prevSortType)
+            val action = when (args.prevFragment) {
+                FragmentType.EVALUATION -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation(sortType = args.prevSortType)
+                FragmentType.SEARCH_RESULT -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToSearchResultFragment(searchLectureName = args.prevSearch, sortType = args.prevSortType)
+                else -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToAddClassFragment()
+            }
             findNavController().navigate(action)
         }
     }

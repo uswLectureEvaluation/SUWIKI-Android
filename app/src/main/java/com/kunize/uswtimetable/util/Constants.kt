@@ -163,6 +163,7 @@ object LIST_CONFIG {
 object FragmentType {
     const val EVALUATION = 1
     const val SEARCH_RESULT = 2
+    const val ADD_CLASS = 3
 }
 
 enum class TimeTableListClickType {

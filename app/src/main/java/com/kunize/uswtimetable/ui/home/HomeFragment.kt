@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.*
 import com.kunize.uswtimetable.ui.home.timetable.BitmapConverter.bitmapToString
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.getCurrentTimetableInfo
@@ -21,7 +22,6 @@ import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.FragmentHomeBinding
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
-import com.kunize.uswtimetable.ui.add_class.AddClassActivity
 import com.kunize.uswtimetable.ui.home.timetable.TimeTableWidget
 import com.kunize.uswtimetable.ui.timetable_list.TimeTableListActivity
 import com.kunize.uswtimetable.ui.timetable_setting.SettingActivity
@@ -67,8 +67,8 @@ class HomeFragment : Fragment() {
                         Toast.makeText(activity, "시간표를 생성해주세요", Toast.LENGTH_SHORT).show()
                         false
                     } else {
-                        val intent = Intent(activity, AddClassActivity::class.java)
-                        startActivity(intent)
+                        val action = HomeFragmentDirections.actionNavigationHomeToAddClassActivity()
+                        findNavController().navigate(action)
                         true
                     }
                 }
