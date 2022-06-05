@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.size
 import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
@@ -21,6 +22,8 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.UswTimetableBinding
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.ui.create_timetable.CreateTimeTableActivity
+import com.kunize.uswtimetable.util.TimetableCellColor
+import com.kunize.uswtimetable.util.TimetableColor
 import com.kunize.uswtimetable.util.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -200,11 +203,28 @@ class UswTimeTable @JvmOverloads constructor(
         timeRect.id = View.generateViewId()
         timeRect.text = timeText
         timeRect.setTextColor(Color.WHITE)
-        timeRect.setBackgroundColor(data.color)
+        setBackgroundColor(timeRect, data.color)
         timeRect.setOnClickListener { v ->
             showBottomSheet(data, timeTableData, v)
         }
         return timeRect
+    }
+
+    private fun setBackgroundColor(timeRect: TextView, color: Int) {
+        when(color) {
+            TimetableColor.APRICOT -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_apricot))
+            TimetableColor.BROWN -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_brown))
+            TimetableColor.DARK_GREEN -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_dark_green))
+            TimetableColor.DARK_PURPLE -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_dark_purple))
+            TimetableColor.GRAY -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_gray))
+            TimetableColor.GREEN -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_green))
+            TimetableColor.MINT -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_mint))
+            TimetableColor.NAVY -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_navy))
+            TimetableColor.PURPLE -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_purple))
+            TimetableColor.SKY -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_sky))
+            TimetableColor.PINK -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_pink))
+            else -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_orange))
+        }
     }
 
     private fun setParams(
