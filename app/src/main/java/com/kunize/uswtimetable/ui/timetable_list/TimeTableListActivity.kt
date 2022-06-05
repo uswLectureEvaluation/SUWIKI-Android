@@ -29,14 +29,14 @@ class TimeTableListActivity : AppCompatActivity() {
 
         db = TimeTableListDatabase.getInstance(applicationContext)!!
 
-        binding.btnOpenSource.setOnClickListener {
-            startActivity(Intent(this, OpenSourceActivity::class.java))
-        }
 
-
-        binding.addClass.setOnClickListener {
+        binding.ivAdd.setOnClickListener {
             val intent = Intent(this, CreateTimeTableActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.ivBack.setOnClickListener {
+            finish()
         }
 
         CoroutineScope(IO).launch {

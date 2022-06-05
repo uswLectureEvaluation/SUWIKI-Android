@@ -217,5 +217,6 @@
     <string name="finish">완료</string>
     <string name="year">년</string>
     <string name="semester">학기</string>
+    <string name="timetable_list">시간표 목록</string>
 
 </resources>

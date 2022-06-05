@@ -3,87 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_rounded_border_line_15_gray_500"
+    android:padding="16dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="1dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="3.4"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/timeTableYearSemester"
+        style="@style/TextMedium.16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_optimizationLevel="ratio">
+        tools:text="2021년 1학기" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/timeTableName"
+        style="@style/TextRegular.14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timeTableYearSemester"
+        tools:text="테스트" />
 
-            <TextView
-                android:id="@+id/timeTableYearSemester"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:text="2021년 1학기"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:autoSizeMinTextSize="2sp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toTopOf="@+id/timeTableName"
-                app:layout_constraintHeight_percent="0.35"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.6" />
+    <TextView
+        android:id="@+id/btnDelete"
+        style="@style/TextRegular.10.Gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="삭제"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTableYearSemester"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/timeTableYearSemester" />
 
-            <TextView
-                android:id="@+id/timeTableName"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:text="테스트"
-                app:autoSizeMinTextSize="2sp"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_percent="0.3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timeTableYearSemester"
-                app:layout_constraintWidth_percent="0.6" />
-
-            <TextView
-                android:id="@+id/btnDelete"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:padding="4dp"
-                android:text="삭제"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.15" />
-
-            <TextView
-                android:id="@+id/btnEdit"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:padding="4dp"
-                android:text="수정"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="@+id/btnDelete"
-                app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-                app:layout_constraintHeight_percent="0.3"
-                app:layout_constraintTop_toTopOf="@+id/btnDelete"
-                app:layout_constraintWidth_percent="0.15" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/btnEdit"
+        style="@style/TextRegular.10.Gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:padding="4dp"
+        android:text="수정"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDelete"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+        app:layout_constraintTop_toTopOf="@+id/btnDelete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
