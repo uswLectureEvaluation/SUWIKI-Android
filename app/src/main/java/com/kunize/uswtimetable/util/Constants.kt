@@ -164,3 +164,7 @@ object FragmentType {
     const val EVALUATION = 1
     const val SEARCH_RESULT = 2
 }
+
+enum class TimeTableListClickType {
+    ITEM_CLICK, EDIT_CLICK
+}

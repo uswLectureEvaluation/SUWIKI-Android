@@ -10,6 +10,7 @@ import com.kunize.uswtimetable.databinding.ActivityTimeTableListBinding
 import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.ui.create_timetable.CreateTimeTableActivity
 import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
+import com.kunize.uswtimetable.util.TimeTableListClickType
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -49,9 +50,18 @@ class TimeTableListActivity : AppCompatActivity() {
         }
 
         adapter.setItemClickListener(object : TimeTableListAdapter.ItemClickListener {
-            override fun onClick(view: View, data: TimeTableList) {
-                TimeTableSelPref.prefs.setLong("timetableSel",data.createTime)
-                finish()
+            override fun onClick(view: View, data: TimeTableList, type: TimeTableListClickType) {
+                when(type) {
+                    TimeTableListClickType.ITEM_CLICK -> {
+                        TimeTableSelPref.prefs.setLong("timetableSel",data.createTime)
+                        finish()
+                    }
+                    TimeTableListClickType.EDIT_CLICK -> {
+                        val intent = Intent(this@TimeTableListActivity, CreateTimeTableActivity::class.java)
+                        intent.putExtra("edit_data",data)
+                        startActivity(intent)
+                    }
+                }
             }
         })
 

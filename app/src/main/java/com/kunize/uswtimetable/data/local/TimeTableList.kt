@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 data class TimeTableList(
@@ -10,4 +11,4 @@ data class TimeTableList(
     var semester: String,
     var timeTableName: String,
     var timeTableJsonData: String = ""
-)
+) : Serializable
