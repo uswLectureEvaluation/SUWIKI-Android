@@ -292,6 +292,7 @@
                 app:srcCompat="@drawable/clrcle" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="16dp"
@@ -313,6 +314,14 @@
                     app:autoSizeTextType="uniform" />
             </androidx.cardview.widget.CardView>
 
+            <RadioButton
+                android:button="@null"
+                android:background="@drawable/selector_radio_button_sky"
+                android:id="@+id/radioButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView"
+                app:layout_constraintEnd_toStartOf="@+id/cardView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
