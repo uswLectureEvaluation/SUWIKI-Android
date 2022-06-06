@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -22,6 +23,19 @@ import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.dialog.EditTimeDialog
 import com.kunize.uswtimetable.util.TimeStringFormatter
 import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
+import com.kunize.uswtimetable.util.TimetableColor
+import com.kunize.uswtimetable.util.TimetableColor.APRICOT
+import com.kunize.uswtimetable.util.TimetableColor.BROWN
+import com.kunize.uswtimetable.util.TimetableColor.DARK_GREEN
+import com.kunize.uswtimetable.util.TimetableColor.DARK_PURPLE
+import com.kunize.uswtimetable.util.TimetableColor.GRAY
+import com.kunize.uswtimetable.util.TimetableColor.GREEN
+import com.kunize.uswtimetable.util.TimetableColor.MINT
+import com.kunize.uswtimetable.util.TimetableColor.NAVY
+import com.kunize.uswtimetable.util.TimetableColor.ORANGE
+import com.kunize.uswtimetable.util.TimetableColor.PINK
+import com.kunize.uswtimetable.util.TimetableColor.PURPLE
+import com.kunize.uswtimetable.util.TimetableColor.SKY
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -37,9 +51,29 @@ class ClassInfoActivity : AppCompatActivity() {
     private lateinit var timetableSel: TimeTableList
     private var tempTimeData = mutableListOf<TimeData>()
     private lateinit var bindingTimeList: List<List<TextView>>
+    private lateinit var radioHashMap: HashMap<Int, Int>
+    private lateinit var timeColorRadioButtonHashMap: HashMap<Int, RadioButton>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        with(binding) {
+            radioHashMap = hashMapOf(rbSky.id to SKY, rbNavy.id to NAVY, rbPurple.id to PURPLE,
+            rbDarkPurple.id to DARK_PURPLE, rbMint.id to MINT, rbDarkGreen.id to DARK_GREEN,
+                rbApricot.id to APRICOT, rbOrange.id to ORANGE, rbPink.id to PINK,
+                rbBrown.id to BROWN, rbGreen.id to GREEN, rbGray.id to GRAY
+            )
+
+            timeColorRadioButtonHashMap = hashMapOf(SKY to rbSky, NAVY to rbNavy, PURPLE to rbPurple,
+            DARK_PURPLE to rbPurple, MINT to rbMint, DARK_GREEN to rbDarkGreen,
+            APRICOT to rbApricot, ORANGE to rbOrange, PINK to rbPink,
+            BROWN to rbBrown, GREEN to rbGreen, GRAY to rbGray)
+        }
+        
+        binding.rgColor.setOnCheckedChangeListener { group, checkedId ->
+            colorSel = radioHashMap[checkedId]!!
+        }
 
         bindingTimeList = listOf(
             listOf(binding.time1, binding.editTime1, binding.deleteTime1),
@@ -344,6 +378,7 @@ class ClassInfoActivity : AppCompatActivity() {
             } while (jsonStr.contains("$randomColor") && (tempTimeData.size < 12))
         }
 
+        timeColorRadioButtonHashMap[randomColor]?.isChecked = true
         colorSel = randomColor
         return randomColor
     }

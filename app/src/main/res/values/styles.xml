@@ -101,6 +101,10 @@
         <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 
+    <style name="TextRegular.14.DarkGray">
+        <item name="android:textColor">@color/suwiki_gray_900</item>
+    </style>
+
     <style name="TextRegular.16">
         <item name="android:textSize">16sp</item>
     </style>

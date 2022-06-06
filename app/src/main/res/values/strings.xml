@@ -220,5 +220,7 @@
     <string name="timetable_list">시간표 목록</string>
     <string name="add_class">수업 추가</string>
     <string name="search_class">수업 검색</string>
+    <string name="class_info">수업 정보</string>
+    <string name="enroll">등록</string>
 
 </resources>
