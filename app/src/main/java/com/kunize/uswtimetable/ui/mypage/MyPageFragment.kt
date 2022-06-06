@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.ui.mypage
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +14,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMyPageBinding
-import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
+import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Event
+import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Type
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
 import com.kunize.uswtimetable.ui.user_info.*
-import com.kunize.uswtimetable.util.MyPageViewType.*
+import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.repeatOnStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -42,18 +45,13 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (User.isLoggedIn.value?.not() == true) {
-            logIn(requireContext())
-        }
-
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
-        binding.user = User
         binding.executePendingBindings()
 
-        logInStateView()
-        setOnViewClicked()
-        setOnMenuClicked()
+        repeatOnStarted {
+            viewModel.eventFlow.collect { event -> handleUiEvent(event) }
+        }
     }
 
     override fun onResume() {
@@ -62,79 +60,9 @@ class MyPageFragment : Fragment() {
         binding.user = User
     }
 
-    private fun setOnMenuClicked() {
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_login -> {
-                    logIn(requireContext())
-                    true
-                }
-                R.id.action_sign_in -> {
-                    signIn(requireContext())
-                    true
-                }
-                R.id.action_find_id -> {
-                    findId(requireContext())
-                    true
-                }
-                R.id.action_find_password -> {
-                    findPw(requireContext())
-                    true
-                }
-                R.id.action_log_out -> {
-                    User.logout()
-                    true
-                }
-                R.id.action_change_password -> {
-                    resetPassword(requireContext())
-                    true
-                }
-                R.id.action_quit -> {
-                    quit(requireContext())
-                    true
-                }
-                else -> {
-                    makeToast("${it.title} : 준비 중입니다")
-                    false
-                }
-            }
-        }
-    }
-
-    private fun setOnViewClicked() {
-        viewModel.eventClick.observe(viewLifecycleOwner, EventObserver { type ->
-            val context = requireContext()
-            when (type) {
-                BTN_LOGIN -> logIn(context)
-                BTN_MY_POST -> showMyPosts()
-                MENU_NOTICE -> showNoticePage(context)
-                MENU_FEEDBACK -> makeToast("준비 중입니다.")
-                MENU_QUESTION -> showQuestionPage()
-                MENU_CHANGE_PW -> resetPassword(context)
-                MENU_TERMS -> makeToast("준비 중입니다.")
-                MENU_PRIVACY_POLICY -> makeToast("준비 중입니다.")
-                MENU_SIGN_OUT -> quit(context)
-                MENU_OPENSOURCE -> showOpenSourcePage(context)
-                MENU_LIMIT_HISTORY -> makeToast("준비 중입니다.")
-                MENU_PURCHASE_HISTORY -> showPurchaseHistory()
-            }
-        })
-    }
-
     private fun showMyPosts() {
+        Log.d(TAG, "MyPageFragment - showMyPosts() called")
         if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_more_to_myPostFragment)
-    }
-
-    private fun logInStateView() {
-        User.isLoggedIn.observe(viewLifecycleOwner) { loggedIn ->
-            binding.toolbar.menu.clear()
-            if (loggedIn) {
-                binding.toolbar.inflateMenu(R.menu.more_menu_after)
-            } else {
-                logIn(requireContext())
-                binding.toolbar.inflateMenu(R.menu.more_menu_before)
-            }
-        }
     }
 
     private fun showQuestionPage() {
@@ -172,6 +100,11 @@ class MyPageFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun logOut() {
+        User.logout()
+        binding.user = User
+    }
+
     private fun resetPassword(context: Context) {
         if (User.isLoggedIn.value == true) {
             val intent = Intent(context, ResetPasswordActivity::class.java)
@@ -200,6 +133,28 @@ class MyPageFragment : Fragment() {
 
     private fun showPurchaseHistory() {
         findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment)
+    }
+
+    private fun handleUiEvent(event: Event) {
+        val context = requireContext()
+        Log.d(TAG, "MyPageFragment - handleUiEvent($event) called")
+        when ((event as Event.UiEvent).type) {
+            Type.BTN_LOGIN -> logIn(context)
+            Type.BTN_LOGOUT -> logOut()
+            Type.BTN_MY_POST -> showMyPosts()
+            Type.MENU_NOTICE -> showNoticePage(context)
+            Type.MENU_FIND_ID -> findId(context)
+            Type.MENU_FIND_PW -> findPw(context)
+            Type.MENU_FEEDBACK -> makeToast("준비 중입니다.")
+            Type.MENU_QUESTION -> showQuestionPage()
+            Type.MENU_CHANGE_PW -> resetPassword(context)
+            Type.MENU_TERMS -> makeToast("준비 중입니다.")
+            Type.MENU_PRIVACY_POLICY -> makeToast("준비 중입니다.")
+            Type.MENU_SIGN_OUT -> quit(context)
+            Type.MENU_OPENSOURCE -> showOpenSourcePage(context)
+            Type.MENU_LIMIT_HISTORY -> makeToast("준비 중입니다.")
+            Type.MENU_PURCHASE_HISTORY -> showPurchaseHistory()
+        }
     }
 
     private fun makeToast(message: String) {

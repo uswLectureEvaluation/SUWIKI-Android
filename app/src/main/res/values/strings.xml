@@ -212,5 +212,6 @@
     <string name="my_post">내가 쓴 글</string>
     <string name="hint_signup_id">아이디 입력(영문 6~20자)</string>
     <string name="description_close_button">닫기 버튼</string>
+    <string name="text_require_login">내가 쓴 글과 포인트를\n확인하려면 로그인하세요.</string>
 
 </resources>

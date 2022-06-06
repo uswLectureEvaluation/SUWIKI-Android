@@ -19,10 +19,6 @@
         <variable
             name="viewmodel"
             type="com.kunize.uswtimetable.ui.mypage.MyPageViewModel" />
-
-        <variable
-            name="viewType"
-            type="com.kunize.uswtimetable.util.MyPageViewType" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -65,10 +61,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.BTN_MY_POST)}"
+                        android:onClick="@{() -> viewmodel.myPostEvent()}"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
                         android:text="@string/my_evaluate"
+                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -92,7 +89,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_rounded_border_line_15_gray_500"
-                    android:padding="@dimen/cardview_padding">
+                    android:padding="@dimen/cardview_padding"
+                    android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}">
 
                     <TextView
                         android:id="@+id/tv_my_account_title"
@@ -102,6 +100,16 @@
                         android:text="@string/my_account"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/TextRegular.12.Gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewmodel.logoutEvent()}"
+                        android:text="@string/logout"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_my_account_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_my_account_title" />
 
                     <TextView
                         android:id="@+id/tv_login_id_title"
@@ -160,7 +168,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/bg_corner16_grey"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}">
 
                     <TextView
                         android:id="@+id/tv_total_point_title"
@@ -291,6 +300,35 @@
                         tools:text="-40" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_border_line_15_gray_500"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="@{user.isLoggedIn()?View.GONE:View.VISIBLE}">
+
+                    <TextView
+                        style="@style/TextRegular.14.Gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewmodel.loginEvent()}"
+                        android:text="@string/text_require_login" />
+
+                    <TextView
+                        style="@style/SuwikiMiniButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="64dp"
+                        android:onClick="@{() -> viewmodel.loginEvent()}"
+                        android:text="@string/login_button_text" />
+
+                </LinearLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -524,9 +562,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_LIMIT_HISTORY)}"
+                        android:onClick="@{() -> viewmodel.limitHistoryEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/suspension_history" />
+                        android:text="@string/suspension_history"
+                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
 
                     <TextView
                         android:id="@+id/tv_purchase_history_button"
@@ -536,9 +575,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_PURCHASE_HISTORY)}"
+                        android:onClick="@{() -> viewmodel.purchaseHistoryEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/purchase_history" />
+                        android:text="@string/purchase_history"
+                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
 
                     <TextView
                         android:id="@+id/tv_notice_button"
@@ -548,9 +588,35 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_NOTICE)}"
+                        android:onClick="@{() -> viewmodel.noticeEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/notice" />
+
+                    <TextView
+                        android:id="@+id/tv_find_id_btn"
+                        style="@style/TextRegular.14"
+                        visibility="@{user.isLoggedIn()?View.GONE:View.VISIBLE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.findIdEvent()}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/find_id" />
+
+                    <TextView
+                        android:id="@+id/tv_find_pw_btn"
+                        style="@style/TextRegular.14"
+                        visibility="@{user.isLoggedIn()?View.GONE:View.VISIBLE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{() -> viewmodel.findPwEvent()}"
+                        android:paddingVertical="8dp"
+                        android:text="@string/find_password" />
 
                     <TextView
                         android:id="@+id/tv_send_feedback_button"
@@ -560,7 +626,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_FEEDBACK)}"
+                        android:onClick="@{() -> viewmodel.feedbackEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/send_feedback" />
 
@@ -572,7 +638,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_QUESTION)}"
+                        android:onClick="@{() -> viewmodel.questionEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/question" />
 
@@ -584,7 +650,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_TERMS)}"
+                        android:onClick="@{() -> viewmodel.termsEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/terms_of_use" />
 
@@ -596,7 +662,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_PRIVACY_POLICY)}"
+                        android:onClick="@{() -> viewmodel.privatePolicyEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/privacy_policy" />
 
@@ -608,7 +674,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_OPENSOURCE)}"
+                        android:onClick="@{() -> viewmodel.openSourceEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/opensource_licence" />
 
@@ -620,9 +686,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_CHANGE_PW)}"
+                        android:onClick="@{() -> viewmodel.changePwEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/change_password" />
+                        android:text="@string/change_password"
+                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
 
                     <TextView
                         android:id="@+id/sign_out_button"
@@ -633,9 +700,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.onClick(viewType.MENU_SIGN_OUT)}"
+                        android:onClick="@{() -> viewmodel.signOutEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/sign_out" />
+                        android:text="@string/sign_out"
+                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
