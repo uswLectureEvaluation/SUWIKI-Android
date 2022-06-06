@@ -51,14 +51,6 @@ class MyPageViewModel : ViewModel() {
         event(Event.UiEvent(Type.BTN_LOGOUT))
     }
 
-    fun findIdEvent() {
-        event(Event.UiEvent(Type.MENU_FIND_ID))
-    }
-
-    fun findPwEvent() {
-        event(Event.UiEvent(Type.MENU_FIND_PW))
-    }
-
     fun openSourceEvent() {
         event(Event.UiEvent(Type.MENU_OPENSOURCE))
     }

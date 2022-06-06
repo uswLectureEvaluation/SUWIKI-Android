@@ -21,7 +21,9 @@ import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Type
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
-import com.kunize.uswtimetable.ui.user_info.*
+import com.kunize.uswtimetable.ui.user_info.QuitActivity
+import com.kunize.uswtimetable.ui.user_info.ResetPasswordActivity
+import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.repeatOnStarted
 import kotlinx.coroutines.CoroutineScope
@@ -84,16 +86,6 @@ class MyPageFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun findId(context: Context) {
-        val intent = Intent(context, FindIdActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun findPw(context: Context) {
-        val intent = Intent(context, FindPasswordActivity::class.java)
-        startActivity(intent)
-    }
-
     private fun logIn(context: Context) {
         val intent = Intent(context, LoginActivity::class.java)
         startActivity(intent)
@@ -142,17 +134,12 @@ class MyPageFragment : Fragment() {
             Type.BTN_LOGOUT -> logOut()
             Type.BTN_MY_POST -> showMyPosts()
             Type.MENU_NOTICE -> showNoticePage(context)
-            Type.MENU_FIND_ID -> findId(context)
-            Type.MENU_FIND_PW -> findPw(context)
-            Type.MENU_FEEDBACK -> makeToast("준비 중입니다.")
             Type.MENU_QUESTION -> showQuestionPage()
             Type.MENU_CHANGE_PW -> resetPassword(context)
-            Type.MENU_TERMS -> makeToast("준비 중입니다.")
-            Type.MENU_PRIVACY_POLICY -> makeToast("준비 중입니다.")
             Type.MENU_SIGN_OUT -> quit(context)
             Type.MENU_OPENSOURCE -> showOpenSourcePage(context)
-            Type.MENU_LIMIT_HISTORY -> makeToast("준비 중입니다.")
             Type.MENU_PURCHASE_HISTORY -> showPurchaseHistory()
+            else -> makeToast("준비 중입니다.")
         }
     }
 
