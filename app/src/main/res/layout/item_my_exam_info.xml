@@ -77,7 +77,8 @@
             android:id="@+id/tv_lecture_name"
             style="@style/lecture_name_middle_style"
             android:layout_marginTop="4dp"
-            android:text="@string/title_item_my_exam_info_lecture_name"
+            android:text="@{data.lectureName}"
+            tools:text="@string/title_item_my_exam_info_lecture_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_semester" />
 
