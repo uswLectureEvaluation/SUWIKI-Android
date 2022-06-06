@@ -78,21 +78,50 @@
 
         <TextView
             android:id="@+id/tv_lecture_name"
-            style="@style/lecture_name_middle_style"
-            android:layout_marginTop="4dp"
+            style="@style/TextMedium.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
             android:text="@{data.lectureName}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_semester"
             tools:text="강의 이름" />
 
         <TextView
-            android:id="@+id/tv_professor"
-            style="@style/professor_middle_style"
-            android:layout_marginStart="8dp"
+            android:id="@+id/tv_major"
+            style="@style/TextMedium.12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@{data.professor}"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_lecture_name"
             app:layout_constraintStart_toEndOf="@+id/tv_lecture_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_lecture_name"
             tools:text="교수 이름" />
+
+        <View
+            android:id="@+id/divider_major_professor"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="2dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/suwiki_gray_700"
+            app:layout_constraintBottom_toBottomOf="@id/tv_major"
+            app:layout_constraintStart_toEndOf="@id/tv_major"
+            app:layout_constraintTop_toTopOf="@id/tv_major" />
+
+        <TextView
+            android:id="@+id/tv_professor"
+            style="@style/TextMedium.12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{data.majorType}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_major"
+            app:layout_constraintStart_toEndOf="@id/divider_major_professor"
+            app:layout_constraintTop_toTopOf="@id/tv_major"
+            tools:text="강성민" />
+
 
         <RatingBar
             android:id="@+id/rb_average"
@@ -100,7 +129,7 @@
             android:layout_marginTop="8dp"
             android:rating="@{data.totalAvg}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_lecture_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_major" />
 
         <TextView
             android:id="@+id/tv_average"

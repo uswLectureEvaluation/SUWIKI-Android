@@ -61,7 +61,6 @@ class MyPageFragment : Fragment() {
     }
 
     private fun showMyPosts() {
-        Log.d(TAG, "MyPageFragment - showMyPosts() called")
         if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_more_to_myPostFragment)
     }
 
