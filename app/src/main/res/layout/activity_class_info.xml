@@ -104,315 +104,581 @@
 
         <TextView
             android:id="@+id/textTime"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="시간 및 장소"
-            android:textColor="@color/black"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintEnd_toStartOf="@+id/addTime"
-            app:layout_constraintHeight_percent="0.06"
+            style="@style/TextRegular.14.DarkGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="시간 및 강의실"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editProfessorName" />
 
         <TextView
             android:id="@+id/addTime"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
+            style="@style/TextRegular.10.Blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="추가"
-            app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="@+id/textTime"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/textTime"
-            app:layout_constraintTop_toTopOf="@+id/textTime"
-            app:layout_constraintWidth_percent="0.15" />
+            app:layout_constraintTop_toTopOf="@+id/textTime" />
 
-        <TextView
-            android:id="@+id/time1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="글경701(월 1,2,3)"
-            android:textColor="@color/custom_dark_gray"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintEnd_toStartOf="@+id/editTime1"
-            app:layout_constraintHeight_percent="0.06"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_day1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textTime" />
+            app:layout_constraintTop_toBottomOf="@id/textTime">
 
-        <TextView
-            android:id="@+id/time2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/custom_dark_gray"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintEnd_toStartOf="@+id/editTime2"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time1" />
+            <TextView
+                android:id="@+id/tv_day1"
+                style="@style/TextRegular.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="화요일" />
 
-        <TextView
-            android:id="@+id/time3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/custom_dark_gray"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintEnd_toStartOf="@+id/editTime3"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time2" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_down_arrow_16"
+                app:layout_constraintBottom_toBottomOf="@id/tv_day1"
+                app:layout_constraintStart_toEndOf="@id/tv_day1"
+                app:layout_constraintTop_toTopOf="@id/tv_day1" />
 
-        <TextView
-            android:id="@+id/editTime1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="수정"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@+id/time1"
-            app:layout_constraintEnd_toStartOf="@+id/deleteTime1"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/time1"
-            app:layout_constraintTop_toTopOf="@+id/time1"
-            app:layout_constraintWidth_percent="0.15" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@id/cl_day1"
+            app:layout_constraintTop_toBottomOf="@+id/textTime">
+
+            <EditText
+                android:id="@+id/et_start_class"
+                style="@style/TextRegular.14"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:maxLength="2"
+                android:textColorHint="@color/suwiki_gray_700"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15" />
+            
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:layout_width="18dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/et_start_class"
+                app:layout_constraintEnd_toEndOf="@id/et_start_class"
+                app:layout_constraintTop_toBottomOf="@id/et_start_class"/>
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:id="@+id/mid_view1"
+                android:layout_marginStart="5dp"
+                android:layout_width="5dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toEndOf="@id/et_start_class"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <EditText
+                android:id="@+id/et_end_class1"
+                style="@style/TextRegular.14"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:maxLength="2"
+                android:layout_marginStart="5dp"
+                android:textColorHint="@color/suwiki_gray_700"
+                app:layout_constraintStart_toEndOf="@id/mid_view1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15" />
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:layout_width="18dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/et_end_class1"
+                app:layout_constraintEnd_toEndOf="@id/et_end_class1"
+                app:layout_constraintTop_toBottomOf="@id/et_end_class1"/>
+
+            <TextView
+                style="@style/TextRegular.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/et_end_class1"
+                app:layout_constraintTop_toTopOf="@id/et_end_class1"
+                app:layout_constraintBottom_toBottomOf="@id/et_end_class1"
+                android:layout_marginStart="4dp"
+                android:text="교시" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/deleteTime1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
+            android:layout_marginTop="24dp"
+            style="@style/TextRegular.10.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="삭제"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@+id/editTime1"
-
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/editTime1"
-            app:layout_constraintTop_toTopOf="@+id/editTime1"
-            app:layout_constraintWidth_percent="0.15" />
+            app:layout_constraintTop_toBottomOf="@+id/addTime" />
 
-        <TextView
-            android:id="@+id/editTime2"
+        <EditText
+            android:id="@+id/location1"
+            style="@style/TextRegular.14"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="수정"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@+id/time2"
-            app:layout_constraintEnd_toStartOf="@+id/deleteTime2"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/time2"
-            app:layout_constraintTop_toTopOf="@+id/time2"
-            app:layout_constraintWidth_percent="0.15" />
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_day1"
+            tools:text="글경701(월 1,2,3)" />
+
+        <View
+            android:id="@+id/view1"
+            android:background="@color/suwiki_gray_500"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/location1"
+            app:layout_constraintEnd_toEndOf="@id/location1"
+            app:layout_constraintTop_toBottomOf="@id/location1"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_day2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view1">
+
+            <TextView
+                android:id="@+id/tv_day2"
+                style="@style/TextRegular.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="화요일" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_down_arrow_16"
+                app:layout_constraintBottom_toBottomOf="@id/tv_day2"
+                app:layout_constraintStart_toEndOf="@id/tv_day2"
+                app:layout_constraintTop_toTopOf="@id/tv_day2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_class2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@id/cl_day2"
+            app:layout_constraintTop_toBottomOf="@+id/view1">
+
+            <EditText
+                android:id="@+id/et_start_class2"
+                style="@style/TextRegular.14"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:maxLength="2"
+                android:textColorHint="@color/suwiki_gray_700"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15" />
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:layout_width="18dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/et_start_class2"
+                app:layout_constraintEnd_toEndOf="@id/et_start_class2"
+                app:layout_constraintTop_toBottomOf="@id/et_start_class2"/>
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:id="@+id/mid_view2"
+                android:layout_marginStart="5dp"
+                android:layout_width="5dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toEndOf="@id/et_start_class2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <EditText
+                android:id="@+id/et_end_class2"
+                style="@style/TextRegular.14"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:maxLength="2"
+                android:layout_marginStart="5dp"
+                android:textColorHint="@color/suwiki_gray_700"
+                app:layout_constraintStart_toEndOf="@id/mid_view2"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15" />
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:layout_width="18dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/et_end_class2"
+                app:layout_constraintEnd_toEndOf="@id/et_end_class2"
+                app:layout_constraintTop_toBottomOf="@id/et_end_class2"/>
+
+            <TextView
+                style="@style/TextRegular.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/et_end_class2"
+                app:layout_constraintTop_toTopOf="@id/et_end_class2"
+                app:layout_constraintBottom_toBottomOf="@id/et_end_class2"
+                android:layout_marginStart="4dp"
+                android:text="교시" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/deleteTime2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
+            android:layout_marginTop="24dp"
+            style="@style/TextRegular.10.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="삭제"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@+id/editTime2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/editTime2"
-            app:layout_constraintTop_toTopOf="@+id/editTime2"
-            app:layout_constraintWidth_percent="0.15" />
+            app:layout_constraintTop_toBottomOf="@+id/view1" />
 
-        <TextView
-            android:id="@+id/editTime3"
+        <EditText
+            android:id="@+id/location2"
+            style="@style/TextRegular.14"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="수정"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@+id/time3"
-            app:layout_constraintEnd_toStartOf="@+id/deleteTime3"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/time3"
-            app:layout_constraintTop_toTopOf="@+id/time3"
-            app:layout_constraintWidth_percent="0.15" />
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_day2"
+            tools:text="글경701(월 1,2,3)" />
+
+        <View
+            android:id="@+id/view2"
+            android:background="@color/suwiki_gray_500"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/location2"
+            app:layout_constraintEnd_toEndOf="@id/location2"
+            app:layout_constraintTop_toBottomOf="@id/location2"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_day3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view2">
+
+            <TextView
+                android:id="@+id/tv_day3"
+                style="@style/TextRegular.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="화요일" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_down_arrow_16"
+                app:layout_constraintBottom_toBottomOf="@id/tv_day3"
+                app:layout_constraintStart_toEndOf="@id/tv_day3"
+                app:layout_constraintTop_toTopOf="@id/tv_day3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_class3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@id/cl_day3"
+            app:layout_constraintTop_toBottomOf="@+id/view2">
+
+            <EditText
+                android:id="@+id/et_start_class3"
+                style="@style/TextRegular.14"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:maxLength="2"
+                android:textColorHint="@color/suwiki_gray_700"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15" />
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:layout_width="18dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/et_start_class3"
+                app:layout_constraintEnd_toEndOf="@id/et_start_class3"
+                app:layout_constraintTop_toBottomOf="@id/et_start_class3"/>
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:id="@+id/mid_view3"
+                android:layout_marginStart="5dp"
+                android:layout_width="5dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toEndOf="@id/et_start_class3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <EditText
+                android:id="@+id/et_end_class3"
+                style="@style/TextRegular.14"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:maxLength="2"
+                android:layout_marginStart="5dp"
+                android:textColorHint="@color/suwiki_gray_700"
+                app:layout_constraintStart_toEndOf="@id/mid_view3"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="15" />
+
+            <View
+                android:background="@color/suwiki_gray_500"
+                android:layout_width="18dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/et_end_class3"
+                app:layout_constraintEnd_toEndOf="@id/et_end_class3"
+                app:layout_constraintTop_toBottomOf="@id/et_end_class3"/>
+
+            <TextView
+                style="@style/TextRegular.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/et_end_class3"
+                app:layout_constraintTop_toTopOf="@id/et_end_class3"
+                app:layout_constraintBottom_toBottomOf="@id/et_end_class3"
+                android:layout_marginStart="4dp"
+                android:text="교시" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/deleteTime3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
+            android:layout_marginTop="24dp"
+            style="@style/TextRegular.10.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="4dp"
             android:text="삭제"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@+id/editTime3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/editTime3"
-            app:layout_constraintTop_toTopOf="@+id/editTime3"
-            app:layout_constraintWidth_percent="0.15" />
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <EditText
+            android:id="@+id/location3"
+            style="@style/TextRegular.14"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_day3"
+            tools:text="글경701(월 1,2,3)" />
+
+        <View
+            android:id="@+id/view3"
+            android:background="@color/suwiki_gray_500"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/location3"
+            app:layout_constraintEnd_toEndOf="@id/location3"
+            app:layout_constraintTop_toBottomOf="@id/location3"/>
+
 
         <TextView
             android:id="@+id/tv_color"
+            android:layout_marginTop="34dp"
             style="@style/TextRegular.14.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="색상"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time3" />
+            app:layout_constraintTop_toBottomOf="@id/view3"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup
             android:id="@+id/rg_color"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
-            app:layout_constraintStart_toStartOf="@id/editClassName"
-            app:layout_constraintTop_toTopOf="@id/tv_color"
             app:alignItems="flex_start"
             app:flexWrap="wrap"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content">
+            app:layout_constraintStart_toStartOf="@id/editClassName"
+            app:layout_constraintTop_toTopOf="@id/tv_color">
 
             <RadioButton
                 android:id="@+id/rb_sky"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_sky"
                 android:button="@null"
-                android:layout_marginEnd="8dp"
-                android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_navy"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_navy"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_purple"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_purple"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_dark_purple"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_dark_purple"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_mint"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_mint"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_dark_green"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_dark_green"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_apricot"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_apricot"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_orange"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_orange"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_pink"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_pink"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_brown"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_brown"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_green"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_green"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
             <RadioButton
                 android:id="@+id/rb_gray"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/selector_radio_button_dark_gray"
                 android:button="@null"
-                android:minHeight="0dp"
-                android:layout_marginEnd="8dp"
                 android:minWidth="0dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:minHeight="0dp" />
 
         </com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup>
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/imgColor"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tv_color"
             app:layout_constraintDimensionRatio="1.1"
             app:layout_constraintHeight_percent="0.06"
