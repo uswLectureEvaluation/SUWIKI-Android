@@ -18,7 +18,6 @@ import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Event
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
-import com.kunize.uswtimetable.ui.signup.SignUpActivity
 import com.kunize.uswtimetable.ui.user_info.QuitActivity
 import com.kunize.uswtimetable.ui.user_info.ResetPasswordActivity
 import com.kunize.uswtimetable.ui.user_info.User
@@ -48,7 +47,7 @@ class MyPageFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.executePendingBindings()
 
-        repeatOnStarted {
+        viewLifecycleOwner.repeatOnStarted {
             viewModel.eventFlow.collect { event -> handleUiEvent(event) }
         }
     }
@@ -97,11 +96,6 @@ class MyPageFragment : Fragment() {
 
     private fun showSuspensionHistory() {
         findNavController().navigate(R.id.action_global_suspensionHistoryFragment)
-    }
-
-    private fun signIn(context: Context) {
-        val intent = Intent(context, SignUpActivity::class.java)
-        startActivity(intent)
     }
 
     private fun logIn(context: Context) {
