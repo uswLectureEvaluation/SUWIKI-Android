@@ -17,14 +17,33 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.round
 
+fun dateTimeFormat(dateTime: LocalDateTime): String {
+    return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+}
+
+fun dateFormat(dateTime: LocalDateTime): String {
+    return dateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+}
+
 @BindingAdapter("dateTime")
 fun applyDateTime(view: TextView, dateTime: LocalDateTime) {
-    view.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+    view.text = dateTimeFormat(dateTime)
 }
 
 @BindingAdapter("date")
 fun applyDate(view: TextView, dateTime: LocalDateTime) {
-    view.text = dateTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+    view.text = dateFormat(dateTime)
+}
+
+@BindingAdapter("banCreatedAt")
+fun applyBanCreatedAt(view: TextView, createdAt: LocalDateTime) {
+    view.text = view.resources.getString(R.string.suspension_created_at, dateTimeFormat(createdAt))
+}
+
+@BindingAdapter("banCreatedAt", "banExpiredAt")
+fun applyBanExpiredAt(view: TextView, createdAt: LocalDateTime, expiredAt: LocalDateTime) {
+    val diff = expiredAt.compareTo(createdAt)
+    view.text = view.resources.getString(R.string.suspension_expired_at, dateTimeFormat(expiredAt), diff)
 }
 
 @BindingAdapter("point")

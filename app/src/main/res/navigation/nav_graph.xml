@@ -30,11 +30,7 @@
         android:id="@+id/navigation_my_page"
         android:name="com.kunize.uswtimetable.ui.mypage.MyPageFragment"
         android:label="fragment_my_page"
-        tools:layout="@layout/fragment_my_page">
-        <action
-            android:id="@+id/action_navigation_my_page_to_purchaseHistoryFragment"
-            app:destination="@id/purchaseHistoryFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_my_page"/>
     <fragment
         android:id="@+id/searchResultFragment"
         android:name="com.kunize.uswtimetable.ui.search_result.SearchResultFragment"
@@ -181,5 +177,15 @@
         android:id="@+id/action_global_purchaseHistoryFragment"
         app:destination="@id/purchaseHistoryFragment"
         app:popUpTo="@id/purchaseHistoryFragment"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/suspensionHistoryFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.SuspensionHistoryFragment"
+        tools:layout="@layout/fragment_suspension_history"
+        android:label="SuspensionHistoryFragment" />
+    <action
+        android:id="@+id/action_global_suspensionHistoryFragment"
+        app:destination="@id/suspensionHistoryFragment"
+        app:popUpTo="@id/suspensionHistoryFragment"
         app:popUpToInclusive="true" />
 </navigation>
