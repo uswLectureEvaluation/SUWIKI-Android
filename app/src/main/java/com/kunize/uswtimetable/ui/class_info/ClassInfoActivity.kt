@@ -116,6 +116,10 @@ class ClassInfoActivity : AppCompatActivity() {
             dialog.show()
         }
 
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
         binding.rgColor.setOnCheckedChangeListener { group, checkedId ->
             colorSel = radioHashMap[checkedId]!!
         }
