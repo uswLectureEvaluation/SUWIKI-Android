@@ -16,7 +16,6 @@ import com.kunize.uswtimetable.databinding.FragmentMyPageBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Event
-import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Type
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
@@ -62,17 +61,17 @@ class MyPageFragment : Fragment() {
 
     private fun handleUiEvent(event: Event) {
         val context = requireContext()
-        when ((event as Event.UiEvent).type) {
-            Type.BTN_LOGIN -> logIn(context)
-            Type.BTN_LOGOUT -> logOut()
-            Type.BTN_MY_POST -> showMyPosts()
-            Type.MENU_NOTICE -> showNoticePage(context)
-            Type.MENU_QUESTION -> showQuestionPage()
-            Type.MENU_CHANGE_PW -> resetPassword(context)
-            Type.MENU_SIGN_OUT -> quit(context)
-            Type.MENU_OPENSOURCE -> showOpenSourcePage(context)
-            Type.MENU_PURCHASE_HISTORY -> showPurchaseHistory()
-            Type.MENU_LIMIT_HISTORY -> showSuspensionHistory()
+        when(event) {
+            is Event.LoginEvent -> logIn(context)
+            is Event.LogoutEvent -> logOut()
+            is Event.MyPostEvent -> showMyPosts()
+            is Event.NoticeEvent -> showNoticePage(context)
+            is Event.QuestionEvent -> showQuestionPage()
+            is Event.ChangePwEvent -> resetPassword(context)
+            is Event.SignOutEvent -> quit(context)
+            is Event.OpenSourceEvent -> showOpenSourcePage(context)
+            is Event.PurchaseHistoryEvent -> showPurchaseHistory()
+            is Event.LimitHistoryEvent -> showSuspensionHistory()
             else -> makeToast("준비 중입니다.")
         }
     }

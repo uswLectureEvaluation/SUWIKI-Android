@@ -12,55 +12,55 @@ class MyPageViewModel : ViewModel() {
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun loginEvent() {
-        event(Event.UiEvent(Type.BTN_LOGIN))
+        event(Event.LoginEvent)
     }
 
     fun myPostEvent() {
-        event(Event.UiEvent(Type.BTN_MY_POST))
+        event(Event.MyPostEvent)
     }
 
     fun noticeEvent() {
-        event(Event.UiEvent(Type.MENU_NOTICE))
+        event(Event.NoticeEvent)
     }
 
     fun feedbackEvent() {
-        event(Event.UiEvent(Type.MENU_FEEDBACK))
+        event(Event.FeedbackEvent)
     }
 
     fun questionEvent() {
-        event(Event.UiEvent(Type.MENU_QUESTION))
+        event(Event.QuestionEvent)
     }
 
     fun changePwEvent() {
-        event(Event.UiEvent(Type.MENU_CHANGE_PW))
+        event(Event.ChangePwEvent)
     }
 
     fun termsEvent() {
-        event(Event.UiEvent(Type.MENU_TERMS))
+        event(Event.TermsEvent)
     }
 
-    fun privatePolicyEvent() {
-        event(Event.UiEvent(Type.MENU_PRIVACY_POLICY))
+    fun privacyPolicyEvent() {
+        event(Event.PrivacyPolicyEvent)
     }
 
     fun signOutEvent() {
-        event(Event.UiEvent(Type.MENU_SIGN_OUT))
+        event(Event.SignOutEvent)
     }
 
     fun logoutEvent() {
-        event(Event.UiEvent(Type.BTN_LOGOUT))
+        event(Event.LogoutEvent)
     }
 
     fun openSourceEvent() {
-        event(Event.UiEvent(Type.MENU_OPENSOURCE))
+        event(Event.OpenSourceEvent)
     }
 
     fun limitHistoryEvent() {
-        event(Event.UiEvent(Type.MENU_LIMIT_HISTORY))
+        event(Event.LimitHistoryEvent)
     }
 
     fun purchaseHistoryEvent() {
-        event(Event.UiEvent(Type.MENU_PURCHASE_HISTORY))
+        event(Event.PurchaseHistoryEvent)
     }
 
     private fun event(event: Event) {
@@ -70,22 +70,18 @@ class MyPageViewModel : ViewModel() {
     }
 
     sealed class Event {
-        data class UiEvent(val type: Type): Event()
-    }
-
-    enum class Type {
-        BTN_LOGIN,
-        BTN_LOGOUT,
-        BTN_MY_POST,
-        MENU_LIMIT_HISTORY,
-        MENU_PURCHASE_HISTORY,
-        MENU_NOTICE,
-        MENU_FEEDBACK,
-        MENU_QUESTION,
-        MENU_CHANGE_PW,
-        MENU_TERMS,
-        MENU_PRIVACY_POLICY,
-        MENU_SIGN_OUT,
-        MENU_OPENSOURCE
+        object LoginEvent : Event()
+        object LogoutEvent: Event()
+        object MyPostEvent: Event()
+        object LimitHistoryEvent: Event()
+        object PurchaseHistoryEvent: Event()
+        object NoticeEvent: Event()
+        object FeedbackEvent: Event()
+        object QuestionEvent: Event()
+        object ChangePwEvent: Event()
+        object TermsEvent: Event()
+        object PrivacyPolicyEvent: Event()
+        object SignOutEvent: Event()
+        object OpenSourceEvent: Event()
     }
 }

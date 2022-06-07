@@ -636,7 +636,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.privatePolicyEvent()}"
+                        android:onClick="@{() -> viewmodel.privacyPolicyEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/privacy_policy" />
 
