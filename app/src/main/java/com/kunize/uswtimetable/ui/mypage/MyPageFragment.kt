@@ -76,7 +76,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun showMyPosts() {
-        if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_global_myPostFragment)
+        if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_navigation_my_page_to_myPostFragment)
     }
 
     private fun showQuestionPage() {
@@ -95,7 +95,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun showSuspensionHistory() {
-        findNavController().navigate(R.id.action_global_suspensionHistoryFragment)
+        findNavController().navigate(R.id.action_navigation_my_page_to_suspensionHistoryFragment)
     }
 
     private fun logIn(context: Context) {
@@ -135,7 +135,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun showPurchaseHistory() {
-        findNavController().navigate(R.id.action_global_purchaseHistoryFragment )
+        findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment )
     }
 
     private fun makeToast(message: String) {
