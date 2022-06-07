@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.class_info
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import com.kunize.uswtimetable.EditColorDialog
 import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.arrayToJson
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.getCurrentTimetableInfo
@@ -22,12 +20,8 @@ import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
-import com.kunize.uswtimetable.dialog.EditTimeDialog
-import com.kunize.uswtimetable.ui.add_class.GradeSortDialog
 import com.kunize.uswtimetable.util.TimeStringFormatter
-import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
-import com.kunize.uswtimetable.util.TimetableColor
 import com.kunize.uswtimetable.util.TimetableColor.APRICOT
 import com.kunize.uswtimetable.util.TimetableColor.BROWN
 import com.kunize.uswtimetable.util.TimetableColor.DARK_GREEN
@@ -141,10 +135,7 @@ class ClassInfoActivity : AppCompatActivity() {
             jsonStr = timetableSel.timeTableJsonData
             tempTimeData = jsonToArray(jsonStr)
 
-            val randomColor = setTimeTableCellColor()
-            withContext(Main) {
-                binding.imgColor.imageTintList = ColorStateList.valueOf(randomColor)
-            }
+            setTimeTableCellColor()
         }
 
         setVisibilityTime(View.GONE, 2)
@@ -216,20 +207,6 @@ class ClassInfoActivity : AppCompatActivity() {
         }
         binding.deleteTime3.setOnClickListener {
             setVisibilityTime(View.GONE, 3)
-        }
-
-        binding.imgColor.setOnClickListener {
-            val dlg = EditColorDialog(this)
-            Log.d("color", "클릭함")
-            dlg.setOnOKClickedListener(object : EditColorDialog.OKClickedListener {
-                override fun onOKClicked(color: Int?) {
-                    binding.imgColor.imageTintList = ColorStateList.valueOf(color!!)
-                    colorSel = color
-                    Log.d("color", "$color")
-                }
-
-            })
-            dlg.start()
         }
     }
 

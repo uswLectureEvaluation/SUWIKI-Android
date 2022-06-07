@@ -686,19 +686,6 @@
 
         </com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup>
 
-        <ImageView
-            android:id="@+id/imgColor"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_color"
-            app:layout_constraintDimensionRatio="1.1"
-            app:layout_constraintHeight_percent="0.06"
-            app:layout_constraintStart_toEndOf="@+id/tv_color"
-            app:layout_constraintTop_toTopOf="@+id/tv_color"
-            app:layout_optimizationLevel="ratio"
-            app:srcCompat="@drawable/clrcle" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
