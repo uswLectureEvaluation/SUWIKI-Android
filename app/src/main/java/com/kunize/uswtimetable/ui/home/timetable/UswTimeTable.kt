@@ -255,6 +255,12 @@ class UswTimeTable @JvmOverloads constructor(
         )
         timeText.setSpan(
             AbsoluteSizeSpan(12, true),
+            0,
+            data.name.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        timeText.setSpan(
+            AbsoluteSizeSpan(10, true),
             data.name.length,
             tempText.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

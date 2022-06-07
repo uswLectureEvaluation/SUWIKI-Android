@@ -131,6 +131,7 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-xxxhdpi/bg_rounded_gray_300_20.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/background_cardview.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_border_line_10_gray_500.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_top.xml" value="0.1455" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_white_10.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/border_circle.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/border_corner8_gray.xml" value="0.144" />
@@ -211,6 +212,7 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_login.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_setting.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_time_table_list.xml" value="0.176" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/bottom_dialog.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/dialog_day_sort.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/dialog_grade_sort.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/dialog_sort.xml" value="0.14605263157894738" />
