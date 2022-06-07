@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <size
+                android:width="32dp"
+                android:height="32dp" />
+            <solid android:color="@color/suwiki_blue_900"/>
+        </shape>
+    </item>
+
+    <item
+        android:bottom="2dp"
+        android:end="2dp"
+        android:start="2dp"
+        android:top="2dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/suwiki_white" />
+
+        </shape>
+    </item>
+
+    <item
+        android:bottom="5dp"
+        android:end="5dp"
+        android:start="5dp"
+        android:top="5dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/suwiki_timetable_orange" />
+
+        </shape>
+    </item>
+</layer-list>

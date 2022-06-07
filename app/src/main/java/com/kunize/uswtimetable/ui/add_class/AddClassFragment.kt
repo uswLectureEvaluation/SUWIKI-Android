@@ -3,14 +3,23 @@ package com.kunize.uswtimetable.ui.add_class
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.ActivityAddClassBinding
 import com.kunize.uswtimetable.data.local.TimeTableData
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
+import com.kunize.uswtimetable.databinding.FragmentAddClassBinding
+import com.kunize.uswtimetable.databinding.FragmentHomeBinding
+import com.kunize.uswtimetable.ui.evaluation.ImageSortDialog
+import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.onItemSelected
 import com.kunize.uswtimetable.util.onTextChanged
@@ -20,26 +29,48 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddClassActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityAddClassBinding.inflate(layoutInflater) }
+class AddClassFragment : Fragment() {
+    lateinit var binding: FragmentAddClassBinding
     private lateinit var timetableData: MutableList<TimeTableData>
     private lateinit var spinnerData: MutableList<String>
     private lateinit var searchAdapter: ClassSearchAdapter
-    private val gradeList = listOf("전부", "1학년", "2학년", "3학년", "4학년")
-    var majorSel = "전부"
-    var gradeSel = "전부"
+    private val gradeList = listOf("전체", "1학년", "2학년", "3학년", "4학년")
+    var majorSel = "전체"
+    var gradeSel = "전체"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-
-        binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
-        binding.bannerAdView.loadAd()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentAddClassBinding.inflate(inflater, container, false)
 
         searchAdapter = ClassSearchAdapter()
-        val db = TimeTableDatabase.getInstance(applicationContext)
+        val db = TimeTableDatabase.getInstance(requireActivity())
 
         binding.searchClass.visibility = View.INVISIBLE
+
+        binding.back.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.clOpenMajor.setOnClickListener {
+            val action = AddClassFragmentDirections.globalOpenMajor(FragmentType.ADD_CLASS)
+            findNavController().navigate(action)
+        }
+
+        binding.clSort.setOnClickListener {
+            val dialog = GradeSortDialog(context as AppCompatActivity)
+            dialog.setDialogListener(object : GradeSortDialog.ItemClickListener {
+                override fun onClick(text: String) {
+                    binding.tvSortSelected.text = text
+                    gradeSel = text
+                    TimeTableSelPref.prefs.setInt("gradeSel", gradeList.indexOf(text))
+                    filterData()
+                }
+            })
+            dialog.show()
+        }
 
 
         CoroutineScope(IO).launch {
@@ -51,59 +82,53 @@ class AddClassActivity : AppCompatActivity() {
             for(data in timetableData)
                 tempSpinnerData.add(data.major)
             spinnerData = tempSpinnerData.sorted().toMutableList()
-            spinnerData.add(0, "전부")
-
-            val majorSpinnerAdapter = ArrayAdapter<String>(
-                this@AddClassActivity, R.layout.item_spinner_major,
-                spinnerData
-            )
-            val gradeSpinnerAdapter = ArrayAdapter<String>(
-                this@AddClassActivity, R.layout.item_spinner_major,
-                gradeList
-            )
+            spinnerData.add(0, "전체")
 
             withContext(Main) {
-                binding.majorSpinner.adapter = majorSpinnerAdapter
-                binding.gradeSpinner.adapter = gradeSpinnerAdapter
-                binding.majorSpinner.setSelection(TimeTableSelPref.prefs.getInt("majorSel", 0))
-                binding.gradeSpinner.setSelection(TimeTableSelPref.prefs.getInt("gradeSel", 0))
                 binding.recyclerClass.adapter = searchAdapter
-                binding.recyclerClass.layoutManager = LinearLayoutManager(this@AddClassActivity)
+                binding.recyclerClass.layoutManager = LinearLayoutManager(requireActivity())
                 binding.searchClass.visibility = View.VISIBLE
+                majorSel = TimeTableSelPref.prefs.getString("openMajorSel", "전체")
+                majorSel = majorSel.replace("-","·")
+                gradeSel = gradeList[TimeTableSelPref.prefs.getInt("gradeSel", 0)]
+                binding.tvSortSelected.text = gradeSel
+                binding.tvSelectedOpenMajor.text = majorSel
+                filterData()
             }
         }
 
         binding.searchClass.onTextChanged { searchAdapter.filter.filter(it) }
 
-        binding.majorSpinner.onItemSelected { position ->
-            majorSel = spinnerData[position]
-            TimeTableSelPref.prefs.setInt("majorSel", position)
-            filterData()
-        }
+//        binding.majorSpinner.onItemSelected { position ->
+//            majorSel = spinnerData[position]
+//            TimeTableSelPref.prefs.setInt("majorSel", position)
+//            filterData()
+//        }
+//
+//        binding.gradeSpinner.onItemSelected { position ->
 
-        binding.gradeSpinner.onItemSelected { position ->
-            gradeSel = gradeList[position]
-            TimeTableSelPref.prefs.setInt("gradeSel", position)
-            filterData()
-        }
+//            filterData()
+//        }
 
         searchAdapter.setItemClickListener(object : ClassSearchAdapter.ItemClickListener {
             override fun onClick(view: View, data: TimeTableData) {
-                val intent = Intent(this@AddClassActivity, ClassInfoActivity::class.java)
+                val intent = Intent(requireActivity(), ClassInfoActivity::class.java)
                 intent.putExtra("className", data.className)
                 intent.putExtra("professor", data.professor)
                 intent.putExtra("time", data.time)
                 startActivity(intent)
             }
         })
+
+        return binding.root
     }
 
     private fun filterData() {
         val changeData = mutableListOf<TimeTableData>()
         when {
-            majorSel == "전부" && gradeSel == "전부" -> changeFilterData(timetableData)
-            majorSel != "전부" && gradeSel == "전부" -> setFilterDataByMajor(changeData)
-            majorSel == "전부" && gradeSel != "전부" -> setFilterDataByGrade(changeData)
+            majorSel == "전체" && gradeSel == "전체" -> changeFilterData(timetableData)
+            majorSel != "전체" && gradeSel == "전체" -> setFilterDataByMajor(changeData)
+            majorSel == "전체" && gradeSel != "전체" -> setFilterDataByGrade(changeData)
             else -> setFilterDataByAll(changeData)
         }
         searchAdapter.notifyDataSetChanged()
@@ -149,22 +174,6 @@ class AddClassActivity : AppCompatActivity() {
     private fun changeFilterData(changeData: MutableList<TimeTableData>) {
         searchAdapter.filteredData = changeData
         searchAdapter.unfilteredData = changeData
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.bannerAdView.resume()
-    }
-
-
-    override fun onPause() {
-        super.onPause()
-        binding.bannerAdView.pause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.bannerAdView.destroy()
     }
 
 }

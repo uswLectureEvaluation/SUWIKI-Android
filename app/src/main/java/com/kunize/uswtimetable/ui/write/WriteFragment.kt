@@ -218,10 +218,10 @@ class WriteFragment : Fragment() {
                     testDifficulty = it.text.toString()
             }
 
-            //TODO 수정
             info = LectureExamDto(
                 selectedSemester = writeViewModel.semesterText.value!!,
                 examInfo = testContent,
+                examType = writeViewModel.testText.value!!,
                 examDifficulty = testDifficulty,
                 content = writeContent.text.toString()
             )
@@ -301,7 +301,7 @@ class WriteFragment : Fragment() {
 
     private fun setTestContentCheckBox(it: LectureExamDto) {
         for (checkBox in testContentCheckBoxList) {
-            for (dataString in it.examType?.replace(" ","")?.split(",")!!) {
+            for (dataString in it.examInfo.replace(" ", "").split(",")) {
                 if (checkBox.text == dataString)
                     checkBox.isChecked = true
             }

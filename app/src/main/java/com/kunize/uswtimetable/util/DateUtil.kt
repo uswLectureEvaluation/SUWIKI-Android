@@ -18,14 +18,17 @@ class DateUtil {
             return today.split("/")[0].toInt()
         }
 
-        fun getYearList(): List<String> {
+        fun getYearList(): MutableList<String> {
             val today = getToday()
             var year = today.split("/")[0].toInt()
             val yearList = mutableListOf<String>()
-            for (i in 1.. NUMBER_OF_YEAR) {
+            for(i in NUMBER_OF_YEAR / 2 downTo 1) {
+                yearList.add((year - i).toString())
+            }
+            for (i in 1.. NUMBER_OF_YEAR/2) {
                 yearList.add(year++.toString())
             }
-            return yearList.toList()
+            return yearList
         }
 
         fun getSemester(): Int {

@@ -7,117 +7,109 @@
     android:background="@color/background"
     tools:context=".ui.create_timetable.CreateTimeTableActivity">
 
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="80dp"
-        android:text="시간표 생성"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:autoSizeTextType="uniform"
+        style="@style/TextMedium.16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/crate_timetable"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
+        style="@style/SpinnerTheme"
         android:id="@+id/yearSpinner"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="24dp"
-        android:spinnerMode="dropdown"
-        app:layout_constraintHeight_percent="0.04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="년"
-        app:autoSizeTextType="uniform"
+        android:layout_marginStart="8dp"
+        style="@style/TextRegular.16.Gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/year"
         app:layout_constraintBottom_toBottomOf="@+id/yearSpinner"
-        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toEndOf="@+id/yearSpinner"
-        app:layout_constraintTop_toTopOf="@+id/yearSpinner"
-        app:layout_constraintWidth_percent="0.1" />
+        app:layout_constraintTop_toTopOf="@+id/yearSpinner" />
 
     <Spinner
+        style="@style/SpinnerTheme"
         android:id="@+id/semesterSpinner"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
-        app:layout_constraintWidth_percent="0.2" />
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <TextView
+        android:layout_marginStart="8dp"
         android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="학기"
-        app:autoSizeTextType="uniform"
+        style="@style/TextRegular.16.Gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/semester"
         app:layout_constraintBottom_toBottomOf="@+id/semesterSpinner"
-        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toEndOf="@+id/semesterSpinner"
-        app:layout_constraintTop_toTopOf="@+id/semesterSpinner"
-        app:layout_constraintWidth_percent="0.1" />
+        app:layout_constraintTop_toTopOf="@+id/semesterSpinner" />
 
-    <com.autofit.et.lib.AutoFitEditText
+    <EditText
+        android:background="@null"
         android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
         android:focusableInTouchMode="true"
         android:hint="시간표 이름"
+        android:textColorHint="@color/suwiki_gray_700"
         android:inputType="text"
-        android:textSize="100sp"
-        app:autoSizeTextType="uniform"
+        style="@style/TextRegular.16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="4dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:background="@color/custom_gray"
+        android:layout_marginTop="8dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/suwiki_gray_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editName" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="60dp"
-        app:cardBackgroundColor="@color/custom_light_gray"
-        app:cardCornerRadius="20dp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/finishButton"
+        android:layout_width="46dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_suwiki_mini"
+        android:text="@string/finish"
+        android:textColor="@color/suwiki_white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.06"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintWidth_percent="0.2">
-
-        <TextView
-            android:id="@+id/finishButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="#E6E6E6"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="완료"
-            android:textStyle="bold"
-            app:autoSizeTextType="uniform" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

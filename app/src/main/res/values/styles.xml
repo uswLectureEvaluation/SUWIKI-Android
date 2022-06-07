@@ -68,6 +68,10 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="TextRegular.10.Blue">
+        <item name="android:textColor">@color/suwiki_blue_900</item>
+    </style>
+
     <style name="TextRegular.10.Gray">
         <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
@@ -100,8 +104,16 @@
         <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 
+    <style name="TextRegular.14.DarkGray">
+        <item name="android:textColor">@color/suwiki_gray_900</item>
+    </style>
+
     <style name="TextRegular.16">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextRegular.16.Gray">
+        <item name="android:textColor">@color/suwiki_gray_700</item>
     </style>
 
     <style name="TextLight.10">
@@ -640,5 +652,25 @@
 
     <style name="SuwikiTextBody10.Gray">
         <item name="android:textColor">@color/suwiki_gray_700</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/selector_spinner_arrow</item>
+    </style>
+
+    <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    </style>
+
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 </resources>

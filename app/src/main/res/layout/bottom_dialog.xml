@@ -3,75 +3,97 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/bottomName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="8dp"
-        android:text="이름"
-        android:textColor="@color/black"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintDimensionRatio="9.8"
-        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/TextMedium.14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_optimizationLevel="ratio" />
+        tools:text="이름" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/suwiki_gray_500"
+        app:layout_constraintBottom_toBottomOf="@id/bottomName"
+        app:layout_constraintStart_toEndOf="@id/bottomName"
+        app:layout_constraintTop_toTopOf="@id/bottomName" />
 
     <TextView
         android:id="@+id/bottomProfessor"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="8dp"
-        android:text="교수님 성함"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintDimensionRatio="11.8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomTime"
-        app:layout_optimizationLevel="ratio" />
+        style="@style/TextMedium.14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/view"
+        app:layout_constraintStart_toEndOf="@id/view"
+        app:layout_constraintTop_toTopOf="@id/view"
+        tools:text="교수명" />
 
     <TextView
         android:id="@+id/bottomTime"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="8dp"
-        android:text="시간"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintDimensionRatio="11.8"
-        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/TextRegular.14.DarkGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomName"
-        app:layout_optimizationLevel="ratio" />
+        tools:text="시간" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/suwiki_gray_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottomTime" />
+
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_edit_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2" />
 
     <TextView
         android:id="@+id/bottomEdit"
+        style="@style/TextRegular.14"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:padding="8dp"
         android:text="수정하기"
-        android:textColor="@color/custom_blue"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintDimensionRatio="8.8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomProfessor"
-        app:layout_optimizationLevel="ratio" />
+        app:layout_constraintStart_toEndOf="@id/iv_edit"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:src="@drawable/ic_delete_20"
+        app:layout_constraintTop_toBottomOf="@id/iv_edit" />
 
     <TextView
         android:id="@+id/bottomDelete"
+        style="@style/TextRegular.14"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="삭제하기"
-        android:textColor="@color/custom_red"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintDimensionRatio="8.8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomEdit"
-        app:layout_optimizationLevel="ratio" />
+        app:layout_constraintStart_toEndOf="@id/iv_delete"
+        app:layout_constraintTop_toBottomOf="@+id/bottomEdit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

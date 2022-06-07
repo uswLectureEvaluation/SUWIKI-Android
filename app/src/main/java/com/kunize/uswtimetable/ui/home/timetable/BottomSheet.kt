@@ -32,7 +32,7 @@ class BottomSheet(data: TimeData, val callback: (Int) -> Unit) : BottomSheetDial
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<TextView>(R.id.bottomName)?.text = localData.name
         view.findViewById<TextView>(R.id.bottomProfessor)?.text = localData.professor
-        view.findViewById<TextView>(R.id.bottomTime)?.text = localData.location + " (" + localData.day + " " + localData.startTime + "~" +localData.endTime + ")"
+        view.findViewById<TextView>(R.id.bottomTime)?.text = localData.day + " " + localData.startTime + " - " + localData.endTime + " 교시 (" +localData.location + ")"
         edit = view.findViewById<TextView>(R.id.bottomEdit)!!
         edit.setOnClickListener{
             callback(1)

@@ -20,7 +20,7 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     private var selectedType: String = MODIFIED
     var searchValue: String = ""
 
-    var majorType = "전부"
+    var majorType = "전체"
 
     private val _sortText = MutableLiveData<String>()
     val sortText: LiveData<String>
@@ -66,14 +66,14 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
         searchResultRepository.getLectureMainList(
             selectedType,
             pageViewModel.page.value ?: 1,
-            if(majorType == "전부") "" else majorType
+            if(majorType == "전체") "" else majorType
         )
     } else {
         searchResultRepository.getSearchResultList(
             searchValue,
             selectedType,
             pageViewModel.page.value ?: 1,
-            if(majorType == "전부") "" else majorType
+            if(majorType == "전체") "" else majorType
         )
     }
 

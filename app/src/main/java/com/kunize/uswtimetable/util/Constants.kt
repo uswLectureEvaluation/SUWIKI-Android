@@ -150,4 +150,24 @@ object LIST_CONFIG {
 object FragmentType {
     const val EVALUATION = 1
     const val SEARCH_RESULT = 2
+    const val ADD_CLASS = 3
+}
+
+enum class TimeTableListClickType {
+    ITEM_CLICK, EDIT_CLICK
+}
+
+object TimetableColor {
+    const val BROWN = -4026526
+    const val PURPLE = -3368205
+    const val GRAY = -4013635
+    const val SKY = -7747330
+    const val ORANGE = -16046
+    const val PINK = -96120
+    const val NAVY = -12363882
+    const val GREEN = -5907327
+    const val APRICOT = -17536
+    const val DARK_GREEN = -9728172
+    const val DARK_PURPLE = -6194752
+    const val MINT = -7369077
 }

@@ -215,6 +215,16 @@
     <string name="my_post">내가 쓴 글</string>
     <string name="hint_signup_id">아이디 입력(영문 6~20자)</string>
     <string name="description_close_button">닫기 버튼</string>
+    <string name="no_timetable">시간표가 없습니다.</string>
+    <string name="crate_timetable">시간표 생성</string>
+    <string name="finish">완료</string>
+    <string name="year">년</string>
+    <string name="semester">학기</string>
+    <string name="timetable_list">시간표 목록</string>
+    <string name="add_class">수업 추가</string>
+    <string name="search_class">수업 검색</string>
+    <string name="class_info">수업 정보</string>
+    <string name="enroll">등록</string>
     <string name="text_require_login">내가 쓴 글과 포인트를\n확인하려면 로그인하세요.</string>
 
 </resources>

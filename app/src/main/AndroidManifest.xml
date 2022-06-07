@@ -76,9 +76,6 @@
             android:name=".ui.class_info.ClassInfoActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.add_class.AddClassActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".ui.create_timetable.CreateTimeTableActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity

@@ -15,7 +15,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/background</item>
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
         <item name="appBarLayoutStyle">@style/SuwikiAppbar</item>
     </style>
 

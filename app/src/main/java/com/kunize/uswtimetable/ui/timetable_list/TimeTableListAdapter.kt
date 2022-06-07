@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.timetable_list
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ItemRecyclerTimetableBinding
 import com.kunize.uswtimetable.data.local.TimeTableList
-import com.kunize.uswtimetable.dialog.EditTimetableDialog
+import com.kunize.uswtimetable.util.TimeTableListClickType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -32,7 +33,7 @@ class TimeTableListAdapter : RecyclerView.Adapter<TimeTableListAdapter.Holder>()
         val data = timeTableListData[position]
         holder.setData(data)
         holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it,data)
+            itemClickListener.onClick(it,data, TimeTableListClickType.ITEM_CLICK)
         }
     }
 
@@ -43,7 +44,7 @@ class TimeTableListAdapter : RecyclerView.Adapter<TimeTableListAdapter.Holder>()
     private lateinit var itemClickListener: ItemClickListener
 
     interface ItemClickListener {
-        fun onClick(view: View, data: TimeTableList)
+        fun onClick(view: View, data: TimeTableList, type: TimeTableListClickType)
     }
 
     fun setItemClickListener(itemClickListener: ItemClickListener) {
@@ -56,22 +57,7 @@ class TimeTableListAdapter : RecyclerView.Adapter<TimeTableListAdapter.Holder>()
             binding.timeTableYearSemester.text = data.year + "년 " + data.semester + "학기"
             binding.timeTableName.text = data.timeTableName
             binding.btnEdit.setOnClickListener {
-                Log.d("test","클릭됨")
-                val dlg = EditTimetableDialog(binding.root.context)
-                dlg.setOnOKClickedListener { name, year, semester ->
-                    binding.timeTableName.text = name
-                    CoroutineScope(IO).launch {
-                        data.timeTableName = name
-                        data.year = year
-                        data.semester = semester
-                        val db = TimeTableListDatabase.getInstance(binding.root.context)!!
-                        db.timetableListDao().update(data)
-                        withContext(Main) {
-                            notifyDataSetChanged()
-                        }
-                    }
-                }
-                dlg.start(data)
+                itemClickListener.onClick(it,data, TimeTableListClickType.EDIT_CLICK)
             }
             binding.btnDelete.setOnClickListener {
                 val builder = AlertDialog.Builder(binding.root.context)
@@ -79,7 +65,6 @@ class TimeTableListAdapter : RecyclerView.Adapter<TimeTableListAdapter.Holder>()
                 builder.setPositiveButton(
                     "네"
                 ) { dialog: DialogInterface?, which: Int ->
-                    //TODO DB에서 삭제
                     CoroutineScope(IO).launch {
                         val db = TimeTableListDatabase.getInstance(binding.root.context)!!
                         db.timetableListDao().delete(data)

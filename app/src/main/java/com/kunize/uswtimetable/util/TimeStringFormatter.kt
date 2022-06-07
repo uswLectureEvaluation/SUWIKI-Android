@@ -1,7 +1,9 @@
 package com.kunize.uswtimetable.util
 
+import android.util.Log
+
 class TimeStringFormatter {
-    fun splitTime(
+    fun splitTimeForClassInfo(
         time: String?
     ): List<String> {
         val timeListSplitByDay = mutableListOf<String>()
@@ -19,6 +21,30 @@ class TimeStringFormatter {
                     timeListSplitByDay.add(locationDayHour)
                 }
             }
+        }
+        return timeListSplitByDay
+    }
+
+    fun splitTimeForItem(
+        time: String?
+    ): List<String> {
+        val timeListSplitByDay = mutableListOf<String>()
+        // 1. 장소 분리 (미술108(월1,2),미술109(월3,4))
+        val timeListSplitByLocation = time!!.split("),")
+        // 2. 요일 분리 (미래417(화10,11 목10,11,12,13))
+        for (timeSplitByLocation in timeListSplitByLocation) {
+            try {
+                val splitLocationDay = timeSplitByLocation.split("(")
+                val location = splitLocationDay[0]
+                val dayHourList = splitLocationDay[1].replace(")", "").split(" ")
+                val dayHourMap = splitContinuousHour(dayHourList)
+                dayHourMap.forEach { (day, hourList) ->
+                    hourList.forEach { hour ->
+                        val locationDayHour = "$day ${hour}교시 ($location)"
+                        timeListSplitByDay.add(locationDayHour)
+                    }
+                }
+            } catch (e: Exception) {timeListSplitByDay.add("None")}
         }
         return timeListSplitByDay
     }
