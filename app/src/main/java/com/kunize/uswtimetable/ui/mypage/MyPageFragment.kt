@@ -3,7 +3,6 @@ package com.kunize.uswtimetable.ui.mypage
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.kunize.uswtimetable.ui.signup.SignUpActivity
 import com.kunize.uswtimetable.ui.user_info.QuitActivity
 import com.kunize.uswtimetable.ui.user_info.ResetPasswordActivity
 import com.kunize.uswtimetable.ui.user_info.User
-import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.repeatOnStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,8 +60,25 @@ class MyPageFragment : Fragment() {
         binding.user = User
     }
 
+    private fun handleUiEvent(event: Event) {
+        val context = requireContext()
+        when ((event as Event.UiEvent).type) {
+            Type.BTN_LOGIN -> logIn(context)
+            Type.BTN_LOGOUT -> logOut()
+            Type.BTN_MY_POST -> showMyPosts()
+            Type.MENU_NOTICE -> showNoticePage(context)
+            Type.MENU_QUESTION -> showQuestionPage()
+            Type.MENU_CHANGE_PW -> resetPassword(context)
+            Type.MENU_SIGN_OUT -> quit(context)
+            Type.MENU_OPENSOURCE -> showOpenSourcePage(context)
+            Type.MENU_PURCHASE_HISTORY -> showPurchaseHistory()
+            Type.MENU_SIGN_IN -> signIn(context)
+            else -> makeToast("준비 중입니다.")
+        }
+    }
+
     private fun showMyPosts() {
-        if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_more_to_myPostFragment)
+        if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_global_myPostFragment)
     }
 
     private fun showQuestionPage() {
@@ -123,25 +138,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun showPurchaseHistory() {
-        findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment)
-    }
-
-    private fun handleUiEvent(event: Event) {
-        val context = requireContext()
-        Log.d(TAG, "MyPageFragment - handleUiEvent($event) called")
-        when ((event as Event.UiEvent).type) {
-            Type.BTN_LOGIN -> logIn(context)
-            Type.BTN_LOGOUT -> logOut()
-            Type.BTN_MY_POST -> showMyPosts()
-            Type.MENU_NOTICE -> showNoticePage(context)
-            Type.MENU_QUESTION -> showQuestionPage()
-            Type.MENU_CHANGE_PW -> resetPassword(context)
-            Type.MENU_SIGN_OUT -> quit(context)
-            Type.MENU_OPENSOURCE -> showOpenSourcePage(context)
-            Type.MENU_PURCHASE_HISTORY -> showPurchaseHistory()
-            Type.MENU_SIGN_IN -> signIn(context)
-            else -> makeToast("준비 중입니다.")
-        }
+        findNavController().navigate(R.id.action_global_purchaseHistoryFragment )
     }
 
     private fun makeToast(message: String) {
