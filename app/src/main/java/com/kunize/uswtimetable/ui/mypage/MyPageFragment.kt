@@ -139,6 +139,7 @@ class MyPageFragment : Fragment() {
             Type.MENU_SIGN_OUT -> quit(context)
             Type.MENU_OPENSOURCE -> showOpenSourcePage(context)
             Type.MENU_PURCHASE_HISTORY -> showPurchaseHistory()
+            Type.MENU_SIGN_IN -> signIn(context)
             else -> makeToast("준비 중입니다.")
         }
     }

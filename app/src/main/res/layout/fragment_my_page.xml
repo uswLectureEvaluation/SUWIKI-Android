@@ -581,6 +581,19 @@
                         android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
 
                     <TextView
+                        android:id="@+id/tv_sign_in_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewmodel.signInEvent()}"
+                        android:text="@string/sign_in"
+                        style="@style/TextRegular.14"
+                        android:paddingVertical="8dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:visibility="@{user.isLoggedIn()?View.GONE:View.VISIBLE}" />
+
+                    <TextView
                         android:id="@+id/tv_notice_button"
                         style="@style/TextRegular.14"
                         android:layout_width="match_parent"
@@ -591,32 +604,6 @@
                         android:onClick="@{() -> viewmodel.noticeEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/notice" />
-
-                    <TextView
-                        android:id="@+id/tv_find_id_btn"
-                        style="@style/TextRegular.14"
-                        visibility="@{user.isLoggedIn()?View.GONE:View.VISIBLE}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.findIdEvent()}"
-                        android:paddingVertical="8dp"
-                        android:text="@string/find_id" />
-
-                    <TextView
-                        android:id="@+id/tv_find_pw_btn"
-                        style="@style/TextRegular.14"
-                        visibility="@{user.isLoggedIn()?View.GONE:View.VISIBLE}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.findPwEvent()}"
-                        android:paddingVertical="8dp"
-                        android:text="@string/find_password" />
 
                     <TextView
                         android:id="@+id/tv_send_feedback_button"

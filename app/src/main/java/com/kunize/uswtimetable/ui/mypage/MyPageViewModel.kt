@@ -47,6 +47,10 @@ class MyPageViewModel : ViewModel() {
         event(Event.UiEvent(Type.MENU_SIGN_OUT))
     }
 
+    fun signInEvent() {
+        event(Event.UiEvent(Type.MENU_SIGN_IN))
+    }
+
     fun logoutEvent() {
         event(Event.UiEvent(Type.BTN_LOGOUT))
     }
@@ -80,8 +84,7 @@ class MyPageViewModel : ViewModel() {
         MENU_LIMIT_HISTORY,
         MENU_PURCHASE_HISTORY,
         MENU_NOTICE,
-        MENU_FIND_ID,
-        MENU_FIND_PW,
+        MENU_SIGN_IN,
         MENU_FEEDBACK,
         MENU_QUESTION,
         MENU_CHANGE_PW,
