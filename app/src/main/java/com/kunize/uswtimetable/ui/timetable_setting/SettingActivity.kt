@@ -26,6 +26,10 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
         binding.shareKakaoBtn.setOnClickListener {
             val strBit = TimeTableSelPref.prefs.getString("image", "")
             val bitmap = stringToBitmap(strBit)
