@@ -11,7 +11,7 @@
         <import type="com.kunize.uswtimetable.util.Constants" />
 
         <variable
-            name="viewModel"
+            name="vm"
             type="com.kunize.uswtimetable.ui.login.LoginViewModel" />
     </data>
 
@@ -41,20 +41,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="74dp"
             android:hint="@string/id"
-            app:errorEnabled="@{viewModel.loginFormState.idError != null ? true : false}"
+            app:errorEnabled="@{vm.loginFormState.idError != null ? true : false}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_input_id"
+                style="@style/TextRegular.14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextRegular.14"
+                android:afterTextChanged="@{(text) -> vm.loginDataChanged()}"
                 android:hint="@string/id"
                 android:inputType="text"
                 android:maxLength="@{Constants.ID_COUNT_LIMIT}"
-                android:text="@={viewModel.userId}" />
+                android:text="@={vm.userId}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -65,40 +66,42 @@
             android:layout_marginTop="16dp"
             android:hint="@string/password"
             app:endIconMode="password_toggle"
-            app:errorEnabled="@{viewModel.loginFormState.pwError != null ? true : false}"
+            app:errorEnabled="@{vm.loginFormState.pwError != null ? true : false}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_input_id">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_input_pw"
+                style="@style/TextRegular.14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextRegular.14"
+                android:afterTextChanged="@{(text) -> vm.loginDataChanged()}"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLength="@{Constants.PW_COUNT_LIMIT}"
-                android:text="@={viewModel.userPw}" />
+                android:text="@={vm.userPw}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
             android:id="@+id/cb_remember_login"
-            android:layout_width="wrap_content"
             style="@style/TextRegular.12"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:onCheckedChanged="@{(_, checked) -> vm.rememberCheckEvent(checked)}"
             android:text="@string/keep_login"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_input_pw" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
+            style="@style/SuwikiMainButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            style="@style/SuwikiMainButton"
-            android:enabled="@{viewModel.loginFormState.dataValid == true &amp;&amp; viewModel.loading == false}"
-            android:onClick="@{() -> viewModel.login(etInputId.getText().toString(), etInputPw.getText().toString())}"
+            android:enabled="@{vm.loginFormState.dataValid == true &amp;&amp; vm.loading == false}"
+            android:onClick="@{() -> vm.login(etInputId.getText().toString(), etInputPw.getText().toString())}"
             android:text="@string/login_button_text"
             app:layout_constraintBottom_toTopOf="@id/tv_find_id_btn" />
 
@@ -110,6 +113,7 @@
             android:layout_marginStart="70dp"
             android:layout_marginBottom="67dp"
             android:gravity="center"
+            android:onClick="@{() -> vm.findIdEvent()}"
             android:text="@string/find_id"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -133,6 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:onClick="@{() -> vm.findPwEvent()}"
             android:text="@string/find_password"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/divider_2"
@@ -157,6 +162,7 @@
             android:layout_marginEnd="70dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{() -> vm.signUpEvent()}"
             android:text="@string/sign_in"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +173,7 @@
             android:id="@+id/progress_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.loading?View.VISIBLE:View.GONE}"
+            android:visibility="@{vm.loading?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

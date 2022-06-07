@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.kunize.uswtimetable.databinding.ActivityLoginBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
@@ -17,7 +16,7 @@ import com.kunize.uswtimetable.ui.user_info.FindPasswordActivity
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.PreferenceManager
-import com.kunize.uswtimetable.util.afterTextChanged
+import com.kunize.uswtimetable.util.repeatOnStarted
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -32,14 +31,14 @@ class LoginActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
 
-        binding.viewModel = loginViewModel
+        binding.vm = loginViewModel
 
         User.isLoggedIn.observe(this) {
             if (it) finish()
         }
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-            val loginState = it ?: return@Observer
+        loginViewModel.loginFormState.observe(this@LoginActivity) {
+            val loginState = it ?: return@observe
 
             if (loginState.idError != null) {
                 binding.layoutInputId.error = getString(loginState.idError)
@@ -47,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
             if (loginState.pwError != null) {
                 binding.layoutInputPw.error = getString(loginState.pwError)
             }
-        })
+        }
 
         loginViewModel.loginResult.observe(this@LoginActivity) { loginResult ->
 
@@ -62,6 +61,10 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else -> makeToast("LoginActivity 에러 : $loginResult")
             }
+        }
+
+        repeatOnStarted {
+            loginViewModel.eventFlow.collect { event -> handleEvent(this@LoginActivity, event) }
         }
 
         initViews(this)
@@ -79,33 +82,22 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initViews(context: Context) {
         with(binding) {
-            tvSignInBtn.setOnClickListener {
-                startActivity(Intent(context, SignUpActivity::class.java))
-                finish()
-            }
-            tvFindIdBtn.setOnClickListener {
-                startActivity(Intent(context, FindIdActivity::class.java))
-            }
-            tvFindPwBtn.setOnClickListener {
-                startActivity(Intent(context, FindPasswordActivity::class.java))
-            }
-            cbRememberLogin.setOnCheckedChangeListener { _, isChecked ->
-                PreferenceManager.setBoolean(context, REMEMBER_LOGIN, isChecked)
-            }
             try {
                 cbRememberLogin.isChecked = PreferenceManager.getBoolean(context, REMEMBER_LOGIN)
             } catch (e: ClassCastException) {
                 Log.d(TAG, "LoginActivity - \"로그인 유지\" 값이 저장되지 않음: $e")
                 cbRememberLogin.isChecked = true
             }
+        }
+    }
 
-            etInputId.afterTextChanged {
-                loginViewModel.loginDataChanged()
-            }
-
-            etInputPw.afterTextChanged {
-                loginViewModel.loginDataChanged()
-            }
+    private fun handleEvent(context: Context, event: LoginViewModel.Event) = when(event) {
+        is LoginViewModel.Event.CheckRemember -> PreferenceManager.setBoolean(context, REMEMBER_LOGIN, event.checked)
+        is LoginViewModel.Event.FindId -> startActivity(Intent(context, FindIdActivity::class.java))
+        is LoginViewModel.Event.FindPw -> startActivity(Intent(context, FindPasswordActivity::class.java))
+        is LoginViewModel.Event.SignUp -> {
+            startActivity(Intent(context, SignUpActivity::class.java))
+            finish()
         }
     }
 

@@ -94,6 +94,9 @@
     <string name="signup_welcome_info">"<b>"%s@suwon.ac.kr"</b>"로 링크를 발송했습니다. 로그인을 위해서 이메일로 발송된 인증 링크를 클릭해주세요.</string>
     <string name="floatToStr">%.1f</string>
     <string name="notice_date_format">%d.%d.%d</string>
+    <string name="suspension_created_at">제한 일시 : %s</string>
+    <string name="suspension_expired_at">제한 기간 : %s까지 (%d일)</string>
+    <string name="suspension_judgement">제한 기간 : %s까지 (%d일)</string>
 
     <string name="setting">설정</string>
     <string name="add_timetable">시간표 추가</string>
@@ -222,5 +225,6 @@
     <string name="search_class">수업 검색</string>
     <string name="class_info">수업 정보</string>
     <string name="enroll">등록</string>
+    <string name="text_require_login">내가 쓴 글과 포인트를\n확인하려면 로그인하세요.</string>
 
 </resources>

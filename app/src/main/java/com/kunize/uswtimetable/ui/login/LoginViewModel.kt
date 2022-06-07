@@ -16,6 +16,8 @@ import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
@@ -34,6 +36,9 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     private val idPattern: Pattern = Pattern.compile(ID_REGEX)
     private val pwPattern: Pattern = Pattern.compile(PW_REGEX)
+
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     fun login(id: String, pw: String) {
         loading.value = true
@@ -91,6 +96,32 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     private fun isPwValid(pw: String) = pw.isBlank() || pwPattern.matcher(pw).matches()
 
+    fun findIdEvent() {
+        event(Event.FindId(Unit))
+    }
+
+    fun findPwEvent() {
+        event(Event.FindPw(Unit))
+    }
+
+    fun signUpEvent() {
+        event(Event.SignUp(Unit))
+    }
+
+    fun rememberCheckEvent(checked: Boolean) {
+        event(Event.CheckRemember(checked))
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch { _eventFlow.emit(event) }
+    }
+
+    sealed class Event {
+        data class FindId(val p: Unit): Event()
+        data class FindPw(val p: Unit): Event()
+        data class SignUp(val p: Unit): Event()
+        data class CheckRemember(val checked: Boolean): Event()
+    }
 }
 
 enum class LoginState {

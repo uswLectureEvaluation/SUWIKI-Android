@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextBold" parent="TextRegular">
+        <item name="android:textFontWeight">900</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+</resources>

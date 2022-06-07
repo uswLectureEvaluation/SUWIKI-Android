@@ -2,26 +2,25 @@
 <resources>
 
     <style name="TextMedium">
-        <item name="android:fontWeight">500</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextLight">
-        <item name="android:fontWeight">100</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="TextRegular">
-        <item name="android:fontWeight">400</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/suwiki_black_700</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="TextBold">
-        <item name="android:fontWeight">700</item>
-        <item name="android:textColor">@color/suwiki_black_700</item>
+    <style name="TextBold" parent="TextRegular">
+        <item name="android:textStyle">bold</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
