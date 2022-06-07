@@ -453,7 +453,7 @@ class ClassInfoActivity : AppCompatActivity() {
 
     private fun setVisibilityTime(set: Int, idx: Int) {
         dayList[idx - 1].apply {
-            text = "없음"
+            text = "월요일"
             visibility = set
         }
         locationList[idx - 1].apply {
