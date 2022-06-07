@@ -72,7 +72,7 @@ class MyPageFragment : Fragment() {
             Type.MENU_SIGN_OUT -> quit(context)
             Type.MENU_OPENSOURCE -> showOpenSourcePage(context)
             Type.MENU_PURCHASE_HISTORY -> showPurchaseHistory()
-            Type.MENU_SIGN_IN -> signIn(context)
+            Type.MENU_LIMIT_HISTORY -> showSuspensionHistory()
             else -> makeToast("준비 중입니다.")
         }
     }
@@ -94,6 +94,10 @@ class MyPageFragment : Fragment() {
     private fun showOpenSourcePage(context: Context) {
         val intent = Intent(context, OpenSourceActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun showSuspensionHistory() {
+        findNavController().navigate(R.id.action_global_suspensionHistoryFragment)
     }
 
     private fun signIn(context: Context) {
