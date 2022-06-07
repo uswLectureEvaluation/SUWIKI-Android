@@ -396,34 +396,24 @@
         android:id="@+id/textView26"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:text="이러닝"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        style="@style/TextMedium.18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timetable" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="1dp"
-        app:cardCornerRadius="5dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26">
-
         <TextView
+            android:background="@drawable/bg_rounded_border_line_15_gray_500"
             android:id="@+id/eLearningText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            style="@style/TextRegular.14"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
             android:gravity="center"
-            android:textColor="@color/black" />
-
-    </androidx.cardview.widget.CardView>
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView26"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
