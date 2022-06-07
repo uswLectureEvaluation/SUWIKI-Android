@@ -153,7 +153,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_class"
+            android:id="@+id/cl_class1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -162,76 +162,80 @@
             app:layout_constraintTop_toBottomOf="@+id/textTime">
 
             <EditText
-                android:id="@+id/et_start_class"
+                android:id="@+id/et_start_class1"
                 style="@style/TextRegular.14"
                 android:layout_width="18dp"
                 android:layout_height="20dp"
                 android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
                 android:maxLength="2"
                 android:textColorHint="@color/suwiki_gray_700"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="15" />
-            
+
             <View
-                android:background="@color/suwiki_gray_500"
                 android:layout_width="18dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@id/et_start_class"
-                app:layout_constraintEnd_toEndOf="@id/et_start_class"
-                app:layout_constraintTop_toBottomOf="@id/et_start_class"/>
+                android:background="@color/suwiki_gray_500"
+                app:layout_constraintEnd_toEndOf="@id/et_start_class1"
+                app:layout_constraintStart_toStartOf="@id/et_start_class1"
+                app:layout_constraintTop_toBottomOf="@id/et_start_class1" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:id="@+id/mid_view1"
-                android:layout_marginStart="5dp"
                 android:layout_width="5dp"
                 android:layout_height="1dp"
-                app:layout_constraintStart_toEndOf="@id/et_start_class"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_marginStart="5dp"
+                android:background="@color/suwiki_gray_500"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/et_start_class1"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/et_end_class1"
                 style="@style/TextRegular.14"
                 android:layout_width="18dp"
                 android:layout_height="20dp"
-                android:background="@null"
-                android:maxLength="2"
                 android:layout_marginStart="5dp"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="2"
                 android:textColorHint="@color/suwiki_gray_700"
                 app:layout_constraintStart_toEndOf="@id/mid_view1"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="15" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:layout_width="18dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@id/et_end_class1"
+                android:background="@color/suwiki_gray_500"
                 app:layout_constraintEnd_toEndOf="@id/et_end_class1"
-                app:layout_constraintTop_toBottomOf="@id/et_end_class1"/>
+                app:layout_constraintStart_toStartOf="@id/et_end_class1"
+                app:layout_constraintTop_toBottomOf="@id/et_end_class1" />
 
             <TextView
                 style="@style/TextRegular.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/et_end_class1"
-                app:layout_constraintTop_toTopOf="@id/et_end_class1"
-                app:layout_constraintBottom_toBottomOf="@id/et_end_class1"
                 android:layout_marginStart="4dp"
-                android:text="교시" />
+                android:text="교시"
+                app:layout_constraintBottom_toBottomOf="@id/et_end_class1"
+                app:layout_constraintStart_toEndOf="@id/et_end_class1"
+                app:layout_constraintTop_toTopOf="@id/et_end_class1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/deleteTime1"
-            android:layout_marginTop="24dp"
             style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:padding="4dp"
             android:text="삭제"
             app:layout_constraintEnd_toEndOf="parent"
@@ -251,13 +255,13 @@
 
         <View
             android:id="@+id/view1"
-            android:background="@color/suwiki_gray_500"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/location1"
+            android:background="@color/suwiki_gray_500"
             app:layout_constraintEnd_toEndOf="@id/location1"
-            app:layout_constraintTop_toBottomOf="@id/location1"/>
+            app:layout_constraintStart_toStartOf="@id/location1"
+            app:layout_constraintTop_toBottomOf="@id/location1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_day2"
@@ -303,6 +307,8 @@
                 android:layout_width="18dp"
                 android:layout_height="20dp"
                 android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
                 android:maxLength="2"
                 android:textColorHint="@color/suwiki_gray_700"
                 app:layout_constraintStart_toStartOf="parent"
@@ -310,64 +316,66 @@
                 tools:text="15" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:layout_width="18dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@id/et_start_class2"
+                android:background="@color/suwiki_gray_500"
                 app:layout_constraintEnd_toEndOf="@id/et_start_class2"
-                app:layout_constraintTop_toBottomOf="@id/et_start_class2"/>
+                app:layout_constraintStart_toStartOf="@id/et_start_class2"
+                app:layout_constraintTop_toBottomOf="@id/et_start_class2" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:id="@+id/mid_view2"
-                android:layout_marginStart="5dp"
                 android:layout_width="5dp"
                 android:layout_height="1dp"
+                android:layout_marginStart="5dp"
+                android:background="@color/suwiki_gray_500"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/et_start_class2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/et_end_class2"
                 style="@style/TextRegular.14"
                 android:layout_width="18dp"
                 android:layout_height="20dp"
-                android:background="@null"
-                android:maxLength="2"
                 android:layout_marginStart="5dp"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="2"
                 android:textColorHint="@color/suwiki_gray_700"
                 app:layout_constraintStart_toEndOf="@id/mid_view2"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="15" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:layout_width="18dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@id/et_end_class2"
+                android:background="@color/suwiki_gray_500"
                 app:layout_constraintEnd_toEndOf="@id/et_end_class2"
-                app:layout_constraintTop_toBottomOf="@id/et_end_class2"/>
+                app:layout_constraintStart_toStartOf="@id/et_end_class2"
+                app:layout_constraintTop_toBottomOf="@id/et_end_class2" />
 
             <TextView
                 style="@style/TextRegular.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/et_end_class2"
-                app:layout_constraintTop_toTopOf="@id/et_end_class2"
-                app:layout_constraintBottom_toBottomOf="@id/et_end_class2"
                 android:layout_marginStart="4dp"
-                android:text="교시" />
+                android:text="교시"
+                app:layout_constraintBottom_toBottomOf="@id/et_end_class2"
+                app:layout_constraintStart_toEndOf="@id/et_end_class2"
+                app:layout_constraintTop_toTopOf="@id/et_end_class2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/deleteTime2"
-            android:layout_marginTop="24dp"
             style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:padding="4dp"
             android:text="삭제"
             app:layout_constraintEnd_toEndOf="parent"
@@ -387,13 +395,13 @@
 
         <View
             android:id="@+id/view2"
-            android:background="@color/suwiki_gray_500"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/location2"
+            android:background="@color/suwiki_gray_500"
             app:layout_constraintEnd_toEndOf="@id/location2"
-            app:layout_constraintTop_toBottomOf="@id/location2"/>
+            app:layout_constraintStart_toStartOf="@id/location2"
+            app:layout_constraintTop_toBottomOf="@id/location2" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_day3"
@@ -439,6 +447,8 @@
                 android:layout_width="18dp"
                 android:layout_height="20dp"
                 android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
                 android:maxLength="2"
                 android:textColorHint="@color/suwiki_gray_700"
                 app:layout_constraintStart_toStartOf="parent"
@@ -446,64 +456,66 @@
                 tools:text="15" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:layout_width="18dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@id/et_start_class3"
+                android:background="@color/suwiki_gray_500"
                 app:layout_constraintEnd_toEndOf="@id/et_start_class3"
-                app:layout_constraintTop_toBottomOf="@id/et_start_class3"/>
+                app:layout_constraintStart_toStartOf="@id/et_start_class3"
+                app:layout_constraintTop_toBottomOf="@id/et_start_class3" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:id="@+id/mid_view3"
-                android:layout_marginStart="5dp"
                 android:layout_width="5dp"
                 android:layout_height="1dp"
+                android:layout_marginStart="5dp"
+                android:background="@color/suwiki_gray_500"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/et_start_class3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/et_end_class3"
                 style="@style/TextRegular.14"
                 android:layout_width="18dp"
                 android:layout_height="20dp"
-                android:background="@null"
-                android:maxLength="2"
                 android:layout_marginStart="5dp"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLength="2"
                 android:textColorHint="@color/suwiki_gray_700"
                 app:layout_constraintStart_toEndOf="@id/mid_view3"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="15" />
 
             <View
-                android:background="@color/suwiki_gray_500"
                 android:layout_width="18dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@id/et_end_class3"
+                android:background="@color/suwiki_gray_500"
                 app:layout_constraintEnd_toEndOf="@id/et_end_class3"
-                app:layout_constraintTop_toBottomOf="@id/et_end_class3"/>
+                app:layout_constraintStart_toStartOf="@id/et_end_class3"
+                app:layout_constraintTop_toBottomOf="@id/et_end_class3" />
 
             <TextView
                 style="@style/TextRegular.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/et_end_class3"
-                app:layout_constraintTop_toTopOf="@id/et_end_class3"
-                app:layout_constraintBottom_toBottomOf="@id/et_end_class3"
                 android:layout_marginStart="4dp"
-                android:text="교시" />
+                android:text="교시"
+                app:layout_constraintBottom_toBottomOf="@id/et_end_class3"
+                app:layout_constraintStart_toEndOf="@id/et_end_class3"
+                app:layout_constraintTop_toTopOf="@id/et_end_class3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/deleteTime3"
-            android:layout_marginTop="24dp"
             style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:padding="4dp"
             android:text="삭제"
             app:layout_constraintEnd_toEndOf="parent"
@@ -523,24 +535,24 @@
 
         <View
             android:id="@+id/view3"
-            android:background="@color/suwiki_gray_500"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/location3"
+            android:background="@color/suwiki_gray_500"
             app:layout_constraintEnd_toEndOf="@id/location3"
-            app:layout_constraintTop_toBottomOf="@id/location3"/>
+            app:layout_constraintStart_toStartOf="@id/location3"
+            app:layout_constraintTop_toBottomOf="@id/location3" />
 
 
         <TextView
             android:id="@+id/tv_color"
-            android:layout_marginTop="34dp"
             style="@style/TextRegular.14.DarkGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
             android:text="색상"
-            app:layout_constraintTop_toBottomOf="@id/view3"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view3" />
 
         <com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup
             android:id="@+id/rg_color"
