@@ -11,14 +11,14 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.kunize.uswtimetable.data.local.OpenMajorData
 import com.kunize.uswtimetable.data.local.OpenMajorDatabase
-import com.kunize.uswtimetable.ui.main.MainActivity
+import com.kunize.uswtimetable.data.local.TimeTableData
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
-import com.kunize.uswtimetable.data.local.TimeTableData
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
+import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.TimeTableSelPref
@@ -71,11 +71,11 @@ class StartActivity : AppCompatActivity() {
         var update: Boolean? = null
 
         // 로그인 유지
-//        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN)) {
-//            User.login()
-//        } else {
-//            User.logout()
-//        }
+        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN)) {
+            User.login()
+        } else {
+            User.logout()
+        }
 
         //intent 설정
         val intent = Intent(this@StartActivity, MainActivity::class.java)

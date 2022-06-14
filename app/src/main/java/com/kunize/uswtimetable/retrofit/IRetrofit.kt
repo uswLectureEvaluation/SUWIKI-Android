@@ -44,6 +44,8 @@ import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.isJsonArray
 import com.kunize.uswtimetable.util.isJsonObject
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONArray
@@ -108,7 +110,7 @@ interface IRetrofit {
 
     // 내 정보 페이지 호출 API
     @GET(MY_PAGE)
-    suspend fun getUserData(): Response<UserDataDto>
+    suspend fun getUserData(): ApiResponse<UserDataDto>
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
@@ -239,6 +241,7 @@ interface IRetrofit {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(TokenAuthenticator()))
+                .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(gsonConverterFactory())
                 .build()
@@ -248,6 +251,7 @@ interface IRetrofit {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(getOkHttpClient(null))
+                .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
                 .addConverterFactory(gsonConverterFactory())
                 .build()
         }
