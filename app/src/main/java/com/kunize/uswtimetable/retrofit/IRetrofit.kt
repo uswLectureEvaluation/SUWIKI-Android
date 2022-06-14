@@ -198,10 +198,10 @@ interface IRetrofit {
     ): Response<String>
 
     @GET(OPEN_MAJOR_VERSION)
-    suspend fun getOpenMajorVersion(): Response<OpenMajorVersion>
+    suspend fun getOpenMajorVersion(): ApiResponse<OpenMajorVersion>
 
     @GET(OPEN_MAJOR_LIST_UPDATE)
-    suspend fun getOpenMajorList(): Response<OpenMajorList>
+    suspend fun getOpenMajorList(): ApiResponse<OpenMajorList>
 
     @POST(BOOKMARK)
     suspend fun bookmarkMajor(

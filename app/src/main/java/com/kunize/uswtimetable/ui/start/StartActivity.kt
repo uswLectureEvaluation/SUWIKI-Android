@@ -22,6 +22,8 @@ import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -174,24 +176,24 @@ class StartActivity : AppCompatActivity() {
         openMajorRepository: OpenMajorRepository,
         openMajorVersion: Float
     ) {
-        try {
-            val majorVersionResponse = openMajorRepository.getOpenMajorVersion()
-            Log.d("openMajorVersion", "${majorVersionResponse.isSuccessful}")
-            if (majorVersionResponse.isSuccessful && (majorVersionResponse.body()!!.version > openMajorVersion)) {
+        when (val majorVersionResponse = openMajorRepository.getOpenMajorVersion()) {
+            is ApiResponse.Success -> {
+                if (majorVersionResponse.data.version <= openMajorVersion) return
                 val majorListResponse = openMajorRepository.getOpenMajorList()
-                withContext(IO) {
-                    val db = OpenMajorDatabase.getInstance(applicationContext)
-                    db!!.openMajorDao().deleteAll()
-                    val data = majorListResponse.body()!!.convertToOpenMajorData()
-                    data.add(0, OpenMajorData("전체"))
-                    db.openMajorDao().insertAll(data)
-                    versionPreferences.edit {
-                        putFloat("openMajorVersion", majorVersionResponse.body()!!.version)
+                if(majorListResponse is ApiResponse.Success) {
+                    withContext(IO) {
+                        val db = OpenMajorDatabase.getInstance(applicationContext)
+                        db!!.openMajorDao().deleteAll()
+                        val data = majorListResponse.data.convertToOpenMajorData()
+                        data.add(0, OpenMajorData("전체"))
+                        db.openMajorDao().insertAll(data)
+                        versionPreferences.edit {
+                            putFloat("openMajorVersion", majorVersionResponse.data.version)
+                        }
                     }
                 }
             }
-        } catch (e: Exception) {
-
+            else -> {}
         }
     }
 
