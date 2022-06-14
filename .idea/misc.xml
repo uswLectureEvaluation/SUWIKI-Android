@@ -127,11 +127,13 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-hdpi/bg_rounded_gray_300_15.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-hdpi/ripple_suwiki_white.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-mdpi/bg_baseline_ripple_blue.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-mdpi/bg_rounded_blue_15.xml" value="0.1455" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-nodpi/custom_ripple_effect_recyclerview.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-v24/ll_bottom_line.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable-xxxhdpi/bg_rounded_gray_300_20.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/background_cardview.xml" value="0.144" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_border_line_10_gray_500.xml" value="0.1705" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_gray_300_30.xml" value="0.1455" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_top.xml" value="0.1455" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/bg_rounded_white_10.xml" value="0.1705" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/drawable/border_circle.xml" value="0.1705" />
@@ -212,6 +214,7 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_find_password.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_login.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_setting.xml" value="0.2" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_signup.xml" value="0.14462540716612377" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/activity_time_table_list.xml" value="0.176" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/bottom_dialog.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/dialog_day_sort.xml" value="0.14605263157894738" />
@@ -225,6 +228,8 @@
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_my_exam_info.xml" value="0.264" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_search_result.xml" value="0.4" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_select_open_major.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_sign_up1.xml" value="0.14605263157894738" />
+        <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_sign_up2.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_sign_up3.xml" value="0.14605263157894738" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/fragment_write.xml" value="0.2" />
         <entry key="..\:/androidprojects/uswtimetable/app/src/main/res/layout/item_my_exam_info.xml" value="0.264" />

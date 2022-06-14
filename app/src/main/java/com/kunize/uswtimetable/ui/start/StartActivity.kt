@@ -71,11 +71,11 @@ class StartActivity : AppCompatActivity() {
         var update: Boolean? = null
 
         // 로그인 유지
-        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN)) {
-            User.login()
-        } else {
-            User.logout()
-        }
+//        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN)) {
+//            User.login()
+//        } else {
+//            User.logout()
+//        }
 
         //intent 설정
         val intent = Intent(this@StartActivity, MainActivity::class.java)
@@ -174,20 +174,24 @@ class StartActivity : AppCompatActivity() {
         openMajorRepository: OpenMajorRepository,
         openMajorVersion: Float
     ) {
-        val majorVersionResponse = openMajorRepository.getOpenMajorVersion()
-        Log.d("openMajorVersion", "${majorVersionResponse.isSuccessful}")
-        if (majorVersionResponse.isSuccessful && (majorVersionResponse.body()!!.version > openMajorVersion)) {
-            val majorListResponse = openMajorRepository.getOpenMajorList()
-            withContext(IO) {
-                val db = OpenMajorDatabase.getInstance(applicationContext)
-                db!!.openMajorDao().deleteAll()
-                val data = majorListResponse.body()!!.convertToOpenMajorData()
-                data.add(0, OpenMajorData("전체"))
-                db.openMajorDao().insertAll(data)
-                versionPreferences.edit {
-                    putFloat("openMajorVersion", majorVersionResponse.body()!!.version)
+        try {
+            val majorVersionResponse = openMajorRepository.getOpenMajorVersion()
+            Log.d("openMajorVersion", "${majorVersionResponse.isSuccessful}")
+            if (majorVersionResponse.isSuccessful && (majorVersionResponse.body()!!.version > openMajorVersion)) {
+                val majorListResponse = openMajorRepository.getOpenMajorList()
+                withContext(IO) {
+                    val db = OpenMajorDatabase.getInstance(applicationContext)
+                    db!!.openMajorDao().deleteAll()
+                    val data = majorListResponse.body()!!.convertToOpenMajorData()
+                    data.add(0, OpenMajorData("전체"))
+                    db.openMajorDao().insertAll(data)
+                    versionPreferences.edit {
+                        putFloat("openMajorVersion", majorVersionResponse.body()!!.version)
+                    }
                 }
             }
+        } catch (e: Exception) {
+
         }
     }
 
