@@ -114,7 +114,7 @@ interface IRetrofit {
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
-    suspend fun getEvaluatePosts(@Query("page") page: Int): Response<DataDto<List<MyEvaluationDto>>>
+    suspend fun getEvaluatePosts(@Query("page") page: Int): DataDto<List<MyEvaluationDto>>
 
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)

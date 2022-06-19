@@ -7,7 +7,7 @@ import com.kunize.uswtimetable.dataclass.PurchaseHistory
 import retrofit2.Response
 
 interface MyPostDataSource {
-    suspend fun getMyEvaluations(page: Int): Response<DataDto<List<MyEvaluationDto>>>
+    suspend fun getMyEvaluations(page: Int): DataDto<List<MyEvaluationDto>>
     suspend fun getMyExamInfos(page: Int): Response<DataDto<List<LectureExamDto>>>
     suspend fun deleteMyEvaluation(id: Long)
     suspend fun deleteMyExamInfo(id: Long)

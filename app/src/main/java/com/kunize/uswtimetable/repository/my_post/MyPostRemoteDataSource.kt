@@ -17,4 +17,6 @@ class MyPostRemoteDataSource(private val apiService: IRetrofit): MyPostDataSourc
     }
 
     override suspend fun getPurchaseHistory() = apiService.getPurchaseHistory()
+
+    fun evaluationPagingSource() = MyEvaluationPagingSource(apiService)
 }

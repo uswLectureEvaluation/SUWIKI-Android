@@ -2,14 +2,14 @@ package com.kunize.uswtimetable.ui.mypage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 
 class MyEvaluationAdapter(private val viewModel: MyEvaluationViewModel) :
-    ListAdapter<MyEvaluationDto, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
+    PagingDataAdapter<MyEvaluationDto, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
 
     inner class MyEvaluationViewHolder(private val binding: ItemMyPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -28,7 +28,7 @@ class MyEvaluationAdapter(private val viewModel: MyEvaluationViewModel) :
     }
 
     override fun onBindViewHolder(holder: MyEvaluationViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        getItem(position)?.let { holder.bind(it) }
     }
 
     companion object {
