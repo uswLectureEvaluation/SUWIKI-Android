@@ -10,6 +10,7 @@ import com.skydoves.sandwich.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 object User {
 
@@ -39,17 +40,20 @@ object User {
                 Log.d(TAG, "User - login Success!")
             }*/
             val response = IRetrofit.getInstance().getUserData()
-            response.onSuccess {
-                setUser(
-                    LoggedInUser(
-                        userId = data.userId,
-                        point = data.point,
-                        writtenEvaluation = data.writtenEvaluation,
-                        writtenExam = data.writtenExam,
-                        viewExam = data.viewExam,
-                        email = data.email
+            response.suspendOnSuccess {
+                withContext(Dispatchers.Main) {
+                    setUser(
+                        LoggedInUser(
+                            userId = data.userId,
+                            point = data.point,
+                            writtenEvaluation = data.writtenEvaluation,
+                            writtenExam = data.writtenExam,
+                            viewExam = data.viewExam,
+                            email = data.email
+                        )
                     )
-                )
+                    isLoggedIn.value = true
+                }
             }.onError {
                 Log.d(TAG, "User - login() Error: ${message()}")
             }.onException {
