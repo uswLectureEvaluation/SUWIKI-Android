@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentMyPageBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.common.WebviewActivity
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Event
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
@@ -21,6 +22,7 @@ import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.ui.user_info.QuitActivity
 import com.kunize.uswtimetable.ui.user_info.ResetPasswordActivity
 import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.repeatOnStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,7 +67,10 @@ class MyPageFragment : Fragment() {
             is Event.LogoutEvent -> logOut()
             is Event.MyPostEvent -> showMyPosts()
             is Event.NoticeEvent -> showNoticePage(context)
+            is Event.FeedbackEvent -> showFeedbackPage(context)
             is Event.QuestionEvent -> showQuestionPage()
+            is Event.TermsEvent -> showTermsPage(context)
+            is Event.PrivacyPolicyEvent -> showPrivacyPolicyPage(context)
             is Event.ChangePwEvent -> resetPassword(context)
             is Event.SignOutEvent -> quit(context)
             is Event.OpenSourceEvent -> showOpenSourcePage(context)
@@ -87,6 +92,18 @@ class MyPageFragment : Fragment() {
     private fun showNoticePage(context: Context) {
         val intent = Intent(context, NoticeActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun showFeedbackPage(context: Context) {
+        showWebView(context, Constants.FEEDBACK_SITE)
+    }
+
+    private fun showTermsPage(context: Context) {
+        showWebView(context, Constants.TERMS_SITE)
+    }
+
+    private fun showPrivacyPolicyPage(context: Context) {
+        showWebView(context, Constants.PRIVACY_POLICY_SITE)
     }
 
     private fun showOpenSourcePage(context: Context) {
@@ -136,6 +153,13 @@ class MyPageFragment : Fragment() {
 
     private fun showPurchaseHistory() {
         findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment )
+    }
+
+    private fun showWebView(context: Context, url: String) {
+        val intent = Intent(context, WebviewActivity::class.java).apply {
+            putExtra(Constants.KEY_URL, url)
+        }
+        startActivity(intent)
     }
 
     private fun makeToast(message: String) {
