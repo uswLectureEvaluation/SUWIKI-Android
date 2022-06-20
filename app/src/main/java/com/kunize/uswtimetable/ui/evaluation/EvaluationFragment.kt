@@ -3,7 +3,6 @@ package com.kunize.uswtimetable.ui.evaluation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,7 +21,6 @@ import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
-import com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorFragmentArgs
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.LectureItemViewType
@@ -32,11 +31,7 @@ class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
     private lateinit var evaluationFooterAdapter: EvaluationFooterAdapter
     private val args: EvaluationFragmentArgs by navArgs()
-    private val evaluationViewModel: EvaluationViewModel by viewModels {
-        ViewModelFactory(
-            requireContext()
-        )
-    }
+    private val evaluationViewModel: EvaluationViewModel by viewModels { ViewModelFactory() }
     private var imageSortDialog: ImageSortDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

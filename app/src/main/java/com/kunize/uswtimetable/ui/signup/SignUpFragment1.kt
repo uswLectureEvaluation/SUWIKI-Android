@@ -20,7 +20,7 @@ class SignUpFragment1 : Fragment() {
     private var _binding: FragmentSignUp1Binding? = null
     val binding: FragmentSignUp1Binding get() = _binding!!
 
-    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

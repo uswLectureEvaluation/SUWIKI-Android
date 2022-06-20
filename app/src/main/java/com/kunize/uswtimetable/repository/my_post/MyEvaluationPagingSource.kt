@@ -15,7 +15,7 @@ class MyEvaluationPagingSource(
         return try {
             val page = params.key ?: API_STARTING_PAGE
             val response = api.getEvaluatePosts(page).data
-            return LoadResult.Page(
+            LoadResult.Page(
                 data = response,
                 prevKey = if (page == API_STARTING_PAGE) null else ensureValidKey(page - 1),
                 nextKey = if (response.isEmpty()) null else page + 1

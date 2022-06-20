@@ -15,7 +15,7 @@ import com.kunize.uswtimetable.util.Constants.KEY_EMAIL
 class WelcomeSignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWelcomeSignUpBinding
-    private val viewModel: WelcomeSignUpViewModel by viewModels { ViewModelFactory(this) }
+    private val viewModel: WelcomeSignUpViewModel by viewModels { ViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -2,11 +2,9 @@ package com.kunize.uswtimetable.ui.select_open_major
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,12 +18,10 @@ import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.search_result.SearchResultFragmentArgs
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.afterEditTextChanged
-import com.kunize.uswtimetable.util.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -40,12 +36,12 @@ class SelectOpenMajorFragment : Fragment() {
     private val args: SelectOpenMajorFragmentArgs by navArgs()
     private lateinit var tempOpenMajorList: List<OpenMajorData>
     var openMajorList = mutableListOf<OpenMajorItem>()
-    private val viewModel: SelectOpenMajorViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: SelectOpenMajorViewModel by viewModels { ViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_select_open_major, container, false)
         binding.viewModel = viewModel

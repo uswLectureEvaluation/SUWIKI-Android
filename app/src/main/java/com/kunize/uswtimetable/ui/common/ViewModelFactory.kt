@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.common
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kunize.uswtimetable.repository.evaluation.EvaluationRemoteDataSource
@@ -15,12 +14,12 @@ import com.kunize.uswtimetable.repository.notice.NoticeDetailRemoteDataSource
 import com.kunize.uswtimetable.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.repository.notice.NoticeRemoteDataSource
 import com.kunize.uswtimetable.repository.notice.NoticeRepository
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
+import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.repository.search_result.SearchResultRemoteDataSource
 import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.repository.signup.SignUpRemoteDataSource
 import com.kunize.uswtimetable.repository.signup.SignUpRepository
-import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
-import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.repository.user_info.FindIdRepository
 import com.kunize.uswtimetable.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.repository.user_info.QuitRepository
@@ -48,7 +47,7 @@ import com.kunize.uswtimetable.ui.user_info.ResetPasswordViewModel
 import com.kunize.uswtimetable.ui.write.WriteViewModel
 
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class ViewModelFactory : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
@@ -104,7 +103,8 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             }
             // Notice
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {
-                val repository = NoticeRepository(NoticeRemoteDataSource())
+                val apiService = IRetrofit.getInstanceWithNoToken()
+                val repository = NoticeRepository(NoticeRemoteDataSource(apiService))
                 NoticeViewModel(repository) as T
             }
             modelClass.isAssignableFrom(NoticeDetailViewModel::class.java) -> {

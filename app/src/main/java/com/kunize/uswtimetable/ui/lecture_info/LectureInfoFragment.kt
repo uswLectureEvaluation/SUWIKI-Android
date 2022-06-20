@@ -26,7 +26,7 @@ class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
     private lateinit var adapter: EvaluationListAdapter
-    private val lectureInfoViewModel: LectureInfoViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val lectureInfoViewModel: LectureInfoViewModel by viewModels { ViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

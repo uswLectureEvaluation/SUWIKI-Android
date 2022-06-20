@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class ResetPasswordActivity: AppCompatActivity() {
     private lateinit var binding: ActivityResetPasswordBinding
-    private val viewModel: ResetPasswordViewModel by viewModels { ViewModelFactory(this) }
+    private val viewModel: ResetPasswordViewModel by viewModels { ViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

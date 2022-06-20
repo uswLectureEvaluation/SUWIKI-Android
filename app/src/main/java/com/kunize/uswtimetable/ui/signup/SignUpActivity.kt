@@ -16,7 +16,7 @@ import com.kunize.uswtimetable.util.Constants.TAG
 
 class SignUpActivity : AppCompatActivity() {
     lateinit var binding: ActivitySignupBinding
-    val viewModel: SignUpViewModel by viewModels { ViewModelFactory(this) }
+    val viewModel: SignUpViewModel by viewModels { ViewModelFactory() }
     private var toast: Toast? = null
     lateinit var viewPager: ViewPager2
     private val backKeyManager = BackKeyManager(this)

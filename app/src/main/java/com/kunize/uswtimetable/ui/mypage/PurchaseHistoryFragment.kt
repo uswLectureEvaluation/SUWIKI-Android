@@ -11,7 +11,7 @@ import com.kunize.uswtimetable.databinding.FragmentPurchaseHistoryBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 
 class PurchaseHistoryFragment : Fragment() {
-    private val viewModel: PurchaseHistoryViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: PurchaseHistoryViewModel by viewModels { ViewModelFactory() }
     private var _binding: FragmentPurchaseHistoryBinding? = null
     private val binding get() = _binding!!
 

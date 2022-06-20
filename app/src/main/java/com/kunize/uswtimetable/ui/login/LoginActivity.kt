@@ -20,7 +20,7 @@ import com.kunize.uswtimetable.util.repeatOnStarted
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val loginViewModel: LoginViewModel by viewModels { ViewModelFactory(this) }
+    private val loginViewModel: LoginViewModel by viewModels { ViewModelFactory() }
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

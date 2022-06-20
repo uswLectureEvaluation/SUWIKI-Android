@@ -15,7 +15,7 @@ class FindIdActivity : AppCompatActivity() {
     private var _binding: ActivityFindIdBinding? = null
     val binding get() = _binding!!
 
-    private val viewModel: FindIdViewModel by viewModels { ViewModelFactory(this) }
+    private val viewModel: FindIdViewModel by viewModels { ViewModelFactory() }
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

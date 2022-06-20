@@ -28,7 +28,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MyPageFragment : Fragment() {
-    private val viewModel: MyPageViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: MyPageViewModel by viewModels { ViewModelFactory() }
     private lateinit var binding: FragmentMyPageBinding
     private var toast: Toast? = null
 

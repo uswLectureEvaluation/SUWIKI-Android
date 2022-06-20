@@ -35,7 +35,7 @@ class WriteFragment : Fragment() {
 
     lateinit var binding: FragmentWriteBinding
 
-    private val writeViewModel: WriteViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val writeViewModel: WriteViewModel by viewModels { ViewModelFactory() }
     private var semesterDialog: SemesterDialog? = null
     private var testDialog: TestDialog? = null
     private val args: WriteFragmentArgs by navArgs()

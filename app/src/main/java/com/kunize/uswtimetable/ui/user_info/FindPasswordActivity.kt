@@ -15,7 +15,7 @@ class FindPasswordActivity : AppCompatActivity() {
     private var _binding: ActivityFindPasswordBinding? = null
     val binding get() = _binding!!
 
-    private val viewModel: FindPwViewModel by viewModels { ViewModelFactory(this) }
+    private val viewModel: FindPwViewModel by viewModels { ViewModelFactory() }
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

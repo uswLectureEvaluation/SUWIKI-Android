@@ -15,7 +15,7 @@ class SignUpFragment2 : Fragment() {
     private var _binding: FragmentSignUp2Binding? = null
     val binding: FragmentSignUp2Binding get() = _binding!!
 
-    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

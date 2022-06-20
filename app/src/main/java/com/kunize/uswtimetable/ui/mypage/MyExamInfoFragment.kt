@@ -20,7 +20,7 @@ class MyExamInfoFragment : Fragment() {
     private var _binding: FragmentMyExamInfoBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private val viewModel: MyExamInfoViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: MyExamInfoViewModel by viewModels { ViewModelFactory() }
 
     private lateinit var adapter: MyExamInfoAdapter
 

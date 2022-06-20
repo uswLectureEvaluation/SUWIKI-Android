@@ -13,7 +13,7 @@ class QuitActivity: AppCompatActivity() {
     private var _binding: ActivityQuitBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: QuitViewModel by viewModels { ViewModelFactory(this) }
+    private val viewModel: QuitViewModel by viewModels { ViewModelFactory() }
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

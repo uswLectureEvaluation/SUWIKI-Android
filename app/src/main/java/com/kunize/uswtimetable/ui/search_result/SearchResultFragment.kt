@@ -3,7 +3,6 @@ package com.kunize.uswtimetable.ui.search_result
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,13 +20,9 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.evaluation.EvaluationFragmentDirections
-import com.kunize.uswtimetable.ui.evaluation.ImageSortDialog
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.FragmentType
-import com.kunize.uswtimetable.util.LectureApiOption
-import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.infiniteScrolls
@@ -35,7 +31,7 @@ class SearchResultFragment : Fragment() {
 
     lateinit var binding: FragmentSearchResultBinding
     private lateinit var searchResultAdapter: SearchResultAdapter
-    private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory() }
     private val args: SearchResultFragmentArgs by navArgs()
     private var sortDialog: SortDialog? = null
 
@@ -52,7 +48,7 @@ class SearchResultFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result,container, false)
         binding.viewModel = searchResultViewModel
         binding.lifecycleOwner = this

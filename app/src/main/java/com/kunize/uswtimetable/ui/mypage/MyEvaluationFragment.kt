@@ -24,7 +24,7 @@ class MyEvaluationFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MyEvaluationAdapter
-    private val viewModel: MyEvaluationViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: MyEvaluationViewModel by viewModels { ViewModelFactory() }
     private var toast: Toast? = null
 
     override fun onCreateView(
