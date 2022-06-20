@@ -6,7 +6,10 @@ import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.TimeTableSelPref
-import com.skydoves.sandwich.*
+import com.skydoves.sandwich.message
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onException
+import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,24 +24,6 @@ object User {
 
     fun login() {
         CoroutineScope(Dispatchers.IO).launch {
-            /*val response = IRetrofit.getInstance().getUserData()
-            if (response.isSuccessful && response.body() != null) {
-                withContext(Dispatchers.Main) {
-                    val info = response.body()?:return@withContext
-                    setUser(
-                        LoggedInUser(
-                            userId = info.userId,
-                            point = info.point,
-                            writtenEvaluation = info.writtenEvaluation,
-                            writtenExam = info.writtenExam,
-                            viewExam = info.viewExam,
-                            email = info.email
-                        )
-                    )
-                    isLoggedIn.value = true
-                }
-                Log.d(TAG, "User - login Success!")
-            }*/
             val response = IRetrofit.getInstance().getUserData()
             response.suspendOnSuccess {
                 withContext(Dispatchers.Main) {
@@ -58,11 +43,6 @@ object User {
                 Log.d(TAG, "User - login() Error: ${message()}")
             }.onException {
                 Log.d(TAG, "User - login() Exception: $message")
-            }
-            when(response) {
-                is ApiResponse.Success -> {/* 성공 */}
-                is ApiResponse.Failure.Error -> {/* 에러 */}
-                is ApiResponse.Failure.Exception -> {/* 예외 */}
             }
         }
     }

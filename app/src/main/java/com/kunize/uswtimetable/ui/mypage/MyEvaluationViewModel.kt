@@ -18,13 +18,8 @@ import kotlinx.coroutines.launch
 private const val ITEMS_PER_PAGE = 10
 
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
-    val loading = MutableLiveData(true)
-
     private val _eventClicked = MutableLiveData<Event<Pair<ItemType, MyEvaluationDto>>>()
     val eventClicked: LiveData<Event<Pair<ItemType, MyEvaluationDto>>> get() = _eventClicked
-
-    init {
-    }
 
     val items: Flow<PagingData<MyEvaluationDto>> = Pager(
         config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
@@ -38,6 +33,7 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
     fun deletePost(id: Long) {
         viewModelScope.launch {
             repository.deleteEvaluation(id)
+            repository.evaluationPagingSource().invalidate()
         }
     }
 }
