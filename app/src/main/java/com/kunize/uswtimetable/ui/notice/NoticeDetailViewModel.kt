@@ -20,7 +20,7 @@ class NoticeDetailViewModel(private val repository: NoticeDetailRepository) : Vi
             loading.postValue(true)
             val response = repository.getNotice(id)
             if (response.isSuccessful) {
-//                notice.postValue(response.body()?.data?:return@launch)
+                notice.postValue(response.body()?.data?:return@launch)
             }
             loading.postValue(false)
         }

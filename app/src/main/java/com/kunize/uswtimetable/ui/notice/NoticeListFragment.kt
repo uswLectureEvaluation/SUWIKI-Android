@@ -14,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.paging.LoadState
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
-import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
@@ -26,7 +25,7 @@ class NoticeListFragment : Fragment() {
     private var _binding: FragmentNoticeListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NoticeViewModel by viewModels { ViewModelFactory() }
-    private val adapter: NoticeAdapter by lazy { NoticeAdapter() }
+    private val adapter: NoticeAdapter by lazy { NoticeAdapter(viewModel) }
     private var toast: Toast? = null
 
     override fun onCreateView(
@@ -63,12 +62,16 @@ class NoticeListFragment : Fragment() {
             }
         }
 
-        viewModel.eventNotice.observe(viewLifecycleOwner, EventObserver { noticeId ->
-            findNavController(this).navigate(
-                R.id.action_noticeListFragment_to_noticeDetailFragment,
-                bundleOf(KEY_NOTICE_ID to noticeId)
-            )
-        })
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.event.collect { event ->
+                if (event is NoticeViewModel.Event.NoticeClickEvent) {
+                    findNavController(this@NoticeListFragment).navigate(
+                        R.id.action_noticeListFragment_to_noticeDetailFragment,
+                        bundleOf(KEY_NOTICE_ID to event.notice.id)
+                    )
+                }
+            }
+        }
     }
 
     private fun makeToast(message: String) {

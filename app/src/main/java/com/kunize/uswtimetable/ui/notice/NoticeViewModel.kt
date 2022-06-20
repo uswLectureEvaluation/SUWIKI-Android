@@ -1,6 +1,6 @@
 package com.kunize.uswtimetable.ui.notice
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,25 +11,37 @@ import androidx.paging.cachedIn
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.repository.notice.NoticeRepository
 import com.kunize.uswtimetable.ui.common.Event
+import com.kunize.uswtimetable.util.Constants.TAG
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 private const val ITEMS_PER_PAGE = 10
 
 class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewModel() {
-    val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
-    val notices = MutableLiveData<List<NoticeDto>>()
-    private val _eventNotice = MutableLiveData<Event<Long>>()
-    val eventNotice: LiveData<Event<Long>> get() = _eventNotice
+    private val _event = MutableSharedFlow<Event>()
+    val event: SharedFlow<Event> = _event.asSharedFlow()
+
     val items: Flow<PagingData<NoticeDto>> = Pager(
-        config = PagingConfig(
-            pageSize = ITEMS_PER_PAGE,
-            enablePlaceholders = false
-        ),
+        config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
         pagingSourceFactory = { noticeRepository.pagingSource() }
     ).flow.cachedIn(viewModelScope)
 
-    fun moveToNoticeDetail(noticeId: Long) {
-        _eventNotice.value = Event(noticeId)
+    fun noticeClicked(notice: NoticeDto) {
+        Log.d(TAG, "NoticeViewModel - noticeClicked($notice) called")
+        event(Event.NoticeClickEvent(notice))
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _event.emit(event)
+        }
+    }
+
+    sealed class Event {
+        data class NoticeClickEvent(val notice: NoticeDto): Event()
     }
 }

@@ -20,7 +20,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_rounded_border_line_15_gray_500"
-        android:onClick="@{() -> viewmodel.moveToNoticeDetail(notice.id)}"
+        android:onClick="@{() -> viewmodel.noticeClicked(notice)}"
         android:padding="16dp"
         tools:ignore="RtlSymmetry">
 

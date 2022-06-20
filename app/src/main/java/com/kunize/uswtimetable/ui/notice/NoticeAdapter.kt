@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemNoticeBinding
 import com.kunize.uswtimetable.dataclass.NoticeDto
 
-class NoticeAdapter : PagingDataAdapter<NoticeDto, NoticeAdapter.ViewHolder>(
-    diffUtil
-) {
+class NoticeAdapter(private val viewModel: NoticeViewModel) : PagingDataAdapter<NoticeDto, NoticeAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemNoticeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(notice: NoticeDto) {
             binding.notice = notice
+            binding.viewmodel = viewModel
             binding.executePendingBindings()
         }
     }

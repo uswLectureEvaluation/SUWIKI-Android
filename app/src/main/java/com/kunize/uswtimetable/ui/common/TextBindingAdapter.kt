@@ -31,8 +31,8 @@ fun applyDateTime(view: TextView, dateTime: LocalDateTime) {
 }
 
 @BindingAdapter("date")
-fun applyDate(view: TextView, dateTime: LocalDateTime) {
-    view.text = dateFormat(dateTime)
+fun applyDate(view: TextView, dateTime: LocalDateTime?) {
+    dateTime?.let { view.text = dateFormat(dateTime) }
 }
 
 @BindingAdapter("banCreatedAt")

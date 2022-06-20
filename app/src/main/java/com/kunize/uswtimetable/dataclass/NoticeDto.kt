@@ -13,6 +13,6 @@ data class NoticeDto(
 data class NoticeDetailDto(
     val id: Long,
     val title: String,
-    @SerializedName("modifiedDate") val date: LocalDateTime,
+    @SerializedName("modifiedDate") val date: LocalDateTime?,
     val content: String
 ): Serializable
