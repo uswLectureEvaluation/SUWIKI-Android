@@ -80,3 +80,6 @@
 -keep class * extends androidx.fragment.app.Fragment{}
 -keepnames class com.kunize.uswtimetable.dataclass.*
 -keep class com.kunize.uswtimetable.dataclass.* { *; }
+
+-keepnames class com.kunize.uswtimetable.data.*
+-keep class com.kunize.uswtimetable.data.* { *; }
