@@ -28,24 +28,5 @@ class MainActivity : AppCompatActivity() {
             else
                 binding.bottomNav.visibility = View.GONE
         }
-
-        binding.bannerAdView.setClientId(getString(R.string.kakaoAdfitID))  // 할당 받은 광고단위 ID 설정
-        binding.bannerAdView.loadAd()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.bannerAdView.pause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.bannerAdView.destroy()
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        binding.bannerAdView.resume()
     }
 }

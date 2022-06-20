@@ -48,7 +48,6 @@ android {
 dependencies {
 
     implementation "com.google.android.gms:play-services-ads-identifier:17.0.1"
-    implementation "com.kakao.adfit:ads-base:3.12.4"
     implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
 
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
