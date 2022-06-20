@@ -1,7 +1,8 @@
 package com.kunize.uswtimetable.repository.notice
 
 import com.kunize.uswtimetable.retrofit.IRetrofit
+import com.kunize.uswtimetable.ui.notice.NoticePagingSource
 
-class NoticeRemoteDataSource: NoticeDataSource {
-    override suspend fun getNotices(page: Int) = IRetrofit.getInstanceWithNoToken().getNoticeList(page)
+class NoticeRemoteDataSource(private val api: IRetrofit) {
+    fun pagingSource() = NoticePagingSource(api)
 }

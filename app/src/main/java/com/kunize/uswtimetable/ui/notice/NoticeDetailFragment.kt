@@ -15,7 +15,7 @@ import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
 class NoticeDetailFragment : Fragment() {
     private var _binding: FragmentNoticeDetailBinding? = null
     private val binding: FragmentNoticeDetailBinding get() = _binding!!
-    private val viewModel: NoticeDetailViewModel by viewModels { ViewModelFactory(requireContext()) }
+    private val viewModel: NoticeDetailViewModel by viewModels { ViewModelFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

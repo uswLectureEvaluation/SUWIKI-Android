@@ -2,13 +2,13 @@ package com.kunize.uswtimetable.ui.notice
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemNoticeBinding
 import com.kunize.uswtimetable.dataclass.NoticeDto
 
-class NoticeAdapter : ListAdapter<NoticeDto, NoticeAdapter.ViewHolder>(
+class NoticeAdapter : PagingDataAdapter<NoticeDto, NoticeAdapter.ViewHolder>(
     diffUtil
 ) {
     inner class ViewHolder(private val binding: ItemNoticeBinding) :
@@ -30,7 +30,7 @@ class NoticeAdapter : ListAdapter<NoticeDto, NoticeAdapter.ViewHolder>(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        getItem(position)?.let { holder.bind(it) }
     }
 
     companion object {
