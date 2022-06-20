@@ -1,7 +1,9 @@
 package com.kunize.uswtimetable.ui.mypage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -68,7 +70,7 @@ class MyPageFragment : Fragment() {
             is Event.MyPostEvent -> showMyPosts()
             is Event.NoticeEvent -> showNoticePage(context)
             is Event.FeedbackEvent -> showFeedbackPage(context)
-            is Event.QuestionEvent -> showQuestionPage()
+            is Event.QuestionEvent -> sendAsk(context)
             is Event.TermsEvent -> showTermsPage(context)
             is Event.PrivacyPolicyEvent -> showPrivacyPolicyPage(context)
             is Event.ChangePwEvent -> resetPassword(context)
@@ -84,9 +86,17 @@ class MyPageFragment : Fragment() {
         if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_navigation_my_page_to_myPostFragment)
     }
 
-    private fun showQuestionPage() {
-        val dialogFragment = ContactUsFragment()
-        dialogFragment.show(parentFragmentManager, dialogFragment.tag)
+    @SuppressLint("IntentReset")
+    private fun sendAsk(context: Context) {
+        val sender = if (User.isLoggedIn.value == true) User.user?.value?.email!! else "익명 사용자"
+        val email = Intent(Intent.ACTION_SENDTO).apply {
+            type = "text/plain"
+            data = Uri.parse("mailto:")
+
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.ASK_EMAIL))
+            putExtra(Intent.EXTRA_TEXT, "\n".repeat(10) + "Sent by $sender\nto Suwiki")
+        }
+        context.startActivity(email)
     }
 
     private fun showNoticePage(context: Context) {
