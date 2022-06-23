@@ -29,7 +29,7 @@ class PurchaseHistoryViewModel(private val repository: MyPostRepository) : ViewM
                 if (response.body()?.data?.isEmpty() == true) {
                     _errorMessage.postValue("구매 이력이 없습니다")
                 }
-                response.body()?.data?.let { _historyList.postValue(response.body()?.data) }
+                response.body()?.data?.let { _historyList.postValue(response.body()?.data!!) }
             } else {
                 _errorMessage.postValue("구매 이력 로딩 실패")
             }

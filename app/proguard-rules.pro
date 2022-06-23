@@ -78,8 +78,21 @@
 
 -keepnames class androidx.navigation.fragment.NavHostFragment
 -keep class * extends androidx.fragment.app.Fragment{}
--keepnames class com.kunize.uswtimetable.dataclass.*
--keep class com.kunize.uswtimetable.dataclass.* { *; }
 
--keepnames class com.kunize.uswtimetable.data.*
--keep class com.kunize.uswtimetable.data.* { *; }
+-keepnames class com.kunize.uswtimetable.dataclass.** { *; }
+-keep class com.kunize.uswtimetable.dataclass.** { *; }
+
+-keepnames class com.kunize.uswtimetable.data.** { *; }
+-keep class com.kunize.uswtimetable.data.** { *; }
+
+-keepnames class * extends android.os.Parcelable
+-keepnames class * extends java.io.Serializable
+
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+}
