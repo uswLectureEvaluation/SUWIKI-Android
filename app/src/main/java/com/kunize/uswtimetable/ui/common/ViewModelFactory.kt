@@ -30,10 +30,10 @@ import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
 import com.kunize.uswtimetable.ui.login.LoginViewModel
-import com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel
-import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
 import com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel
+import com.kunize.uswtimetable.ui.mypage.my_post.MyEvaluationViewModel
+import com.kunize.uswtimetable.ui.mypage.my_post.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel

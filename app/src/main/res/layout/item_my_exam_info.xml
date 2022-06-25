@@ -15,7 +15,7 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel" />
+            type="com.kunize.uswtimetable.ui.mypage.my_post.MyExamInfoViewModel" />
 
         <variable
             name="contentTextView"

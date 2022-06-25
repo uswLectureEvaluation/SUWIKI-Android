@@ -16,7 +16,7 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel" />
+            type="com.kunize.uswtimetable.ui.mypage.my_post.MyEvaluationViewModel" />
 
         <variable
             name="viewType"

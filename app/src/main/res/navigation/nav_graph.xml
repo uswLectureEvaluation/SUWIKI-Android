@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/myPostFragment"
-        android:name="com.kunize.uswtimetable.ui.mypage.MyPostFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.my_post.MyPostFragment"
         android:label="fragment_my_post"
         tools:layout="@layout/fragment_my_post">
         <action
@@ -86,12 +86,12 @@
     </fragment>
     <fragment
         android:id="@+id/myEvaluationFragment"
-        android:name="com.kunize.uswtimetable.ui.mypage.MyEvaluationFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.my_post.MyEvaluationFragment"
         android:label="fragment_my_evaluation"
         tools:layout="@layout/fragment_my_evaluation" />
     <fragment
         android:id="@+id/myExamInfoFragment"
-        android:name="com.kunize.uswtimetable.ui.mypage.MyExamInfoFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.my_post.MyExamInfoFragment"
         android:label="fragment_my_exam_info"
         tools:layout="@layout/fragment_my_exam_info" />
     <action
