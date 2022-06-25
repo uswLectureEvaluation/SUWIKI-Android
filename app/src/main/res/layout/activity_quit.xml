@@ -13,110 +13,92 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/page_padding"
         tools:context=".ui.user_info.QuitActivity">
 
-        <TextView
-            android:id="@+id/tv_logo"
-            style="@style/title_textview_style"
-            android:fontFamily="@font/godom"
-            android:text="@string/app_name"
-            android:textColor="@color/custom_blue"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_current_page_title"
-            style="@style/TextSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_out"
-            app:layout_constraintEnd_toEndOf="@+id/tv_logo"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@+id/tv_logo"
-            app:layout_constraintTop_toBottomOf="@+id/tv_logo" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_corner8_gray"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_current_page_title"
-            app:layout_constraintVertical_bias="0.3">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_sign_out"
-                style="@style/TextSubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_out"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/layout_input_id"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0" />
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="50dp"
+                android:paddingBottom="17dp"
+                app:navigationIcon="@drawable/ic_back">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_input_id"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_current_page_title"
+                    style="@style/TextMedium.16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/sign_out" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_input_id"
+            style="@style/SuwikiEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="60dp"
+            app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_input_id"
+                style="@style/TextRegular.14"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:hint="@string/require_id"
-                app:endIconMode="clear_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_sign_out">
+                android:inputType="text"
+                android:text="@={viewmodel.loginId}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_input_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text="@={viewmodel.loginId}" />
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_input_pw"
+            style="@style/SuwikiEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            app:endIconMode="password_toggle"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_input_id">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_input_pw"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_input_pw"
+                style="@style/TextRegular.14"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:hint="@string/require_password"
-                app:endIconMode="password_toggle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_input_id">
+                android:inputType="textPassword"
+                android:text="@={viewmodel.password}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_input_pw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:text="@={viewmodel.password}" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/custom_ripple_light_blue_button"
-                android:enabled="@{etInputId.text.length() > 0 &amp;&amp; etInputPw.text.length() > 0 &amp;&amp; viewmodel.loading == false}"
-                android:onClick="@{() -> viewmodel.quit()}"
-                android:text="@string/sign_out"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_input_pw" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            style="@style/SuwikiMainButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="109dp"
+            android:enabled="@{etInputId.text.length() > 0 &amp;&amp; etInputPw.text.length() > 0 &amp;&amp; viewmodel.loading == false}"
+            android:onClick="@{() -> viewmodel.quit()}"
+            android:text="@string/sign_out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
