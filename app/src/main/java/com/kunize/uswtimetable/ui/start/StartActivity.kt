@@ -23,7 +23,6 @@ import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
