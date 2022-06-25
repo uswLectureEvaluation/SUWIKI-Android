@@ -33,6 +33,8 @@ import com.kunize.uswtimetable.util.API.PASSWORD
 import com.kunize.uswtimetable.util.API.PASSWORD_RESET
 import com.kunize.uswtimetable.util.API.PURCHASE_HISTORY
 import com.kunize.uswtimetable.util.API.QUIT
+import com.kunize.uswtimetable.util.API.REPORT_EVALUATION
+import com.kunize.uswtimetable.util.API.REPORT_EXAM
 import com.kunize.uswtimetable.util.API.REQUEST_REFRESH
 import com.kunize.uswtimetable.util.API.SEARCH
 import com.kunize.uswtimetable.util.API.SIGN_UP
@@ -215,6 +217,16 @@ interface IRetrofit {
     suspend fun clearBookmarkMajor(
         @Query("majorType") majorName: String
     ): Response<String>
+
+    @POST(REPORT_EVALUATION)
+    suspend fun reportLecture(
+        @Body body: ReportLecture
+    ): ApiResponse<JsonElement>
+
+    @POST(REPORT_EXAM)
+    suspend fun reportExam(
+        @Body body: ReportExam
+    ): ApiResponse<JsonElement>
 
 
     companion object {

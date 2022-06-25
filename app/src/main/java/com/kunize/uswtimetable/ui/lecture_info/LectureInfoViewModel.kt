@@ -50,6 +50,19 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _showHideExamDataLayout.value = false
     }
 
+    fun reportExam(lectureId: Long) {
+        viewModelScope.launch {
+            lectureInfoRepository.reportExam(lectureId)
+        }
+    }
+
+    fun reportLecture(lectureId: Long) {
+        viewModelScope.launch {
+            lectureInfoRepository.reportLecture(lectureId)
+        }
+    }
+
+
     fun lectureInfoRadioBtnClicked() {
         pageViewModel.resetPage()
         _showHideExamDataLayout.value = false

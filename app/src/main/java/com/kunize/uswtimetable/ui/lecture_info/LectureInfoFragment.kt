@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,7 +39,15 @@ class LectureInfoFragment : Fragment() {
         binding.lectureInfoViewModel = lectureInfoViewModel
         binding.lifecycleOwner = this
 
-        adapter = EvaluationListAdapter { id -> Log.d("lectureApi", "$id 클릭됨") }
+        adapter = EvaluationListAdapter { id ->
+            showAlertDialog("신고하기", "신고하시겠어요? \n" +
+                    "\n" +
+                    "*허위 신고 시 제재가 가해질 수 있습니다!"
+            ) {
+                if (binding.examInfoRadioBtn.isChecked) lectureInfoViewModel.reportExam(id)
+                else lectureInfoViewModel.reportLecture(id)
+            }
+        }
         binding.infoRecyclerView.adapter = adapter
 
         val args: LectureInfoFragmentArgs by navArgs()
@@ -108,5 +117,18 @@ class LectureInfoFragment : Fragment() {
                 lectureId = lectureInfoViewModel.pageViewModel.lectureId
             )
         findNavController().navigate(action)
+    }
+
+    private fun showAlertDialog(title: String, message: String, positiveClick: () -> Unit) {
+        val builder = AlertDialog.Builder(requireActivity())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("확인") { _, _ ->
+                positiveClick()
+            }
+            .setNegativeButton("취소") { _, _ ->
+
+            }
+        builder.show()
     }
 }

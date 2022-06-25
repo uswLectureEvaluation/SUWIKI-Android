@@ -59,6 +59,8 @@ object API {
     const val OPEN_MAJOR_VERSION = "/suwiki/version/"
     const val OPEN_MAJOR_LIST_UPDATE = "/suwiki/majorType"
     const val BOOKMARK = "/user/favorite-major/"
+    const val REPORT_EVALUATION = "/user/report/evaluate"
+    const val REPORT_EXAM = "/user/report/exam"
 }
 
 object WriteFragmentTitle {
