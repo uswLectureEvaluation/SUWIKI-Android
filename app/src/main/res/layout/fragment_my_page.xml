@@ -357,25 +357,6 @@
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:id="@+id/tv_dash_1"
-                        style="@style/TextRegular.12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/dash"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_point_system_guide_title" />
-
-                    <TextView
-                        android:id="@+id/tv_point_system_guide_1"
-                        style="@style/TextRegular.12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/point_guide_1"
-                        app:layout_constraintStart_toEndOf="@id/guide_end_dash"
-                        app:layout_constraintTop_toTopOf="@id/tv_dash_1" />
-
-                    <TextView
                         android:id="@+id/tv_dash_2"
                         style="@style/TextRegular.12"
                         android:layout_width="wrap_content"
@@ -383,7 +364,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/dash"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_point_system_guide_1" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_point_system_guide_title" />
 
                     <TextView
                         android:id="@+id/tv_point_system_guide_2"
