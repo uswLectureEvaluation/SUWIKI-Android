@@ -19,7 +19,17 @@
             android:theme="@style/Theme.Uswtimetable.NoActionBar" />
         <activity
             android:name=".ui.common.WebviewActivity"
-            android:exported="false" />
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="suwiki" android:host="web_view" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.notice.NoticeActivity"
             android:exported="false" />

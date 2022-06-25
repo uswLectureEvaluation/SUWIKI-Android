@@ -13,6 +13,9 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
+import com.kunize.uswtimetable.util.Constants.KEY_URL
+import com.kunize.uswtimetable.util.Constants.PRIVACY_POLICY_SITE
+import com.kunize.uswtimetable.util.Constants.TERMS_SITE
 import com.kunize.uswtimetable.util.afterTextChanged
 import java.util.regex.Pattern
 
@@ -106,8 +109,9 @@ class SignUpFragment1 : Fragment() {
         val link1 = Pattern.compile("이용약관")
         val link2 = Pattern.compile("개인정보처리방침")
         // TODO 이용약관, 개인정보처리방침 링크 연결
-        Linkify.addLinks(binding.tvTerms, link1, "")
-        Linkify.addLinks(binding.tvTerms, link2, "")
+        val mTransform = Linkify.TransformFilter { _, _ -> "" }
+        Linkify.addLinks(binding.tvTerms, link1, "suwiki://web_view?${KEY_URL}=${TERMS_SITE}", null, mTransform)
+        Linkify.addLinks(binding.tvTerms, link2, "suwiki://web_view?${KEY_URL}=${PRIVACY_POLICY_SITE}", null, mTransform)
     }
 
     private fun dataChanged() {
