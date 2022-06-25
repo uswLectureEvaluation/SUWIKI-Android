@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.kunize.uswtimetable.ui.home.timetable.BitmapConverter.stringToBitmap
@@ -31,16 +32,18 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.shareKakaoBtn.setOnClickListener {
-            val strBit = TimeTableSelPref.prefs.getString("image", "")
-            val bitmap = stringToBitmap(strBit)
+            try {
+                val strBit = TimeTableSelPref.prefs.getString("image", "")
+                val bitmap = stringToBitmap(strBit)
 
-            val dir = getImageUri(this, bitmap!!)
+                val dir = getImageUri(this, bitmap!!)
 
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "image/*"
-            intent.putExtra(Intent.EXTRA_STREAM, dir)
-            intent.`package` = "com.kakao.talk"
-            startActivity(intent)
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/*"
+                intent.putExtra(Intent.EXTRA_STREAM, dir)
+                intent.`package` = "com.kakao.talk"
+                startActivity(intent)
+            } catch (e: Exception) { Toast.makeText(this, "카카오톡이 설치되어 있지 않습니다!", Toast.LENGTH_LONG).show() }
         }
 
         binding.classInfoBtn.apply {
