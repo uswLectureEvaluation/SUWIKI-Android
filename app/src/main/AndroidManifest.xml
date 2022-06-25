@@ -36,10 +36,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.user_info.QuitActivity"
+            android:name=".ui.user_info.quit.QuitActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.user_info.ResetPasswordActivity"
+            android:name=".ui.user_info.reset_password.ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"

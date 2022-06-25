@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info
+package com.kunize.uswtimetable.ui.user_info.quit
 
 import android.os.Bundle
 import android.widget.Toast
@@ -8,32 +8,27 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityQuitBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.repeatOnStarted
 
-class QuitActivity: AppCompatActivity() {
-    private var _binding: ActivityQuitBinding? = null
-    private val binding get() = _binding!!
+class QuitActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityQuitBinding
 
     private val viewModel: QuitViewModel by viewModels { ViewModelFactory() }
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = DataBindingUtil.setContentView(this, R.layout.activity_quit)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_quit)
 
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
-    }
 
-    override fun onResume() {
-        super.onResume()
+        binding.toolbar.setNavigationOnClickListener { viewModel.navigateBackEvent() }
 
-        viewModel.successMessage.observe(this) { message ->
-            makeToast(message)
-            finish()
-        }
-        viewModel.errorMessage.observe(this) { message ->
-            makeToast(message)
+        repeatOnStarted {
+            viewModel.uiEvent.collect { event ->
+                handleEvent(event)
+            }
         }
     }
 
@@ -43,8 +38,11 @@ class QuitActivity: AppCompatActivity() {
         toast?.show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    private fun handleEvent(event: Event) {
+        when (event) {
+            is Event.NavigateBackEvent -> this@QuitActivity.finish()
+            is Event.SuccessMessage -> makeToast(event.message)
+            is Event.ErrorMessage -> makeToast(event.message)
+        }
     }
 }

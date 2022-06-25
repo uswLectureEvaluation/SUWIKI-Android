@@ -42,8 +42,8 @@ import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.signup.WelcomeSignUpViewModel
 import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
 import com.kunize.uswtimetable.ui.user_info.FindPwViewModel
-import com.kunize.uswtimetable.ui.user_info.QuitViewModel
-import com.kunize.uswtimetable.ui.user_info.ResetPasswordViewModel
+import com.kunize.uswtimetable.ui.user_info.quit.QuitViewModel
+import com.kunize.uswtimetable.ui.user_info.reset_password.ResetPasswordViewModel
 import com.kunize.uswtimetable.ui.write.WriteViewModel
 
 @Suppress("UNCHECKED_CAST")

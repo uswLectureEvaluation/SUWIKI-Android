@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info
+package com.kunize.uswtimetable.ui.user_info.reset_password
 
 import android.app.Activity
 import android.content.Intent
@@ -11,8 +11,10 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityResetPasswordBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.user_info.FindPasswordActivity
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.Result
+import com.kunize.uswtimetable.util.repeatOnStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -26,7 +28,6 @@ class ResetPasswordActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_reset_password)
-        setContentView(binding.root)
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
 
@@ -46,13 +47,22 @@ class ResetPasswordActivity: AppCompatActivity() {
             }
         }
 
-        initViews()
+        binding.toolbar.setNavigationOnClickListener { viewModel.navigateBackEvent() }
+
+        repeatOnStarted {
+            viewModel.uiEvent.collect { event ->
+                handleEvent(event)
+            }
+        }
     }
 
-    private fun initViews() {
-        binding.tvFindPwBtn.setOnClickListener {
-            val intent = Intent(this@ResetPasswordActivity, FindPasswordActivity::class.java)
-            startActivity(intent)
+    private fun handleEvent(event: Event) {
+        when (event) {
+            is Event.FindPasswordEvent -> {
+                val intent = Intent(this@ResetPasswordActivity, FindPasswordActivity::class.java)
+                startActivity(intent)
+            }
+            is Event.NavigateBackEvent -> this@ResetPasswordActivity.finish()
         }
     }
 }

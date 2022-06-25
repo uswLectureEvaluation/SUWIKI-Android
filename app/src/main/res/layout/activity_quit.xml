@@ -7,13 +7,13 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.user_info.QuitViewModel" />
+            type="com.kunize.uswtimetable.ui.user_info.quit.QuitViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.user_info.QuitActivity">
+        tools:context=".ui.user_info.quit.QuitActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="50dp"

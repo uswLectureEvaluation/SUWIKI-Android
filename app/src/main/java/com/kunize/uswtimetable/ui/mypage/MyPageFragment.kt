@@ -21,9 +21,9 @@ import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel.Event
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
-import com.kunize.uswtimetable.ui.user_info.QuitActivity
-import com.kunize.uswtimetable.ui.user_info.ResetPasswordActivity
 import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.ui.user_info.quit.QuitActivity
+import com.kunize.uswtimetable.ui.user_info.reset_password.ResetPasswordActivity
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.repeatOnStarted
 import kotlinx.coroutines.CoroutineScope
