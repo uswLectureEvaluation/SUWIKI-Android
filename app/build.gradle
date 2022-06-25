@@ -48,10 +48,7 @@ android {
 dependencies {
 
     implementation "com.google.android.gms:play-services-ads-identifier:17.0.1"
-    implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
-
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
-
     implementation 'com.google.android.play:core:1.10.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
     implementation 'androidx.room:room-runtime:2.3.0'
@@ -83,8 +80,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
-    implementation 'com.github.jeffreyliu8:FlexBoxRadioGroup:0.0.8'
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
     /* EncryptedSharedPreference */
@@ -109,4 +104,6 @@ dependencies {
 
     /* Handling Network Error */
     implementation "com.github.skydoves:sandwich:1.2.4"
+
+    implementation 'com.github.jeffreyliu8:FlexBoxRadioGroup:0.0.8'
 }
