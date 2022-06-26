@@ -4,9 +4,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MyPostRepository(private val dataSource: MyPostRemoteDataSource) {
-    suspend fun getExamInfos(page: Int) = withContext(Dispatchers.IO){ dataSource.getMyExamInfos(page) }
-    suspend fun deleteEvaluation(id: Long) = withContext(Dispatchers.IO) { dataSource.deleteMyEvaluation(id)}
-    suspend fun deleteExamInfo(id: Long) = withContext(Dispatchers.IO) { dataSource.deleteMyEvaluation(id)}
+    suspend fun getExamInfos(page: Int) = withContext(Dispatchers.IO) { dataSource.getMyExamInfos(page) }
+    suspend fun deleteEvaluation(id: Long) = withContext(Dispatchers.IO) { dataSource.deleteMyEvaluation(id) }
+    suspend fun deleteExamInfo(id: Long) = withContext(Dispatchers.IO) { dataSource.deleteMyEvaluation(id) }
     suspend fun getPurchaseHistory() = withContext(Dispatchers.IO) { dataSource.getPurchaseHistory() }
 
     fun evaluationPagingSource() = dataSource.evaluationPagingSource()

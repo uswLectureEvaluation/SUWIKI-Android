@@ -10,11 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
-import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
-import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.infiniteScrolls
+import com.kunize.uswtimetable.util.repeatOnStarted
 
 class MyExamInfoFragment : Fragment() {
     private var _binding: FragmentMyExamInfoBinding? = null
@@ -25,12 +24,11 @@ class MyExamInfoFragment : Fragment() {
     private lateinit var adapter: MyExamInfoAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMyExamInfoBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 
@@ -42,18 +40,13 @@ class MyExamInfoFragment : Fragment() {
 
         adapter = MyExamInfoAdapter(viewModel)
 
-        viewModel.eventClicked.observe(viewLifecycleOwner, EventObserver { (type, data) ->
-            when (type) {
-                ItemType.ROOT_VIEW -> {}
-                ItemType.EDIT_BUTTON -> { gotoWriteFragment(data) }
-                ItemType.DELETE_BUTTON -> {
-                    // TODO 삭제 확인 다이얼로그 띄우기
-                    viewModel.deletePost(data.id?:return@EventObserver)
-                }
-            }
-        })
-
         initRecyclerView()
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.uiEvent.collect { event ->
+                handleEvent(event)
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -69,10 +62,25 @@ class MyExamInfoFragment : Fragment() {
         }
     }
 
+    private fun handleEvent(event: Event) {
+        when (event) {
+            is Event.EditEvent -> {
+                gotoWriteFragment(event.examInfo)
+            }
+            is Event.DeleteEvent -> {
+                // TODO 삭제 확인 다이얼로그 띄우기
+                event.examInfo.id?.let { id ->
+                    viewModel.deletePost(id)
+                }
+            }
+        }
+    }
+
     private fun gotoWriteFragment(data: LectureExamDto) {
+        data.id ?: return
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
-                lectureId = data.id?:return,
+                lectureId = data.id,
                 myExamInfo = data,
                 isEvaluation = false
             )
