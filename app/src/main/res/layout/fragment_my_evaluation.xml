@@ -30,10 +30,22 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_my_post" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/evaluation_not_exists"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="37dp"
+            android:visibility="@{viewmodel.items.empty?View.VISIBLE:View.INVISIBLE}"
+            style="@style/TextRegular.14.Gray" />
+
         <ProgressBar
             android:id="@+id/loading_myEvaluation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.loading?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

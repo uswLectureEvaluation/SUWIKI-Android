@@ -1,33 +1,54 @@
 package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
-import kotlinx.coroutines.flow.Flow
+import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-private const val ITEMS_PER_PAGE = 10
-
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _uiEvent = MutableSharedFlow<Event>()
     val uiEvent = _uiEvent.asSharedFlow()
+    private val _items = MutableLiveData<List<MyEvaluationDto>>(emptyList())
+    val items: LiveData<List<MyEvaluationDto>> get() = _items
+    val loading = MutableLiveData(false)
+    private var _page = 1
+    private var _loadFinished = false
 
-    val items: Flow<PagingData<MyEvaluationDto>> = Pager(
-        config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
-        pagingSourceFactory = { repository.evaluationPagingSource() }
-    ).flow.cachedIn(viewModelScope)
+    init {
+        scrollBottomEvent()
+    }
+
+    fun scrollBottomEvent() {
+        if (_loadFinished || _page == LAST_PAGE) return
+
+        viewModelScope.launch {
+            loading.postValue(true)
+            val response = repository.getEvaluation(_page)
+            if (response.isSuccessful) {
+                val newData = response.body()?.data
+
+                if (newData?.isEmpty() == true) {
+                    _loadFinished = true
+                } else {
+                    val currentData = _items.value?.toMutableList() ?: mutableListOf()
+                    currentData.addAll(newData!!)
+                    _items.postValue(currentData)
+                    nextPage()
+                }
+            }
+            loading.postValue(false)
+        }
+    }
 
     fun deletePost(id: Long) {
         viewModelScope.launch {
             repository.deleteEvaluation(id)
-            repository.evaluationPagingSource().invalidate()
         }
     }
 
@@ -43,5 +64,9 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
         viewModelScope.launch {
             _uiEvent.emit(event)
         }
+    }
+
+    private fun nextPage() {
+        if (_page != LAST_PAGE) _page++
     }
 }

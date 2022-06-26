@@ -37,6 +37,7 @@
     <string name="use_point">포인트 사용</string>
     <string name="edit_evaluation">강의평가 수정</string>
 
+    <!-- My Page -->
     <string name="notice">공지사항</string>
     <string name="my_page">내 정보</string>
     <string name="send_feedback">피드백 전송</string>
@@ -54,6 +55,8 @@
     <string name="exam_point">20포인트</string>
     <string name="need">가 차감됩니다.</string>
     <string name="no_data">아직 등록된 강의평가가 없습니다.</string>
+    <string name="suspension_history_not_exists">이용 제한 내역이 없습니다</string>
+    <string name="evaluation_not_exists">강의평가가 없습니다.</string>
 
     <!-- Login & Sign in -->
     <string name="login">로그인</string>
@@ -114,7 +117,6 @@
     <string name="btn_previous">이전</string>
     <string name="btn_exit">닫기</string>
 
-
     <!-- write -->
     <string name="write_lecture_info">완료 (+10P)</string>
     <string name="write_exam_info">완료 (+20P)</string>
@@ -156,20 +158,8 @@
     <string name="hint_input_SWLE_id">SWLE 아이디 입력</string>
     <string name="hint_find_pw">학교 메일로 임시 비밀번호를 전송합니다.</string>
 
-    <string-array name="contact_us">
-        <item>--카테고리 선택--</item>
-        <item>시간표 기능</item>
-        <item>강의 평가 기능</item>
-        <item>내 정보</item>
-        <item>포인트</item>
-        <item>서버 오류</item>
-        <item>응원하기 💕</item>
-        <item>기타 문의 사항</item>
-    </string-array>
     <string name="title_activity_welcome_sign_up">WelcomeSignUpActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="title_point_system_guide">포인트 제도 안내</string>
@@ -187,7 +177,6 @@
     <string name="title_guidance">이용 안내</string>
     <string name="suspension_history">이용 제한 내역</string>
     <string name="purchase_history">구매 이력</string>
-
 
     <string name="open_major">개설학과</string>
     <string name="simple_see_more">더보기</string>
@@ -226,6 +215,4 @@
     <string name="class_info">수업 정보</string>
     <string name="enroll">등록</string>
     <string name="text_require_login">내가 쓴 글과 포인트를\n확인하려면 로그인하세요.</string>
-    <string name="suspension_history_not_exits">이용 제한 내역이 없습니다</string>
-
 </resources>

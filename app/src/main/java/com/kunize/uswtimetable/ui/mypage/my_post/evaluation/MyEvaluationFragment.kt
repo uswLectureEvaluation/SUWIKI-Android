@@ -1,21 +1,21 @@
 package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.Constants.TAG
+import com.kunize.uswtimetable.util.infiniteScrolls
 import com.kunize.uswtimetable.util.repeatOnStarted
-import kotlinx.coroutines.flow.collectLatest
 
 class MyEvaluationFragment : Fragment() {
     private var _binding: FragmentMyEvaluationBinding? = null
@@ -45,16 +45,6 @@ class MyEvaluationFragment : Fragment() {
         initRecyclerView()
 
         viewLifecycleOwner.repeatOnStarted {
-            adapter.loadStateFlow.collect {
-                binding.loadingMyEvaluation.isVisible = it.source.refresh is LoadState.Loading
-            }
-        }
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.items.collectLatest {
-                adapter.submitData(it)
-            }
-        }
-        viewLifecycleOwner.repeatOnStarted {
             viewModel.uiEvent.collect { event ->
                 handleEvent(event)
             }
@@ -74,12 +64,14 @@ class MyEvaluationFragment : Fragment() {
     private fun initRecyclerView() {
         recyclerView = binding.myEvaluationList
         recyclerView.adapter = adapter
-        /*viewModel.myEvaluationData.observe(viewLifecycleOwner) { evaluations ->
+
+        viewModel.items.observe(viewLifecycleOwner) { evaluations ->
             adapter.submitList(evaluations)
         }
         recyclerView.infiniteScrolls {
+            Log.d(TAG, "MyEvaluationFragment - initRecyclerView() called")
             viewModel.scrollBottomEvent()
-        }*/
+        }
     }
 
     private fun handleEvent(event: Event) {
