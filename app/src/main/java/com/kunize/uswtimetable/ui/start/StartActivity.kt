@@ -17,13 +17,12 @@ import com.kunize.uswtimetable.databinding.ActivityStartBinding
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
+import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
 import com.kunize.uswtimetable.ui.main.MainActivity
-import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

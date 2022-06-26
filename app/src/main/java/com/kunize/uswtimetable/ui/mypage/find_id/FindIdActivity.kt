@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info
+package com.kunize.uswtimetable.ui.mypage.find_id
 
 import android.content.Intent
 import android.os.Bundle

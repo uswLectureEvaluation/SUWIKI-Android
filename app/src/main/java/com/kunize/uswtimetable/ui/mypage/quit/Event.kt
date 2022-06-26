@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info.quit
+package com.kunize.uswtimetable.ui.mypage.quit
 
 sealed class Event {
     object NavigateBackEvent: Event()

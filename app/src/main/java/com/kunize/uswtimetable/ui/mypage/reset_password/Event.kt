@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info.reset_password
+package com.kunize.uswtimetable.ui.mypage.reset_password
 
 sealed class Event {
     object FindPasswordEvent: Event()

@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info.reset_password
+package com.kunize.uswtimetable.ui.mypage.reset_password
 
 import android.app.Activity
 import android.content.Intent
@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityResetPasswordBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.user_info.FindPasswordActivity
+import com.kunize.uswtimetable.ui.mypage.find_password.FindPasswordActivity
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.Result
 import com.kunize.uswtimetable.util.repeatOnStarted

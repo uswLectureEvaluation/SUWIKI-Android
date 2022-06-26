@@ -1,20 +1,16 @@
 package com.kunize.uswtimetable.ui.select_open_major
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.text.Spannable
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.ItemRecyclerOpenMajorBinding
-import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.ui.common.User
 import java.util.*
 
 

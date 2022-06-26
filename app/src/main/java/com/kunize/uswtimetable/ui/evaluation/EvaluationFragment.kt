@@ -19,9 +19,9 @@ import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
+import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
-import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH

@@ -14,7 +14,7 @@
 
         <variable
             name="user"
-            type="com.kunize.uswtimetable.ui.user_info.User" />
+            type="com.kunize.uswtimetable.ui.common.User" />
 
         <variable
             name="viewmodel"

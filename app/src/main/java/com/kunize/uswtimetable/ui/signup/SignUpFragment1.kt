@@ -108,7 +108,6 @@ class SignUpFragment1 : Fragment() {
         /* 이용 약관 링크 연결 */
         val link1 = Pattern.compile("이용약관")
         val link2 = Pattern.compile("개인정보처리방침")
-        // TODO 이용약관, 개인정보처리방침 링크 연결
         val mTransform = Linkify.TransformFilter { _, _ -> "" }
         Linkify.addLinks(binding.tvTerms, link1, "suwiki://web_view?${KEY_URL}=${TERMS_SITE}", null, mTransform)
         Linkify.addLinks(binding.tvTerms, link2, "suwiki://web_view?${KEY_URL}=${PRIVACY_POLICY_SITE}", null, mTransform)

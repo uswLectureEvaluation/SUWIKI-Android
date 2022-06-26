@@ -17,8 +17,8 @@ import com.kunize.uswtimetable.data.local.OpenMajorDatabase
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
+import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TimeTableSelPref
 import com.kunize.uswtimetable.util.afterEditTextChanged

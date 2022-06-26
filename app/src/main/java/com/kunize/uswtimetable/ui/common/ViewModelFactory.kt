@@ -31,19 +31,19 @@ import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
 import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
+import com.kunize.uswtimetable.ui.mypage.find_id.FindIdViewModel
+import com.kunize.uswtimetable.ui.mypage.find_password.FindPwViewModel
 import com.kunize.uswtimetable.ui.mypage.my_post.MyEvaluationViewModel
 import com.kunize.uswtimetable.ui.mypage.my_post.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.puchase_history.PurchaseHistoryViewModel
+import com.kunize.uswtimetable.ui.mypage.quit.QuitViewModel
+import com.kunize.uswtimetable.ui.mypage.reset_password.ResetPasswordViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.signup.WelcomeSignUpViewModel
-import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
-import com.kunize.uswtimetable.ui.user_info.FindPwViewModel
-import com.kunize.uswtimetable.ui.user_info.quit.QuitViewModel
-import com.kunize.uswtimetable.ui.user_info.reset_password.ResetPasswordViewModel
 import com.kunize.uswtimetable.ui.write.WriteViewModel
 
 @Suppress("UNCHECKED_CAST")

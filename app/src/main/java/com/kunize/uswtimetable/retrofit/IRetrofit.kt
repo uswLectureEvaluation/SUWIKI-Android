@@ -8,7 +8,7 @@ import com.google.gson.JsonElement
 import com.kunize.uswtimetable.data.remote.*
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
-import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.BOOKMARK
 import com.kunize.uswtimetable.util.API.BUY_EXAM

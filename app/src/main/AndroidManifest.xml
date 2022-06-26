@@ -34,11 +34,11 @@
             android:name=".ui.notice.NoticeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.user_info.FindPasswordActivity"
+            android:name=".ui.mypage.find_password.FindPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.user_info.FindIdActivity"
+            android:name=".ui.mypage.find_id.FindIdActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -46,10 +46,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.user_info.quit.QuitActivity"
+            android:name="com.kunize.uswtimetable.ui.mypage.quit.QuitActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.user_info.reset_password.ResetPasswordActivity"
+            android:name="com.kunize.uswtimetable.ui.mypage.reset_password.ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"

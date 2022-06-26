@@ -1,10 +1,10 @@
-package com.kunize.uswtimetable.ui.user_info.quit
+package com.kunize.uswtimetable.ui.mypage.quit
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.repository.user_info.QuitRepository
-import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.ui.common.User
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
