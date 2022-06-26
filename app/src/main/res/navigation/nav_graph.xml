@@ -199,7 +199,7 @@
         app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/suspensionHistoryFragment"
-        android:name="com.kunize.uswtimetable.ui.mypage.SuspensionHistoryFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionHistoryFragment"
         tools:layout="@layout/fragment_suspension_history"
         android:label="SuspensionHistoryFragment" />
     <action
