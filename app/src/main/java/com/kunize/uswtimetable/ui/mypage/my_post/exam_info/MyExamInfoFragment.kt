@@ -53,7 +53,7 @@ class MyExamInfoFragment : Fragment() {
         recyclerView = binding.myExamInfoContainer
         recyclerView.adapter = adapter
 
-        viewModel.myExamInfoData.observe(viewLifecycleOwner) { myExamInfoList ->
+        viewModel.items.observe(viewLifecycleOwner) { myExamInfoList ->
             adapter.submitList(myExamInfoList)
         }
 

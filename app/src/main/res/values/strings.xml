@@ -215,4 +215,5 @@
     <string name="class_info">수업 정보</string>
     <string name="enroll">등록</string>
     <string name="text_require_login">내가 쓴 글과 포인트를\n확인하려면 로그인하세요.</string>
+    <string name="exam_info_not_exists">시험정보가 없습니다.</string>
 </resources>

@@ -14,9 +14,11 @@ import kotlinx.coroutines.launch
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _uiEvent = MutableSharedFlow<Event>()
     val uiEvent = _uiEvent.asSharedFlow()
-    private val _items = MutableLiveData<List<MyEvaluationDto>>()
-    val items: LiveData<List<MyEvaluationDto>> get() = _items
     val loading = MutableLiveData(false)
+
+    private val _items = MutableLiveData<List<MyEvaluationDto>>(emptyList())
+    val items: LiveData<List<MyEvaluationDto>> get() = _items
+
     private var _page = 1
     private var _loadFinished = false
 
