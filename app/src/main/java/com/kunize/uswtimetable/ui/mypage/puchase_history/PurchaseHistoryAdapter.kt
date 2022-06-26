@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage
+package com.kunize.uswtimetable.ui.mypage.puchase_history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemRecyclerPurchaseBinding
 import com.kunize.uswtimetable.dataclass.PurchaseHistory
 
-class PurchaseHistoryAdapter : ListAdapter<PurchaseHistory, PurchaseHistoryAdapter.ViewHolder>(diffUtil) {
+class PurchaseHistoryAdapter : ListAdapter<PurchaseHistory, PurchaseHistoryAdapter.ViewHolder>(
+    diffUtil
+) {
     inner class ViewHolder(private val binding: ItemRecyclerPurchaseBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(history: PurchaseHistory) {

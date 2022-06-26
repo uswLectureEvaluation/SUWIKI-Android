@@ -154,7 +154,7 @@
         app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/purchaseHistoryFragment"
-        android:name="com.kunize.uswtimetable.ui.mypage.PurchaseHistoryFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.puchase_history.PurchaseHistoryFragment"
         android:label="purchase_history_fragment"
         tools:layout="@layout/fragment_purchase_history" />
     <fragment

@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage
+package com.kunize.uswtimetable.ui.mypage.puchase_history
 
 import android.os.Bundle
 import android.view.LayoutInflater
