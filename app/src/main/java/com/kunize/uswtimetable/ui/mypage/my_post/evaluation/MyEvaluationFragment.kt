@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -76,14 +77,19 @@ class MyEvaluationFragment : Fragment() {
 
     private fun handleEvent(event: Event) {
         when (event) {
-            is Event.EditEvent -> {
-                gotoWriteFragment(event.evaluation)
-            }
-            is Event.DeleteEvent -> {
-                makeToast("${event.evaluation.id} 아이템 삭제 - 사용자에게 확인하는 메시지 보여줘야함")
-                viewModel.deletePost(event.evaluation.id)
-            }
+            is Event.EditEvent -> gotoWriteFragment(event.evaluation)
+            is Event.DeleteEvent -> showAlertDialog(event.evaluation)
         }
+    }
+
+    private fun showAlertDialog(data: MyEvaluationDto) {
+        AlertDialog.Builder(requireContext())
+            .setMessage("강의평가를 삭제하면 30P를 잃게 됩니다.\n삭제하시겠습니까?")
+            .setNeutralButton("취소") { _, _ -> }
+            .setPositiveButton("삭제") { _, _ ->
+                viewModel.deletePost(data.id)
+            }
+            .show()
     }
 
     override fun onDestroyView() {
