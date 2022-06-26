@@ -50,9 +50,11 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
 
     fun deletePost(id: Long) {
         viewModelScope.launch {
-            repository.deleteEvaluation(id)
+            kotlin.runCatching {
+                repository.deleteEvaluation(id)
+                _items.value = _items.value?.filterNot { evaluation -> evaluation.id == id }
+            }.onFailure {}
         }
-        _items.value = _items.value?.filterNot { evaluation -> evaluation.id == id }
     }
 
     fun editButtonClickEvent(data: MyEvaluationDto) {
