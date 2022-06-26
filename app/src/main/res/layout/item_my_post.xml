@@ -19,10 +19,6 @@
             type="com.kunize.uswtimetable.ui.mypage.my_post.evaluation.MyEvaluationViewModel" />
 
         <variable
-            name="viewType"
-            type="com.kunize.uswtimetable.util.ItemType" />
-
-        <variable
             name="detailOrShortButton"
             type="android.widget.TextView" />
 
@@ -59,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:onClick="@{() -> viewmodel.itemClicked(viewType.EDIT_BUTTON, data)}"
+            android:onClick="@{() -> viewmodel.editButtonClickEvent(data)}"
             android:text="@string/edit"
             app:layout_constraintBottom_toBottomOf="@id/tv_semester"
             app:layout_constraintEnd_toStartOf="@id/tv_delete_btn"
@@ -70,7 +66,7 @@
             style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.itemClicked(viewType.DELETE_BUTTON, data)}"
+            android:onClick="@{() -> viewmodel.deleteButtonClickEvent(data)}"
             android:text="@string/delete"
             app:layout_constraintBottom_toBottomOf="@id/tv_edit_btn"
             app:layout_constraintEnd_toEndOf="parent"

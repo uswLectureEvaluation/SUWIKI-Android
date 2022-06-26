@@ -13,9 +13,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
-import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.ItemType
 import com.kunize.uswtimetable.util.repeatOnStarted
 import kotlinx.coroutines.flow.collectLatest
 
@@ -56,17 +54,11 @@ class MyEvaluationFragment : Fragment() {
                 adapter.submitData(it)
             }
         }
-
-        viewModel.eventClicked.observe(viewLifecycleOwner, EventObserver { (type, data) ->
-            when (type) {
-                ItemType.ROOT_VIEW -> {}
-                ItemType.EDIT_BUTTON -> { gotoWriteFragment(data) }
-                ItemType.DELETE_BUTTON -> {
-                    makeToast("${data.id} 아이템 삭제 - 사용자에게 확인하는 메시지 보여줘야함")
-                    viewModel.deletePost(data.id)
-                }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.uiEvent.collect { event ->
+                handleEvent(event)
             }
-        })
+        }
     }
 
     private fun gotoWriteFragment(data: MyEvaluationDto) {
@@ -88,6 +80,18 @@ class MyEvaluationFragment : Fragment() {
         recyclerView.infiniteScrolls {
             viewModel.scrollBottomEvent()
         }*/
+    }
+
+    private fun handleEvent(event: Event) {
+        when (event) {
+            is Event.EditEvent -> {
+                gotoWriteFragment(event.evaluation)
+            }
+            is Event.DeleteEvent -> {
+                makeToast("${event.evaluation.id} 아이템 삭제 - 사용자에게 확인하는 메시지 보여줘야함")
+                viewModel.deletePost(event.evaluation.id)
+            }
+        }
     }
 
     override fun onDestroyView() {
