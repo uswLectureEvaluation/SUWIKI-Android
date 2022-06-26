@@ -86,12 +86,12 @@
     </fragment>
     <fragment
         android:id="@+id/myEvaluationFragment"
-        android:name="com.kunize.uswtimetable.ui.mypage.my_post.MyEvaluationFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.my_post.evaluation.MyEvaluationFragment"
         android:label="fragment_my_evaluation"
         tools:layout="@layout/fragment_my_evaluation" />
     <fragment
         android:id="@+id/myExamInfoFragment"
-        android:name="com.kunize.uswtimetable.ui.mypage.my_post.MyExamInfoFragment"
+        android:name="com.kunize.uswtimetable.ui.mypage.my_post.exam_info.MyExamInfoFragment"
         android:label="fragment_my_exam_info"
         tools:layout="@layout/fragment_my_exam_info" />
     <action

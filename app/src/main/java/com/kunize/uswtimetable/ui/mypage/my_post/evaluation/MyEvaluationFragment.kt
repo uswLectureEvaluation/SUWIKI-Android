@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage.my_post
+package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +28,8 @@ class MyEvaluationFragment : Fragment() {
     private var toast: Toast? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMyEvaluationBinding.inflate(inflater, container, false)

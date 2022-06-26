@@ -9,14 +9,14 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.mypage.my_post.MyExamInfoViewModel" />
+            type="com.kunize.uswtimetable.ui.mypage.my_post.exam_info.MyExamInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.mypage.my_post.MyExamInfoFragment">
+        tools:context=".ui.mypage.my_post.exam_info.MyExamInfoFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_exam_info_container"

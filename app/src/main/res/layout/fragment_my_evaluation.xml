@@ -9,14 +9,14 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.mypage.my_post.MyEvaluationViewModel" />
+            type="com.kunize.uswtimetable.ui.mypage.my_post.evaluation.MyEvaluationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_my_evaluation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.mypage.my_post.MyEvaluationFragment">
+        tools:context=".ui.mypage.my_post.evaluation.MyEvaluationFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_evaluation_list"
