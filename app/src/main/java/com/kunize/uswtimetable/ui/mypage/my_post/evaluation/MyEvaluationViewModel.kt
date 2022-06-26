@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _uiEvent = MutableSharedFlow<Event>()
     val uiEvent = _uiEvent.asSharedFlow()
-    private val _items = MutableLiveData<List<MyEvaluationDto>>(emptyList())
+    private val _items = MutableLiveData<List<MyEvaluationDto>>()
     val items: LiveData<List<MyEvaluationDto>> get() = _items
     val loading = MutableLiveData(false)
     private var _page = 1
@@ -50,6 +50,7 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
         viewModelScope.launch {
             repository.deleteEvaluation(id)
         }
+        _items.value = _items.value?.filterNot { evaluation -> evaluation.id == id }
     }
 
     fun editButtonClickEvent(data: MyEvaluationDto) {
