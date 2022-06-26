@@ -9,6 +9,7 @@ import com.kunize.uswtimetable.data.remote.*
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.common.User
+import com.kunize.uswtimetable.util.API.BAN_REASON
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.BOOKMARK
 import com.kunize.uswtimetable.util.API.BUY_EXAM
@@ -131,6 +132,10 @@ interface IRetrofit {
     // 시험정보 구매 이력
     @GET(PURCHASE_HISTORY)
     suspend fun getPurchaseHistory(): Response<DataDto<List<PurchaseHistory>>>
+
+    // 이용제한 내역 조회
+    @GET(BAN_REASON)
+    suspend fun getSuspensionHistory(): ApiResponse<List<SuspensionHistory>>
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)

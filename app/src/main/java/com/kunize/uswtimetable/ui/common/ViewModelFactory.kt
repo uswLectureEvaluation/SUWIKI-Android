@@ -38,6 +38,8 @@ import com.kunize.uswtimetable.ui.mypage.my_post.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.puchase_history.PurchaseHistoryViewModel
 import com.kunize.uswtimetable.ui.mypage.quit.QuitViewModel
 import com.kunize.uswtimetable.ui.mypage.reset_password.ResetPasswordViewModel
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspendHistoryViewModel
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionRepository
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
@@ -100,6 +102,11 @@ class ViewModelFactory : ViewModelProvider.Factory {
                 val apiService = IRetrofit.getInstance()
                 val repository = MyPostRepository(MyPostRemoteDataSource(apiService))
                 PurchaseHistoryViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(SuspendHistoryViewModel::class.java) -> {
+                val apiService = IRetrofit.getInstance()
+                val repository = SuspensionRepository(apiService)
+                SuspendHistoryViewModel(repository) as T
             }
             // Notice
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {
