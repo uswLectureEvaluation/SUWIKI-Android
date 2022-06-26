@@ -1,15 +1,18 @@
 package com.kunize.uswtimetable.ui.mypage.my_post.exam_info
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
+import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _items = MutableLiveData<List<LectureExamDto>>(emptyList())
@@ -54,9 +57,15 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
 
     fun deletePost(id: Long) {
         viewModelScope.launch {
-            repository.deleteExamInfo(id)
+            withContext(viewModelScope.coroutineContext) {
+                kotlin.runCatching {
+                    repository.deleteExamInfo(id)
+                    _items.postValue(_items.value?.filterNot { examInfo -> examInfo.id == id })
+                }.onFailure {
+                    Log.d(TAG, "MyExamInfoViewModel - deletePost() called FAILED: ${it.message}")
+                }
+            }
         }
-        _items.value = _items.value?.filterNot { examInfo -> examInfo.id == id }
     }
 
     fun editButtonClickEvent(data: LectureExamDto) {

@@ -8,13 +8,9 @@ class MyPostRemoteDataSource(private val apiService: IRetrofit) : MyPostDataSour
 
     override suspend fun getMyExamInfos(page: Int) = apiService.getExamPosts(page)
 
-    override suspend fun deleteMyEvaluation(id: Long) {
-        apiService.deleteEvaluation(id)
-    }
+    override suspend fun deleteMyEvaluation(id: Long) = apiService.deleteEvaluation(id)
 
-    override suspend fun deleteMyExamInfo(id: Long) {
-        apiService.deleteExamInfo(id)
-    }
+    override suspend fun deleteMyExamInfo(id: Long) = apiService.deleteExamInfo(id)
 
     override suspend fun getPurchaseHistory() = apiService.getPurchaseHistory()
 }

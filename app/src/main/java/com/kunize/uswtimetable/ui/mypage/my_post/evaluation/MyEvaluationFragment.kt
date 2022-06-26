@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.infiniteScrolls
 import com.kunize.uswtimetable.util.repeatOnStarted
 
@@ -70,7 +68,6 @@ class MyEvaluationFragment : Fragment() {
             adapter.submitList(evaluations)
         }
         recyclerView.infiniteScrolls {
-            Log.d(TAG, "MyEvaluationFragment - initRecyclerView() called")
             viewModel.scrollBottomEvent()
         }
     }
