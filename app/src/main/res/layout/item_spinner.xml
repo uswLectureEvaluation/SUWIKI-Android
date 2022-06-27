@@ -2,8 +2,9 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:gravity="start"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     style="@style/TextRegular.16"
+    android:paddingVertical="4dp"
     android:paddingEnd="16dp"
     android:text="sample"/>
