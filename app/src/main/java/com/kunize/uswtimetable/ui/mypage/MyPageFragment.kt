@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.mypage
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -37,7 +38,8 @@ class MyPageFragment : Fragment() {
     private var toast: Toast? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
@@ -64,9 +66,9 @@ class MyPageFragment : Fragment() {
 
     private fun handleUiEvent(event: Event) {
         val context = requireContext()
-        when(event) {
+        when (event) {
             is Event.LoginEvent -> logIn(context)
-            is Event.LogoutEvent -> logOut()
+            is Event.LogoutEvent -> showLogoutDialog()
             is Event.MyPostEvent -> showMyPosts()
             is Event.NoticeEvent -> showNoticePage(context)
             is Event.FeedbackEvent -> showFeedbackPage(context)
@@ -78,7 +80,6 @@ class MyPageFragment : Fragment() {
             is Event.OpenSourceEvent -> showOpenSourcePage(context)
             is Event.PurchaseHistoryEvent -> showPurchaseHistory()
             is Event.LimitHistoryEvent -> showSuspensionHistory()
-            else -> makeToast("준비 중입니다.")
         }
     }
 
@@ -130,6 +131,16 @@ class MyPageFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage("로그아웃 하시겠습니까?")
+            .setNeutralButton("취소") { _, _ -> }
+            .setPositiveButton("로그아웃") { _, _ ->
+                logOut()
+            }
+            .show()
+    }
+
     private fun logOut() {
         User.logout()
         binding.user = User
@@ -162,7 +173,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun showPurchaseHistory() {
-        findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment )
+        findNavController().navigate(R.id.action_navigation_my_page_to_purchaseHistoryFragment)
     }
 
     private fun showWebView(context: Context, url: String) {
