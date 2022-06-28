@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage
+package com.kunize.uswtimetable.ui.mypage.suspend_history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemSuspensionHistoryBinding
 import com.kunize.uswtimetable.dataclass.SuspensionHistory
 
-class SuspensionHistoryAdapter: ListAdapter<SuspensionHistory, SuspensionHistoryAdapter.ViewHolder>(diffUtil) {
+class SuspensionHistoryAdapter: ListAdapter<SuspensionHistory, SuspensionHistoryAdapter.ViewHolder>(
+    diffUtil
+) {
     inner class ViewHolder(val binding: ItemSuspensionHistoryBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SuspensionHistory) {
             binding.data = data

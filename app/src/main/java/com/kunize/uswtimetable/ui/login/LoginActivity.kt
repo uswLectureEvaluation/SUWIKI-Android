@@ -9,11 +9,11 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.kunize.uswtimetable.databinding.ActivityLoginBinding
+import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.mypage.find_id.FindIdActivity
+import com.kunize.uswtimetable.ui.mypage.find_password.FindPasswordActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
-import com.kunize.uswtimetable.ui.user_info.FindIdActivity
-import com.kunize.uswtimetable.ui.user_info.FindPasswordActivity
-import com.kunize.uswtimetable.ui.user_info.User
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.repeatOnStarted

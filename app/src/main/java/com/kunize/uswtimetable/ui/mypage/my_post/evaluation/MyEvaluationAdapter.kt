@@ -1,15 +1,15 @@
-package com.kunize.uswtimetable.ui.mypage
+package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemMyPostBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 
 class MyEvaluationAdapter(private val viewModel: MyEvaluationViewModel) :
-    PagingDataAdapter<MyEvaluationDto, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
+    ListAdapter<MyEvaluationDto, MyEvaluationAdapter.MyEvaluationViewHolder>(diffUtil) {
 
     inner class MyEvaluationViewHolder(private val binding: ItemMyPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -32,7 +32,7 @@ class MyEvaluationAdapter(private val viewModel: MyEvaluationViewModel) :
     }
 
     companion object {
-        private val diffUtil = object: DiffUtil.ItemCallback<MyEvaluationDto>() {
+        private val diffUtil = object : DiffUtil.ItemCallback<MyEvaluationDto>() {
             override fun areItemsTheSame(oldItem: MyEvaluationDto, newItem: MyEvaluationDto): Boolean {
                 return oldItem.id == newItem.id
             }

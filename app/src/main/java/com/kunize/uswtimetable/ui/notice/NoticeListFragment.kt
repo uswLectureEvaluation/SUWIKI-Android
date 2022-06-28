@@ -29,7 +29,8 @@ class NoticeListFragment : Fragment() {
     private var toast: Toast? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNoticeListBinding.inflate(inflater, container, false)

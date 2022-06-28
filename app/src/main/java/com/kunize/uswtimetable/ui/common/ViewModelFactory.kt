@@ -30,20 +30,22 @@ import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel
 import com.kunize.uswtimetable.ui.login.LoginViewModel
-import com.kunize.uswtimetable.ui.mypage.MyEvaluationViewModel
-import com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
-import com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel
+import com.kunize.uswtimetable.ui.mypage.find_id.FindIdViewModel
+import com.kunize.uswtimetable.ui.mypage.find_password.FindPwViewModel
+import com.kunize.uswtimetable.ui.mypage.my_post.evaluation.MyEvaluationViewModel
+import com.kunize.uswtimetable.ui.mypage.my_post.exam_info.MyExamInfoViewModel
+import com.kunize.uswtimetable.ui.mypage.puchase_history.PurchaseHistoryViewModel
+import com.kunize.uswtimetable.ui.mypage.quit.QuitViewModel
+import com.kunize.uswtimetable.ui.mypage.reset_password.ResetPasswordViewModel
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspendHistoryViewModel
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionRepository
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
 import com.kunize.uswtimetable.ui.search_result.SearchResultViewModel
 import com.kunize.uswtimetable.ui.select_open_major.SelectOpenMajorViewModel
 import com.kunize.uswtimetable.ui.signup.SignUpViewModel
 import com.kunize.uswtimetable.ui.signup.WelcomeSignUpViewModel
-import com.kunize.uswtimetable.ui.user_info.FindIdViewModel
-import com.kunize.uswtimetable.ui.user_info.FindPwViewModel
-import com.kunize.uswtimetable.ui.user_info.QuitViewModel
-import com.kunize.uswtimetable.ui.user_info.ResetPasswordViewModel
 import com.kunize.uswtimetable.ui.write.WriteViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -100,6 +102,11 @@ class ViewModelFactory : ViewModelProvider.Factory {
                 val apiService = IRetrofit.getInstance()
                 val repository = MyPostRepository(MyPostRemoteDataSource(apiService))
                 PurchaseHistoryViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(SuspendHistoryViewModel::class.java) -> {
+                val apiService = IRetrofit.getInstance()
+                val repository = SuspensionRepository(apiService)
+                SuspendHistoryViewModel(repository) as T
             }
             // Notice
             modelClass.isAssignableFrom(NoticeViewModel::class.java) -> {

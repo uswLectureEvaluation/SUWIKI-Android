@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.mypage.PurchaseHistoryViewModel" />
+            type="com.kunize.uswtimetable.ui.mypage.puchase_history.PurchaseHistoryViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         app:statusBarBackground="@color/background"
-        tools:context=".ui.mypage.PurchaseHistoryFragment">
+        tools:context=".ui.mypage.puchase_history.PurchaseHistoryFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"

@@ -1,23 +1,20 @@
-package com.kunize.uswtimetable.ui.mypage
+package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
-import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.ItemType
+import com.kunize.uswtimetable.util.infiniteScrolls
 import com.kunize.uswtimetable.util.repeatOnStarted
-import kotlinx.coroutines.flow.collectLatest
 
 class MyEvaluationFragment : Fragment() {
     private var _binding: FragmentMyEvaluationBinding? = null
@@ -28,7 +25,8 @@ class MyEvaluationFragment : Fragment() {
     private var toast: Toast? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMyEvaluationBinding.inflate(inflater, container, false)
@@ -46,26 +44,10 @@ class MyEvaluationFragment : Fragment() {
         initRecyclerView()
 
         viewLifecycleOwner.repeatOnStarted {
-            adapter.loadStateFlow.collect {
-                binding.loadingMyEvaluation.isVisible = it.source.refresh is LoadState.Loading
+            viewModel.uiEvent.collect { event ->
+                handleEvent(event)
             }
         }
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.items.collectLatest {
-                adapter.submitData(it)
-            }
-        }
-
-        viewModel.eventClicked.observe(viewLifecycleOwner, EventObserver { (type, data) ->
-            when (type) {
-                ItemType.ROOT_VIEW -> {}
-                ItemType.EDIT_BUTTON -> { gotoWriteFragment(data) }
-                ItemType.DELETE_BUTTON -> {
-                    makeToast("${data.id} 아이템 삭제 - 사용자에게 확인하는 메시지 보여줘야함")
-                    viewModel.deletePost(data.id)
-                }
-            }
-        })
     }
 
     private fun gotoWriteFragment(data: MyEvaluationDto) {
@@ -81,12 +63,30 @@ class MyEvaluationFragment : Fragment() {
     private fun initRecyclerView() {
         recyclerView = binding.myEvaluationList
         recyclerView.adapter = adapter
-        /*viewModel.myEvaluationData.observe(viewLifecycleOwner) { evaluations ->
+
+        viewModel.items.observe(viewLifecycleOwner) { evaluations ->
             adapter.submitList(evaluations)
         }
         recyclerView.infiniteScrolls {
             viewModel.scrollBottomEvent()
-        }*/
+        }
+    }
+
+    private fun handleEvent(event: Event) {
+        when (event) {
+            is Event.EditEvent -> gotoWriteFragment(event.evaluation)
+            is Event.DeleteEvent -> showAlertDialog(event.evaluation)
+        }
+    }
+
+    private fun showAlertDialog(data: MyEvaluationDto) {
+        AlertDialog.Builder(requireContext())
+            .setMessage("강의평가를 삭제하면 30P를 잃게 됩니다.\n삭제하시겠습니까?")
+            .setNeutralButton("취소") { _, _ -> }
+            .setPositiveButton("삭제") { _, _ ->
+                viewModel.deletePost(data.id)
+            }
+            .show()
     }
 
     override fun onDestroyView() {

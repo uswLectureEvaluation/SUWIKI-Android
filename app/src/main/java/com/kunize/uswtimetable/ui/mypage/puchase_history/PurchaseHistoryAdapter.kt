@@ -1,29 +1,27 @@
-package com.kunize.uswtimetable.ui.mypage
+package com.kunize.uswtimetable.ui.mypage.puchase_history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.data.remote.LectureExamDto
-import com.kunize.uswtimetable.databinding.ItemMyExamInfoBinding
+import com.kunize.uswtimetable.databinding.ItemRecyclerPurchaseBinding
+import com.kunize.uswtimetable.dataclass.PurchaseHistory
 
-class MyExamInfoAdapter(private val viewModel: MyExamInfoViewModel) :
-    ListAdapter<LectureExamDto, MyExamInfoAdapter.ViewHolder>(diffUtil) {
-
-    inner class ViewHolder(private val binding: ItemMyExamInfoBinding) :
+class PurchaseHistoryAdapter : ListAdapter<PurchaseHistory, PurchaseHistoryAdapter.ViewHolder>(
+    diffUtil
+) {
+    inner class ViewHolder(private val binding: ItemRecyclerPurchaseBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: LectureExamDto) {
-            binding.viewmodel = viewModel
-            binding.data = data
-            binding.contentTextView = binding.tvContent
+        fun bind(history: PurchaseHistory) {
+            binding.data = history
             binding.executePendingBindings()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemMyExamInfoBinding.inflate(
+            ItemRecyclerPurchaseBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -36,14 +34,17 @@ class MyExamInfoAdapter(private val viewModel: MyExamInfoViewModel) :
     }
 
     companion object {
-        private val diffUtil = object : DiffUtil.ItemCallback<LectureExamDto>() {
-            override fun areItemsTheSame(oldItem: LectureExamDto, newItem: LectureExamDto): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<PurchaseHistory>() {
+            override fun areItemsTheSame(
+                oldItem: PurchaseHistory,
+                newItem: PurchaseHistory
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: LectureExamDto,
-                newItem: LectureExamDto
+                oldItem: PurchaseHistory,
+                newItem: PurchaseHistory
             ): Boolean {
                 return oldItem == newItem
             }

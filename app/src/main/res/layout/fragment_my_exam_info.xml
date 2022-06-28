@@ -9,14 +9,14 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.mypage.MyExamInfoViewModel" />
+            type="com.kunize.uswtimetable.ui.mypage.my_post.exam_info.MyExamInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.mypage.MyExamInfoFragment">
+        tools:context=".ui.mypage.my_post.exam_info.MyExamInfoFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_exam_info_container"
@@ -28,6 +28,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_my_exam_info" />
+
+        <TextView
+            style="@style/TextRegular.14.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="67dp"
+            android:text="@string/exam_info_not_exists"
+            android:visibility="@{viewmodel.items.empty?View.VISIBLE:View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/loading_myExamInfo"

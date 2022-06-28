@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info
+package com.kunize.uswtimetable.ui.mypage.find_password
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

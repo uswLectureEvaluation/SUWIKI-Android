@@ -1,10 +1,12 @@
-package com.kunize.uswtimetable.ui.user_info
+package com.kunize.uswtimetable.ui.mypage.reset_password
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.util.Result
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -13,6 +15,8 @@ class ResetPasswordViewModel(private val repository: ResetPasswordRepository) : 
     val newPassword = MutableLiveData<String>()
     val result = MutableLiveData<Result<Any>>()
     val loading = MutableLiveData<Boolean>()
+    private val _uiEvent = MutableSharedFlow<Event>()
+    val uiEvent = _uiEvent.asSharedFlow()
 
     fun resetPassword() {
         val current = currentPassword.value ?: return
@@ -28,6 +32,20 @@ class ResetPasswordViewModel(private val repository: ResetPasswordRepository) : 
                 result.postValue(Result.Error(IOException("${response.code()}: ${response.message()}")))
             }
             loading.postValue(false)
+        }
+    }
+
+    fun findPasswordButtonClickEvent() {
+        event(Event.FindPasswordEvent)
+    }
+
+    fun navigateBackEvent() {
+        event(Event.NavigateBackEvent)
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _uiEvent.emit(event)
         }
     }
 }

@@ -8,7 +8,8 @@ import com.google.gson.JsonElement
 import com.kunize.uswtimetable.data.remote.*
 import com.kunize.uswtimetable.dataclass.*
 import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
-import com.kunize.uswtimetable.ui.user_info.User
+import com.kunize.uswtimetable.ui.common.User
+import com.kunize.uswtimetable.util.API.BAN_REASON
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.BOOKMARK
 import com.kunize.uswtimetable.util.API.BUY_EXAM
@@ -116,7 +117,7 @@ interface IRetrofit {
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
-    suspend fun getEvaluatePosts(@Query("page") page: Int): DataDto<List<MyEvaluationDto>>
+    suspend fun getEvaluatePosts(@Query("page") page: Int): Response<DataDto<List<MyEvaluationDto>>>
 
     // 내가 쓴 글 (시험 정보)
     @GET(EXAM_POSTS)
@@ -131,6 +132,10 @@ interface IRetrofit {
     // 시험정보 구매 이력
     @GET(PURCHASE_HISTORY)
     suspend fun getPurchaseHistory(): Response<DataDto<List<PurchaseHistory>>>
+
+    // 이용제한 내역 조회
+    @GET(BAN_REASON)
+    suspend fun getSuspensionHistory(): ApiResponse<List<SuspensionHistory>>
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)
@@ -167,32 +172,32 @@ interface IRetrofit {
         @Query("majorType") majorType: String = ""
     ): Response<DataDto<MutableList<LectureMain?>>>
 
-    //강의평가 쓰기
+    // 강의평가 쓰기
     @POST(WRITE_LECTURE_EVALUATION)
     suspend fun postLectureEvaluation(
         @Query("lectureId") lectureId: Long,
         @Body info: LectureEvaluationPostDto
     ): Response<String>
 
-    //시험정보 쓰기
+    // 시험정보 쓰기
     @POST(WRITE_LECTURE_EXAM)
     suspend fun postLectureExam(
         @Query("lectureId") lectureId: Long,
         @Body info: LectureExamDto
     ): Response<String>
 
-    //강의평가 수정
+    // 강의평가 수정
     @PUT(EDIT_LECTURE_EVALUATION)
     suspend fun updateLectureEvaluation(
         @Query("evaluateIdx") lectureId: Long,
         @Body info: LectureEvaluationEditDto
     ): Response<String>
 
-    //시험 정보 구매
+    // 시험 정보 구매
     @POST(BUY_EXAM)
     suspend fun buyExam(@Query("lectureId") lectureId: Long): Response<String>
 
-    //시험 정보 수정
+    // 시험 정보 수정
     @PUT(EDIT_LECTURE_EXAM)
     suspend fun updateLectureExam(
         @Query("examIdx") lectureId: Long,
@@ -227,7 +232,6 @@ interface IRetrofit {
     suspend fun reportExam(
         @Body body: ReportExam
     ): ApiResponse<JsonElement>
-
 
     companion object {
         private var retrofitService: IRetrofit? = null
@@ -295,33 +299,42 @@ interface IRetrofit {
 
         private fun gsonConverterFactory(): GsonConverterFactory {
             val gson = GsonBuilder()
-                .registerTypeAdapter(LocalDateTime::class.java, object: JsonDeserializer<LocalDateTime> {
-                    override fun deserialize(
-                        json: JsonElement?,
-                        typeOfT: Type?,
-                        context: JsonDeserializationContext?
-                    ): LocalDateTime {
-                        return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+                .registerTypeAdapter(
+                    LocalDateTime::class.java,
+                    object : JsonDeserializer<LocalDateTime> {
+                        override fun deserialize(
+                            json: JsonElement?,
+                            typeOfT: Type?,
+                            context: JsonDeserializationContext?
+                        ): LocalDateTime {
+                            return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+                        }
                     }
-                })
-                .registerTypeAdapter(LocalDate::class.java, object: JsonDeserializer<LocalDate> {
-                    override fun deserialize(
-                        json: JsonElement?,
-                        typeOfT: Type?,
-                        context: JsonDeserializationContext?
-                    ): LocalDate {
-                        return LocalDate.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                )
+                .registerTypeAdapter(
+                    LocalDate::class.java,
+                    object : JsonDeserializer<LocalDate> {
+                        override fun deserialize(
+                            json: JsonElement?,
+                            typeOfT: Type?,
+                            context: JsonDeserializationContext?
+                        ): LocalDate {
+                            return LocalDate.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        }
                     }
-                })
-                .registerTypeAdapter(LocalTime::class.java, object: JsonDeserializer<LocalTime> {
-                    override fun deserialize(
-                        json: JsonElement?,
-                        typeOfT: Type?,
-                        context: JsonDeserializationContext?
-                    ): LocalTime {
-                        return LocalTime.parse(json?.asString, DateTimeFormatter.ofPattern("HH:mm:ss"))
+                )
+                .registerTypeAdapter(
+                    LocalTime::class.java,
+                    object : JsonDeserializer<LocalTime> {
+                        override fun deserialize(
+                            json: JsonElement?,
+                            typeOfT: Type?,
+                            context: JsonDeserializationContext?
+                        ): LocalTime {
+                            return LocalTime.parse(json?.asString, DateTimeFormatter.ofPattern("HH:mm:ss"))
+                        }
                     }
-                })
+                )
                 .create()
             return GsonConverterFactory.create(gson)
         }

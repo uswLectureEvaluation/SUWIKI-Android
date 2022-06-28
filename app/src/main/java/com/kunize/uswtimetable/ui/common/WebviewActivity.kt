@@ -26,7 +26,11 @@ class WebviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
 
-        val startUrl = intent.getStringExtra(KEY_URL) ?: getString(R.string.SUWIKI_WEB)
+        val startUrl = if (intent.action == Intent.ACTION_VIEW) {
+            intent.data?.getQueryParameter(KEY_URL)
+        } else {
+            intent.getStringExtra(KEY_URL)
+        } ?: getString(R.string.SUWIKI_WEB)
 
         webView.apply {
             webViewClient = WebViewClient(this@WebviewActivity)

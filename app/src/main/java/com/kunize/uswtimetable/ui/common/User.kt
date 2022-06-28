@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.user_info
+package com.kunize.uswtimetable.ui.common
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
