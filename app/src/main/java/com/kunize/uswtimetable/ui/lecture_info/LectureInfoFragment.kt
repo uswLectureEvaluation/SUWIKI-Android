@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.ui.lecture_info
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.util.infiniteScrolls
+import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -30,7 +29,8 @@ class LectureInfoFragment : Fragment() {
     private val lectureInfoViewModel: LectureInfoViewModel by viewModels { ViewModelFactory() }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
@@ -40,7 +40,9 @@ class LectureInfoFragment : Fragment() {
         binding.lifecycleOwner = this
 
         adapter = EvaluationListAdapter { id ->
-            showAlertDialog("신고하기", "신고하시겠어요? \n" +
+            showAlertDialog(
+                "신고하기",
+                "신고하시겠어요? \n" +
                     "\n" +
                     "*허위 신고 시 제재가 가해질 수 있습니다!"
             ) {
@@ -86,8 +88,8 @@ class LectureInfoFragment : Fragment() {
                 ).show()
                 if (lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!")
                     findNavController().popBackStack()
-
-            })
+            }
+        )
 
         with(binding) {
             hideExamDataLayout.usePointBtn.setOnClickListener {
@@ -113,7 +115,8 @@ class LectureInfoFragment : Fragment() {
                     binding.tvLectureName.text.toString(),
                     binding.tvProfessorName.text.toString(),
                     lectureInfoViewModel.lectureDetailInfoData.value?.semester ?: ""
-                ), isEvaluation = !binding.examInfoRadioBtn.isChecked,
+                ),
+                isEvaluation = !binding.examInfoRadioBtn.isChecked,
                 lectureId = lectureInfoViewModel.pageViewModel.lectureId
             )
         findNavController().navigate(action)
@@ -127,7 +130,6 @@ class LectureInfoFragment : Fragment() {
                 positiveClick()
             }
             .setNegativeButton("취소") { _, _ ->
-
             }
         builder.show()
     }

@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,7 +25,8 @@ import com.kunize.uswtimetable.ui.mypage.reset_password.ResetPasswordActivity
 import com.kunize.uswtimetable.ui.notice.NoticeActivity
 import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.util.Constants
-import com.kunize.uswtimetable.util.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 class MyPageFragment : Fragment() {
     private val viewModel: MyPageViewModel by viewModels { ViewModelFactory() }
     private lateinit var binding: FragmentMyPageBinding
-    private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -152,7 +151,7 @@ class MyPageFragment : Fragment() {
             startActivity(intent)
         } else {
             CoroutineScope(Dispatchers.Main).launch {
-                makeToast("로그인 후 가능합니다")
+                this@MyPageFragment.toast("로그인 후 가능합니다")
                 delay(2000)
             }
         }
@@ -164,7 +163,7 @@ class MyPageFragment : Fragment() {
             startActivity(intent)
         } else {
             CoroutineScope(Dispatchers.Main).launch {
-                makeToast("로그인 후 가능합니다")
+                this@MyPageFragment.toast("로그인 후 가능합니다")
                 delay(2000)
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
@@ -181,11 +180,5 @@ class MyPageFragment : Fragment() {
             putExtra(Constants.KEY_URL, url)
         }
         startActivity(intent)
-    }
-
-    private fun makeToast(message: String) {
-        toast?.cancel()
-        toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
-        toast?.show()
     }
 }

@@ -16,7 +16,7 @@ import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.KEY_URL
 import com.kunize.uswtimetable.util.Constants.PRIVACY_POLICY_SITE
 import com.kunize.uswtimetable.util.Constants.TERMS_SITE
-import com.kunize.uswtimetable.util.afterTextChanged
+import com.kunize.uswtimetable.util.extensions.afterTextChanged
 import java.util.regex.Pattern
 
 class SignUpFragment1 : Fragment() {
@@ -26,7 +26,8 @@ class SignUpFragment1 : Fragment() {
     private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory() }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false)
@@ -84,33 +85,37 @@ class SignUpFragment1 : Fragment() {
             }
 
             // 아이디: 소문자와 숫자만 입력 가능
-            etInputId.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-                val idRegex = """^[a-z0-9]*$"""
-                val idPattern = Pattern.compile(idRegex)
-                if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
-                    return@InputFilter source
+            etInputId.filters = arrayOf(
+                InputFilter { source, _, _, _, _, _ ->
+                    val idRegex = """^[a-z0-9]*$"""
+                    val idPattern = Pattern.compile(idRegex)
+                    if (source.isNullOrBlank() || idPattern.matcher(source).matches()) {
+                        return@InputFilter source
+                    }
+                    viewModel.setToastMessage("소문자와 숫자만 입력 가능합니다: $source")
+                    source.dropLast(1)
                 }
-                viewModel.setToastMessage("소문자와 숫자만 입력 가능합니다: $source")
-                source.dropLast(1)
-            })
+            )
 
             // 패스워드: 알파벳, 숫자, 특정 특수 문자 입력 가능
-            etInputPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-                val pwRegex = """^[0-9a-zA-Z!@#$%^+\-=]*$"""
-                val pwPattern = Pattern.compile(pwRegex)
-                if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
-                    return@InputFilter source
+            etInputPw.filters = arrayOf(
+                InputFilter { source, _, _, _, _, _ ->
+                    val pwRegex = """^[0-9a-zA-Z!@#$%^+\-=]*$"""
+                    val pwPattern = Pattern.compile(pwRegex)
+                    if (source.isNullOrBlank() || pwPattern.matcher(source).matches()) {
+                        return@InputFilter source
+                    }
+                    viewModel.setToastMessage("입력할 수 없는 문자입니다: $source")
+                    ""
                 }
-                viewModel.setToastMessage("입력할 수 없는 문자입니다: $source")
-                ""
-            })
+            )
         }
         /* 이용 약관 링크 연결 */
         val link1 = Pattern.compile("이용약관")
         val link2 = Pattern.compile("개인정보처리방침")
         val mTransform = Linkify.TransformFilter { _, _ -> "" }
-        Linkify.addLinks(binding.tvTerms, link1, "suwiki://web_view?${KEY_URL}=${TERMS_SITE}", null, mTransform)
-        Linkify.addLinks(binding.tvTerms, link2, "suwiki://web_view?${KEY_URL}=${PRIVACY_POLICY_SITE}", null, mTransform)
+        Linkify.addLinks(binding.tvTerms, link1, "suwiki://web_view?$KEY_URL=$TERMS_SITE", null, mTransform)
+        Linkify.addLinks(binding.tvTerms, link2, "suwiki://web_view?$KEY_URL=$PRIVACY_POLICY_SITE", null, mTransform)
     }
 
     private fun dataChanged() {

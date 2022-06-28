@@ -45,8 +45,8 @@ import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EXAM
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.TimeTableSelPref
-import com.kunize.uswtimetable.util.isJsonArray
-import com.kunize.uswtimetable.util.isJsonObject
+import com.kunize.uswtimetable.util.extensions.isJsonArray
+import com.kunize.uswtimetable.util.extensions.isJsonObject
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import okhttp3.*

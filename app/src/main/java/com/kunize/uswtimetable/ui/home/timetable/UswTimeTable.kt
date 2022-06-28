@@ -17,14 +17,13 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.size
-import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.UswTimetableBinding
 import com.kunize.uswtimetable.data.local.TimeData
+import com.kunize.uswtimetable.databinding.UswTimetableBinding
+import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
 import com.kunize.uswtimetable.ui.create_timetable.CreateTimeTableActivity
-import com.kunize.uswtimetable.util.TimetableCellColor
 import com.kunize.uswtimetable.util.TimetableColor
-import com.kunize.uswtimetable.util.dp
+import com.kunize.uswtimetable.util.extensions.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -42,9 +41,10 @@ class UswTimeTable @JvmOverloads constructor(
         const val CLASSNAME_PROFESSOR = 2
         const val CLASSNAME_PROFESSOR_LOCATION = 3
     }
+
     private val binding = UswTimetableBinding.inflate(LayoutInflater.from(context), this, true)
 
-    //속성값
+    // 속성값
     var isEmpty: Boolean
     var infoFormat: Int
 
@@ -77,7 +77,6 @@ class UswTimeTable @JvmOverloads constructor(
                 startActivity(context, intent, null)
             }
         }
-
     }
 
     private fun showBottomSheet(
@@ -120,7 +119,7 @@ class UswTimeTable @JvmOverloads constructor(
         var comma = ""
         try {
             for (add in data.startTime.toInt() until data.endTime.toInt()) {
-                comma = comma + "$add" + ","
+                comma = "$comma$add,"
             }
             comma += data.endTime
             intent.putExtra("time", "${data.location}(${data.day}$comma)")
@@ -134,16 +133,16 @@ class UswTimeTable @JvmOverloads constructor(
     }
 
     private fun reDrawColumn() {
-        val maxTime = if(timeTableData.isEmpty()) 0
+        val maxTime = if (timeTableData.isEmpty()) 0
         else
             timeTableData.maxOf {
-            if(it.day == "토") 0
-            else it.endTime.toIntOrNull() ?: 0
-        }
+                if (it.day == "토") 0
+                else it.endTime.toIntOrNull() ?: 0
+            }
 
         val params = binding.customTimeTable.layoutParams
-        params.height = if(maxTime < 8)  425.dp
-                        else 25.dp + maxTime * 50.dp + 50.dp
+        params.height = if (maxTime < 8) 425.dp
+        else 25.dp + maxTime * 50.dp + 50.dp
         binding.customTimeTable.layoutParams = params
     }
 
@@ -173,8 +172,13 @@ class UswTimeTable @JvmOverloads constructor(
                 withContext(Main) {
                     binding.customTimeTable.addView(timeRect, -1)
                     set.clone(binding.customTimeTable)
-                    set.connect(timeRect.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-                    val idDp = when(data.day) {
+                    set.connect(
+                        timeRect.id,
+                        ConstraintSet.TOP,
+                        ConstraintSet.PARENT_ID,
+                        ConstraintSet.TOP
+                    )
+                    val idDp = when (data.day) {
                         "월" -> Pair(binding.mon.id, 1.dp)
                         "화" -> Pair(binding.tue.id, 1.dp)
                         "수" -> Pair(binding.wed.id, 1.dp)
@@ -182,7 +186,13 @@ class UswTimeTable @JvmOverloads constructor(
                         else -> Pair(binding.fri.id, 0)
                     }
                     set.connect(timeRect.id, ConstraintSet.START, idDp.first, ConstraintSet.START)
-                    set.connect(timeRect.id, ConstraintSet.END, idDp.first, ConstraintSet.END, idDp.second)
+                    set.connect(
+                        timeRect.id,
+                        ConstraintSet.END,
+                        idDp.first,
+                        ConstraintSet.END,
+                        idDp.second
+                    )
                     set.constrainDefaultWidth(timeRect.id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
                     set.applyTo(binding.customTimeTable)
                 }
@@ -192,7 +202,6 @@ class UswTimeTable @JvmOverloads constructor(
                 binding.customTimeTable.visibility = VISIBLE
             }
         }
-
     }
 
     private fun setTimeRect(
@@ -211,19 +220,79 @@ class UswTimeTable @JvmOverloads constructor(
     }
 
     private fun setBackgroundColor(timeRect: TextView, color: Int) {
-        when(color) {
-            TimetableColor.APRICOT -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_apricot))
-            TimetableColor.BROWN -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_brown))
-            TimetableColor.DARK_GREEN -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_dark_green))
-            TimetableColor.DARK_PURPLE -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_dark_purple))
-            TimetableColor.GRAY -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_gray))
-            TimetableColor.GREEN -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_green))
-            TimetableColor.MINT -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_mint))
-            TimetableColor.NAVY -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_navy))
-            TimetableColor.PURPLE -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_purple))
-            TimetableColor.SKY -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_sky))
-            TimetableColor.PINK -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_pink))
-            else -> timeRect.setBackgroundColor(ContextCompat.getColor(context, R.color.suwiki_timetable_orange))
+        when (color) {
+            TimetableColor.APRICOT -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_apricot
+                )
+            )
+            TimetableColor.BROWN -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_brown
+                )
+            )
+            TimetableColor.DARK_GREEN -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_dark_green
+                )
+            )
+            TimetableColor.DARK_PURPLE -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_dark_purple
+                )
+            )
+            TimetableColor.GRAY -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_gray
+                )
+            )
+            TimetableColor.GREEN -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_green
+                )
+            )
+            TimetableColor.MINT -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_mint
+                )
+            )
+            TimetableColor.NAVY -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_navy
+                )
+            )
+            TimetableColor.PURPLE -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_purple
+                )
+            )
+            TimetableColor.SKY -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_sky
+                )
+            )
+            TimetableColor.PINK -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_pink
+                )
+            )
+            else -> timeRect.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.suwiki_timetable_orange
+                )
+            )
         }
     }
 

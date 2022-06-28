@@ -17,7 +17,7 @@ import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
-import com.kunize.uswtimetable.util.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import kotlinx.coroutines.flow.collectLatest
 
 class NoticeListFragment : Fragment() {

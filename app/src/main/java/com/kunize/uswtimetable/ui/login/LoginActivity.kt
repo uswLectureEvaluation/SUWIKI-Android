@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.kunize.uswtimetable.databinding.ActivityLoginBinding
@@ -16,12 +15,12 @@ import com.kunize.uswtimetable.ui.mypage.find_password.FindPasswordActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.PreferenceManager
-import com.kunize.uswtimetable.util.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.toast
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val loginViewModel: LoginViewModel by viewModels { ViewModelFactory() }
-    private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +51,14 @@ class LoginActivity : AppCompatActivity() {
 
             when (loginResult) {
                 LoginState.FAIL -> {
-                    makeToast("로그인 실패")
+                    toast("로그인 실패")
                 }
                 LoginState.SUCCESS -> {
-                    makeToast("로그인 성공!")
+                    toast("로그인 성공!")
                     setResult(Activity.RESULT_OK)
                     finish()
                 }
-                else -> makeToast("LoginActivity 에러 : $loginResult")
+                else -> toast("LoginActivity 에러 : $loginResult")
             }
         }
 
@@ -68,14 +67,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         initViews(this)
-
     }
 
     override fun onResume() {
         super.onResume()
 
         if (User.isLoggedIn.value == true) {
-            makeToast("이미 로그인되어 있습니다")
+            toast("이미 로그인되어 있습니다")
             finish()
         }
     }
@@ -91,20 +89,23 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleEvent(context: Context, event: LoginViewModel.Event) = when(event) {
-        is LoginViewModel.Event.CheckRemember -> PreferenceManager.setBoolean(context, REMEMBER_LOGIN, event.checked)
+    private fun handleEvent(context: Context, event: LoginViewModel.Event) = when (event) {
+        is LoginViewModel.Event.CheckRemember -> PreferenceManager.setBoolean(
+            context,
+            REMEMBER_LOGIN,
+            event.checked
+        )
         is LoginViewModel.Event.FindId -> startActivity(Intent(context, FindIdActivity::class.java))
-        is LoginViewModel.Event.FindPw -> startActivity(Intent(context, FindPasswordActivity::class.java))
+        is LoginViewModel.Event.FindPw -> startActivity(
+            Intent(
+                context,
+                FindPasswordActivity::class.java
+            )
+        )
         is LoginViewModel.Event.SignUp -> {
             startActivity(Intent(context, SignUpActivity::class.java))
             finish()
         }
-    }
-
-    private fun makeToast(message: String) {
-        toast?.cancel()
-        toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-        toast?.show()
     }
 
     companion object {
