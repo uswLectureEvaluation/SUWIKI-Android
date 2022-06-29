@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,8 +13,8 @@ import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
-import com.kunize.uswtimetable.util.infiniteScrolls
-import com.kunize.uswtimetable.util.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.infiniteScrolls
+import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 
 class MyExamInfoFragment : Fragment() {
     private var _binding: FragmentMyExamInfoBinding? = null
@@ -92,10 +91,6 @@ class MyExamInfoFragment : Fragment() {
                 isEvaluation = false
             )
         findNavController().navigate(action)
-    }
-
-    private fun makeToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

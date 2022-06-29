@@ -1,28 +1,21 @@
 package com.kunize.uswtimetable.ui.add_class
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
-import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.TimeTableData
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.FragmentAddClassBinding
-import com.kunize.uswtimetable.databinding.FragmentHomeBinding
-import com.kunize.uswtimetable.ui.evaluation.ImageSortDialog
+import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TimeTableSelPref
-import com.kunize.uswtimetable.util.onItemSelected
-import com.kunize.uswtimetable.util.onTextChanged
+import com.kunize.uswtimetable.util.extensions.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -42,7 +35,7 @@ class AddClassFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddClassBinding.inflate(inflater, container, false)
 
         searchAdapter = ClassSearchAdapter()
@@ -72,14 +65,13 @@ class AddClassFragment : Fragment() {
             dialog.show()
         }
 
-
         CoroutineScope(IO).launch {
             timetableData = db!!.timetableDao().getAll().toMutableList()
             searchAdapter.filteredData = timetableData
             searchAdapter.unfilteredData = timetableData
 
             val tempSpinnerData = mutableSetOf<String>()
-            for(data in timetableData)
+            for (data in timetableData)
                 tempSpinnerData.add(data.major)
             spinnerData = tempSpinnerData.sorted().toMutableList()
             spinnerData.add(0, "전체")
@@ -89,7 +81,7 @@ class AddClassFragment : Fragment() {
                 binding.recyclerClass.layoutManager = LinearLayoutManager(requireActivity())
                 binding.searchClass.visibility = View.VISIBLE
                 majorSel = TimeTableSelPref.prefs.getString("openMajorSel", "전체")
-                majorSel = majorSel.replace("-","·")
+                majorSel = majorSel.replace("-", "·")
                 gradeSel = gradeList[TimeTableSelPref.prefs.getInt("gradeSel", 0)]
                 binding.tvSortSelected.text = gradeSel
                 binding.tvSelectedOpenMajor.text = majorSel
@@ -175,5 +167,4 @@ class AddClassFragment : Fragment() {
         searchAdapter.filteredData = changeData
         searchAdapter.unfilteredData = changeData
     }
-
 }

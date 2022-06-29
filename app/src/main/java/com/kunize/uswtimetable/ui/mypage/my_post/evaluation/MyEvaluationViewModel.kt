@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewModel() {
     private val _uiEvent = MutableSharedFlow<Event>()
     val uiEvent = _uiEvent.asSharedFlow()
+    private val _resultFlow = MutableSharedFlow<Result>()
+    val resultFlow = _resultFlow.asSharedFlow()
     val loading = MutableLiveData(false)
 
     private val _items = MutableLiveData<List<MyEvaluationDto>>(emptyList())
@@ -53,7 +55,10 @@ class MyEvaluationViewModel(private val repository: MyPostRepository) : ViewMode
             kotlin.runCatching {
                 repository.deleteEvaluation(id)
                 _items.value = _items.value?.filterNot { evaluation -> evaluation.id == id }
-            }.onFailure {}
+                _resultFlow.emit(Result.Success)
+            }.onFailure {
+                _resultFlow.emit(Result.Fail)
+            }
         }
     }
 

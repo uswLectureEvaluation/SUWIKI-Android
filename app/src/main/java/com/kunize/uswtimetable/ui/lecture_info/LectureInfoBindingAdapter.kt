@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -9,7 +8,7 @@ import androidx.core.view.size
 import androidx.databinding.BindingAdapter
 import com.google.android.flexbox.FlexboxLayout
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.util.dp
+import com.kunize.uswtimetable.util.extensions.dp
 import kotlin.math.roundToInt
 
 object LectureInfoBindingAdapter {
@@ -37,8 +36,7 @@ object LectureInfoBindingAdapter {
     @BindingAdapter("lectureTotalAvg")
     @JvmStatic
     fun unregistered(textView: TextView, value: Float) {
-        if(value == 0f)
-        {
+        if (value == 0f) {
             textView.text = textView.context.getString(R.string.hyphen)
         }
     }

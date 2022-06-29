@@ -21,13 +21,12 @@ import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TimeTableSelPref
-import com.kunize.uswtimetable.util.afterEditTextChanged
+import com.kunize.uswtimetable.util.extensions.afterEditTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class SelectOpenMajorFragment : Fragment() {
 
@@ -39,7 +38,8 @@ class SelectOpenMajorFragment : Fragment() {
     private val viewModel: SelectOpenMajorViewModel by viewModels { ViewModelFactory() }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
@@ -72,14 +72,14 @@ class SelectOpenMajorFragment : Fragment() {
         binding.etSearch.afterEditTextChanged { searchText ->
             adapter.filter.filter(searchText)
             val num = adapter.unfilteredData.find { it.title.contains(searchText.toString()) }
-            if(num == null && !binding.rbBookmark.isChecked && searchText?.isNotEmpty() == true)
+            if (num == null && !binding.rbBookmark.isChecked && searchText?.isNotEmpty() == true)
                 viewModel.setNoSearchResultText(searchText.toString())
             else
                 viewModel.setNoSearchResultText("")
         }
 
         binding.rbAll.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) CoroutineScope(IO).launch {
+            if (isChecked) CoroutineScope(IO).launch {
                 getAllMajorList()
                 viewModel.hideNeedLoginLayout()
                 withContext(Main) {
@@ -89,8 +89,8 @@ class SelectOpenMajorFragment : Fragment() {
         }
 
         binding.rbBookmark.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) CoroutineScope(IO).launch {
-                if(User.isLoggedIn.value == false) {
+            if (isChecked) CoroutineScope(IO).launch {
+                if (User.isLoggedIn.value == false) {
                     viewModel.showNeedLoginLayout()
                     return@launch
                 }
@@ -101,29 +101,32 @@ class SelectOpenMajorFragment : Fragment() {
             }
         }
 
-        viewModel.starClickEvent.observe(viewLifecycleOwner, EventObserver { title ->
-            if (User.isLoggedIn.value == true) {
-                val filteredData = adapter.filteredData
-                val unfilteredData = adapter.unfilteredData
-                val filteredDataIndex = filteredData.indexOfFirst { it.title == title }
-                val unfilteredDataIndex = unfilteredData.indexOfFirst { it.title == title }
+        viewModel.starClickEvent.observe(
+            viewLifecycleOwner,
+            EventObserver { title ->
+                if (User.isLoggedIn.value == true) {
+                    val filteredData = adapter.filteredData
+                    val unfilteredData = adapter.unfilteredData
+                    val filteredDataIndex = filteredData.indexOfFirst { it.title == title }
+                    val unfilteredDataIndex = unfilteredData.indexOfFirst { it.title == title }
 
-                if (filteredDataIndex == -1 || unfilteredDataIndex == -1)
-                    return@EventObserver
+                    if (filteredDataIndex == -1 || unfilteredDataIndex == -1)
+                        return@EventObserver
 
-                val checkedType = !filteredData[filteredDataIndex].isChecked
-                filteredData[filteredDataIndex].isChecked = checkedType
-                unfilteredData[unfilteredDataIndex].isChecked = checkedType
+                    val checkedType = !filteredData[filteredDataIndex].isChecked
+                    filteredData[filteredDataIndex].isChecked = checkedType
+                    unfilteredData[unfilteredDataIndex].isChecked = checkedType
 
-                CoroutineScope(IO).launch {
-                    if (checkedType) {
-                        viewModel.bookmarkMajor(title)
-                    } else {
-                        viewModel.clearBookmarkMajor(title)
+                    CoroutineScope(IO).launch {
+                        if (checkedType) {
+                            viewModel.bookmarkMajor(title)
+                        } else {
+                            viewModel.clearBookmarkMajor(title)
+                        }
                     }
                 }
             }
-        })
+        )
 
         adapter.setItemClickListener(object : SelectOpenMajorAdapter.ItemClickListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -134,11 +137,18 @@ class SelectOpenMajorFragment : Fragment() {
         })
 
         binding.btnOk.setOnClickListener {
-            TimeTableSelPref.prefs.setString("openMajorSel",
-                adapter.selectedItemTitle.ifBlank { "전체" })
+            TimeTableSelPref.prefs.setString(
+                "openMajorSel",
+                adapter.selectedItemTitle.ifBlank { "전체" }
+            )
             val action = when (args.prevFragment) {
-                FragmentType.EVALUATION -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation(sortType = args.prevSortType)
-                FragmentType.SEARCH_RESULT -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToSearchResultFragment(searchLectureName = args.prevSearch, sortType = args.prevSortType)
+                FragmentType.EVALUATION -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation(
+                    sortType = args.prevSortType
+                )
+                FragmentType.SEARCH_RESULT -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToSearchResultFragment(
+                    searchLectureName = args.prevSearch,
+                    sortType = args.prevSortType
+                )
                 else -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToAddClassFragment()
             }
             findNavController().navigate(action)

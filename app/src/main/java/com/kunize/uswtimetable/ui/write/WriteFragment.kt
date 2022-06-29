@@ -23,7 +23,7 @@ import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.WriteFragmentTitle
-import com.kunize.uswtimetable.util.seekbarChangeListener
+import com.kunize.uswtimetable.util.extensions.seekbarChangeListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -54,7 +54,8 @@ class WriteFragment : Fragment() {
     var lectureId = 0L
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_write, container, false)
@@ -98,8 +99,8 @@ class WriteFragment : Fragment() {
         binding.finishButton.setOnClickListener {
             CoroutineScope(IO).launch {
 
-                val emptyMsg = when(binding.writeType.text.toString()) {
-                    WriteFragmentTitle.WRITE_EVALUATION, WriteFragmentTitle.EDIT_MY_EVALUATION  -> {
+                val emptyMsg = when (binding.writeType.text.toString()) {
+                    WriteFragmentTitle.WRITE_EVALUATION, WriteFragmentTitle.EDIT_MY_EVALUATION -> {
                         when {
                             binding.teamRadioGroup.checkedRadioButtonId == -1 -> "조모임을 선택해주세요!"
                             binding.taskRadioGroup.checkedRadioButtonId == -1 -> "과제를 선택해주세요!"
@@ -110,23 +111,32 @@ class WriteFragment : Fragment() {
                     }
                     else -> when {
                         getTestContentString().isBlank() -> "시험 내용을 선택해주세요!"
-                        binding.difficultyGroup.checkedRadioButtonId == -1 ->"난이도를 선택해주세요!"
+                        binding.difficultyGroup.checkedRadioButtonId == -1 -> "난이도를 선택해주세요!"
                         binding.writeContent.text.toString().isBlank() -> "내용을 입력해주세요!"
                         else -> ""
                     }
                 }
 
-                if(emptyMsg.isNotBlank()) {
+                if (emptyMsg.isNotBlank()) {
                     withContext(Main) {
                         Toast.makeText(requireContext(), emptyMsg, Toast.LENGTH_SHORT).show()
                     }
                     return@launch
                 }
 
-                val response = when(binding.writeType.text.toString()) {
-                    WriteFragmentTitle.WRITE_EVALUATION -> writeViewModel.postLectureEvaluation(lectureId, getLectureEvaluationInfo())
-                    WriteFragmentTitle.WRITE_EXAM -> writeViewModel.postLectureExam(lectureId, getLectureExamInfo())
-                    WriteFragmentTitle.EDIT_MY_EVALUATION -> writeViewModel.updateLectureEvaluation(lectureId, getLectureEvaluationEditInfo())
+                val response = when (binding.writeType.text.toString()) {
+                    WriteFragmentTitle.WRITE_EVALUATION -> writeViewModel.postLectureEvaluation(
+                        lectureId,
+                        getLectureEvaluationInfo()
+                    )
+                    WriteFragmentTitle.WRITE_EXAM -> writeViewModel.postLectureExam(
+                        lectureId,
+                        getLectureExamInfo()
+                    )
+                    WriteFragmentTitle.EDIT_MY_EVALUATION -> writeViewModel.updateLectureEvaluation(
+                        lectureId,
+                        getLectureEvaluationEditInfo()
+                    )
                     else -> writeViewModel.updateLectureExam(lectureId, getLectureExamEditInfo())
                 }
 
@@ -136,21 +146,23 @@ class WriteFragment : Fragment() {
                             goToLectureInfoFragment()
                         else
                             goToMyPostFragment()
-                    }
-                    else {
+                    } else {
                         writeViewModel.handleError(response.code())
                     }
                 }
             }
         }
 
-        writeViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
-            Toast.makeText(
-                requireContext(),
-                writeViewModel.toastViewModel.toastMessage,
-                Toast.LENGTH_LONG
-            ).show()
-        })
+        writeViewModel.toastViewModel.toastLiveData.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                Toast.makeText(
+                    requireContext(),
+                    writeViewModel.toastViewModel.toastMessage,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        )
 
         return binding.root
     }
@@ -188,11 +200,11 @@ class WriteFragment : Fragment() {
 
             var testDifficulty = ""
             difficultyRadioBtnList.forEach {
-                if(it.isChecked)
+                if (it.isChecked)
                     testDifficulty = it.text.toString()
             }
 
-            //TODO 수정
+            // TODO 수정
             info = LectureExamDto(
                 lectureName = lectureName,
                 professor = professorName,
@@ -214,7 +226,7 @@ class WriteFragment : Fragment() {
 
             var testDifficulty = ""
             difficultyRadioBtnList.forEach {
-                if(it.isChecked)
+                if (it.isChecked)
                     testDifficulty = it.text.toString()
             }
 
@@ -280,10 +292,10 @@ class WriteFragment : Fragment() {
             setLectureProfessorName(it)
             setTestContentCheckBox(it)
             setDifficultyRadioBtn(it)
-            val list = it.semesterList?.replace(" ","")?.split(",")?:return@let
+            val list = it.semesterList?.replace(" ", "")?.split(",") ?: return@let
             setSemesterSpinnerList(list)
-            //TODO MyExamInfo 수정되면 선택한 시험 종류 설정 ("기말고사" 선택 시 -> spinner 항목 기말고사 선택되게 해야함)
-            writeViewModel.initSemesterText(it.selectedSemester?:return@let)
+            // TODO MyExamInfo 수정되면 선택한 시험 종류 설정 ("기말고사" 선택 시 -> spinner 항목 기말고사 선택되게 해야함)
+            writeViewModel.initSemesterText(it.selectedSemester ?: return@let)
             binding.writeContent.setText(it.content)
             binding.writeType.text = WriteFragmentTitle.EDIT_MY_EXAM
             binding.finishButton.text = WriteFragmentTitle.FINISH_EDIT
@@ -309,8 +321,8 @@ class WriteFragment : Fragment() {
     }
 
     private fun setLectureProfessorName(it: LectureExamDto) {
-        lectureName = it.lectureName?:return
-        professorName = it.professor?:return
+        lectureName = it.lectureName ?: return
+        professorName = it.professor ?: return
     }
 
     private fun setFragmentViewType(args: WriteFragmentArgs) {
@@ -333,9 +345,9 @@ class WriteFragment : Fragment() {
         args.lectureProfessorName?.let {
             lectureName = it.subject
             professorName = it.professor
-            setSemesterSpinnerList(args.lectureProfessorName!!.semester.replace(" ","").split(","))
+            setSemesterSpinnerList(args.lectureProfessorName!!.semester.replace(" ", "").split(","))
         }
-        setTestSpinnerList(listOf("중간고사","기말고사","쪽지","기타"))
+        setTestSpinnerList(listOf("중간고사", "기말고사", "쪽지", "기타"))
     }
 
     private fun setTestSpinnerList(list: List<String>) {
@@ -346,9 +358,12 @@ class WriteFragment : Fragment() {
             testDialog?.show()
         }
 
-        writeViewModel.dialogTestClickEvent.observe(viewLifecycleOwner, EventObserver {
-            testDialog?.dismiss()
-        })
+        writeViewModel.dialogTestClickEvent.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                testDialog?.dismiss()
+            }
+        )
     }
 
     private fun setSemesterSpinnerList(list: List<String>) {
@@ -359,9 +374,12 @@ class WriteFragment : Fragment() {
             semesterDialog?.show()
         }
 
-        writeViewModel.dialogSemesterClickEvent.observe(viewLifecycleOwner, EventObserver {
-            semesterDialog?.dismiss()
-        })
+        writeViewModel.dialogSemesterClickEvent.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                semesterDialog?.dismiss()
+            }
+        )
     }
 
     private fun setInitValueWhenEditMyEvaluation(args: WriteFragmentArgs) {
@@ -372,7 +390,7 @@ class WriteFragment : Fragment() {
             setTaskRadioBtn(it)
             setGradeRadioBtn(it)
 
-            val list = it.semesterList.replace(" ","").split(",")
+            val list = it.semesterList.replace(" ", "").split(",")
             setSemesterSpinnerList(list)
             writeViewModel.initSemesterText(it.selectedSemester)
             binding.writeContent.setText(it.content)

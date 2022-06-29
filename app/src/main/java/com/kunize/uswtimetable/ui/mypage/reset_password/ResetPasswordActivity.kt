@@ -14,13 +14,13 @@ import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.mypage.find_password.FindPasswordActivity
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.Result
-import com.kunize.uswtimetable.util.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ResetPasswordActivity: AppCompatActivity() {
+class ResetPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResetPasswordBinding
     private val viewModel: ResetPasswordViewModel by viewModels { ViewModelFactory() }
 
