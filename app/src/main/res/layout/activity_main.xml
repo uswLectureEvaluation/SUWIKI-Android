@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
         android:layout_marginBottom="3dp"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:adUnitId="ca-app-pub-8919128352699409/7279140824"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

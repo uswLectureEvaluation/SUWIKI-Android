@@ -1,22 +1,18 @@
 package com.kunize.uswtimetable.ui.main
 
-
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val adView: AdView by lazy { binding.adBottom }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +43,6 @@ class MainActivity : AppCompatActivity() {
             .Builder()
             .build()
 
-        adView.loadAd(adRequest)
+        binding.adBottom.loadAd(adRequest)
     }
 }
