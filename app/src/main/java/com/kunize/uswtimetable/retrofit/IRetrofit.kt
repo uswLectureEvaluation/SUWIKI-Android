@@ -134,7 +134,7 @@ interface IRetrofit {
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @POST(PASSWORD)
-    suspend fun findPassword(@Body info: UserIdEmail): Response<SuccessCheckDto>
+    suspend fun findPassword(@Body info: UserIdEmail): ApiResponse<SuccessCheckDto>
 
     // 비밀번호 재설정 API
     @POST(PASSWORD_RESET)

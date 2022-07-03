@@ -5,4 +5,4 @@ import java.io.Serializable
 
 data class SuccessCheckDto(
     @SerializedName("success") val success: Boolean
-): Serializable
+) : Serializable
