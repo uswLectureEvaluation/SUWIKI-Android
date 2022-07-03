@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,8 +105,9 @@ class WriteFragment : Fragment() {
                         when {
                             binding.teamRadioGroup.checkedRadioButtonId == -1 -> "조모임을 선택해주세요!"
                             binding.taskRadioGroup.checkedRadioButtonId == -1 -> "과제를 선택해주세요!"
-                            binding.gradeRadioGroup.checkedRadioButtonId == -1 -> "학점을 선택해주세요!"
+                            binding.gradeRadioGroup.checkedRadioButtonId == -1 -> "학점비율을 선택해주세요!"
                             binding.writeContent.text.toString().isBlank() -> "내용을 입력해주세요!"
+                            binding.writeContent.text.toString().length < 31 -> "30자 이상 적어주세요!"
                             else -> ""
                         }
                     }
@@ -113,6 +115,7 @@ class WriteFragment : Fragment() {
                         getTestContentString().isBlank() -> "시험 내용을 선택해주세요!"
                         binding.difficultyGroup.checkedRadioButtonId == -1 -> "난이도를 선택해주세요!"
                         binding.writeContent.text.toString().isBlank() -> "내용을 입력해주세요!"
+                        binding.writeContent.text.toString().length < 31 -> "30자 이상 적어주세요!"
                         else -> ""
                     }
                 }
