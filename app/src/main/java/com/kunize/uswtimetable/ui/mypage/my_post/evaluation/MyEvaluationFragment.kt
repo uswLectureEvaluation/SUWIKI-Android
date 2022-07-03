@@ -11,10 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
+import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.mypage.my_post.Result
+import com.kunize.uswtimetable.util.UserPoint.DELETE_POST
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
+import kotlin.math.abs
 
 class MyEvaluationFragment : Fragment() {
     private var _binding: FragmentMyEvaluationBinding? = null
@@ -50,7 +54,11 @@ class MyEvaluationFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.resultFlow.collect { result ->
                 if (result == Result.Fail) {
-                    this@MyEvaluationFragment.toast("포인트가 부족합니다")
+                    if ((User.user?.value?.point ?: 0) < abs(DELETE_POST)) {
+                        this@MyEvaluationFragment.toast("포인트가 부족합니다")
+                    } else {
+                        this@MyEvaluationFragment.toast("삭제할 수 없습니다")
+                    }
                 }
             }
         }

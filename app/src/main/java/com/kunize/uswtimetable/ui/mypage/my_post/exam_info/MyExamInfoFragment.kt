@@ -11,10 +11,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
+import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
+import com.kunize.uswtimetable.ui.mypage.my_post.Result
+import com.kunize.uswtimetable.util.UserPoint
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
+import com.kunize.uswtimetable.util.extensions.toast
+import kotlin.math.abs
 
 class MyExamInfoFragment : Fragment() {
     private var _binding: FragmentMyExamInfoBinding? = null
@@ -46,6 +51,17 @@ class MyExamInfoFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.uiEvent.collect { event ->
                 handleEvent(event)
+            }
+        }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.resultFlow.collect { result ->
+                if (result == Result.Fail) {
+                    if ((User.user?.value?.point ?: 0) < abs(UserPoint.DELETE_POST)) {
+                        this@MyExamInfoFragment.toast("포인트가 부족합니다")
+                    } else {
+                        this@MyExamInfoFragment.toast("삭제할 수 없습니다")
+                    }
+                }
             }
         }
     }
