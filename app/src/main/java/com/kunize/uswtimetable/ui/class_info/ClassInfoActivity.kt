@@ -151,7 +151,7 @@ class ClassInfoActivity : AppCompatActivity() {
             CoroutineScope(IO).launch {
                 var tempDeleteData = TimeData()
                 try {
-                    if (deleteIdx != -1) {
+                    if (modeEditTime(deleteIdx)) {
                         tempDeleteData = tempTimeData[deleteIdx]
                         tempTimeData.removeAt(deleteIdx)
                     }
@@ -174,7 +174,7 @@ class ClassInfoActivity : AppCompatActivity() {
 
         try {
             // deleteIdx가 -1이 아닌 경우에만 문자열 분리
-            if (deleteIdx != -1) {
+            if (modeEditTime(deleteIdx)) {
                 //시간표 수정 로직
                 if (time!! == "" || time == "()" || time == "None") {
                     binding.location1.setText("이러닝")
@@ -248,7 +248,7 @@ class ClassInfoActivity : AppCompatActivity() {
                 "문제가 있어 시간표를 추가할 수 없어요!",
                 Toast.LENGTH_SHORT
             ).show()
-            if (deleteIdx != -1)
+            if (modeEditTime(deleteIdx))
                 tempTimeData.add(deleteIdx, tempDeleteData)
         }
     }
@@ -276,7 +276,7 @@ class ClassInfoActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                        if (deleteIdx != -1)
+                        if (modeEditTime(deleteIdx))
                             tempTimeData.add(deleteIdx, tempDeleteData)
                         return true
                     }
@@ -294,16 +294,15 @@ class ClassInfoActivity : AppCompatActivity() {
         for (newTime in addTimeData) {
             if ((newTime.name.contains("이러닝") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) && jsonStr.contains(
                     "이러닝"
-                ) && deleteIdx == -1
-            ) {
+                )) {
                 withContext(Main) {
                     Toast.makeText(
                         this@ClassInfoActivity,
-                        "이러닝은 하나만 들을 수 있어요!",
-                        Toast.LENGTH_SHORT
+                        "토요일이거나 시간이 없는 과목은 하나만 추가 가능합니다!",
+                        Toast.LENGTH_LONG
                     ).show()
                 }
-                if (deleteIdx != -1)
+                if (modeEditTime(deleteIdx))
                     tempTimeData.add(deleteIdx, tempDeleteData)
                 return true
             }
@@ -318,7 +317,7 @@ class ClassInfoActivity : AppCompatActivity() {
     ): MutableList<TimeData> {
         val addTimeData = mutableListOf<TimeData>()
         for (i in extractionList.indices) {
-            if (extractionList[i].isVisible && dayList[i].text == "없음") {
+            if (extractionList[i].isVisible && (dayList[i].text == "없음" || dayList[i].text =="토요일")) {
                 addTimeData.add(
                     TimeData(
                         inputClassName,
@@ -358,7 +357,7 @@ class ClassInfoActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if (deleteIdx != -1)
+            if (modeEditTime(deleteIdx))
                 tempTimeData.add(deleteIdx, tempDeleteData)
             return true
         }
@@ -383,7 +382,7 @@ class ClassInfoActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if (deleteIdx != -1)
+            if (modeEditTime(deleteIdx))
                 tempTimeData.add(deleteIdx, tempDeleteData)
             return true
         }
@@ -408,7 +407,7 @@ class ClassInfoActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if (deleteIdx != -1)
+            if (modeEditTime(deleteIdx))
                 tempTimeData.add(deleteIdx, tempDeleteData)
             return true
         }
@@ -433,12 +432,14 @@ class ClassInfoActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if (deleteIdx != -1)
+            if (modeEditTime(deleteIdx))
                 tempTimeData.add(deleteIdx, tempDeleteData)
             return true
         }
         return false
     }
+
+    private fun modeEditTime(deleteIdx: Int) = deleteIdx != -1
 
     private fun setTimeTableCellColor(): Int {
         var randomColor = intent.getIntExtra("color", -1)
