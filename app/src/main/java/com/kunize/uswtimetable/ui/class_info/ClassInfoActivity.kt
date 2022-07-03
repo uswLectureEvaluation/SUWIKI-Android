@@ -292,9 +292,8 @@ class ClassInfoActivity : AppCompatActivity() {
         tempDeleteData: TimeData
     ): Boolean {
         for (newTime in addTimeData) {
-            if ((newTime.name.contains("이러닝") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) && jsonStr.contains(
-                    "이러닝"
-                )) {
+            if ((newTime.day.contains("토") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) &&
+                tempTimeData.find { it.location == "이러닝" || it.day == "토" } != null) {
                 withContext(Main) {
                     Toast.makeText(
                         this@ClassInfoActivity,
@@ -317,7 +316,7 @@ class ClassInfoActivity : AppCompatActivity() {
     ): MutableList<TimeData> {
         val addTimeData = mutableListOf<TimeData>()
         for (i in extractionList.indices) {
-            if (extractionList[i].isVisible && (dayList[i].text == "없음" || dayList[i].text =="토요일")) {
+            if (extractionList[i].isVisible && (dayList[i].text == "없음")) {
                 addTimeData.add(
                     TimeData(
                         inputClassName,
