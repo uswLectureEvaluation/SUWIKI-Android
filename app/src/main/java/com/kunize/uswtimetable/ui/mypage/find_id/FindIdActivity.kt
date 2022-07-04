@@ -60,5 +60,4 @@ class FindIdActivity : AppCompatActivity() {
         super.onDestroy()
         _binding = null
     }
-
 }

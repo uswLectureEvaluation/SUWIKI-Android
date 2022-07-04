@@ -19,6 +19,7 @@ object Constants {
     const val SEMESTER_1_END = 6
     const val ID_REGEX = """^[a-z0-9]*$"""
     const val PW_REGEX = """^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^+\-=])(?=\S+$).*$"""
+
     // Key of Intent or Bundle
     const val KEY_NOTICE_ID = "notice_id"
     const val KEY_URL = "url"
@@ -81,12 +82,12 @@ object UserPoint {
 }
 
 object LectureItemViewType {
-    const val SHORT = 0 //강의평가 목록
-    const val LOADING = 1 //내가 쓴 강의평가
-    const val USER_EXAM = 2 //내가 쓴 시험정보
-    const val LECTURE = 3 //세부 강의평가 정보
-    const val EXAM = 4 //세부 시험정보
-    const val FOOTER = -1 //세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
+    const val SHORT = 0 // 강의평가 목록
+    const val LOADING = 1 // 내가 쓴 강의평가
+    const val USER_EXAM = 2 // 내가 쓴 시험정보
+    const val LECTURE = 3 // 세부 강의평가 정보
+    const val EXAM = 4 // 세부 시험정보
+    const val FOOTER = -1 // 세부 시험정보 가림 (content 텍스트 색상 변경 및 report 버튼 클릭 방지
 }
 
 object PostData {
@@ -99,16 +100,8 @@ object PostData {
     }
 }
 
-
-
 object TextLength {
     const val MIN_SEARCH_TEXT_LENGTH = 2
-}
-
-object ExamInfoType {
-    const val NO_DATA = 0 //데이터 없음
-    const val NEED_USE = 1 //포인트 사용 필요
-    const val NOT_INFLATE = 2 //포인트 이미 사용 OR 강의평가 쓰기
 }
 
 object LectureApiOption {
@@ -119,37 +112,24 @@ object LectureApiOption {
     const val BEST = "lectureTotalAvg"
 }
 
-enum class ResponseState {
-    OK, FAIL
-}
-
-enum class ItemType {
-    ROOT_VIEW,
-    EDIT_BUTTON,
-    DELETE_BUTTON
-}
-
-//무한 스크롤
+// 무한 스크롤
 const val LAST_PAGE = 0
 
 object TimetableCellColor {
     val colorMap = mapOf<String, Int>(
-        "Pink" to Color.rgb(254, 136, 136), //핑크
-        "Orange" to Color.rgb(255, 193, 82), //주황
-        "Purple" to Color.rgb(204, 154, 243), //보라
-        "Sky" to Color.rgb(137, 200, 254), //하늘
-        "Green" to Color.rgb(165, 220, 129), //연두
-        "Brown" to Color.rgb(194, 143, 98), //갈색
-        "Gray" to Color.rgb(194, 193, 189), //회색
-        "Navy" to Color.rgb(67, 87, 150), //남색
-        "darkGreen" to Color.rgb(107, 143, 84), //진녹색
-        "lightBrown" to Color.rgb(255, 187, 128), //연갈색
-        "darkPurple" to Color.rgb(161, 121, 192), //진보라색
-        "darkGray" to Color.rgb(143, 142, 139) //진회색
+        "Pink" to Color.rgb(254, 136, 136), // 핑크
+        "Orange" to Color.rgb(255, 193, 82), // 주황
+        "Purple" to Color.rgb(204, 154, 243), // 보라
+        "Sky" to Color.rgb(137, 200, 254), // 하늘
+        "Green" to Color.rgb(165, 220, 129), // 연두
+        "Brown" to Color.rgb(194, 143, 98), // 갈색
+        "Gray" to Color.rgb(194, 193, 189), // 회색
+        "Navy" to Color.rgb(67, 87, 150), // 남색
+        "darkGreen" to Color.rgb(107, 143, 84), // 진녹색
+        "lightBrown" to Color.rgb(255, 187, 128), // 연갈색
+        "darkPurple" to Color.rgb(161, 121, 192), // 진보라색
+        "darkGray" to Color.rgb(143, 142, 139) // 진회색
     )
-}
-object LIST_CONFIG {
-    const val ONCE_REQUEST_SIZE = 10
 }
 
 object FragmentType {

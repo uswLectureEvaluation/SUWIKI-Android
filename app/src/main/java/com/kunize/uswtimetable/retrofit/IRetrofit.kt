@@ -5,8 +5,35 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import com.kunize.uswtimetable.data.remote.*
-import com.kunize.uswtimetable.dataclass.*
+import com.kunize.uswtimetable.data.remote.DataDto
+import com.kunize.uswtimetable.data.remote.LectureDetailEvaluationDto
+import com.kunize.uswtimetable.data.remote.LectureDetailExamDto
+import com.kunize.uswtimetable.data.remote.LectureDetailInfoDataDto
+import com.kunize.uswtimetable.data.remote.LectureEvaluationEditDto
+import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
+import com.kunize.uswtimetable.data.remote.LectureExamDto
+import com.kunize.uswtimetable.data.remote.LectureMain
+import com.kunize.uswtimetable.data.remote.MajorType
+import com.kunize.uswtimetable.data.remote.OpenMajorList
+import com.kunize.uswtimetable.data.remote.OpenMajorVersion
+import com.kunize.uswtimetable.data.remote.ReportExam
+import com.kunize.uswtimetable.data.remote.ReportLecture
+import com.kunize.uswtimetable.dataclass.CheckEmailFormat
+import com.kunize.uswtimetable.dataclass.CheckIdFormat
+import com.kunize.uswtimetable.dataclass.EmailDto
+import com.kunize.uswtimetable.dataclass.LoginIdPassword
+import com.kunize.uswtimetable.dataclass.MyEvaluationDto
+import com.kunize.uswtimetable.dataclass.NoticeDetailDto
+import com.kunize.uswtimetable.dataclass.NoticeDto
+import com.kunize.uswtimetable.dataclass.OverlapCheckDto
+import com.kunize.uswtimetable.dataclass.PurchaseHistory
+import com.kunize.uswtimetable.dataclass.ResetPasswordDto
+import com.kunize.uswtimetable.dataclass.SignUpFormat
+import com.kunize.uswtimetable.dataclass.SuccessCheckDto
+import com.kunize.uswtimetable.dataclass.SuspensionHistory
+import com.kunize.uswtimetable.dataclass.Token
+import com.kunize.uswtimetable.dataclass.UserDataDto
+import com.kunize.uswtimetable.dataclass.UserIdEmail
 import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.util.API.BAN_REASON
@@ -49,7 +76,11 @@ import com.kunize.uswtimetable.util.extensions.isJsonArray
 import com.kunize.uswtimetable.util.extensions.isJsonObject
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
-import okhttp3.*
+import okhttp3.Authenticator
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Route
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONArray
 import org.json.JSONObject
@@ -58,7 +89,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Query
 import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -93,11 +130,11 @@ interface IRetrofit {
 
     // 아이디 찾기 API
     @POST(ID)
-    suspend fun findId(@Body email: EmailDto): Response<SuccessCheckDto>
+    suspend fun findId(@Body email: EmailDto): ApiResponse<SuccessCheckDto>
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @POST(PASSWORD)
-    suspend fun findPassword(@Body info: UserIdEmail): Response<SuccessCheckDto>
+    suspend fun findPassword(@Body info: UserIdEmail): ApiResponse<SuccessCheckDto>
 
     // 비밀번호 재설정 API
     @POST(PASSWORD_RESET)

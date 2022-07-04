@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
+import com.kunize.uswtimetable.ui.mypage.my_post.Result
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,6 +19,8 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
     private val _items = MutableLiveData<List<LectureExamDto>>(emptyList())
     val items: LiveData<List<LectureExamDto>> get() = _items
     val loading = MutableLiveData<Boolean>()
+    private val _resultFlow = MutableSharedFlow<Result>()
+    val resultFlow = _resultFlow.asSharedFlow()
 
     private val _uiEvent = MutableSharedFlow<Event>()
     val uiEvent = _uiEvent.asSharedFlow()
@@ -63,6 +66,7 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
                     _items.postValue(_items.value?.filterNot { examInfo -> examInfo.id == id })
                 }.onFailure {
                     Log.d(TAG, "MyExamInfoViewModel - deletePost() called FAILED: ${it.message}")
+                    _resultFlow.emit(Result.Fail)
                 }
             }
         }
