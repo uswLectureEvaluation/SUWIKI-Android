@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.mypage.quit
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -36,6 +37,7 @@ class QuitActivity : AppCompatActivity() {
     private fun handleEvent(event: Event) {
         when (event) {
             is Event.NavigateBackEvent -> this@QuitActivity.finish()
+            is Event.QuitButtonEvent -> showDialog()
             is Event.Result -> {
                 if (event.success) {
                     toast("성공적으로 탈퇴처리 되었습니다.")
@@ -48,5 +50,13 @@ class QuitActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showDialog() {
+        AlertDialog.Builder(this)
+            .setMessage("회원 탈퇴 시 작성한 강의 평가/시험 정보는 전부 삭제됩니다!")
+            .setPositiveButton("탈퇴") { _, _ -> viewModel.quit() }
+            .setNeutralButton("취소") { _, _ -> }
+            .show()
     }
 }

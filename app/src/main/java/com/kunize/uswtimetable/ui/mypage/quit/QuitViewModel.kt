@@ -33,6 +33,10 @@ class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
         }
     }
 
+    fun quitButtonClickEvent() {
+        event(Event.QuitButtonEvent)
+    }
+
     fun navigateBackEvent() {
         event(Event.NavigateBackEvent)
     }
