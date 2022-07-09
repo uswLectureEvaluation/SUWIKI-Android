@@ -216,4 +216,5 @@
     <string name="enroll">등록</string>
     <string name="text_require_login">내가 쓴 글과 포인트를\n확인하려면 로그인하세요.</string>
     <string name="exam_info_not_exists">시험정보가 없습니다.</string>
+    <string name="purchase_history_not_exists">구매이력이 없습니다.</string>
 </resources>
