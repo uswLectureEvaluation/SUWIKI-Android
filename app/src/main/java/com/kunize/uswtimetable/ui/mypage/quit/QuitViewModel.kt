@@ -24,10 +24,10 @@ class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
         viewModelScope.launch {
             val response = repository.quit(id, pw)
             if (response.isSuccessful && response.body()?.success == true) {
-                setSuccessMessage("성공적으로 탈퇴처리 되었습니다.")
+                setSuccess(isSuccess = true)
                 User.logout()
             } else {
-                setErrorMessage("${response.code()}: ${response.message()}")
+                setSuccess(isSuccess = false)
             }
             loading.postValue(false)
         }
@@ -37,12 +37,8 @@ class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
         event(Event.NavigateBackEvent)
     }
 
-    private fun setSuccessMessage(message: String) {
-        event(Event.SuccessMessage(message))
-    }
-
-    private fun setErrorMessage(message: String) {
-        event(Event.ErrorMessage(message))
+    private fun setSuccess(isSuccess: Boolean) {
+        event(Event.Result(isSuccess))
     }
 
     private fun event(event: Event) {

@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.mypage.quit
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityQuitBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
 
@@ -34,8 +36,17 @@ class QuitActivity : AppCompatActivity() {
     private fun handleEvent(event: Event) {
         when (event) {
             is Event.NavigateBackEvent -> this@QuitActivity.finish()
-            is Event.SuccessMessage -> toast(event.message)
-            is Event.ErrorMessage -> toast(event.message)
+            is Event.Result -> {
+                if (event.success) {
+                    toast("성공적으로 탈퇴처리 되었습니다.")
+
+                    Intent(this@QuitActivity, MainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    }.also { startActivity(it) }
+                } else {
+                    toast("탈퇴 처리에 실패하였습니다.")
+                }
+            }
         }
     }
 }
