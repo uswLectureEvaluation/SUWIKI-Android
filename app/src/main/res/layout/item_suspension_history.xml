@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="data"
-            type="com.kunize.uswtimetable.dataclass.SuspensionHistory" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="@{data.bannedReason}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="중복 정보 신고 누적으로 인한 제한 안내" />
@@ -33,7 +25,6 @@
             android:id="@+id/tv_suspension_start_date"
             style="@style/TextRegular.12"
             android:layout_width="wrap_content"
-            banCreatedAt="@{data.createdAt}"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +34,6 @@
         <TextView
             android:id="@+id/tv_suspension_end_date"
             style="@style/TextRegular.12"
-            banCreatedAt="@{data.createdAt}"
-            banExpiredAt="@{data.expiredAt}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -57,7 +46,6 @@
             style="@style/TextRegular.12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/suspension_judgement(data.judgement)}"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_suspension_end_date"

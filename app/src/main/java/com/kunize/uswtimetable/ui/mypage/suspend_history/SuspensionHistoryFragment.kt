@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.mypage.suspend_history
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.kunize.uswtimetable.databinding.FragmentSuspensionHistoryBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.util.Constants.TAG
 
 class SuspensionHistoryFragment : Fragment() {
     private var _binding: FragmentSuspensionHistoryBinding? = null
@@ -30,6 +32,7 @@ class SuspensionHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvSuspensionHistory.adapter = adapter
         viewModel.suspendHistory.observe(viewLifecycleOwner) { history ->
+            Log.d(TAG, "제한 내역: $history")
             adapter.submitList(history)
         }
     }

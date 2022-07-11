@@ -35,17 +35,6 @@ fun applyDate(view: TextView, dateTime: LocalDateTime?) {
     dateTime?.let { view.text = dateFormat(dateTime) }
 }
 
-@BindingAdapter("banCreatedAt")
-fun applyBanCreatedAt(view: TextView, createdAt: LocalDateTime) {
-    view.text = view.resources.getString(R.string.suspension_created_at, dateTimeFormat(createdAt))
-}
-
-@BindingAdapter("banCreatedAt", "banExpiredAt")
-fun applyBanExpiredAt(view: TextView, createdAt: LocalDateTime, expiredAt: LocalDateTime) {
-    val diff = expiredAt.compareTo(createdAt)
-    view.text = view.resources.getString(R.string.suspension_expired_at, dateTimeFormat(expiredAt), diff)
-}
-
 @BindingAdapter("point")
 fun applyUserPoint(view: TextView, point: Int) {
     if (point >= 0) {
@@ -59,8 +48,8 @@ fun applyUserPoint(view: TextView, point: Int) {
 
 @BindingAdapter("count")
 fun applyCount(view: TextView, count: Int?) {
-    count?:return
-    val ssb = SpannableStringBuilder(count.toString()+"개")
+    count ?: return
+    val ssb = SpannableStringBuilder(count.toString() + "개")
     val color = if (count >= 0) "#346CFD" else "#7800FF"
     ssb.setSpan(ForegroundColorSpan(Color.parseColor(color)), 0, count.toString().length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     view.text = ssb
@@ -83,7 +72,7 @@ fun applyPostData(view: TextView, level: Int, type: PostData.PostDataType) {
 
 @BindingAdapter("textColorLevel")
 fun applyTextColor(view: TextView, level: Int) {
-    val color = when(level) {
+    val color = when (level) {
         0 -> ContextCompat.getColor(view.context, R.color.suwiki_blue_900)
         2 -> ContextCompat.getColor(view.context, R.color.suwiki_purple)
         else -> ContextCompat.getColor(view.context, R.color.suwiki_black_700)

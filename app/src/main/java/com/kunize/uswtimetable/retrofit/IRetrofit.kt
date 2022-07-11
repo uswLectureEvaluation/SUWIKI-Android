@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import com.kunize.uswtimetable.data.remote.BlacklistDto
 import com.kunize.uswtimetable.data.remote.DataDto
 import com.kunize.uswtimetable.data.remote.LectureDetailEvaluationDto
 import com.kunize.uswtimetable.data.remote.LectureDetailExamDto
@@ -18,6 +19,7 @@ import com.kunize.uswtimetable.data.remote.OpenMajorList
 import com.kunize.uswtimetable.data.remote.OpenMajorVersion
 import com.kunize.uswtimetable.data.remote.ReportExam
 import com.kunize.uswtimetable.data.remote.ReportLecture
+import com.kunize.uswtimetable.data.remote.SuspensionHistory
 import com.kunize.uswtimetable.dataclass.CheckEmailFormat
 import com.kunize.uswtimetable.dataclass.CheckIdFormat
 import com.kunize.uswtimetable.dataclass.EmailDto
@@ -30,7 +32,6 @@ import com.kunize.uswtimetable.dataclass.PurchaseHistory
 import com.kunize.uswtimetable.dataclass.ResetPasswordDto
 import com.kunize.uswtimetable.dataclass.SignUpFormat
 import com.kunize.uswtimetable.dataclass.SuccessCheckDto
-import com.kunize.uswtimetable.dataclass.SuspensionHistory
 import com.kunize.uswtimetable.dataclass.Token
 import com.kunize.uswtimetable.dataclass.UserDataDto
 import com.kunize.uswtimetable.dataclass.UserIdEmail
@@ -38,6 +39,7 @@ import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.util.API.BAN_REASON
 import com.kunize.uswtimetable.util.API.BASE_URL
+import com.kunize.uswtimetable.util.API.BLACKLIST_REASON
 import com.kunize.uswtimetable.util.API.BOOKMARK
 import com.kunize.uswtimetable.util.API.BUY_EXAM
 import com.kunize.uswtimetable.util.API.DELETE_EVALUATE_POST
@@ -173,6 +175,10 @@ interface IRetrofit {
     // 이용제한 내역 조회
     @GET(BAN_REASON)
     suspend fun getSuspensionHistory(): ApiResponse<List<SuspensionHistory>>
+
+    // 블랙리스트 내역 조회
+    @GET(BLACKLIST_REASON)
+    suspend fun getBlacklistHistory(): ApiResponse<List<BlacklistDto>>
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)
@@ -344,7 +350,10 @@ interface IRetrofit {
                             typeOfT: Type?,
                             context: JsonDeserializationContext?
                         ): LocalDateTime {
-                            return LocalDateTime.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"))
+                            return LocalDateTime.parse(
+                                json?.asString,
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+                            )
                         }
                     }
                 )
@@ -356,7 +365,10 @@ interface IRetrofit {
                             typeOfT: Type?,
                             context: JsonDeserializationContext?
                         ): LocalDate {
-                            return LocalDate.parse(json?.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                            return LocalDate.parse(
+                                json?.asString,
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                            )
                         }
                     }
                 )
@@ -368,7 +380,10 @@ interface IRetrofit {
                             typeOfT: Type?,
                             context: JsonDeserializationContext?
                         ): LocalTime {
-                            return LocalTime.parse(json?.asString, DateTimeFormatter.ofPattern("HH:mm:ss"))
+                            return LocalTime.parse(
+                                json?.asString,
+                                DateTimeFormatter.ofPattern("HH:mm:ss")
+                            )
                         }
                     }
                 )

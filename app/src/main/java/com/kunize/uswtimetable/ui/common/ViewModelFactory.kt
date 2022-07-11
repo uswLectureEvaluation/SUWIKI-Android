@@ -39,6 +39,7 @@ import com.kunize.uswtimetable.ui.mypage.puchase_history.PurchaseHistoryViewMode
 import com.kunize.uswtimetable.ui.mypage.quit.QuitViewModel
 import com.kunize.uswtimetable.ui.mypage.reset_password.ResetPasswordViewModel
 import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspendHistoryViewModel
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionHistoryRemoteDataSource
 import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionRepository
 import com.kunize.uswtimetable.ui.notice.NoticeDetailViewModel
 import com.kunize.uswtimetable.ui.notice.NoticeViewModel
@@ -105,7 +106,8 @@ class ViewModelFactory : ViewModelProvider.Factory {
             }
             modelClass.isAssignableFrom(SuspendHistoryViewModel::class.java) -> {
                 val apiService = IRetrofit.getInstance()
-                val repository = SuspensionRepository(apiService)
+                val dataSource = SuspensionHistoryRemoteDataSource(apiService)
+                val repository = SuspensionRepository(dataSource)
                 SuspendHistoryViewModel(repository) as T
             }
             // Notice

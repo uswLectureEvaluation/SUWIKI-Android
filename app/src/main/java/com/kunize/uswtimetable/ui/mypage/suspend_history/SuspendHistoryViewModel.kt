@@ -1,16 +1,15 @@
 package com.kunize.uswtimetable.ui.mypage.suspend_history
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.dataclass.SuspensionHistory
-import com.skydoves.sandwich.onSuccess
+import com.kunize.uswtimetable.data.local.Suspension
 import kotlinx.coroutines.launch
 
 class SuspendHistoryViewModel(private val repository: SuspensionRepository) : ViewModel() {
-    private val _history = MutableLiveData<List<SuspensionHistory>>()
-    val suspendHistory: LiveData<List<SuspensionHistory>> get() = _history
+    private lateinit var _history: LiveData<List<Suspension>>
+    val suspendHistory: LiveData<List<Suspension>> get() = _history
 
     init {
         loadData()
@@ -18,10 +17,7 @@ class SuspendHistoryViewModel(private val repository: SuspensionRepository) : Vi
 
     private fun loadData() {
         viewModelScope.launch {
-            val response = repository.getSuspensionHistory()
-            response.onSuccess {
-                _history.postValue(data ?: emptyList())
-            }
+            _history = repository.suspensionHistory.asLiveData()
         }
     }
 }
