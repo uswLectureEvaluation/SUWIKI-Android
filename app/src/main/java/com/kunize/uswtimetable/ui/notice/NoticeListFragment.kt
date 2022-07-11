@@ -7,18 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.paging.LoadState
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
+import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
-import kotlinx.coroutines.flow.collectLatest
+import com.kunize.uswtimetable.util.extensions.toast
 
 class NoticeListFragment : Fragment() {
 
@@ -44,27 +43,15 @@ class NoticeListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.rvNotice.adapter = adapter
+        initRecyclerView()
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             Log.d(Constants.TAG, "NoticeListFragment - onCreateView() called / $message")
-            makeToast(message)
+            toast(message)
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.items.collectLatest {
-                adapter.submitData(it)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            adapter.loadStateFlow.collect {
-                binding.progressLoading.isVisible = it.source.refresh is LoadState.Loading
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.event.collect { event ->
+            viewModel.uiEvent.collect { event ->
                 if (event is NoticeViewModel.Event.NoticeClickEvent) {
                     findNavController(this@NoticeListFragment).navigate(
                         R.id.action_noticeListFragment_to_noticeDetailFragment,
@@ -75,10 +62,15 @@ class NoticeListFragment : Fragment() {
         }
     }
 
-    private fun makeToast(message: String) {
-        toast?.cancel()
-        toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
-        toast?.show()
+    private fun initRecyclerView() {
+        val recyclerView = binding.rvNotice
+        recyclerView.adapter = adapter
+        viewModel.items.observe(viewLifecycleOwner) { notices ->
+            adapter.submitList(notices)
+        }
+        recyclerView.infiniteScrolls {
+            viewModel.scrollBottomEvent()
+        }
     }
 
     override fun onDestroyView() {

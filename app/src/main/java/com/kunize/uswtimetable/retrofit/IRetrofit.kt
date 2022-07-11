@@ -122,7 +122,7 @@ interface IRetrofit {
 
     // 공지사항 리스트 API
     @GET(NOTICE_LIST)
-    suspend fun getNoticeList(@Query("page") page: Int): DataDto<List<NoticeDto>>
+    suspend fun getNoticeList(@Query("page") page: Int): Response<DataDto<List<NoticeDto>>>
 
     // 공지사항 API
     @GET(NOTICE)

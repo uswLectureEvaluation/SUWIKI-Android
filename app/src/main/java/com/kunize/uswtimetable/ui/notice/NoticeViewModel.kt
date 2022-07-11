@@ -1,18 +1,12 @@
 package com.kunize.uswtimetable.ui.notice
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.repository.notice.NoticeRepository
-import com.kunize.uswtimetable.ui.common.Event
-import com.kunize.uswtimetable.util.Constants.TAG
-import kotlinx.coroutines.flow.Flow
+import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -22,26 +16,57 @@ private const val ITEMS_PER_PAGE = 10
 
 class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewModel() {
     val errorMessage = MutableLiveData<String>()
-    private val _event = MutableSharedFlow<Event>()
-    val event: SharedFlow<Event> = _event.asSharedFlow()
+    private val _uiEvent = MutableSharedFlow<Event>()
+    val uiEvent: SharedFlow<Event> = _uiEvent.asSharedFlow()
+    var loading = MutableLiveData(false)
 
-    val items: Flow<PagingData<NoticeDto>> = Pager(
-        config = PagingConfig(pageSize = ITEMS_PER_PAGE, enablePlaceholders = false),
-        pagingSourceFactory = { noticeRepository.pagingSource() }
-    ).flow.cachedIn(viewModelScope)
+    private val _items = MutableLiveData<List<NoticeDto>>(emptyList())
+    val items: LiveData<List<NoticeDto>> get() = _items
+
+    private var _page = 1
+    private var _loadFinished = false
+
+    init {
+        scrollBottomEvent()
+    }
+
+    fun scrollBottomEvent() {
+        if (_loadFinished || _page == LAST_PAGE) return
+
+        viewModelScope.launch {
+            loading.postValue(true)
+            val response = noticeRepository.getNoticeList(_page)
+            if (response.isSuccessful) {
+                val newData = response.body()?.data
+
+                if (newData?.isEmpty() == true) {
+                    _loadFinished = true
+                } else {
+                    val currentData = _items.value?.toMutableList() ?: mutableListOf()
+                    currentData.addAll(newData!!)
+                    _items.postValue(currentData)
+                    nextPage()
+                }
+            }
+            loading.postValue(false)
+        }
+    }
 
     fun noticeClicked(notice: NoticeDto) {
-        Log.d(TAG, "NoticeViewModel - noticeClicked($notice) called")
         event(Event.NoticeClickEvent(notice))
     }
 
     private fun event(event: Event) {
         viewModelScope.launch {
-            _event.emit(event)
+            _uiEvent.emit(event)
         }
     }
 
+    private fun nextPage() {
+        if (_page != LAST_PAGE) _page++
+    }
+
     sealed class Event {
-        data class NoticeClickEvent(val notice: NoticeDto): Event()
+        data class NoticeClickEvent(val notice: NoticeDto) : Event()
     }
 }

@@ -15,6 +15,14 @@
         android:layout_height="match_parent"
         tools:context=".ui.notice.NoticeListFragment">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notice_not_exists"
+            android:layout_gravity="center_horizontal"
+            android:visibility="@{viewModel.items.empty?View.VISIBLE: View.INVISIBLE}"
+            android:layout_marginTop="67dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_notice"
             android:layout_width="match_parent"
@@ -28,6 +36,7 @@
             android:id="@+id/progress_loading"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
+            visibility="@{viewModel.loading?View.VISIBLE:View.GONE}"
             android:layout_height="wrap_content" />
 
     </FrameLayout>
