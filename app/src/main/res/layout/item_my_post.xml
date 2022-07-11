@@ -16,7 +16,7 @@
 
         <variable
             name="viewmodel"
-            type="com.kunize.uswtimetable.ui.mypage.my_post.evaluation.MyEvaluationViewModel" />
+            type="com.kunize.uswtimetable.ui.mypage.mypost.evaluation.MyEvaluationViewModel" />
 
         <variable
             name="detailOrShortButton"

@@ -33,8 +33,8 @@ import com.kunize.uswtimetable.ui.login.LoginViewModel
 import com.kunize.uswtimetable.ui.mypage.MyPageViewModel
 import com.kunize.uswtimetable.ui.mypage.find_id.FindIdViewModel
 import com.kunize.uswtimetable.ui.mypage.find_password.FindPwViewModel
-import com.kunize.uswtimetable.ui.mypage.my_post.evaluation.MyEvaluationViewModel
-import com.kunize.uswtimetable.ui.mypage.my_post.exam_info.MyExamInfoViewModel
+import com.kunize.uswtimetable.ui.mypage.mypost.evaluation.MyEvaluationViewModel
+import com.kunize.uswtimetable.ui.mypage.mypost.examinfo.MyExamInfoViewModel
 import com.kunize.uswtimetable.ui.mypage.puchase_history.PurchaseHistoryViewModel
 import com.kunize.uswtimetable.ui.mypage.quit.QuitViewModel
 import com.kunize.uswtimetable.ui.mypage.reset_password.ResetPasswordViewModel

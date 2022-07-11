@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
+package com.kunize.uswtimetable.ui.mypage.mypost.evaluation
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,7 +13,7 @@ import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
-import com.kunize.uswtimetable.ui.mypage.my_post.Result
+import com.kunize.uswtimetable.ui.mypage.mypost.Result
 import com.kunize.uswtimetable.util.UserPoint.DELETE_POST
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
@@ -75,7 +75,7 @@ class MyEvaluationFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        recyclerView = binding.myEvaluationList
+        recyclerView = binding.rvMyEvaluation
         recyclerView.adapter = adapter
 
         viewModel.items.observe(viewLifecycleOwner) { evaluations ->

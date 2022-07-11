@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage.my_post.exam_info
+package com.kunize.uswtimetable.ui.mypage.mypost.examinfo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

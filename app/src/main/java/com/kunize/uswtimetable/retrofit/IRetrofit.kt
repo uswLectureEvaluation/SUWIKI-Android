@@ -393,7 +393,6 @@ class AuthenticationInterceptor : Interceptor {
 
 class TokenAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-
         val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
         Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh")
         val tokenResponse =

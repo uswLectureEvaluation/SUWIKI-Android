@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage.my_post.evaluation
+package com.kunize.uswtimetable.ui.mypage.mypost.evaluation
 
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 

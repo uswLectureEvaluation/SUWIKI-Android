@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage.my_post
+package com.kunize.uswtimetable.ui.mypage.mypost
 
 import android.os.Bundle
 import android.view.LayoutInflater

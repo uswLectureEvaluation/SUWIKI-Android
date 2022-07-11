@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage.my_post.exam_info
+package com.kunize.uswtimetable.ui.mypage.mypost.examinfo
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
-import com.kunize.uswtimetable.ui.mypage.my_post.Result
+import com.kunize.uswtimetable.ui.mypage.mypost.Result
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.LAST_PAGE
 import kotlinx.coroutines.flow.MutableSharedFlow

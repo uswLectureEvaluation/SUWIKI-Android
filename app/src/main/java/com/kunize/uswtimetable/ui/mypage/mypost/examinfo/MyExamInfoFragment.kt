@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.mypage.my_post.exam_info
+package com.kunize.uswtimetable.ui.mypage.mypost.examinfo
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -14,7 +14,7 @@ import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
 import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
-import com.kunize.uswtimetable.ui.mypage.my_post.Result
+import com.kunize.uswtimetable.ui.mypage.mypost.Result
 import com.kunize.uswtimetable.util.UserPoint
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
