@@ -16,8 +16,8 @@ android {
         applicationId "com.kunize.uswtimetable"
         minSdkVersion 26
         targetSdkVersion 31
-        versionCode 19
-        versionName "1.1.8"
+        versionCode 21
+        versionName "2.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,15 +50,15 @@ dependencies {
 //    implementation "com.google.android.gms:play-services-ads-identifier:17.0.1"
     implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
 
-    implementation "com.google.android.gms:play-services-ads-identifier:17.0.1"
+    implementation "com.google.android.gms:play-services-ads-identifier:18.0.1"
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     implementation 'com.google.android.play:core:1.10.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
     implementation 'androidx.room:room-runtime:2.3.0'
     implementation 'com.google.android.material:material:1.6.0'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.firebase:firebase-firestore-ktx:23.0.3'
+    implementation 'com.google.firebase:firebase-auth:21.0.6'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
@@ -82,7 +82,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
     implementation "com.google.android:flexbox:2.0.1"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
