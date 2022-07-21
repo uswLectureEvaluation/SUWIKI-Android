@@ -18,6 +18,7 @@ class SuspendHistoryViewModel(private val repository: SuspensionRepository) : Vi
     private fun loadData() {
         viewModelScope.launch {
             _history = repository.suspensionHistory.asLiveData()
+            repository.getSuspensionHistory()
         }
     }
 }

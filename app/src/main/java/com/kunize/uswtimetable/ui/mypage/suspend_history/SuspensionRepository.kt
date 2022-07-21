@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.ui.mypage.suspend_history
 
+import android.util.Log
 import com.kunize.uswtimetable.data.local.Suspension
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.Dispatchers

@@ -10,6 +10,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.Suspension
 import com.kunize.uswtimetable.databinding.ItemSuspensionHistoryBinding
 import com.kunize.uswtimetable.ui.common.dateTimeFormat
+import java.time.Duration
 import java.time.LocalDateTime
 
 class SuspensionHistoryAdapter :
@@ -62,7 +63,7 @@ class SuspensionHistoryAdapter :
         context.resources.getString(
             R.string.suspension_expired_at,
             dateTimeFormat(expiredAt),
-            expiredAt.compareTo(createdAt)
+            Duration.between(createdAt, expiredAt).toDays()
         )
 
     companion object {
