@@ -68,6 +68,7 @@
                         app:layout_constraintTop_toTopOf="@id/writeType" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/page_padding"
@@ -310,119 +311,119 @@
 
             </androidx.appcompat.widget.Toolbar>
 
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/page_padding"
+            android:layout_marginEnd="@dimen/page_padding"
+            android:layout_marginBottom="@dimen/page_padding"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/menuLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/page_padding"
-                android:layout_marginEnd="@dimen/page_padding"
-                android:layout_marginBottom="@dimen/page_padding"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+                android:paddingStart="@dimen/cardview_short_padding"
+                android:paddingTop="@dimen/cardview_short_padding"
+                android:paddingEnd="@dimen/cardview_short_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/menuLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/cardview_short_padding"
-                    android:paddingTop="@dimen/cardview_short_padding"
-                    android:paddingEnd="@dimen/cardview_short_padding"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/writeBtn"
+                    style="@style/SuwikiMiniButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:layout_marginBottom="16dp"
+                    android:enabled="@{!lectureInfoViewModel.written}"
+                    android:text="@{lectureInfoViewModel.writeBtnText}"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="강의평가 작성 +20P" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/writeBtn"
-                        style="@style/SuwikiMiniButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="26dp"
-                        android:layout_marginBottom="16dp"
-                        android:enabled="@{!lectureInfoViewModel.written}"
-                        android:text="@{lectureInfoViewModel.writeBtnText}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="강의평가 작성 +20P" />
+                    <RadioButton
+                        android:id="@+id/lectureEvaluationRadioBtn"
+                        style="@style/radiobutton_text_style"
+                        android:checked="true"
+                        android:text="@string/lecture_evaluation" />
 
-                    <RadioGroup
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="18dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <RadioButton
+                        android:id="@+id/examInfoRadioBtn"
+                        style="@style/radiobutton_text_style"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/exam_info" />
 
-                        <RadioButton
-                            android:id="@+id/lectureEvaluationRadioBtn"
-                            style="@style/radiobutton_text_style"
-                            android:checked="true"
-                            android:text="@string/lecture_evaluation" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <RadioButton
-                            android:id="@+id/examInfoRadioBtn"
-                            style="@style/radiobutton_text_style"
-                            android:layout_marginStart="10dp"
-                            android:text="@string/exam_info" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/infoRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingBottom="66dp"
+                app:layout_constraintTop_toBottomOf="@id/menuLayout"
+                app:evaluationList="@{lectureInfoViewModel.commonRecyclerViewViewModel.itemList}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:visibility="invisible" />
 
-                    </RadioGroup>
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lectureInfoContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constrainedHeight="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+            <TextView
+                style="@style/no_data_textview_style"
+                android:layout_width="0dp"
+                android:layout_height="304dp"
+                android:text="@string/no_evaluation_data"
+                android:visibility="@{(lectureInfoViewModel.commonRecyclerViewViewModel.itemList.empty &amp;&amp; !lectureInfoViewModel.showNoExamDataLayout)? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menuLayout"
+                tools:visibility="invisible" />
+
+
+            <TextView
+                android:id="@+id/noExamDataLayout"
+                style="@style/no_data_textview_style"
+                android:layout_width="0dp"
+                android:layout_height="304dp"
+                android:text="@string/no_exam_data"
+                android:visibility="@{lectureInfoViewModel.showNoExamDataLayout ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menuLayout"
+                tools:visibility="invisible" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menuLayout">
+
+                <include
+                    android:id="@+id/hideExamDataLayout"
+                    layout="@layout/hide_exam_info"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/menuLayout">
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/infoRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:evaluationList="@{lectureInfoViewModel.commonRecyclerViewViewModel.itemList}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constrainedHeight="true"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="invisible" />
-
-                    <TextView
-                        style="@style/no_data_textview_style"
-                        android:layout_width="0dp"
-                        android:layout_height="304dp"
-                        android:text="@string/no_evaluation_data"
-                        android:visibility="@{(lectureInfoViewModel.commonRecyclerViewViewModel.itemList.empty &amp;&amp; !lectureInfoViewModel.showNoExamDataLayout)? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:id="@+id/noExamDataLayout"
-                        style="@style/no_data_textview_style"
-                        android:layout_width="0dp"
-                        android:layout_height="304dp"
-                        android:text="@string/no_exam_data"
-                        android:visibility="@{lectureInfoViewModel.showNoExamDataLayout ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="invisible" />
-
-                    <include
-                        android:id="@+id/hideExamDataLayout"
-                        layout="@layout/hide_exam_info"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        bind:lectureInfoViewModel="@{lectureInfoViewModel}" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:lectureInfoViewModel="@{lectureInfoViewModel}" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -154,7 +154,6 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 _written.value = response.body()?.written
                 val tmpResponse = response.body()
                 val tmpExamData = tmpResponse?.convertToEvaluationData()
-                Log.d("test","$tmpExamData")
                 commonRecyclerViewViewModel.deleteLoading()
                 if (tmpExamData != null) {
                     pageViewModel.isLastData(tmpExamData)
@@ -163,7 +162,8 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                     else if (!tmpResponse.examDataExist)
                         _showNoExamDataLayout.value = true
                     else {
-                        commonRecyclerViewViewModel.changeRecyclerViewData(tmpExamData)
+                        commonRecyclerViewViewModel.itemList.value!!.addAll(tmpExamData)
+                        commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.itemList.value!!)
                         pageViewModel.nextPage()
                     }
                 }
