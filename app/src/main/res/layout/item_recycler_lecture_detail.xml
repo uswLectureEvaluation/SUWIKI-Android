@@ -203,7 +203,7 @@
             <TextView
                 android:id="@+id/tv_grade_value"
                 style="@style/SuwikiTextBody2"
-                lectureDifficultyAvg="@{data.task}"
+                lectureDifficultyAvg="@{data.grade}"
                 lectureTotalAvg="@{data.aver}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
