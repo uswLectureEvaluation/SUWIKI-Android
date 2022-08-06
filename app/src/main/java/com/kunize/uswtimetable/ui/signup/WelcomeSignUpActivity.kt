@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.ui.signup
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -44,9 +45,7 @@ class WelcomeSignUpActivity : AppCompatActivity() {
     }
 
     private fun onClickEmailCheckButton() {
-        val intent = Intent(this, WebviewActivity::class.java).apply {
-            putExtra(Constants.KEY_URL, Constants.SCHOOL_HOMEPAGE)
-        }
-        startActivity(intent)
+        //웹뷰 사용 시 포털사이트 -> 웹메일로 이동하지 않는 현상이 있어 수정함
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Constants.SCHOOL_HOMEPAGE)))
     }
 }
