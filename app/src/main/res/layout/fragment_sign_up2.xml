@@ -45,5 +45,13 @@
                 android:inputType="text"
                 android:text="@={viewmodel.email}" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_marginTop="50dp"
+            android:id="@+id/tv_verify_email_notice"
+            style="@style/TextRegular.12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_verify_email_notice" />
     </LinearLayout>
 </layout>

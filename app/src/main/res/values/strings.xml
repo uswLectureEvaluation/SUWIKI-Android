@@ -218,4 +218,5 @@
     <string name="exam_info_not_exists">시험정보가 없습니다.</string>
     <string name="purchase_history_not_exists">구매이력이 없습니다.</string>
     <string name="notice_not_exists">공지사항이 없습니다</string>
+    <string name="sign_up_verify_email_notice">* 이메일 인증 시 주의 사항\n -웹메일이 휴면 상태인지 확인해주세요.\n -웹메일 계정은 포털 계정과 다르니 이 부분 주의 바랍니다.</string>
 </resources>
