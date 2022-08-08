@@ -85,6 +85,7 @@ class StartActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance()
 
+        //TODO 강의평가 데이터 업데이트 시 수정
         firebaseVersion = database.getReference("version")
 
         firebaseVersion.get().addOnSuccessListener {
@@ -98,6 +99,7 @@ class StartActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //TODO 강의평가 데이터 업데이트 시 수정
         firebaseTimetableData = database.getReference("uswTimetable")
 
         CoroutineScope(IO).launch {

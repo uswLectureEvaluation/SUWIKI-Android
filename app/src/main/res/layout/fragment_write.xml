@@ -69,7 +69,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/page_padding">
+                android:paddingTop="@dimen/page_padding"
+                android:paddingHorizontal="@dimen/page_padding"
+                android:paddingBottom="300dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/writeDetailLayout"
