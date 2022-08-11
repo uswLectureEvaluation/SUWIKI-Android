@@ -93,7 +93,7 @@ object LectureItemViewType {
 
 object PostData {
     val team = mapOf(0 to "없음", 1 to "있음")
-    val difficulty = mapOf(0 to "학점느님", 1 to "보통", 2 to "까다로움")
+    val difficulty = mapOf(0 to "너그러움", 1 to "보통", 2 to "까다로움")
     val homework = mapOf(0 to "없음", 1 to "보통", 2 to "많음")
 
     enum class PostDataType {
