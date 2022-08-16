@@ -38,7 +38,7 @@ ___
 ### Android
 - Android Studio
 - Kotlin
-- MVVM + MVC
+- MVVM
 - Navigation
 - Firebase
 - Coroutine
