@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.kunize.uswtimetable.databinding.FragmentSuspensionHistoryBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants.TAG
@@ -31,9 +32,16 @@ class SuspensionHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvSuspensionHistory.adapter = adapter
+        initView()
         viewModel.suspendHistory.observe(viewLifecycleOwner) { history ->
             Log.d(TAG, "제한 내역: $history")
             adapter.submitList(history)
+        }
+    }
+
+    private fun initView() {
+        binding.toolbar.setNavigationOnClickListener {
+            it.findNavController().popBackStack()
         }
     }
 
