@@ -116,14 +116,13 @@ class ClassInfoActivity : AppCompatActivity() {
                         tempDeleteData = currentTimeTable[deleteIdx]
                         currentTimeTable.removeAt(deleteIdx)
                     }
-                    if (checkInputDataEmpty(deleteIdx, tempDeleteData)) return@launch
 
-                    if (checkAllTimeIsValid(deleteIdx = deleteIdx, tempDeleteData = tempDeleteData).not()) return@launch
+                    if (checkAllTimeIsNotValid(deleteIdx = deleteIdx, tempDeleteData = tempDeleteData)) return@launch
 
-                    val addTimeData = extractData(locationList, inputClassName, inputProfessor)
-                    if (checkeLearning(addTimeData, deleteIdx, tempDeleteData)) return@launch
-                    if (checkOverlapTime(addTimeData, deleteIdx, tempDeleteData)) return@launch
-                    currentTimeTable.addAll(addTimeData)
+                    val timeDataTobeAdded = extractData(locationList, inputClassName, inputProfessor)
+                    if (checkeLearning(timeDataTobeAdded, deleteIdx, tempDeleteData)) return@launch
+                    if (checkOverlapTime(timeDataTobeAdded, deleteIdx, tempDeleteData)) return@launch
+                    currentTimeTable.addAll(timeDataTobeAdded)
                     timetableSel.timeTableJsonData = arrayToJson(currentTimeTable)
                     db.timetableListDao().update(timetableSel)
                     goToMainActivity()
@@ -250,11 +249,11 @@ class ClassInfoActivity : AppCompatActivity() {
     }
 
     private suspend fun checkOverlapTime(
-        addTimeData: MutableList<TimeData>,
+        timeDataTobeAdded: MutableList<TimeData>,
         deleteIdx: Int,
         tempDeleteData: TimeData
     ): Boolean {
-        for (newTime in addTimeData) {
+        for (newTime in timeDataTobeAdded) {
             for (oldTime in currentTimeTable) {
                 if (newTime.day == oldTime.day) {
                     val newStartTime = newTime.startTime.toInt()
@@ -283,11 +282,11 @@ class ClassInfoActivity : AppCompatActivity() {
     }
 
     private suspend fun checkeLearning(
-        addTimeData: MutableList<TimeData>,
+        timeDataTobeAdded: MutableList<TimeData>,
         deleteIdx: Int,
         tempDeleteData: TimeData
     ): Boolean {
-        for (newTime in addTimeData) {
+        for (newTime in timeDataTobeAdded) {
             if ((newTime.day.contains("토") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) &&
                 currentTimeTable.find { it.location == "이러닝" || it.day == "토" } != null
             ) {
@@ -339,46 +338,25 @@ class ClassInfoActivity : AppCompatActivity() {
         return addTimeData
     }
 
-    private suspend fun checkInputDataEmpty(
-        deleteIdx: Int,
-        tempDeleteData: TimeData
-    ): Boolean {
-        if (binding.location1.text.toString().isEmpty() && binding.location2.text.toString()
-                .isEmpty() && binding.location3.text.toString().isEmpty()
-        ) {
-            withContext(Main) {
-                Toast.makeText(
-                    this@ClassInfoActivity,
-                    "장소를 입력해주세요!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            if (modeEditTime(deleteIdx))
-                currentTimeTable.add(deleteIdx, tempDeleteData)
-            return true
-        }
-        return false
-    }
-
-    private suspend fun checkAllTimeIsValid(
+    private suspend fun checkAllTimeIsNotValid(
         deleteIdx: Int,
         tempDeleteData: TimeData
     ): Boolean {
         for(idx in dayList.indices) {
-            if(checkTimeIsValid(
+            if(checkTimeIsNotValid(
                     deleteIdx = deleteIdx,
                     tempDeleteData = tempDeleteData,
                     tvDay = dayList[idx],
                     location = locationList[idx],
                     start = startTimeList[idx].textToIntOrNull(),
                     end = endTimeList[idx].textToIntOrNull()
-                ).not()) return false
+                )) return true
         }
 
-        return true
+        return false
     }
 
-    private suspend fun checkTimeIsValid(
+    private suspend fun checkTimeIsNotValid(
         deleteIdx: Int,
         tempDeleteData: TimeData,
         tvDay: TextView,
@@ -402,9 +380,9 @@ class ClassInfoActivity : AppCompatActivity() {
             }
             if (modeEditTime(deleteIdx))
                 currentTimeTable.add(deleteIdx, tempDeleteData)
-            return false
+            return true
         }
-        return true
+        return false
     }
     private fun modeEditTime(deleteIdx: Int) = deleteIdx != -1
 
