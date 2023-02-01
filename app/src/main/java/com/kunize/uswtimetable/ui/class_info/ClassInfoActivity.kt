@@ -34,6 +34,7 @@ import com.kunize.uswtimetable.util.TimetableColor.ORANGE
 import com.kunize.uswtimetable.util.TimetableColor.PINK
 import com.kunize.uswtimetable.util.TimetableColor.PURPLE
 import com.kunize.uswtimetable.util.TimetableColor.SKY
+import com.kunize.uswtimetable.util.extensions.textToIntOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -47,7 +48,7 @@ class ClassInfoActivity : AppCompatActivity() {
     private lateinit var jsonStr: String
     private lateinit var db: TimeTableListDatabase
     private lateinit var timetableSel: TimeTableList
-    private var tempTimeData = mutableListOf<TimeData>()
+    private var currentTimeTable = mutableListOf<TimeData>()
     private lateinit var radioHashMap: HashMap<Int, Int>
     private lateinit var timeColorRadioButtonHashMap: HashMap<Int, RadioButton>
     private lateinit var dayList: List<TextView>
@@ -62,58 +63,18 @@ class ClassInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        with(binding) {
-            dayList = listOf(tvDay1, tvDay2, tvDay3)
-            startTimeList = listOf(etStartClass1, etStartClass2, etStartClass3)
-            endTimeList = listOf(etEndClass1, etEndClass2, etEndClass3)
-            deleteTimeList = listOf(deleteTime1, deleteTime2, deleteTime3)
-            locationList = listOf(location1, location2, location3)
-            clDayList = listOf(clDay1, clDay2, clDay3)
-            clTimeList = listOf(clClass1, clClass2, clClass3)
-
-            radioHashMap = hashMapOf(
-                rbSky.id to SKY, rbNavy.id to NAVY, rbPurple.id to PURPLE,
-                rbDarkPurple.id to DARK_PURPLE, rbMint.id to MINT, rbDarkGreen.id to DARK_GREEN,
-                rbApricot.id to APRICOT, rbOrange.id to ORANGE, rbPink.id to PINK,
-                rbBrown.id to BROWN, rbGreen.id to GREEN, rbGray.id to GRAY
-            )
-
-            timeColorRadioButtonHashMap = hashMapOf(
-                SKY to rbSky, NAVY to rbNavy, PURPLE to rbPurple,
-                DARK_PURPLE to rbPurple, MINT to rbMint, DARK_GREEN to rbDarkGreen,
-                APRICOT to rbApricot, ORANGE to rbOrange, PINK to rbPink,
-                BROWN to rbBrown, GREEN to rbGreen, GRAY to rbGray
-            )
-        }
+        initDefaultData()
 
         binding.clDay1.setOnClickListener {
-            val dialog = DaySortDialog(this)
-            dialog.setDialogListener(object : DaySortDialog.ItemClickListener {
-                override fun onClick(text: String) {
-                    binding.tvDay1.text = text
-                }
-            })
-            dialog.show()
+            showDaySortDialog(binding.tvDay1)
         }
 
         binding.clDay2.setOnClickListener {
-            val dialog = DaySortDialog(this)
-            dialog.setDialogListener(object : DaySortDialog.ItemClickListener {
-                override fun onClick(text: String) {
-                    binding.tvDay2.text = text
-                }
-            })
-            dialog.show()
+            showDaySortDialog(binding.tvDay2)
         }
 
         binding.clDay3.setOnClickListener {
-            val dialog = DaySortDialog(this)
-            dialog.setDialogListener(object : DaySortDialog.ItemClickListener {
-                override fun onClick(text: String) {
-                    binding.tvDay3.text = text
-                }
-            })
-            dialog.show()
+            showDaySortDialog(binding.tvDay3)
         }
 
         binding.ivBack.setOnClickListener {
@@ -137,7 +98,7 @@ class ClassInfoActivity : AppCompatActivity() {
             db = TimeTableListDatabase.getInstance(applicationContext)!!
             timetableSel = getCurrentTimetableInfo(db)
             jsonStr = timetableSel.timeTableJsonData
-            tempTimeData = jsonToArray(jsonStr)
+            currentTimeTable = jsonToArray(jsonStr)
 
             setTimeTableCellColor()
         }
@@ -152,18 +113,18 @@ class ClassInfoActivity : AppCompatActivity() {
                 var tempDeleteData = TimeData()
                 try {
                     if (modeEditTime(deleteIdx)) {
-                        tempDeleteData = tempTimeData[deleteIdx]
-                        tempTimeData.removeAt(deleteIdx)
+                        tempDeleteData = currentTimeTable[deleteIdx]
+                        currentTimeTable.removeAt(deleteIdx)
                     }
                     if (checkInputDataEmpty(deleteIdx, tempDeleteData)) return@launch
-                    if (checkTime1(deleteIdx, tempDeleteData)) return@launch
-                    if (checkTime2(deleteIdx, tempDeleteData)) return@launch
-                    if (checkTime3(deleteIdx, tempDeleteData)) return@launch
+
+                    if (checkAllTimeIsValid(deleteIdx = deleteIdx, tempDeleteData = tempDeleteData).not()) return@launch
+
                     val addTimeData = extractData(locationList, inputClassName, inputProfessor)
                     if (checkeLearning(addTimeData, deleteIdx, tempDeleteData)) return@launch
                     if (checkOverlapTime(addTimeData, deleteIdx, tempDeleteData)) return@launch
-                    tempTimeData.addAll(addTimeData)
-                    timetableSel.timeTableJsonData = arrayToJson(tempTimeData)
+                    currentTimeTable.addAll(addTimeData)
+                    timetableSel.timeTableJsonData = arrayToJson(currentTimeTable)
                     db.timetableListDao().update(timetableSel)
                     goToMainActivity()
                 } catch (e: Exception) {
@@ -179,8 +140,7 @@ class ClassInfoActivity : AppCompatActivity() {
                 if (time!! == "" || time == "()" || time == "None") {
                     binding.location1.setText("이러닝")
                     binding.tvDay1.text = "없음"
-                }
-                else {
+                } else {
                     setTimeLocationView(time)
                 }
             } else if (time!! == "None") {
@@ -211,6 +171,42 @@ class ClassInfoActivity : AppCompatActivity() {
         }
         binding.deleteTime3.setOnClickListener {
             setVisibilityTime(View.GONE, 3)
+        }
+    }
+
+    private fun showDaySortDialog(textView: TextView) {
+        val dialog = DaySortDialog(this)
+        dialog.setDialogListener(object : DaySortDialog.ItemClickListener {
+            override fun onClick(text: String) {
+                textView.text = text
+            }
+        })
+        dialog.show()
+    }
+
+    private fun initDefaultData() {
+        with(binding) {
+            dayList = listOf(tvDay1, tvDay2, tvDay3)
+            startTimeList = listOf(etStartClass1, etStartClass2, etStartClass3)
+            endTimeList = listOf(etEndClass1, etEndClass2, etEndClass3)
+            deleteTimeList = listOf(deleteTime1, deleteTime2, deleteTime3)
+            locationList = listOf(location1, location2, location3)
+            clDayList = listOf(clDay1, clDay2, clDay3)
+            clTimeList = listOf(clClass1, clClass2, clClass3)
+
+            radioHashMap = hashMapOf(
+                rbSky.id to SKY, rbNavy.id to NAVY, rbPurple.id to PURPLE,
+                rbDarkPurple.id to DARK_PURPLE, rbMint.id to MINT, rbDarkGreen.id to DARK_GREEN,
+                rbApricot.id to APRICOT, rbOrange.id to ORANGE, rbPink.id to PINK,
+                rbBrown.id to BROWN, rbGreen.id to GREEN, rbGray.id to GRAY
+            )
+
+            timeColorRadioButtonHashMap = hashMapOf(
+                SKY to rbSky, NAVY to rbNavy, PURPLE to rbPurple,
+                DARK_PURPLE to rbPurple, MINT to rbMint, DARK_GREEN to rbDarkGreen,
+                APRICOT to rbApricot, ORANGE to rbOrange, PINK to rbPink,
+                BROWN to rbBrown, GREEN to rbGreen, GRAY to rbGray
+            )
         }
     }
 
@@ -249,7 +245,7 @@ class ClassInfoActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             if (modeEditTime(deleteIdx))
-                tempTimeData.add(deleteIdx, tempDeleteData)
+                currentTimeTable.add(deleteIdx, tempDeleteData)
         }
     }
 
@@ -259,7 +255,7 @@ class ClassInfoActivity : AppCompatActivity() {
         tempDeleteData: TimeData
     ): Boolean {
         for (newTime in addTimeData) {
-            for (oldTime in tempTimeData) {
+            for (oldTime in currentTimeTable) {
                 if (newTime.day == oldTime.day) {
                     val newStartTime = newTime.startTime.toInt()
                     val newEndTime = newTime.endTime.toInt()
@@ -277,7 +273,7 @@ class ClassInfoActivity : AppCompatActivity() {
                             ).show()
                         }
                         if (modeEditTime(deleteIdx))
-                            tempTimeData.add(deleteIdx, tempDeleteData)
+                            currentTimeTable.add(deleteIdx, tempDeleteData)
                         return true
                     }
                 }
@@ -293,7 +289,8 @@ class ClassInfoActivity : AppCompatActivity() {
     ): Boolean {
         for (newTime in addTimeData) {
             if ((newTime.day.contains("토") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) &&
-                tempTimeData.find { it.location == "이러닝" || it.day == "토" } != null) {
+                currentTimeTable.find { it.location == "이러닝" || it.day == "토" } != null
+            ) {
                 withContext(Main) {
                     Toast.makeText(
                         this@ClassInfoActivity,
@@ -302,7 +299,7 @@ class ClassInfoActivity : AppCompatActivity() {
                     ).show()
                 }
                 if (modeEditTime(deleteIdx))
-                    tempTimeData.add(deleteIdx, tempDeleteData)
+                    currentTimeTable.add(deleteIdx, tempDeleteData)
                 return true
             }
         }
@@ -357,22 +354,44 @@ class ClassInfoActivity : AppCompatActivity() {
                 ).show()
             }
             if (modeEditTime(deleteIdx))
-                tempTimeData.add(deleteIdx, tempDeleteData)
+                currentTimeTable.add(deleteIdx, tempDeleteData)
             return true
         }
         return false
     }
 
-    private suspend fun checkTime1(
+    private suspend fun checkAllTimeIsValid(
         deleteIdx: Int,
         tempDeleteData: TimeData
     ): Boolean {
-        if(binding.tvDay1.text == "없음") return false
-        if (binding.location1.isVisible &&
-            (binding.location1.text.toString().isBlank() || binding.etStartClass1.text.toString().isBlank() || binding.etEndClass1.text.toString().isBlank()
-                    || (binding.etStartClass1.text.toString().toInt() > binding.etEndClass1.text.toString().toInt()
-                    || (binding.etStartClass1.text.toString().toInt() !in 1..15)
-                    || (binding.etEndClass1.text.toString().toInt() !in 1..15)))
+        for(idx in dayList.indices) {
+            if(checkTimeIsValid(
+                    deleteIdx = deleteIdx,
+                    tempDeleteData = tempDeleteData,
+                    tvDay = dayList[idx],
+                    location = locationList[idx],
+                    start = startTimeList[idx].textToIntOrNull(),
+                    end = endTimeList[idx].textToIntOrNull()
+                ).not()) return false
+        }
+
+        return true
+    }
+
+    private suspend fun checkTimeIsValid(
+        deleteIdx: Int,
+        tempDeleteData: TimeData,
+        tvDay: TextView,
+        location: TextView,
+        start: Int?,
+        end: Int?
+    ): Boolean {
+        if (tvDay.text == "없음") return false
+        if (location.isVisible &&
+            (location.text.toString().isBlank() || start == null || end == null
+                    || (start > end
+                    || (start !in 1..15)
+                    || (end !in 1..15)))
         ) {
             withContext(Main) {
                 Toast.makeText(
@@ -382,62 +401,11 @@ class ClassInfoActivity : AppCompatActivity() {
                 ).show()
             }
             if (modeEditTime(deleteIdx))
-                tempTimeData.add(deleteIdx, tempDeleteData)
-            return true
+                currentTimeTable.add(deleteIdx, tempDeleteData)
+            return false
         }
-        return false
+        return true
     }
-
-    private suspend fun checkTime2(
-        deleteIdx: Int,
-        tempDeleteData: TimeData
-    ): Boolean {
-        if(binding.tvDay2.text == "없음") return false
-        if (binding.location2.isVisible &&
-            (binding.location2.text.toString().isBlank() || binding.etStartClass2.text.toString().isBlank() || binding.etEndClass2.text.toString().isBlank()
-                    || (binding.etStartClass2.text.toString().toInt() > binding.etEndClass2.text.toString().toInt()
-                    || (binding.etStartClass2.text.toString().toInt() !in 1..15)
-                    || (binding.etEndClass2.text.toString().toInt() !in 1..15)) && binding.tvDay2.text != "없음")
-        ) {
-            withContext(Main) {
-                Toast.makeText(
-                    this@ClassInfoActivity,
-                    "시간 또는 장소를 확인해주세요!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            if (modeEditTime(deleteIdx))
-                tempTimeData.add(deleteIdx, tempDeleteData)
-            return true
-        }
-        return false
-    }
-
-    private suspend fun checkTime3(
-        deleteIdx: Int,
-        tempDeleteData: TimeData
-    ): Boolean {
-        if(binding.tvDay3.text == "없음") return false
-        if (binding.location3.isVisible &&
-            (binding.location3.text.toString().isBlank() || binding.etStartClass3.text.toString().isBlank() || binding.etEndClass3.text.toString().isBlank()
-                    || (binding.etStartClass3.text.toString().toInt() > binding.etEndClass3.text.toString().toInt()
-                    || (binding.etStartClass3.text.toString().toInt() !in 1..15)
-                    || (binding.etEndClass3.text.toString().toInt() !in 1..15)) && binding.tvDay3.text != "없음")
-        ) {
-            withContext(Main) {
-                Toast.makeText(
-                    this@ClassInfoActivity,
-                    "시간 또는 장소를 확인해주세요!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            if (modeEditTime(deleteIdx))
-                tempTimeData.add(deleteIdx, tempDeleteData)
-            return true
-        }
-        return false
-    }
-
     private fun modeEditTime(deleteIdx: Int) = deleteIdx != -1
 
     private fun setTimeTableCellColor(): Int {
@@ -447,7 +415,7 @@ class ClassInfoActivity : AppCompatActivity() {
             val randomNum = MutableList(12) { i -> i }.shuffled().toMutableList()
             do {
                 randomColor = colorMap.values.toIntArray()[randomNum.removeLast()]
-            } while (jsonStr.contains("$randomColor") && (tempTimeData.size < 12))
+            } while (jsonStr.contains("$randomColor") && (currentTimeTable.size < 12))
         }
 
         timeColorRadioButtonHashMap[randomColor]?.isChecked = true

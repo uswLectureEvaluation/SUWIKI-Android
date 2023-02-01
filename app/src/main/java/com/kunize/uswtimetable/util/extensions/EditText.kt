@@ -3,6 +3,7 @@ package com.kunize.uswtimetable.util.extensions
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.TextView
 import kotlinx.coroutines.*
 
 fun EditText.afterTextChanged(completion: (Editable?) -> Unit) {
@@ -45,4 +46,8 @@ fun EditText.afterEditTextChanged(completion: (Editable?) -> Unit) {
             }
         }
     })
+}
+
+fun EditText.textToIntOrNull(): Int? {
+    return this.text.toString().toIntOrNull()
 }
