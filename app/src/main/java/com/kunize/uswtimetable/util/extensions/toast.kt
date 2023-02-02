@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.kunize.uswtimetable.util.SuwikiApplication
 
 /**
  * 편하게 [Toast] 를 만들 수 있게 재공하는 확장 함수
@@ -57,3 +58,11 @@ private fun toastBuilder(
     message: String,
     length: Int,
 ) = Toast.makeText(context, message, length).also { it.show() }
+
+fun showShortToast(message: String) {
+    toast(SuwikiApplication.instance, message, Toast.LENGTH_SHORT)
+}
+
+fun showLongToast(message: String) {
+    toast(SuwikiApplication.instance, message, Toast.LENGTH_SHORT)
+}
