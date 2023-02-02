@@ -16,8 +16,11 @@ import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.ModelManager
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.HandleFilterResultStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.addTime.AddTimeModelManager
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.addTime.handleFilterResultStrategy.unknownFailFilterResult.UnknownAddTimeFailStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.initELearning.ELearningModelManager
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.initELearning.handleFilterResultStrategy.UnknownELearningFailStrategy
+import com.kunize.uswtimetable.util.strategy.HandleFilterResultStrategy
 import com.kunize.uswtimetable.util.TimeStringFormatter
 import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
 import com.kunize.uswtimetable.util.TimetableColor.APRICOT
@@ -36,6 +39,7 @@ import com.kunize.uswtimetable.util.interceptingFilter.FilterExecutor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -74,25 +78,30 @@ class ClassInfoActivity : AppCompatActivity() {
         setVisibilityTime(View.GONE, 2)
         setVisibilityTime(View.GONE, 3)
 
-        try {
-            if (modeEditTime(deleteIdx)) {
-                //시간표 수정 로직
-                if (time == "" || time == "()" || time == "None") {
-                    binding.location1.setText("이러닝")
-                    binding.tvDay1.text = "없음"
-                } else {
-                    setTimeLocationView(time)
-                }
-            } else if (time == "None") {
-                binding.location1.setText("이러닝")
-                binding.tvDay1.text = "없음"
-            } else {
-                setTimeLocationView(time)
-            }
-        } catch (e: Exception) {
-            Log.d("timeSplit", "$e")
-            binding.location1.setText("이러닝")
-            binding.tvDay1.text = "없음"
+        val eLearningModelManager = ELearningModelManager(
+            isModifiedMode = modeEditTime(deleteIdx),
+            time = time ?: "",
+            location1 = binding.location1,
+            day1 = binding.tvDay1,
+            locationList = locationList,
+            dayList = dayList,
+            startTimeList = startTimeList,
+            endTimeList = endTimeList,
+            deleteTimeList = deleteTimeList,
+            clTimeList = clTimeList,
+            clDayList = clDayList
+        )
+
+        val checkELearningFilter = FilterExecutor()
+        val eLearningFilterResult =
+            checkELearningFilter.addFilter(eLearningModelManager.getFilterChainModel()).invoke()
+
+        val handleELearningFilterResult = HandleFilterResultStrategy(UnknownELearningFailStrategy())
+
+        MainScope().launch {
+            handleELearningFilterResult
+                .addStrategy(eLearningModelManager.getStrategies())
+                .invoke(eLearningFilterResult)
         }
 
         CoroutineScope(IO).launch {
@@ -144,7 +153,7 @@ class ClassInfoActivity : AppCompatActivity() {
                     currentTimeTable.removeAt(deleteIdx)
                 }
 
-                val modelManager = ModelManager(
+                val modelManager = AddTimeModelManager(
                     dayList = dayList,
                     locationList = locationList,
                     startTimeList = startTimeList,
@@ -158,20 +167,22 @@ class ClassInfoActivity : AppCompatActivity() {
                 )
 
                 val timetableValidationFilter = FilterExecutor()
-                val filterResult = timetableValidationFilter
+                val timetableFilterResult = timetableValidationFilter
                     .addFilter(modelManager.getFilterChainModels())
                     .invoke()
 
                 val handleAddTimeFilterResultStrategy =
-                    HandleFilterResultStrategy(doWhenNotInvalidation = {
-                        if (modeEditTime(deleteIdx))
-                            currentTimeTable.add(deleteIdx, tempDeleteData)
-                    })
+                    HandleFilterResultStrategy(
+                        unknownFailStrategy = UnknownAddTimeFailStrategy(),
+                        doWhenNotInvalidation = {
+                            if (modeEditTime(deleteIdx))
+                                currentTimeTable.add(deleteIdx, tempDeleteData)
+                        })
 
                 withContext(Main) {
                     handleAddTimeFilterResultStrategy
                         .addStrategy(modelManager.getStrategies())
-                        .invoke(filterResult)
+                        .invoke(timetableFilterResult)
                 }
             }
         }
@@ -210,21 +221,6 @@ class ClassInfoActivity : AppCompatActivity() {
                 APRICOT to rbApricot, ORANGE to rbOrange, PINK to rbPink,
                 BROWN to rbBrown, GREEN to rbGreen, GRAY to rbGray
             )
-        }
-    }
-
-    private fun setTimeLocationView(time: String?) {
-        val timeListSplitByDay = TimeStringFormatter().splitTimeForClassInfo(time)
-        for (i in timeListSplitByDay.indices) {
-            setVisibilityTime(View.VISIBLE, i + 1)
-            val tempSplit = timeListSplitByDay[i].split("(")
-            locationList[i].setText(tempSplit[0])
-            dayList[i].text = tempSplit[1][0].toString() + "요일"
-            val onlyTime = tempSplit[1].substring(1).replace(")", "").split(",")
-            val startTime = onlyTime[0]
-            val endTime = onlyTime.last()
-            startTimeList[i].setText(startTime)
-            endTimeList[i].setText(endTime)
         }
     }
 

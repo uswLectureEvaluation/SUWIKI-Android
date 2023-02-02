@@ -5,6 +5,11 @@ import android.util.Log
 class FilterExecutor {
     private val filterChainModels = mutableListOf<FilterChainModel>()
 
+    fun addFilter(filterChainModel: FilterChainModel): FilterExecutor {
+        filterChainModels.add(filterChainModel)
+        return this
+    }
+
     fun addFilter(filterChainModels: List<FilterChainModel>): FilterExecutor {
         this.filterChainModels.addAll(filterChainModels)
         return this
