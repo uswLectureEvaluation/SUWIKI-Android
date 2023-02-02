@@ -12,6 +12,6 @@ class ELearningNotValidationStrategy: FilterResultStrategy {
     override fun identifyFilterState(state: FilterState) = state is ELearningNotValidateState
 
     override suspend fun invoke(request: FilterState) {
-        showLongToast("토요일이거나 시간이 없는 과목은 하나만 추가 가능합니다!")
+        showLongToast("토요일이거나 시간이 없는 과목은 최대 3개까지 추가 가능해요")
     }
 }

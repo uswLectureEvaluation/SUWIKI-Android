@@ -352,7 +352,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            tools:visibility="gone"
             android:id="@+id/emptyTimeTable"
             android:layout_width="match_parent"
             android:layout_height="495dp"
@@ -364,7 +363,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
 
             <TextView
                 android:id="@+id/noTitle"
@@ -394,26 +394,57 @@
 
     <TextView
         android:id="@+id/textView26"
+        style="@style/TextMedium.18"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="이러닝"
-        style="@style/TextMedium.18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timetable" />
 
+    <LinearLayout
+        android:id="@+id/ll_eLearning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_rounded_border_line_15_gray_500"
+        android:orientation="vertical"
+        android:paddingTop="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView26">
+
         <TextView
-            android:background="@drawable/bg_rounded_border_line_15_gray_500"
-            android:id="@+id/eLearningText"
-            android:layout_marginTop="8dp"
+            android:id="@+id/eLearningText1"
             style="@style/TextRegular.14"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/eLearningText2"
+            style="@style/TextRegular.14"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
             android:gravity="center"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView26"/>
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/eLearningText3"
+            style="@style/TextRegular.14"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

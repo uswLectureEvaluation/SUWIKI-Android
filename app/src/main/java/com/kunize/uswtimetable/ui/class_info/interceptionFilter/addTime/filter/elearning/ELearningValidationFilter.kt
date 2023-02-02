@@ -18,7 +18,7 @@ class ELearningValidationFilter : Filter {
         with(request) {
             for (newTime in timeDataTobeAdded) {
                 if ((newTime.day.contains("토") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) &&
-                    currentTimeTable.find { it.location == "이러닝" || it.day == "토" } != null
+                    currentTimeTable.count { it.location == "이러닝" || it.day == "토" } > 2
                 ) {
                     return ELearningNotValidateState
                 }

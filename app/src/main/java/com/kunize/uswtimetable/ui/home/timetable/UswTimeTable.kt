@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.isVisible
 import androidx.core.view.size
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.TimeData
@@ -50,6 +51,7 @@ class UswTimeTable @JvmOverloads constructor(
 
     private var timeHeight = 50.dp
     private val timeColumnList: List<TextView>
+    private val eLearningList: List<TextView>
 
     var timeTableData = mutableListOf<TimeData>()
 
@@ -68,6 +70,7 @@ class UswTimeTable @JvmOverloads constructor(
         }
         with(binding) {
             timeColumnList = listOf(nine, ten, eleven, twelve, thirteen, fourteen, fifteen)
+            eLearningList = listOf(eLearningText1, eLearningText2, eLearningText3)
 
             customTimeTable.visibility = View.INVISIBLE
             emptyTimeTable.visibility = View.INVISIBLE
@@ -102,8 +105,17 @@ class UswTimeTable @JvmOverloads constructor(
             binding.customTimeTable.removeView(v)
             tempTimeData.remove(data)
             reDrawColumn()
-        } else
-            binding.eLearningText.text = ""
+        } else {
+            eLearningList.forEachIndexed { index,  textView ->
+                if(textView.text ==
+                    context.getString(R.string.elearning_format, data.name, data.day, data.startTime, data.endTime))
+                {
+                    textView.text = ""
+                    if(eLearningList.count { it.isVisible } > 1) textView.visibility = View.GONE
+                    return@forEachIndexed
+                }
+            }
+        }
     }
 
     private fun setOnClickEditButton(
@@ -147,7 +159,7 @@ class UswTimeTable @JvmOverloads constructor(
     }
 
     fun drawTable() {
-        binding.eLearningText.text = ""
+        clearELearningTextList()
         if (isEmpty) {
             binding.emptyTimeTable.visibility = VISIBLE
             binding.customTimeTable.visibility = GONE
@@ -159,7 +171,7 @@ class UswTimeTable @JvmOverloads constructor(
         CoroutineScope(IO).launch {
             withContext(Main) {
                 binding.customTimeTable.removeViews(28, binding.customTimeTable.size - 28)
-                binding.eLearningText.text = ""
+                clearELearningTextList()
                 reDrawColumn()
             }
             val set = ConstraintSet()
@@ -339,16 +351,31 @@ class UswTimeTable @JvmOverloads constructor(
 
     private suspend fun addeLearningView(data: TimeData): Boolean {
         if ((data.location == "이러닝" && data.day == "") || data.day == "토") {
-            binding.eLearningText.text =
-                "${data.name} (${data.day} ${data.startTime}~${data.endTime})"
-            withContext(Main) {
-                binding.eLearningText.setOnClickListener {
-                    if (binding.eLearningText.text.toString() != "")
-                        showBottomSheet(data, timeTableData, null)
+            for(eLearningText in eLearningList) {
+                if(eLearningText.text.isNotEmpty()) continue
+
+                withContext(Main) {
+                    eLearningText.text =
+                        context.getString(R.string.elearning_format, data.name, data.day, data.startTime, data.endTime)
+                    eLearningText.visibility = View.VISIBLE
+
+                    eLearningText.setOnClickListener {
+                        if (eLearningText.text.toString() != "")
+                            showBottomSheet(data, timeTableData, null)
+                    }
                 }
+                break
             }
             return true
         }
         return false
+    }
+
+    private fun clearELearningTextList() {
+        eLearningList[0].text= ""
+        for(idx in 1 until eLearningList.size) {
+            eLearningList[idx].text = ""
+            eLearningList[idx].visibility = View.GONE
+        }
     }
 }
