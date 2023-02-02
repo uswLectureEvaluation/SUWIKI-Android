@@ -20,6 +20,18 @@ import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
+import com.kunize.uswtimetable.ui.class_info.filter.elearning.ELearningNotValidate
+import com.kunize.uswtimetable.ui.class_info.filter.elearning.ELearningValidationFilter
+import com.kunize.uswtimetable.ui.class_info.filter.elearning.ELearningValidationFilterRequest
+import com.kunize.uswtimetable.ui.class_info.filter.timeLocation.TimeLocationNotValidate
+import com.kunize.uswtimetable.ui.class_info.filter.timeLocation.TimeLocationValidationFilter
+import com.kunize.uswtimetable.ui.class_info.filter.timeLocation.TimeLocationValidationFilterRequest
+import com.kunize.uswtimetable.ui.class_info.filter.timeOverlap.OverlapNotValidate
+import com.kunize.uswtimetable.ui.class_info.filter.timeOverlap.OverlapValidationFilter
+import com.kunize.uswtimetable.ui.class_info.filter.timeOverlap.OverlapValidationFilterRequest
+import com.kunize.uswtimetable.ui.class_info.filter.timeVisible.VisibleNotValidate
+import com.kunize.uswtimetable.ui.class_info.filter.timeVisible.VisibleValidationFilter
+import com.kunize.uswtimetable.ui.class_info.filter.timeVisible.VisibleValidationFilterRequest
 import com.kunize.uswtimetable.util.TimeStringFormatter
 import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
 import com.kunize.uswtimetable.util.TimetableColor.APRICOT
@@ -35,6 +47,9 @@ import com.kunize.uswtimetable.util.TimetableColor.PINK
 import com.kunize.uswtimetable.util.TimetableColor.PURPLE
 import com.kunize.uswtimetable.util.TimetableColor.SKY
 import com.kunize.uswtimetable.util.extensions.textToIntOrNull
+import com.kunize.uswtimetable.util.interceptingFilter.FilterChainModel
+import com.kunize.uswtimetable.util.interceptingFilter.FilterExecutor
+import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -111,23 +126,119 @@ class ClassInfoActivity : AppCompatActivity() {
             val inputProfessor = binding.editProfessorName.text.toString()
             CoroutineScope(IO).launch {
                 var tempDeleteData = TimeData()
-                try {
-                    if (modeEditTime(deleteIdx)) {
-                        tempDeleteData = currentTimeTable[deleteIdx]
-                        currentTimeTable.removeAt(deleteIdx)
+
+                if (modeEditTime(deleteIdx)) {
+                    tempDeleteData = currentTimeTable[deleteIdx]
+                    currentTimeTable.removeAt(deleteIdx)
+                }
+
+                val timeDataTobeAdded =
+                    extractData(locationList, inputClassName, inputProfessor)
+
+                val timetableValidationFilter = FilterExecutor()
+                timetableValidationFilter
+                    .addFilter(
+                        FilterChainModel(
+                            TimeLocationValidationFilter(),
+                            TimeLocationValidationFilterRequest(
+                                deleteIdx = deleteIdx,
+                                tempDeleteData = tempDeleteData,
+                                dayList = dayList,
+                                locationList = locationList,
+                                startTimeList = startTimeList,
+                                endTimeList = endTimeList
+                            )
+                        )
+                    )
+                    .addFilter(
+                        FilterChainModel(
+                            ELearningValidationFilter(),
+                            ELearningValidationFilterRequest(
+                                timeDataTobeAdded = timeDataTobeAdded,
+                                deleteIdx = deleteIdx,
+                                tempDeleteData = tempDeleteData,
+                                currentTimeTable = currentTimeTable
+                            )
+                        )
+                    )
+                    .addFilter(
+                        FilterChainModel(
+                            OverlapValidationFilter(),
+                            OverlapValidationFilterRequest(
+                                timeDataTobeAdded = timeDataTobeAdded,
+                                deleteIdx = deleteIdx,
+                                tempDeleteData = tempDeleteData,
+                                currentTimeTable = currentTimeTable
+                            )
+                        )
+                    )
+                    .addFilter(
+                        FilterChainModel(
+                            VisibleValidationFilter(),
+                            VisibleValidationFilterRequest(
+                                deleteTimeList = deleteTimeList
+                            )
+                        )
+                    )
+
+                val filterResult = timetableValidationFilter.execute()
+
+                when (filterResult) {
+                    is FilterState.Validate -> {
+                        currentTimeTable.addAll(timeDataTobeAdded)
+                        timetableSel.timeTableJsonData = arrayToJson(currentTimeTable)
+                        db.timetableListDao().update(timetableSel)
+                        goToMainActivity()
                     }
 
-                    if (checkAllTimeIsNotValid(deleteIdx = deleteIdx, tempDeleteData = tempDeleteData)) return@launch
+                    is TimeLocationNotValidate, VisibleNotValidate -> {
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@ClassInfoActivity,
+                                "시간 또는 장소를 확인해주세요!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        if (modeEditTime(deleteIdx))
+                            currentTimeTable.add(deleteIdx, tempDeleteData)
+                    }
 
-                    val timeDataTobeAdded = extractData(locationList, inputClassName, inputProfessor)
-                    if (checkeLearning(timeDataTobeAdded, deleteIdx, tempDeleteData)) return@launch
-                    if (checkOverlapTime(timeDataTobeAdded, deleteIdx, tempDeleteData)) return@launch
-                    currentTimeTable.addAll(timeDataTobeAdded)
-                    timetableSel.timeTableJsonData = arrayToJson(currentTimeTable)
-                    db.timetableListDao().update(timetableSel)
-                    goToMainActivity()
-                } catch (e: Exception) {
-                    unknownError(e, deleteIdx, tempDeleteData)
+                    is OverlapNotValidate -> {
+                        val overlapTime = filterResult.overlapTime
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@ClassInfoActivity,
+                                "겹치는 시간이 있어요!\n${overlapTime.name} (${overlapTime.day}${overlapTime.startTime} ~ ${overlapTime.endTime})",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        if (modeEditTime(deleteIdx))
+                            currentTimeTable.add(deleteIdx, tempDeleteData)
+                    }
+
+                    is ELearningNotValidate -> {
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@ClassInfoActivity,
+                                "토요일이거나 시간이 없는 과목은 하나만 추가 가능합니다!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        if (modeEditTime(deleteIdx))
+                            currentTimeTable.add(deleteIdx, tempDeleteData)
+                    }
+
+                    else -> {
+                        withContext(Main) {
+                            Toast.makeText(
+                                this@ClassInfoActivity,
+                                "문제가 있어 시간표를 추가할 수 없어요!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            if (modeEditTime(deleteIdx))
+                                currentTimeTable.add(deleteIdx, tempDeleteData)
+                        }
+                    }
                 }
             }
         }
@@ -231,80 +342,6 @@ class ClassInfoActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private suspend fun unknownError(
-        e: Exception,
-        deleteIdx: Int,
-        tempDeleteData: TimeData
-    ) {
-        Log.d("UnKnownError", "$e")
-        withContext(Main) {
-            Toast.makeText(
-                this@ClassInfoActivity,
-                "문제가 있어 시간표를 추가할 수 없어요!",
-                Toast.LENGTH_SHORT
-            ).show()
-            if (modeEditTime(deleteIdx))
-                currentTimeTable.add(deleteIdx, tempDeleteData)
-        }
-    }
-
-    private suspend fun checkOverlapTime(
-        timeDataTobeAdded: MutableList<TimeData>,
-        deleteIdx: Int,
-        tempDeleteData: TimeData
-    ): Boolean {
-        for (newTime in timeDataTobeAdded) {
-            for (oldTime in currentTimeTable) {
-                if (newTime.day == oldTime.day) {
-                    val newStartTime = newTime.startTime.toInt()
-                    val newEndTime = newTime.endTime.toInt()
-                    val oldStartTime = oldTime.startTime.toInt()
-                    val oldEndTime = oldTime.endTime.toInt()
-                    if (
-                        (newStartTime in oldStartTime..oldEndTime) || (newEndTime in oldStartTime..oldEndTime) ||
-                        (oldStartTime in newStartTime..newEndTime) || (oldEndTime in newStartTime..newEndTime)
-                    ) {
-                        withContext(Main) {
-                            Toast.makeText(
-                                this@ClassInfoActivity,
-                                "겹치는 시간이 있어요!\n${oldTime.name} (${oldTime.day}${oldTime.startTime} ~ ${oldTime.endTime})",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        if (modeEditTime(deleteIdx))
-                            currentTimeTable.add(deleteIdx, tempDeleteData)
-                        return true
-                    }
-                }
-            }
-        }
-        return false
-    }
-
-    private suspend fun checkeLearning(
-        timeDataTobeAdded: MutableList<TimeData>,
-        deleteIdx: Int,
-        tempDeleteData: TimeData
-    ): Boolean {
-        for (newTime in timeDataTobeAdded) {
-            if ((newTime.day.contains("토") || newTime.location.contains("이러닝") || newTime.location.isEmpty()) &&
-                currentTimeTable.find { it.location == "이러닝" || it.day == "토" } != null
-            ) {
-                withContext(Main) {
-                    Toast.makeText(
-                        this@ClassInfoActivity,
-                        "토요일이거나 시간이 없는 과목은 하나만 추가 가능합니다!",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                if (modeEditTime(deleteIdx))
-                    currentTimeTable.add(deleteIdx, tempDeleteData)
-                return true
-            }
-        }
-        return false
-    }
-
     private fun extractData(
         extractionList: List<TextView>,
         inputClassName: String,
@@ -338,52 +375,6 @@ class ClassInfoActivity : AppCompatActivity() {
         return addTimeData
     }
 
-    private suspend fun checkAllTimeIsNotValid(
-        deleteIdx: Int,
-        tempDeleteData: TimeData
-    ): Boolean {
-        for(idx in dayList.indices) {
-            if(checkTimeIsNotValid(
-                    deleteIdx = deleteIdx,
-                    tempDeleteData = tempDeleteData,
-                    tvDay = dayList[idx],
-                    location = locationList[idx],
-                    start = startTimeList[idx].textToIntOrNull(),
-                    end = endTimeList[idx].textToIntOrNull()
-                )) return true
-        }
-
-        return false
-    }
-
-    private suspend fun checkTimeIsNotValid(
-        deleteIdx: Int,
-        tempDeleteData: TimeData,
-        tvDay: TextView,
-        location: TextView,
-        start: Int?,
-        end: Int?
-    ): Boolean {
-        if (tvDay.text == "없음") return false
-        if (location.isVisible &&
-            (location.text.toString().isBlank() || start == null || end == null
-                    || (start > end
-                    || (start !in 1..15)
-                    || (end !in 1..15)))
-        ) {
-            withContext(Main) {
-                Toast.makeText(
-                    this@ClassInfoActivity,
-                    "시간 또는 장소를 확인해주세요!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            if (modeEditTime(deleteIdx))
-                currentTimeTable.add(deleteIdx, tempDeleteData)
-            return true
-        }
-        return false
-    }
     private fun modeEditTime(deleteIdx: Int) = deleteIdx != -1
 
     private fun setTimeTableCellColor(): Int {
