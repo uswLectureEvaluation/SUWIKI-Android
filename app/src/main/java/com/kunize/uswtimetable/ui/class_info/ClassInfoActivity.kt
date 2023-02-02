@@ -9,29 +9,30 @@ import android.view.View
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.kunize.uswtimetable.ui.main.MainActivity
-import com.kunize.uswtimetable.ui.home.timetable.DBManager.arrayToJson
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.getCurrentTimetableInfo
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.jsonToArray
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.elearning.ELearningNotValidate
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.elearning.ELearningValidationFilter
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.elearning.ELearningValidationFilterRequest
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLocation.TimeLocationNotValidate
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLocation.TimeLocationValidationFilter
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLocation.TimeLocationValidationFilterRequest
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap.OverlapNotValidate
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap.OverlapValidationFilter
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap.OverlapValidationFilterRequest
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleNotValidate
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleValidationFilter
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleValidationFilterRequest
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.HandleFilterResultStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.elearning.ELearningNotValidationStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timeLocation.TimeLocationNotValidationStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timeOverlap.OverlapNotValidationStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timeVisible.TimeVisibleNotValidationStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timetableValidation.TimetableValidationStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.unknownFailFilterResult.UnknownFailStrategy
 import com.kunize.uswtimetable.util.TimeStringFormatter
 import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
 import com.kunize.uswtimetable.util.TimetableColor.APRICOT
@@ -48,7 +49,6 @@ import com.kunize.uswtimetable.util.TimetableColor.PURPLE
 import com.kunize.uswtimetable.util.TimetableColor.SKY
 import com.kunize.uswtimetable.util.interceptingFilter.FilterChainModel
 import com.kunize.uswtimetable.util.interceptingFilter.FilterExecutor
-import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -182,62 +182,30 @@ class ClassInfoActivity : AppCompatActivity() {
 
                 val filterResult = timetableValidationFilter.execute()
 
-                when (filterResult) {
-                    is FilterState.Validate -> {
-                        currentTimeTable.addAll(timeDataTobeAdded)
-                        timetableSel.timeTableJsonData = arrayToJson(currentTimeTable)
-                        db.timetableListDao().update(timetableSel)
-                        goToMainActivity()
-                    }
+                val handleFilterResultStrategy = HandleFilterResultStrategy(doWhenNotInvalidation =  {
+                    if (modeEditTime(deleteIdx))
+                        currentTimeTable.add(deleteIdx, tempDeleteData)
+                })
 
-                    is TimeLocationNotValidate, VisibleNotValidate -> {
-                        withContext(Main) {
-                            Toast.makeText(
-                                this@ClassInfoActivity,
-                                "시간 또는 장소를 확인해주세요!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        if (modeEditTime(deleteIdx))
-                            currentTimeTable.add(deleteIdx, tempDeleteData)
-                    }
+                handleFilterResultStrategy.addStrategy(
+                    listOf(
+                        ELearningNotValidationStrategy(),
+                        TimeLocationNotValidationStrategy(),
+                        OverlapNotValidationStrategy(),
+                        TimetableValidationStrategy(
+                            context = this@ClassInfoActivity,
+                            currentTimeTable = currentTimeTable,
+                            timeDataTobeAdded = timeDataTobeAdded,
+                            timetableSel = timetableSel,
+                            db = db
+                        ),
+                        TimeVisibleNotValidationStrategy(),
+                        UnknownFailStrategy()
+                    )
+                )
 
-                    is OverlapNotValidate -> {
-                        val overlapTime = filterResult.overlapTime
-                        withContext(Main) {
-                            Toast.makeText(
-                                this@ClassInfoActivity,
-                                "겹치는 시간이 있어요!\n${overlapTime.name} (${overlapTime.day}${overlapTime.startTime} ~ ${overlapTime.endTime})",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        if (modeEditTime(deleteIdx))
-                            currentTimeTable.add(deleteIdx, tempDeleteData)
-                    }
-
-                    is ELearningNotValidate -> {
-                        withContext(Main) {
-                            Toast.makeText(
-                                this@ClassInfoActivity,
-                                "토요일이거나 시간이 없는 과목은 하나만 추가 가능합니다!",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        if (modeEditTime(deleteIdx))
-                            currentTimeTable.add(deleteIdx, tempDeleteData)
-                    }
-
-                    else -> {
-                        withContext(Main) {
-                            Toast.makeText(
-                                this@ClassInfoActivity,
-                                "문제가 있어 시간표를 추가할 수 없어요!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            if (modeEditTime(deleteIdx))
-                                currentTimeTable.add(deleteIdx, tempDeleteData)
-                        }
-                    }
+                withContext(Main) {
+                    handleFilterResultStrategy(filterResult)
                 }
             }
         }

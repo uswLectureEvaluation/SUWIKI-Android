@@ -1,5 +1,7 @@
 package com.kunize.uswtimetable.util.interceptingFilter
 
+import android.util.Log
+
 class FilterExecutor {
     private val filterChainModels = mutableListOf<FilterChainModel>()
 
@@ -17,6 +19,9 @@ class FilterExecutor {
                 }
             }
             FilterState.Validate
-        } catch (e: Exception) { UnknownFilterFail }
+        } catch (e: Exception) {
+            Log.e("TimetableError", e.stackTraceToString())
+            UnknownFilterFailState
+        }
     }
 }

@@ -4,13 +4,13 @@ import android.view.View
 import com.kunize.uswtimetable.util.interceptingFilter.Filter
 import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
-import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFail
+import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFailState
 
 class VisibleValidationFilter : Filter {
 
     override fun execute(request: FilterRequest): FilterState {
         return if (request is VisibleValidationFilterRequest) checkVisible(request)
-        else UnknownFilterFail
+        else UnknownFilterFailState
     }
 
     private fun checkVisible(
@@ -20,7 +20,7 @@ class VisibleValidationFilter : Filter {
             for(deleteTime in deleteTimeList) {
                 if(deleteTime.visibility == View.VISIBLE) return FilterState.Validate
             }
-            return VisibleNotValidate
+            return VisibleNotValidateState
         }
     }
 }

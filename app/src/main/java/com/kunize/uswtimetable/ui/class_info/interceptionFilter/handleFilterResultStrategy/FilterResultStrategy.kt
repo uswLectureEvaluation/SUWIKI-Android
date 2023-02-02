@@ -3,7 +3,9 @@ package com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterRes
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 
 interface FilterResultStrategy {
-    fun identifyFilterState(filter: FilterState): Boolean
+    fun identifyFilterState(state: FilterState): Boolean
 
-    fun invoke()
+    fun getRequest(state: FilterState): FilterResultStrategyRequest
+
+    suspend operator fun invoke(request: FilterResultStrategyRequest)
 }

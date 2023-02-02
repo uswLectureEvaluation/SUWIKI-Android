@@ -2,4 +2,4 @@ package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLoca
 
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 
-object TimeLocationNotValidate: FilterState
+object TimeLocationNotValidateState: FilterState

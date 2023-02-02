@@ -2,4 +2,4 @@ package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisi
 
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 
-object VisibleNotValidate: FilterState
+object VisibleNotValidateState: FilterState

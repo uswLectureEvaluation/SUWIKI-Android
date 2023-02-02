@@ -1,17 +1,15 @@
 package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap
 
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleNotValidate
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleValidationFilterRequest
 import com.kunize.uswtimetable.util.interceptingFilter.Filter
 import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
-import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFail
+import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFailState
 
 class OverlapValidationFilter : Filter {
 
     override fun execute(request: FilterRequest): FilterState {
         return if (request is OverlapValidationFilterRequest) checkOverlapTime(request)
-        else UnknownFilterFail
+        else UnknownFilterFailState
     }
 
     private fun checkOverlapTime(
@@ -30,7 +28,7 @@ class OverlapValidationFilter : Filter {
                     if (
                         (newStartTime in oldStartTime..oldEndTime) || (newEndTime in oldStartTime..oldEndTime) ||
                         (oldStartTime in newStartTime..newEndTime) || (oldEndTime in newStartTime..newEndTime)
-                    ) return OverlapNotValidate(oldTime)
+                    ) return OverlapNotValidateState(oldTime)
                 }
             }
             return FilterState.Validate

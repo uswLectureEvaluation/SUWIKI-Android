@@ -7,13 +7,13 @@ import com.kunize.uswtimetable.util.extensions.textToIntOrNull
 import com.kunize.uswtimetable.util.interceptingFilter.Filter
 import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
-import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFail
+import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFailState
 
 class TimeLocationValidationFilter : Filter {
 
     override fun execute(request: FilterRequest): FilterState {
         return if (request is TimeLocationValidationFilterRequest) checkAllTimeIsValid(request)
-            else UnknownFilterFail
+            else UnknownFilterFailState
     }
 
     private fun checkAllTimeIsValid(
@@ -29,7 +29,7 @@ class TimeLocationValidationFilter : Filter {
                         start = startTimeList[idx].textToIntOrNull(),
                         end = endTimeList[idx].textToIntOrNull()
                     ).not()
-                ) return TimeLocationNotValidate
+                ) return TimeLocationNotValidateState
             }
 
             return FilterState.Validate

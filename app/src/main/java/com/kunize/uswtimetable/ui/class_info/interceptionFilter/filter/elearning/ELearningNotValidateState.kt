@@ -2,4 +2,4 @@ package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.elearnin
 
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 
-object ELearningNotValidate: FilterState
+object ELearningNotValidateState: FilterState
