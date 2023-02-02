@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.class_info.filter.timeLocation
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLocation
 
 import android.widget.EditText
 import android.widget.TextView

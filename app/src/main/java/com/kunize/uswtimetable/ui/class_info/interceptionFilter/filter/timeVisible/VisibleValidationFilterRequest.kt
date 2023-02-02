@@ -1,7 +1,6 @@
-package com.kunize.uswtimetable.ui.class_info.filter.timeVisible
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible
 
 import android.widget.TextView
-import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest
 
 data class VisibleValidationFilterRequest(

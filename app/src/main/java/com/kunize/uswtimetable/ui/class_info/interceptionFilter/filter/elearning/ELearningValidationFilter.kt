@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.class_info.filter.elearning
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.elearning
 
 import com.kunize.uswtimetable.util.interceptingFilter.Filter
 import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest

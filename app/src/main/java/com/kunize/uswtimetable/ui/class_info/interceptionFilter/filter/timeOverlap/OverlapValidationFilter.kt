@@ -1,7 +1,7 @@
-package com.kunize.uswtimetable.ui.class_info.filter.timeOverlap
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap
 
-import com.kunize.uswtimetable.ui.class_info.filter.timeVisible.VisibleNotValidate
-import com.kunize.uswtimetable.ui.class_info.filter.timeVisible.VisibleValidationFilterRequest
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleNotValidate
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleValidationFilterRequest
 import com.kunize.uswtimetable.util.interceptingFilter.Filter
 import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
@@ -10,12 +10,12 @@ import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFail
 class OverlapValidationFilter : Filter {
 
     override fun execute(request: FilterRequest): FilterState {
-        return if (request is VisibleValidationFilterRequest) checkOverlapTime(request)
+        return if (request is OverlapValidationFilterRequest) checkOverlapTime(request)
         else UnknownFilterFail
     }
 
     private fun checkOverlapTime(
-        request: VisibleValidationFilterRequest
+        request: OverlapValidationFilterRequest
     ): FilterState {
         with(request) {
             for (newTime in timeDataTobeAdded) {
@@ -30,7 +30,7 @@ class OverlapValidationFilter : Filter {
                     if (
                         (newStartTime in oldStartTime..oldEndTime) || (newEndTime in oldStartTime..oldEndTime) ||
                         (oldStartTime in newStartTime..newEndTime) || (oldEndTime in newStartTime..newEndTime)
-                    ) return VisibleNotValidate(oldTime)
+                    ) return OverlapNotValidate(oldTime)
                 }
             }
             return FilterState.Validate

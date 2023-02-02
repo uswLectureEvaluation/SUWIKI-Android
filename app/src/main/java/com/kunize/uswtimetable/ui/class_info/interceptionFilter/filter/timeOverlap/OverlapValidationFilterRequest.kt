@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.class_info.filter.timeOverlap
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap
 
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest

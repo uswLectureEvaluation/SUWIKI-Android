@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.class_info.filter.timeVisible
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible
 
 import android.view.View
 import com.kunize.uswtimetable.util.interceptingFilter.Filter
