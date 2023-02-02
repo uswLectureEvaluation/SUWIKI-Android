@@ -1,5 +1,6 @@
 package com.kunize.uswtimetable.util.strategy
 
+import android.util.Log
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.addTime.handleFilterResultStrategy.unknownFailFilterResult.UnknownAddTimeFailStrategy
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 
@@ -27,6 +28,12 @@ class HandleFilterResultStrategy(
             if (filterResult !is FilterState.Validate)
                 it()
         }
-        strategy(filterResult)
+        try {
+            strategy(filterResult)
+        } catch (e: Exception) {
+            Log.e("StrategyError",e.stackTraceToString())
+            unknownFailStrategy(filterResult)
+        }
+
     }
 }

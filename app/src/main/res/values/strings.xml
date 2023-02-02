@@ -222,4 +222,5 @@
 
     <!-- uswtimetable -->
     <string name="elearning_format">"%s (%s %s~%s)"</string>
+    <string name="add_class_directly">직접 추가</string>
 </resources>

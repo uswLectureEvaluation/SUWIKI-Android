@@ -32,6 +32,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_directly_add_class"
+                    android:layout_width="72dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/button_suwiki_mini"
+                    android:text="@string/add_class_directly"
+                    android:textColor="@color/suwiki_white"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/back"
                     android:layout_width="wrap_content"
@@ -70,10 +81,10 @@
                         android:ellipsize="end"
                         android:maxEms="5"
                         android:maxLines="1"
+                        android:text="@string/all"
                         app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
                         app:layout_constraintStart_toEndOf="@id/tv_open_major"
-                        app:layout_constraintTop_toTopOf="@id/tv_open_major"
-                        android:text="@string/all" />
+                        app:layout_constraintTop_toTopOf="@id/tv_open_major" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -115,10 +126,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
+                        android:text="@string/all"
                         app:layout_constraintBottom_toBottomOf="@id/tv_sort"
                         app:layout_constraintStart_toEndOf="@id/tv_sort"
-                        app:layout_constraintTop_toTopOf="@id/tv_sort"
-                        android:text="@string/all" />
+                        app:layout_constraintTop_toTopOf="@id/tv_sort" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -133,10 +144,10 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
-                    android:padding="8dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/bg_rounded_gray_300_20"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_open_major">

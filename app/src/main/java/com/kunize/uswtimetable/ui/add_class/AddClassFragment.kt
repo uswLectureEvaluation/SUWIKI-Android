@@ -2,6 +2,7 @@ package com.kunize.uswtimetable.ui.add_class
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -91,28 +92,29 @@ class AddClassFragment : Fragment() {
 
         binding.searchClass.onTextChanged { searchAdapter.filter.filter(it) }
 
-//        binding.majorSpinner.onItemSelected { position ->
-//            majorSel = spinnerData[position]
-//            TimeTableSelPref.prefs.setInt("majorSel", position)
-//            filterData()
-//        }
-//
-//        binding.gradeSpinner.onItemSelected { position ->
-
-//            filterData()
-//        }
-
         searchAdapter.setItemClickListener(object : ClassSearchAdapter.ItemClickListener {
             override fun onClick(view: View, data: TimeTableData) {
-                val intent = Intent(requireActivity(), ClassInfoActivity::class.java)
-                intent.putExtra("className", data.className)
-                intent.putExtra("professor", data.professor)
-                intent.putExtra("time", data.time)
-                startActivity(intent)
+                goToClassInfoActivity(data.className, data.professor, data.time)
             }
         })
 
+        binding.btnDirectlyAddClass.setOnClickListener {
+            goToClassInfoActivity("", "", "미정(월,1,2)")
+        }
+
         return binding.root
+    }
+
+    private fun goToClassInfoActivity(
+        className: String,
+        professor: String,
+        time: String
+    ) {
+        val intent = Intent(requireActivity(), ClassInfoActivity::class.java)
+        intent.putExtra("className", className)
+        intent.putExtra("professor", professor)
+        intent.putExtra("time", time)
+        startActivity(intent)
     }
 
     private fun filterData() {
