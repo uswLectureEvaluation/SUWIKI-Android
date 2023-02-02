@@ -11,7 +11,7 @@ import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFailState
 
 class TimeLocationValidationFilter : Filter {
 
-    override fun execute(request: FilterRequest): FilterState {
+    override fun invoke(request: FilterRequest): FilterState {
         return if (request is TimeLocationValidationFilterRequest) checkAllTimeIsValid(request)
             else UnknownFilterFailState
     }
@@ -22,8 +22,6 @@ class TimeLocationValidationFilter : Filter {
         with(request) {
             for (idx in dayList.indices) {
                 if (checkTimeIsValid(
-                        deleteIdx = deleteIdx,
-                        tempDeleteData = tempDeleteData,
                         tvDay = dayList[idx],
                         location = locationList[idx],
                         start = startTimeList[idx].textToIntOrNull(),
@@ -37,8 +35,6 @@ class TimeLocationValidationFilter : Filter {
     }
 
     private fun checkTimeIsValid(
-        deleteIdx: Int,
-        tempDeleteData: TimeData,
         tvDay: TextView,
         location: TextView,
         start: Int?,
@@ -51,7 +47,6 @@ class TimeLocationValidationFilter : Filter {
                     || (start !in 1..15)
                     || (end !in 1..15)))
         ) {
-            //TODO 유효하지 않을 때 실행하는 코드
             return false
         }
         return true

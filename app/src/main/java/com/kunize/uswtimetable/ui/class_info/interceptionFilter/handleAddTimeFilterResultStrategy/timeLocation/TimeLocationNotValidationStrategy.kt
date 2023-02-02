@@ -1,9 +1,9 @@
-package com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timeLocation
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.timeLocation
 
 import android.widget.Toast
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLocation.TimeLocationNotValidateState
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.FilterResultStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.FilterResultStrategyRequest
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.FilterResultStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.FilterResultStrategyRequest
 import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 

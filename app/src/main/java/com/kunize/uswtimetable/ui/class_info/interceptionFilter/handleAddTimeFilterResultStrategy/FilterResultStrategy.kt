@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy
 
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 

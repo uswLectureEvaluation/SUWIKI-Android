@@ -7,7 +7,7 @@ import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFailState
 
 class OverlapValidationFilter : Filter {
 
-    override fun execute(request: FilterRequest): FilterState {
+    override fun invoke(request: FilterRequest): FilterState {
         return if (request is OverlapValidationFilterRequest) checkOverlapTime(request)
         else UnknownFilterFailState
     }

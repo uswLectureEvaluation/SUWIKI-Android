@@ -5,7 +5,5 @@ import com.kunize.uswtimetable.util.interceptingFilter.FilterRequest
 
 data class OverlapValidationFilterRequest(
     val timeDataTobeAdded: MutableList<TimeData>,
-    val deleteIdx: Int,
-    val tempDeleteData: TimeData,
     val currentTimeTable: MutableList<TimeData>
 ): FilterRequest

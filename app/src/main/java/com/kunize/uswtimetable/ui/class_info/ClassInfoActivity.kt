@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.class_info
 
-import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,28 +10,14 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.getCurrentTimetableInfo
 import com.kunize.uswtimetable.ui.home.timetable.DBManager.jsonToArray
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.databinding.ActivityClassInfoBinding
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.elearning.ELearningValidationFilter
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.elearning.ELearningValidationFilterRequest
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLocation.TimeLocationValidationFilter
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeLocation.TimeLocationValidationFilterRequest
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap.OverlapValidationFilter
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeOverlap.OverlapValidationFilterRequest
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleValidationFilter
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.filter.timeVisible.VisibleValidationFilterRequest
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.HandleFilterResultStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.elearning.ELearningNotValidationStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timeLocation.TimeLocationNotValidationStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timeOverlap.OverlapNotValidationStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timeVisible.TimeVisibleNotValidationStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timetableValidation.TimetableValidationStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.unknownFailFilterResult.UnknownFailStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.ModelManager
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.HandleFilterResultStrategy
 import com.kunize.uswtimetable.util.TimeStringFormatter
 import com.kunize.uswtimetable.util.TimetableCellColor.colorMap
 import com.kunize.uswtimetable.util.TimetableColor.APRICOT
@@ -47,7 +32,6 @@ import com.kunize.uswtimetable.util.TimetableColor.ORANGE
 import com.kunize.uswtimetable.util.TimetableColor.PINK
 import com.kunize.uswtimetable.util.TimetableColor.PURPLE
 import com.kunize.uswtimetable.util.TimetableColor.SKY
-import com.kunize.uswtimetable.util.interceptingFilter.FilterChainModel
 import com.kunize.uswtimetable.util.interceptingFilter.FilterExecutor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -57,7 +41,7 @@ import kotlinx.coroutines.withContext
 
 class ClassInfoActivity : AppCompatActivity() {
 
-    var colorSel: Int = Color.rgb(255, 193, 82)
+    private var colorSel: Int = Color.rgb(255, 193, 82)
     private val binding by lazy { ActivityClassInfoBinding.inflate(layoutInflater) }
     private lateinit var jsonStr: String
     private lateinit var db: TimeTableListDatabase
@@ -79,34 +63,37 @@ class ClassInfoActivity : AppCompatActivity() {
 
         initDefaultData()
 
-        binding.clDay1.setOnClickListener {
-            showDaySortDialog(binding.tvDay1)
-        }
-
-        binding.clDay2.setOnClickListener {
-            showDaySortDialog(binding.tvDay2)
-        }
-
-        binding.clDay3.setOnClickListener {
-            showDaySortDialog(binding.tvDay3)
-        }
-
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
-
-        binding.rgColor.setOnCheckedChangeListener { group, checkedId ->
-            colorSel = radioHashMap[checkedId]!!
-        }
-
         val deleteIdx = intent.getIntExtra("deleteIdx", -1)
-
         val className = intent.getStringExtra("className")
         val professor = intent.getStringExtra("professor")
         val time = intent.getStringExtra("time")
 
         binding.editClassName.setText(className)
         binding.editProfessorName.setText(professor)
+
+        setVisibilityTime(View.GONE, 2)
+        setVisibilityTime(View.GONE, 3)
+
+        try {
+            if (modeEditTime(deleteIdx)) {
+                //시간표 수정 로직
+                if (time == "" || time == "()" || time == "None") {
+                    binding.location1.setText("이러닝")
+                    binding.tvDay1.text = "없음"
+                } else {
+                    setTimeLocationView(time)
+                }
+            } else if (time == "None") {
+                binding.location1.setText("이러닝")
+                binding.tvDay1.text = "없음"
+            } else {
+                setTimeLocationView(time)
+            }
+        } catch (e: Exception) {
+            Log.d("timeSplit", "$e")
+            binding.location1.setText("이러닝")
+            binding.tvDay1.text = "없음"
+        }
 
         CoroutineScope(IO).launch {
             db = TimeTableListDatabase.getInstance(applicationContext)!!
@@ -117,8 +104,34 @@ class ClassInfoActivity : AppCompatActivity() {
             setTimeTableCellColor()
         }
 
-        setVisibilityTime(View.GONE, 2)
-        setVisibilityTime(View.GONE, 3)
+        clDayList.zip(dayList).forEach { (clDay, tvDay) ->
+            clDay.setOnClickListener {
+                showDaySortDialog(tvDay)
+            }
+        }
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
+        binding.addTime.setOnClickListener {
+            if (!binding.location1.isVisible)
+                setVisibilityTime(View.VISIBLE, 1)
+            else if (!binding.location2.isVisible)
+                setVisibilityTime(View.VISIBLE, 2)
+            else if (!binding.location3.isVisible)
+                setVisibilityTime(View.VISIBLE, 3)
+        }
+
+        deleteTimeList.forEachIndexed { index, deleteTime ->
+            deleteTime.setOnClickListener {
+                setVisibilityTime(View.GONE, index + 1)
+            }
+        }
+
+        binding.rgColor.setOnCheckedChangeListener { group, checkedId ->
+            colorSel = radioHashMap[checkedId]!!
+        }
 
         binding.finishButton.setOnClickListener {
             val inputClassName = binding.editClassName.text.toString()
@@ -131,123 +144,36 @@ class ClassInfoActivity : AppCompatActivity() {
                     currentTimeTable.removeAt(deleteIdx)
                 }
 
-                val timeDataTobeAdded =
-                    extractData(locationList, inputClassName, inputProfessor)
-
-                val timetableValidationFilter = FilterExecutor()
-                timetableValidationFilter
-                    .addFilter(
-                        FilterChainModel(
-                            TimeLocationValidationFilter(),
-                            TimeLocationValidationFilterRequest(
-                                deleteIdx = deleteIdx,
-                                tempDeleteData = tempDeleteData,
-                                dayList = dayList,
-                                locationList = locationList,
-                                startTimeList = startTimeList,
-                                endTimeList = endTimeList
-                            )
-                        )
-                    )
-                    .addFilter(
-                        FilterChainModel(
-                            ELearningValidationFilter(),
-                            ELearningValidationFilterRequest(
-                                timeDataTobeAdded = timeDataTobeAdded,
-                                deleteIdx = deleteIdx,
-                                tempDeleteData = tempDeleteData,
-                                currentTimeTable = currentTimeTable
-                            )
-                        )
-                    )
-                    .addFilter(
-                        FilterChainModel(
-                            OverlapValidationFilter(),
-                            OverlapValidationFilterRequest(
-                                timeDataTobeAdded = timeDataTobeAdded,
-                                deleteIdx = deleteIdx,
-                                tempDeleteData = tempDeleteData,
-                                currentTimeTable = currentTimeTable
-                            )
-                        )
-                    )
-                    .addFilter(
-                        FilterChainModel(
-                            VisibleValidationFilter(),
-                            VisibleValidationFilterRequest(
-                                deleteTimeList = deleteTimeList
-                            )
-                        )
-                    )
-
-                val filterResult = timetableValidationFilter.execute()
-
-                val handleFilterResultStrategy = HandleFilterResultStrategy(doWhenNotInvalidation =  {
-                    if (modeEditTime(deleteIdx))
-                        currentTimeTable.add(deleteIdx, tempDeleteData)
-                })
-
-                handleFilterResultStrategy.addStrategy(
-                    listOf(
-                        ELearningNotValidationStrategy(),
-                        TimeLocationNotValidationStrategy(),
-                        OverlapNotValidationStrategy(),
-                        TimetableValidationStrategy(
-                            context = this@ClassInfoActivity,
-                            currentTimeTable = currentTimeTable,
-                            timeDataTobeAdded = timeDataTobeAdded,
-                            timetableSel = timetableSel,
-                            db = db
-                        ),
-                        TimeVisibleNotValidationStrategy(),
-                        UnknownFailStrategy()
-                    )
+                val modelManager = ModelManager(
+                    dayList = dayList,
+                    locationList = locationList,
+                    startTimeList = startTimeList,
+                    endTimeList = endTimeList,
+                    timeDataTobeAdded = extractData(locationList, inputClassName, inputProfessor),
+                    currentTimeTable = currentTimeTable,
+                    deleteTimeList = deleteTimeList,
+                    context = this@ClassInfoActivity,
+                    timetableSel = timetableSel,
+                    db = db
                 )
 
+                val timetableValidationFilter = FilterExecutor()
+                val filterResult = timetableValidationFilter
+                    .addFilter(modelManager.getFilterChainModels())
+                    .invoke()
+
+                val handleAddTimeFilterResultStrategy =
+                    HandleFilterResultStrategy(doWhenNotInvalidation = {
+                        if (modeEditTime(deleteIdx))
+                            currentTimeTable.add(deleteIdx, tempDeleteData)
+                    })
+
                 withContext(Main) {
-                    handleFilterResultStrategy(filterResult)
+                    handleAddTimeFilterResultStrategy
+                        .addStrategy(modelManager.getStrategies())
+                        .invoke(filterResult)
                 }
             }
-        }
-
-        try {
-            // deleteIdx가 -1이 아닌 경우에만 문자열 분리
-            if (modeEditTime(deleteIdx)) {
-                //시간표 수정 로직
-                if (time!! == "" || time == "()" || time == "None") {
-                    binding.location1.setText("이러닝")
-                    binding.tvDay1.text = "없음"
-                } else {
-                    setTimeLocationView(time)
-                }
-            } else if (time!! == "None") {
-                binding.location1.setText("이러닝")
-                binding.tvDay1.text = "없음"
-            } else {
-                setTimeLocationView(time)
-            }
-        } catch (e: Exception) {
-            Log.d("timeSplit", "$e")
-            binding.location1.setText("이러닝")
-        }
-
-        binding.addTime.setOnClickListener {
-            if (!binding.location1.isVisible)
-                setVisibilityTime(View.VISIBLE, 1)
-            else if (!binding.location2.isVisible)
-                setVisibilityTime(View.VISIBLE, 2)
-            else if (!binding.location3.isVisible)
-                setVisibilityTime(View.VISIBLE, 3)
-        }
-
-        binding.deleteTime1.setOnClickListener {
-            setVisibilityTime(View.GONE, 1)
-        }
-        binding.deleteTime2.setOnClickListener {
-            setVisibilityTime(View.GONE, 2)
-        }
-        binding.deleteTime3.setOnClickListener {
-            setVisibilityTime(View.GONE, 3)
         }
     }
 
@@ -300,13 +226,6 @@ class ClassInfoActivity : AppCompatActivity() {
             startTimeList[i].setText(startTime)
             endTimeList[i].setText(endTime)
         }
-    }
-
-    private fun goToMainActivity() {
-        val intent = Intent(this@ClassInfoActivity, MainActivity::class.java)
-        intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
-        startActivity(intent)
     }
 
     private fun extractData(

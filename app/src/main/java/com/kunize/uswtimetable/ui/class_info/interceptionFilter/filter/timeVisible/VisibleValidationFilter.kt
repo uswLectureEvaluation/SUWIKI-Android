@@ -8,7 +8,7 @@ import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFailState
 
 class VisibleValidationFilter : Filter {
 
-    override fun execute(request: FilterRequest): FilterState {
+    override fun invoke(request: FilterRequest): FilterState {
         return if (request is VisibleValidationFilterRequest) checkVisible(request)
         else UnknownFilterFailState
     }

@@ -1,12 +1,12 @@
-package com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.timetableValidation
+package com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.timetableValidation
 
 import android.content.Context
 import android.content.Intent
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.FilterResultStrategy
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleFilterResultStrategy.FilterResultStrategyRequest
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.FilterResultStrategy
+import com.kunize.uswtimetable.ui.class_info.interceptionFilter.handleAddTimeFilterResultStrategy.FilterResultStrategyRequest
 import com.kunize.uswtimetable.ui.home.timetable.DBManager
 import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState

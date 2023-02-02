@@ -5,16 +5,16 @@ import android.util.Log
 class FilterExecutor {
     private val filterChainModels = mutableListOf<FilterChainModel>()
 
-    fun addFilter(filterChainModel: FilterChainModel): FilterExecutor {
-        filterChainModels.add(filterChainModel)
+    fun addFilter(filterChainModels: List<FilterChainModel>): FilterExecutor {
+        this.filterChainModels.addAll(filterChainModels)
         return this
     }
 
-    fun execute(): FilterState {
+    operator fun invoke(): FilterState {
         return try {
             for (filterChinModel in filterChainModels) {
                 with(filterChinModel) {
-                    val result = filter.execute(request)
+                    val result = filter(request)
                     if (result != FilterState.Validate) return result
                 }
             }
