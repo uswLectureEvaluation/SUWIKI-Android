@@ -18,9 +18,9 @@ class VisibleValidationFilter : Filter {
     ): FilterState {
         with(request) {
             for(deleteTime in deleteTimeList) {
-                if(deleteTime.visibility != View.VISIBLE) return VisibleNotValidate
+                if(deleteTime.visibility == View.VISIBLE) return FilterState.Validate
             }
-            return FilterState.Validate
+            return VisibleNotValidate
         }
     }
 }
