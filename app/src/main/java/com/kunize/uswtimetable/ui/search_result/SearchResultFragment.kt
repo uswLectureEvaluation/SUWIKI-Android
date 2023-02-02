@@ -24,7 +24,7 @@ import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 
 class SearchResultFragment : Fragment() {
@@ -38,7 +38,7 @@ class SearchResultFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         searchResultViewModel.initType()
-        searchResultViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전체")
+        searchResultViewModel.majorType = SuwikiApplication.prefs.getString("openMajorSel", "전체")
         if (args.searchLectureName.isBlank())
             searchResultViewModel.changeType(args.sortType)
         else

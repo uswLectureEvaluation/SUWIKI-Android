@@ -25,7 +25,7 @@ import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
@@ -36,7 +36,7 @@ class EvaluationFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        evaluationViewModel.majorType = TimeTableSelPref.prefs.getString("openMajorSel", "전체")
+        evaluationViewModel.majorType = SuwikiApplication.prefs.getString("openMajorSel", "전체")
         evaluationViewModel.changeType(args.sortType)
     }
 

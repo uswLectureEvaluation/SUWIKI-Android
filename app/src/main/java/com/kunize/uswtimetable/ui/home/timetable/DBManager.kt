@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.ui.home.timetable
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList
@@ -14,7 +14,7 @@ object DBManager {
 
     fun getCurrentTimetableInfo(db: TimeTableListDatabase): TimeTableList {
         val timeTableList = db.timetableListDao().getAll()
-        val createTime = TimeTableSelPref.prefs.getLong("timetableSel", 0)
+        val createTime = SuwikiApplication.prefs.getLong("timetableSel", 0)
         return timeTableList.find { it.createTime == createTime } ?: timeTableList[0]
     }
 

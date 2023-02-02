@@ -6,13 +6,15 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
-class TimeTableSelPref : Application() {
+class SuwikiApplication : Application() {
     companion object {
         lateinit var prefs: PrefsManager
         lateinit var encryptedPrefs: EncryptedPrefsManger
+        lateinit var instance: SuwikiApplication
     }
 
     override fun onCreate() {
+        instance = this
         prefs = PrefsManager(applicationContext)
         encryptedPrefs = EncryptedPrefsManger(applicationContext)
         super.onCreate()

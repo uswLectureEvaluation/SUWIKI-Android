@@ -11,7 +11,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityCreateTimeTableBinding
 import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -93,7 +93,7 @@ class CreateTimeTableActivity : AppCompatActivity() {
         val selectedSemester = semesterList[binding.semesterSpinner.selectedItemPosition]
 
         // SharedPreference에 저장
-        TimeTableSelPref.prefs.setLong("timetableSel", currentTime)
+        SuwikiApplication.prefs.setLong("timetableSel", currentTime)
 
         val tempData = TimeTableList(
             currentTime,

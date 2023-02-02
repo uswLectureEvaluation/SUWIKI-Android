@@ -20,7 +20,7 @@ import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.FragmentType
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.afterEditTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -137,7 +137,7 @@ class SelectOpenMajorFragment : Fragment() {
         })
 
         binding.btnOk.setOnClickListener {
-            TimeTableSelPref.prefs.setString(
+            SuwikiApplication.prefs.setString(
                 "openMajorSel",
                 adapter.selectedItemTitle.ifBlank { "전체" }
             )

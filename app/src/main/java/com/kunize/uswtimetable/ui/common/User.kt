@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.util.Constants.TAG
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onException
@@ -52,8 +52,8 @@ object User {
             isLoggedIn.value = false
             user = null
         }
-        TimeTableSelPref.encryptedPrefs.saveAccessToken("")
-        TimeTableSelPref.encryptedPrefs.saveRefreshToken("")
+        SuwikiApplication.encryptedPrefs.saveAccessToken("")
+        SuwikiApplication.encryptedPrefs.saveRefreshToken("")
         Log.d(TAG, "User - logout Success!")
     }
 

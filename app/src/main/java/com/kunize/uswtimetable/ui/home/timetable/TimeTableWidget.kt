@@ -11,7 +11,7 @@ import android.widget.RemoteViews
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.ui.home.timetable.BitmapConverter.stringToBitmap
 import com.kunize.uswtimetable.ui.start.StartActivity
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import java.lang.Exception
 
 /**
@@ -53,7 +53,7 @@ internal fun updateAppWidget(
 ) {
     val views = RemoteViews(context.packageName, R.layout.time_table_widget)
 
-    val strBit = TimeTableSelPref.prefs.getString("image", "")
+    val strBit = SuwikiApplication.prefs.getString("image", "")
     try {
         val bitmap = stringToBitmap(strBit)
         views.setImageViewBitmap(R.id.widgetImage, bitmap)

@@ -17,7 +17,7 @@ import com.kunize.uswtimetable.ui.home.timetable.UswTimeTable.Companion.CLASSNAM
 import com.kunize.uswtimetable.ui.home.timetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR
 import com.kunize.uswtimetable.ui.home.timetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR_LOCATION
 import com.kunize.uswtimetable.databinding.ActivitySettingBinding
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import java.io.*
 
 
@@ -33,7 +33,7 @@ class SettingActivity : AppCompatActivity() {
 
         binding.shareKakaoBtn.setOnClickListener {
             try {
-                val strBit = TimeTableSelPref.prefs.getString("image", "")
+                val strBit = SuwikiApplication.prefs.getString("image", "")
                 val bitmap = stringToBitmap(strBit)
 
                 val dir = getImageUri(this, bitmap!!)
@@ -56,7 +56,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun getPrefInfo(type: String, defValue: Int): String {
-        return when (TimeTableSelPref.prefs.getInt(type, defValue)) {
+        return when (SuwikiApplication.prefs.getInt(type, defValue)) {
             CLASSNAME -> "수업명"
             CLASSNAME_LOCATION -> "수업명, 장소"
             CLASSNAME_PROFESSOR -> "수업명, 교수명"
@@ -77,7 +77,7 @@ class SettingActivity : AppCompatActivity() {
                 else -> 0
             }
             (v as TextView).text = list[which]
-            TimeTableSelPref.prefs.setInt(setType, temp)
+            SuwikiApplication.prefs.setInt(setType, temp)
         }
         dlg.show()
     }

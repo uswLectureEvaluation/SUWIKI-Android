@@ -25,7 +25,7 @@ import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.ui.home.timetable.TimeTableWidget
 import com.kunize.uswtimetable.ui.timetable_list.TimeTableListActivity
 import com.kunize.uswtimetable.ui.timetable_setting.SettingActivity
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -114,7 +114,7 @@ class HomeFragment : Fragment() {
         binding.uswTimeTable.isEmpty = false
         tempTimeData = jsonToArray(timeTableSel!!.timeTableJsonData)
         binding.uswTimeTable.timeTableData = tempTimeData
-        binding.uswTimeTable.infoFormat = TimeTableSelPref.prefs.getInt(
+        binding.uswTimeTable.infoFormat = SuwikiApplication.prefs.getInt(
             "infoFormat",
             CLASSNAME_LOCATION
         )
@@ -136,7 +136,7 @@ class HomeFragment : Fragment() {
     private fun widgetUpdate() {
         val timetableBitmap = viewToBitmap(binding.uswTimeTable)
         val strBit = bitmapToString(timetableBitmap)
-        TimeTableSelPref.prefs.setString("image", strBit)
+        SuwikiApplication.prefs.setString("image", strBit)
         val intentAction = Intent(activity, TimeTableWidget::class.java)
         intentAction.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         val ids = AppWidgetManager.getInstance(activity)

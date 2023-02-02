@@ -14,7 +14,7 @@ import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.FragmentAddClassBinding
 import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
 import com.kunize.uswtimetable.util.FragmentType
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -58,7 +58,7 @@ class AddClassFragment : Fragment() {
                 override fun onClick(text: String) {
                     binding.tvSortSelected.text = text
                     gradeSel = text
-                    TimeTableSelPref.prefs.setInt("gradeSel", gradeList.indexOf(text))
+                    SuwikiApplication.prefs.setInt("gradeSel", gradeList.indexOf(text))
                     filterData()
                 }
             })
@@ -80,9 +80,9 @@ class AddClassFragment : Fragment() {
                 binding.recyclerClass.adapter = searchAdapter
                 binding.recyclerClass.layoutManager = LinearLayoutManager(requireActivity())
                 binding.searchClass.visibility = View.VISIBLE
-                majorSel = TimeTableSelPref.prefs.getString("openMajorSel", "전체")
+                majorSel = SuwikiApplication.prefs.getString("openMajorSel", "전체")
                 majorSel = majorSel.replace("-", "·")
-                gradeSel = gradeList[TimeTableSelPref.prefs.getInt("gradeSel", 0)]
+                gradeSel = gradeList[SuwikiApplication.prefs.getInt("gradeSel", 0)]
                 binding.tvSortSelected.text = gradeSel
                 binding.tvSelectedOpenMajor.text = majorSel
                 filterData()

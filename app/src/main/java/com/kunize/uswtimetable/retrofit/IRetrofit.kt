@@ -73,7 +73,7 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EXAM
 import com.kunize.uswtimetable.util.Constants.TAG
-import com.kunize.uswtimetable.util.TimeTableSelPref
+import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.isJsonArray
 import com.kunize.uswtimetable.util.extensions.isJsonObject
 import com.skydoves.sandwich.ApiResponse
@@ -395,7 +395,7 @@ interface IRetrofit {
 
 class AuthenticationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-        val accessToken = TimeTableSelPref.encryptedPrefs.getAccessToken() ?: ""
+        val accessToken = SuwikiApplication.encryptedPrefs.getAccessToken() ?: ""
         val request = chain.request().newBuilder()
             .addHeader(AUTH_HEADER, accessToken).build()
         Log.d(
@@ -408,7 +408,7 @@ class AuthenticationInterceptor : Interceptor {
 
 class TokenAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-        val refresh = TimeTableSelPref.encryptedPrefs.getRefreshToken() ?: ""
+        val refresh = SuwikiApplication.encryptedPrefs.getRefreshToken() ?: ""
         Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh")
         val tokenResponse =
             IRetrofit.getInstanceWithNoToken().requestRefresh(refresh).execute()
@@ -418,7 +418,7 @@ class TokenAuthenticator : Authenticator {
             response.request
                 .newBuilder()
                 .removeHeader(AUTH_HEADER)
-                .header(AUTH_HEADER, TimeTableSelPref.encryptedPrefs.getAccessToken() ?: "")
+                .header(AUTH_HEADER, SuwikiApplication.encryptedPrefs.getAccessToken() ?: "")
                 .build()
         } else {
             null
@@ -427,8 +427,8 @@ class TokenAuthenticator : Authenticator {
 
     private fun handleResponse(tokenResponse: Response<Token>) =
         if (tokenResponse.isSuccessful && tokenResponse.body() != null) {
-            TimeTableSelPref.encryptedPrefs.saveAccessToken(tokenResponse.body()!!.accessToken)
-            TimeTableSelPref.encryptedPrefs.saveRefreshToken(tokenResponse.body()!!.refreshToken)
+            SuwikiApplication.encryptedPrefs.saveAccessToken(tokenResponse.body()!!.accessToken)
+            SuwikiApplication.encryptedPrefs.saveRefreshToken(tokenResponse.body()!!.refreshToken)
             true
         } else {
             User.logout()
