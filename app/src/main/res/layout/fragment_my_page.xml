@@ -105,11 +105,11 @@
                         style="@style/TextRegular.12.Gray"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{() -> viewmodel.logoutEvent()}"
                         android:text="@string/logout"
                         app:layout_constraintBottom_toBottomOf="@id/tv_my_account_title"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tv_my_account_title" />
+                        app:layout_constraintTop_toTopOf="@id/tv_my_account_title"
+                        app:onThrottleClick="@{() -> viewmodel.logoutEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_login_id_title"
@@ -315,8 +315,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
                         android:gravity="center"
-                        android:onClick="@{() -> viewmodel.loginEvent()}"
-                        android:text="@string/text_require_login" />
+                        android:text="@string/text_require_login"
+                        app:onThrottleClick="@{() -> viewmodel.loginEvent()}" />
 
                     <TextView
                         style="@style/SuwikiMiniButton"
@@ -324,8 +324,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:layout_marginBottom="64dp"
-                        android:onClick="@{() -> viewmodel.loginEvent()}"
-                        android:text="@string/login_button_text" />
+                        android:text="@string/login_button_text"
+                        app:onThrottleClick="@{() -> viewmodel.loginEvent()}" />
 
                 </LinearLayout>
 
@@ -569,9 +569,9 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.noticeEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/notice" />
+                        android:text="@string/notice"
+                        app:onThrottleClick="@{() -> viewmodel.noticeEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_send_feedback_button"
@@ -581,9 +581,9 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.feedbackEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/send_feedback" />
+                        android:text="@string/send_feedback"
+                        app:onThrottleClick="@{() -> viewmodel.feedbackEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_question_button"
@@ -605,9 +605,9 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.termsEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/terms_of_use" />
+                        android:text="@string/terms_of_use"
+                        app:onThrottleClick="@{() -> viewmodel.termsEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_privacy_policy_button"
@@ -617,9 +617,9 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.privacyPolicyEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/privacy_policy" />
+                        android:text="@string/privacy_policy"
+                        app:onThrottleClick="@{() -> viewmodel.privacyPolicyEvent()}" />
 
                     <TextView
                         android:id="@+id/opensource_licence_button"
@@ -629,9 +629,9 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.openSourceEvent()}"
                         android:paddingVertical="8dp"
-                        android:text="@string/opensource_licence" />
+                        android:text="@string/opensource_licence"
+                        app:onThrottleClick="@{() -> viewmodel.openSourceEvent()}" />
 
                     <TextView
                         android:id="@+id/change_password_button"
@@ -641,10 +641,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.changePwEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/change_password"
-                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}"
+                        app:onThrottleClick="@{() -> viewmodel.changePwEvent()}" />
 
                     <TextView
                         android:id="@+id/sign_out_button"
@@ -655,10 +655,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.signOutEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/sign_out"
-                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}"
+                        app:onThrottleClick="@{() -> viewmodel.signOutEvent()}" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

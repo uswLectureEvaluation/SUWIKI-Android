@@ -6,7 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.util.extensions.onThrottleClick
 
 @BindingAdapter("group", "detailOrShortButton")
 fun applyExpandOrFoldLayout(view: View, group: ConstraintLayout, content: TextView) {
@@ -29,12 +28,9 @@ fun applyExpandOrFoldText(view: View, content: TextView) {
 }
 
 @BindingAdapter("onThrottleClick", "duration", requireAll = false)
-fun applyThrottleClick(view: View, onClick: () -> Unit, interval: Long? = 300L) {
-    interval?.let { time ->
-        view.onThrottleClick(time) {
-            onClick()
-        }
-    } ?: view.onThrottleClick {
-        onClick()
-    }
+fun applyThrottleClick(view: View, listener: View.OnClickListener, interval: Long? = 300L) {
+    val throttleListener = interval?.let { time ->
+        OnThrottleClickListener(listener, time)
+    } ?: OnThrottleClickListener(listener)
+    view.setOnClickListener(throttleListener)
 }
