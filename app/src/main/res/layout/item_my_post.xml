@@ -55,22 +55,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:onClick="@{() -> viewmodel.editButtonClickEvent(data)}"
             android:text="@string/edit"
             app:layout_constraintBottom_toBottomOf="@id/tv_semester"
             app:layout_constraintEnd_toStartOf="@id/tv_delete_btn"
-            app:layout_constraintTop_toTopOf="@id/tv_semester" />
+            app:layout_constraintTop_toTopOf="@id/tv_semester"
+            app:onThrottleClick="@{() -> viewmodel.editButtonClickEvent(data)}" />
 
         <TextView
             android:id="@+id/tv_delete_btn"
             style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.deleteButtonClickEvent(data)}"
             android:text="@string/delete"
             app:layout_constraintBottom_toBottomOf="@id/tv_edit_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_edit_btn" />
+            app:layout_constraintTop_toTopOf="@id/tv_edit_btn"
+            app:onThrottleClick="@{() -> viewmodel.deleteButtonClickEvent(data)}" />
 
         <TextView
             android:id="@+id/tv_lecture_name"

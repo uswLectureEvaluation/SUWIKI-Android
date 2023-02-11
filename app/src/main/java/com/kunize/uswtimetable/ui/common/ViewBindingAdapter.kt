@@ -27,7 +27,7 @@ fun applyExpandOrFoldText(view: View, content: TextView) {
     }
 }
 
-@BindingAdapter("onThrottleClick", "duration", requireAll = false)
+@BindingAdapter("onThrottleClick", "clickInterval", requireAll = false)
 fun applyThrottleClick(view: View, listener: View.OnClickListener, interval: Long? = 300L) {
     val throttleListener = interval?.let { time ->
         OnThrottleClickListener(listener, time)

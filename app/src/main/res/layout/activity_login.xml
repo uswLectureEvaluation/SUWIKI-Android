@@ -101,9 +101,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:enabled="@{vm.loginFormState.dataValid == true &amp;&amp; vm.loading == false}"
-            android:onClick="@{() -> vm.login(etInputId.getText().toString(), etInputPw.getText().toString())}"
             android:text="@string/login_button_text"
-            app:layout_constraintBottom_toTopOf="@id/tv_find_id_btn" />
+            app:layout_constraintBottom_toTopOf="@id/tv_find_id_btn"
+            app:onThrottleClick="@{() -> vm.login(etInputId.getText().toString(), etInputPw.getText().toString())}" />
 
         <TextView
             android:id="@+id/tv_find_id_btn"
@@ -113,13 +113,13 @@
             android:layout_marginStart="70dp"
             android:layout_marginBottom="67dp"
             android:gravity="center"
-            android:onClick="@{() -> vm.findIdEvent()}"
             android:text="@string/find_id"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/divider_1"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:onThrottleClick="@{() -> vm.findIdEvent()}" />
 
         <View
             android:id="@+id/divider_1"
@@ -137,12 +137,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:onClick="@{() -> vm.findPwEvent()}"
             android:text="@string/find_password"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/divider_2"
             app:layout_constraintStart_toEndOf="@id/divider_1"
-            app:layout_constraintTop_toTopOf="@id/tv_find_id_btn" />
+            app:layout_constraintTop_toTopOf="@id/tv_find_id_btn"
+            app:onThrottleClick="@{() -> vm.findPwEvent()}" />
 
         <View
             android:id="@+id/divider_2"
@@ -162,12 +162,12 @@
             android:layout_marginEnd="70dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> vm.signUpEvent()}"
             android:text="@string/sign_in"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/divider_2"
-            app:layout_constraintTop_toTopOf="@id/tv_find_pw_btn" />
+            app:layout_constraintTop_toTopOf="@id/tv_find_pw_btn"
+            app:onThrottleClick="@{() -> vm.signUpEvent()}" />
 
         <ProgressBar
             android:id="@+id/progress_loading"

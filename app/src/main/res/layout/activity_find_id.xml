@@ -74,11 +74,11 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="109dp"
             android:enabled="@{etInputEmail.text.length() == 0? false : true}"
-            android:onClick="@{() -> viewmodel.findId()}"
             android:text="@string/find_id"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:onThrottleClick="@{() -> viewmodel.findId()}" />
 
         <ProgressBar
             android:layout_width="wrap_content"

@@ -57,12 +57,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:enabled="@{viewmodel.idCheckButtonEnabled}"
-            android:onClick="@{() -> viewmodel.checkId()}"
             android:text="@string/text_check_id_btn"
             android:textColor="@{viewmodel.idCheckButtonEnabled?@color/suwiki_white:@color/suwiki_gray_700}"
             android:visibility="@{viewmodel.isIdUnique?View.GONE:View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="@id/layout_input_id"
-            app:layout_constraintTop_toTopOf="@id/layout_input_id" />
+            app:layout_constraintTop_toTopOf="@id/layout_input_id"
+            app:onThrottleClick="@{() -> viewmodel.checkId()}" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_input_pw"
