@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.util.extensions
 
 import android.view.View
+import com.kunize.uswtimetable.ui.common.OnThrottleClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -13,13 +14,28 @@ fun View.clicks(): Flow<Unit> = callbackFlow {
     awaitClose { setOnClickListener(null) }
 }
 
-fun View.setOnThrottleClick(
+fun View.onThrottleClick(
     scope: CoroutineScope,
     duration: Long = 300L,
-    onClick: () -> Unit,
+    onClick: (v: View) -> Unit,
 ) {
     clicks()
         .throttleFirst(duration)
-        .onEach { onClick() }
+        .onEach { onClick(this) }
         .launchIn(scope)
+}
+
+fun View.onThrottleClick(
+    onClick: (v: View) -> Unit,
+) {
+    val listener = View.OnClickListener { onClick(it) }
+    setOnClickListener(OnThrottleClickListener(listener))
+}
+
+fun View.onThrottleClick(
+    interval: Long,
+    onClick: (v: View) -> Unit,
+) {
+    val listener = View.OnClickListener { onClick(it) }
+    setOnClickListener(OnThrottleClickListener(listener, interval))
 }
