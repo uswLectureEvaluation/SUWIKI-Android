@@ -1,6 +1,5 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -98,26 +97,28 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         _written.value = true
     }
 
-    suspend fun setInfoValue(): Boolean {
-        val response: Response<DataDto<LectureDetailInfoDataDto>>
-        withContext(viewModelScope.coroutineContext) {
-            response = lectureInfoRepository.getLectureDetailInfo(pageViewModel.lectureId)
-            if (response.isSuccessful) {
-                _lectureDetailInfoData.value = response.body()?.data?:return@withContext
-            } else {
+    suspend fun fetchLectureIntegratedInfo(onSuccess: () -> Unit) {
+        val response = lectureInfoRepository.getLectureDetailInfo(pageViewModel.lectureId)
+        when {
+            response.isSuccessful -> {
+                response.body()?.data?.let { data ->
+                    _lectureDetailInfoData.value = data
+                    onSuccess()
+                }
+            }
+            else -> {
                 handleError(response.code())
             }
         }
-        return response.isSuccessful
     }
 
     fun scrollBottomEvent() {
         if (pageViewModel.page.value!! < 2)
             return
-        getLectureList()
+        fetchLectureList()
     }
 
-    fun getLectureList() {
+    fun fetchLectureList() {
         if(pageViewModel.page.value!! == LAST_PAGE)
             return
         when (_writeBtnText.value) {
