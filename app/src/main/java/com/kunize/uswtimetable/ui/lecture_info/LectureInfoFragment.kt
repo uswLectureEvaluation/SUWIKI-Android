@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.R
@@ -63,7 +64,7 @@ class LectureInfoFragment : Fragment() {
             findNavController().popBackStack(R.id.navigation_evaluation, false)
         }
 
-        CoroutineScope(IO).launch {
+        lifecycleScope.launch {
             loadInitData()
             with(binding) {
                 infoRecyclerView.infiniteScrolls {
@@ -104,8 +105,9 @@ class LectureInfoFragment : Fragment() {
     }
 
     private suspend fun loadInitData() {
-        if (lectureInfoViewModel.setInfoValue())
-            lectureInfoViewModel.getLectureList()
+        lectureInfoViewModel.fetchLectureIntegratedInfo {
+            lectureInfoViewModel.fetchLectureList()
+        }
     }
 
     private fun goToWriteFragment() {
