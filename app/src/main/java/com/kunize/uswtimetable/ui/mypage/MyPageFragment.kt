@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -86,17 +85,8 @@ class MyPageFragment : Fragment() {
         if (User.isLoggedIn.value == true) findNavController().navigate(R.id.action_navigation_my_page_to_myPostFragment)
     }
 
-    @SuppressLint("IntentReset")
     private fun sendAsk(context: Context) {
-        val sender = if (User.isLoggedIn.value == true) User.user?.value?.email!! else "익명 사용자"
-        val email = Intent(Intent.ACTION_SENDTO).apply {
-            type = "text/plain"
-            data = Uri.parse("mailto:")
-
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(Constants.ASK_EMAIL))
-            putExtra(Intent.EXTRA_TEXT, "\n".repeat(10) + "Sent by $sender\nto Suwiki")
-        }
-        context.startActivity(email)
+        showWebView(context, Constants.ASK_SITE)
     }
 
     private fun showNoticePage(context: Context) {
