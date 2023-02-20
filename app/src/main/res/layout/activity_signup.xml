@@ -67,11 +67,11 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="109dp"
                 android:enabled="@{viewmodel.nextButtonEnable ? true : false}"
-                android:onClick="@{() -> viewmodel.onNextButtonClick()}"
                 android:text="@{viewmodel.nextButtonText}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:onThrottleClick="@{() -> viewmodel.onNextButtonClick()}"
                 tools:text="다음" />
 
             <TextView

@@ -26,3 +26,11 @@ fun applyExpandOrFoldText(view: View, content: TextView) {
         content.maxLines = if (content.maxLines == 2) 100 else 2
     }
 }
+
+@BindingAdapter("onThrottleClick", "clickInterval", requireAll = false)
+fun applyThrottleClick(view: View, listener: View.OnClickListener, interval: Long? = 300L) {
+    val throttleListener = interval?.let { time ->
+        OnThrottleClickListener(listener, time)
+    } ?: OnThrottleClickListener(listener)
+    view.setOnClickListener(throttleListener)
+}

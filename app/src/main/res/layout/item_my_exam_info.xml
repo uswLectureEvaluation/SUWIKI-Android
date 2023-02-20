@@ -53,29 +53,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:onClick="@{() -> viewmodel.editButtonClickEvent(data)}"
             android:text="@string/edit"
             app:layout_constraintEnd_toStartOf="@id/tv_delete_btn"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onThrottleClick="@{() -> viewmodel.editButtonClickEvent(data)}" />
 
         <TextView
             android:id="@+id/tv_delete_btn"
             style="@style/TextRegular.10.Gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.deleteButtonClickEvent(data)}"
             android:text="@string/delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onThrottleClick="@{() -> viewmodel.deleteButtonClickEvent(data)}" />
 
         <TextView
             android:id="@+id/tv_lecture_name"
             style="@style/lecture_name_middle_style"
             android:layout_marginTop="4dp"
             android:text="@{data.lectureName}"
-            tools:text="@string/title_item_my_exam_info_lecture_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_semester" />
+            app:layout_constraintTop_toBottomOf="@id/tv_semester"
+            tools:text="@string/title_item_my_exam_info_lecture_name" />
 
         <TextView
             android:id="@+id/tv_professor"

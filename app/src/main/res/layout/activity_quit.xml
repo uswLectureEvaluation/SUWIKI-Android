@@ -95,11 +95,11 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="109dp"
             android:enabled="@{etInputId.text.length() > 0 &amp;&amp; etInputPw.text.length() > 0 &amp;&amp; viewmodel.loading == false}"
-            android:onClick="@{() -> viewmodel.quitButtonClickEvent()}"
             android:text="@string/sign_out"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:onThrottleClick="@{() -> viewmodel.quitButtonClickEvent()}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
