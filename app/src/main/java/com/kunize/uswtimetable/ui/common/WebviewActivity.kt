@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,7 @@ class WebviewActivity : AppCompatActivity() {
             settings.displayZoomControls = false
             settings.builtInZoomControls = true
             settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true;
         }
         webView.loadUrl(startUrl)
 
@@ -64,17 +66,20 @@ class WebviewActivity : AppCompatActivity() {
             progressBar.hide()
         }
 
-        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            val url = request.url.toString()
             val intent = parse(url)
             return if (isIntent(url)) {
                 if (isExistInfo(intent) or isExistPackage(intent))
                     start(intent)
                 else
                     gotoMarket(intent)
-            } else if (isMarket(url))
+            } else if (isMarket(intent.toString()))
                 start(intent)
-            else
-                true
+            else {
+                webView.loadUrl(url)
+                false
+            }
         }
 
         private fun isIntent(url: String?) = url?.matches(Regex("^intent:?\\w*://\\S+$")) ?: false
