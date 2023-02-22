@@ -50,6 +50,9 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginResult.observe(this@LoginActivity) { loginResult ->
 
             when (loginResult) {
+                LoginState.REQUIRE_AUTH -> {
+                    toast("이메일 인증을 받지 않은 사용자입니다.")
+                }
                 LoginState.FAIL -> {
                     toast("로그인 실패")
                 }

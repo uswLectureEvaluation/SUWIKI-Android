@@ -155,7 +155,7 @@
     <string name="title_item_my_exam_info_lecture_name">강의 이름</string>
     <string name="app_logo">app logo</string>
     <string name="hint_input_school_email">학교 이메일 입력</string>
-    <string name="hint_input_SWLE_id">SWLE 아이디 입력</string>
+    <string name="hint_input_SWLE_id">SUWIKI 아이디 입력</string>
     <string name="hint_find_pw">학교 메일로 임시 비밀번호를 전송합니다.</string>
 
     <string name="title_activity_welcome_sign_up">WelcomeSignUpActivity</string>

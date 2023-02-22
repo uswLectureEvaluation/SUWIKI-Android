@@ -57,7 +57,10 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                     }
                 }
             } else {
-                _loginResult.postValue(LoginState.FAIL)
+                when(loginResult.code()) {
+                    401 -> _loginResult.postValue(LoginState.REQUIRE_AUTH)
+                    else -> _loginResult.postValue(LoginState.FAIL)
+                }
             }
             loading.postValue(false)
         }
@@ -126,5 +129,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
 enum class LoginState {
     SUCCESS,
-    FAIL
+    FAIL,
+    REQUIRE_AUTH
 }
