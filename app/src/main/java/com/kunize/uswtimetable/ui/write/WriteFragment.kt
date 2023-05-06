@@ -447,9 +447,9 @@ class WriteFragment : Fragment() {
         *
         * 해당 문제를 해결하기 위해 progress 초기화
         * */
-        binding.satisfactionSeekBar.progress = defaultHoneyProgress
+        binding.satisfactionSeekBar.progress = defaultSatisfactionProgress
         binding.learningSeekBar.progress = defaultLearningProgress
-        binding.honeySeekBar.progress = defaultSatisfactionProgress
+        binding.honeySeekBar.progress = defaultHoneyProgress
     }
 
     private fun goToLectureInfoFragment() {
