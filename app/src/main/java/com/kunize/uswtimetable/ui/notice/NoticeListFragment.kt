@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.ui.common.ViewModelFactory
@@ -53,10 +53,8 @@ class NoticeListFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.uiEvent.collect { event ->
                 if (event is NoticeViewModel.Event.NoticeClickEvent) {
-                    findNavController(this@NoticeListFragment).navigate(
-                        R.id.action_noticeListFragment_to_noticeDetailFragment,
-                        bundleOf(KEY_NOTICE_ID to event.notice.id)
-                    )
+                    val action = NoticeListFragmentDirections.actionNoticeListFragmentToNoticeDetailFragment(event.notice.id)
+                    findNavController().navigate(action)
                 }
             }
         }
