@@ -35,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
         repeatOnStarted {
             loginViewModel.loggedIn.collect {
                 if (it) {
-                    toast("이미 로그인되어 있습니다") // TODO 문자열 추출
                     finish()
                 }
             }
