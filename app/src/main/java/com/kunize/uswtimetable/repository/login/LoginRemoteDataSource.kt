@@ -1,11 +1,12 @@
 package com.kunize.uswtimetable.repository.login
 
 import com.kunize.uswtimetable.dataclass.LoginIdPassword
+import com.kunize.uswtimetable.domain.di.OtherApiService
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import javax.inject.Inject
 
 class LoginRemoteDataSource @Inject constructor(
-    private val apiService: IRetrofit,
+    @OtherApiService private val apiService: IRetrofit,
 ) : LoginDataSource {
 
     override suspend fun login(userId: String, userPassword: String) =

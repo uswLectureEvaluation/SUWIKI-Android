@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -22,8 +21,8 @@ class UserRepositoryImpl @Inject constructor(
     override val isLoggedIn: Flow<Boolean>
         get() = userPreference.isLoggedIn
 
-    override val userInfo: Flow<LoggedInUser?> = flow {
-        combine(
+    override val userInfo: Flow<LoggedInUser?>
+        get() = combine(
             userPreference.userId,
             userPreference.point,
             userPreference.writtenEvaluation,
@@ -31,42 +30,21 @@ class UserRepositoryImpl @Inject constructor(
             userPreference.viewExam,
             userPreference.email,
         ) {
-            val userId = (it[0] as? String) ?: run {
-                emit(null)
-                return@combine
-            }
-            val point = (it[1] as? Int) ?: run {
-                emit(null)
-                return@combine
-            }
-            val writtenEvaluation = (it[2] as? Int) ?: run {
-                emit(null)
-                return@combine
-            }
-            val writtenExam = (it[3] as? Int) ?: run {
-                emit(null)
-                return@combine
-            }
-            val viewExam = (it[4] as? Int) ?: run {
-                emit(null)
-                return@combine
-            }
-            val email = (it[5] as? String) ?: run {
-                emit(null)
-                return@combine
-            }
-            emit(
-                LoggedInUser(
-                    userId = userId,
-                    point = point,
-                    writtenEvaluation = writtenEvaluation,
-                    writtenExam = writtenExam,
-                    viewExam = viewExam,
-                    email = email,
-                ),
+            val userId = (it[0] as? String) ?: return@combine null
+            val point = (it[1] as? Int) ?: return@combine null
+            val writtenEvaluation = (it[2] as? Int) ?: return@combine null
+            val writtenExam = (it[3] as? Int) ?: return@combine null
+            val viewExam = (it[4] as? Int) ?: return@combine null
+            val email = (it[5] as? String) ?: return@combine null
+            LoggedInUser(
+                userId = userId,
+                point = point,
+                writtenEvaluation = writtenEvaluation,
+                writtenExam = writtenExam,
+                viewExam = viewExam,
+                email = email,
             )
         }
-    }
 
     override suspend fun login() {
         withContext(ioDispatcher) {

@@ -1,10 +1,11 @@
 package com.kunize.uswtimetable.repository.my_post
 
+import com.kunize.uswtimetable.domain.di.AuthApiService
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import javax.inject.Inject
 
 class MyPostRemoteDataSource @Inject constructor(
-    private val apiService: IRetrofit,
+    @AuthApiService private val apiService: IRetrofit,
 ) : MyPostDataSource {
 
     override suspend fun getMyEvaluations(page: Int) = apiService.getEvaluatePosts(page)
