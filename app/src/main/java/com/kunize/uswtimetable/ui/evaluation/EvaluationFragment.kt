@@ -24,7 +24,9 @@ import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.LectureItemViewType
 import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
     private lateinit var evaluationFooterAdapter: EvaluationFooterAdapter
