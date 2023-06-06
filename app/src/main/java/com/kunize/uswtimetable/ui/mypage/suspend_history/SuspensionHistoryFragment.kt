@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.kunize.uswtimetable.databinding.FragmentSuspensionHistoryBinding
 import com.kunize.uswtimetable.util.Constants.TAG
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SuspensionHistoryFragment : Fragment() {
     private var _binding: FragmentSuspensionHistoryBinding? = null
     private val binding get() = _binding!!

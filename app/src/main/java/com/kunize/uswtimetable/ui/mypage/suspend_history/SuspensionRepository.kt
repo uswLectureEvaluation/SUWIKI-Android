@@ -1,14 +1,16 @@
 package com.kunize.uswtimetable.ui.mypage.suspend_history
 
-import android.util.Log
 import com.kunize.uswtimetable.data.local.Suspension
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class SuspensionRepository(private val dataSource: SuspensionHistoryRemoteDataSource) {
+class SuspensionRepository @Inject constructor(
+    private val dataSource: SuspensionHistoryDataSource,
+) {
     private val items = mutableListOf<Suspension>()
     private val _suspensionHistory = MutableStateFlow<List<Suspension>>(emptyList())
     val suspensionHistory = _suspensionHistory.asStateFlow()
@@ -23,7 +25,7 @@ class SuspensionRepository(private val dataSource: SuspensionHistoryRemoteDataSo
                         item.bannedReason,
                         item.judgement,
                         item.createdAt,
-                        item.expiredAt
+                        item.expiredAt,
                     )
                 }
                 items.addAll(banHistory)
@@ -34,7 +36,7 @@ class SuspensionRepository(private val dataSource: SuspensionHistoryRemoteDataSo
                         item.blackListReason,
                         item.judgement,
                         item.createdAt,
-                        item.expiredAt
+                        item.expiredAt,
                     )
                 }
                 items.addAll(blockHistory)

@@ -27,6 +27,9 @@ import com.kunize.uswtimetable.repository.search_result.SearchResultDataSource
 import com.kunize.uswtimetable.repository.search_result.SearchResultRemoteDataSource
 import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionHistoryDataSource
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionHistoryRemoteDataSource
+import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -130,5 +133,19 @@ object RepositoryModule {
         dataSource: SearchResultDataSource,
     ): SearchResultRepository {
         return SearchResultRepository(dataSource)
+    }
+
+    @Provides
+    fun provideSuspensionHistoryDataSource(
+        @AuthApiService apiService: IRetrofit,
+    ): SuspensionHistoryDataSource {
+        return SuspensionHistoryRemoteDataSource(apiService)
+    }
+
+    @Provides
+    fun provideSuspensionRepository(
+        dataSource: SuspensionHistoryDataSource,
+    ): SuspensionRepository {
+        return SuspensionRepository(dataSource)
     }
 }
