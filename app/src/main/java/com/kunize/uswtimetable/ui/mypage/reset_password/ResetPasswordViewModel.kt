@@ -5,12 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.util.Result
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
-class ResetPasswordViewModel(private val repository: ResetPasswordRepository) : ViewModel() {
+@HiltViewModel
+class ResetPasswordViewModel @Inject constructor(
+    private val repository: ResetPasswordRepository,
+) : ViewModel() {
     val currentPassword = MutableLiveData<String>()
     val newPassword = MutableLiveData<String>()
     val result = MutableLiveData<Result<Any>>()

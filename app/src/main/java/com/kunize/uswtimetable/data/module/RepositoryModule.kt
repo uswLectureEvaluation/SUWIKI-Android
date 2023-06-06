@@ -31,6 +31,7 @@ import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.repository.search_result.SearchResultDataSource
 import com.kunize.uswtimetable.repository.search_result.SearchResultRemoteDataSource
 import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
+import com.kunize.uswtimetable.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionHistoryDataSource
 import com.kunize.uswtimetable.ui.mypage.suspend_history.SuspensionHistoryRemoteDataSource
@@ -180,5 +181,12 @@ object RepositoryModule {
         noticeDetailRepository: NoticeDetailDataSource,
     ): NoticeDetailRepository {
         return NoticeDetailRepository(noticeDetailRepository)
+    }
+
+    @Provides
+    fun provideResetPasswordRepository(
+        @AuthApiService apiService: IRetrofit,
+    ): ResetPasswordRepository {
+        return ResetPasswordRepository(apiService)
     }
 }
