@@ -8,9 +8,14 @@ import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.skydoves.sandwich.StatusCode
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FindPwViewModel(private val repository: FindPwRepository) : ViewModel() {
+@HiltViewModel
+class FindPwViewModel @Inject constructor(
+    private val repository: FindPwRepository,
+) : ViewModel() {
     val email = MutableLiveData<String>()
     val userId = MutableLiveData<String>()
     val successMessage = MutableLiveData<String>()

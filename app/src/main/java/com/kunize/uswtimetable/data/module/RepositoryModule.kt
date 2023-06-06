@@ -31,6 +31,8 @@ import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.repository.search_result.SearchResultDataSource
 import com.kunize.uswtimetable.repository.search_result.SearchResultRemoteDataSource
 import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
+import com.kunize.uswtimetable.repository.user_info.FindIdRepository
+import com.kunize.uswtimetable.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.repository.user_info.QuitRepository
 import com.kunize.uswtimetable.repository.user_info.ResetPasswordRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
@@ -196,5 +198,19 @@ object RepositoryModule {
         @AuthApiService apiService: IRetrofit,
     ): QuitRepository {
         return QuitRepository(apiService)
+    }
+
+    @Provides
+    fun provideFindIdRepository(
+        @OtherApiService apiService: IRetrofit,
+    ): FindIdRepository {
+        return FindIdRepository(apiService)
+    }
+
+    @Provides
+    fun provideFindPwRepository(
+        @OtherApiService apiService: IRetrofit,
+    ): FindPwRepository {
+        return FindPwRepository(apiService)
     }
 }

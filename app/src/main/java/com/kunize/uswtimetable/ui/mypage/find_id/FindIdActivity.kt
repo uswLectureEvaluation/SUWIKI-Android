@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityFindIdBinding
 import com.kunize.uswtimetable.ui.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindIdActivity : AppCompatActivity() {
     private var _binding: ActivityFindIdBinding? = null
     val binding get() = _binding!!

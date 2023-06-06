@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityFindPasswordBinding
 import com.kunize.uswtimetable.ui.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindPasswordActivity : AppCompatActivity() {
     private var _binding: ActivityFindPasswordBinding? = null
     val binding get() = _binding!!

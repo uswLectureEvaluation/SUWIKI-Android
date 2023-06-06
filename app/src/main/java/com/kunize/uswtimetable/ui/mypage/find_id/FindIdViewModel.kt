@@ -8,9 +8,14 @@ import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
 import com.skydoves.sandwich.StatusCode
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onSuccess
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FindIdViewModel(private val repository: FindIdRepository) : ViewModel() {
+@HiltViewModel
+class FindIdViewModel @Inject constructor(
+    private val repository: FindIdRepository,
+) : ViewModel() {
     val successMessage = MutableLiveData<String>()
     val errorMessage = MutableLiveData<String>()
     val email = MutableLiveData<String>()
@@ -25,8 +30,9 @@ class FindIdViewModel(private val repository: FindIdRepository) : ViewModel() {
             val response = repository.findId(emailWithDomain)
 
             response.onSuccess {
-                if (data.success)
+                if (data.success) {
                     successMessage.postValue("$emailWithDomain 로 아이디가 전송되었습니다.")
+                }
             }.onError {
                 when (statusCode) {
                     StatusCode.BadRequest -> errorMessage.postValue("존재하지 않는 이메일 주소입니다.")
