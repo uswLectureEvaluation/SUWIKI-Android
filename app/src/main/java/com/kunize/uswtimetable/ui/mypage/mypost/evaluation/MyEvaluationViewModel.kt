@@ -10,6 +10,7 @@ import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.ui.mypage.mypost.Result
 import com.kunize.uswtimetable.util.LAST_PAGE
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +18,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MyEvaluationViewModel(
+@HiltViewModel
+class MyEvaluationViewModel @Inject constructor(
     private val repository: MyPostRepository,
     getUserInfoUsecase: GetUserInfoUsecase,
 ) : ViewModel() {
