@@ -7,14 +7,19 @@ import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.NoticeDto
 import com.kunize.uswtimetable.repository.notice.NoticeRepository
 import com.kunize.uswtimetable.util.LAST_PAGE
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val ITEMS_PER_PAGE = 10
 
-class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewModel() {
+@HiltViewModel
+class NoticeViewModel @Inject constructor(
+    private val noticeRepository: NoticeRepository,
+) : ViewModel() {
     val errorMessage = MutableLiveData<String>()
     private val _uiEvent = MutableSharedFlow<Event>()
     val uiEvent: SharedFlow<Event> = _uiEvent.asSharedFlow()

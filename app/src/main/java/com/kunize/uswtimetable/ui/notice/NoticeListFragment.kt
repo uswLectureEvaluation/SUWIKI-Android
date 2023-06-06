@@ -6,18 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import com.kunize.uswtimetable.R
+import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
 import com.kunize.uswtimetable.util.Constants
-import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoticeListFragment : Fragment() {
 
     private var _binding: FragmentNoticeListBinding? = null
@@ -52,10 +51,11 @@ class NoticeListFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.uiEvent.collect { event ->
                 if (event is NoticeViewModel.Event.NoticeClickEvent) {
-                    findNavController(this@NoticeListFragment).navigate(
-                        R.id.action_noticeListFragment_to_noticeDetailFragment,
-                        bundleOf(KEY_NOTICE_ID to event.notice.id),
-                    )
+                    val action =
+                        NoticeListFragmentDirections.actionNoticeListFragmentToNoticeDetailFragment(
+                            event.notice.id,
+                        )
+                    findNavController().navigate(action)
                 }
             }
         }

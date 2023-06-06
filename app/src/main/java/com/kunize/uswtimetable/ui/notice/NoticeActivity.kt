@@ -6,7 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityNoticeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoticeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoticeBinding
     private lateinit var navController: NavController

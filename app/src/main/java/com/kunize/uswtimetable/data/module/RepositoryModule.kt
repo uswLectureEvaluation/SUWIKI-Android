@@ -20,6 +20,11 @@ import com.kunize.uswtimetable.repository.login.LoginRepository
 import com.kunize.uswtimetable.repository.my_post.MyPostDataSource
 import com.kunize.uswtimetable.repository.my_post.MyPostRemoteDataSource
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
+import com.kunize.uswtimetable.repository.notice.NoticeDetailDataSource
+import com.kunize.uswtimetable.repository.notice.NoticeDetailRemoteDataSource
+import com.kunize.uswtimetable.repository.notice.NoticeDetailRepository
+import com.kunize.uswtimetable.repository.notice.NoticeRemoteDataSource
+import com.kunize.uswtimetable.repository.notice.NoticeRepository
 import com.kunize.uswtimetable.repository.open_major.OpenMajorDataSource
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
@@ -147,5 +152,33 @@ object RepositoryModule {
         dataSource: SuspensionHistoryDataSource,
     ): SuspensionRepository {
         return SuspensionRepository(dataSource)
+    }
+
+    @Provides
+    fun provideNoticeDataSource(
+        @OtherApiService apiService: IRetrofit,
+    ): NoticeRemoteDataSource {
+        return NoticeRemoteDataSource(apiService)
+    }
+
+    @Provides
+    fun provideNoticeRepository(
+        dataSource: NoticeRemoteDataSource,
+    ): NoticeRepository {
+        return NoticeRepository(dataSource)
+    }
+
+    @Provides
+    fun provideNoticeDetailDataSource(
+        @OtherApiService apiService: IRetrofit,
+    ): NoticeDetailDataSource {
+        return NoticeDetailRemoteDataSource(apiService)
+    }
+
+    @Provides
+    fun provideNoticeDetailRepository(
+        noticeDetailRepository: NoticeDetailDataSource,
+    ): NoticeDetailRepository {
+        return NoticeDetailRepository(noticeDetailRepository)
     }
 }

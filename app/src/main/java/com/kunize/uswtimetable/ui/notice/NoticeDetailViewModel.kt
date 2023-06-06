@@ -7,9 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.NoticeDetailDto
 import com.kunize.uswtimetable.repository.notice.NoticeDetailRepository
 import com.kunize.uswtimetable.ui.common.Event
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoticeDetailViewModel(private val repository: NoticeDetailRepository) : ViewModel() {
+@HiltViewModel
+class NoticeDetailViewModel @Inject constructor(
+    private val repository: NoticeDetailRepository,
+) : ViewModel() {
     var notice = MutableLiveData<NoticeDetailDto>()
     val loading = MutableLiveData<Boolean>()
     private val _eventBack = MutableLiveData<Event<Boolean>>()
@@ -20,7 +25,7 @@ class NoticeDetailViewModel(private val repository: NoticeDetailRepository) : Vi
             loading.postValue(true)
             val response = repository.getNotice(id)
             if (response.isSuccessful) {
-                notice.postValue(response.body()?.data?:return@launch)
+                notice.postValue(response.body()?.data ?: return@launch)
             }
             loading.postValue(false)
         }
