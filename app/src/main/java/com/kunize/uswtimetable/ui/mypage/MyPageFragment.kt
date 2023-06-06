@@ -23,14 +23,16 @@ import com.kunize.uswtimetable.ui.open_source.OpenSourceActivity
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MyPageFragment : Fragment() {
-    private val viewModel: MyPageViewModel by viewModels()
     private lateinit var binding: FragmentMyPageBinding
+    private val viewModel: MyPageViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
