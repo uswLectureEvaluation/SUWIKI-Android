@@ -6,16 +6,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.data.remote.LectureExamDto
+import com.kunize.uswtimetable.dataclass.LoggedInUser
+import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
 import com.kunize.uswtimetable.ui.mypage.mypost.Result
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.LAST_PAGE
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel() {
+@HiltViewModel
+class MyExamInfoViewModel @Inject constructor(
+    private val repository: MyPostRepository,
+    getUserInfoUsecase: GetUserInfoUsecase,
+) : ViewModel() {
     private val _items = MutableLiveData<List<LectureExamDto>>(emptyList())
     val items: LiveData<List<LectureExamDto>> get() = _items
     val loading = MutableLiveData<Boolean>()
@@ -27,6 +39,23 @@ class MyExamInfoViewModel(private val repository: MyPostRepository) : ViewModel(
 
     private var _page = 1
     private var _loadFinished = false
+
+    val isLoggedIn: StateFlow<Boolean> = getUserInfoUsecase.isLoggedIn()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            false,
+        )
+
+    val userInfo: StateFlow<LoggedInUser> = getUserInfoUsecase().transform {
+        it?.let { info ->
+            emit(info)
+        }
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        LoggedInUser(),
+    )
 
     init {
         scrollBottomEvent()

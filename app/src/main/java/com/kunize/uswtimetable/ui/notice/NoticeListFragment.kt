@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentNoticeListBinding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
@@ -23,14 +22,14 @@ class NoticeListFragment : Fragment() {
 
     private var _binding: FragmentNoticeListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: NoticeViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: NoticeViewModel by viewModels()
     private val adapter: NoticeAdapter by lazy { NoticeAdapter(viewModel) }
     private var toast: Toast? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentNoticeListBinding.inflate(inflater, container, false)
 
@@ -55,7 +54,7 @@ class NoticeListFragment : Fragment() {
                 if (event is NoticeViewModel.Event.NoticeClickEvent) {
                     findNavController(this@NoticeListFragment).navigate(
                         R.id.action_noticeListFragment_to_noticeDetailFragment,
-                        bundleOf(KEY_NOTICE_ID to event.notice.id)
+                        bundleOf(KEY_NOTICE_ID to event.notice.id),
                     )
                 }
             }

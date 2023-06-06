@@ -17,17 +17,17 @@ import com.kunize.uswtimetable.data.local.OpenMajorDatabase
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
-import com.kunize.uswtimetable.ui.common.User
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.afterEditTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class SelectOpenMajorFragment : Fragment() {
 
     private lateinit var binding: FragmentSelectOpenMajorBinding
@@ -35,12 +35,12 @@ class SelectOpenMajorFragment : Fragment() {
     private val args: SelectOpenMajorFragmentArgs by navArgs()
     private lateinit var tempOpenMajorList: List<OpenMajorData>
     var openMajorList = mutableListOf<OpenMajorItem>()
-    private val viewModel: SelectOpenMajorViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: SelectOpenMajorViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_select_open_major, container, false)
@@ -72,31 +72,36 @@ class SelectOpenMajorFragment : Fragment() {
         binding.etSearch.afterEditTextChanged { searchText ->
             adapter.filter.filter(searchText)
             val num = adapter.unfilteredData.find { it.title.contains(searchText.toString()) }
-            if (num == null && !binding.rbBookmark.isChecked && searchText?.isNotEmpty() == true)
+            if (num == null && !binding.rbBookmark.isChecked && searchText?.isNotEmpty() == true) {
                 viewModel.setNoSearchResultText(searchText.toString())
-            else
+            } else {
                 viewModel.setNoSearchResultText("")
+            }
         }
 
         binding.rbAll.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) CoroutineScope(IO).launch {
-                getAllMajorList()
-                viewModel.hideNeedLoginLayout()
-                withContext(Main) {
-                    adapter.notifyDataSetChanged()
+            if (isChecked) {
+                CoroutineScope(IO).launch {
+                    getAllMajorList()
+                    viewModel.hideNeedLoginLayout()
+                    withContext(Main) {
+                        adapter.notifyDataSetChanged()
+                    }
                 }
             }
         }
 
         binding.rbBookmark.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) CoroutineScope(IO).launch {
-                if (User.isLoggedIn.value == false) {
-                    viewModel.showNeedLoginLayout()
-                    return@launch
-                }
-                getBookmarkList()
-                withContext(Main) {
-                    adapter.notifyDataSetChanged()
+            if (isChecked) {
+                CoroutineScope(IO).launch {
+                    if (!viewModel.isLoggedIn.value) {
+                        viewModel.showNeedLoginLayout()
+                        return@launch
+                    }
+                    getBookmarkList()
+                    withContext(Main) {
+                        adapter.notifyDataSetChanged()
+                    }
                 }
             }
         }
@@ -104,14 +109,15 @@ class SelectOpenMajorFragment : Fragment() {
         viewModel.starClickEvent.observe(
             viewLifecycleOwner,
             EventObserver { title ->
-                if (User.isLoggedIn.value == true) {
+                if (viewModel.isLoggedIn.value) {
                     val filteredData = adapter.filteredData
                     val unfilteredData = adapter.unfilteredData
                     val filteredDataIndex = filteredData.indexOfFirst { it.title == title }
                     val unfilteredDataIndex = unfilteredData.indexOfFirst { it.title == title }
 
-                    if (filteredDataIndex == -1 || unfilteredDataIndex == -1)
+                    if (filteredDataIndex == -1 || unfilteredDataIndex == -1) {
                         return@EventObserver
+                    }
 
                     val checkedType = !filteredData[filteredDataIndex].isChecked
                     filteredData[filteredDataIndex].isChecked = checkedType
@@ -125,7 +131,7 @@ class SelectOpenMajorFragment : Fragment() {
                         }
                     }
                 }
-            }
+            },
         )
 
         adapter.setItemClickListener(object : SelectOpenMajorAdapter.ItemClickListener {
@@ -139,16 +145,18 @@ class SelectOpenMajorFragment : Fragment() {
         binding.btnOk.setOnClickListener {
             SuwikiApplication.prefs.setString(
                 "openMajorSel",
-                adapter.selectedItemTitle.ifBlank { "전체" }
+                adapter.selectedItemTitle.ifBlank { "전체" },
             )
             val action = when (args.prevFragment) {
                 FragmentType.EVALUATION -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToNavigationEvaluation(
-                    sortType = args.prevSortType
+                    sortType = args.prevSortType,
                 )
+
                 FragmentType.SEARCH_RESULT -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToSearchResultFragment(
                     searchLectureName = args.prevSearch,
-                    sortType = args.prevSortType
+                    sortType = args.prevSortType,
                 )
+
                 else -> SelectOpenMajorFragmentDirections.actionSelectOpenMajorFragmentToAddClassFragment()
             }
             findNavController().navigate(action)

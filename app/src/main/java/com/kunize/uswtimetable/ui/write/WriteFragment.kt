@@ -1,7 +1,6 @@
 package com.kunize.uswtimetable.ui.write
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.ui.common.EventObserver
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.WriteFragmentTitle
 import com.kunize.uswtimetable.util.extensions.seekbarChangeListener
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +34,7 @@ class WriteFragment : Fragment() {
 
     lateinit var binding: FragmentWriteBinding
 
-    private val writeViewModel: WriteViewModel by viewModels { ViewModelFactory() }
+    private val writeViewModel: WriteViewModel by viewModels()
     private var semesterDialog: SemesterDialog? = null
     private var testDialog: TestDialog? = null
     private val args: WriteFragmentArgs by navArgs()
@@ -57,7 +55,7 @@ class WriteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_write, container, false)
 
@@ -73,13 +71,13 @@ class WriteFragment : Fragment() {
             binding.noteCheckBox,
             binding.applicationCheckBox,
             binding.practiceCheckBox,
-            binding.taskCheckBox
+            binding.taskCheckBox,
         )
 
         difficultyRadioBtnList = listOf(
             binding.easyRadioButton,
             binding.normalRadioButton,
-            binding.difficultRadioButton
+            binding.difficultRadioButton,
         )
 
         binding.ivClose.setOnClickListener {
@@ -99,7 +97,6 @@ class WriteFragment : Fragment() {
 
         binding.finishButton.setOnClickListener {
             CoroutineScope(IO).launch {
-
                 val emptyMsg = when (binding.writeType.text.toString()) {
                     WriteFragmentTitle.WRITE_EVALUATION, WriteFragmentTitle.EDIT_MY_EVALUATION -> {
                         when {
@@ -111,6 +108,7 @@ class WriteFragment : Fragment() {
                             else -> ""
                         }
                     }
+
                     else -> when {
                         getTestContentString().isBlank() -> "시험 내용을 선택해주세요!"
                         binding.difficultyGroup.checkedRadioButtonId == -1 -> "난이도를 선택해주세요!"
@@ -130,25 +128,29 @@ class WriteFragment : Fragment() {
                 val response = when (binding.writeType.text.toString()) {
                     WriteFragmentTitle.WRITE_EVALUATION -> writeViewModel.postLectureEvaluation(
                         lectureId,
-                        getLectureEvaluationInfo()
+                        getLectureEvaluationInfo(),
                     )
+
                     WriteFragmentTitle.WRITE_EXAM -> writeViewModel.postLectureExam(
                         lectureId,
-                        getLectureExamInfo()
+                        getLectureExamInfo(),
                     )
+
                     WriteFragmentTitle.EDIT_MY_EVALUATION -> writeViewModel.updateLectureEvaluation(
                         lectureId,
-                        getLectureEvaluationEditInfo()
+                        getLectureEvaluationEditInfo(),
                     )
+
                     else -> writeViewModel.updateLectureExam(lectureId, getLectureExamEditInfo())
                 }
 
                 withContext(Main) {
                     if (response.isSuccessful) {
-                        if (args.myExamInfo == null && args.myEvaluation == null)
+                        if (args.myExamInfo == null && args.myEvaluation == null) {
                             goToLectureInfoFragment()
-                        else
+                        } else {
                             goToMyPostFragment()
+                        }
                     } else {
                         writeViewModel.handleError(response.code())
                     }
@@ -162,9 +164,9 @@ class WriteFragment : Fragment() {
                 Toast.makeText(
                     requireContext(),
                     writeViewModel.toastViewModel.toastMessage,
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
-            }
+            },
         )
 
         return binding.root
@@ -189,7 +191,7 @@ class WriteFragment : Fragment() {
                 team,
                 difficulty,
                 homework,
-                writeContent.text.toString()
+                writeContent.text.toString(),
             )
         }
         return info
@@ -203,8 +205,9 @@ class WriteFragment : Fragment() {
 
             var testDifficulty = ""
             difficultyRadioBtnList.forEach {
-                if (it.isChecked)
+                if (it.isChecked) {
                     testDifficulty = it.text.toString()
+                }
             }
 
             // TODO 수정
@@ -215,7 +218,7 @@ class WriteFragment : Fragment() {
                 examInfo = testContent,
                 examType = writeViewModel.testText.value!!,
                 examDifficulty = testDifficulty,
-                content = writeContent.text.toString()
+                content = writeContent.text.toString(),
             )
         }
         return info
@@ -229,8 +232,9 @@ class WriteFragment : Fragment() {
 
             var testDifficulty = ""
             difficultyRadioBtnList.forEach {
-                if (it.isChecked)
+                if (it.isChecked) {
                     testDifficulty = it.text.toString()
+                }
             }
 
             info = LectureExamDto(
@@ -238,7 +242,7 @@ class WriteFragment : Fragment() {
                 examInfo = testContent,
                 examType = writeViewModel.testText.value!!,
                 examDifficulty = testDifficulty,
-                content = writeContent.text.toString()
+                content = writeContent.text.toString(),
             )
         }
         return info
@@ -247,8 +251,9 @@ class WriteFragment : Fragment() {
     private fun getTestContentString(): String {
         var testContent = ""
         testContentCheckBoxList.forEach { checkBox ->
-            if (checkBox.isChecked)
+            if (checkBox.isChecked) {
                 testContent += checkBox.text.toString() + ", "
+            }
         }
         return testContent
     }
@@ -270,7 +275,7 @@ class WriteFragment : Fragment() {
                 team,
                 difficulty,
                 homework,
-                writeContent.text.toString()
+                writeContent.text.toString(),
             )
         }
         return info
@@ -317,8 +322,9 @@ class WriteFragment : Fragment() {
     private fun setTestContentCheckBox(it: LectureExamDto) {
         for (checkBox in testContentCheckBoxList) {
             for (dataString in it.examInfo.replace(" ", "").split(",")) {
-                if (checkBox.text == dataString)
+                if (checkBox.text == dataString) {
                     checkBox.isChecked = true
+                }
             }
         }
     }
@@ -365,7 +371,7 @@ class WriteFragment : Fragment() {
             viewLifecycleOwner,
             EventObserver {
                 testDialog?.dismiss()
-            }
+            },
         )
     }
 
@@ -381,7 +387,7 @@ class WriteFragment : Fragment() {
             viewLifecycleOwner,
             EventObserver {
                 semesterDialog?.dismiss()
-            }
+            },
         )
     }
 
@@ -406,7 +412,7 @@ class WriteFragment : Fragment() {
         gradeRadioBtnList = listOf(
             binding.gradeGoodRadioButton,
             binding.gradeNormalRadioButton,
-            binding.gradeDifficultRadioButton
+            binding.gradeDifficultRadioButton,
         )
         gradeRadioBtnList[it.difficulty].isChecked = true
     }
@@ -420,10 +426,11 @@ class WriteFragment : Fragment() {
     }
 
     private fun setTeamRadioBtn(it: MyEvaluationDto) {
-        if (it.team == 1)
+        if (it.team == 1) {
             binding.teamExistRadioButton.isChecked = true
-        else
+        } else {
             binding.teamNotExistRadioButton.isChecked = true
+        }
     }
 
     private fun setDefaultSeekBarProgressValue(it: MyEvaluationDto) {

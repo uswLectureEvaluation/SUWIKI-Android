@@ -120,8 +120,13 @@ dependencies {
     implementation 'com.github.jeffreyliu8:FlexBoxRadioGroup:0.0.8'
 
     /* Hilt */
-    implementation "com.google.dagger:hilt-android:2.44"
+    implementation "com.google.dagger:hilt-android:2.45"
     kapt "com.google.dagger:hilt-compiler:2.44"
+
+    /* Preference DataStore */
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+//    implementation "androidx.datastore:datastore-preferences-core:1.0.0" // -> Domain 모듈에서 사용
+//    implementation 'androidx.datastore:datastore-core:1.0.0'
 }
 
 kapt {

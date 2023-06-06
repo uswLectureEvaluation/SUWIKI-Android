@@ -9,17 +9,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kunize.uswtimetable.databinding.FragmentNoticeDetailBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants.KEY_NOTICE_ID
 
 class NoticeDetailFragment : Fragment() {
     private var _binding: FragmentNoticeDetailBinding? = null
     private val binding: FragmentNoticeDetailBinding get() = _binding!!
-    private val viewModel: NoticeDetailViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: NoticeDetailViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentNoticeDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -37,9 +37,12 @@ class NoticeDetailFragment : Fragment() {
             binding.notice = it
         }
 
-        viewModel.eventBack.observe(viewLifecycleOwner, EventObserver {
-            if (it) findNavController().navigateUp()
-        })
+        viewModel.eventBack.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                if (it) findNavController().navigateUp()
+            },
+        )
     }
 
     override fun onDestroyView() {

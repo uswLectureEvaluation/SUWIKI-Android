@@ -5,12 +5,9 @@ import com.kunize.uswtimetable.data.remote.OpenMajorList
 import com.kunize.uswtimetable.data.remote.OpenMajorVersion
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.skydoves.sandwich.ApiResponse
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
 import retrofit2.Response
 
-class OpenMajorRemoteDataSource(private val apiService: IRetrofit): OpenMajorDataSource {
+class OpenMajorRemoteDataSource(private val apiService: IRetrofit) : OpenMajorDataSource {
     override suspend fun getOpenMajorVersion(): ApiResponse<OpenMajorVersion> {
         return apiService.getOpenMajorVersion()
     }

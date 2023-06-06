@@ -4,16 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.JsonObject
 import com.kunize.uswtimetable.data.remote.MajorType
+import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.ui.common.Event
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
+import javax.inject.Inject
 
-class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorRepository) : ViewModel() {
+@HiltViewModel
+class SelectOpenMajorViewModel @Inject constructor(
+    private val openMajorRepository: OpenMajorRepository,
+    userInfoUsecase: GetUserInfoUsecase,
+) : ViewModel() {
     private val _starClickEvent = MutableLiveData<Event<String>>()
     val starClickEvent: LiveData<Event<String>>
         get() = _starClickEvent
@@ -25,6 +33,9 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
     private val _showNoSearchResultText = MutableLiveData<String>()
     val showNoSearchResultText: LiveData<String>
         get() = _showNoSearchResultText
+
+    val isLoggedIn: StateFlow<Boolean> = userInfoUsecase.isLoggedIn()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     init {
         _showNoSearchResultText.value = ""

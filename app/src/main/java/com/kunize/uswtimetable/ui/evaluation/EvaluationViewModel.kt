@@ -5,30 +5,40 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.data.remote.LectureMain
+import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
+import com.kunize.uswtimetable.repository.evaluation.EvaluationRepository
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
+import com.kunize.uswtimetable.ui.common.Event
 import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.ToastViewModel
-import com.kunize.uswtimetable.repository.evaluation.EvaluationRepository
-import com.kunize.uswtimetable.ui.common.Event
-import com.kunize.uswtimetable.util.LectureApiOption
 import com.kunize.uswtimetable.util.LectureApiOption.BEST
 import com.kunize.uswtimetable.util.LectureApiOption.HONEY
 import com.kunize.uswtimetable.util.LectureApiOption.LEARNING
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
 import com.kunize.uswtimetable.util.LectureApiOption.SATISFACTION
-import com.kunize.uswtimetable.util.PreferenceManager.Companion.getString
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EvaluationViewModel(private val evaluationRepository: EvaluationRepository) : ViewModel(),
+@HiltViewModel
+class EvaluationViewModel @Inject constructor(
+    private val evaluationRepository: EvaluationRepository,
+    userInfoUsecase: GetUserInfoUsecase,
+) : ViewModel(),
     HandlingErrorInterface {
 
     private var spinnerTypeList = listOf(MODIFIED, HONEY, SATISFACTION, LEARNING, BEST)
     val spinnerTextList = listOf("최근 올라온 강의", "꿀 강의", "만족도가 높은 강의", "배울게 많은 강의", "Best 강의")
     private val spinnerImageList = listOf(
-        R.drawable.ic_fire, R.drawable.ic_honey, R.drawable.ic_thumbs,
-        R.drawable.ic_book, R.drawable.ic_1st
+        R.drawable.ic_fire,
+        R.drawable.ic_honey,
+        R.drawable.ic_thumbs,
+        R.drawable.ic_book,
+        R.drawable.ic_1st,
     )
     var majorType = "전체"
     var spinnerSel = 0
@@ -49,9 +59,19 @@ class EvaluationViewModel(private val evaluationRepository: EvaluationRepository
     val dialogItemClickEvent: LiveData<Event<Boolean>>
         get() = _dialogItemClickEvent
 
+    val loggedIn: StateFlow<Boolean> = userInfoUsecase.isLoggedIn()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            false,
+        )
+
     private fun loadEvaluationData() {
         viewModelScope.launch {
-            val response = evaluationRepository.getLectureMainList(_selectedType.value.toString(), if(majorType == "전체") "" else majorType)
+            val response = evaluationRepository.getLectureMainList(
+                _selectedType.value.toString(),
+                if (majorType == "전체") "" else majorType,
+            )
             if (response.isSuccessful) {
                 commonRecyclerViewViewModel.deleteLoading()
                 commonRecyclerViewViewModel.changeRecyclerViewData(response.body()!!.data)

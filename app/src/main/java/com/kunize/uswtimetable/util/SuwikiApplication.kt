@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class SuwikiApplication : Application() {
     companion object {
         lateinit var prefs: PrefsManager
@@ -19,7 +21,6 @@ class SuwikiApplication : Application() {
         encryptedPrefs = EncryptedPrefsManger(applicationContext)
         super.onCreate()
     }
-
 }
 
 class EncryptedPrefsManger(context: Context) {
@@ -45,14 +46,11 @@ class EncryptedPrefsManger(context: Context) {
 
     private fun getString(key: String) = sharedPreferences.getString(key, "")
 
-
     companion object {
         private const val ACCESS_TOKEN = "access"
         private const val REFRESH_TOKEN = "refresh"
     }
-
 }
-
 
 class PrefsManager(context: Context) {
     private val prefs = context.getSharedPreferences("timetableSel", Context.MODE_PRIVATE)

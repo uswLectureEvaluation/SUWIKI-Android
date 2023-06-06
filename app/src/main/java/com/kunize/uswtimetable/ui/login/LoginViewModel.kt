@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
+import com.kunize.uswtimetable.domain.usecase.LoginUsecase
 import com.kunize.uswtimetable.repository.login.LoginRepository
-import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_REGEX
@@ -15,18 +16,31 @@ import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
 import com.kunize.uswtimetable.util.Constants.TAG
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
+import javax.inject.Inject
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val loginRepository: LoginRepository,
+    private val loginUsecase: LoginUsecase,
+    userInfoUsecase: GetUserInfoUsecase,
+) : ViewModel() {
 
     val loading = MutableLiveData(false)
 
-    val userId = MutableLiveData<String>()
+    val userId = MutableLiveData<String>() // TODO 백킹 프로퍼티 적용
     val userPw = MutableLiveData<String>()
+
+    val loggedIn: StateFlow<Boolean> = userInfoUsecase.isLoggedIn()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> get() = _loginForm
@@ -48,16 +62,20 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             if (loginResult.isSuccessful) {
                 when (loginResult.code()) {
                     200 -> {
-                        User.login()
+                        loginUsecase()
                         _loginResult.postValue(LoginState.SUCCESS)
                     }
+
                     else -> {
                         _loginResult.postValue(LoginState.FAIL)
-                        Log.d(TAG, "LoginViewModel - login() failed : ${loginResult.code()} ${loginResult.message()}")
+                        Log.d(
+                            TAG,
+                            "LoginViewModel - login() failed : ${loginResult.code()} ${loginResult.message()}",
+                        )
                     }
                 }
             } else {
-                when(loginResult.code()) {
+                when (loginResult.code()) {
                     401 -> _loginResult.postValue(LoginState.REQUIRE_AUTH)
                     else -> _loginResult.postValue(LoginState.FAIL)
                 }
@@ -74,15 +92,19 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             checkIdLength(id).not() -> {
                 _loginForm.value = LoginFormState(idError = R.string.check_id_length)
             }
+
             isIdValid(id).not() -> {
                 _loginForm.value = LoginFormState(idError = R.string.invalid_id)
             }
+
             checkPwLength(pw).not() -> {
                 _loginForm.value = LoginFormState(pwError = R.string.check_pw_length)
             }
+
             isPwValid(pw).not() -> {
                 _loginForm.value = LoginFormState(pwError = R.string.invalid_pw)
             }
+
             else -> {
                 _loginForm.value = LoginFormState(isDataValid = true)
             }
@@ -120,15 +142,15 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     }
 
     sealed class Event {
-        data class FindId(val p: Unit): Event()
-        data class FindPw(val p: Unit): Event()
-        data class SignUp(val p: Unit): Event()
-        data class CheckRemember(val checked: Boolean): Event()
+        data class FindId(val p: Unit) : Event()
+        data class FindPw(val p: Unit) : Event()
+        data class SignUp(val p: Unit) : Event()
+        data class CheckRemember(val checked: Boolean) : Event()
     }
 }
 
 enum class LoginState {
     SUCCESS,
     FAIL,
-    REQUIRE_AUTH
+    REQUIRE_AUTH,
 }

@@ -1,20 +1,21 @@
 package com.kunize.uswtimetable.repository.search_result
 
-import com.kunize.uswtimetable.repository.evaluation.EvaluationDataSource
 import com.kunize.uswtimetable.retrofit.IRetrofit
+import javax.inject.Inject
 
-class SearchResultRemoteDataSource(private val apiService: IRetrofit) : SearchResultDataSource,
-    EvaluationDataSource {
+class SearchResultRemoteDataSource @Inject constructor(
+    private val apiService: IRetrofit,
+) : SearchResultDataSource {
     override suspend fun getSearchResultDataSource(
         name: String,
         option: String,
         page: Int,
-        majorType: String
+        majorType: String,
     ) = apiService.getSearchResultDetail(name, option, page, majorType)
 
     override suspend fun getEvaluationDataSource(
         option: String,
         page: Int,
-        majorType: String
+        majorType: String,
     ) = apiService.getLectureMainList(option, page, majorType)
 }

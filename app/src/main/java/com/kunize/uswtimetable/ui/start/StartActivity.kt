@@ -14,27 +14,43 @@ import com.kunize.uswtimetable.data.local.OpenMajorDatabase
 import com.kunize.uswtimetable.data.local.TimeTableData
 import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.ActivityStartBinding
+import com.kunize.uswtimetable.domain.di.OtherApiService
+import com.kunize.uswtimetable.domain.usecase.LoginUsecase
+import com.kunize.uswtimetable.domain.usecase.LogoutUsecase
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
 import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
 import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.skydoves.sandwich.ApiResponse
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class StartActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
     private lateinit var versionPreferences: SharedPreferences
     var toUpdate = false
+
+    @OtherApiService
+    @Inject
+    lateinit var apiService: IRetrofit
+
+    @Inject
+    lateinit var loginUsecase: LoginUsecase
+
+    @Inject
+    lateinit var logoutUsecase: LogoutUsecase
 
     companion object {
         const val MY_REQUEST_CODE = 700
@@ -47,45 +63,46 @@ class StartActivity : AppCompatActivity() {
         binding.showProgress.text = "시간표 DB 버전 확인 중"
         setPercentage(0)
 
-        //retrofit2
-        val apiService = IRetrofit.getInstanceWithNoToken()
+        // retrofit2
         val openMajorRepository = OpenMajorRepository(OpenMajorRemoteDataSource(apiService))
 
-        //firebase 설정
+        // firebase 설정
         val database: FirebaseDatabase?
         val firebaseVersion: DatabaseReference?
         val firebaseTimetableData: DatabaseReference?
 
-        //Preferences 설정
+        // Preferences 설정
         versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
         var version = versionPreferences.getString("version", "202107271830")
         val openMajorVersion = versionPreferences.getFloat("openMajorVersion", 0f)
         SuwikiApplication.prefs.setInt("gradeSel", 0)
         SuwikiApplication.prefs.setString("openMajorSel", "전체")
 
-        //Room 설정
+        // Room 설정
         val db = TimeTableDatabase.getInstance(applicationContext)
 
-        //기타
+        // 기타
         val localDataList = mutableListOf<TimeTableData>()
         var done = false
         var update: Boolean? = null
 
         // 로그인 유지
-        if (PreferenceManager.getBoolean(this, REMEMBER_LOGIN)) {
-            User.login()
-        } else {
-            User.logout()
+        repeatOnStarted {
+            if (PreferenceManager.getBoolean(this@StartActivity, REMEMBER_LOGIN)) {
+                loginUsecase()
+            } else {
+                logoutUsecase()
+            }
         }
 
-        //intent 설정
+        // intent 설정
         val intent = Intent(this@StartActivity, MainActivity::class.java)
         intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP //액티비티 스택제거
+            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP // 액티비티 스택제거
 
         database = FirebaseDatabase.getInstance()
 
-        //TODO 강의평가 데이터 업데이트 시 수정
+        // TODO 강의평가 데이터 업데이트 시 수정
         firebaseVersion = database.getReference("version")
 
         firebaseVersion.get().addOnSuccessListener {
@@ -99,16 +116,17 @@ class StartActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //TODO 강의평가 데이터 업데이트 시 수정
+        // TODO 강의평가 데이터 업데이트 시 수정
         firebaseTimetableData = database.getReference("uswTimetable")
 
         CoroutineScope(IO).launch {
             while (true) {
-                if (update != null && !toUpdate)
+                if (update != null && !toUpdate) {
                     break
+                }
                 delay(500L)
                 Log.d("update123", "$update")
-            } //update 값이 입력될 때 까지 무한 루프
+            } // update 값이 입력될 때 까지 무한 루프
             if (update == true) {
                 Log.d("firebase", "업데이트 실행 $version")
                 withContext(Main) {
@@ -155,7 +173,7 @@ class StartActivity : AppCompatActivity() {
                             putString("version", version)
                         }
                         break
-                    } //시간표를 업데이트 완료 전까지 무한 루프
+                    } // 시간표를 업데이트 완료 전까지 무한 루프
                     delay(1000L)
                 }
                 withContext(Main) {
@@ -175,13 +193,13 @@ class StartActivity : AppCompatActivity() {
 
     private suspend fun updateOpenMajorList(
         openMajorRepository: OpenMajorRepository,
-        openMajorVersion: Float
+        openMajorVersion: Float,
     ) {
         when (val majorVersionResponse = openMajorRepository.getOpenMajorVersion()) {
             is ApiResponse.Success -> {
                 if (majorVersionResponse.data.version <= openMajorVersion) return
                 val majorListResponse = openMajorRepository.getOpenMajorList()
-                if(majorListResponse is ApiResponse.Success) {
+                if (majorListResponse is ApiResponse.Success) {
                     withContext(IO) {
                         val db = OpenMajorDatabase.getInstance(applicationContext)
                         db!!.openMajorDao().deleteAll()
@@ -194,6 +212,7 @@ class StartActivity : AppCompatActivity() {
                     }
                 }
             }
+
             else -> {}
         }
     }

@@ -19,19 +19,17 @@ import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentEvaluationBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
-import com.kunize.uswtimetable.ui.common.User
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.LectureItemViewType
-import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 
 class EvaluationFragment : Fragment() {
     lateinit var binding: FragmentEvaluationBinding
     private lateinit var evaluationFooterAdapter: EvaluationFooterAdapter
     private val args: EvaluationFragmentArgs by navArgs()
-    private val evaluationViewModel: EvaluationViewModel by viewModels { ViewModelFactory() }
+    private val evaluationViewModel: EvaluationViewModel by viewModels()
     private var imageSortDialog: ImageSortDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +39,9 @@ class EvaluationFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_evaluation, container, false)
         return binding.root
@@ -56,7 +55,7 @@ class EvaluationFragment : Fragment() {
                 goToSearchResult("", evaluationViewModel.spinnerSel)
                 return@EvaluationFooterAdapter
             }
-            if(User.isLoggedIn.value == true) {
+            if (evaluationViewModel.loggedIn.value) {
                 val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
                 findNavController().navigate(action)
             } else {
@@ -80,37 +79,46 @@ class EvaluationFragment : Fragment() {
             goToSelectOpenMajorFragment()
         }
 
-        //키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
+        // 키보드 검색 클릭 시 프래그먼트 이동 이벤트 구현
         binding.etSearch.setOnEditorActionListener { _, it, _ ->
             var handled = false
             if (it == EditorInfo.IME_ACTION_SEARCH && !isSearchTextLengthNotEnough()) {
                 val inputMethodManager =
                     requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
-                goToSearchResult(now = evaluationViewModel.spinnerTextList.indexOf(evaluationViewModel.sortText.value))
+                goToSearchResult(
+                    now = evaluationViewModel.spinnerTextList.indexOf(
+                        evaluationViewModel.sortText.value,
+                    ),
+                )
                 handled = true
             }
             handled
         }
 
-        //spinner 설정
+        // spinner 설정
         binding.clSort.setOnClickListener {
             imageSortDialog = ImageSortDialog(context as AppCompatActivity, evaluationViewModel)
             imageSortDialog?.show()
         }
 
-        evaluationViewModel.dialogItemClickEvent.observe(viewLifecycleOwner, EventObserver {
-            imageSortDialog?.dismiss()
-        })
+        evaluationViewModel.dialogItemClickEvent.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                imageSortDialog?.dismiss()
+            },
+        )
 
-        evaluationViewModel.toastViewModel.toastLiveData.observe(viewLifecycleOwner, EventObserver {
-            Toast.makeText(
-                requireContext(),
-                evaluationViewModel.toastViewModel.toastMessage,
-                Toast.LENGTH_LONG
-            ).show()
-        })
-
+        evaluationViewModel.toastViewModel.toastLiveData.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                Toast.makeText(
+                    requireContext(),
+                    evaluationViewModel.toastViewModel.toastMessage,
+                    Toast.LENGTH_LONG,
+                ).show()
+            },
+        )
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {
@@ -123,7 +131,7 @@ class EvaluationFragment : Fragment() {
 
     private fun goToSearchResult(
         msg: String = binding.etSearch.text.toString(),
-        now: Int = 0
+        now: Int = 0,
     ) {
         val action =
             EvaluationFragmentDirections.actionNavigationEvaluationToSearchResultFragment(msg, now)
@@ -132,8 +140,10 @@ class EvaluationFragment : Fragment() {
 
     private fun goToSelectOpenMajorFragment() {
         val action =
-            EvaluationFragmentDirections.globalOpenMajor(FragmentType.EVALUATION,
-                prevSortType = evaluationViewModel.spinnerTextList.indexOf(evaluationViewModel.sortText.value))
+            EvaluationFragmentDirections.globalOpenMajor(
+                FragmentType.EVALUATION,
+                prevSortType = evaluationViewModel.spinnerTextList.indexOf(evaluationViewModel.sortText.value),
+            )
         findNavController().navigate(action)
     }
 }

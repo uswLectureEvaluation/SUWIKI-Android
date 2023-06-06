@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.ItemRecyclerOpenMajorBinding
-import com.kunize.uswtimetable.ui.common.User
-import java.util.*
-
+import java.util.Locale
 
 class SelectOpenMajorAdapter(val viewModel: SelectOpenMajorViewModel) :
     RecyclerView.Adapter<SelectOpenMajorAdapter.SearchHolder>(), Filterable {
@@ -26,7 +24,7 @@ class SelectOpenMajorAdapter(val viewModel: SelectOpenMajorViewModel) :
         val binding = ItemRecyclerOpenMajorBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false
+            false,
         )
         return SearchHolder(binding)
     }
@@ -97,9 +95,7 @@ class SelectOpenMajorAdapter(val viewModel: SelectOpenMajorViewModel) :
 
             binding.data = data
             binding.viewModel = viewModel
-            binding.isLoggedIn = User.isLoggedIn.value
             binding.searchText = searchText
         }
     }
 }
-

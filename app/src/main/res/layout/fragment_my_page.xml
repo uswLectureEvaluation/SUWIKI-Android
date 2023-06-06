@@ -13,11 +13,7 @@
             type="com.kunize.uswtimetable.util.UserPoint" />
 
         <variable
-            name="user"
-            type="com.kunize.uswtimetable.ui.common.User" />
-
-        <variable
-            name="viewmodel"
+            name="vm"
             type="com.kunize.uswtimetable.ui.mypage.MyPageViewModel" />
     </data>
 
@@ -61,16 +57,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
-                        android:onClick="@{() -> viewmodel.myPostEvent()}"
+                        android:onClick="@{() -> vm.myPostEvent()}"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
                         android:text="@string/my_evaluate"
-                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}"
+                        android:visibility="@{vm.loggedIn?View.VISIBLE:View.GONE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -90,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_rounded_border_line_15_gray_500"
                     android:padding="@dimen/cardview_padding"
-                    android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}">
+                    android:visibility="@{vm.loggedIn?View.VISIBLE:View.GONE}">
 
                     <TextView
                         android:id="@+id/tv_my_account_title"
@@ -109,7 +103,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/tv_my_account_title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_my_account_title"
-                        app:onThrottleClick="@{() -> viewmodel.logoutEvent()}" />
+                        app:onThrottleClick="@{() -> vm.logoutEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_login_id_title"
@@ -128,7 +122,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
-                        android:text="@{user.user.userId}"
+                        android:text="@{vm.userInfo.userId}"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_login_id_title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0"
@@ -153,7 +147,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
-                        android:text="@{user.user.email}"
+                        android:text="@{vm.userInfo.email}"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_school_email_title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0"
@@ -169,7 +163,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/bg_corner16_grey"
                     android:padding="16dp"
-                    android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}">
+                    android:visibility="@{vm.loggedIn?View.VISIBLE:View.GONE}">
 
                     <TextView
                         android:id="@+id/tv_total_point_title"
@@ -187,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="@{@string/detail_point(user.user.point)}"
+                        android:text="@{@string/detail_point(vm.userInfo.point)}"
                         android:textColor="@color/suwiki_blue_900"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -207,7 +201,7 @@
                     <TextView
                         android:id="@+id/tv_my_evaluations"
                         style="@style/TextRegular.14"
-                        count="@{user.user.writtenEvaluation}"
+                        count="@{vm.userInfo.writtenEvaluation}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
@@ -219,7 +213,7 @@
                     <TextView
                         android:id="@+id/tv_my_evaluations_point"
                         style="@style/TextRegular.14"
-                        point="@{user.user.writtenEvaluation * point.WRITE_EVALUATION}"
+                        point="@{vm.userInfo.writtenEvaluation * point.WRITE_EVALUATION}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_blue_900"
@@ -243,7 +237,7 @@
                     <TextView
                         android:id="@+id/tv_my_exam_infos"
                         style="@style/TextRegular.14"
-                        count="@{user.user.writtenExam}"
+                        count="@{vm.userInfo.writtenExam}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_my_exam_infos_text"
@@ -255,7 +249,7 @@
                     <TextView
                         android:id="@+id/tv_my_exam_infos_point"
                         style="@style/TextRegular.14"
-                        point="@{user.user.writtenExam * point.WRITE_EXAM}"
+                        point="@{vm.userInfo.writtenExam * point.WRITE_EXAM}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_blue_900"
@@ -279,7 +273,7 @@
                     <TextView
                         android:id="@+id/tv_opened_exam_infos"
                         style="@style/TextRegular.14"
-                        count="@{user.user.viewExam}"
+                        count="@{vm.userInfo.viewExam}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="@id/tv_opened_exam_infos_title"
@@ -290,7 +284,7 @@
                     <TextView
                         android:id="@+id/tv_opened_exam_point"
                         style="@style/TextRegular.14"
-                        point="@{user.user.viewExam * point.VIEW_EXAM}"
+                        point="@{vm.userInfo.viewExam * point.VIEW_EXAM}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/suwiki_purple"
@@ -307,7 +301,7 @@
                     android:background="@drawable/bg_rounded_border_line_15_gray_500"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:visibility="@{user.isLoggedIn()?View.GONE:View.VISIBLE}">
+                    android:visibility="@{vm.loggedIn?View.GONE:View.VISIBLE}">
 
                     <TextView
                         style="@style/TextRegular.14.Gray"
@@ -316,7 +310,7 @@
                         android:layout_marginTop="32dp"
                         android:gravity="center"
                         android:text="@string/text_require_login"
-                        app:onThrottleClick="@{() -> viewmodel.loginEvent()}" />
+                        app:onThrottleClick="@{() -> vm.loginEvent()}" />
 
                     <TextView
                         style="@style/SuwikiMiniButton"
@@ -325,7 +319,7 @@
                         android:layout_marginTop="24dp"
                         android:layout_marginBottom="64dp"
                         android:text="@string/login_button_text"
-                        app:onThrottleClick="@{() -> viewmodel.loginEvent()}" />
+                        app:onThrottleClick="@{() -> vm.loginEvent()}" />
 
                 </LinearLayout>
 
@@ -543,10 +537,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.limitHistoryEvent()}"
+                        android:onClick="@{() -> vm.limitHistoryEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/suspension_history"
-                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{vm.loggedIn?View.VISIBLE:View.GONE}" />
 
                     <TextView
                         android:id="@+id/tv_purchase_history_button"
@@ -556,10 +550,10 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.purchaseHistoryEvent()}"
+                        android:onClick="@{() -> vm.purchaseHistoryEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/purchase_history"
-                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}" />
+                        android:visibility="@{vm.loggedIn?View.VISIBLE:View.GONE}" />
 
                     <TextView
                         android:id="@+id/tv_notice_button"
@@ -571,7 +565,7 @@
                         android:gravity="center_vertical"
                         android:paddingVertical="8dp"
                         android:text="@string/notice"
-                        app:onThrottleClick="@{() -> viewmodel.noticeEvent()}" />
+                        app:onThrottleClick="@{() -> vm.noticeEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_send_feedback_button"
@@ -583,7 +577,7 @@
                         android:gravity="center_vertical"
                         android:paddingVertical="8dp"
                         android:text="@string/send_feedback"
-                        app:onThrottleClick="@{() -> viewmodel.feedbackEvent()}" />
+                        app:onThrottleClick="@{() -> vm.feedbackEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_question_button"
@@ -593,7 +587,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:onClick="@{() -> viewmodel.questionEvent()}"
+                        android:onClick="@{() -> vm.questionEvent()}"
                         android:paddingVertical="8dp"
                         android:text="@string/question" />
 
@@ -607,7 +601,7 @@
                         android:gravity="center_vertical"
                         android:paddingVertical="8dp"
                         android:text="@string/terms_of_use"
-                        app:onThrottleClick="@{() -> viewmodel.termsEvent()}" />
+                        app:onThrottleClick="@{() -> vm.termsEvent()}" />
 
                     <TextView
                         android:id="@+id/tv_privacy_policy_button"
@@ -619,7 +613,7 @@
                         android:gravity="center_vertical"
                         android:paddingVertical="8dp"
                         android:text="@string/privacy_policy"
-                        app:onThrottleClick="@{() -> viewmodel.privacyPolicyEvent()}" />
+                        app:onThrottleClick="@{() -> vm.privacyPolicyEvent()}" />
 
                     <TextView
                         android:id="@+id/opensource_licence_button"
@@ -631,7 +625,7 @@
                         android:gravity="center_vertical"
                         android:paddingVertical="8dp"
                         android:text="@string/opensource_licence"
-                        app:onThrottleClick="@{() -> viewmodel.openSourceEvent()}" />
+                        app:onThrottleClick="@{() -> vm.openSourceEvent()}" />
 
                     <TextView
                         android:id="@+id/change_password_button"
@@ -643,8 +637,8 @@
                         android:gravity="center_vertical"
                         android:paddingVertical="8dp"
                         android:text="@string/change_password"
-                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}"
-                        app:onThrottleClick="@{() -> viewmodel.changePwEvent()}" />
+                        android:visibility="@{vm.loggedIn?View.VISIBLE:View.GONE}"
+                        app:onThrottleClick="@{() -> vm.changePwEvent()}" />
 
                     <TextView
                         android:id="@+id/sign_out_button"
@@ -657,8 +651,8 @@
                         android:gravity="center_vertical"
                         android:paddingVertical="8dp"
                         android:text="@string/sign_out"
-                        android:visibility="@{user.isLoggedIn()?View.VISIBLE:View.GONE}"
-                        app:onThrottleClick="@{() -> viewmodel.signOutEvent()}" />
+                        android:visibility="@{vm.loggedIn?View.VISIBLE:View.GONE}"
+                        app:onThrottleClick="@{() -> vm.signOutEvent()}" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

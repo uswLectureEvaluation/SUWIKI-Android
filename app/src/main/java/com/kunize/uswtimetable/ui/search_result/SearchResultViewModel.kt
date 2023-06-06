@@ -4,16 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.data.remote.LectureMain
+import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
 import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
-import com.kunize.uswtimetable.ui.common.*
+import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
+import com.kunize.uswtimetable.ui.common.Event
+import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
+import com.kunize.uswtimetable.ui.common.PageViewModel
+import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.util.LectureApiOption
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchResultViewModel(private val searchResultRepository: SearchResultRepository) :
-    ViewModel(), HandlingErrorInterface {
+@HiltViewModel
+class SearchResultViewModel @Inject constructor(
+    private val searchResultRepository: SearchResultRepository,
+    userInfoUsecase: GetUserInfoUsecase,
+) : ViewModel(), HandlingErrorInterface {
     val toastViewModel = ToastViewModel()
     private val pageViewModel = PageViewModel()
     val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<LectureMain>()
@@ -30,17 +42,22 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
     val dialogItemClickEvent: LiveData<Event<Boolean>>
         get() = _dialogItemClickEvent
 
-    private val sortTypeList = listOf(MODIFIED,
+    private val sortTypeList = listOf(
+        MODIFIED,
         LectureApiOption.HONEY,
         LectureApiOption.SATISFACTION,
         LectureApiOption.LEARNING,
-        LectureApiOption.BEST
+        LectureApiOption.BEST,
     )
-    val spinnerTextList = listOf("날짜", "꿀강", "만족도", "배움","종합")
+    val spinnerTextList = listOf("날짜", "꿀강", "만족도", "배움", "종합")
+
+    val isLoggedIn: StateFlow<Boolean> = userInfoUsecase.isLoggedIn()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     fun scrollBottomEvent() {
-        if(pageViewModel.page.value!! < 2)
+        if (pageViewModel.page.value!! < 2) {
             return
+        }
         viewModelScope.launch {
             getData()
         }
@@ -66,14 +83,14 @@ class SearchResultViewModel(private val searchResultRepository: SearchResultRepo
         searchResultRepository.getLectureMainList(
             selectedType,
             pageViewModel.page.value ?: 1,
-            if(majorType == "전체") "" else majorType
+            if (majorType == "전체") "" else majorType,
         )
     } else {
         searchResultRepository.getSearchResultList(
             searchValue,
             selectedType,
             pageViewModel.page.value ?: 1,
-            if(majorType == "전체") "" else majorType
+            if (majorType == "전체") "" else majorType,
         )
     }
 

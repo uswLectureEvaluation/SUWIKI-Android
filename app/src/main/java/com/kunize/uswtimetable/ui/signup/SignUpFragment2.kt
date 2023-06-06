@@ -9,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp2Binding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 
 class SignUpFragment2 : Fragment() {
     private var _binding: FragmentSignUp2Binding? = null
     val binding: FragmentSignUp2Binding get() = _binding!!
 
-    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory() }
+    private val viewModel: SignUpViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up2, container, false)
 

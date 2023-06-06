@@ -17,22 +17,19 @@ import com.kunize.uswtimetable.data.local.LectureProfessorSemester
 import com.kunize.uswtimetable.databinding.FragmentLectureInfoBinding
 import com.kunize.uswtimetable.ui.common.EvaluationListAdapter
 import com.kunize.uswtimetable.ui.common.EventObserver
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class LectureInfoFragment : Fragment() {
 
     lateinit var binding: FragmentLectureInfoBinding
     private lateinit var adapter: EvaluationListAdapter
-    private val lectureInfoViewModel: LectureInfoViewModel by viewModels { ViewModelFactory() }
+    private val lectureInfoViewModel: LectureInfoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_lecture_info, container, false)
@@ -45,10 +42,13 @@ class LectureInfoFragment : Fragment() {
                 "신고하기",
                 "신고하시겠어요? \n" +
                     "\n" +
-                    "*허위 신고 시 제재가 가해질 수 있습니다!"
+                    "*허위 신고 시 제재가 가해질 수 있습니다!",
             ) {
-                if (binding.examInfoRadioBtn.isChecked) lectureInfoViewModel.reportExam(id)
-                else lectureInfoViewModel.reportLecture(id)
+                if (binding.examInfoRadioBtn.isChecked) {
+                    lectureInfoViewModel.reportExam(id)
+                } else {
+                    lectureInfoViewModel.reportLecture(id)
+                }
             }
         }
         binding.infoRecyclerView.adapter = adapter
@@ -85,11 +85,12 @@ class LectureInfoFragment : Fragment() {
                 Toast.makeText(
                     requireContext(),
                     lectureInfoViewModel.toastViewModel.toastMessage,
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
-                if (lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!")
+                if (lectureInfoViewModel.toastViewModel.toastMessage != "포인트가 부족해요!") {
                     findNavController().popBackStack()
-            }
+                }
+            },
         )
 
         with(binding) {
@@ -116,10 +117,10 @@ class LectureInfoFragment : Fragment() {
                 lectureProfessorName = LectureProfessorSemester(
                     binding.tvLectureName.text.toString(),
                     binding.tvProfessorName.text.toString(),
-                    lectureInfoViewModel.lectureDetailInfoData.value?.semester ?: ""
+                    lectureInfoViewModel.lectureDetailInfoData.value?.semester ?: "",
                 ),
                 isEvaluation = !binding.examInfoRadioBtn.isChecked,
-                lectureId = lectureInfoViewModel.pageViewModel.lectureId
+                lectureId = lectureInfoViewModel.pageViewModel.lectureId,
             )
         findNavController().navigate(action)
     }

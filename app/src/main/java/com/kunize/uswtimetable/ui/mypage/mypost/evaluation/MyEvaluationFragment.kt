@@ -11,26 +11,26 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.FragmentMyEvaluationBinding
 import com.kunize.uswtimetable.dataclass.MyEvaluationDto
-import com.kunize.uswtimetable.ui.common.User
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.mypage.mypost.Result
 import com.kunize.uswtimetable.util.UserPoint.DELETE_POST
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class MyEvaluationFragment : Fragment() {
     private var _binding: FragmentMyEvaluationBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MyEvaluationAdapter
-    private val viewModel: MyEvaluationViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: MyEvaluationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentMyEvaluationBinding.inflate(inflater, container, false)
         return _binding?.root
@@ -52,9 +52,16 @@ class MyEvaluationFragment : Fragment() {
             }
         }
         viewLifecycleOwner.repeatOnStarted {
+            viewModel.isLoggedIn.collect {
+                if (!it) {
+                    // TODO 로그아웃 처리
+                }
+            }
+        }
+        viewLifecycleOwner.repeatOnStarted {
             viewModel.resultFlow.collect { result ->
                 if (result == Result.Fail) {
-                    if ((User.user?.value?.point ?: 0) < abs(DELETE_POST)) {
+                    if (viewModel.userInfo.value.point < abs(DELETE_POST)) {
                         this@MyEvaluationFragment.toast("포인트가 부족합니다")
                     } else {
                         this@MyEvaluationFragment.toast("삭제할 수 없습니다")
@@ -69,7 +76,7 @@ class MyEvaluationFragment : Fragment() {
             MyEvaluationFragmentDirections.actionGlobalWriteFragment(
                 lectureId = data.id,
                 myEvaluation = data,
-                isEvaluation = true
+                isEvaluation = true,
             )
         findNavController().navigate(action)
     }

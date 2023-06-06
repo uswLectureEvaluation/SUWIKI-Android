@@ -3,13 +3,19 @@ package com.kunize.uswtimetable.ui.mypage.quit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kunize.uswtimetable.domain.usecase.LogoutUsecase
 import com.kunize.uswtimetable.repository.user_info.QuitRepository
-import com.kunize.uswtimetable.ui.common.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
+@HiltViewModel
+class QuitViewModel @Inject constructor(
+    private val repository: QuitRepository,
+    private val logoutUsecase: LogoutUsecase,
+) : ViewModel() {
     val loginId = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     val loading = MutableLiveData<Boolean>()
@@ -25,7 +31,7 @@ class QuitViewModel(private val repository: QuitRepository) : ViewModel() {
             val response = repository.quit(id, pw)
             if (response.isSuccessful && response.body()?.success == true) {
                 setSuccess(isSuccess = true)
-                User.logout()
+                logoutUsecase()
             } else {
                 setSuccess(isSuccess = false)
             }

@@ -3,8 +3,11 @@ package com.kunize.uswtimetable.repository.login
 import com.kunize.uswtimetable.util.SuwikiApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class LoginRepository(private val dataSource: LoginRemoteDataSource) {
+class LoginRepository @Inject constructor(
+    private val dataSource: LoginDataSource,
+) {
 
     suspend fun login(id: String, pw: String) =
         withContext(Dispatchers.IO) {
@@ -16,5 +19,6 @@ class LoginRepository(private val dataSource: LoginRemoteDataSource) {
             return@withContext result
         }
 
-    suspend fun getUserData() = withContext(Dispatchers.IO) { return@withContext dataSource.getUserData() }
+    suspend fun getUserData() =
+        withContext(Dispatchers.IO) { return@withContext dataSource.getUserData() }
 }

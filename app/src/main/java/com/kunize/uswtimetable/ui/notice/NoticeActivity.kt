@@ -17,7 +17,8 @@ class NoticeActivity : AppCompatActivity() {
         binding = ActivityNoticeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
         binding.toolbar.setNavigationOnClickListener {
@@ -39,5 +40,4 @@ class NoticeActivity : AppCompatActivity() {
             }
         }
     }
-
 }

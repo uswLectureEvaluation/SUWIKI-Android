@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityResetPasswordBinding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.mypage.find_password.FindPasswordActivity
 import com.kunize.uswtimetable.util.Constants.TAG
 import com.kunize.uswtimetable.util.Result
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class ResetPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResetPasswordBinding
-    private val viewModel: ResetPasswordViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: ResetPasswordViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

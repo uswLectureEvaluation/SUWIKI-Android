@@ -7,13 +7,13 @@ import com.skydoves.sandwich.ApiResponse
 import retrofit2.Response
 
 class OpenMajorRepository(
-    private val remoteDataSource: OpenMajorRemoteDataSource
+    private val remoteDataSource: OpenMajorDataSource,
 ) {
-    suspend fun getOpenMajorVersion() : ApiResponse<OpenMajorVersion> {
+    suspend fun getOpenMajorVersion(): ApiResponse<OpenMajorVersion> {
         return remoteDataSource.getOpenMajorVersion()
     }
 
-    suspend fun getOpenMajorList() : ApiResponse<OpenMajorList> {
+    suspend fun getOpenMajorList(): ApiResponse<OpenMajorList> {
         return remoteDataSource.getOpenMajorList()
     }
 

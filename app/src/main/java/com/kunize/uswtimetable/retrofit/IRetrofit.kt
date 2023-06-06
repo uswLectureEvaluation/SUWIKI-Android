@@ -1,9 +1,5 @@
 package com.kunize.uswtimetable.retrofit
 
-import android.util.Log
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.kunize.uswtimetable.data.remote.BlacklistDto
 import com.kunize.uswtimetable.data.remote.DataDto
@@ -20,6 +16,7 @@ import com.kunize.uswtimetable.data.remote.OpenMajorVersion
 import com.kunize.uswtimetable.data.remote.ReportExam
 import com.kunize.uswtimetable.data.remote.ReportLecture
 import com.kunize.uswtimetable.data.remote.SuspensionHistory
+import com.kunize.uswtimetable.data.remote.TokenAuthenticator.Companion.AUTH_HEADER
 import com.kunize.uswtimetable.dataclass.CheckEmailFormat
 import com.kunize.uswtimetable.dataclass.CheckIdFormat
 import com.kunize.uswtimetable.dataclass.EmailDto
@@ -35,10 +32,7 @@ import com.kunize.uswtimetable.dataclass.SuccessCheckDto
 import com.kunize.uswtimetable.dataclass.Token
 import com.kunize.uswtimetable.dataclass.UserDataDto
 import com.kunize.uswtimetable.dataclass.UserIdEmail
-import com.kunize.uswtimetable.retrofit.TokenAuthenticator.Companion.AUTH_HEADER
-import com.kunize.uswtimetable.ui.common.User
 import com.kunize.uswtimetable.util.API.BAN_REASON
-import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.API.BLACKLIST_REASON
 import com.kunize.uswtimetable.util.API.BOOKMARK
 import com.kunize.uswtimetable.util.API.BUY_EXAM
@@ -72,25 +66,9 @@ import com.kunize.uswtimetable.util.API.SIGN_UP_EMAIL_CHECK
 import com.kunize.uswtimetable.util.API.SIGN_UP_ID_CHECK
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EVALUATION
 import com.kunize.uswtimetable.util.API.WRITE_LECTURE_EXAM
-import com.kunize.uswtimetable.util.Constants.TAG
-import com.kunize.uswtimetable.util.SuwikiApplication
-import com.kunize.uswtimetable.util.extensions.isJsonArray
-import com.kunize.uswtimetable.util.extensions.isJsonObject
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
-import okhttp3.Authenticator
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Route
-import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -98,11 +76,6 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
-import java.lang.reflect.Type
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 interface IRetrofit {
 
@@ -152,7 +125,7 @@ interface IRetrofit {
 
     // 내 정보 페이지 호출 API
     @GET(MY_PAGE)
-    suspend fun getUserData(): ApiResponse<UserDataDto>
+    suspend fun getUserData(): Response<UserDataDto>
 
     // 내가 쓴 글 (강의평가)
     @GET(EVALUATE_POST)
@@ -188,14 +161,14 @@ interface IRetrofit {
     @GET(LECTURE_DETAIL_EVALUATION)
     suspend fun getLectureDetailEvaluation(
         @Query("lectureId") lectureId: Long,
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): Response<LectureDetailEvaluationDto>
 
     // 검색결과 자세히 보기 (Exam)
     @GET(LECTURE_DETAIL_EXAM)
     suspend fun getLectureDetailExam(
         @Query("lectureId") lectureId: Long,
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): Response<LectureDetailExamDto>
 
     // 검색결과 페이지 API(강의평)
@@ -204,7 +177,7 @@ interface IRetrofit {
         @Query("searchValue") searchValue: String,
         @Query("option") option: String,
         @Query("page") page: Int,
-        @Query("majorType") majorType: String
+        @Query("majorType") majorType: String,
     ): Response<DataDto<MutableList<LectureMain?>>>
 
     // 메인 페이지
@@ -212,28 +185,28 @@ interface IRetrofit {
     suspend fun getLectureMainList(
         @Query("option") option: String,
         @Query("page") page: Int = 1,
-        @Query("majorType") majorType: String = ""
+        @Query("majorType") majorType: String = "",
     ): Response<DataDto<MutableList<LectureMain?>>>
 
     // 강의평가 쓰기
     @POST(WRITE_LECTURE_EVALUATION)
     suspend fun postLectureEvaluation(
         @Query("lectureId") lectureId: Long,
-        @Body info: LectureEvaluationPostDto
+        @Body info: LectureEvaluationPostDto,
     ): Response<String>
 
     // 시험정보 쓰기
     @POST(WRITE_LECTURE_EXAM)
     suspend fun postLectureExam(
         @Query("lectureId") lectureId: Long,
-        @Body info: LectureExamDto
+        @Body info: LectureExamDto,
     ): Response<String>
 
     // 강의평가 수정
     @PUT(EDIT_LECTURE_EVALUATION)
     suspend fun updateLectureEvaluation(
         @Query("evaluateIdx") lectureId: Long,
-        @Body info: LectureEvaluationEditDto
+        @Body info: LectureEvaluationEditDto,
     ): Response<String>
 
     // 시험 정보 구매
@@ -244,7 +217,7 @@ interface IRetrofit {
     @PUT(EDIT_LECTURE_EXAM)
     suspend fun updateLectureExam(
         @Query("examIdx") lectureId: Long,
-        @Body info: LectureExamDto
+        @Body info: LectureExamDto,
     ): Response<String>
 
     @GET(OPEN_MAJOR_VERSION)
@@ -255,7 +228,7 @@ interface IRetrofit {
 
     @POST(BOOKMARK)
     suspend fun bookmarkMajor(
-        @Body majorName: MajorType
+        @Body majorName: MajorType,
     ): Response<String>
 
     @GET(BOOKMARK)
@@ -263,180 +236,16 @@ interface IRetrofit {
 
     @DELETE(BOOKMARK)
     suspend fun clearBookmarkMajor(
-        @Query("majorType") majorName: String
+        @Query("majorType") majorName: String,
     ): Response<String>
 
     @POST(REPORT_EVALUATION)
     suspend fun reportLecture(
-        @Body body: ReportLecture
+        @Body body: ReportLecture,
     ): ApiResponse<JsonElement>
 
     @POST(REPORT_EXAM)
     suspend fun reportExam(
-        @Body body: ReportExam
+        @Body body: ReportExam,
     ): ApiResponse<JsonElement>
-
-    companion object {
-        private var retrofitService: IRetrofit? = null
-        private var retrofitServiceWithNoToken: IRetrofit? = null
-
-        fun getInstance(): IRetrofit {
-            if (retrofitService == null) {
-                val client = getClient()
-                retrofitService = client.create(IRetrofit::class.java)
-            }
-            return retrofitService!!
-        }
-
-        fun getInstanceWithNoToken(): IRetrofit {
-            if (retrofitServiceWithNoToken == null) {
-                val client = getClientWithNoToken()
-                retrofitServiceWithNoToken = client.create(IRetrofit::class.java)
-            }
-            return retrofitServiceWithNoToken!!
-        }
-
-        private fun getClient(): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(getOkHttpClient(TokenAuthenticator()))
-                .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(gsonConverterFactory())
-                .build()
-        }
-
-        private fun getClientWithNoToken(): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(getOkHttpClient(null))
-                .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
-                .addConverterFactory(gsonConverterFactory())
-                .build()
-        }
-
-        private fun getOkHttpClient(
-            authenticator: TokenAuthenticator?
-        ): OkHttpClient {
-            val loggingInterceptor = HttpLoggingInterceptor { message ->
-                when {
-                    message.isJsonObject() ->
-                        Log.d(TAG, JSONObject(message).toString(4))
-                    message.isJsonArray() ->
-                        Log.d(TAG, JSONArray(message).toString(4))
-                    else ->
-                        Log.d(TAG, "CONNECTION INFO -> $message")
-                }
-            }
-            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-            val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
-            authenticator?.apply {
-                client
-                    .addInterceptor(AuthenticationInterceptor())
-                    .authenticator(this)
-            }
-
-            return client.build()
-        }
-
-        private fun gsonConverterFactory(): GsonConverterFactory {
-            val gson = GsonBuilder()
-                .registerTypeAdapter(
-                    LocalDateTime::class.java,
-                    object : JsonDeserializer<LocalDateTime> {
-                        override fun deserialize(
-                            json: JsonElement?,
-                            typeOfT: Type?,
-                            context: JsonDeserializationContext?
-                        ): LocalDateTime {
-                            return LocalDateTime.parse(
-                                json?.asString,
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-                            )
-                        }
-                    }
-                )
-                .registerTypeAdapter(
-                    LocalDate::class.java,
-                    object : JsonDeserializer<LocalDate> {
-                        override fun deserialize(
-                            json: JsonElement?,
-                            typeOfT: Type?,
-                            context: JsonDeserializationContext?
-                        ): LocalDate {
-                            return LocalDate.parse(
-                                json?.asString,
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                            )
-                        }
-                    }
-                )
-                .registerTypeAdapter(
-                    LocalTime::class.java,
-                    object : JsonDeserializer<LocalTime> {
-                        override fun deserialize(
-                            json: JsonElement?,
-                            typeOfT: Type?,
-                            context: JsonDeserializationContext?
-                        ): LocalTime {
-                            return LocalTime.parse(
-                                json?.asString,
-                                DateTimeFormatter.ofPattern("HH:mm:ss")
-                            )
-                        }
-                    }
-                )
-                .create()
-            return GsonConverterFactory.create(gson)
-        }
-    }
-}
-
-class AuthenticationInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-        val accessToken = SuwikiApplication.encryptedPrefs.getAccessToken() ?: ""
-        val request = chain.request().newBuilder()
-            .addHeader(AUTH_HEADER, accessToken).build()
-        Log.d(
-            TAG,
-            "AuthenticationInterceptor - intercept() called / request header: ${request.headers}"
-        )
-        return chain.proceed(request)
-    }
-}
-
-class TokenAuthenticator : Authenticator {
-    override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-        val refresh = SuwikiApplication.encryptedPrefs.getRefreshToken() ?: ""
-        Log.d(TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh")
-        val tokenResponse =
-            IRetrofit.getInstanceWithNoToken().requestRefresh(refresh).execute()
-
-        return if (handleResponse(tokenResponse)) {
-            Log.d(TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")
-            response.request
-                .newBuilder()
-                .removeHeader(AUTH_HEADER)
-                .header(AUTH_HEADER, SuwikiApplication.encryptedPrefs.getAccessToken() ?: "")
-                .build()
-        } else {
-            null
-        }
-    }
-
-    private fun handleResponse(tokenResponse: Response<Token>) =
-        if (tokenResponse.isSuccessful && tokenResponse.body() != null) {
-            SuwikiApplication.encryptedPrefs.saveAccessToken(tokenResponse.body()!!.accessToken)
-            SuwikiApplication.encryptedPrefs.saveRefreshToken(tokenResponse.body()!!.refreshToken)
-            true
-        } else {
-            User.logout()
-            Log.d(TAG, "TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다.")
-            false
-        }
-
-    companion object {
-        const val AUTH_HEADER = "Authorization"
-    }
 }

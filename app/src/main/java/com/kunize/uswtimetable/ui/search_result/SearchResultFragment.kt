@@ -19,19 +19,19 @@ import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
-import com.kunize.uswtimetable.ui.common.User
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.FragmentType
-import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchResultFragment : Fragment() {
 
     lateinit var binding: FragmentSearchResultBinding
     private lateinit var searchResultAdapter: SearchResultAdapter
-    private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory() }
+    private val searchResultViewModel: SearchResultViewModel by viewModels()
     private val args: SearchResultFragmentArgs by navArgs()
     private var sortDialog: SortDialog? = null
 
@@ -39,16 +39,17 @@ class SearchResultFragment : Fragment() {
         super.onCreate(savedInstanceState)
         searchResultViewModel.initType()
         searchResultViewModel.majorType = SuwikiApplication.prefs.getString("openMajorSel", "전체")
-        if (args.searchLectureName.isBlank())
+        if (args.searchLectureName.isBlank()) {
             searchResultViewModel.changeType(args.sortType)
-        else
+        } else {
             searchResultViewModel.search(args.searchLectureName)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_search_result, container, false)
@@ -56,7 +57,7 @@ class SearchResultFragment : Fragment() {
         binding.lifecycleOwner = this
 
         searchResultAdapter = SearchResultAdapter { id ->
-            if (User.isLoggedIn.value == true) {
+            if (searchResultViewModel.isLoggedIn.value) {
                 val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
                 findNavController().navigate(action)
             } else {
@@ -70,7 +71,7 @@ class SearchResultFragment : Fragment() {
                 SearchResultFragmentDirections.globalOpenMajor(
                     FragmentType.SEARCH_RESULT,
                     searchResultViewModel.searchValue,
-                    searchResultViewModel.spinnerTextList.indexOf(searchResultViewModel.sortText.value)
+                    searchResultViewModel.spinnerTextList.indexOf(searchResultViewModel.sortText.value),
                 )
             findNavController().navigate(action)
         }
@@ -85,7 +86,7 @@ class SearchResultFragment : Fragment() {
             sortDialog = SortDialog(
                 context as AppCompatActivity,
                 searchResultViewModel,
-                searchResultViewModel.spinnerTextList
+                searchResultViewModel.spinnerTextList,
             )
             sortDialog?.show()
         }
@@ -94,7 +95,7 @@ class SearchResultFragment : Fragment() {
             viewLifecycleOwner,
             EventObserver {
                 sortDialog?.dismiss()
-            }
+            },
         )
 
         binding.ivClose.setOnClickListener {
@@ -129,9 +130,9 @@ class SearchResultFragment : Fragment() {
                 Toast.makeText(
                     requireContext(),
                     searchResultViewModel.toastViewModel.toastMessage,
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
-            }
+            },
         )
 
         return binding.root
