@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.kunize.uswtimetable.databinding.FragmentPurchaseHistoryBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PurchaseHistoryFragment : Fragment() {
     private val viewModel: PurchaseHistoryViewModel by viewModels()
     private var _binding: FragmentPurchaseHistoryBinding? = null

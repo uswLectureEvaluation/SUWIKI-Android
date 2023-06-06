@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.dataclass.PurchaseHistory
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PurchaseHistoryViewModel(private val repository: MyPostRepository) : ViewModel() {
-
+@HiltViewModel
+class PurchaseHistoryViewModel @Inject constructor(
+    private val repository: MyPostRepository,
+) : ViewModel() {
     val loading = MutableLiveData<Boolean>()
     private val _historyList = MutableLiveData<List<PurchaseHistory>>()
     val historyList: LiveData<List<PurchaseHistory>> get() = _historyList
