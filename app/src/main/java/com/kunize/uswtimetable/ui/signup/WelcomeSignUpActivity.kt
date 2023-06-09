@@ -10,7 +10,9 @@ import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.KEY_EMAIL
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WelcomeSignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWelcomeSignUpBinding

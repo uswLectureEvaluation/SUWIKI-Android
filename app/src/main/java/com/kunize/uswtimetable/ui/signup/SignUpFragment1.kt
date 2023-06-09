@@ -16,8 +16,10 @@ import com.kunize.uswtimetable.util.Constants.KEY_URL
 import com.kunize.uswtimetable.util.Constants.PRIVACY_POLICY_SITE
 import com.kunize.uswtimetable.util.Constants.TERMS_SITE
 import com.kunize.uswtimetable.util.extensions.afterTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 
+@AndroidEntryPoint
 class SignUpFragment1 : Fragment() {
     private var _binding: FragmentSignUp1Binding? = null
     val binding: FragmentSignUp1Binding get() = _binding!!

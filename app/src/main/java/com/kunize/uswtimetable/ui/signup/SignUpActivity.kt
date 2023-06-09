@@ -12,7 +12,9 @@ import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.util.BackKeyManager
 import com.kunize.uswtimetable.util.Constants.KEY_EMAIL
 import com.kunize.uswtimetable.util.Constants.TAG
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     lateinit var binding: ActivitySignupBinding
     val viewModel: SignUpViewModel by viewModels()
