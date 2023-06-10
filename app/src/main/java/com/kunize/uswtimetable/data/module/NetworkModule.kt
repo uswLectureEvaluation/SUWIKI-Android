@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import com.kunize.uswtimetable.data.model.ResultCallAdapterFactory
 import com.kunize.uswtimetable.data.remote.AuthenticationInterceptor
 import com.kunize.uswtimetable.data.remote.TokenAuthenticator
 import com.kunize.uswtimetable.domain.di.AuthApiService
@@ -13,9 +14,8 @@ import com.kunize.uswtimetable.domain.di.AuthenticatorInterceptor
 import com.kunize.uswtimetable.domain.di.LoggingInterceptor
 import com.kunize.uswtimetable.domain.di.OtherApiService
 import com.kunize.uswtimetable.domain.di.OtherOkHttpClient
-import com.kunize.uswtimetable.domain.di.UserRepositoryLogout
 import com.kunize.uswtimetable.domain.repository.AuthRepository
-import com.kunize.uswtimetable.domain.repository.UserRepository
+import com.kunize.uswtimetable.domain.repository.LogoutRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.util.API.BASE_URL
 import com.kunize.uswtimetable.util.Constants
@@ -86,6 +86,7 @@ object NetworkModule {
             .baseUrl(BASE_URL)
             .client(client)
             .addCallAdapterFactory(apiResponseCallAdapterFactory)
+            .addCallAdapterFactory(ResultCallAdapterFactory())
             .addConverterFactory(scalarsConverterFactory)
             .addConverterFactory(gsonConverterFactory)
             .build()
@@ -152,11 +153,11 @@ object NetworkModule {
     @Provides
     fun provideTokenAuthenticator(
         authRepository: AuthRepository,
-        @UserRepositoryLogout userRepository: UserRepository,
+        logoutRepository: LogoutRepository,
     ): TokenAuthenticator {
         return TokenAuthenticator(
             authRepository,
-            userRepository,
+            logoutRepository,
         )
     }
 
