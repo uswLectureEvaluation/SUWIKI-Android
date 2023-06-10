@@ -35,7 +35,11 @@ class SelectOpenMajorViewModel @Inject constructor(
         get() = _showNoSearchResultText
 
     val isLoggedIn: StateFlow<Boolean> = userInfoUsecase.isLoggedIn()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            false,
+        )
 
     init {
         _showNoSearchResultText.value = ""
