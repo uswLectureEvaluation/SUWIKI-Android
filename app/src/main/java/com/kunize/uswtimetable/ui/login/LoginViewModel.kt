@@ -1,21 +1,20 @@
 package com.kunize.uswtimetable.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.domain.model.SuwikiError
+import com.kunize.uswtimetable.domain.repository.LoginRepository
 import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
 import com.kunize.uswtimetable.domain.usecase.LoginUsecase
-import com.kunize.uswtimetable.repository.login.LoginRepository
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_REGEX
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
-import com.kunize.uswtimetable.util.Constants.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -60,23 +59,11 @@ class LoginViewModel @Inject constructor(
             // 로그인 API
             val loginResult = loginRepository.login(id, pw)
             if (loginResult.isSuccessful) {
-                when (loginResult.code()) {
-                    200 -> {
-                        loginUsecase()
-                        _loginResult.postValue(LoginState.SUCCESS)
-                    }
-
-                    else -> {
-                        _loginResult.postValue(LoginState.FAIL)
-                        Log.d(
-                            TAG,
-                            "LoginViewModel - login() failed : ${loginResult.code()} ${loginResult.message()}",
-                        )
-                    }
-                }
+                loginUsecase()
+                _loginResult.postValue(LoginState.SUCCESS)
             } else {
-                when (loginResult.code()) {
-                    401 -> _loginResult.postValue(LoginState.REQUIRE_AUTH)
+                when (loginResult.errorOrThrow()) {
+                    SuwikiError.TokenExpired -> _loginResult.postValue(LoginState.REQUIRE_AUTH)
                     else -> _loginResult.postValue(LoginState.FAIL)
                 }
             }

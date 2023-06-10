@@ -1,22 +1,21 @@
 package com.kunize.uswtimetable.data.module
 
+import com.kunize.uswtimetable.data.datasource.LoginDataSource
 import com.kunize.uswtimetable.data.datastore.UserPreference
 import com.kunize.uswtimetable.data.repository.AuthRepositoryImpl
+import com.kunize.uswtimetable.data.repository.LoginRepositoryImpl
+import com.kunize.uswtimetable.data.repository.LogoutRepositoryImpl
 import com.kunize.uswtimetable.data.repository.UserRepositoryImpl
-import com.kunize.uswtimetable.data.repository.UserRepositoryLogoutImpl
 import com.kunize.uswtimetable.domain.di.AuthApiService
 import com.kunize.uswtimetable.domain.di.IoDispatcher
 import com.kunize.uswtimetable.domain.di.OtherApiService
-import com.kunize.uswtimetable.domain.di.UserRepositoryAll
-import com.kunize.uswtimetable.domain.di.UserRepositoryLogout
 import com.kunize.uswtimetable.domain.repository.AuthRepository
+import com.kunize.uswtimetable.domain.repository.LoginRepository
+import com.kunize.uswtimetable.domain.repository.LogoutRepository
 import com.kunize.uswtimetable.domain.repository.UserRepository
 import com.kunize.uswtimetable.repository.evaluation.EvaluationDataSource
 import com.kunize.uswtimetable.repository.evaluation.EvaluationRemoteDataSource
 import com.kunize.uswtimetable.repository.evaluation.EvaluationRepository
-import com.kunize.uswtimetable.repository.login.LoginDataSource
-import com.kunize.uswtimetable.repository.login.LoginRemoteDataSource
-import com.kunize.uswtimetable.repository.login.LoginRepository
 import com.kunize.uswtimetable.repository.my_post.MyPostDataSource
 import com.kunize.uswtimetable.repository.my_post.MyPostRemoteDataSource
 import com.kunize.uswtimetable.repository.my_post.MyPostRepository
@@ -53,35 +52,35 @@ import kotlinx.coroutines.CoroutineDispatcher
 object RepositoryModule {
 
     @Provides
-    fun provideLoginDataSource(@AuthApiService apiService: IRetrofit): LoginDataSource {
-        return LoginRemoteDataSource(apiService)
+    fun provideLoginDataSource(
+        @OtherApiService apiService: IRetrofit,
+    ): LoginDataSource {
+        return LoginDataSource(apiService)
     }
 
     @Provides
-    fun provideLoginRepository(dataSource: LoginDataSource): LoginRepository {
-        return LoginRepository(dataSource)
+    fun provideLoginRepository(
+        datasource: LoginDataSource,
+    ): LoginRepository {
+        return LoginRepositoryImpl(datasource)
     }
 
-    @UserRepositoryAll
+    @Provides
+    fun provideLogoutRepository(
+        userPreference: UserPreference,
+    ): LogoutRepository {
+        return LogoutRepositoryImpl(userPreference)
+    }
+
     @Provides
     fun provideUserRepository(
-        @IoDispatcher ioDispatcher: CoroutineDispatcher,
         @AuthApiService apiService: IRetrofit,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
         userPreference: UserPreference,
     ): UserRepository {
         return UserRepositoryImpl(
-            ioDispatcher,
             apiService,
-            userPreference,
-        )
-    }
-
-    @UserRepositoryLogout
-    @Provides
-    fun provideUserRepositoryLogout(
-        userPreference: UserPreference,
-    ): UserRepository {
-        return UserRepositoryLogoutImpl(
+            ioDispatcher,
             userPreference,
         )
     }

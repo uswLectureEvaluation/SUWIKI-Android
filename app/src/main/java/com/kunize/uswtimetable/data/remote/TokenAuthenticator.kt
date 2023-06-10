@@ -1,9 +1,8 @@
 package com.kunize.uswtimetable.data.remote
 
 import android.util.Log
-import com.kunize.uswtimetable.domain.di.UserRepositoryLogout
 import com.kunize.uswtimetable.domain.repository.AuthRepository
-import com.kunize.uswtimetable.domain.repository.UserRepository
+import com.kunize.uswtimetable.domain.repository.LogoutRepository
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.SuwikiApplication
 import kotlinx.coroutines.runBlocking
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
     private val authRepository: AuthRepository,
-    @UserRepositoryLogout private val userRepository: UserRepository,
+    private val logoutRepository: LogoutRepository,
 ) : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
         val refresh = SuwikiApplication.encryptedPrefs.getRefreshToken() ?: ""
@@ -37,7 +36,7 @@ class TokenAuthenticator @Inject constructor(
     }
 
     private fun handleFailure() {
-        runBlocking { userRepository.logout() }
+        runBlocking { logoutRepository.logout() }
         Log.d(
             Constants.TAG,
             "TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다.",

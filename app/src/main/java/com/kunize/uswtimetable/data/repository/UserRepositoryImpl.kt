@@ -2,22 +2,22 @@ package com.kunize.uswtimetable.data.repository
 
 import com.kunize.uswtimetable.data.datastore.UserPreference
 import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.domain.di.AuthApiService
+import com.kunize.uswtimetable.domain.di.IoDispatcher
+import com.kunize.uswtimetable.domain.di.OtherApiService
 import com.kunize.uswtimetable.domain.repository.UserRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.util.SuwikiApplication
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    @AuthApiService private val apiService: IRetrofit,
+    @OtherApiService private val apiService: IRetrofit,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val userPreference: UserPreference,
 ) : UserRepository {
+
     override val isLoggedIn: Flow<Boolean>
         get() = userPreference.isLoggedIn
 
@@ -46,11 +46,11 @@ class UserRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun login() {
-        withContext(ioDispatcher) {
-            try {
+    override suspend fun setUserInfo(): Boolean {
+        return try {
+            withContext(ioDispatcher) {
                 val response = apiService.getUserData()
-                if (response.isSuccessful) {
+                return@withContext if (response.isSuccessful) {
                     response.body()?.apply {
                         userPreference.login(
                             userId = userId,
@@ -60,21 +60,14 @@ class UserRepositoryImpl @Inject constructor(
                             viewExam = viewExam,
                             email = email,
                         )
-                    } ?: run {
-                        userPreference.logout()
-                    }
+                    } ?: return@withContext false
+                    true
                 } else {
-                    userPreference.logout()
+                    false
                 }
-            } catch (_: Exception) {
-                userPreference.logout()
             }
+        } catch (_: Exception) {
+            false
         }
-    }
-
-    override suspend fun logout() {
-        userPreference.logout()
-        SuwikiApplication.encryptedPrefs.saveAccessToken("") // TODO DataStore 로 마이그레이션
-        SuwikiApplication.encryptedPrefs.saveRefreshToken("")
     }
 }

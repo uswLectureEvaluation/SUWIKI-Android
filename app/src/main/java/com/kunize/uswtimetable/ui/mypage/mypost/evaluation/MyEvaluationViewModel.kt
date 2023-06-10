@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -44,15 +44,12 @@ class MyEvaluationViewModel @Inject constructor(
             false,
         )
 
-    val userInfo: StateFlow<LoggedInUser> = getUserInfoUsecase().transform {
-        it?.let { info ->
-            emit(info)
-        }
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        LoggedInUser(),
-    )
+    val userInfo: StateFlow<LoggedInUser> = getUserInfoUsecase().filterNotNull()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            LoggedInUser(),
+        )
 
     init {
         scrollBottomEvent()

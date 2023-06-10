@@ -20,14 +20,6 @@ annotation class OtherApiService
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class UserRepositoryAll
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class UserRepositoryLogout
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
 annotation class AuthenticatorInterceptor
 
 @Qualifier

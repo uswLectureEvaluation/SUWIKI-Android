@@ -100,7 +100,7 @@ class EvaluationFragment : Fragment() {
 
         // spinner 설정
         binding.clSort.setOnClickListener {
-            imageSortDialog = ImageSortDialog(context as AppCompatActivity, evaluationViewModel)
+            imageSortDialog = ImageSortDialog(context as AppCompatActivity, evaluationViewModel) // FIXME 강의평가 - 정렬 클릭 튕김
             imageSortDialog?.show()
         }
 

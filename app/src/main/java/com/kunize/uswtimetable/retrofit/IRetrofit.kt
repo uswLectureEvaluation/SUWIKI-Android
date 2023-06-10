@@ -1,6 +1,7 @@
 package com.kunize.uswtimetable.retrofit
 
 import com.google.gson.JsonElement
+import com.kunize.uswtimetable.data.model.ApiResult
 import com.kunize.uswtimetable.data.remote.BlacklistDto
 import com.kunize.uswtimetable.data.remote.DataDto
 import com.kunize.uswtimetable.data.remote.LectureDetailEvaluationDto
@@ -117,7 +118,7 @@ interface IRetrofit {
 
     // 로그인 요청 API
     @POST(LOGIN)
-    suspend fun login(@Body info: LoginIdPassword): Response<Token>
+    suspend fun login(@Body info: LoginIdPassword): ApiResult<Token>
 
     // 회원탈퇴 요청 API
     @POST(QUIT)
