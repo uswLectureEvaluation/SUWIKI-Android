@@ -40,8 +40,9 @@ android {
         dataBinding true
         viewBinding true
     }
-    lintOptions {
-        baseline file("lint-baseline.xml")
+    namespace 'com.kunize.uswtimetable'
+    lint {
+        baseline file('lint-baseline.xml')
     }
 }
 
