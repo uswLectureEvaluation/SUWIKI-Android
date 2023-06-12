@@ -23,7 +23,7 @@ import com.kunize.uswtimetable.retrofit.IRetrofit
 import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
 import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.util.PreferenceManager
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.skydoves.sandwich.ApiResponse
 import dagger.hilt.android.AndroidEntryPoint

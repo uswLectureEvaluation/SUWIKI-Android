@@ -21,7 +21,7 @@ import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.FragmentType
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import dagger.hilt.android.AndroidEntryPoint

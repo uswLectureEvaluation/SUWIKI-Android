@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 
 /**
  * 편하게 [Toast] 를 만들 수 있게 재공하는 확장 함수

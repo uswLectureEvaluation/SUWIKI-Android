@@ -10,7 +10,7 @@ import com.kunize.uswtimetable.databinding.ActivityTimeTableListBinding
 import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.ui.create_timetable.CreateTimeTableActivity
 import com.kunize.uswtimetable.util.TimeTableListClickType
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

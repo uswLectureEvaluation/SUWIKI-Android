@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.data.repository
 import com.kunize.uswtimetable.domain.di.OtherApiService
 import com.kunize.uswtimetable.domain.repository.AuthRepository
 import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

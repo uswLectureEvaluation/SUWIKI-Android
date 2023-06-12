@@ -2,7 +2,7 @@ package com.kunize.uswtimetable.data.remote
 
 import android.util.Log
 import com.kunize.uswtimetable.util.Constants
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import okhttp3.Interceptor
 
 class AuthenticationInterceptor : Interceptor {

@@ -4,7 +4,7 @@ import android.util.Log
 import com.kunize.uswtimetable.domain.repository.AuthRepository
 import com.kunize.uswtimetable.domain.repository.LogoutRepository
 import com.kunize.uswtimetable.util.Constants
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request

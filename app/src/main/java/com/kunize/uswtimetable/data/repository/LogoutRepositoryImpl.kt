@@ -2,7 +2,7 @@ package com.kunize.uswtimetable.data.repository
 
 import com.kunize.uswtimetable.data.datastore.UserPreference
 import com.kunize.uswtimetable.domain.repository.LogoutRepository
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import javax.inject.Inject
 
 class LogoutRepositoryImpl @Inject constructor(

@@ -11,7 +11,7 @@ import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityCreateTimeTableBinding
 import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable.util
+package com.kunize.uswtimetable
 
 import android.app.Application
 import android.content.Context

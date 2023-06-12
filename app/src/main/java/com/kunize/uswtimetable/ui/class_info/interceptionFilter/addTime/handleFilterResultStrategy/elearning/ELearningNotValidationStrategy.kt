@@ -1,11 +1,8 @@
 package com.kunize.uswtimetable.ui.class_info.interceptionFilter.addTime.handleFilterResultStrategy.elearning
 
-import android.widget.Toast
 import com.kunize.uswtimetable.ui.class_info.interceptionFilter.addTime.filter.elearning.ELearningNotValidateState
 import com.kunize.uswtimetable.util.strategy.FilterResultStrategy
-import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.showLongToast
-import com.kunize.uswtimetable.util.extensions.showShortToast
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 
 class ELearningNotValidationStrategy: FilterResultStrategy {

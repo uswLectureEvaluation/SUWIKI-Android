@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.ui.home.timetable
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import com.kunize.uswtimetable.data.local.TimeTableListDatabase
 import com.kunize.uswtimetable.data.local.TimeData
 import com.kunize.uswtimetable.data.local.TimeTableList

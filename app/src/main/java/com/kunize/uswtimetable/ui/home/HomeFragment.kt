@@ -25,7 +25,7 @@ import com.kunize.uswtimetable.data.local.TimeTableList
 import com.kunize.uswtimetable.ui.home.timetable.TimeTableWidget
 import com.kunize.uswtimetable.ui.timetable_list.TimeTableListActivity
 import com.kunize.uswtimetable.ui.timetable_setting.SettingActivity
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

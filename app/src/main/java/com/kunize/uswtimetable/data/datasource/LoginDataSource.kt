@@ -8,7 +8,7 @@ import com.kunize.uswtimetable.domain.di.OtherApiService
 import com.kunize.uswtimetable.domain.model.Result
 import com.kunize.uswtimetable.domain.model.SuwikiError
 import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 
 class LoginDataSource(
     @OtherApiService private val apiService: IRetrofit,
