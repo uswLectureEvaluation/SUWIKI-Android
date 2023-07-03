@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -57,7 +56,7 @@ class EvaluationFragment : Fragment() {
 
         binding.recyclerEvaluation.adapter = evaluationFooterAdapter
 
-        binding.viewModel = evaluationViewModel
+        binding.vm = evaluationViewModel
         binding.lifecycleOwner = this
 
         binding.btnSearch.setOnClickListener {
@@ -90,9 +89,9 @@ class EvaluationFragment : Fragment() {
         // spinner 설정
         binding.clSort.setOnClickListener {
             imageSortDialog = ImageSortDialog(
-                context as AppCompatActivity,
+                requireActivity(),
                 evaluationViewModel,
-            ) // FIXME 강의평가 - 정렬 클릭 튕김
+            )
             imageSortDialog?.show()
         }
 

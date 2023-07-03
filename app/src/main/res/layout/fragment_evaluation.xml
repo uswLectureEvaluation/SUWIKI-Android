@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="vm"
             type="com.kunize.uswtimetable.ui.evaluation.EvaluationViewModel" />
     </data>
 
@@ -74,11 +74,12 @@
                             android:id="@+id/btn_search"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
+                            android:paddingStart="0dp"
                             android:paddingEnd="8dp"
                             android:src="@drawable/ic_search"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintStart_toEndOf="@id/et_search"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <View
@@ -111,18 +112,18 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:layout_marginStart="8dp"
-                            style="@style/SuwikiTextBody2.Bold.Blue"
                             android:id="@+id/tv_selected_open_major"
+                            style="@style/SuwikiTextBody2.Bold.Blue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:ellipsize="end"
                             android:maxEms="5"
                             android:maxLines="1"
-                            android:ellipsize="end"
                             app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
                             app:layout_constraintStart_toEndOf="@id/tv_open_major"
                             app:layout_constraintTop_toTopOf="@id/tv_open_major"
-                            tools:text="전부전부전부전부전부"/>
+                            tools:text="전부전부전부전부전부" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -151,7 +152,7 @@
 
                         <ImageView
                             android:id="@+id/iv_sort_icon"
-                            setImage="@{viewModel.sortImgId}"
+                            setImage="@{vm.stateFlow.evaluationSortBy.imageRes}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -165,7 +166,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:text="@{viewModel.sortText}"
+                            android:text="@{vm.stateFlow.evaluationSortBy.labelRes}"
                             app:layout_constraintBottom_toBottomOf="@id/iv_sort_icon"
                             app:layout_constraintStart_toEndOf="@id/iv_sort_icon"
                             app:layout_constraintTop_toTopOf="@id/iv_sort_icon"
