@@ -3,18 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="lectureInfoViewModel"
-            type="com.kunize.uswtimetable.ui.lecture_info.LectureInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/bg_rounded_border_line_15_gray_500"
-        style="@style/exam_type_layout_style"
-        android:visibility="@{lectureInfoViewModel.showHideExamDataLayout ? View.VISIBLE : View.GONE}">
+        style="@style/exam_type_layout_style">
 
         <TextView
             android:id="@+id/usePointText1"

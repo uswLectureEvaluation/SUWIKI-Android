@@ -3,11 +3,10 @@ package com.kunize.uswtimetable.ui.mypage.find_id
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.repository.user_info.FindIdRepository
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
-import com.skydoves.sandwich.StatusCode
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onSuccess
+import com.suwiki.domain.model.Result
+import com.suwiki.domain.model.SuwikiError
+import com.suwiki.domain.repository.FindIdRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,16 +26,14 @@ class FindIdViewModel @Inject constructor(
 
         viewModelScope.launch {
             loading.postValue(true)
-            val response = repository.findId(emailWithDomain)
 
-            response.onSuccess {
-                if (data.success) {
-                    successMessage.postValue("$emailWithDomain 로 아이디가 전송되었습니다.")
+            when (val response = repository.findId(emailWithDomain)) {
+                is Result.Success -> {
+                    if (response.data) successMessage.postValue("$emailWithDomain 로 아이디가 전송되었습니다.")
                 }
-            }.onError {
-                when (statusCode) {
-                    StatusCode.BadRequest -> errorMessage.postValue("존재하지 않는 이메일 주소입니다.")
-                    StatusCode.InternalServerError -> errorMessage.postValue("서버가 원활하지 않습니다.")
+
+                is Result.Failure -> when (response.error) {
+                    SuwikiError.RequestFailure -> errorMessage.postValue("존재하지 않는 이메일 주소입니다.")
                     else -> errorMessage.postValue("알 수 없는 오류입니다.")
                 }
             }

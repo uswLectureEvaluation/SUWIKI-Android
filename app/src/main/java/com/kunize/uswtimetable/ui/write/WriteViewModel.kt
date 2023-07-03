@@ -9,12 +9,11 @@ import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
 import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.repository.write.WriteRepository
 import com.kunize.uswtimetable.ui.common.Event
-import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.ToastViewModel
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel(), HandlingErrorInterface {
+class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel() {
     val toastViewModel = ToastViewModel()
     private val _honeyScore = MutableLiveData<Float>()
     val honeyScore: LiveData<Float>
@@ -74,7 +73,10 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         _learningScore.value = value
     }
 
-    suspend fun postLectureEvaluation(lectureId: Long, info: LectureEvaluationPostDto): Response<String> {
+    suspend fun postLectureEvaluation(
+        lectureId: Long,
+        info: LectureEvaluationPostDto,
+    ): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.postLectureEvaluation(lectureId, info)
@@ -90,7 +92,10 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         return response
     }
 
-    suspend fun updateLectureEvaluation(lectureId: Long, info: LectureEvaluationEditDto): Response<String> {
+    suspend fun updateLectureEvaluation(
+        lectureId: Long,
+        info: LectureEvaluationEditDto,
+    ): Response<String> {
         val response: Response<String>
         withContext(viewModelScope.coroutineContext) {
             response = writeRepository.updateLectureEvaluation(lectureId, info)
@@ -110,14 +115,5 @@ class WriteViewModel(private val writeRepository: WriteRepository) : ViewModel()
         _honeyScore.value = 0f
         _satisfactionScore.value = 0f
         _learningScore.value = 0f
-    }
-
-    override fun handleError(errorCode: Int) {
-        toastViewModel.toastMessage = when (errorCode) {
-            400 -> "이미 작성한 이력이 있어요!"
-            403 -> "권한이 없어요! 이용 제한 내역을 확인하거나 문의해주세요!"
-            else -> "$errorCode 에러 발생!"
-        }
-        toastViewModel.showToastMsg()
     }
 }

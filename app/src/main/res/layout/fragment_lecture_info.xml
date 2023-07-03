@@ -81,7 +81,6 @@
                         <TextView
                             android:id="@+id/tv_lecture_name"
                             style="@style/SuwikiTextSubTitle.Bold"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.lectureName}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +90,6 @@
                         <TextView
                             android:id="@+id/tv_professor_name"
                             style="@style/SuwikiTextBody2"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.professor}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -112,7 +110,6 @@
                         <TextView
                             android:id="@+id/tv_major_name"
                             style="@style/SuwikiTextBody2"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.majorType}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -130,15 +127,11 @@
                             app:flexWrap="wrap"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_professor_name"
-                            app:yearSemesterList="@{lectureInfoViewModel.lectureDetailInfoData.semester}">
-
-                        </com.google.android.flexbox.FlexboxLayout>
+                            app:layout_constraintTop_toBottomOf="@id/tv_professor_name" />
 
                         <TextView
                             android:id="@+id/infoEvaluationType"
                             style="@style/recyclerview_evaluation_rounding_text_style"
-                            text="@{lectureInfoViewModel.lectureDetailInfoData.lectureType}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -175,11 +168,9 @@
                         <TextView
                             android:id="@+id/infoHoneyScore"
                             style="@style/SuwikiTextBody1.Blue.Bold"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.lectureHoneyAvg)}"
                             app:layout_constraintBottom_toBottomOf="@id/infoHoneyTextView"
                             app:layout_constraintStart_toEndOf="@id/infoHoneyTextView"
                             tools:text="4.2" />
@@ -196,11 +187,9 @@
                         <TextView
                             android:id="@+id/infoLearningScore"
                             style="@style/SuwikiTextBody1.Blue.Bold"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.lectureLearningAvg)}"
                             app:layout_constraintBottom_toBottomOf="@id/infoLearningTextView"
                             app:layout_constraintStart_toEndOf="@id/infoLearningTextView"
                             tools:text="4.5" />
@@ -217,10 +206,8 @@
                         <TextView
                             android:id="@+id/infoSatisfactionScore"
                             style="@style/SuwikiTextBody1.Blue.Bold"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{@string/floatToStr(lectureInfoViewModel.lectureDetailInfoData.lectureSatisfactionAvg)}"
                             app:layout_constraintBottom_toBottomOf="@+id/infoSatisfactionTextView"
                             app:layout_constraintStart_toStartOf="@id/infoLearningScore"
                             tools:text="4.5" />
@@ -270,8 +257,6 @@
                         <TextView
                             android:id="@+id/infoMeeting"
                             style="@style/SuwikiTextBody2"
-                            lectureTeamAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTeamAvg}"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -282,8 +267,6 @@
                         <TextView
                             android:id="@+id/infoTask"
                             style="@style/SuwikiTextBody2"
-                            lectureHomeworkAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureHomeworkAvg}"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -294,24 +277,15 @@
                         <TextView
                             android:id="@+id/infoGrade"
                             style="@style/SuwikiTextBody2"
-                            lectureDifficultyAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureDifficultyAvg}"
-                            lectureTotalAvg="@{lectureInfoViewModel.lectureDetailInfoData.lectureTotalAvg}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             app:layout_constraintBottom_toBottomOf="@id/infoGradeTextView"
                             app:layout_constraintStart_toEndOf="@id/infoGradeTextView"
                             tools:text="까다로움" />
-
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             </androidx.appcompat.widget.Toolbar>
-
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -339,8 +313,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="26dp"
                     android:layout_marginBottom="16dp"
-                    android:enabled="@{!lectureInfoViewModel.written}"
-                    android:text="@{lectureInfoViewModel.writeBtnText}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="강의평가 작성 +20P" />
@@ -374,12 +346,12 @@
                 android:id="@+id/infoRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="vertical"
                 android:paddingBottom="66dp"
-                app:layout_constraintTop_toBottomOf="@id/menuLayout"
-                app:evaluationList="@{lectureInfoViewModel.commonRecyclerViewViewModel.itemList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menuLayout"
                 tools:visibility="invisible" />
 
 
@@ -388,12 +360,10 @@
                 android:layout_width="0dp"
                 android:layout_height="304dp"
                 android:text="@string/no_evaluation_data"
-                android:visibility="@{(lectureInfoViewModel.commonRecyclerViewViewModel.itemList.empty &amp;&amp; !lectureInfoViewModel.showNoExamDataLayout)? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/menuLayout"
                 tools:visibility="invisible" />
-
 
             <TextView
                 android:id="@+id/noExamDataLayout"
@@ -401,7 +371,6 @@
                 android:layout_width="0dp"
                 android:layout_height="304dp"
                 android:text="@string/no_exam_data"
-                android:visibility="@{lectureInfoViewModel.showNoExamDataLayout ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/menuLayout"
@@ -419,12 +388,8 @@
                     layout="@layout/hide_exam_info"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    bind:lectureInfoViewModel="@{lectureInfoViewModel}" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

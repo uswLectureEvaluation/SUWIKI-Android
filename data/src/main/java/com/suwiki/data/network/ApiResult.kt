@@ -84,6 +84,6 @@ fun <T> ApiResult<T>.toResult(): Result<T> {
     return if (this.isSuccess()) {
         Result.Success(getOrThrow())
     } else {
-        failureOrThrow().toResult()
+        Result.Failure(failureOrThrow().toSuwikiError())
     }
 }

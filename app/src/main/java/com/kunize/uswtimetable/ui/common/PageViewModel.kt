@@ -2,12 +2,10 @@ package com.kunize.uswtimetable.ui.common
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.kunize.uswtimetable.data.local.EvaluationData
 import com.kunize.uswtimetable.util.LAST_PAGE
 
 class PageViewModel {
-    private val _page = MutableLiveData<Int>()
+    val _page = MutableLiveData<Int>()
     val page: LiveData<Int>
         get() = _page
     var lectureId: Long = 0
@@ -17,8 +15,9 @@ class PageViewModel {
     }
 
     fun nextPage() {
-        if (_page.value == LAST_PAGE)
+        if (_page.value == LAST_PAGE) {
             return
+        }
         _page.value = _page.value?.plus(1)
         _page.value = _page.value
     }
@@ -28,9 +27,10 @@ class PageViewModel {
     }
 
     fun <T> isLastData(tmpEvaluationData: MutableList<T?>) {
-        if (tmpEvaluationData.size == 10)
+        if (tmpEvaluationData.size == 10) {
             tmpEvaluationData.add(null)
-        else
+        } else {
             _page.value = LAST_PAGE
+        }
     }
 }

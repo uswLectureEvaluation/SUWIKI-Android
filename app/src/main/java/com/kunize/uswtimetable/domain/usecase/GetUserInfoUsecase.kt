@@ -1,7 +1,7 @@
 package com.kunize.uswtimetable.domain.usecase
 
-import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.domain.repository.UserRepository
+import com.suwiki.domain.model.LoggedInUser
+import com.suwiki.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

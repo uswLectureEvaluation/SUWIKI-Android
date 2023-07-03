@@ -48,6 +48,9 @@ android {
 
 
 dependencies {
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
 
     implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
 

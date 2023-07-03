@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.repository.signup.SignUpRepository
 import com.kunize.uswtimetable.ui.common.Event
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
+import com.suwiki.domain.model.Result
+import com.suwiki.domain.repository.SignUpRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
@@ -158,18 +159,20 @@ class SignUpViewModel @Inject constructor(
         val userId = id.value ?: return
         loading.value = true
         viewModelScope.launch {
-            val response = repository.checkId(userId)
-            if (response.isSuccessful) {
-                isIdUnique.postValue(response.body()?.overlap == false)
-                if (response.body()?.overlap == true) {
-                    onError("이미 가입된 아이디입니다.")
-                } else {
-                    idCheckButtonEnabled.postValue(false)
-                    _toastMessage.postValue(Event("사용 가능한 아이디입니다."))
+            when (val response = repository.checkId(userId)) {
+                is Result.Success -> {
+                    isIdUnique.postValue(response.data)
+                    if (response.data) {
+                        onError("이미 가입된 아이디입니다.")
+                    } else {
+                        idCheckButtonEnabled.postValue(false)
+                        _toastMessage.postValue(Event("사용 가능한 아이디입니다."))
+                    }
                 }
-            } else {
-                onError("${response.code()} Error: ${response.errorBody()}")
+
+                is Result.Failure -> onError("아이디 확인 실패")
             }
+
             loading.postValue(false)
         }
     }
@@ -185,35 +188,39 @@ class SignUpViewModel @Inject constructor(
         loading.value = true
         viewModelScope.launch {
             // 이메일 중복 확인
-            val emailResponse = repository.checkEmail(userEmail)
-            if (emailResponse.isSuccessful) {
-                isEmailUnique.postValue(emailResponse.body()?.overlap == false)
-                if (emailResponse.body()?.overlap == true) {
-                    loading.postValue(false)
-                    onError("이미 가입된 이메일입니다.")
-                    return@launch
+            when (val emailResponse = repository.checkEmail(userEmail)) {
+                is Result.Success -> {
+                    isEmailUnique.postValue(!emailResponse.data)
+                    if (emailResponse.data) {
+                        loading.postValue(false)
+                        onError("이미 가입된 이메일입니다.")
+                    }
                 }
-            } else {
-                onError("이메일 중복 확인 에러: ${emailResponse.errorBody()}")
-                loading.postValue(false)
-                return@launch
+
+                is Result.Failure -> {
+                    onError("이메일 중복 확인 에러")
+                    loading.postValue(false)
+                }
             }
             // 회원 가입
             val signUpResponse = repository.signUp(userId, userPw, userEmail)
-            if (signUpResponse.isSuccessful) {
-                signUpResult.postValue(signUpResponse.body()?.success == true)
-                if (signUpResponse.body()?.success == true) {
-                    successSignUp()
-                } else {
-                    onError("회원 가입 실패: ${signUpResponse.message()}")
-                    loading.postValue(false)
-                    return@launch
+            when (signUpResponse) {
+                is Result.Success -> {
+                    signUpResult.postValue(signUpResponse.data)
+                    if (signUpResponse.data) {
+                        successSignUp()
+                    } else {
+                        onError("회원 가입 실패")
+                        loading.postValue(false)
+                    }
                 }
-            } else {
-                onError("회원 가입 에러: ${signUpResponse.errorBody()}")
-                loading.postValue(false)
-                return@launch
+
+                is Result.Failure -> {
+                    onError("회원 가입 에러")
+                    loading.postValue(false)
+                }
             }
+
             loading.postValue(false)
         }
     }

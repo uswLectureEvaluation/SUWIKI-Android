@@ -3,6 +3,13 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
+    <!-- 스플래시 화면 -->
+    <string name="start_loading_timetable">서버로부터 시간표 DB 불러오는 중</string>
+    <string name="start_storing_timetable">시간표 DB 저장 중</string>
+    <string name="start_version_checking">시간표 DB 버전 확인 중</string>
+    <string name="start_version_check_complete">시간표 DB 버전 확인 완료</string>
+    <string name="start_version_check_fail">시간표 DB 버전 확인 실패</string>
+
     <string name="timetable">시간표</string>
     <string name="evaluation">강의평가</string>
     <string name="more">더보기</string>
@@ -223,4 +230,11 @@
     <!-- uswtimetable -->
     <string name="elearning_format">"%s (%s %s~%s)"</string>
     <string name="add_class_directly">직접 추가</string>
+
+    <!-- evaluation -->
+    <string name="evaluation_category_recent">최근 올라온 강의</string>
+    <string name="evaluation_category_honey">꿀 강의</string>
+    <string name="evaluation_category_satisfaction">만족도가 높은 강의</string>
+    <string name="evaluation_category_learnable">배울게 많은 강의</string>
+    <string name="evaluation_category_best">Best 강의</string>
 </resources>

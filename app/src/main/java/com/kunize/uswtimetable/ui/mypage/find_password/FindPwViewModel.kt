@@ -3,11 +3,10 @@ package com.kunize.uswtimetable.ui.mypage.find_password
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.repository.user_info.FindPwRepository
 import com.kunize.uswtimetable.util.Constants.SCHOOL_DOMAIN_AT
-import com.skydoves.sandwich.StatusCode
-import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onSuccess
+import com.suwiki.domain.model.Result
+import com.suwiki.domain.model.SuwikiError
+import com.suwiki.domain.repository.FindPwRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,13 +28,11 @@ class FindPwViewModel @Inject constructor(
 
         viewModelScope.launch {
             loading.postValue(true)
-            val response = repository.findPw(id, email)
 
-            response.onSuccess {
-                successMessage.postValue("${email}로 임시 비밀번호가 전송되었습니다")
-            }.onError {
-                when (statusCode) {
-                    StatusCode.BadRequest -> errorMessage.postValue("존재하지 않는 정보입니다")
+            when (val response = repository.findPw(id, email)) {
+                is Result.Success -> if (response.data) successMessage.postValue("${email}로 임시 비밀번호가 전송되었습니다")
+                is Result.Failure -> when (response.error) {
+                    SuwikiError.RequestFailure -> errorMessage.postValue("존재하지 않는 정보입니다")
                     else -> errorMessage.postValue("알 수 없는 오류가 발생했습니다")
                 }
             }

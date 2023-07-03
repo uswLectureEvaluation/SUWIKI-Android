@@ -5,16 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.domain.model.SuwikiError
-import com.kunize.uswtimetable.domain.repository.LoginRepository
-import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
-import com.kunize.uswtimetable.domain.usecase.LoginUsecase
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.ID_REGEX
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_COUNT_LOWER_LIMIT
 import com.kunize.uswtimetable.util.Constants.PW_REGEX
+import com.suwiki.domain.model.Result
+import com.suwiki.domain.model.SuwikiError
+import com.suwiki.domain.repository.LoginRepository
+import com.suwiki.domain.repository.SettingRepository
+import com.suwiki.domain.usecase.GetUserInfoUsecase
+import com.suwiki.domain.usecase.LoginUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,6 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
+    private val settingRepository: SettingRepository,
     private val loginUsecase: LoginUsecase,
     userInfoUsecase: GetUserInfoUsecase,
 ) : ViewModel() {
@@ -53,16 +56,20 @@ class LoginViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<Event>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    val rememberLogin: StateFlow<Boolean> =
+        settingRepository.isRememberLogin.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
     fun login(id: String, pw: String) {
         loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             // 로그인 API
-            val loginResult = loginRepository.login(id, pw)
-            if (loginResult.isSuccessful) {
-                loginUsecase()
-                _loginResult.postValue(LoginState.SUCCESS)
-            } else {
-                when (loginResult.errorOrThrow()) {
+            when (val loginResult = loginRepository.login(id, pw)) {
+                is Result.Success -> {
+                    loginUsecase()
+                    _loginResult.postValue(LoginState.SUCCESS)
+                }
+
+                is Result.Failure -> when (loginResult.error) {
                     SuwikiError.TokenExpired -> _loginResult.postValue(LoginState.REQUIRE_AUTH)
                     else -> _loginResult.postValue(LoginState.FAIL)
                 }
@@ -121,7 +128,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun rememberCheckEvent(checked: Boolean) {
-        event(Event.CheckRemember(checked))
+        viewModelScope.launch { settingRepository.setRememberLogin(checked) }
     }
 
     private fun event(event: Event) {
@@ -132,7 +139,6 @@ class LoginViewModel @Inject constructor(
         data class FindId(val p: Unit) : Event()
         data class FindPw(val p: Unit) : Event()
         data class SignUp(val p: Unit) : Event()
-        data class CheckRemember(val checked: Boolean) : Event()
     }
 }
 

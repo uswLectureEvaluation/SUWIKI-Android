@@ -1,16 +1,19 @@
 package com.kunize.uswtimetable.ui.notice
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.dataclass.NoticeDto
-import com.kunize.uswtimetable.repository.notice.NoticeRepository
+import com.kunize.uswtimetable.ui.common.UiEvent
 import com.kunize.uswtimetable.util.LAST_PAGE
+import com.suwiki.domain.model.SimpleNotice
+import com.suwiki.domain.model.onFailure
+import com.suwiki.domain.model.onSuccess
+import com.suwiki.domain.repository.NoticeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,44 +23,39 @@ private const val ITEMS_PER_PAGE = 10
 class NoticeViewModel @Inject constructor(
     private val noticeRepository: NoticeRepository,
 ) : ViewModel() {
-    val errorMessage = MutableLiveData<String>()
     private val _uiEvent = MutableSharedFlow<Event>()
     val uiEvent: SharedFlow<Event> = _uiEvent.asSharedFlow()
-    var loading = MutableLiveData(false)
 
-    private val _items = MutableLiveData<List<NoticeDto>>(emptyList())
-    val items: LiveData<List<NoticeDto>> get() = _items
-
-    private var _page = 1
-    private var _loadFinished = false
+    private val _state = MutableStateFlow(NoticeListState())
+    val stateFlow = _state.asStateFlow()
+    val state = stateFlow.value
 
     init {
         scrollBottomEvent()
     }
 
     fun scrollBottomEvent() {
-        if (_loadFinished || _page == LAST_PAGE) return
+        if (state.loadFinished || state.page == LAST_PAGE) return
 
         viewModelScope.launch {
-            loading.postValue(true)
-            val response = noticeRepository.getNoticeList(_page)
-            if (response.isSuccessful) {
-                val newData = response.body()?.data
-
-                if (newData?.isEmpty() == true) {
-                    _loadFinished = true
-                } else {
-                    val currentData = _items.value?.toMutableList() ?: mutableListOf()
-                    currentData.addAll(newData!!)
-                    _items.postValue(currentData)
-                    nextPage()
+            reduce(state.copy(loading = false))
+            noticeRepository.getNoticeList(state.page)
+                .onSuccess { newData ->
+                    if (newData.isEmpty()) {
+                        reduce(state.copy(loadFinished = true))
+                    } else {
+                        val updated = state.data.toMutableList().apply { addAll(newData) }
+                        reduce(state.copy(loading = false, data = updated))
+                        nextPage()
+                    }
+                }.onFailure { error ->
+                    reduce(state.copy(loading = false, error = error))
                 }
-            }
-            loading.postValue(false)
+            reduce(state.copy(loading = false))
         }
     }
 
-    fun noticeClicked(notice: NoticeDto) {
+    fun noticeClicked(notice: SimpleNotice) {
         event(Event.NoticeClickEvent(notice))
     }
 
@@ -68,10 +66,14 @@ class NoticeViewModel @Inject constructor(
     }
 
     private fun nextPage() {
-        if (_page != LAST_PAGE) _page++
+        if (state.page != LAST_PAGE) reduce(state.copy(page = state.page + 1))
     }
 
-    sealed class Event {
-        data class NoticeClickEvent(val notice: NoticeDto) : Event()
+    sealed class Event : UiEvent {
+        data class NoticeClickEvent(val notice: SimpleNotice) : Event()
+    }
+
+    private fun reduce(newState: NoticeListState) {
+        _state.value = newState
     }
 }

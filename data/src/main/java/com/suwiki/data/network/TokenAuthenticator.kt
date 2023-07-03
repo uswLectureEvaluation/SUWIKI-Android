@@ -1,10 +1,8 @@
 package com.suwiki.data.network
 
 import android.util.Log
-import com.suwiki.domain.di.IoDispatcher
 import com.suwiki.domain.repository.AuthRepository
 import com.suwiki.domain.repository.LogoutRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -13,7 +11,6 @@ import okhttp3.Route
 import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val authRepository: AuthRepository,
     private val logoutRepository: LogoutRepository,
 ) : Authenticator {

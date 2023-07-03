@@ -7,7 +7,7 @@
 
         <variable
             name="notice"
-            type="com.kunize.uswtimetable.dataclass.NoticeDto" />
+            type="com.suwiki.domain.model.SimpleNotice" />
 
         <variable
             name="viewmodel"

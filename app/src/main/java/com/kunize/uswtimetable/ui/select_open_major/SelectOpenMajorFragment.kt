@@ -12,13 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.data.local.OpenMajorData
-import com.kunize.uswtimetable.data.local.OpenMajorDatabase
+import com.kunize.uswtimetable.SuwikiApplication
 import com.kunize.uswtimetable.data.local.OpenMajorItem
 import com.kunize.uswtimetable.databinding.FragmentSelectOpenMajorBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.util.FragmentType
-import com.kunize.uswtimetable.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.afterEditTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -33,7 +31,8 @@ class SelectOpenMajorFragment : Fragment() {
     private lateinit var binding: FragmentSelectOpenMajorBinding
     private lateinit var adapter: SelectOpenMajorAdapter
     private val args: SelectOpenMajorFragmentArgs by navArgs()
-    private lateinit var tempOpenMajorList: List<OpenMajorData>
+
+    //    private lateinit var tempOpenMajorList: List<OpenMajorData>
     var openMajorList = mutableListOf<OpenMajorItem>()
     private val viewModel: SelectOpenMajorViewModel by viewModels()
 
@@ -52,10 +51,10 @@ class SelectOpenMajorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = SelectOpenMajorAdapter(viewModel)
-        val db = OpenMajorDatabase.getInstance(requireContext())
+//        val db = OpenMajorDatabase.getInstance(requireContext())
 
         CoroutineScope(IO).launch {
-            tempOpenMajorList = db!!.openMajorDao().getAll()
+//            tempOpenMajorList = db!!.openMajorDao().getAll()
             getAllMajorList()
             adapter.setHasStableIds(true)
             withContext(Main) {
@@ -166,7 +165,7 @@ class SelectOpenMajorFragment : Fragment() {
     private suspend fun getAllMajorList() {
         val tempBookmarkMajorList = viewModel.getBookmarkList()
         openMajorList = mutableListOf()
-        tempOpenMajorList.forEach {
+        viewModel.tempOpenMajorList.forEach {
             openMajorList.add(OpenMajorItem(it.name in tempBookmarkMajorList, it.name))
         }
         adapter.filteredData = openMajorList

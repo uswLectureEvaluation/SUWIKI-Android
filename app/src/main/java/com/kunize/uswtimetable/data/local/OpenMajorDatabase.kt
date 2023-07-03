@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [OpenMajorData::class], version = 1)
-abstract class OpenMajorDatabase: RoomDatabase() {
+@Database(entities = [OpenMajorData::class], version = 1, exportSchema = true)
+abstract class OpenMajorDatabase : RoomDatabase() {
     abstract fun openMajorDao(): OpenMajorDao
 
     companion object {
@@ -14,17 +14,16 @@ abstract class OpenMajorDatabase: RoomDatabase() {
 
         @Synchronized
         fun getInstance(context: Context): OpenMajorDatabase? {
-            if(instance == null) {
+            if (instance == null) {
                 synchronized(OpenMajorDatabase::class) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         OpenMajorDatabase::class.java,
-                        "open-major-database"
+                        "open-major-database",
                     ).build()
                 }
             }
             return instance
         }
     }
-
 }

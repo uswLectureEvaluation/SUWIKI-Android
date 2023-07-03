@@ -1,7 +1,16 @@
 package com.suwiki.data.network
 
-import com.google.gson.JsonElement
-import com.skydoves.sandwich.ApiResponse
+import com.suwiki.data.db.request.BookmarkMajorRequest
+import com.suwiki.data.db.request.CheckEmailRequest
+import com.suwiki.data.db.request.CheckIdRequest
+import com.suwiki.data.db.request.FindIdRequest
+import com.suwiki.data.db.request.FindPasswordRequest
+import com.suwiki.data.db.request.LoginRequest
+import com.suwiki.data.db.request.QuitRequest
+import com.suwiki.data.db.request.ReportExamRequest
+import com.suwiki.data.db.request.ReportLectureRequest
+import com.suwiki.data.db.request.ResetPasswordRequest
+import com.suwiki.data.db.request.SignupRequest
 import com.suwiki.data.model.Token
 import com.suwiki.data.network.ApiService.Companion.API.BAN_REASON
 import com.suwiki.data.network.ApiService.Companion.API.BLACKLIST_REASON
@@ -40,8 +49,8 @@ import com.suwiki.data.network.ApiService.Companion.API.WRITE_LECTURE_EXAM
 import com.suwiki.data.network.TokenAuthenticator.Companion.AUTH_HEADER
 import com.suwiki.data.network.dto.BlacklistDto
 import com.suwiki.data.network.dto.DataDto
-import com.suwiki.data.network.dto.LectureDetailEvaluationDto
-import com.suwiki.data.network.dto.LectureDetailExamDto
+import com.suwiki.data.network.dto.LectureDetailEvaluationDataDto
+import com.suwiki.data.network.dto.LectureDetailExamDataDto
 import com.suwiki.data.network.dto.LectureDetailInfoDto
 import com.suwiki.data.network.dto.LectureExamDto
 import com.suwiki.data.network.dto.LectureMainDto
@@ -57,6 +66,7 @@ import com.suwiki.data.network.dto.SuspensionHistoryDto
 import com.suwiki.data.network.dto.UserDataDto
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.GET
@@ -73,19 +83,15 @@ interface ApiService {
 
     // 회원가입 요청 API
     @POST(SIGN_UP)
-    suspend fun signUp(
-        @Field("loginId") id: String,
-        @Field("password") password: String,
-        @Field("email") email: String,
-    ): ApiResult<SuccessCheckDto>
+    suspend fun signUp(@Body signupRequest: SignupRequest): ApiResult<SuccessCheckDto>
 
     // 아이디 중복 확인 요청 API
     @POST(SIGN_UP_ID_CHECK)
-    suspend fun checkId(@Field("loginId") loginId: String): ApiResult<OverlapCheckDto>
+    suspend fun checkId(@Body checkIdRequest: CheckIdRequest): ApiResult<OverlapCheckDto>
 
     // 이메일 중복 확인 요청 API
     @POST(SIGN_UP_EMAIL_CHECK)
-    suspend fun checkEmail(@Field("email") email: String): ApiResult<OverlapCheckDto>
+    suspend fun checkEmail(@Body checkEmailRequest: CheckEmailRequest): ApiResult<OverlapCheckDto>
 
     // 공지사항 리스트 API
     @GET(NOTICE_LIST)
@@ -97,35 +103,23 @@ interface ApiService {
 
     // 아이디 찾기 API
     @POST(ID)
-    suspend fun findId(@Field("email") email: String): ApiResult<SuccessCheckDto>
+    suspend fun findId(@Body findIdRequest: FindIdRequest): ApiResult<SuccessCheckDto>
 
     // 비밀번호 찾기(임시 비밀번호 전송) API
     @POST(PASSWORD)
-    suspend fun findPassword(
-        @Field("loginId") id: String,
-        @Field("email") email: String,
-    ): ApiResult<SuccessCheckDto>
+    suspend fun findPassword(@Body findPasswordRequest: FindPasswordRequest): ApiResult<SuccessCheckDto>
 
     // 비밀번호 재설정 API
     @POST(PASSWORD_RESET)
-    suspend fun resetPassword(
-        @Field("prePassword") currentPassword: String,
-        @Field("newPassword") newPassword: String,
-    ): ApiResult<SuccessCheckDto>
+    suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): ApiResult<SuccessCheckDto>
 
     // 로그인 요청 API
     @POST(LOGIN)
-    suspend fun login(
-        @Field("loginId") loginId: String,
-        @Field("password") password: String,
-    ): ApiResult<Token>
+    suspend fun login(@Body loginRequest: LoginRequest): ApiResult<Token>
 
     // 회원탈퇴 요청 API
     @POST(QUIT)
-    suspend fun quit(
-        @Field("loginId") id: String,
-        @Field("password") password: String,
-    ): ApiResult<SuccessCheckDto>
+    suspend fun quit(@Body quitRequest: QuitRequest): ApiResult<SuccessCheckDto>
 
     // 내 정보 페이지 호출 API
     @GET(MY_PAGE)
@@ -159,21 +153,21 @@ interface ApiService {
 
     // 검색결과 자세히 보기 (LECTURE)
     @GET(LECTURE_DETAIL_INFO)
-    suspend fun getLectureDetailInfo(@Query("lectureId") lectureId: Long): Response<DataDto<LectureDetailInfoDto>>
+    suspend fun getLectureDetailInfo(@Query("lectureId") lectureId: Long): ApiResult<DataDto<LectureDetailInfoDto>>
 
     // 검색결과 자세히 보기 (Evaluation)
     @GET(LECTURE_DETAIL_EVALUATION)
     suspend fun getLectureDetailEvaluation(
         @Query("lectureId") lectureId: Long,
         @Query("page") page: Int,
-    ): Response<LectureDetailEvaluationDto>
+    ): ApiResult<LectureDetailEvaluationDataDto>
 
     // 검색결과 자세히 보기 (Exam)
     @GET(LECTURE_DETAIL_EXAM)
     suspend fun getLectureDetailExam(
         @Query("lectureId") lectureId: Long,
         @Query("page") page: Int,
-    ): Response<LectureDetailExamDto>
+    ): ApiResult<LectureDetailExamDataDto>
 
     // 검색결과 페이지 API(강의평)
     @GET(SEARCH)
@@ -236,7 +230,7 @@ interface ApiService {
 
     // 시험 정보 구매
     @POST(BUY_EXAM)
-    suspend fun buyExam(@Query("lectureId") lectureId: Long): Response<String>
+    suspend fun buyExam(@Query("lectureId") lectureId: Long): ApiResult<String>
 
     // 시험 정보 수정
     @PUT(EDIT_LECTURE_EXAM)
@@ -256,9 +250,7 @@ interface ApiService {
     suspend fun getOpenMajorList(): ApiResult<OpenMajorListDto>
 
     @POST(BOOKMARK)
-    suspend fun bookmarkMajor(
-        @Field("majorType") majorType: String,
-    ): ApiResult<String>
+    suspend fun bookmarkMajor(@Body bookmarkMajorRequest: BookmarkMajorRequest): ApiResult<String>
 
     @GET(BOOKMARK)
     suspend fun getBookmarkMajorList(): ApiResult<OpenMajorListDto>
@@ -270,17 +262,11 @@ interface ApiService {
 
     // 강의평가 신고하기
     @POST(REPORT_EVALUATION)
-    suspend fun reportLecture(
-        @Field("evaluateIdx") evaluateIdx: Long,
-        @Field("content") content: String = "",
-    ): ApiResponse<JsonElement>
+    suspend fun reportLecture(@Body reportLectureRequest: ReportLectureRequest): ApiResult<Unit>
 
     // 시험정보 신고하기
     @POST(REPORT_EXAM)
-    suspend fun reportExam(
-        @Field("examIdx") evaluateIdx: Long,
-        @Field("content") content: String = "",
-    ): ApiResponse<JsonElement>
+    suspend fun reportExam(@Body reportExamRequest: ReportExamRequest): ApiResult<Unit>
 
     companion object {
         object API {

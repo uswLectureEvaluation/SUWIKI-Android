@@ -4,16 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.data.remote.LectureMain
 import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
-import com.kunize.uswtimetable.repository.search_result.SearchResultRepository
 import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
 import com.kunize.uswtimetable.ui.common.Event
-import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
 import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.util.LectureApiOption
 import com.kunize.uswtimetable.util.LectureApiOption.MODIFIED
+import com.suwiki.domain.model.LectureMain
+import com.suwiki.domain.repository.SearchResultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -25,9 +24,10 @@ import javax.inject.Inject
 class SearchResultViewModel @Inject constructor(
     private val searchResultRepository: SearchResultRepository,
     userInfoUsecase: GetUserInfoUsecase,
-) : ViewModel(), HandlingErrorInterface {
+) : ViewModel() {
     val toastViewModel = ToastViewModel()
     private val pageViewModel = PageViewModel()
+
     val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<LectureMain>()
     private var selectedType: String = MODIFIED
     var searchValue: String = ""
@@ -64,19 +64,22 @@ class SearchResultViewModel @Inject constructor(
     }
 
     private suspend fun SearchResultViewModel.getData() {
-        val response = getResponse()
+        /*val response = getResponse() // TODO 구현!!
         if (response.isSuccessful) {
             val tmpEvaluationData = response.body()?.data
             commonRecyclerViewViewModel.deleteLoading()
             if (!tmpEvaluationData.isNullOrEmpty()) {
                 pageViewModel.isLastData(tmpEvaluationData)
                 commonRecyclerViewViewModel.itemList.value!!.addAll(tmpEvaluationData)
-                commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.itemList.value!!)
+                commonRecyclerViewViewModel.changeRecyclerViewData(
+//                    commonRecyclerViewViewModel.itemList.value!!,
+                    commonRecyclerViewViewModel.itemList.value?: emptyList<LectureMain>() + tmpEvaluationData
+                )
                 pageViewModel.nextPage()
             }
         } else {
-            handleError(response.code())
-        }
+//            handleError(response.code()) // TODO Error 처리
+        }*/
     }
 
     private suspend fun getResponse() = if (searchValue.isBlank()) {
@@ -121,11 +124,5 @@ class SearchResultViewModel @Inject constructor(
         viewModelScope.launch {
             getData()
         }
-    }
-
-    override fun handleError(errorCode: Int) {
-        toastViewModel.toastMessage = "$errorCode 에러 발생!"
-        toastViewModel.showToastMsg()
-        commonRecyclerViewViewModel.deleteLoading()
     }
 }

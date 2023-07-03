@@ -117,12 +117,12 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="myEvaluation"
-            app:argType="com.kunize.uswtimetable.dataclass.MyEvaluationDto"
+            app:argType="com.suwiki.domain.model.MyEvaluation"
             app:nullable="true"
             android:defaultValue="@null" />
         <argument
             android:name="myExamInfo"
-            app:argType="com.kunize.uswtimetable.data.remote.LectureExamDto"
+            app:argType="com.suwiki.domain.model.LectureExam"
             app:nullable="true"
             android:defaultValue="@null" />
         <action

@@ -1,8 +1,9 @@
 package com.suwiki.data.repository
 
-import com.kunize.uswtimetable.domain.di.AuthApiService
+import com.suwiki.data.db.request.ResetPasswordRequest
 import com.suwiki.data.network.ApiService
 import com.suwiki.data.network.toResult
+import com.suwiki.domain.di.AuthApiService
 import com.suwiki.domain.model.Result
 import com.suwiki.domain.repository.ResetPasswordRepository
 import javax.inject.Inject
@@ -15,7 +16,9 @@ class ResetPasswordRepositoryImpl @Inject constructor(
      * */
     override suspend fun resetPassword(current: String, new: String): Result<Boolean> =
         apiService.resetPassword(
-            currentPassword = current,
-            newPassword = new,
+            ResetPasswordRequest(
+                currentPassword = current,
+                newPassword = new,
+            ),
         ).toResult().map { it.success }
 }

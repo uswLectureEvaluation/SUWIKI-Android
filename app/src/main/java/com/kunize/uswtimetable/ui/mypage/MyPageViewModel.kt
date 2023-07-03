@@ -2,9 +2,9 @@ package com.kunize.uswtimetable.ui.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.dataclass.LoggedInUser
-import com.kunize.uswtimetable.domain.usecase.GetUserInfoUsecase
-import com.kunize.uswtimetable.domain.usecase.LogoutUsecase
+import com.suwiki.domain.model.LoggedInUser
+import com.suwiki.domain.usecase.GetUserInfoUsecase
+import com.suwiki.domain.usecase.LogoutUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted

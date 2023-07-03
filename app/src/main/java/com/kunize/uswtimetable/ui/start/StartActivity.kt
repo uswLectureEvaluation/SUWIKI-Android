@@ -1,108 +1,85 @@
 package com.kunize.uswtimetable.ui.start
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.kunize.uswtimetable.data.local.OpenMajorData
-import com.kunize.uswtimetable.data.local.OpenMajorDatabase
-import com.kunize.uswtimetable.data.local.TimeTableData
-import com.kunize.uswtimetable.data.local.TimeTableDatabase
-import com.kunize.uswtimetable.databinding.ActivityStartBinding
-import com.kunize.uswtimetable.domain.di.OtherApiService
-import com.kunize.uswtimetable.domain.usecase.LoginUsecase
-import com.kunize.uswtimetable.domain.usecase.LogoutUsecase
-import com.kunize.uswtimetable.repository.open_major.OpenMajorRemoteDataSource
-import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
-import com.kunize.uswtimetable.retrofit.IRetrofit
-import com.kunize.uswtimetable.ui.login.LoginActivity.Companion.REMEMBER_LOGIN
-import com.kunize.uswtimetable.ui.main.MainActivity
-import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.SuwikiApplication
+import com.kunize.uswtimetable.databinding.ActivityStartBinding
+import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
-import com.skydoves.sandwich.ApiResponse
+import com.mangbaam.presentation.extension.startActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class StartActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityStartBinding.inflate(layoutInflater) }
-    private lateinit var versionPreferences: SharedPreferences
-    var toUpdate = false
+    private val viewModel: StartViewModel by viewModels()
+//    private lateinit var versionPreferences: SharedPreferences
+//    var toUpdate = false
 
-    @OtherApiService
-    @Inject
-    lateinit var apiService: IRetrofit
+//    @OtherApiService
+//    @Inject
+//    lateinit var apiService: IRetrofit
 
-    @Inject
+    /*@Inject
     lateinit var loginUsecase: LoginUsecase
 
     @Inject
-    lateinit var logoutUsecase: LogoutUsecase
-
-    companion object {
-        const val MY_REQUEST_CODE = 700
-    }
+    lateinit var logoutUsecase: LogoutUsecase*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.showProgress.text = "시간표 DB 버전 확인 중"
-        setPercentage(0)
+        repeatOnStarted {
+            viewModel.startState.collect(::render)
+        }
+        repeatOnStarted {
+            viewModel.event.collect(::handleEvent)
+        }
 
-        // retrofit2
-        val openMajorRepository = OpenMajorRepository(OpenMajorRemoteDataSource(apiService))
+        /*binding.showProgress.text = "시간표 DB 버전 확인 중"
+        setPercentage(0)*/
 
         // firebase 설정
-        val database: FirebaseDatabase?
-        val firebaseVersion: DatabaseReference?
-        val firebaseTimetableData: DatabaseReference?
+//        val database: FirebaseDatabase?
+//        val firebaseVersion: DatabaseReference?
+//        val firebaseTimetableData: DatabaseReference?
 
         // Preferences 설정
-        versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
-        var version = versionPreferences.getString("version", "202107271830")
-        val openMajorVersion = versionPreferences.getFloat("openMajorVersion", 0f)
+//        versionPreferences = getSharedPreferences("version", Context.MODE_PRIVATE)
+//        var version = versionPreferences.getString("version", "202107271830")
+//        val openMajorVersion = versionPreferences.getFloat("openMajorVersion", 0f)
         SuwikiApplication.prefs.setInt("gradeSel", 0)
         SuwikiApplication.prefs.setString("openMajorSel", "전체")
 
         // Room 설정
-        val db = TimeTableDatabase.getInstance(applicationContext)
+//        val db = TimeTableDatabase.getInstance(applicationContext)
 
         // 기타
-        val localDataList = mutableListOf<TimeTableData>()
-        var done = false
-        var update: Boolean? = null
+//        val localDataList = mutableListOf<TimeTableData>()
+//        var done = false
+//        var update: Boolean? = null
 
         // 로그인 유지
-        repeatOnStarted {
+        /*repeatOnStarted {
             if (PreferenceManager.getBoolean(this@StartActivity, REMEMBER_LOGIN)) {
                 loginUsecase()
             } else {
                 logoutUsecase()
             }
-        }
+        }*/
 
         // intent 설정
-        val intent = Intent(this@StartActivity, MainActivity::class.java)
+        /*val intent = Intent(this@StartActivity, MainActivity::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP // 액티비티 스택제거
+*/
+//        database = FirebaseDatabase.getInstance()
 
-        database = FirebaseDatabase.getInstance()
-
-        // TODO 강의평가 데이터 업데이트 시 수정
+        /*// TODO 강의평가 데이터 업데이트 시 수정
         firebaseVersion = database.getReference("version")
 
         firebaseVersion.get().addOnSuccessListener {
@@ -114,12 +91,12 @@ class StartActivity : AppCompatActivity() {
             binding.showProgress.text = "시간표 DB 버전 확인 실패"
             setPercentage(100)
             startActivity(intent)
-        }
+        }*/
 
         // TODO 강의평가 데이터 업데이트 시 수정
-        firebaseTimetableData = database.getReference("uswTimetable")
+//        firebaseTimetableData = database.getReference("uswTimetable")
 
-        CoroutineScope(IO).launch {
+        /*CoroutineScope(IO).launch {
             while (true) {
                 if (update != null && !toUpdate) {
                     break
@@ -129,10 +106,10 @@ class StartActivity : AppCompatActivity() {
             } // update 값이 입력될 때 까지 무한 루프
             if (update == true) {
                 Log.d("firebase", "업데이트 실행 $version")
-                withContext(Main) {
+                *//*withContext(Main) {
                     binding.showProgress.text = "서버로부터 시간표 DB 불러오는 중"
-                }
-                firebaseTimetableData.get().addOnSuccessListener {
+                }*//*
+                *//*firebaseTimetableData.get().addOnSuccessListener {
                     var index = 1L
                     for (data in it.children) {
                         val emptyData = TimeTableData()
@@ -153,11 +130,11 @@ class StartActivity : AppCompatActivity() {
                     }
                     done = true
                     Log.d("firebase", "추가 완료")
-                }
+                }*//*
 
-                db!!.timetableDao().deleteAll()
+//                db!!.timetableDao().deleteAll()
 
-                while (true) {
+                *//*while (true) {
                     if (done) {
                         withContext(Main) {
                             binding.showProgress.text = "시간표 DB 저장 중"
@@ -175,23 +152,23 @@ class StartActivity : AppCompatActivity() {
                         break
                     } // 시간표를 업데이트 완료 전까지 무한 루프
                     delay(1000L)
-                }
-                withContext(Main) {
-                    updateOpenMajorList(openMajorRepository, openMajorVersion)
-                    setPercentage(100)
-                }
-                startActivity(intent)
+                }*//*
+//                withContext(Main) {
+//                    updateOpenMajorList(openMajorRepository, openMajorVersion)
+//                    setPercentage(100)
+//                }
+//                startActivity(intent)
             } else {
-                withContext(Main) {
+                *//*withContext(Main) {
                     updateOpenMajorList(openMajorRepository, openMajorVersion)
                     setPercentage(100)
-                }
-                startActivity(intent)
+                }*//*
+//                startActivity(intent)
             }
-        }
+        }*/
     }
 
-    private suspend fun updateOpenMajorList(
+    /*private suspend fun updateOpenMajorList(
         openMajorRepository: OpenMajorRepository,
         openMajorVersion: Float,
     ) {
@@ -215,10 +192,25 @@ class StartActivity : AppCompatActivity() {
 
             else -> {}
         }
-    }
+    }*/
 
-    private fun setPercentage(percentage: Int) {
+    /*private fun setPercentage(percentage: Int) {
         binding.tvProgress.text = "$percentage%"
         binding.progressBar.progress = percentage
+    }*/
+
+    private fun render(state: StartState) = with(binding) {
+        showProgress.text = getString(state.progressText)
+        tvProgress.text = "${state.progressPercent}%"
+        progressBar.progress = state.progressPercent
+    }
+
+    private fun handleEvent(event: StartEvent) {
+        when (event) {
+            StartEvent.GotoMain -> startActivity<MainActivity> {
+                flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP // 액티비티 스택제거
+            }
+        }
     }
 }

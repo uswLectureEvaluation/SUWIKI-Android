@@ -28,8 +28,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="24dp"
                     android:paddingStart="16dp"
+                    android:paddingTop="24dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="4dp">
 
@@ -89,8 +89,8 @@
                             android:paddingEnd="8dp"
                             android:src="@drawable/ic_search"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintStart_toEndOf="@id/et_search"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <View
@@ -123,18 +123,18 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:layout_marginStart="8dp"
-                            style="@style/SuwikiTextBody2.Bold.Blue"
                             android:id="@+id/tv_selected_open_major"
+                            style="@style/SuwikiTextBody2.Bold.Blue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:ellipsize="end"
                             android:maxEms="5"
                             android:maxLines="1"
-                            android:ellipsize="end"
                             app:layout_constraintBottom_toBottomOf="@id/tv_open_major"
                             app:layout_constraintStart_toEndOf="@id/tv_open_major"
                             app:layout_constraintTop_toTopOf="@id/tv_open_major"
-                            tools:text="전부전부전부전부전부"/>
+                            tools:text="전부전부전부전부전부" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -162,11 +162,11 @@
                         app:layout_constraintTop_toBottomOf="@id/cl_search">
 
                         <TextView
-                            style="@style/SuwikiTextBody2.Bold"
                             android:id="@+id/tv_sort"
-                            android:text="정렬"
+                            style="@style/SuwikiTextBody2.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="정렬"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -178,10 +178,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
+                            android:text="@{viewModel.sortText}"
                             app:layout_constraintBottom_toBottomOf="@id/tv_sort"
                             app:layout_constraintStart_toEndOf="@id/tv_sort"
                             app:layout_constraintTop_toTopOf="@id/tv_sort"
-                            android:text="@{viewModel.sortText}"
                             tools:text="종합" />
 
                         <ImageView
@@ -211,36 +211,32 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                style="@style/no_data_textview_style"
                 android:layout_width="0dp"
                 android:layout_height="304dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/no_search_data"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:paddingTop="64dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                style="@style/no_data_textview_style"
-                android:visibility="@{viewModel.commonRecyclerViewViewModel.itemList.empty ? View.VISIBLE : View.GONE}" />
-
-            <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="64dp"
+                android:text="@string/no_search_data"
+                android:visibility="@{viewModel.commonRecyclerViewViewModel.itemList.empty ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSearchResult"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:id="@+id/recyclerSearchResult"
-                app:searchResultList="@{viewModel.commonRecyclerViewViewModel.itemList}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 </layout>

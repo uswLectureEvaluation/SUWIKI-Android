@@ -1,5 +1,8 @@
 package com.suwiki.data.repository
 
+import com.suwiki.data.db.request.CheckEmailRequest
+import com.suwiki.data.db.request.CheckIdRequest
+import com.suwiki.data.db.request.SignupRequest
 import com.suwiki.data.network.ApiService
 import com.suwiki.data.network.toResult
 import com.suwiki.domain.model.Result
@@ -11,14 +14,16 @@ class SignUpRepositoryImpl @Inject constructor(
 ) : SignUpRepository {
 
     override suspend fun checkId(id: String): Result<Boolean> {
-        return apiService.checkId(id).toResult().map { it.overlap }
+        return apiService.checkId(CheckIdRequest(id)).toResult().map { it.overlap }
     }
 
     override suspend fun checkEmail(email: String): Result<Boolean> {
-        return apiService.checkEmail(email).toResult().map { it.overlap }
+        return apiService.checkEmail(CheckEmailRequest(email)).toResult().map { it.overlap }
     }
 
     override suspend fun signUp(id: String, pw: String, email: String): Result<Boolean> {
-        return apiService.signUp(id, pw, email).toResult().map { it.success }
+        return apiService.signUp(
+            SignupRequest(id, pw, email),
+        ).toResult().map { it.success }
     }
 }

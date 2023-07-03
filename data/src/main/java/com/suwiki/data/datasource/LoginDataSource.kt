@@ -1,5 +1,6 @@
 package com.suwiki.data.datasource
 
+import com.suwiki.data.db.request.LoginRequest
 import com.suwiki.data.network.ApiResult
 import com.suwiki.data.network.ApiService
 import com.suwiki.data.network.onFailure
@@ -17,7 +18,7 @@ class LoginDataSource(
      * 서버에 로그인 후 토큰 저장
      * */
     suspend fun login(id: String, password: String): Result<Unit> {
-        apiService.login(id, password)
+        apiService.login(LoginRequest(id, password))
             .onSuccess { tokens ->
                 authRepository.saveTokens(tokens.refreshToken, tokens.accessToken)
                 return Result.Success(Unit)

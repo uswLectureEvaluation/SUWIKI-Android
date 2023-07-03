@@ -1,9 +1,9 @@
 package com.suwiki.data.datasource
 
-import com.kunize.uswtimetable.domain.di.OtherApiService
 import com.suwiki.data.network.ApiService
 import com.suwiki.data.network.dto.NoticeDetailDto
 import com.suwiki.data.network.toResult
+import com.suwiki.domain.di.OtherApiService
 import com.suwiki.domain.model.Result
 import javax.inject.Inject
 

@@ -19,10 +19,11 @@ import com.kunize.uswtimetable.data.remote.LectureEvaluationEditDto
 import com.kunize.uswtimetable.data.remote.LectureEvaluationPostDto
 import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentWriteBinding
-import com.kunize.uswtimetable.dataclass.MyEvaluationDto
 import com.kunize.uswtimetable.ui.common.EventObserver
 import com.kunize.uswtimetable.util.WriteFragmentTitle
 import com.kunize.uswtimetable.util.extensions.seekbarChangeListener
+import com.suwiki.domain.model.LectureExam
+import com.suwiki.domain.model.MyEvaluation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -152,7 +153,7 @@ class WriteFragment : Fragment() {
                             goToMyPostFragment()
                         }
                     } else {
-                        writeViewModel.handleError(response.code())
+//                        writeViewModel.handleError(response.code())
                     }
                 }
             }
@@ -310,7 +311,7 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setDifficultyRadioBtn(it: LectureExamDto) {
+    private fun setDifficultyRadioBtn(it: LectureExam) {
         for (radioButton in difficultyRadioBtnList) {
             if (it.examDifficulty == radioButton.text.toString()) {
                 radioButton.isChecked = true
@@ -319,7 +320,7 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setTestContentCheckBox(it: LectureExamDto) {
+    private fun setTestContentCheckBox(it: LectureExam) {
         for (checkBox in testContentCheckBoxList) {
             for (dataString in it.examInfo.replace(" ", "").split(",")) {
                 if (checkBox.text == dataString) {
@@ -329,7 +330,7 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setLectureProfessorName(it: LectureExamDto) {
+    private fun setLectureProfessorName(it: LectureExam) {
         lectureName = it.lectureName ?: return
         professorName = it.professor ?: return
     }
@@ -408,7 +409,7 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setGradeRadioBtn(it: MyEvaluationDto) {
+    private fun setGradeRadioBtn(it: MyEvaluation) {
         gradeRadioBtnList = listOf(
             binding.gradeGoodRadioButton,
             binding.gradeNormalRadioButton,
@@ -417,7 +418,7 @@ class WriteFragment : Fragment() {
         gradeRadioBtnList[it.difficulty].isChecked = true
     }
 
-    private fun setTaskRadioBtn(it: MyEvaluationDto) {
+    private fun setTaskRadioBtn(it: MyEvaluation) {
         when (it.homework) {
             0 -> binding.taskNotExistRadioButton.isChecked = true
             1 -> binding.taskNormalRadioButton.isChecked = true
@@ -425,7 +426,7 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setTeamRadioBtn(it: MyEvaluationDto) {
+    private fun setTeamRadioBtn(it: MyEvaluation) {
         if (it.team == 1) {
             binding.teamExistRadioButton.isChecked = true
         } else {
@@ -433,13 +434,13 @@ class WriteFragment : Fragment() {
         }
     }
 
-    private fun setDefaultSeekBarProgressValue(it: MyEvaluationDto) {
+    private fun setDefaultSeekBarProgressValue(it: MyEvaluation) {
         defaultHoneyProgress = (it.honey * 2).roundToInt()
         defaultLearningProgress = (it.learning * 2).roundToInt()
         defaultSatisfactionProgress = (it.satisfaction * 2).roundToInt()
     }
 
-    private fun setLectureProfessorName(it: MyEvaluationDto) {
+    private fun setLectureProfessorName(it: MyEvaluation) {
         lectureName = it.lectureName
         professorName = it.professor
     }

@@ -1,52 +1,86 @@
 package com.kunize.uswtimetable.ui.lecture_info
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.data.local.EvaluationData
-import com.kunize.uswtimetable.data.remote.DataDto
-import com.kunize.uswtimetable.data.remote.LectureDetailInfoDataDto
-import com.kunize.uswtimetable.repository.lecture_info.LectureInfoRepository
-import com.kunize.uswtimetable.ui.common.CommonRecyclerViewViewModel
-import com.kunize.uswtimetable.ui.common.HandlingErrorInterface
 import com.kunize.uswtimetable.ui.common.PageViewModel
-import com.kunize.uswtimetable.ui.common.ToastViewModel
 import com.kunize.uswtimetable.util.LAST_PAGE
+import com.suwiki.domain.model.EvaluationData
+import com.suwiki.domain.model.Result
+import com.suwiki.domain.repository.LectureInfoRepository
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
-import retrofit2.Response
+import javax.inject.Inject
 
-class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoRepository) : ViewModel(), HandlingErrorInterface {
+class LectureInfoViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val lectureInfoRepository: LectureInfoRepository,
+) : ViewModel() {
     val pageViewModel = PageViewModel()
-    val toastViewModel = ToastViewModel()
-    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
 
-    private val _writeBtnText = MutableLiveData<Int>()
-    val writeBtnText: LiveData<Int>
-        get() = _writeBtnText
+    //    val commonRecyclerViewViewModel = CommonRecyclerViewViewModel<EvaluationData>()
+//    val evaluationsState = CommonRecyclerViewState<EvaluationData>()
 
-    private val _written = MutableLiveData<Boolean>()
-    val written: LiveData<Boolean>
-        get() = _written
+//    private val _writeBtnText = MutableLiveData<Int>()
+//    val writeBtnText: LiveData<Int>
+//        get() = _writeBtnText
 
-    private val _showNoExamDataLayout = MutableLiveData<Boolean>()
-    val showNoExamDataLayout: LiveData<Boolean>
-        get() = _showNoExamDataLayout
+//    private val _written = MutableLiveData<Boolean>()
+//    val written: LiveData<Boolean>
+//        get() = _written
 
-    private val _showHideExamDataLayout = MutableLiveData<Boolean>()
-    val showHideExamDataLayout: LiveData<Boolean>
-        get() = _showHideExamDataLayout
+//    private val _showNoExamDataLayout = MutableLiveData<Boolean>()
+//    val showNoExamDataLayout: LiveData<Boolean>
+//        get() = _showNoExamDataLayout
 
-    private val _lectureDetailInfoData = MutableLiveData<LectureDetailInfoDataDto>()
-    val lectureDetailInfoData: LiveData<LectureDetailInfoDataDto>
-        get() = _lectureDetailInfoData
+//    private val _showHideExamDataLayout = MutableLiveData<Boolean>()
+//    val showHideExamDataLayout: LiveData<Boolean>
+//        get() = _showHideExamDataLayout
+
+//    private val _lectureDetailInfoData = MutableLiveData<LectureDetailInfo>()
+//    val lectureDetailInfoData: LiveData<LectureDetailInfo>
+//        get() = _lectureDetailInfoData
+
+    private lateinit var _lectureInfoState: MutableStateFlow<LectureInfoState>
+    val lectureInfoState: StateFlow<LectureInfoState>
+        get() = _lectureInfoState.asStateFlow()
+
+    val state: LectureInfoState
+        get() = lectureInfoState.value
 
     init {
-        _writeBtnText.value = R.string.write_evaluation
-        _showNoExamDataLayout.value = false
-        _showHideExamDataLayout.value = false
+//        _writeBtnText.value = R.string.write_evaluation
+//        _showNoExamDataLayout.value = false
+//        _showHideExamDataLayout.value = false
+    }
+
+    init {
+        viewModelScope.launch {
+            val lectureId: Long = savedStateHandle["lectureId"] ?: error("lectureId is null")
+            when (
+                val response =
+                    lectureInfoRepository.getLectureDetailInfo(lectureId)
+            ) {
+                is Result.Success -> {
+                    reduce {
+                        copy(lectureInfo = response.data, error = null)
+                    }
+                }
+
+                is Result.Failure -> {
+                    reduce {
+                        copy(error = response.error)
+                    }
+                }
+            }
+        }
+        fetchLectureList()
     }
 
     fun reportExam(lectureId: Long) {
@@ -61,77 +95,171 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
         }
     }
 
-
     fun lectureInfoRadioBtnClicked() {
         pageViewModel.resetPage()
-        _showHideExamDataLayout.value = false
-        _showNoExamDataLayout.value = false
-        changeWriteBtnText(R.string.write_evaluation)
-        commonRecyclerViewViewModel.loading()
+//        _showHideExamDataLayout.value = false
+//        _showNoExamDataLayout.value = false
+//        changeWriteBtnText(R.string.write_evaluation)
+//        commonRecyclerViewViewModel.loading()
+//        evaluationsState.loading = true
+        viewModelScope.launch {
+            reduce {
+                copy(
+                    showHideExamInfo = false,
+                    showNoExamInfo = false,
+                    writeButtonText = R.string.write_evaluation,
+                    written = true,
+                    evaluationsState = evaluationsState.apply {
+                        loading = true
+                    },
+                )
+            }
+        }
         getEvaluationList()
     }
 
     fun examInfoRadioBtnClicked() {
         pageViewModel.resetPage()
-        changeWriteBtnText(R.string.write_exam)
-        commonRecyclerViewViewModel.loading()
+//        changeWriteBtnText(R.string.write_exam)
+//        commonRecyclerViewViewModel.loading()
+//        evaluationsState.loading = true
         getExamList()
+        viewModelScope.launch {
+            reduce {
+                copy(
+                    writeButtonText = R.string.write_exam,
+                    written = true,
+                    evaluationsState = evaluationsState.apply {
+                        loading = true
+                    },
+                )
+            }
+        }
     }
 
     fun usePointBtnClicked() {
         viewModelScope.launch {
-            val response = lectureInfoRepository.buyExam(pageViewModel.lectureId)
-            if(response.isSuccessful) {
-                if(response.body() == "success") {
+            when (lectureInfoRepository.buyExam(pageViewModel.lectureId)) {
+                is Result.Success -> {
+                    reduce {
+                        copy(
+                            showHideExamInfo = false,
+                            evaluationsState = evaluationsState.apply { loading = true },
+                        )
+                    }
+//                    _showHideExamDataLayout.value = false
+                    pageViewModel.resetPage()
+//                    commonRecyclerViewViewModel.loading()
+//                    evaluationsState.loading = true
+                    getExamList()
+                }
+
+                is Result.Failure -> {}
+            }
+            /*if (response.isSuccessful) {
+                if (response.body() == "success") {
                     _showHideExamDataLayout.value = false
                     pageViewModel.resetPage()
                     commonRecyclerViewViewModel.loading()
                     getExamList()
                 }
-            } else handleError(response.code())
+            } else {
+//                handleError(response.code())
+            }*/
         }
     }
 
-    private fun changeWriteBtnText(resource: Int) {
+    /*private fun changeWriteBtnText(resource: Int) {
         _writeBtnText.value = resource
         _written.value = true
-    }
+    }*/
 
-    suspend fun fetchLectureIntegratedInfo(onSuccess: () -> Unit) {
+    /*suspend fun fetchLectureIntegratedInfo(onSuccess: () -> Unit) {
         val response = lectureInfoRepository.getLectureDetailInfo(pageViewModel.lectureId)
-        when {
+
+        when (response) {
+            is Result.Success -> {
+                _lectureDetailInfoData.value = response.data
+                onSuccess()
+            }
+
+            is Result.Failure -> {}
+        }
+        *//*when {
             response.isSuccessful -> {
                 response.body()?.data?.let { data ->
                     _lectureDetailInfoData.value = data
                     onSuccess()
                 }
             }
+
             else -> {
-                handleError(response.code())
+//                handleError(response.code())
             }
-        }
-    }
+        }*//*
+    }*/
 
     fun scrollBottomEvent() {
-        if (pageViewModel.page.value!! < 2)
+        if (pageViewModel.page.value!! < 2) {
             return
+        }
         fetchLectureList()
     }
 
     fun fetchLectureList() {
-        if(pageViewModel.page.value!! == LAST_PAGE)
+        if (pageViewModel.page.value!! == LAST_PAGE) {
             return
-        when (_writeBtnText.value) {
+        }
+        when (state.writeButtonText) {
             R.string.write_evaluation -> getEvaluationList()
             else -> getExamList()
         }
+        /*when (_writeBtnText.value) {
+            R.string.write_evaluation -> getEvaluationList()
+            else -> getExamList()
+        }*/
     }
 
     private fun getEvaluationList() {
         viewModelScope.launch {
             val response =
-                lectureInfoRepository.getLectureDetailEvaluation(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
-            if (response.isSuccessful) {
+                lectureInfoRepository.getLectureDetailEvaluation(
+                    pageViewModel.lectureId,
+                    pageViewModel.page.value!!.toInt(),
+                )
+            when (response) {
+                is Result.Success -> {
+//                    _written.value = response.data.written
+                    reduce {
+                        copy(
+                            written = response.data.written,
+                            evaluationsState = evaluationsState.apply { loading = false },
+                        )
+                    }
+//                    commonRecyclerViewViewModel.deleteLoading()
+//                    evaluationsState.loading = false
+                    val tmpEvaluationData = response.data.data
+                    if (tmpEvaluationData.isNotEmpty()) {
+                        pageViewModel.isLastData(tmpEvaluationData.toMutableList())
+//                        commonRecyclerViewViewModel.itemList.value!!.addAll(tmpEvaluationData)
+                        /*commonRecyclerViewViewModel.changeRecyclerViewData(
+                            commonRecyclerViewViewModel.itemList.value!!,
+                        )*/
+//                        evaluationsState.addItems(tmpEvaluationData)
+                        reduce {
+                            copy(
+                                evaluationsState = evaluationsState.apply {
+                                    addItems(tmpEvaluationData)
+                                },
+                            )
+                        }
+                    }
+                    pageViewModel.nextPage()
+                }
+
+                is Result.Failure -> reduce { copy(error = response.error) }
+            }
+            /*if (response.isSuccessful) {
                 _written.value = response.body()?.written
                 commonRecyclerViewViewModel.deleteLoading()
                 val tmpEvaluationData = response.body()?.convertToEvaluationData()
@@ -142,45 +270,66 @@ class LectureInfoViewModel(private val lectureInfoRepository: LectureInfoReposit
                 }
                 pageViewModel.nextPage()
             } else {
-                handleError(response.code())
-            }
+//                handleError(response.code())
+            }*/
         }
     }
 
     private fun getExamList() {
         viewModelScope.launch {
             val response =
-                lectureInfoRepository.getLectureDetailExam(pageViewModel.lectureId, pageViewModel.page.value!!.toInt())
-            if (response.isSuccessful) {
-                _written.value = response.body()?.written
-                val tmpResponse = response.body()
-                val tmpExamData = tmpResponse?.convertToEvaluationData()
-                commonRecyclerViewViewModel.deleteLoading()
-                if (tmpExamData != null) {
-                    pageViewModel.isLastData(tmpExamData)
-                    if (tmpExamData.isEmpty() && tmpResponse.examDataExist)
-                        _showHideExamDataLayout.value = true
-                    else if (!tmpResponse.examDataExist)
-                        _showNoExamDataLayout.value = true
-                    else {
-                        commonRecyclerViewViewModel.itemList.value!!.addAll(tmpExamData)
-                        commonRecyclerViewViewModel.changeRecyclerViewData(commonRecyclerViewViewModel.itemList.value!!)
+                lectureInfoRepository.getLectureDetailExam(
+                    pageViewModel.lectureId,
+                    pageViewModel.page.value ?: 1,
+                )
+            when (response) {
+                is Result.Success -> {
+                    val evaluationDatas: MutableList<EvaluationData?> =
+                        response.data.data.toMutableList()
+                    if (evaluationDatas.size == 10) {
+                        evaluationDatas.add(null)
+                    } else {
+                        pageViewModel._page.value = LAST_PAGE
+                    }
+                    if (evaluationDatas.isEmpty() && response.data.examDataExist) {
+                        reduce {
+                            copy(
+                                showHideExamInfo = true,
+                            )
+                        }
+                    } else if (!response.data.examDataExist) {
+                        reduce {
+                            copy(
+                                showNoExamInfo = true,
+                            )
+                        }
+                    } else {
+                        reduce {
+                            copy(
+                                written = response.data.written,
+                                evaluationsState = evaluationsState.apply {
+                                    loading = false
+                                    addItems(evaluationDatas)
+                                },
+                            )
+                        }
                         pageViewModel.nextPage()
                     }
                 }
-            } else {
-                handleError(response.code())
+
+                is Result.Failure -> reduce { copy(error = response.error) }
             }
         }
     }
 
-    override fun handleError(errorCode: Int) {
-        toastViewModel.toastMessage = when (errorCode) {
-            403 -> "권한이 없어요! 이용 제한 내역을 확인하거나 문의해주세요!"
-            400 -> "포인트가 부족해요!"
-            else -> "$errorCode 에러 발생!"
+    private suspend fun reduce(reducer: LectureInfoState.() -> LectureInfoState) {
+        withContext(SINGLE_THREAD) {
+            _lectureInfoState.value = reducer(state)
         }
-        toastViewModel.showToastMsg()
-        commonRecyclerViewViewModel.deleteLoading()
+    }
+
+    companion object {
+        @OptIn(DelicateCoroutinesApi::class)
+        private val SINGLE_THREAD = newSingleThreadContext("single thread")
     }
 }

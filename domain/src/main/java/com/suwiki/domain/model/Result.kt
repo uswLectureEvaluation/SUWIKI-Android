@@ -27,3 +27,13 @@ sealed class Result<out T> {
         return if (isSuccessful) Success(transform(getOrThrow())) else (this as Failure)
     }
 }
+
+fun <T> Result<T>.onSuccess(action: (T) -> Unit): Result<T> {
+    if (isSuccessful) action(this.getOrThrow())
+    return this
+}
+
+fun <T> Result<T>.onFailure(action: (SuwikiError) -> Unit): Result<T> {
+    if (isFailure) action(this.errorOrThrow())
+    return this
+}
