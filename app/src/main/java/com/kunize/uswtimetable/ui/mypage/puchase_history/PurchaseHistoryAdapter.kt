@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemRecyclerPurchaseBinding
-import com.kunize.uswtimetable.dataclass.PurchaseHistory
+import com.suwiki.domain.model.PurchaseHistory
 
 class PurchaseHistoryAdapter : ListAdapter<PurchaseHistory, PurchaseHistoryAdapter.ViewHolder>(
-    diffUtil
+    diffUtil,
 ) {
     inner class ViewHolder(private val binding: ItemRecyclerPurchaseBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,8 +24,8 @@ class PurchaseHistoryAdapter : ListAdapter<PurchaseHistory, PurchaseHistoryAdapt
             ItemRecyclerPurchaseBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
@@ -37,14 +37,14 @@ class PurchaseHistoryAdapter : ListAdapter<PurchaseHistory, PurchaseHistoryAdapt
         val diffUtil = object : DiffUtil.ItemCallback<PurchaseHistory>() {
             override fun areItemsTheSame(
                 oldItem: PurchaseHistory,
-                newItem: PurchaseHistory
+                newItem: PurchaseHistory,
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
                 oldItem: PurchaseHistory,
-                newItem: PurchaseHistory
+                newItem: PurchaseHistory,
             ): Boolean {
                 return oldItem == newItem
             }

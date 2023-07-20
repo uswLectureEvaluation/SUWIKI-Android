@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.data.local.Suspension
 import com.kunize.uswtimetable.databinding.ItemSuspensionHistoryBinding
 import com.kunize.uswtimetable.ui.common.dateTimeFormat
+import com.suwiki.domain.model.Suspension
 import java.time.Duration
 import java.time.LocalDateTime
 
@@ -27,6 +27,7 @@ class SuspensionHistoryAdapter :
                         parseExpiredAt(context, data.createdAt, data.expiredAt)
                     binding.tvRestrictions.text = data.judgement
                 }
+
                 is Suspension.Block -> {
                     binding.tvReason.text = data.reason
                     binding.tvSuspensionStartDate.text = parseCreatedAt(context, data.createdAt)
@@ -43,8 +44,8 @@ class SuspensionHistoryAdapter :
             ItemSuspensionHistoryBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
@@ -58,26 +59,26 @@ class SuspensionHistoryAdapter :
     private fun parseExpiredAt(
         context: Context,
         createdAt: LocalDateTime,
-        expiredAt: LocalDateTime
+        expiredAt: LocalDateTime,
     ) =
         context.resources.getString(
             R.string.suspension_expired_at,
             dateTimeFormat(expiredAt),
-            Duration.between(createdAt, expiredAt).toDays()
+            Duration.between(createdAt, expiredAt).toDays(),
         )
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Suspension>() {
             override fun areItemsTheSame(
                 oldItem: Suspension,
-                newItem: Suspension
+                newItem: Suspension,
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
                 oldItem: Suspension,
-                newItem: Suspension
+                newItem: Suspension,
             ): Boolean {
                 return oldItem == newItem
             }

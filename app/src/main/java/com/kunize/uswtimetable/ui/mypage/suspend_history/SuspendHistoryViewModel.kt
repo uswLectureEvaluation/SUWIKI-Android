@@ -3,11 +3,20 @@ package com.kunize.uswtimetable.ui.mypage.suspend_history
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.kunize.uswtimetable.data.local.Suspension
+import com.suwiki.domain.model.Result
+import com.suwiki.domain.model.Suspension
+import com.suwiki.domain.repository.SuspensionRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SuspendHistoryViewModel(private val repository: SuspensionRepository) : ViewModel() {
+@HiltViewModel
+class SuspendHistoryViewModel @Inject constructor(
+    private val repository: SuspensionRepository,
+) : ViewModel() {
     private lateinit var _history: LiveData<List<Suspension>>
     val suspendHistory: LiveData<List<Suspension>> get() = _history
 
@@ -17,7 +26,14 @@ class SuspendHistoryViewModel(private val repository: SuspensionRepository) : Vi
 
     private fun loadData() {
         viewModelScope.launch {
-            _history = repository.suspensionHistory.asLiveData()
+            _history = repository.getSuspensionHistory().asLiveData().switchMap {
+                liveData {
+                    when (it) {
+                        is Result.Success -> it.data
+                        is Result.Failure -> emptyList()
+                    }
+                }
+            }
             repository.getSuspensionHistory()
         }
     }

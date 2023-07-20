@@ -5,15 +5,16 @@ import com.kunize.uswtimetable.data.remote.OpenMajorList
 import com.kunize.uswtimetable.data.remote.OpenMajorVersion
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.Response
+import javax.inject.Inject
 
-class OpenMajorRepository(
-    private val remoteDataSource: OpenMajorRemoteDataSource
+class OpenMajorRepository @Inject constructor(
+    private val remoteDataSource: OpenMajorDataSource,
 ) {
-    suspend fun getOpenMajorVersion() : ApiResponse<OpenMajorVersion> {
+    suspend fun getOpenMajorVersion(): ApiResponse<OpenMajorVersion> {
         return remoteDataSource.getOpenMajorVersion()
     }
 
-    suspend fun getOpenMajorList() : ApiResponse<OpenMajorList> {
+    suspend fun getOpenMajorList(): ApiResponse<OpenMajorList> {
         return remoteDataSource.getOpenMajorList()
     }
 

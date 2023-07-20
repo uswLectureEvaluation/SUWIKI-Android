@@ -1,8 +1,6 @@
 package com.kunize.uswtimetable.ui.class_info.interceptionFilter.addTime.handleFilterResultStrategy.unknownFailFilterResult
 
-import android.widget.Toast
 import com.kunize.uswtimetable.util.strategy.FilterResultStrategy
-import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.showLongToast
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState
 import com.kunize.uswtimetable.util.interceptingFilter.UnknownFilterFailState

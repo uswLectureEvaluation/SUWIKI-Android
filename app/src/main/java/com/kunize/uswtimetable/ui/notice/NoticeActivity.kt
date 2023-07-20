@@ -6,7 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityNoticeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoticeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoticeBinding
     private lateinit var navController: NavController
@@ -17,7 +19,8 @@ class NoticeActivity : AppCompatActivity() {
         binding = ActivityNoticeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
         binding.toolbar.setNavigationOnClickListener {
@@ -39,5 +42,4 @@ class NoticeActivity : AppCompatActivity() {
             }
         }
     }
-
 }

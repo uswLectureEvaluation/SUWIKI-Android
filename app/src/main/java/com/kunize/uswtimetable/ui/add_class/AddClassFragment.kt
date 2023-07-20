@@ -2,7 +2,6 @@ package com.kunize.uswtimetable.ui.add_class
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.kunize.uswtimetable.data.local.TimeTableDatabase
 import com.kunize.uswtimetable.databinding.FragmentAddClassBinding
 import com.kunize.uswtimetable.ui.class_info.ClassInfoActivity
 import com.kunize.uswtimetable.util.FragmentType
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.onTextChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO

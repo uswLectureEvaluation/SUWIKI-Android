@@ -6,14 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.databinding.ItemNoticeBinding
-import com.kunize.uswtimetable.dataclass.NoticeDto
+import com.kunize.uswtimetable.util.extensions.onThrottleClick
+import com.suwiki.domain.model.SimpleNotice
 
-class NoticeAdapter(private val viewModel: NoticeViewModel) : ListAdapter<NoticeDto, NoticeAdapter.ViewHolder>(diffUtil) {
+class NoticeAdapter(private val onClick: (SimpleNotice) -> Unit) : // TODO ViewModel 제거
+    ListAdapter<SimpleNotice, NoticeAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemNoticeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(notice: NoticeDto) {
+        fun bind(notice: SimpleNotice) {
             binding.notice = notice
-            binding.viewmodel = viewModel
+//            binding.viewmodel = viewModel
+            binding.root.onThrottleClick { onClick(notice) }
             binding.executePendingBindings()
         }
     }
@@ -23,8 +26,8 @@ class NoticeAdapter(private val viewModel: NoticeViewModel) : ListAdapter<Notice
             ItemNoticeBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            )
+                false,
+            ),
         )
     }
 
@@ -33,13 +36,13 @@ class NoticeAdapter(private val viewModel: NoticeViewModel) : ListAdapter<Notice
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<NoticeDto>() {
-            override fun areItemsTheSame(oldItem: NoticeDto, newItem: NoticeDto): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<SimpleNotice>() {
+            override fun areItemsTheSame(oldItem: SimpleNotice, newItem: SimpleNotice): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: NoticeDto, newItem: NoticeDto): Boolean {
-                return oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: SimpleNotice, newItem: SimpleNotice): Boolean {
+                return oldItem == newItem
             }
         }
     }

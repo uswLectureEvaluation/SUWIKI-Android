@@ -8,7 +8,7 @@
 
         <variable
             name="data"
-            type="com.kunize.uswtimetable.data.remote.LectureMain" />
+            type="com.suwiki.domain.model.LectureMain" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -11,24 +11,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.FragmentSignUp1Binding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.util.Constants
 import com.kunize.uswtimetable.util.Constants.KEY_URL
 import com.kunize.uswtimetable.util.Constants.PRIVACY_POLICY_SITE
 import com.kunize.uswtimetable.util.Constants.TERMS_SITE
 import com.kunize.uswtimetable.util.extensions.afterTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 
+@AndroidEntryPoint
 class SignUpFragment1 : Fragment() {
     private var _binding: FragmentSignUp1Binding? = null
     val binding: FragmentSignUp1Binding get() = _binding!!
 
-    private val viewModel: SignUpViewModel by activityViewModels { ViewModelFactory() }
+    private val viewModel: SignUpViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up1, container, false)
 
@@ -56,7 +57,9 @@ class SignUpFragment1 : Fragment() {
         }
 
         viewModel.isIdUnique.observe(viewLifecycleOwner) { isUnique ->
-            if (isUnique == false && viewModel.errorMessage.value?.peekContent().isNullOrBlank().not()) {
+            if (isUnique == false && viewModel.errorMessage.value?.peekContent().isNullOrBlank()
+                    .not()
+            ) {
                 viewModel.setToastMessage(viewModel.errorMessage.value!!.peekContent())
             }
         }
@@ -65,7 +68,6 @@ class SignUpFragment1 : Fragment() {
     }
 
     private fun initViews() {
-
         with(binding) {
             etInputId.afterTextChanged {
                 viewModel.showCheckIdButton()
@@ -94,7 +96,7 @@ class SignUpFragment1 : Fragment() {
                     }
                     viewModel.setToastMessage("소문자와 숫자만 입력 가능합니다: $source")
                     source.dropLast(1)
-                }
+                },
             )
 
             // 패스워드: 알파벳, 숫자, 특정 특수 문자 입력 가능
@@ -107,15 +109,27 @@ class SignUpFragment1 : Fragment() {
                     }
                     viewModel.setToastMessage("입력할 수 없는 문자입니다: $source")
                     ""
-                }
+                },
             )
         }
         /* 이용 약관 링크 연결 */
         val link1 = Pattern.compile("이용약관")
         val link2 = Pattern.compile("개인정보처리방침")
         val mTransform = Linkify.TransformFilter { _, _ -> "" }
-        Linkify.addLinks(binding.tvTerms, link1, "suwiki://web_view?$KEY_URL=$TERMS_SITE", null, mTransform)
-        Linkify.addLinks(binding.tvTerms, link2, "suwiki://web_view?$KEY_URL=$PRIVACY_POLICY_SITE", null, mTransform)
+        Linkify.addLinks(
+            binding.tvTerms,
+            link1,
+            "suwiki://web_view?$KEY_URL=$TERMS_SITE",
+            null,
+            mTransform,
+        )
+        Linkify.addLinks(
+            binding.tvTerms,
+            link2,
+            "suwiki://web_view?$KEY_URL=$PRIVACY_POLICY_SITE",
+            null,
+            mTransform,
+        )
     }
 
     private fun dataChanged() {
@@ -123,7 +137,7 @@ class SignUpFragment1 : Fragment() {
             id = binding.etInputId.text.toString(),
             pw = binding.etInputPw.text.toString(),
             pwAgain = binding.etInputPwAgain.text.toString(),
-            term = binding.cbTerms.isChecked
+            term = binding.cbTerms.isChecked,
         )
     }
 

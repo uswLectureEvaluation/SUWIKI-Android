@@ -9,30 +9,30 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.kunize.uswtimetable.data.remote.LectureExamDto
 import com.kunize.uswtimetable.databinding.FragmentMyExamInfoBinding
-import com.kunize.uswtimetable.ui.common.User
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.lecture_info.LectureInfoFragmentDirections
-import com.kunize.uswtimetable.ui.mypage.mypost.Result
+import com.kunize.uswtimetable.ui.mypage.mypost.MyPostResult
 import com.kunize.uswtimetable.util.UserPoint
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
+import com.suwiki.domain.model.LectureExam
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class MyExamInfoFragment : Fragment() {
     private var _binding: FragmentMyExamInfoBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private val viewModel: MyExamInfoViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: MyExamInfoViewModel by viewModels()
 
     private lateinit var adapter: MyExamInfoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMyExamInfoBinding.inflate(inflater, container, false)
         return binding.root
@@ -54,10 +54,17 @@ class MyExamInfoFragment : Fragment() {
             }
         }
         viewLifecycleOwner.repeatOnStarted {
+            viewModel.isLoggedIn.collect {
+                if (!it) {
+                    // TODO 로그아웃 처리
+                }
+            }
+        }
+        viewLifecycleOwner.repeatOnStarted {
             viewModel.resultFlow.collect { result ->
-                if (result == Result.Fail) {
-                    if ((User.user?.value?.point ?: 0) < abs(UserPoint.DELETE_POST)) {
-                        this@MyExamInfoFragment.toast("포인트가 부족합니다")
+                if (result == MyPostResult.Fail) {
+                    if (viewModel.userInfo.value.point < abs(UserPoint.DELETE_POST)) {
+                        this@MyExamInfoFragment.toast("포인트가 부족합니다") // TODO 문자열 추출
                     } else {
                         this@MyExamInfoFragment.toast("삭제할 수 없습니다")
                     }
@@ -86,9 +93,9 @@ class MyExamInfoFragment : Fragment() {
         }
     }
 
-    private fun showAlertDialog(data: LectureExamDto) {
+    private fun showAlertDialog(data: LectureExam) {
         AlertDialog.Builder(requireContext())
-            .setMessage("시험정보를 삭제하면 30P를 잃게 됩니다.\n삭제하시겠습니까?")
+            .setMessage("시험정보를 삭제하면 30P를 잃게 됩니다.\n삭제하시겠습니까?") // TODO 문자열 추출
             .setNeutralButton("취소") { _, _ -> }
             .setPositiveButton("삭제") { _, _ ->
                 data.id?.let { id ->
@@ -98,13 +105,13 @@ class MyExamInfoFragment : Fragment() {
             .show()
     }
 
-    private fun gotoWriteFragment(data: LectureExamDto) {
-        data.id ?: return
+    private fun gotoWriteFragment(data: LectureExam) {
+        val id = data.id ?: return
         val action =
             LectureInfoFragmentDirections.actionGlobalWriteFragment(
-                lectureId = data.id,
+                lectureId = id,
                 myExamInfo = data,
-                isEvaluation = false
+                isEvaluation = false,
             )
         findNavController().navigate(action)
     }

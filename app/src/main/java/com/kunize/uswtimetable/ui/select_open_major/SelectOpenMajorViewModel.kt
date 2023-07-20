@@ -4,16 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.JsonObject
-import com.kunize.uswtimetable.data.remote.MajorType
-import com.kunize.uswtimetable.repository.open_major.OpenMajorRepository
 import com.kunize.uswtimetable.ui.common.Event
+import com.suwiki.domain.model.OpenMajor
+import com.suwiki.domain.repository.OpenMajorRepository
+import com.suwiki.domain.usecase.GetUserInfoUsecase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
+import javax.inject.Inject
 
-class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorRepository) : ViewModel() {
+@HiltViewModel
+class SelectOpenMajorViewModel @Inject constructor(
+    private val openMajorRepository: OpenMajorRepository,
+    userInfoUsecase: GetUserInfoUsecase,
+) : ViewModel() {
     private val _starClickEvent = MutableLiveData<Event<String>>()
     val starClickEvent: LiveData<Event<String>>
         get() = _starClickEvent
@@ -26,8 +34,18 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
     val showNoSearchResultText: LiveData<String>
         get() = _showNoSearchResultText
 
+    val isLoggedIn: StateFlow<Boolean> = userInfoUsecase.isLoggedIn()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            false,
+        )
+
+    lateinit var tempOpenMajorList: List<OpenMajor>
+
     init {
         _showNoSearchResultText.value = ""
+        viewModelScope.launch { tempOpenMajorList = openMajorRepository.getLocalOpenMajorList() }
     }
 
     suspend fun showNeedLoginLayout() = withContext(Main) {
@@ -48,7 +66,7 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
 
     suspend fun bookmarkMajor(majorName: String) {
         viewModelScope.launch {
-            openMajorRepository.bookmarkMajor(MajorType(majorName))
+            openMajorRepository.bookmarkMajor(majorName)
         }
     }
 
@@ -58,10 +76,6 @@ class SelectOpenMajorViewModel(private val openMajorRepository: OpenMajorReposit
         }
     }
 
-    suspend fun getBookmarkList(): List<String> {
-        var bookmarkList = listOf<String>()
-        val response = openMajorRepository.getBookmarkMajorList()
-        if (response.isSuccessful) bookmarkList = response.body()!!.data
-        return bookmarkList
-    }
+    suspend fun getBookmarkList(): List<String> =
+        openMajorRepository.getBookmarkMajorList().getOrNull() ?: emptyList()
 }

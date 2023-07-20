@@ -14,9 +14,10 @@ import kotlin.math.roundToInt
 object LectureInfoBindingAdapter {
     @BindingAdapter("yearSemesterList")
     @JvmStatic
-    fun setList(flexBox: FlexboxLayout, items: String?) {
-        if (items == null || flexBox.size != 0)
-            return
+    fun FlexboxLayout.setList(items: String?) {
+        val flexBox = this
+        if (items == null || flexBox.size != 0) return
+
         for (item in items.split(",")) {
             val textView = TextView(flexBox.context)
             textView.text = item.replace(" ", "")
@@ -25,7 +26,7 @@ object LectureInfoBindingAdapter {
             textView.setBackgroundResource(R.drawable.bg_rounded_gray_300_15)
             val lp = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.WRAP_CONTENT,
             )
             lp.setMargins(0, 8.dp, 8.dp, 0)
             textView.layoutParams = lp
@@ -43,7 +44,8 @@ object LectureInfoBindingAdapter {
 
     @BindingAdapter("lectureTeamAvg")
     @JvmStatic
-    fun setTeamText(textView: TextView, value: Number) {
+    fun TextView.setTeamText(value: Number) {
+        val textView = this
         val colorId: Int
         val textId: Int
         when (value.toFloat().roundToInt()) {
@@ -51,6 +53,7 @@ object LectureInfoBindingAdapter {
                 textId = R.string.not_exist
                 colorId = R.color.suwiki_blue_900
             }
+
             else -> {
                 textId = R.string.exist
                 colorId = R.color.suwiki_purple
@@ -70,10 +73,12 @@ object LectureInfoBindingAdapter {
                 textId = R.string.good
                 colorId = R.color.suwiki_blue_900
             }
+
             1 -> {
                 textId = R.string.normal
                 colorId = R.color.suwiki_black_900
             }
+
             else -> {
                 textId = R.string.picky
                 colorId = R.color.suwiki_purple
@@ -93,10 +98,12 @@ object LectureInfoBindingAdapter {
                 textId = R.string.not_exist
                 colorId = R.color.suwiki_blue_900
             }
+
             1 -> {
                 textId = R.string.normal
                 colorId = R.color.suwiki_black_900
             }
+
             else -> {
                 textId = R.string.many
                 colorId = R.color.suwiki_purple

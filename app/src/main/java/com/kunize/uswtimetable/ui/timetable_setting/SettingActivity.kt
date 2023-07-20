@@ -17,7 +17,7 @@ import com.kunize.uswtimetable.ui.home.timetable.UswTimeTable.Companion.CLASSNAM
 import com.kunize.uswtimetable.ui.home.timetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR
 import com.kunize.uswtimetable.ui.home.timetable.UswTimeTable.Companion.CLASSNAME_PROFESSOR_LOCATION
 import com.kunize.uswtimetable.databinding.ActivitySettingBinding
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import java.io.*
 
 

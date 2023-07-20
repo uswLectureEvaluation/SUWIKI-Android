@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.data.remote.LectureMain
 import com.kunize.uswtimetable.databinding.ItemRecyclerLectureListBinding
 import com.kunize.uswtimetable.databinding.ItemRecyclerProgressBinding
 import com.kunize.uswtimetable.databinding.ItemRecyclerSeeMoreFooterBinding
 import com.kunize.uswtimetable.util.LectureItemViewType
+import com.suwiki.domain.model.LectureMain
 
-class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var evaluationListData = mutableListOf<LectureMain?>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -20,23 +21,25 @@ class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerV
                 val binding = ItemRecyclerLectureListBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 LectureSearchHolder(binding)
             }
+
             LectureItemViewType.FOOTER -> {
                 val binding = ItemRecyclerSeeMoreFooterBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 FooterHolder(binding)
             }
+
             else -> {
                 val binding = ItemRecyclerProgressBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 LoadingHolder(binding)
             }
@@ -44,7 +47,7 @@ class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerV
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position == evaluationListData.size) {
+        if (position == evaluationListData.size) {
             return LectureItemViewType.FOOTER
         }
         evaluationListData[position]?.let {
@@ -54,9 +57,9 @@ class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(position == evaluationListData.size)
+        if (position == evaluationListData.size) {
             (holder as FooterHolder).setData()
-        else {
+        } else {
             val data = evaluationListData[position]
             data?.let {
                 (holder as LectureSearchHolder).setData(data)
@@ -71,19 +74,19 @@ class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerV
 
     inner class FooterHolder(private val binding: ItemRecyclerSeeMoreFooterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun setData() {
-                itemView.setOnClickListener {
-                    onItemClicked(LectureItemViewType.FOOTER.toLong())
-                }
+        fun setData() {
+            itemView.setOnClickListener {
+                onItemClicked(LectureItemViewType.FOOTER.toLong())
             }
         }
+    }
 
     inner class LectureSearchHolder(private val binding: ItemRecyclerLectureListBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun setData(data: LectureMain) {
             with(binding) {
                 this.data = data
-                    tvDetail.setOnClickListener {
+                tvDetail.setOnClickListener {
                     if (clDetail.isVisible) {
                         tvDetail.setText(R.string.see_detail)
                         clDetail.visibility = View.GONE
@@ -93,10 +96,11 @@ class EvaluationFooterAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerV
                     }
                 }
                 val pos = adapterPosition
-                if(pos!=RecyclerView.NO_POSITION)
-                    itemView.setOnClickListener{
+                if (pos != RecyclerView.NO_POSITION) {
+                    itemView.setOnClickListener {
                         onItemClicked(data.id)
                     }
+                }
                 executePendingBindings()
             }
         }

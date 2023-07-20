@@ -4,10 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View" />
-        <variable
-            name="viewModel"
-            type="com.kunize.uswtimetable.ui.notice.NoticeViewModel" />
     </data>
 
     <FrameLayout
@@ -16,11 +12,11 @@
         tools:context=".ui.notice.NoticeListFragment">
 
         <TextView
+            android:id="@+id/tv_empty_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/notice_not_exists"
             android:layout_gravity="center_horizontal"
-            android:visibility="@{viewModel.items.empty?View.VISIBLE: View.INVISIBLE}"
             android:layout_marginTop="67dp" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -36,7 +32,6 @@
             android:id="@+id/progress_loading"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
-            visibility="@{viewModel.loading?View.VISIBLE:View.GONE}"
             android:layout_height="wrap_content" />
 
     </FrameLayout>

@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.kunize.uswtimetable.data.remote.LectureExamDto" />
+            type="com.suwiki.domain.model.LectureExam" />
 
         <variable
             name="viewmodel"

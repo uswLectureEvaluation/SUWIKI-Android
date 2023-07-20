@@ -11,7 +11,7 @@ import android.widget.RemoteViews
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.ui.home.timetable.BitmapConverter.stringToBitmap
 import com.kunize.uswtimetable.ui.start.StartActivity
-import com.kunize.uswtimetable.util.SuwikiApplication
+import com.kunize.uswtimetable.SuwikiApplication
 import java.lang.Exception
 
 /**

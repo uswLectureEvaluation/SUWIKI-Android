@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.data.remote.LectureMain
 import com.kunize.uswtimetable.databinding.ItemRecyclerLectureListBinding
 import com.kunize.uswtimetable.databinding.ItemRecyclerProgressBinding
 import com.kunize.uswtimetable.util.LectureItemViewType
+import com.suwiki.domain.model.LectureMain
 
 class SearchResultAdapter(val onItemClicked: (id: Long) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -20,15 +20,16 @@ class SearchResultAdapter(val onItemClicked: (id: Long) -> Unit) :
                 val binding = ItemRecyclerLectureListBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 LectureSearchHolder(binding)
             }
+
             else -> {
                 val binding = ItemRecyclerProgressBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 LoadingHolder(binding)
             }
@@ -69,10 +70,11 @@ class SearchResultAdapter(val onItemClicked: (id: Long) -> Unit) :
                     }
                 }
                 val pos = adapterPosition
-                if (pos != RecyclerView.NO_POSITION)
+                if (pos != RecyclerView.NO_POSITION) {
                     itemView.setOnClickListener {
                         onItemClicked(data.id)
                     }
+                }
                 executePendingBindings()
             }
         }

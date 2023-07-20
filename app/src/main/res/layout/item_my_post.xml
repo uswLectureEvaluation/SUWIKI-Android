@@ -8,7 +8,7 @@
 
         <variable
             name="data"
-            type="com.kunize.uswtimetable.dataclass.MyEvaluationDto" />
+            type="com.suwiki.domain.model.MyEvaluation" />
 
         <variable
             name="type"

@@ -6,9 +6,6 @@
         <variable
             name="searchText"
             type="String" />
-        <variable
-            name="isLoggedIn"
-            type="Boolean" />
 
         <variable
             name="viewModel"
@@ -36,7 +33,7 @@
             android:button="@android:color/transparent"
             android:onClick="@{() -> viewModel.starClick(data.title)}"
             android:checked="@{data.checked}"
-            bookmark_enabled="@{isLoggedIn}"/>
+            bookmark_enabled="@{viewModel.isLoggedIn}"/>
 
         <TextView
             android:id="@+id/tv_title"

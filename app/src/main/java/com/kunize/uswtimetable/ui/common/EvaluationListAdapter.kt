@@ -6,35 +6,41 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kunize.uswtimetable.R
-import com.kunize.uswtimetable.databinding.*
-import com.kunize.uswtimetable.data.local.EvaluationData
+import com.kunize.uswtimetable.databinding.ItemRecyclerExamDetailBinding
+import com.kunize.uswtimetable.databinding.ItemRecyclerLectureDetailBinding
+import com.kunize.uswtimetable.databinding.ItemRecyclerLectureSearchBinding
+import com.kunize.uswtimetable.databinding.ItemRecyclerProgressBinding
 import com.kunize.uswtimetable.util.LectureItemViewType
+import com.suwiki.domain.model.EvaluationData
 
-class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var evaluationListData = mutableListOf<EvaluationData?>()
+class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var evaluationListData = listOf<EvaluationData?>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             LectureItemViewType.LECTURE -> {
                 val binding = ItemRecyclerLectureDetailBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 LectureInfoHolder(binding)
             }
+
             LectureItemViewType.EXAM -> {
                 val binding = ItemRecyclerExamDetailBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 ExamInfoHolder(binding)
             }
+
             else -> {
                 val binding = ItemRecyclerProgressBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
-                    false
+                    false,
                 )
                 LoadingHolder(binding)
             }
@@ -51,12 +57,15 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = evaluationListData[position]
         data?.let {
-            if (holder is LectureInfoHolder)
+            if (holder is LectureInfoHolder) {
                 holder.setData(data)
-            if (holder is LectureSearchHolder)
+            }
+            if (holder is LectureSearchHolder) {
                 holder.setData(data)
-            if (holder is ExamInfoHolder)
+            }
+            if (holder is ExamInfoHolder) {
                 holder.setData(data)
+            }
         }
     }
 
@@ -66,11 +75,11 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
         RecyclerView.ViewHolder(binding.root)
 
     inner class LectureSearchHolder(private val binding: ItemRecyclerLectureSearchBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun setData(data: EvaluationData) {
             with(binding) {
                 evaluationData = data
-                    averageSeeDetail.seeDetail.setOnClickListener {
+                averageSeeDetail.seeDetail.setOnClickListener {
                     if (scores.layout.isVisible) {
                         averageSeeDetail.seeDetail.setText(R.string.see_detail)
                         scores.layout.visibility = View.GONE
@@ -80,10 +89,11 @@ class EvaluationListAdapter(val onItemClicked: (id: Long) -> Unit) : RecyclerVie
                     }
                 }
                 val pos = adapterPosition
-                if(pos!=RecyclerView.NO_POSITION)
-                    itemView.setOnClickListener{
+                if (pos != RecyclerView.NO_POSITION) {
+                    itemView.setOnClickListener {
                         onItemClicked(data.lectureId)
                     }
+                }
                 executePendingBindings()
             }
         }

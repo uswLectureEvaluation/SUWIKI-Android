@@ -1,8 +1,5 @@
 package com.kunize.uswtimetable.ui.class_info.interceptionFilter.initELearning.handleFilterResultStrategy
 
-import android.widget.Toast
-import com.kunize.uswtimetable.ui.class_info.interceptionFilter.initELearning.filter.IsELearningState
-import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.showLongToast
 import com.kunize.uswtimetable.util.strategy.FilterResultStrategy
 import com.kunize.uswtimetable.util.interceptingFilter.FilterState

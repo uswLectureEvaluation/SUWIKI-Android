@@ -1,8 +1,8 @@
 package com.kunize.uswtimetable.ui.search_result
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,21 +17,32 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.kunize.uswtimetable.NavGraphDirections
 import com.kunize.uswtimetable.R
+import com.kunize.uswtimetable.SuwikiApplication
 import com.kunize.uswtimetable.databinding.FragmentSearchResultBinding
 import com.kunize.uswtimetable.ui.common.EventObserver
-import com.kunize.uswtimetable.ui.common.User
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
+import com.kunize.uswtimetable.ui.evaluation.EvaluationFooterAdapter
 import com.kunize.uswtimetable.ui.login.LoginActivity
 import com.kunize.uswtimetable.util.FragmentType
 import com.kunize.uswtimetable.util.TextLength.MIN_SEARCH_TEXT_LENGTH
-import com.kunize.uswtimetable.util.SuwikiApplication
 import com.kunize.uswtimetable.util.extensions.infiniteScrolls
+import com.mangbaam.presentation.extension.startActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchResultFragment : Fragment() {
 
-    lateinit var binding: FragmentSearchResultBinding
-    private lateinit var searchResultAdapter: SearchResultAdapter
-    private val searchResultViewModel: SearchResultViewModel by viewModels { ViewModelFactory() }
+    private var _binding: FragmentSearchResultBinding? = null
+    private val binding = _binding ?: error("binding is null")
+
+    private val searchResultAdapter = SearchResultAdapter { id ->
+        if (searchResultViewModel.isLoggedIn.value) {
+            val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
+            findNavController().navigate(action)
+        } else {
+            startActivity<LoginActivity>()
+        }
+    }
+    private val searchResultViewModel: SearchResultViewModel by viewModels()
     private val args: SearchResultFragmentArgs by navArgs()
     private var sortDialog: SortDialog? = null
 
@@ -39,30 +50,27 @@ class SearchResultFragment : Fragment() {
         super.onCreate(savedInstanceState)
         searchResultViewModel.initType()
         searchResultViewModel.majorType = SuwikiApplication.prefs.getString("openMajorSel", "전체")
-        if (args.searchLectureName.isBlank())
+        if (args.searchLectureName.isBlank()) {
             searchResultViewModel.changeType(args.sortType)
-        else
+        } else {
             searchResultViewModel.search(args.searchLectureName)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_search_result, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.viewModel = searchResultViewModel
         binding.lifecycleOwner = this
-
-        searchResultAdapter = SearchResultAdapter { id ->
-            if (User.isLoggedIn.value == true) {
-                val action = NavGraphDirections.actionGlobalLectureInfoFragment(lectureId = id)
-                findNavController().navigate(action)
-            } else {
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
-            }
-        }
 
         binding.tvSelectedOpenMajor.text = searchResultViewModel.majorType
         binding.clOpenMajor.setOnClickListener {
@@ -70,7 +78,7 @@ class SearchResultFragment : Fragment() {
                 SearchResultFragmentDirections.globalOpenMajor(
                     FragmentType.SEARCH_RESULT,
                     searchResultViewModel.searchValue,
-                    searchResultViewModel.spinnerTextList.indexOf(searchResultViewModel.sortText.value)
+                    searchResultViewModel.spinnerTextList.indexOf(searchResultViewModel.sortText.value),
                 )
             findNavController().navigate(action)
         }
@@ -85,7 +93,7 @@ class SearchResultFragment : Fragment() {
             sortDialog = SortDialog(
                 context as AppCompatActivity,
                 searchResultViewModel,
-                searchResultViewModel.spinnerTextList
+                searchResultViewModel.spinnerTextList,
             )
             sortDialog?.show()
         }
@@ -94,7 +102,7 @@ class SearchResultFragment : Fragment() {
             viewLifecycleOwner,
             EventObserver {
                 sortDialog?.dismiss()
-            }
+            },
         )
 
         binding.ivClose.setOnClickListener {
@@ -129,12 +137,35 @@ class SearchResultFragment : Fragment() {
                 Toast.makeText(
                     requireContext(),
                     searchResultViewModel.toastViewModel.toastMessage,
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
-            }
+            },
         )
 
-        return binding.root
+        searchResultViewModel.commonRecyclerViewViewModel.itemList.observe(viewLifecycleOwner) {
+            val recyclerView = binding.recyclerSearchResult
+            val items = it
+            if (recyclerView.adapter == null) {
+                recyclerView.adapter = EvaluationFooterAdapter { }
+            }
+            val evaluationAdapter = recyclerView.adapter as SearchResultAdapter
+
+            val prevItemSize = evaluationAdapter.evaluationListData.size
+            val newItemSize = items.size
+
+            Log.d("Scroll", "$prevItemSize $newItemSize")
+            evaluationAdapter.evaluationListData = items.toMutableList()
+            // api를 호출했을 때 불러올 수 있는 데이터 개수의 최대값이 11이므로 만약 newItemSize의 크기가 11보다 크다면 데이터가 추가되었음을 의미
+            when {
+                newItemSize == prevItemSize -> evaluationAdapter.notifyDataSetChanged()
+                newItemSize > 11 -> evaluationAdapter.notifyItemRangeInserted(
+                    prevItemSize + 1,
+                    newItemSize - prevItemSize + 1,
+                )
+
+                else -> evaluationAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun isSearchTextLengthNotEnough(): Boolean {
@@ -143,5 +174,10 @@ class SearchResultFragment : Fragment() {
             return true
         }
         return false
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

@@ -1,26 +1,22 @@
 package com.kunize.uswtimetable.ui.login
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.kunize.uswtimetable.databinding.ActivityLoginBinding
-import com.kunize.uswtimetable.ui.common.User
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.mypage.find_id.FindIdActivity
 import com.kunize.uswtimetable.ui.mypage.find_password.FindPasswordActivity
 import com.kunize.uswtimetable.ui.signup.SignUpActivity
-import com.kunize.uswtimetable.util.Constants.TAG
-import com.kunize.uswtimetable.util.PreferenceManager
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
+import com.mangbaam.presentation.extension.startActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val loginViewModel: LoginViewModel by viewModels { ViewModelFactory() }
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +28,12 @@ class LoginActivity : AppCompatActivity() {
 
         binding.vm = loginViewModel
 
-        User.isLoggedIn.observe(this) {
-            if (it) finish()
+        repeatOnStarted {
+            loginViewModel.loggedIn.collect {
+                if (it) {
+                    finish()
+                }
+            }
         }
 
         loginViewModel.loginFormState.observe(this@LoginActivity) {
@@ -51,67 +51,41 @@ class LoginActivity : AppCompatActivity() {
 
             when (loginResult) {
                 LoginState.REQUIRE_AUTH -> {
-                    toast("이메일 인증을 받지 않은 사용자입니다.")
+                    toast("이메일 인증을 받지 않은 사용자입니다.") // TODO 문자열 추출
                 }
+
                 LoginState.FAIL -> {
                     toast("로그인 실패")
                 }
+
                 LoginState.SUCCESS -> {
                     toast("로그인 성공!")
                     setResult(Activity.RESULT_OK)
                     finish()
                 }
+
                 else -> toast("LoginActivity 에러 : $loginResult")
             }
         }
 
         repeatOnStarted {
-            loginViewModel.eventFlow.collect { event -> handleEvent(this@LoginActivity, event) }
+            loginViewModel.eventFlow.collect(::handleEvent)
         }
 
-        initViews(this)
+        initViews()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (User.isLoggedIn.value == true) {
-            toast("이미 로그인되어 있습니다")
-            finish()
-        }
-    }
-
-    private fun initViews(context: Context) {
-        with(binding) {
-            try {
-                cbRememberLogin.isChecked = PreferenceManager.getBoolean(context, REMEMBER_LOGIN)
-            } catch (e: ClassCastException) {
-                Log.d(TAG, "LoginActivity - \"로그인 유지\" 값이 저장되지 않음: $e")
-                cbRememberLogin.isChecked = true
+    private fun initViews() {
+        repeatOnStarted {
+            loginViewModel.rememberLogin.collect {
+                binding.cbRememberLogin.isChecked = it
             }
         }
     }
 
-    private fun handleEvent(context: Context, event: LoginViewModel.Event) = when (event) {
-        is LoginViewModel.Event.CheckRemember -> PreferenceManager.setBoolean(
-            context,
-            REMEMBER_LOGIN,
-            event.checked
-        )
-        is LoginViewModel.Event.FindId -> startActivity(Intent(context, FindIdActivity::class.java))
-        is LoginViewModel.Event.FindPw -> startActivity(
-            Intent(
-                context,
-                FindPasswordActivity::class.java
-            )
-        )
-        is LoginViewModel.Event.SignUp -> {
-            startActivity(Intent(context, SignUpActivity::class.java))
-            finish()
-        }
-    }
-
-    companion object {
-        const val REMEMBER_LOGIN = "rememberLogin"
+    private fun handleEvent(event: LoginViewModel.Event) = when (event) {
+        is LoginViewModel.Event.FindId -> startActivity<FindIdActivity> {}
+        is LoginViewModel.Event.FindPw -> startActivity<FindPasswordActivity> {}
+        is LoginViewModel.Event.SignUp -> startActivity<SignUpActivity>(true) {}
     }
 }

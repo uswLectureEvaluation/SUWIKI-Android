@@ -8,15 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityQuitBinding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.main.MainActivity
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
 import com.kunize.uswtimetable.util.extensions.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class QuitActivity : AppCompatActivity() {
     private lateinit var binding: ActivityQuitBinding
 
-    private val viewModel: QuitViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: QuitViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

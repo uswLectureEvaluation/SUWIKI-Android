@@ -96,3 +96,7 @@
     public static int d(...);
     public static int e(...);
 }
+
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**

@@ -9,7 +9,9 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -24,10 +26,11 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.bottomNav, navController)
         binding.bottomNav.setOnItemReselectedListener { }
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.navigation_home || destination.id == R.id.navigation_evaluation || destination.id == R.id.navigation_my_page)
+            if (destination.id == R.id.navigation_home || destination.id == R.id.navigation_evaluation || destination.id == R.id.navigation_my_page) {
                 binding.bottomNav.visibility = View.VISIBLE
-            else
+            } else {
                 binding.bottomNav.visibility = View.GONE
+            }
         }
 
         initAdView()

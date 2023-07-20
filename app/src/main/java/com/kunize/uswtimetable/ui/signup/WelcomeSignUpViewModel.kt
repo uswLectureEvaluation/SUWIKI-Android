@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunize.uswtimetable.ui.common.Event
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class WelcomeSignUpViewModel: ViewModel() {
+@HiltViewModel
+class WelcomeSignUpViewModel @Inject constructor() : ViewModel() {
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> get() = _email
 
@@ -22,6 +25,7 @@ class WelcomeSignUpViewModel: ViewModel() {
     fun onClickCheckMail() {
         _eventCheckEmailClicked.value = Event(true)
     }
+
     fun onClickLogin() {
         _eventLoginClicked.value = Event(true)
     }

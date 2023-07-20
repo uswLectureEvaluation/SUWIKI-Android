@@ -1,8 +1,8 @@
 package com.kunize.uswtimetable.ui.mypage.mypost.examinfo
 
-import com.kunize.uswtimetable.data.remote.LectureExamDto
+import com.suwiki.domain.model.LectureExam
 
 sealed class Event {
-    data class EditEvent(val examInfo: LectureExamDto) : Event()
-    data class DeleteEvent(val examInfo: LectureExamDto) : Event()
+    data class EditEvent(val examInfo: LectureExam) : Event()
+    data class DeleteEvent(val examInfo: LectureExam) : Event()
 }

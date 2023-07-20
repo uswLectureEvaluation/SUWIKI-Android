@@ -8,14 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityFindIdBinding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindIdActivity : AppCompatActivity() {
     private var _binding: ActivityFindIdBinding? = null
     val binding get() = _binding!!
 
-    private val viewModel: FindIdViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: FindIdViewModel by viewModels()
     private var toast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

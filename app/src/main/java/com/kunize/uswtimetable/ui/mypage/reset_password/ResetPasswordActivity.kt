@@ -10,19 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.kunize.uswtimetable.R
 import com.kunize.uswtimetable.databinding.ActivityResetPasswordBinding
-import com.kunize.uswtimetable.ui.common.ViewModelFactory
 import com.kunize.uswtimetable.ui.mypage.find_password.FindPasswordActivity
 import com.kunize.uswtimetable.util.Constants.TAG
-import com.kunize.uswtimetable.util.Result
 import com.kunize.uswtimetable.util.extensions.repeatOnStarted
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ResetPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResetPasswordBinding
-    private val viewModel: ResetPasswordViewModel by viewModels { ViewModelFactory() }
+    private val viewModel: ResetPasswordViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,17 +33,20 @@ class ResetPasswordActivity : AppCompatActivity() {
 
         viewModel.result.observe(this) { result ->
             when (result) {
-                is Result.Success -> {
+                true -> {
                     CoroutineScope(Dispatchers.Main).launch {
-                        Toast.makeText(this@ResetPasswordActivity, "성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@ResetPasswordActivity,
+                            "성공적으로 변경되었습니다.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                         delay(1500)
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
                 }
-                is Result.Error -> {
-                    Log.d(TAG, "ResetPasswordActivity - reset PW Failed! : ${result.exception.message}")
-                }
+
+                false -> Log.d(TAG, "ResetPasswordActivity - reset PW Failed!")
             }
         }
 
@@ -62,6 +65,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                 val intent = Intent(this@ResetPasswordActivity, FindPasswordActivity::class.java)
                 startActivity(intent)
             }
+
             is Event.NavigateBackEvent -> this@ResetPasswordActivity.finish()
         }
     }
