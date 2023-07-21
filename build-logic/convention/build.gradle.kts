@@ -25,21 +25,25 @@ gradlePlugin {
             id = "suwiki.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
-//        register("androidLibrary") {
-//            id = "pluu.android.library"
-//            implementationClass = "AndroidLibraryConventionPlugin"
-//        }
-//        register("androidLibraryCompose") {
-//            id = "pluu.android.library.compose"
-//            implementationClass = "AndroidLibraryComposeConventionPlugin"
-//        }
-//        register("androidHilt") {
-//            id = "pluu.android.hilt"
-//            implementationClass = "AndroidHiltConventionPlugin"
-//        }
-//        register("javaLibrary") {
-//            id = "pluu.java.library"
-//            implementationClass = "JavaLibraryConventionPlugin"
-//        }
+        register("androidLibrary") {
+            id = "suwiki.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidLibraryCompose") {
+            id = "suwiki.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+        register("androidHilt") {
+            id = "suwiki.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("javaLibrary") {
+            id = "suwiki.java.library"
+            implementationClass = "JavaLibraryConventionPlugin"
+        }
+        register("featureCompose") {
+            id = "suwiki.android.feature.compose"
+            implementationClass = "FeatureComposeConventionPlugin"
+        }
     }
 }
