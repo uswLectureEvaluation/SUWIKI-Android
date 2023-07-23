@@ -6,7 +6,7 @@ import com.suwiki.data.network.toResult
 import com.suwiki.domain.model.Result
 import javax.inject.Inject
 
-class EvaluationRemoteDataSource @Inject constructor(
+class EvaluationRemoteDataSourceImpl @Inject constructor(
     private val apiService: ApiService,
 ) : EvaluationDataSource {
 

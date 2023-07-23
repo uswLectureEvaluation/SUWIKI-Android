@@ -3,7 +3,7 @@ package com.kunize.uswtimetable.di
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
 import com.suwiki.data.datasource.EvaluationDataSource
-import com.suwiki.data.datasource.EvaluationRemoteDataSource
+import com.suwiki.data.datasource.EvaluationRemoteDataSourceImpl
 import com.suwiki.data.datasource.LoginDataSource
 import com.suwiki.data.datasource.MyPostDataSource
 import com.suwiki.data.datasource.MyPostRemoteDataSource
@@ -153,7 +153,7 @@ object RepositoryModule {
     fun provideEvaluationRemoteDataSource(
         @AuthApiService apiService: ApiService,
     ): EvaluationDataSource {
-        return EvaluationRemoteDataSource(apiService)
+        return EvaluationRemoteDataSourceImpl(apiService)
     }
 
     @Provides

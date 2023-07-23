@@ -102,6 +102,7 @@ encrypted-datastore-preference-security = { group = "tech.thdev", name = "useful
 
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
@@ -127,3 +128,5 @@ androidx-compose = [
     "androidx-activity-compose",
     "androidx-lifecycle-viewmodel-compose"
 ]
+
+firebase = ["firebase-analytics", "firebase-database"]
