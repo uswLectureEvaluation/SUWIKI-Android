@@ -1,4 +1,4 @@
-package com.onewx2m.remote
+package com.suwiki.remote
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

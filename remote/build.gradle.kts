@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.onewx2m.remote"
+    namespace = "com.suwiki.remote"
 }
 
 dependencies {

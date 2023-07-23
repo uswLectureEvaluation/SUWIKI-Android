@@ -1,4 +1,4 @@
-package com.onewx2m.remote
+package com.suwiki.remote
 
 import org.junit.Test
 
