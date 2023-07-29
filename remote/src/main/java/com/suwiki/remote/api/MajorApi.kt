@@ -1,7 +1,5 @@
 package com.suwiki.remote.api
 
-import com.suwiki.data.network.ApiService
-import com.suwiki.data.network.dto.OpenMajorListDto
 import com.suwiki.remote.ApiResult
 import com.suwiki.remote.api.UserApi.Companion.USER
 import com.suwiki.remote.request.BookmarkMajorRequest
