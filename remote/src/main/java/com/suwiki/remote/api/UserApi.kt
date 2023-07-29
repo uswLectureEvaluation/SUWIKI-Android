@@ -15,7 +15,6 @@ import com.suwiki.remote.response.SuccessCheckResponse
 import com.suwiki.remote.response.SuspensionHistoryResponse
 import com.suwiki.remote.response.TokenResponse
 import com.suwiki.remote.response.UserResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -59,7 +58,7 @@ interface UserApi {
 
     // Refresh Token
     @POST("$USER/refresh")
-    fun requestRefresh(@Header(AUTH_HEADER) refresh: String): Call<TokenResponse>
+    fun requestRefresh(@Header(AUTH_HEADER) refresh: String): ApiResult<TokenResponse>
 
     // 회원탈퇴 요청 API
     @POST("$USER/quit")
@@ -67,7 +66,7 @@ interface UserApi {
 
     // 내 정보 페이지 호출 API
     @GET("$USER/my-page")
-    suspend fun getUserData(): Response<UserResponse>
+    suspend fun getUserData(): ApiResult<UserResponse>
 
     // 이용제한 내역 조회
     @GET("$USER/restricted-reason")

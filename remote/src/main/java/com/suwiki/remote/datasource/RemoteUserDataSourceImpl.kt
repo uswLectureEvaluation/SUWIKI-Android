@@ -6,7 +6,15 @@ import com.suwiki.model.Suspension
 import com.suwiki.model.Token
 import com.suwiki.model.User
 import com.suwiki.remote.api.UserApi
+import com.suwiki.remote.request.CheckEmailRequest
+import com.suwiki.remote.request.CheckIdRequest
+import com.suwiki.remote.request.FindIdRequest
+import com.suwiki.remote.request.FindPasswordRequest
+import com.suwiki.remote.request.LoginRequest
+import com.suwiki.remote.request.QuitRequest
+import com.suwiki.remote.request.ResetPasswordRequest
 import com.suwiki.remote.request.SignupRequest
+import com.suwiki.remote.response.toModel
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 
@@ -26,49 +34,68 @@ class RemoteUserDataSourceImpl @Inject constructor(
     }
 
     override suspend fun checkId(loginId: String): Result<Boolean> {
-        TODO("Not yet implemented")
+        return userApi.checkId(CheckIdRequest(loginId)).toResult().map {
+            it.overlap
+        }
     }
 
     override suspend fun checkEmail(email: String): Result<Boolean> {
-        TODO("Not yet implemented")
+        return userApi.checkEmail(CheckEmailRequest(email)).toResult().map { it.overlap }
     }
 
     override suspend fun findId(email: String): Result<Boolean> {
-        TODO("Not yet implemented")
+        return userApi.findId(FindIdRequest(email)).toResult().map { it.success }
     }
 
     override suspend fun findPassword(loginId: String, email: String): Result<Boolean> {
-        TODO("Not yet implemented")
+        return userApi.findPassword(
+            FindPasswordRequest(loginId, email),
+        ).toResult().map { it.success }
     }
 
     override suspend fun resetPassword(
         currentPassword: String,
         newPassword: String,
     ): Result<Boolean> {
-        TODO("Not yet implemented")
+        return userApi.resetPassword(
+            ResetPasswordRequest(
+                currentPassword = currentPassword,
+                newPassword = newPassword,
+            ),
+        ).toResult().map { it.success }
     }
 
     override suspend fun login(loginId: String, password: String): Result<Token> {
-        TODO("Not yet implemented")
+        return userApi.login(
+            LoginRequest(
+                loginId = loginId,
+                password = password,
+            ),
+        ).toResult().map { it.toModel() }
     }
 
     override fun requestRefresh(refresh: String): Result<Token> {
-        TODO("Not yet implemented")
+        return userApi.requestRefresh(refresh).toResult().map { it.toModel() }
     }
 
     override suspend fun quit(id: String, password: String): Result<Boolean> {
-        TODO("Not yet implemented")
+        return userApi.quit(
+            QuitRequest(
+                id = id,
+                password = password,
+            ),
+        ).toResult().map { it.success }
     }
 
     override suspend fun getUserData(): Result<User> {
-        TODO("Not yet implemented")
+        return userApi.getUserData().toResult().map { it.toModel() }
     }
 
     override suspend fun getSuspensionHistory(): Result<List<Suspension.Ban>> {
-        TODO("Not yet implemented")
+        return userApi.getSuspensionHistory().toResult().map { result -> result.map { it.toModel() } }
     }
 
     override suspend fun getBlacklistHistory(): Result<List<Suspension.Block>> {
-        TODO("Not yet implemented")
+        return userApi.getBlacklistHistory().toResult().map { result -> result.map { it.toModel() } }
     }
 }

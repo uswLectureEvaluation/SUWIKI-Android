@@ -1,6 +1,8 @@
 package com.suwiki.remote.response
 
+import com.suwiki.model.Suspension
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -10,4 +12,11 @@ data class SuspensionHistoryResponse(
     val judgement: String, // 조치 사항
     val createdAt: LocalDateTime, // 정지 조치 시각
     @SerialName("restrictingDate") val expiredAt: LocalDateTime, // 정지 풀리는 시각
+)
+
+internal fun SuspensionHistoryResponse.toModel() = Suspension.Ban(
+    reason = bannedReason,
+    judgement = judgement,
+    createdAt = createdAt.toJavaLocalDateTime(),
+    expiredAt = expiredAt.toJavaLocalDateTime(),
 )
