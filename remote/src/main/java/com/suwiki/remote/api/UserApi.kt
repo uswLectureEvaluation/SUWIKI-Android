@@ -27,6 +27,7 @@ import retrofit2.http.POST
 interface UserApi {
     companion object {
         const val USER = "/user"
+        const val AUTH_HEADER = "Authorization"
     }
 
     // 회원가입 요청 API
@@ -59,7 +60,7 @@ interface UserApi {
 
     // Refresh Token
     @POST("$USER/refresh")
-    fun requestRefresh(@Header(TokenAuthenticator.AUTH_HEADER) refresh: String): Call<Token>
+    fun requestRefresh(@Header(AUTH_HEADER) refresh: String): Call<Token>
 
     // 회원탈퇴 요청 API
     @POST("$USER/quit")
