@@ -1,9 +1,12 @@
 package com.suwiki.remote.api
 
-import com.suwiki.data.network.ApiResult
+import com.suwiki.data.network.ApiService
+import com.suwiki.data.network.dto.OpenMajorListDto
+import com.suwiki.remote.ApiResult
 import com.suwiki.remote.api.UserApi.Companion.USER
 import com.suwiki.remote.request.BookmarkMajorRequest
 import com.suwiki.remote.response.OpenMajorListResponse
+import com.suwiki.remote.response.OpenMajorVersionResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -15,7 +18,18 @@ interface MajorApi {
     companion object {
         const val MAJOR = "$USER/favorite-major/"
         const val MAJOR_TYPE = "majorType"
+        const val SUWIKI = "/suwiki"
+        const val OPEN_MAJOR_VERSION = "$SUWIKI/version/"
+        const val OPEN_MAJOR_LIST_UPDATE = "$SUWIKI/$MAJOR_TYPE"
     }
+
+    // 전공 버전 조회
+    @GET(OPEN_MAJOR_VERSION)
+    suspend fun getOpenMajorVersion(): ApiResult<OpenMajorVersionResponse>
+
+    // 전공 리스트 조회
+    @GET(OPEN_MAJOR_LIST_UPDATE)
+    suspend fun getOpenMajorList(): ApiResult<OpenMajorListResponse>
 
     // 전공 즐겨찾기 하기
     @POST(MAJOR)
