@@ -1,6 +1,6 @@
 package com.suwiki.remote.api
 
-import com.suwiki.data.network.ApiResult
+import com.suwiki.remote.ApiResult
 import com.suwiki.remote.request.CheckEmailRequest
 import com.suwiki.remote.request.CheckIdRequest
 import com.suwiki.remote.request.FindIdRequest

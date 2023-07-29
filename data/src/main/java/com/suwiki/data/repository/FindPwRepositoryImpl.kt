@@ -2,7 +2,7 @@ package com.suwiki.data.repository
 
 import com.suwiki.data.db.request.FindPasswordRequest
 import com.suwiki.data.network.ApiService
-import com.suwiki.data.network.toResult
+import com.suwiki.data.network.toDomainResult
 import com.suwiki.domain.di.OtherApiService
 import com.suwiki.domain.model.Result
 import com.suwiki.domain.repository.FindPwRepository
@@ -16,5 +16,5 @@ class FindPwRepositoryImpl @Inject constructor(
     override suspend fun findPw(id: String, email: String): Result<Boolean> =
         apiService.findPassword(
             FindPasswordRequest(id, email),
-        ).toResult().map { it.success }
+        ).toDomainResult().map { it.success }
 }

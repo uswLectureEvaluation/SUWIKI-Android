@@ -2,7 +2,7 @@ package com.suwiki.data.datasource
 
 import com.suwiki.data.network.ApiService
 import com.suwiki.data.network.dto.LectureMainDto
-import com.suwiki.data.network.toResult
+import com.suwiki.data.network.toDomainResult
 import com.suwiki.domain.model.Result
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class SearchResultRemoteDataSource @Inject constructor(
         page: Int,
         majorType: String,
     ): Result<MutableList<LectureMainDto?>> {
-        return apiService.getLectureMainList(option, page, majorType).toResult().map {
+        return apiService.getLectureMainList(option, page, majorType).toDomainResult().map {
             it.data
         }
     }
@@ -26,7 +26,7 @@ class SearchResultRemoteDataSource @Inject constructor(
         page: Int,
         majorType: String,
     ): Result<MutableList<LectureMainDto?>> {
-        return apiService.getSearchResultDetail(name, option, page, majorType).toResult().map {
+        return apiService.getSearchResultDetail(name, option, page, majorType).toDomainResult().map {
             it.data
         }
     }

@@ -2,7 +2,7 @@ package com.suwiki.data.repository
 
 import com.suwiki.data.db.request.QuitRequest
 import com.suwiki.data.network.ApiService
-import com.suwiki.data.network.toResult
+import com.suwiki.data.network.toDomainResult
 import com.suwiki.domain.di.AuthApiService
 import com.suwiki.domain.model.Result
 import com.suwiki.domain.repository.QuitRepository
@@ -18,5 +18,5 @@ class QuitRepositoryImpl @Inject constructor(
     override suspend fun quit(id: String, password: String): Result<Boolean> =
         apiService.quit(
             QuitRequest(id = id, password = password),
-        ).toResult().map { it.success }
+        ).toDomainResult().map { it.success }
 }

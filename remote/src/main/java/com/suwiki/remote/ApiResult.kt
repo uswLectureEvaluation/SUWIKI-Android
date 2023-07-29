@@ -1,7 +1,7 @@
-package com.suwiki.data.network
+package com.suwiki.remote
 
-import com.suwiki.domain.model.Result
-import com.suwiki.domain.model.SuwikiError
+import com.suwiki.model.Result
+import com.suwiki.model.SuwikiError
 
 sealed interface ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>
@@ -71,7 +71,7 @@ internal fun ApiResult<*>.throwFailure() {
     if (this is ApiResult.Failure) throw safeThrowable()
 }
 
-fun ApiResult.Failure.toDomainSuwikiError(): SuwikiError {
+fun ApiResult.Failure.toSuwikiError(): SuwikiError {
     return when (this) {
         is ApiResult.Failure.CustomError -> error
         is ApiResult.Failure.HttpError -> SuwikiError.HttpError(code, message, body)
@@ -80,10 +80,10 @@ fun ApiResult.Failure.toDomainSuwikiError(): SuwikiError {
     }
 }
 
-fun <T> ApiResult<T>.toDomainResult(): Result<T> {
+fun <T> ApiResult<T>.toResult(): Result<T> {
     return if (this.isSuccess()) {
         Result.Success(getOrThrow())
     } else {
-        Result.Failure(failureOrThrow().toDomainSuwikiError())
+        Result.Failure(failureOrThrow().toSuwikiError())
     }
 }
