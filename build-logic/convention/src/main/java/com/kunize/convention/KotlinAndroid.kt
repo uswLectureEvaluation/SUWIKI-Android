@@ -5,7 +5,7 @@ import org.gradle.api.plugins.ExtensionAware
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 internal fun configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *>,
 ) {
     commonExtension.apply {
         compileSdk = Const.compileSdk
@@ -28,7 +28,7 @@ internal fun configureKotlinAndroid(
     }
 }
 
-internal fun CommonExtension<*, *, *, *>.kotlinOptions(
+internal fun CommonExtension<*, *, *, *, *>.kotlinOptions(
     block: KotlinJvmOptions.() -> Unit,
 ) {
     (this as ExtensionAware).extensions.configure("kotlinOptions", block)

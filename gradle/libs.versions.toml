@@ -1,5 +1,5 @@
 [versions]
-gradle-android = "8.0.2"
+gradle-android = "8.1.0"
 androidx-compose-compiler = "1.4.8"
 
 junit4 = "4.13.2"
@@ -24,6 +24,7 @@ androidx-datastore = "1.0.0"
 kotlin = "1.8.22"
 kotlinx-coroutines = "1.7.1"
 kotlinx-serialization-json = "1.5.1"
+kotlinx-datetime = "0.4.0"
 
 retrofit = "2.9.0"
 retrofit-kotlinx-serialization-json = "1.0.0"
@@ -73,6 +74,7 @@ hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hi
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-kotlinx-serialization-json" }
