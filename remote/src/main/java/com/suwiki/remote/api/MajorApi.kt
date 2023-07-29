@@ -11,6 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
+// TODO : v2 api로 업그레이드 필요.
 interface MajorApi {
     companion object {
         const val MAJOR = "$USER/favorite-major/"
