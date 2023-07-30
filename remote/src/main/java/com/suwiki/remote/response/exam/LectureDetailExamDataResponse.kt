@@ -1,4 +1,4 @@
-package com.suwiki.remote.response
+package com.suwiki.remote.response.exam
 
 import com.suwiki.model.LectureDetailExam
 import com.suwiki.model.LectureDetailExamData

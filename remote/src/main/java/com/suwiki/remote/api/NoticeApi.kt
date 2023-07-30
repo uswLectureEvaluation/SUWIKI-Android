@@ -2,7 +2,7 @@ package com.suwiki.remote.api
 
 import com.suwiki.remote.ApiResult
 import com.suwiki.remote.api.LectureApi.Companion.QUERY_PAGE
-import com.suwiki.remote.response.DataResponse
+import com.suwiki.remote.response.common.DataResponse
 import com.suwiki.remote.response.notice.NoticeDetailResponse
 import com.suwiki.remote.response.notice.NoticeResponse
 import retrofit2.http.GET

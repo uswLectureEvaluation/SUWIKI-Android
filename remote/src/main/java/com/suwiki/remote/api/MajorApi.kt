@@ -3,8 +3,8 @@ package com.suwiki.remote.api
 import com.suwiki.remote.ApiResult
 import com.suwiki.remote.api.UserApi.Companion.USER
 import com.suwiki.remote.request.BookmarkMajorRequest
-import com.suwiki.remote.response.OpenMajorListResponse
-import com.suwiki.remote.response.OpenMajorVersionResponse
+import com.suwiki.remote.response.major.OpenMajorListResponse
+import com.suwiki.remote.response.major.OpenMajorVersionResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

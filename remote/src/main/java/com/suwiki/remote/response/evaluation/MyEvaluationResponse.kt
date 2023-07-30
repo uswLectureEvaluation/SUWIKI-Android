@@ -1,4 +1,4 @@
-package com.suwiki.remote.response
+package com.suwiki.remote.response.evaluation
 
 import com.suwiki.model.Evaluation
 import kotlinx.serialization.Serializable

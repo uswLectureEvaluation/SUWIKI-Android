@@ -7,9 +7,9 @@ import com.suwiki.remote.api.UserApi.Companion.USER
 import com.suwiki.remote.request.LectureEvaluationRequest
 import com.suwiki.remote.request.ReportLectureRequest
 import com.suwiki.remote.request.UpdateLectureEvaluationRequest
-import com.suwiki.remote.response.DataResponse
-import com.suwiki.remote.response.LectureDetailEvaluationDataResponse
-import com.suwiki.remote.response.MyEvaluationResponse
+import com.suwiki.remote.response.common.DataResponse
+import com.suwiki.remote.response.evaluation.LectureDetailEvaluationDataResponse
+import com.suwiki.remote.response.evaluation.MyEvaluationResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

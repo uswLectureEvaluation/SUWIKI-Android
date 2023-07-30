@@ -1,4 +1,4 @@
-package com.suwiki.remote.response
+package com.suwiki.remote.response.major
 
 import kotlinx.serialization.Serializable
 

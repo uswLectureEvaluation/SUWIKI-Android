@@ -1,11 +1,11 @@
-package com.suwiki.remote.response
+package com.suwiki.remote.response.lecture
 
-import com.suwiki.model.LectureDetailInfo
+import com.suwiki.model.LectureMain
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LectureDetailInfoResponse(
+data class LectureMainResponse(
     val id: Long,
     @SerialName("semesterList") val semester: String,
     val professor: String,
@@ -16,12 +16,9 @@ data class LectureDetailInfoResponse(
     val lectureSatisfactionAvg: Float,
     val lectureHoneyAvg: Float,
     val lectureLearningAvg: Float,
-    val lectureTeamAvg: Float,
-    val lectureDifficultyAvg: Float,
-    val lectureHomeworkAvg: Float,
 )
 
-internal fun LectureDetailInfoResponse.toModel() = LectureDetailInfo(
+internal fun LectureMainResponse.toModel() = LectureMain(
     id = id,
     semester = semester,
     professor = professor,
@@ -32,7 +29,4 @@ internal fun LectureDetailInfoResponse.toModel() = LectureDetailInfo(
     lectureSatisfactionAvg = lectureSatisfactionAvg,
     lectureHoneyAvg = lectureHoneyAvg,
     lectureLearningAvg = lectureLearningAvg,
-    lectureTeamAvg = lectureTeamAvg,
-    lectureDifficultyAvg = lectureDifficultyAvg,
-    lectureHomeworkAvg = lectureHomeworkAvg,
 )

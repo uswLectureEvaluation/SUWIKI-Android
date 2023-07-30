@@ -14,7 +14,8 @@ import com.suwiki.remote.request.LoginRequest
 import com.suwiki.remote.request.QuitRequest
 import com.suwiki.remote.request.ResetPasswordRequest
 import com.suwiki.remote.request.SignupRequest
-import com.suwiki.remote.response.toModel
+import com.suwiki.remote.response.evaluation.toModel
+import com.suwiki.remote.response.user.toModel
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 

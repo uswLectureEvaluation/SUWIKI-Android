@@ -8,7 +8,7 @@ import com.suwiki.remote.api.EvaluateApi
 import com.suwiki.remote.request.LectureEvaluationRequest
 import com.suwiki.remote.request.ReportLectureRequest
 import com.suwiki.remote.request.UpdateLectureEvaluationRequest
-import com.suwiki.remote.response.toModel
+import com.suwiki.remote.response.evaluation.toModel
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 

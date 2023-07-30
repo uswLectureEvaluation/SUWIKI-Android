@@ -5,7 +5,8 @@ import com.suwiki.model.LectureDetailInfo
 import com.suwiki.model.LectureMain
 import com.suwiki.model.Result
 import com.suwiki.remote.api.LectureApi
-import com.suwiki.remote.response.toModel
+import com.suwiki.remote.response.evaluation.toModel
+import com.suwiki.remote.response.lecture.toModel
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 

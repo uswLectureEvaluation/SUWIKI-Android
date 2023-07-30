@@ -9,7 +9,8 @@ import com.suwiki.remote.api.ExamApi
 import com.suwiki.remote.request.PostLectureExamRequest
 import com.suwiki.remote.request.ReportExamRequest
 import com.suwiki.remote.request.UpdateLectureExamRequest
-import com.suwiki.remote.response.toModel
+import com.suwiki.remote.response.evaluation.toModel
+import com.suwiki.remote.response.exam.toModel
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 

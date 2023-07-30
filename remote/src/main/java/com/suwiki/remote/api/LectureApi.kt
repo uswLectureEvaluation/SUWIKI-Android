@@ -1,9 +1,9 @@
 package com.suwiki.remote.api
 
 import com.suwiki.remote.ApiResult
-import com.suwiki.remote.response.DataResponse
-import com.suwiki.remote.response.LectureDetailInfoResponse
-import com.suwiki.remote.response.LectureMainResponse
+import com.suwiki.remote.response.common.DataResponse
+import com.suwiki.remote.response.lecture.LectureDetailInfoResponse
+import com.suwiki.remote.response.lecture.LectureMainResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

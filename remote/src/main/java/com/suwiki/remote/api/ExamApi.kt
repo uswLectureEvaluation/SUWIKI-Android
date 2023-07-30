@@ -8,10 +8,10 @@ import com.suwiki.remote.api.UserApi.Companion.USER
 import com.suwiki.remote.request.PostLectureExamRequest
 import com.suwiki.remote.request.ReportExamRequest
 import com.suwiki.remote.request.UpdateLectureExamRequest
-import com.suwiki.remote.response.DataResponse
-import com.suwiki.remote.response.LectureDetailExamDataResponse
-import com.suwiki.remote.response.LectureExamResponse
-import com.suwiki.remote.response.PurchaseHistoryResponse
+import com.suwiki.remote.response.common.DataResponse
+import com.suwiki.remote.response.exam.LectureDetailExamDataResponse
+import com.suwiki.remote.response.exam.LectureExamResponse
+import com.suwiki.remote.response.exam.PurchaseHistoryResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
