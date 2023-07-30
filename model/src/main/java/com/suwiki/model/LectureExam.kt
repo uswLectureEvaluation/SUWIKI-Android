@@ -1,7 +1,5 @@
 package com.suwiki.model
 
-import java.io.Serializable
-
 data class LectureExam(
     val id: Long? = null,
     val lectureName: String? = null, // 과목 이름
@@ -13,4 +11,4 @@ data class LectureExam(
     val examType: String? = null,
     val examDifficulty: String, // 시험 난이도
     val content: String,
-) : Serializable
+)
