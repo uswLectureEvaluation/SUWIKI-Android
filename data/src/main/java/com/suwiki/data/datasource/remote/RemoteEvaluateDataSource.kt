@@ -14,6 +14,8 @@ interface RemoteEvaluateDataSource {
     ): Result<LectureDetailEvaluationData>
 
     suspend fun postLectureEvaluation(
+        lectureName: String,
+        professor: String,
         selectedSemester: String,
         satisfaction: Float,
         learning: Float,
