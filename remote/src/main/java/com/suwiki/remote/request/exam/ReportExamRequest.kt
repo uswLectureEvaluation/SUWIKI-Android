@@ -1,4 +1,4 @@
-package com.suwiki.remote.request
+package com.suwiki.remote.request.exam
 
 data class ReportExamRequest(
     val evaluateIdx: Long,

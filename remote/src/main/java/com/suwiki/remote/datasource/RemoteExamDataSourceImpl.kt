@@ -6,10 +6,9 @@ import com.suwiki.model.LectureExam
 import com.suwiki.model.PurchaseHistory
 import com.suwiki.model.Result
 import com.suwiki.remote.api.ExamApi
-import com.suwiki.remote.request.PostLectureExamRequest
-import com.suwiki.remote.request.ReportExamRequest
-import com.suwiki.remote.request.UpdateLectureExamRequest
-import com.suwiki.remote.response.evaluation.toModel
+import com.suwiki.remote.request.exam.PostLectureExamRequest
+import com.suwiki.remote.request.exam.ReportExamRequest
+import com.suwiki.remote.request.exam.UpdateLectureExamRequest
 import com.suwiki.remote.response.exam.toModel
 import com.suwiki.remote.toResult
 import javax.inject.Inject

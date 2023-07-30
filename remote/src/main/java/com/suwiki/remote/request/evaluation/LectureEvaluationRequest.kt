@@ -1,9 +1,11 @@
-package com.suwiki.remote.request
+package com.suwiki.remote.request.evaluation
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UpdateLectureEvaluationRequest(
+data class LectureEvaluationRequest(
+    val lectureName: String,
+    val professor: String,
     val selectedSemester: String,
     val satisfaction: Float,
     val learning: Float,

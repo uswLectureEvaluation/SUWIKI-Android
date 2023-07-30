@@ -1,6 +1,8 @@
-package com.suwiki.remote.request
+package com.suwiki.remote.request.exam
 
-data class UpdateLectureExamRequest(
+data class PostLectureExamRequest(
+    val lectureName: String?,
+    val professor: String?,
     val selectedSemester: String?,
     val examInfo: String,
     val examType: String?,

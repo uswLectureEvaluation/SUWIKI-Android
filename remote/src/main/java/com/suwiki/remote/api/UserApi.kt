@@ -1,14 +1,14 @@
 package com.suwiki.remote.api
 
 import com.suwiki.remote.ApiResult
-import com.suwiki.remote.request.CheckEmailRequest
-import com.suwiki.remote.request.CheckIdRequest
-import com.suwiki.remote.request.FindIdRequest
-import com.suwiki.remote.request.FindPasswordRequest
-import com.suwiki.remote.request.LoginRequest
-import com.suwiki.remote.request.QuitRequest
-import com.suwiki.remote.request.ResetPasswordRequest
-import com.suwiki.remote.request.SignupRequest
+import com.suwiki.remote.request.user.CheckEmailRequest
+import com.suwiki.remote.request.user.CheckIdRequest
+import com.suwiki.remote.request.user.FindIdRequest
+import com.suwiki.remote.request.user.FindPasswordRequest
+import com.suwiki.remote.request.user.LoginRequest
+import com.suwiki.remote.request.user.QuitRequest
+import com.suwiki.remote.request.user.ResetPasswordRequest
+import com.suwiki.remote.request.user.SignupRequest
 import com.suwiki.remote.response.user.BlacklistResponse
 import com.suwiki.remote.response.user.OverlapCheckResponse
 import com.suwiki.remote.response.common.SuccessCheckResponse

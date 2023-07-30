@@ -3,7 +3,7 @@ package com.suwiki.remote.datasource
 import com.suwiki.data.datasource.remote.RemoteOpenMajorDataSource
 import com.suwiki.model.Result
 import com.suwiki.remote.api.MajorApi
-import com.suwiki.remote.request.BookmarkMajorRequest
+import com.suwiki.remote.request.major.BookmarkMajorRequest
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 

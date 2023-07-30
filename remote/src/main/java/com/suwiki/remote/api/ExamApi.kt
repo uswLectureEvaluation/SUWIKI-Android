@@ -5,9 +5,9 @@ import com.suwiki.remote.api.EvaluateApi.Companion.REPORT
 import com.suwiki.remote.api.LectureApi.Companion.QUERY_LECTURE_ID
 import com.suwiki.remote.api.LectureApi.Companion.QUERY_PAGE
 import com.suwiki.remote.api.UserApi.Companion.USER
-import com.suwiki.remote.request.PostLectureExamRequest
-import com.suwiki.remote.request.ReportExamRequest
-import com.suwiki.remote.request.UpdateLectureExamRequest
+import com.suwiki.remote.request.exam.PostLectureExamRequest
+import com.suwiki.remote.request.exam.ReportExamRequest
+import com.suwiki.remote.request.exam.UpdateLectureExamRequest
 import com.suwiki.remote.response.common.DataResponse
 import com.suwiki.remote.response.exam.LectureDetailExamDataResponse
 import com.suwiki.remote.response.exam.LectureExamResponse
