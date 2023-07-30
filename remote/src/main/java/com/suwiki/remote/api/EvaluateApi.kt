@@ -51,7 +51,7 @@ interface EvaluateApi {
 
     // 강의 평가 삭제
     @DELETE(EVALUATE_POST)
-    suspend fun deleteEvaluation(@Query(QUERY_EVALUATE_ID) id: Long)
+    suspend fun deleteEvaluation(@Query(QUERY_EVALUATE_ID) id: Long): ApiResult<Unit>
 
     // 강의 평가 신고하기
     @POST("$USER/$REPORT/evaluate")

@@ -1,5 +1,6 @@
 package com.suwiki.remote.response
 
+import com.suwiki.model.Evaluation
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -18,4 +19,21 @@ data class MyEvaluationResponse(
     val difficulty: Int, // 학점 잘주는가? (까다로움 == 0, 보통 == 1, 학점느님 ==2)
     val homework: Int, // 과제양 (없음 ==0, 보통 == 1, 많음 == 2)
     val content: String,
+)
+
+internal fun MyEvaluationResponse.toModel() = Evaluation(
+    id = id,
+    lectureName = lectureName,
+    professor = professor,
+    majorType = majorType,
+    selectedSemester = selectedSemester,
+    semesterList = semesterList,
+    totalAvg = totalAvg,
+    satisfaction = satisfaction,
+    learning = learning,
+    honey = honey,
+    team = team,
+    difficulty = difficulty,
+    homework = homework,
+    content = content,
 )
