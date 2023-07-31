@@ -7,6 +7,7 @@ import com.suwiki.data.db.entity.converter.toDomain
 import com.suwiki.data.db.entity.converter.toEntity
 import com.suwiki.domain.model.TimetableData
 import com.suwiki.domain.repository.TimetableRepository
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class TimetableRepositoryImpl @Inject constructor(
@@ -38,7 +39,7 @@ class TimetableRepositoryImpl @Inject constructor(
                 Log.d("arrayTest", "$timetableData")
                 timetables.add(timetableData)
             }
-        }
+        }.await()
         return timetables
     }
 
