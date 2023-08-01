@@ -38,6 +38,8 @@ room = "2.5.2"
 timber = "5.0.1"
 encrypted-datastore = "1.7.21-1.0.8-1.1.0-alpha01"
 oss-licenses = "0.10.6"
+junit = "1.1.5"
+espresso-core = "3.5.1"
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -117,6 +119,8 @@ junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 oss = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "google-service-oss-licenses" }
 androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "androidx-monitor" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidx-junit-ktx" }
+junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 
 [bundles]
