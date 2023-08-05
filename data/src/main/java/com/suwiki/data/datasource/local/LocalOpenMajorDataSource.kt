@@ -1,6 +1,6 @@
 package com.suwiki.data.datasource.local
 
-import com.suwiki.domain.model.OpenMajor
+import com.suwiki.model.OpenMajor
 
 interface LocalOpenMajorDataSource {
     suspend fun saveAllOpenMajors(majors: List<OpenMajor>)
