@@ -1,13 +1,14 @@
 package com.suwiki.remote.datasource
 
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.suwiki.data.datasource.remote.RemoteTimetableDataSource
 import com.suwiki.model.TimetableData
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class RemoteTimetableDataSourceImpl @Inject constructor(
-    private val firebaseDatabase: DatabaseReference,
+    private val firebaseDatabase: FirebaseDatabase,
 ) : RemoteTimetableDataSource {
     companion object {
         private const val FIELD_MAJOR = "estbDpmNm"
@@ -22,12 +23,29 @@ class RemoteTimetableDataSourceImpl @Inject constructor(
 
         private const val SUFFIX_GRADE = "학년"
         private const val DEFAULT = "None"
+
+        private const val DATABASE_TIMETABLE = "uswTimetable"
+        private const val DATABASE_TIMETABLE_VERSION = "version"
+    }
+
+    override suspend fun fetchRemoteTimetableVersion(): Long {
+        val timetableVersionDatabase = firebaseDatabase.getReference(DATABASE_TIMETABLE_VERSION)
+
+        var version = 0L
+
+        timetableVersionDatabase.get().addOnSuccessListener {
+            version = it.value.toString().toLong()
+        }.await()
+
+        return version
     }
 
     override suspend fun loadRemoteTimetable(): List<TimetableData> {
+        val timetableDatabase = firebaseDatabase.getReference(DATABASE_TIMETABLE)
+
         val timetables = mutableListOf<TimetableData>()
 
-        firebaseDatabase.get().addOnSuccessListener {
+        timetableDatabase.get().addOnSuccessListener {
             it.children.forEachIndexed { i, snapshot ->
                 val data = snapshot.value as HashMap<*, *>
                 val timetableData = TimetableData(
