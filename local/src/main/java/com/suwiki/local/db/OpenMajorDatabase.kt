@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.RenameTable
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
-import com.suwiki.data.db.dao.OpenMajorDao
-import com.suwiki.data.db.entity.OpenMajorEntity
+import com.suwiki.local.db.dao.OpenMajorDao
+import com.suwiki.local.model.OpenMajorEntity
 
 @Database(
     entities = [OpenMajorEntity::class],

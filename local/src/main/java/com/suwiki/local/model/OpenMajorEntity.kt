@@ -2,7 +2,6 @@ package com.suwiki.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.suwiki.data.db.entity.OpenMajorEntity
 import com.suwiki.model.OpenMajor
 
 @Entity

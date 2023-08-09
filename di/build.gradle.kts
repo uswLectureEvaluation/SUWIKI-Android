@@ -21,6 +21,10 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.okhttp.logging)
 
+    val bom = libs.firebase.bom
+    add("implementation", platform(bom))
+    implementation(libs.bundles.firebase)
+
     implementation(libs.androidx.dataStore.core)
     implementation(libs.androidx.dataStore.preferences)
 

@@ -6,9 +6,14 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+ksp {
+    arg("room.schemaLocation", "$rootDir/schemas")
+}
+
 android {
     namespace = "com.suwiki.local"
 }
+
 
 dependencies {
     implementation(project(":model"))
