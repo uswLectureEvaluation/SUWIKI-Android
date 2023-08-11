@@ -1,16 +1,17 @@
 package com.suwiki.data.repository
 
-import com.suwiki.data.datasource.local.LocalAuthDataSource
 import com.suwiki.data.datasource.local.LocalUserDataSource
 import com.suwiki.data.datasource.remote.RemoteUserDataSource
 import com.suwiki.domain.model.LoggedInUser
 import com.suwiki.domain.repository.UserRepository
+import com.suwiki.model.Result
+import com.suwiki.model.SuwikiError
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val authDataSource: LocalAuthDataSource,
     private val localUserDataSource: LocalUserDataSource,
     private val remoteUserDataSource: RemoteUserDataSource,
 ) : UserRepository {
@@ -18,7 +19,7 @@ class UserRepositoryImpl @Inject constructor(
     override val isLoggedIn: Flow<Boolean>
         get() = localUserDataSource.isLoggedIn
 
-    override val userInfo: Flow<LoggedInUser?>
+    override val userInfo: Flow<Result<LoggedInUser>>
         get() = combine(
             localUserDataSource.userId,
             localUserDataSource.point,
@@ -26,14 +27,20 @@ class UserRepositoryImpl @Inject constructor(
             localUserDataSource.writtenExam,
             localUserDataSource.viewExam,
             localUserDataSource.email,
-        ) {
-            val userId = (it[0] as? String) ?: return@combine null
-            val point = (it[1] as? Int) ?: return@combine null
-            val writtenEvaluation = (it[2] as? Int) ?: return@combine null
-            val writtenExam = (it[3] as? Int) ?: return@combine null
-            val viewExam = (it[4] as? Int) ?: return@combine null
-            val email = (it[5] as? String) ?: return@combine null
-            LoggedInUser(
+        ) { userInfo ->
+            if (isLoggedIn.firstOrNull() != true) {
+                return@combine Result.Failure(SuwikiError.TokenExpired)
+            }
+
+            val userId = (userInfo[0] as? String) ?: return@combine getRemoteUserInfoAndSetLocal()
+            val point = (userInfo[1] as? Int) ?: return@combine getRemoteUserInfoAndSetLocal()
+            val writtenEvaluation =
+                (userInfo[2] as? Int) ?: return@combine getRemoteUserInfoAndSetLocal()
+            val writtenExam = (userInfo[3] as? Int) ?: return@combine getRemoteUserInfoAndSetLocal()
+            val viewExam = (userInfo[4] as? Int) ?: return@combine getRemoteUserInfoAndSetLocal()
+            val email = (userInfo[5] as? String) ?: return@combine getRemoteUserInfoAndSetLocal()
+
+            val loggedInUser = LoggedInUser(
                 userId = userId,
                 point = point,
                 writtenEvaluation = writtenEvaluation,
@@ -41,34 +48,33 @@ class UserRepositoryImpl @Inject constructor(
                 viewExam = viewExam,
                 email = email,
             )
+
+            Result.Success(loggedInUser)
         }
 
-    override suspend fun setUserInfo(): Boolean {
-        return false
-//        remoteUserDataSource.getUserData().onSuccess { user ->
-//            return@set
-//        }
-//        return try {
-//
-//
-//            val response = remoteUserDataSource.getUserData()
-//            return if (response.isSuccessful) {
-//                response.body()?.apply {
-//                    userPreference.login(
-//                        userId = userId,
-//                        point = point,
-//                        writtenEvaluation = writtenEvaluation,
-//                        writtenExam = writtenExam,
-//                        viewExam = viewExam,
-//                        email = email,
-//                    )
-//                } ?: return@withContext false
-//                true
-//            } else {
-//                false
-//            }
-//        } catch (_: Exception) {
-//            false
-//        }
+    private suspend fun getRemoteUserInfoAndSetLocal(): Result<LoggedInUser> {
+        val result = remoteUserDataSource.getUserData().map { user ->
+            LoggedInUser(
+                userId = user.userId,
+                point = user.point,
+                writtenEvaluation = user.writtenEvaluation,
+                writtenExam = user.writtenExam,
+                viewExam = user.viewExam,
+                email = user.email,
+            )
+        }
+
+        result.getOrNull()?.let {
+            localUserDataSource.login(
+                userId = it.userId,
+                point = it.point,
+                writtenEvaluation = it.writtenEvaluation,
+                writtenExam = it.writtenExam,
+                viewExam = it.viewExam,
+                email = it.email,
+            )
+        }
+
+        return result
     }
 }

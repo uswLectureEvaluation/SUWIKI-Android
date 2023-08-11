@@ -7,6 +7,5 @@ class LoginUsecase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke() {
-        userRepository.setUserInfo()
     }
 }
