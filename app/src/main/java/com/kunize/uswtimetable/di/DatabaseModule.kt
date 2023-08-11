@@ -38,9 +38,4 @@ object DatabaseModule {
             "timetable-database",
         ).build()
     }
-
-    @Provides
-    fun provideFirebaseDatabase(): FirebaseDatabase {
-        return FirebaseDatabase.getInstance()
-    }
 }

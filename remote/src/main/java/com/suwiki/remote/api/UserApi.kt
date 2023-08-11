@@ -24,40 +24,11 @@ import retrofit2.http.POST
 interface UserApi {
     companion object {
         const val USER = "/user"
-        const val AUTH_HEADER = "Authorization"
     }
-
-    // 회원가입 요청 API
-    @POST("$USER/join")
-    suspend fun signUp(@Body signupRequest: SignupRequest): ApiResult<SuccessCheckResponse>
-
-    // 아이디 중복 확인 요청 API
-    @POST("$USER/check-id")
-    suspend fun checkId(@Body checkIdRequest: CheckIdRequest): ApiResult<OverlapCheckResponse>
-
-    // 이메일 중복 확인 요청 API
-    @POST("$USER/check-email")
-    suspend fun checkEmail(@Body checkEmailRequest: CheckEmailRequest): ApiResult<OverlapCheckResponse>
-
-    // 아이디 찾기 API
-    @POST("$USER/find-id")
-    suspend fun findId(@Body findIdRequest: FindIdRequest): ApiResult<SuccessCheckResponse>
-
-    // 비밀번호 찾기(임시 비밀번호 전송) API
-    @POST("$USER/find-pw")
-    suspend fun findPassword(@Body findPasswordRequest: FindPasswordRequest): ApiResult<SuccessCheckResponse>
 
     // 비밀번호 재설정 API
     @POST("$USER/reset-pw")
     suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): ApiResult<SuccessCheckResponse>
-
-    // 로그인 요청 API
-    @POST("$USER/login")
-    suspend fun login(@Body loginRequest: LoginRequest): ApiResult<TokenResponse>
-
-    // Refresh Token
-    @POST("$USER/refresh")
-    fun requestRefresh(@Header(AUTH_HEADER) refresh: String): ApiResult<TokenResponse>
 
     // 회원탈퇴 요청 API
     @POST("$USER/quit")

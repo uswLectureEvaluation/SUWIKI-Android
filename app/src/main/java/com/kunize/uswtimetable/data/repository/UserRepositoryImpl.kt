@@ -5,7 +5,7 @@ import com.kunize.uswtimetable.dataclass.LoggedInUser
 import com.kunize.uswtimetable.domain.di.IoDispatcher
 import com.kunize.uswtimetable.domain.di.OtherApiService
 import com.kunize.uswtimetable.domain.repository.UserRepository
-import com.kunize.uswtimetable.retrofit.IRetrofit
+import com.suwiki.data.network.ApiService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    @OtherApiService private val apiService: IRetrofit,
+    @OtherApiService private val apiService: ApiService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val userPreference: UserPreference,
 ) : UserRepository {

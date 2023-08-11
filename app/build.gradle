@@ -47,12 +47,6 @@ android {
 
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":presentation"))
-
-    implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
-
     implementation "com.google.android.gms:play-services-ads-identifier:18.0.1"
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 

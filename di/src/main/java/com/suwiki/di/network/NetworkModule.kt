@@ -1,8 +1,6 @@
 package com.suwiki.di.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.suwiki.data.network.AuthenticationInterceptor
-import com.suwiki.data.network.TokenAuthenticator
 import com.suwiki.di.AuthOkHttpClient
 import com.suwiki.di.AuthRetrofit
 import com.suwiki.di.NormalOkHttpClient
@@ -10,6 +8,8 @@ import com.suwiki.di.NormalRetrofit
 import com.suwiki.di.isJsonArray
 import com.suwiki.di.isJsonObject
 import com.suwiki.remote.ResultCallAdapterFactory
+import com.suwiki.remote.auth.AuthenticationInterceptor
+import com.suwiki.remote.auth.TokenAuthenticator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

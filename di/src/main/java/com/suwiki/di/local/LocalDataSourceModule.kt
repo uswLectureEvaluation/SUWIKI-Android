@@ -3,9 +3,11 @@ package com.suwiki.di.local
 import com.suwiki.data.datasource.local.LocalAuthDataSource
 import com.suwiki.data.datasource.local.LocalOpenMajorDataSource
 import com.suwiki.data.datasource.local.LocalTimetableDatasource
+import com.suwiki.data.datasource.local.LocalUserDataSource
 import com.suwiki.local.datasource.LocalAuthDataSourceImpl
 import com.suwiki.local.datasource.LocalOpenMajorDataSourceImpl
 import com.suwiki.local.datasource.LocalTimetableDatasourceImpl
+import com.suwiki.local.datasource.LocalUserDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,6 +21,11 @@ abstract class LocalDataSourceModule {
     abstract fun provideLocalAuthDataSource(
         localAuthDataSourceImpl: LocalAuthDataSourceImpl,
     ): LocalAuthDataSource
+
+    @Binds
+    abstract fun provideLocalUserDataSource(
+        localUserDataSourceImpl: LocalUserDataSourceImpl,
+    ): LocalUserDataSource
 
     @Binds
     abstract fun provideLocalOpenMajorDataSource(

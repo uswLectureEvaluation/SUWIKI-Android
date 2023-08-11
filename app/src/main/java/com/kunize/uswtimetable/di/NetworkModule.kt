@@ -5,20 +5,20 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import com.kunize.uswtimetable.data.remote.AuthenticationInterceptor
+import com.kunize.uswtimetable.data.remote.TokenAuthenticator
+import com.kunize.uswtimetable.domain.repository.AuthRepository
+import com.kunize.uswtimetable.domain.repository.LogoutRepository
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import com.suwiki.data.network.ApiService
 import com.suwiki.data.network.ApiService.Companion.API.BASE_URL
-import com.suwiki.data.network.AuthenticationInterceptor
 import com.suwiki.data.network.ResultCallAdapterFactory
-import com.suwiki.data.network.TokenAuthenticator
 import com.suwiki.domain.di.AuthApiService
 import com.suwiki.domain.di.AuthOkHttpClient
 import com.suwiki.domain.di.AuthenticatorInterceptor
 import com.suwiki.domain.di.LoggingInterceptor
 import com.suwiki.domain.di.OtherApiService
 import com.suwiki.domain.di.OtherOkHttpClient
-import com.suwiki.domain.repository.AuthRepository
-import com.suwiki.domain.repository.LogoutRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -133,10 +133,8 @@ object NetworkModule {
 
     @AuthenticatorInterceptor
     @Provides
-    fun provideAuthenticatorInterceptor(
-        authRepository: AuthRepository,
-    ): Interceptor {
-        return AuthenticationInterceptor(authRepository)
+    fun provideAuthenticatorInterceptor(): Interceptor {
+        return AuthenticationInterceptor()
     }
 
     @Provides

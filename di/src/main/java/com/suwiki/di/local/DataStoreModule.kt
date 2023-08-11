@@ -25,7 +25,6 @@ import javax.inject.Singleton
 object DataStoreModule {
 
     @Provides
-    @Singleton
     fun provideEncryptedDataStore(
         @ApplicationContext applicationContext: Context,
     ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
@@ -34,18 +33,6 @@ object DataStoreModule {
         ),
         scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
         produceFile = { applicationContext.preferencesDataStoreFile("security-preference") },
-    )
-
-    @Provides
-    @Singleton
-    fun providePreferenceDataStore(
-        @ApplicationContext applicationContext: Context,
-    ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
-        corruptionHandler = ReplaceFileCorruptionHandler(
-            produceNewData = { emptyPreferences() },
-        ),
-        scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-        produceFile = { applicationContext.preferencesDataStoreFile("normal-preferences") },
     )
 
     @Provides

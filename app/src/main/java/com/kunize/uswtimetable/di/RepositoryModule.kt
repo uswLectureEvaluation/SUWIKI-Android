@@ -2,6 +2,8 @@ package com.kunize.uswtimetable.di
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
+import com.kunize.uswtimetable.data.repository.UserRepositoryImpl
+import com.kunize.uswtimetable.domain.repository.UserRepository
 import com.suwiki.data.datasource.EvaluationDataSource
 import com.suwiki.data.datasource.EvaluationRemoteDataSourceImpl
 import com.suwiki.data.datasource.LoginDataSource
@@ -37,7 +39,6 @@ import com.suwiki.data.repository.SettingRepositoryImpl
 import com.suwiki.data.repository.SignUpRepositoryImpl
 import com.suwiki.data.repository.SuspensionRepositoryImpl
 import com.suwiki.data.repository.TimetableRepositoryImpl
-import com.suwiki.data.repository.UserRepositoryImpl
 import com.suwiki.data.repository.VersionRepositoryImpl
 import com.suwiki.domain.di.AuthApiService
 import com.suwiki.domain.di.IoDispatcher
@@ -59,7 +60,6 @@ import com.suwiki.domain.repository.SettingRepository
 import com.suwiki.domain.repository.SignUpRepository
 import com.suwiki.domain.repository.SuspensionRepository
 import com.suwiki.domain.repository.TimetableRepository
-import com.suwiki.domain.repository.UserRepository
 import com.suwiki.domain.repository.VersionRepository
 import dagger.Module
 import dagger.Provides
@@ -99,7 +99,7 @@ object RepositoryModule {
     fun provideUserRepository(
         @AuthApiService apiService: ApiService,
         @IoDispatcher ioDispatcher: CoroutineDispatcher,
-        userPreference: UserPreference,
+        userPreference: com.kunize.uswtimetable.data.datastore.UserPreference,
     ): UserRepository {
         return UserRepositoryImpl(
             apiService,
