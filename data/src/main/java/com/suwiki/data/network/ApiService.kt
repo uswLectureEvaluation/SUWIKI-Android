@@ -46,7 +46,6 @@ import com.suwiki.data.network.ApiService.Companion.API.SIGN_UP_EMAIL_CHECK
 import com.suwiki.data.network.ApiService.Companion.API.SIGN_UP_ID_CHECK
 import com.suwiki.data.network.ApiService.Companion.API.WRITE_LECTURE_EVALUATION
 import com.suwiki.data.network.ApiService.Companion.API.WRITE_LECTURE_EXAM
-import com.suwiki.data.network.TokenAuthenticator.Companion.AUTH_HEADER
 import com.suwiki.data.network.dto.BlacklistDto
 import com.suwiki.data.network.dto.DataDto
 import com.suwiki.data.network.dto.LectureDetailEvaluationDataDto
@@ -79,7 +78,7 @@ interface ApiService {
 
     // Refresh Token
     @POST(REQUEST_REFRESH)
-    fun requestRefresh(@Header(AUTH_HEADER) refresh: String): Call<Token>
+    fun requestRefresh(@Header("Authorization") refresh: String): Call<Token>
 
     // 회원가입 요청 API
     @POST(SIGN_UP)

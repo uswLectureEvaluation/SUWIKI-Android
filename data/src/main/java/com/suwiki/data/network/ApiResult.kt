@@ -71,7 +71,7 @@ internal fun ApiResult<*>.throwFailure() {
     if (this is ApiResult.Failure) throw safeThrowable()
 }
 
-fun ApiResult.Failure.toSuwikiError(): SuwikiError {
+fun ApiResult.Failure.toDomainSuwikiError(): SuwikiError {
     return when (this) {
         is ApiResult.Failure.CustomError -> error
         is ApiResult.Failure.HttpError -> SuwikiError.HttpError(code, message, body)
@@ -80,10 +80,10 @@ fun ApiResult.Failure.toSuwikiError(): SuwikiError {
     }
 }
 
-fun <T> ApiResult<T>.toResult(): Result<T> {
+fun <T> ApiResult<T>.toDomainResult(): Result<T> {
     return if (this.isSuccess()) {
         Result.Success(getOrThrow())
     } else {
-        Result.Failure(failureOrThrow().toSuwikiError())
+        Result.Failure(failureOrThrow().toDomainSuwikiError())
     }
 }

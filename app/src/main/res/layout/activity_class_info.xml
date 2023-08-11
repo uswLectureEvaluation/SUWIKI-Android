@@ -554,7 +554,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view3" />
 
-        <com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup
+        <com.kunize.uswtimetable.ui.common.flexboxRadioGroup.FlexBoxRadioGroup
             android:id="@+id/rg_color"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
@@ -684,7 +684,7 @@
                 android:minWidth="0dp"
                 android:minHeight="0dp" />
 
-        </com.askjeffreyliu.flexboxradiogroup.FlexBoxRadioGroup>
+        </com.kunize.uswtimetable.ui.common.flexboxRadioGroup.FlexBoxRadioGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

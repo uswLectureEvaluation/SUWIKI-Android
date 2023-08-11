@@ -7,7 +7,7 @@ import com.suwiki.data.db.request.BookmarkMajorRequest
 import com.suwiki.data.network.ApiService
 import com.suwiki.data.network.dto.OpenMajorListDto
 import com.suwiki.data.network.dto.OpenMajorVersionDto
-import com.suwiki.data.network.toResult
+import com.suwiki.data.network.toDomainResult
 import com.suwiki.domain.di.AuthApiService
 import com.suwiki.domain.model.OpenMajor
 import com.suwiki.domain.model.Result
@@ -18,23 +18,23 @@ class OpenMajorRemoteDataSource @Inject constructor(
     private val db: OpenMajorDatabase,
 ) : OpenMajorDataSource {
     override suspend fun getOpenMajorVersion(): Result<OpenMajorVersionDto> {
-        return apiService.getOpenMajorVersion().toResult()
+        return apiService.getOpenMajorVersion().toDomainResult()
     }
 
     override suspend fun getOpenMajorList(): Result<OpenMajorListDto> {
-        return apiService.getOpenMajorList().toResult()
+        return apiService.getOpenMajorList().toDomainResult()
     }
 
     override suspend fun bookmarkMajor(majorName: String): Result<String> {
-        return apiService.bookmarkMajor(BookmarkMajorRequest(majorName)).toResult()
+        return apiService.bookmarkMajor(BookmarkMajorRequest(majorName)).toDomainResult()
     }
 
     override suspend fun getBookmarkMajorList(): Result<OpenMajorListDto> {
-        return apiService.getBookmarkMajorList().toResult()
+        return apiService.getBookmarkMajorList().toDomainResult()
     }
 
     override suspend fun clearBookmarkMajor(majorName: String): Result<String> {
-        return apiService.clearBookmarkMajor(majorName).toResult()
+        return apiService.clearBookmarkMajor(majorName).toDomainResult()
     }
 
     override suspend fun saveAllOpenMajors(majors: List<OpenMajor>) {

@@ -11,7 +11,6 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.kunize.uswtimetable"
@@ -48,12 +47,6 @@ android {
 
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":presentation"))
-
-    implementation 'com.github.ViksaaSkool:AutoFitEditText:53238e2d29'
-
     implementation "com.google.android.gms:play-services-ads-identifier:18.0.1"
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 
@@ -61,7 +54,6 @@ dependencies {
     implementation 'com.google.android.play:core-ktx:1.8.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
 
     /* AdMob */
@@ -93,12 +85,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation "com.google.android:flexbox:2.0.1"
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation 'com.github.jeffreyliu8:FlexBoxRadioGroup:0.0.8'
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
 
     /* EncryptedSharedPreference */
@@ -123,8 +114,6 @@ dependencies {
 
     /* Handling Network Error */
     implementation "com.github.skydoves:sandwich:1.2.4"
-
-    implementation 'com.github.jeffreyliu8:FlexBoxRadioGroup:0.0.8'
 
     /* Hilt */
     implementation "com.google.dagger:hilt-android:2.45"
