@@ -1,12 +1,16 @@
 package com.suwiki.di.local
 
-import com.suwiki.data.datasource.local.LocalAuthDataSource
+import com.suwiki.data.datasource.local.LocalAccessTokenProviderDataSource
 import com.suwiki.data.datasource.local.LocalOpenMajorDataSource
+import com.suwiki.data.datasource.local.LocalRefreshTokenProviderDataSource
 import com.suwiki.data.datasource.local.LocalTimetableDatasource
+import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
 import com.suwiki.data.datasource.local.LocalUserDataSource
-import com.suwiki.local.datasource.LocalAuthDataSourceImpl
+import com.suwiki.local.datasource.LocalAccessTokenProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalOpenMajorDataSourceImpl
+import com.suwiki.local.datasource.LocalRefreshTokenProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalTimetableDatasourceImpl
+import com.suwiki.local.datasource.LocalTokenStorageDataSourceImpl
 import com.suwiki.local.datasource.LocalUserDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -18,9 +22,19 @@ import dagger.hilt.components.SingletonComponent
 abstract class LocalDataSourceModule {
 
     @Binds
-    abstract fun provideLocalAuthDataSource(
-        localAuthDataSourceImpl: LocalAuthDataSourceImpl,
-    ): LocalAuthDataSource
+    abstract fun provideLocalAccessTokenProviderDataSource(
+        localAccessTokenProviderDataSourceImpl: LocalAccessTokenProviderDataSourceImpl,
+    ): LocalAccessTokenProviderDataSource
+
+    @Binds
+    abstract fun provideLocalRefreshTokenProviderDataSource(
+        localRefreshTokenProviderDataSourceImpl: LocalRefreshTokenProviderDataSourceImpl,
+    ): LocalRefreshTokenProviderDataSource
+
+    @Binds
+    abstract fun provideLocalTokenStorageDataSource(
+        localTokenStorageDataSourceImpl: LocalTokenStorageDataSourceImpl,
+    ): LocalTokenStorageDataSource
 
     @Binds
     abstract fun provideLocalUserDataSource(
