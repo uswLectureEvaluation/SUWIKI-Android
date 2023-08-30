@@ -1,13 +1,15 @@
 package com.suwiki.di.local
 
 import com.suwiki.data.datasource.local.LocalAccessTokenProviderDataSource
-import com.suwiki.data.datasource.local.LocalOpenMajorDataSource
+import com.suwiki.data.datasource.local.LocalOpenMajorProviderDataSource
+import com.suwiki.data.datasource.local.LocalOpenMajorStorageDataSource
 import com.suwiki.data.datasource.local.LocalRefreshTokenProviderDataSource
 import com.suwiki.data.datasource.local.LocalTimetableDatasource
 import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
 import com.suwiki.data.datasource.local.LocalUserDataSource
 import com.suwiki.local.datasource.LocalAccessTokenProviderDataSourceImpl
-import com.suwiki.local.datasource.LocalOpenMajorDataSourceImpl
+import com.suwiki.local.datasource.LocalOpenMajorProviderDataSourceImpl
+import com.suwiki.local.datasource.LocalOpenMajorStorageDataSourceImpl
 import com.suwiki.local.datasource.LocalRefreshTokenProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalTimetableDatasourceImpl
 import com.suwiki.local.datasource.LocalTokenStorageDataSourceImpl
@@ -42,9 +44,14 @@ abstract class LocalDataSourceModule {
     ): LocalUserDataSource
 
     @Binds
-    abstract fun provideLocalOpenMajorDataSource(
-        localOpenMajorDataSourceImpl: LocalOpenMajorDataSourceImpl,
-    ): LocalOpenMajorDataSource
+    abstract fun provideLocalOpenMajorProviderDataSource(
+        localOpenMajorProviderDataSourceImpl: LocalOpenMajorProviderDataSourceImpl,
+    ): LocalOpenMajorProviderDataSource
+
+    @Binds
+    abstract fun provideLocalOpenMajorStorageDataSource(
+        localOpenMajorStorageDataSourceImpl: LocalOpenMajorStorageDataSourceImpl,
+    ): LocalOpenMajorStorageDataSource
 
     @Binds
     abstract fun provideLocalTimetableDatasource(
