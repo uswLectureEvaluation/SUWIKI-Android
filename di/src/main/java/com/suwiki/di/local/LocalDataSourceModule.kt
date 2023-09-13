@@ -7,7 +7,8 @@ import com.suwiki.data.datasource.local.LocalRefreshTokenProviderDataSource
 import com.suwiki.data.datasource.local.LocalTimetableProviderDatasource
 import com.suwiki.data.datasource.local.LocalTimetableStorageDatasource
 import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
-import com.suwiki.data.datasource.local.LocalUserDataSource
+import com.suwiki.data.datasource.local.LocalUserProviderDataSource
+import com.suwiki.data.datasource.local.LocalUserStorageDataSource
 import com.suwiki.local.datasource.LocalAccessTokenProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalOpenMajorProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalOpenMajorStorageDataSourceImpl
@@ -15,7 +16,8 @@ import com.suwiki.local.datasource.LocalRefreshTokenProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalTimetableProviderDatasourceImpl
 import com.suwiki.local.datasource.LocalTimetableStorageDatasourceImpl
 import com.suwiki.local.datasource.LocalTokenStorageDataSourceImpl
-import com.suwiki.local.datasource.LocalUserDataSourceImpl
+import com.suwiki.local.datasource.LocalUserProviderDataSourceImpl
+import com.suwiki.local.datasource.LocalUserStorageDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -41,9 +43,14 @@ abstract class LocalDataSourceModule {
     ): LocalTokenStorageDataSource
 
     @Binds
-    abstract fun bindLocalUserDataSource(
-        localUserDataSourceImpl: LocalUserDataSourceImpl,
-    ): LocalUserDataSource
+    abstract fun bindLocalUserProviderDataSource(
+        localUserProviderDataSourceImpl: LocalUserProviderDataSourceImpl,
+    ): LocalUserProviderDataSource
+
+    @Binds
+    abstract fun bindLocalUserStorageDataSource(
+        localUserStorageDataSourceImpl: LocalUserStorageDataSourceImpl,
+    ): LocalUserStorageDataSource
 
     @Binds
     abstract fun bindLocalOpenMajorProviderDataSource(
