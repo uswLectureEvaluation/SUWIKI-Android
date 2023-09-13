@@ -4,14 +4,16 @@ import com.suwiki.data.datasource.local.LocalAccessTokenProviderDataSource
 import com.suwiki.data.datasource.local.LocalOpenMajorProviderDataSource
 import com.suwiki.data.datasource.local.LocalOpenMajorStorageDataSource
 import com.suwiki.data.datasource.local.LocalRefreshTokenProviderDataSource
-import com.suwiki.data.datasource.local.LocalTimetableDatasource
+import com.suwiki.data.datasource.local.LocalTimetableProviderDatasource
+import com.suwiki.data.datasource.local.LocalTimetableStorageDatasource
 import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
 import com.suwiki.data.datasource.local.LocalUserDataSource
 import com.suwiki.local.datasource.LocalAccessTokenProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalOpenMajorProviderDataSourceImpl
 import com.suwiki.local.datasource.LocalOpenMajorStorageDataSourceImpl
 import com.suwiki.local.datasource.LocalRefreshTokenProviderDataSourceImpl
-import com.suwiki.local.datasource.LocalTimetableDatasourceImpl
+import com.suwiki.local.datasource.LocalTimetableProviderDatasourceImpl
+import com.suwiki.local.datasource.LocalTimetableStorageDatasourceImpl
 import com.suwiki.local.datasource.LocalTokenStorageDataSourceImpl
 import com.suwiki.local.datasource.LocalUserDataSourceImpl
 import dagger.Binds
@@ -24,37 +26,42 @@ import dagger.hilt.components.SingletonComponent
 abstract class LocalDataSourceModule {
 
     @Binds
-    abstract fun provideLocalAccessTokenProviderDataSource(
+    abstract fun bindLocalAccessTokenProviderDataSource(
         localAccessTokenProviderDataSourceImpl: LocalAccessTokenProviderDataSourceImpl,
     ): LocalAccessTokenProviderDataSource
 
     @Binds
-    abstract fun provideLocalRefreshTokenProviderDataSource(
+    abstract fun bindLocalRefreshTokenProviderDataSource(
         localRefreshTokenProviderDataSourceImpl: LocalRefreshTokenProviderDataSourceImpl,
     ): LocalRefreshTokenProviderDataSource
 
     @Binds
-    abstract fun provideLocalTokenStorageDataSource(
+    abstract fun bindLocalTokenStorageDataSource(
         localTokenStorageDataSourceImpl: LocalTokenStorageDataSourceImpl,
     ): LocalTokenStorageDataSource
 
     @Binds
-    abstract fun provideLocalUserDataSource(
+    abstract fun bindLocalUserDataSource(
         localUserDataSourceImpl: LocalUserDataSourceImpl,
     ): LocalUserDataSource
 
     @Binds
-    abstract fun provideLocalOpenMajorProviderDataSource(
+    abstract fun bindLocalOpenMajorProviderDataSource(
         localOpenMajorProviderDataSourceImpl: LocalOpenMajorProviderDataSourceImpl,
     ): LocalOpenMajorProviderDataSource
 
     @Binds
-    abstract fun provideLocalOpenMajorStorageDataSource(
+    abstract fun bindLocalOpenMajorStorageDataSource(
         localOpenMajorStorageDataSourceImpl: LocalOpenMajorStorageDataSourceImpl,
     ): LocalOpenMajorStorageDataSource
 
     @Binds
-    abstract fun provideLocalTimetableDatasource(
-        localTimetableDatasourceImpl: LocalTimetableDatasourceImpl,
-    ): LocalTimetableDatasource
+    abstract fun bindLocalTimetableProviderDatasource(
+        localTimetableProviderDatasourceImpl: LocalTimetableProviderDatasourceImpl,
+    ): LocalTimetableProviderDatasource
+
+    @Binds
+    abstract fun bindLocalTimetableStorageDatasource(
+        localTimetableStorageDatasourceImpl: LocalTimetableStorageDatasourceImpl,
+    ): LocalTimetableStorageDatasource
 }
