@@ -4,5 +4,5 @@ import com.suwiki.model.TimetableData
 
 interface RemoteTimetableDataSource {
     suspend fun fetchRemoteTimetableVersion(): Long
-    suspend fun loadRemoteTimetable(): List<TimetableData>
+    suspend fun fetchRemoteTimetable(): List<TimetableData>
 }

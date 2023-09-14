@@ -40,7 +40,7 @@ class RemoteTimetableDataSourceImpl @Inject constructor(
         return version
     }
 
-    override suspend fun loadRemoteTimetable(): List<TimetableData> {
+    override suspend fun fetchRemoteTimetable(): List<TimetableData> {
         val timetableDatabase = firebaseDatabase.getReference(DATABASE_TIMETABLE)
 
         val timetables = mutableListOf<TimetableData>()

@@ -1,9 +1,9 @@
 package com.suwiki.remote.api
 
 import com.suwiki.remote.ApiResult
-import com.suwiki.remote.api.EvaluateApi.Companion.REPORT
 import com.suwiki.remote.api.LectureApi.Companion.QUERY_LECTURE_ID
 import com.suwiki.remote.api.LectureApi.Companion.QUERY_PAGE
+import com.suwiki.remote.api.LectureApi.Companion.REPORT
 import com.suwiki.remote.api.UserApi.Companion.USER
 import com.suwiki.remote.request.exam.PostLectureExamRequest
 import com.suwiki.remote.request.exam.ReportExamRequest

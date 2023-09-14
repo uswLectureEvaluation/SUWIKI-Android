@@ -1,17 +1,13 @@
 package com.suwiki.local.datasource
 
-import com.suwiki.data.datasource.local.LocalAuthDataSource
+import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
 import com.suwiki.local.datastore.SecurityPreferences
 import com.suwiki.model.Token
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LocalAuthDataSourceImpl @Inject constructor(
+class LocalTokenStorageDataSourceImpl @Inject constructor(
     private val securityPreferences: SecurityPreferences,
-) : LocalAuthDataSource {
-    override fun getAccessToken(): Flow<String> = securityPreferences.flowAccessToken()
-
-    override fun getRefreshToken(): Flow<String> = securityPreferences.flowRefreshToken()
+) : LocalTokenStorageDataSource {
 
     override suspend fun saveAccessToken(accessToken: String) {
         securityPreferences.setAccessToken(accessToken)

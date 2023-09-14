@@ -6,24 +6,12 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.suwiki.data.datasource.local.LocalUserDataSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import com.suwiki.data.datasource.local.LocalUserStorageDataSource
 import javax.inject.Inject
 
-class LocalUserDataSourceImpl @Inject constructor(
+class LocalUserStorageDataSourceImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>,
-) : LocalUserDataSource {
-    private val data: Flow<Preferences>
-        get() = dataStore.data
-
-    override val isLoggedIn: Flow<Boolean> = data.map { it[LOGGED_IN] ?: false }
-    override val userId: Flow<String?> = data.map { it[USER_ID] }
-    override val point: Flow<Int?> = data.map { it[POINT] }
-    override val writtenEvaluation: Flow<Int?> = data.map { it[WRITTEN_EVALUATION] }
-    override val writtenExam: Flow<Int?> = data.map { it[WRITTEN_EXAM] }
-    override val viewExam: Flow<Int?> = data.map { it[VIEW_EXAM] }
-    override val email: Flow<String?> = data.map { it[EMAIL] }
+) : LocalUserStorageDataSource {
 
     override suspend fun login(
         userId: String,

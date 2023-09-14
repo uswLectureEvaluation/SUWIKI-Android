@@ -3,7 +3,6 @@ package com.suwiki.di.network
 import com.suwiki.di.AuthRetrofit
 import com.suwiki.di.NormalRetrofit
 import com.suwiki.remote.api.AuthApi
-import com.suwiki.remote.api.EvaluateApi
 import com.suwiki.remote.api.ExamApi
 import com.suwiki.remote.api.LectureApi
 import com.suwiki.remote.api.MajorApi
@@ -18,11 +17,6 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-
-    @Provides
-    fun provideEvaluateApi(@AuthRetrofit retrofit: Retrofit): EvaluateApi {
-        return retrofit.create(EvaluateApi::class.java)
-    }
 
     @Provides
     fun provideExamApi(@AuthRetrofit retrofit: Retrofit): ExamApi {

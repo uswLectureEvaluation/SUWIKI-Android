@@ -1,13 +1,23 @@
 package com.suwiki.di.local
 
-import com.suwiki.data.datasource.local.LocalAuthDataSource
-import com.suwiki.data.datasource.local.LocalOpenMajorDataSource
-import com.suwiki.data.datasource.local.LocalTimetableDatasource
-import com.suwiki.data.datasource.local.LocalUserDataSource
-import com.suwiki.local.datasource.LocalAuthDataSourceImpl
-import com.suwiki.local.datasource.LocalOpenMajorDataSourceImpl
-import com.suwiki.local.datasource.LocalTimetableDatasourceImpl
-import com.suwiki.local.datasource.LocalUserDataSourceImpl
+import com.suwiki.data.datasource.local.LocalAccessTokenProviderDataSource
+import com.suwiki.data.datasource.local.LocalOpenMajorProviderDataSource
+import com.suwiki.data.datasource.local.LocalOpenMajorStorageDataSource
+import com.suwiki.data.datasource.local.LocalRefreshTokenProviderDataSource
+import com.suwiki.data.datasource.local.LocalTimetableProviderDatasource
+import com.suwiki.data.datasource.local.LocalTimetableStorageDatasource
+import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
+import com.suwiki.data.datasource.local.LocalUserProviderDataSource
+import com.suwiki.data.datasource.local.LocalUserStorageDataSource
+import com.suwiki.local.datasource.LocalAccessTokenProviderDataSourceImpl
+import com.suwiki.local.datasource.LocalOpenMajorProviderDataSourceImpl
+import com.suwiki.local.datasource.LocalOpenMajorStorageDataSourceImpl
+import com.suwiki.local.datasource.LocalRefreshTokenProviderDataSourceImpl
+import com.suwiki.local.datasource.LocalTimetableProviderDatasourceImpl
+import com.suwiki.local.datasource.LocalTimetableStorageDatasourceImpl
+import com.suwiki.local.datasource.LocalTokenStorageDataSourceImpl
+import com.suwiki.local.datasource.LocalUserProviderDataSourceImpl
+import com.suwiki.local.datasource.LocalUserStorageDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,22 +28,47 @@ import dagger.hilt.components.SingletonComponent
 abstract class LocalDataSourceModule {
 
     @Binds
-    abstract fun provideLocalAuthDataSource(
-        localAuthDataSourceImpl: LocalAuthDataSourceImpl,
-    ): LocalAuthDataSource
+    abstract fun bindLocalAccessTokenProviderDataSource(
+        localAccessTokenProviderDataSourceImpl: LocalAccessTokenProviderDataSourceImpl,
+    ): LocalAccessTokenProviderDataSource
 
     @Binds
-    abstract fun provideLocalUserDataSource(
-        localUserDataSourceImpl: LocalUserDataSourceImpl,
-    ): LocalUserDataSource
+    abstract fun bindLocalRefreshTokenProviderDataSource(
+        localRefreshTokenProviderDataSourceImpl: LocalRefreshTokenProviderDataSourceImpl,
+    ): LocalRefreshTokenProviderDataSource
 
     @Binds
-    abstract fun provideLocalOpenMajorDataSource(
-        localOpenMajorDataSourceImpl: LocalOpenMajorDataSourceImpl,
-    ): LocalOpenMajorDataSource
+    abstract fun bindLocalTokenStorageDataSource(
+        localTokenStorageDataSourceImpl: LocalTokenStorageDataSourceImpl,
+    ): LocalTokenStorageDataSource
 
     @Binds
-    abstract fun provideLocalTimetableDatasource(
-        localTimetableDatasourceImpl: LocalTimetableDatasourceImpl,
-    ): LocalTimetableDatasource
+    abstract fun bindLocalUserProviderDataSource(
+        localUserProviderDataSourceImpl: LocalUserProviderDataSourceImpl,
+    ): LocalUserProviderDataSource
+
+    @Binds
+    abstract fun bindLocalUserStorageDataSource(
+        localUserStorageDataSourceImpl: LocalUserStorageDataSourceImpl,
+    ): LocalUserStorageDataSource
+
+    @Binds
+    abstract fun bindLocalOpenMajorProviderDataSource(
+        localOpenMajorProviderDataSourceImpl: LocalOpenMajorProviderDataSourceImpl,
+    ): LocalOpenMajorProviderDataSource
+
+    @Binds
+    abstract fun bindLocalOpenMajorStorageDataSource(
+        localOpenMajorStorageDataSourceImpl: LocalOpenMajorStorageDataSourceImpl,
+    ): LocalOpenMajorStorageDataSource
+
+    @Binds
+    abstract fun bindLocalTimetableProviderDatasource(
+        localTimetableProviderDatasourceImpl: LocalTimetableProviderDatasourceImpl,
+    ): LocalTimetableProviderDatasource
+
+    @Binds
+    abstract fun bindLocalTimetableStorageDatasource(
+        localTimetableStorageDatasourceImpl: LocalTimetableStorageDatasourceImpl,
+    ): LocalTimetableStorageDatasource
 }

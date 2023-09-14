@@ -1,11 +1,11 @@
 package com.suwiki.data.datasource.remote
 
+import com.suwiki.model.LectureDetailEvaluationData
 import com.suwiki.model.LectureDetailInfo
 import com.suwiki.model.LectureMain
 import com.suwiki.model.Result
 
-interface RemoteLectureDataSource {
-
+interface RemoteLectureProviderDataSource {
     suspend fun getLectureMainList(
         option: String,
         page: Int = 1,
@@ -20,4 +20,9 @@ interface RemoteLectureDataSource {
     ): Result<List<LectureMain?>>
 
     suspend fun getLectureDetailInfo(lectureId: Long): Result<LectureDetailInfo>
+
+    suspend fun getLectureDetailEvaluation(
+        lectureId: Long,
+        page: Int,
+    ): Result<LectureDetailEvaluationData>
 }

@@ -1,17 +1,8 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.Evaluation
-import com.suwiki.model.LectureDetailEvaluationData
 import com.suwiki.model.Result
 
-interface RemoteEvaluateDataSource {
-
-    suspend fun getEvaluatePosts(page: Int): Result<List<Evaluation>>
-
-    suspend fun getLectureDetailEvaluation(
-        lectureId: Long,
-        page: Int,
-    ): Result<LectureDetailEvaluationData>
+interface RemoteLectureStorageDataSource {
 
     suspend fun postLectureEvaluation(
         lectureName: String,
@@ -38,10 +29,5 @@ interface RemoteEvaluateDataSource {
         content: String,
     ): Result<Unit>
 
-    suspend fun deleteEvaluation(id: Long): Result<Unit>
-
-    suspend fun reportLecture(
-        evaluateIdx: Long,
-        content: String = "",
-    ): Result<Unit>
+    suspend fun deleteLectureEvaluation(id: Long): Result<Unit>
 }

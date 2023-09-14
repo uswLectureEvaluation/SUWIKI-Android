@@ -1,6 +1,7 @@
 package com.suwiki.data.repository
 
-import com.suwiki.data.datasource.local.LocalUserDataSource
+import com.suwiki.data.datasource.local.LocalUserProviderDataSource
+import com.suwiki.data.datasource.local.LocalUserStorageDataSource
 import com.suwiki.data.datasource.remote.RemoteUserDataSource
 import com.suwiki.domain.model.LoggedInUser
 import com.suwiki.domain.repository.UserRepository
@@ -12,21 +13,22 @@ import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val localUserDataSource: LocalUserDataSource,
+    private val localUserProviderDataSource: LocalUserProviderDataSource,
+    private val localUserStorageDataSource: LocalUserStorageDataSource,
     private val remoteUserDataSource: RemoteUserDataSource,
 ) : UserRepository {
 
     override val isLoggedIn: Flow<Boolean>
-        get() = localUserDataSource.isLoggedIn
+        get() = localUserProviderDataSource.isLoggedIn
 
     override val userInfo: Flow<Result<LoggedInUser>>
         get() = combine(
-            localUserDataSource.userId,
-            localUserDataSource.point,
-            localUserDataSource.writtenEvaluation,
-            localUserDataSource.writtenExam,
-            localUserDataSource.viewExam,
-            localUserDataSource.email,
+            localUserProviderDataSource.userId,
+            localUserProviderDataSource.point,
+            localUserProviderDataSource.writtenEvaluation,
+            localUserProviderDataSource.writtenExam,
+            localUserProviderDataSource.viewExam,
+            localUserProviderDataSource.email,
         ) { userInfo ->
             if (isLoggedIn.firstOrNull() != true) {
                 return@combine Result.Failure(SuwikiError.TokenExpired)
@@ -65,7 +67,7 @@ class UserRepositoryImpl @Inject constructor(
         }
 
         result.getOrNull()?.let {
-            localUserDataSource.login(
+            localUserStorageDataSource.login(
                 userId = it.userId,
                 point = it.point,
                 writtenEvaluation = it.writtenEvaluation,

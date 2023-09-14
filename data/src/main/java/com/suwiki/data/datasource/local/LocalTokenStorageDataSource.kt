@@ -1,12 +1,8 @@
 package com.suwiki.data.datasource.local
 
 import com.suwiki.model.Token
-import kotlinx.coroutines.flow.Flow
 
-interface LocalAuthDataSource {
-
-    fun getAccessToken(): Flow<String>
-    fun getRefreshToken(): Flow<String>
+interface LocalTokenStorageDataSource {
 
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveRefreshToken(refreshToken: String)
