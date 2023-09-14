@@ -4,14 +4,7 @@ import com.suwiki.model.Evaluation
 import com.suwiki.model.LectureDetailEvaluationData
 import com.suwiki.model.Result
 
-interface RemoteEvaluateDataSource {
-
-    suspend fun getEvaluatePosts(page: Int): Result<List<Evaluation>>
-
-    suspend fun getLectureDetailEvaluation(
-        lectureId: Long,
-        page: Int,
-    ): Result<LectureDetailEvaluationData>
+interface RemoteEvaluateStorageDataSource {
 
     suspend fun postLectureEvaluation(
         lectureName: String,
@@ -39,9 +32,4 @@ interface RemoteEvaluateDataSource {
     ): Result<Unit>
 
     suspend fun deleteEvaluation(id: Long): Result<Unit>
-
-    suspend fun reportLecture(
-        evaluateIdx: Long,
-        content: String = "",
-    ): Result<Unit>
 }

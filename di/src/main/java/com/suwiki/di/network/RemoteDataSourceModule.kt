@@ -1,13 +1,17 @@
 package com.suwiki.di.network
 
-import com.suwiki.data.datasource.remote.RemoteEvaluateDataSource
+import com.suwiki.data.datasource.remote.RemoteEvaluateProviderDataSource
+import com.suwiki.data.datasource.remote.RemoteEvaluateReportDataSource
+import com.suwiki.data.datasource.remote.RemoteEvaluateStorageDataSource
 import com.suwiki.data.datasource.remote.RemoteExamDataSource
 import com.suwiki.data.datasource.remote.RemoteLectureDataSource
 import com.suwiki.data.datasource.remote.RemoteNoticeDataSource
 import com.suwiki.data.datasource.remote.RemoteOpenMajorDataSource
 import com.suwiki.data.datasource.remote.RemoteTimetableDataSource
 import com.suwiki.data.datasource.remote.RemoteUserDataSource
-import com.suwiki.remote.datasource.RemoteEvaluateDataSourceImpl
+import com.suwiki.remote.datasource.RemoteEvaluateProviderDataSourceImpl
+import com.suwiki.remote.datasource.RemoteEvaluateReportDataSourceImpl
+import com.suwiki.remote.datasource.RemoteEvaluateStorageDataSourceImpl
 import com.suwiki.remote.datasource.RemoteExamDataSourceImpl
 import com.suwiki.remote.datasource.RemoteLectureDataSourceImpl
 import com.suwiki.remote.datasource.RemoteNoticeDataSourceImpl
@@ -24,9 +28,19 @@ import dagger.hilt.components.SingletonComponent
 abstract class RemoteDataSourceModule {
 
     @Binds
-    abstract fun bindRemoteEvaluateDataSource(
-        remoteEvaluateDataSourceImpl: RemoteEvaluateDataSourceImpl,
-    ): RemoteEvaluateDataSource
+    abstract fun bindRemoteEvaluateProviderDataSource(
+        remoteEvaluateProviderDataSourceImpl: RemoteEvaluateProviderDataSourceImpl,
+    ): RemoteEvaluateProviderDataSource
+
+    @Binds
+    abstract fun bindRemoteEvaluateStorageDataSource(
+        remoteEvaluateStorageDataSourceImpl: RemoteEvaluateStorageDataSourceImpl,
+    ): RemoteEvaluateStorageDataSource
+
+    @Binds
+    abstract fun bindRemoteEvaluateReportDataSource(
+        remoteEvaluateReportDataSourceImpl: RemoteEvaluateReportDataSourceImpl,
+    ): RemoteEvaluateReportDataSource
 
     @Binds
     abstract fun bindRemoteExamDataSource(
