@@ -1,16 +1,16 @@
 package com.suwiki.remote.datasource
 
-import com.suwiki.data.datasource.remote.RemoteEvaluateStorageDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureStorageDataSource
 import com.suwiki.model.Result
-import com.suwiki.remote.api.EvaluateApi
+import com.suwiki.remote.api.LectureApi
 import com.suwiki.remote.request.evaluation.LectureEvaluationRequest
 import com.suwiki.remote.request.evaluation.UpdateLectureEvaluationRequest
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 
-class RemoteEvaluateStorageDataSourceImpl @Inject constructor(
-    private val evaluateApi: EvaluateApi,
-) : RemoteEvaluateStorageDataSource {
+class RemoteLectureStorageDataSourceImpl @Inject constructor(
+    private val lectureApi: LectureApi,
+) : RemoteLectureStorageDataSource {
 
     override suspend fun postLectureEvaluation(
         lectureName: String,
@@ -37,7 +37,7 @@ class RemoteEvaluateStorageDataSourceImpl @Inject constructor(
             content = content,
         )
 
-        return evaluateApi.postLectureEvaluation(
+        return lectureApi.postLectureEvaluation(
             request,
         ).toResult()
     }
@@ -64,13 +64,13 @@ class RemoteEvaluateStorageDataSourceImpl @Inject constructor(
             content = content,
         )
 
-        return evaluateApi.updateLectureEvaluation(
+        return lectureApi.updateLectureEvaluation(
             lectureId = lectureId,
             updateLectureEvaluationRequest = request,
         ).toResult()
     }
 
-    override suspend fun deleteEvaluation(id: Long): Result<Unit> {
-        return evaluateApi.deleteEvaluation(id = id).toResult()
+    override suspend fun deleteLectureEvaluation(id: Long): Result<Unit> {
+        return lectureApi.deleteEvaluation(id = id).toResult()
     }
 }

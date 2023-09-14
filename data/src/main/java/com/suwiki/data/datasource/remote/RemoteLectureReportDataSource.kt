@@ -2,7 +2,7 @@ package com.suwiki.data.datasource.remote
 
 import com.suwiki.model.Result
 
-interface RemoteEvaluateReportDataSource {
+interface RemoteLectureReportDataSource {
 
     suspend fun reportLecture(
         evaluateIdx: Long,

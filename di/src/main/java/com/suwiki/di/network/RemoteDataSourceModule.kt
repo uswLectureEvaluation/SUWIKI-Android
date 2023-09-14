@@ -1,19 +1,19 @@
 package com.suwiki.di.network
 
-import com.suwiki.data.datasource.remote.RemoteEvaluateProviderDataSource
-import com.suwiki.data.datasource.remote.RemoteEvaluateReportDataSource
-import com.suwiki.data.datasource.remote.RemoteEvaluateStorageDataSource
 import com.suwiki.data.datasource.remote.RemoteExamDataSource
-import com.suwiki.data.datasource.remote.RemoteLectureDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureMyDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureProviderDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureReportDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureStorageDataSource
 import com.suwiki.data.datasource.remote.RemoteNoticeDataSource
 import com.suwiki.data.datasource.remote.RemoteOpenMajorDataSource
 import com.suwiki.data.datasource.remote.RemoteTimetableDataSource
 import com.suwiki.data.datasource.remote.RemoteUserDataSource
-import com.suwiki.remote.datasource.RemoteEvaluateProviderDataSourceImpl
-import com.suwiki.remote.datasource.RemoteEvaluateReportDataSourceImpl
-import com.suwiki.remote.datasource.RemoteEvaluateStorageDataSourceImpl
 import com.suwiki.remote.datasource.RemoteExamDataSourceImpl
-import com.suwiki.remote.datasource.RemoteLectureDataSourceImpl
+import com.suwiki.remote.datasource.RemoteLectureMyDataSourceImpl
+import com.suwiki.remote.datasource.RemoteLectureProviderDataSourceImpl
+import com.suwiki.remote.datasource.RemoteLectureReportDataSourceImpl
+import com.suwiki.remote.datasource.RemoteLectureStorageDataSourceImpl
 import com.suwiki.remote.datasource.RemoteNoticeDataSourceImpl
 import com.suwiki.remote.datasource.RemoteOpenMajorDataSourceImpl
 import com.suwiki.remote.datasource.RemoteTimetableDataSourceImpl
@@ -28,29 +28,29 @@ import dagger.hilt.components.SingletonComponent
 abstract class RemoteDataSourceModule {
 
     @Binds
+    abstract fun bindRemoteEvaluateMyDataSource(
+        remoteEvaluateMyDataSourceImpl: RemoteLectureMyDataSourceImpl,
+    ): RemoteLectureMyDataSource
+
+    @Binds
     abstract fun bindRemoteEvaluateProviderDataSource(
-        remoteEvaluateProviderDataSourceImpl: RemoteEvaluateProviderDataSourceImpl,
-    ): RemoteEvaluateProviderDataSource
+        remoteEvaluateProviderDataSourceImpl: RemoteLectureProviderDataSourceImpl,
+    ): RemoteLectureProviderDataSource
 
     @Binds
     abstract fun bindRemoteEvaluateStorageDataSource(
-        remoteEvaluateStorageDataSourceImpl: RemoteEvaluateStorageDataSourceImpl,
-    ): RemoteEvaluateStorageDataSource
+        remoteEvaluateStorageDataSourceImpl: RemoteLectureStorageDataSourceImpl,
+    ): RemoteLectureStorageDataSource
 
     @Binds
     abstract fun bindRemoteEvaluateReportDataSource(
-        remoteEvaluateReportDataSourceImpl: RemoteEvaluateReportDataSourceImpl,
-    ): RemoteEvaluateReportDataSource
+        remoteEvaluateReportDataSourceImpl: RemoteLectureReportDataSourceImpl,
+    ): RemoteLectureReportDataSource
 
     @Binds
     abstract fun bindRemoteExamDataSource(
         remoteExamDataSourceImpl: RemoteExamDataSourceImpl,
     ): RemoteExamDataSource
-
-    @Binds
-    abstract fun bindRemoteLectureDatasource(
-        remoteLectureDataSourceImpl: RemoteLectureDataSourceImpl,
-    ): RemoteLectureDataSource
 
     @Binds
     abstract fun bindRemoteNoticeDatasource(

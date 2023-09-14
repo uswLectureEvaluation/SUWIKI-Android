@@ -1,6 +1,7 @@
 package com.suwiki.remote.datasource
 
-import com.suwiki.data.datasource.remote.RemoteLectureDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureProviderDataSource
+import com.suwiki.model.LectureDetailEvaluationData
 import com.suwiki.model.LectureDetailInfo
 import com.suwiki.model.LectureMain
 import com.suwiki.model.Result
@@ -10,9 +11,19 @@ import com.suwiki.remote.response.lecture.toModel
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 
-class RemoteLectureDataSourceImpl @Inject constructor(
+class RemoteLectureProviderDataSourceImpl @Inject constructor(
     private val lectureApi: LectureApi,
-) : RemoteLectureDataSource {
+) : RemoteLectureProviderDataSource {
+
+    override suspend fun getLectureDetailEvaluation(
+        lectureId: Long,
+        page: Int,
+    ): Result<LectureDetailEvaluationData> {
+        return lectureApi.getLectureDetailEvaluation(lectureId = lectureId, page = page).toResult()
+            .map {
+                it.toModel()
+            }
+    }
 
     override suspend fun getLectureMainList(
         option: String,

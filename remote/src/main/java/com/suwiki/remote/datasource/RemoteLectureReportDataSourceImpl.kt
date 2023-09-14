@@ -1,18 +1,18 @@
 package com.suwiki.remote.datasource
 
-import com.suwiki.data.datasource.remote.RemoteEvaluateReportDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureReportDataSource
 import com.suwiki.model.Result
-import com.suwiki.remote.api.EvaluateApi
+import com.suwiki.remote.api.LectureApi
 import com.suwiki.remote.request.evaluation.ReportLectureRequest
 import com.suwiki.remote.toResult
 import javax.inject.Inject
 
-class RemoteEvaluateReportDataSourceImpl @Inject constructor(
-    private val evaluateApi: EvaluateApi,
-) : RemoteEvaluateReportDataSource {
+class RemoteLectureReportDataSourceImpl @Inject constructor(
+    private val lectureApi: LectureApi,
+) : RemoteLectureReportDataSource {
 
     override suspend fun reportLecture(evaluateIdx: Long, content: String): Result<Unit> {
-        return evaluateApi.reportLecture(
+        return lectureApi.reportLecture(
             ReportLectureRequest(
                 evaluateIdx = evaluateIdx,
                 content = content,
