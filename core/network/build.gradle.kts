@@ -11,6 +11,7 @@ android {
 
 dependencies {
     implementation(project(":core:model"))
+    implementation(project(":core:database"))
 
     implementation(libs.bundles.coroutine)
     implementation(libs.kotlinx.serialization.json)
