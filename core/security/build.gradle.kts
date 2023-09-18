@@ -6,19 +6,14 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-ksp {
-    arg("room.schemaLocation", "$rootDir/schemas")
-}
-
 android {
-    namespace = "com.suwiki.database"
+    namespace = "com.suwiki.security"
 }
 
 dependencies {
     implementation(project(":core:model"))
 
     implementation(libs.bundles.coroutine)
-    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.dataStore.core)
     implementation(libs.androidx.dataStore.preferences)
@@ -26,10 +21,6 @@ dependencies {
     ksp(libs.encrypted.datastore.preference.ksp)
     implementation(libs.encrypted.datastore.preference.ksp.annotations)
     implementation(libs.encrypted.datastore.preference.security)
-
-    ksp(libs.room.compiler)
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
 
     implementation(libs.timber)
 

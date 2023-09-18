@@ -6,25 +6,18 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.core.network"
+    namespace = "com.suwiki.openmajor"
 }
 
 dependencies {
     implementation(project(":core:model"))
-    implementation(project(":core:security"))
+    implementation(project(":core:network"))
 
     implementation(libs.bundles.coroutine)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.kotlin.serialization)
-    implementation(libs.okhttp.logging)
     implementation(libs.androidx.monitor)
     implementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.junit4)
-
-    val bom = libs.firebase.bom
-    add("implementation", platform(bom))
-    implementation(libs.bundles.firebase)
 
     implementation(libs.timber)
 }
