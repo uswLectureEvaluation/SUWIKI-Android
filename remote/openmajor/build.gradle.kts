@@ -12,8 +12,10 @@ android {
 dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:network"))
+    implementation(project(":data"))
 
     implementation(libs.bundles.coroutine)
+    implementation(libs.retrofit.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.monitor)
     implementation(libs.androidx.junit.ktx)
