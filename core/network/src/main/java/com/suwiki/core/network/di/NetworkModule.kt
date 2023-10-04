@@ -16,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,6 +25,7 @@ object NetworkModule {
     private const val BASE_URL: String = "https://api.suwiki.kr"
     private const val RETROFIT_TAG = "Retrofit2"
 
+    @Singleton
     @Provides
     @NormalOkHttpClient
     fun provideNormalHttpClient(
@@ -37,6 +39,7 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
     fun provideJson(): Json {
         return Json {
@@ -46,6 +49,7 @@ object NetworkModule {
         }
     }
 
+    @Singleton
     @Provides
     fun provideLoggingInterceptor(
         json: Json,
@@ -67,6 +71,7 @@ object NetworkModule {
         return loggingInterceptor
     }
 
+    @Singleton
     @Provides
     @NormalRetrofit
     fun provideNormalRetrofit(
@@ -81,6 +86,7 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
     @AuthOkHttpClient
     fun provideAuthHttpClient(
@@ -98,6 +104,7 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
     @AuthRetrofit
     fun provideAuthRetrofit(

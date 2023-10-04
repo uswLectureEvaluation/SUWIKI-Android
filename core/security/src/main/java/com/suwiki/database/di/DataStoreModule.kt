@@ -18,11 +18,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import tech.thdev.useful.encrypted.data.store.preferences.security.generateUsefulSecurity
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
+    @Singleton
     @Provides
     fun provideEncryptedDataStore(
         @ApplicationContext applicationContext: Context,
@@ -34,6 +36,7 @@ object DataStoreModule {
         produceFile = { applicationContext.preferencesDataStoreFile("security-preference") },
     )
 
+    @Singleton
     @Provides
     fun provideSecurityPreference(
         dataStore: DataStore<Preferences>,
