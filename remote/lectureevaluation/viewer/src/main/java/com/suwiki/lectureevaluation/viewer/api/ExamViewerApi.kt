@@ -16,14 +16,6 @@ interface ExamViewerApi {
         const val QUERY_PAGE = "page"
     }
 
-    // 내가 쓴 글 (시험 정보)
-    @GET("$EXAM_POSTS/written")
-    suspend fun getExamPosts(@Query(QUERY_PAGE) page: Int): ApiResult<DataResponse<List<LectureExamResponse>>>
-
-    // 시험정보 구매 이력
-    @GET("$EXAM_POSTS/purchase")
-    suspend fun getPurchaseHistory(): ApiResult<DataResponse<List<PurchaseHistoryResponse>>>
-
     // 검색결과 자세히 보기 (Exam)
     @GET(EXAM_POSTS)
     suspend fun getLectureDetailExam(

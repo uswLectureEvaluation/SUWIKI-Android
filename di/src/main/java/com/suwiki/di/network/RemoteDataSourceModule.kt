@@ -3,11 +3,11 @@ package com.suwiki.di.network
 import com.suwiki.data.datasource.remote.RemoteExamMyDataSource
 import com.suwiki.data.datasource.remote.RemoteExamProviderDataSource
 import com.suwiki.data.datasource.remote.RemoteExamReportDataSource
-import com.suwiki.data.datasource.remote.RemoteExamStorageDataSource
+import com.suwiki.data.datasource.remote.RemoteExamEditorDataSource
 import com.suwiki.data.datasource.remote.RemoteLectureMyDataSource
 import com.suwiki.data.datasource.remote.RemoteLectureProviderDataSource
 import com.suwiki.data.datasource.remote.RemoteLectureReportDataSource
-import com.suwiki.data.datasource.remote.RemoteLectureStorageDataSource
+import com.suwiki.data.datasource.remote.RemoteLectureEditorDataSource
 import com.suwiki.data.datasource.remote.RemoteNoticeDataSource
 import com.suwiki.data.datasource.remote.RemoteOpenMajorDataSource
 import com.suwiki.data.datasource.remote.RemoteTimetableDataSource
@@ -19,7 +19,7 @@ import com.suwiki.remote.datasource.RemoteExamStorageDataSourceImpl
 import com.suwiki.remote.datasource.RemoteLectureMyDataSourceImpl
 import com.suwiki.remote.datasource.RemoteLectureProviderDataSourceImpl
 import com.suwiki.remote.datasource.RemoteLectureReportDataSourceImpl
-import com.suwiki.remote.datasource.RemoteLectureStorageDataSourceImpl
+import com.suwiki.remote.datasource.RemoteLectureEditorDataSourceImpl
 import com.suwiki.remote.datasource.RemoteNoticeDataSourceImpl
 import com.suwiki.remote.datasource.RemoteOpenMajorDataSourceImpl
 import com.suwiki.remote.datasource.RemoteTimetableDataSourceImpl
@@ -45,8 +45,8 @@ abstract class RemoteDataSourceModule {
 
     @Binds
     abstract fun bindRemoteLectureStorageDataSource(
-        remoteLectureStorageDataSourceImpl: RemoteLectureStorageDataSourceImpl,
-    ): RemoteLectureStorageDataSource
+        remoteLectureStorageDataSourceImpl: RemoteLectureEditorDataSourceImpl,
+    ): RemoteLectureEditorDataSource
 
     @Binds
     abstract fun bindRemoteLectureReportDataSource(
@@ -71,7 +71,7 @@ abstract class RemoteDataSourceModule {
     @Binds
     abstract fun bindRemoteExamStorageDataSource(
         remoteExamStorageDataSourceImpl: RemoteExamStorageDataSourceImpl,
-    ): RemoteExamStorageDataSource
+    ): RemoteExamEditorDataSource
 
     @Binds
     abstract fun bindRemoteNoticeDatasource(

@@ -2,7 +2,7 @@ package com.suwiki.data.datasource.remote
 
 import com.suwiki.model.Result
 
-interface RemoteLectureStorageDataSource {
+interface RemoteLectureEditorDataSource {
 
     suspend fun postLectureEvaluation(
         lectureName: String,

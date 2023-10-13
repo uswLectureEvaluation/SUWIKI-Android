@@ -1,16 +1,16 @@
-package com.suwiki.remote.datasource
+package com.suwiki.lectureevaluation.editor.datasource
 
-import com.suwiki.data.datasource.remote.RemoteLectureStorageDataSource
+import com.suwiki.core.network.retrofit.toResult
+import com.suwiki.data.datasource.remote.RemoteLectureEditorDataSource
+import com.suwiki.lectureevaluation.editor.api.LectureEditorApi
+import com.suwiki.lectureevaluation.editor.request.LectureEvaluationRequest
+import com.suwiki.lectureevaluation.editor.request.UpdateLectureEvaluationRequest
 import com.suwiki.model.Result
-import com.suwiki.remote.api.LectureApi
-import com.suwiki.remote.request.evaluation.LectureEvaluationRequest
-import com.suwiki.remote.request.evaluation.UpdateLectureEvaluationRequest
-import com.suwiki.remote.toResult
 import javax.inject.Inject
 
-class RemoteLectureStorageDataSourceImpl @Inject constructor(
-    private val lectureApi: LectureApi,
-) : RemoteLectureStorageDataSource {
+class RemoteLectureEditorDataSourceImpl @Inject constructor(
+    private val lectureApi: LectureEditorApi,
+) : RemoteLectureEditorDataSource {
 
     override suspend fun postLectureEvaluation(
         lectureName: String,
