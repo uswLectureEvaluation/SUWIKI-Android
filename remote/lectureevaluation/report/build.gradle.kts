@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.report"
+    namespace = "com.suwiki.lectureevaluation.report"
 }
 
 dependencies {

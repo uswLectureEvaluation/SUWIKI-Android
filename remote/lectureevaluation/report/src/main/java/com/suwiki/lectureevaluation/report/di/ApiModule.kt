@@ -1,8 +1,8 @@
-package com.suwiki.report.di
+package com.suwiki.lectureevaluation.report.di
 
 import com.suwiki.core.network.di.AuthRetrofit
-import com.suwiki.report.api.ExamReportApi
-import com.suwiki.report.api.LectureReportApi
+import com.suwiki.lectureevaluation.report.api.ExamReportApi
+import com.suwiki.lectureevaluation.report.api.LectureReportApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

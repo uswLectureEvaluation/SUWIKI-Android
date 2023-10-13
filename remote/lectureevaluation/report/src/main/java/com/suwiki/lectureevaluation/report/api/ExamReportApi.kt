@@ -1,9 +1,9 @@
-package com.suwiki.report.api
+package com.suwiki.lectureevaluation.report.api
 
 import com.suwiki.core.network.retrofit.ApiResult
-import com.suwiki.report.api.LectureReportApi.Companion.REPORT
-import com.suwiki.report.api.LectureReportApi.Companion.USER
-import com.suwiki.report.request.ReportExamRequest
+import com.suwiki.lectureevaluation.report.api.LectureReportApi.Companion.REPORT
+import com.suwiki.lectureevaluation.report.api.LectureReportApi.Companion.USER
+import com.suwiki.lectureevaluation.report.request.ReportExamRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 

@@ -1,7 +1,7 @@
-package com.suwiki.report.api
+package com.suwiki.lectureevaluation.report.api
 
 import com.suwiki.core.network.retrofit.ApiResult
-import com.suwiki.report.request.ReportLectureRequest
+import com.suwiki.lectureevaluation.report.request.ReportLectureRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 

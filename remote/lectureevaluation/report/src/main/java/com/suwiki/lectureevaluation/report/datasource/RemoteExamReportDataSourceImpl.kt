@@ -1,10 +1,10 @@
-package com.suwiki.report.datasource
+package com.suwiki.lectureevaluation.report.datasource
 
 import com.suwiki.core.network.retrofit.toResult
 import com.suwiki.data.datasource.remote.RemoteExamReportDataSource
 import com.suwiki.model.Result
-import com.suwiki.report.api.ExamReportApi
-import com.suwiki.report.request.ReportExamRequest
+import com.suwiki.lectureevaluation.report.api.ExamReportApi
+import com.suwiki.lectureevaluation.report.request.ReportExamRequest
 import javax.inject.Inject
 
 class RemoteExamReportDataSourceImpl @Inject constructor(

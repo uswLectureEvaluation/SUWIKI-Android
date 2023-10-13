@@ -1,9 +1,9 @@
-package com.suwiki.report.datasource
+package com.suwiki.lectureevaluation.report.datasource
 
 import com.suwiki.core.network.retrofit.toResult
 import com.suwiki.data.datasource.remote.RemoteLectureReportDataSource
-import com.suwiki.report.api.LectureReportApi
-import com.suwiki.report.request.ReportLectureRequest
+import com.suwiki.lectureevaluation.report.api.LectureReportApi
+import com.suwiki.lectureevaluation.report.request.ReportLectureRequest
 import com.suwiki.model.Result
 import javax.inject.Inject
 
