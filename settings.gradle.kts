@@ -17,11 +17,10 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "uswtimetable"
-include (":domain")
-include (":data")
-include (":presentation")
-include (":app-compose")
-include(":remote")
+include(":domain")
+include(":data")
+include(":presentation")
+include(":app-compose")
 include(":core:model")
 include(":local")
 include(":di")
