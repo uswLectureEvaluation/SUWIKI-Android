@@ -1,7 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("suwiki.android.library")
-    id("suwiki.android.hilt")
+    id("suwiki.android.remote")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
@@ -10,15 +9,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:network"))
-    implementation(project(":data"))
+    implementation(projects.data)
 
-    implementation(libs.bundles.coroutine)
     implementation(libs.retrofit.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
-    androidTestImplementation(libs.junit4)
-
-    implementation(libs.timber)
 }

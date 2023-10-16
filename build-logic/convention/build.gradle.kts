@@ -45,5 +45,9 @@ gradlePlugin {
             id = "suwiki.android.feature.compose"
             implementationClass = "FeatureComposeConventionPlugin"
         }
+        register("remote") {
+            id = "suwiki.android.remote"
+            implementationClass = "RemoteConventionPlugin"
+        }
     }
 }
