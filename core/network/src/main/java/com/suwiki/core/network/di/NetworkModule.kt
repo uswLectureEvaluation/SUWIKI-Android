@@ -23,7 +23,6 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private const val BASE_URL: String = "https://api.suwiki.kr"
-    private const val RETROFIT_TAG = "Retrofit2"
 
     @Singleton
     @Provides
