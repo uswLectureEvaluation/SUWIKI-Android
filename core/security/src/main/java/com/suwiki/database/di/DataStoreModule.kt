@@ -26,6 +26,7 @@ object DataStoreModule {
 
     @Singleton
     @Provides
+    @SecureDataStore
     fun provideEncryptedDataStore(
         @ApplicationContext applicationContext: Context,
     ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
@@ -39,6 +40,6 @@ object DataStoreModule {
     @Singleton
     @Provides
     fun provideSecurityPreference(
-        dataStore: DataStore<Preferences>,
+        @SecureDataStore dataStore: DataStore<Preferences>,
     ): SecurityPreferences = dataStore.generateSecurityPreferences(generateUsefulSecurity())
 }
