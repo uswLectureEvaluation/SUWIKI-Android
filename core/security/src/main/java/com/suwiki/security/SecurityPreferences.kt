@@ -1,4 +1,4 @@
-package com.suwiki.database
+package com.suwiki.security
 
 import kotlinx.coroutines.flow.Flow
 import tech.thdev.useful.encrypted.data.store.preferences.ksp.annotations.UsefulPreferences

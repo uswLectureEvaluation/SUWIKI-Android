@@ -1,4 +1,4 @@
-package com.suwiki.database
+package com.suwiki.security
 
 import org.junit.Test
 

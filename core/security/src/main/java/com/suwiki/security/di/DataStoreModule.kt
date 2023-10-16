@@ -1,4 +1,4 @@
-package com.suwiki.database.di
+package com.suwiki.security.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.suwiki.database.SecurityPreferences
-import com.suwiki.database.generateSecurityPreferences
+import com.suwiki.security.SecurityPreferences
+import com.suwiki.security.generateSecurityPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

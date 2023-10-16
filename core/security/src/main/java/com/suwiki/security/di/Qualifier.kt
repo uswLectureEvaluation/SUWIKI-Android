@@ -1,4 +1,4 @@
-package com.suwiki.database.di
+package com.suwiki.security.di
 
 import javax.inject.Qualifier
 
