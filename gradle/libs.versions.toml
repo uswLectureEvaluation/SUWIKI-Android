@@ -58,7 +58,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
 
 [libraries]
