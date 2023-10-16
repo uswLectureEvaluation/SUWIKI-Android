@@ -17,8 +17,6 @@ dependencies {
     implementation(libs.bundles.coroutine)
     implementation(libs.retrofit.core)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.androidx.monitor)
-    implementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.junit4)
 
     implementation(libs.timber)

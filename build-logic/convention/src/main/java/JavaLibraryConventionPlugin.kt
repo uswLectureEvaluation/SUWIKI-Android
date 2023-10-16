@@ -1,8 +1,9 @@
 import com.kunize.convention.Const
-import com.kunize.convention.java
-import com.kunize.convention.kotlin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.kotlin.dsl.configure
+import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 
 class JavaLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -12,12 +13,12 @@ class JavaLibraryConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.jvm")
             }
 
-            java {
+            extensions.configure<JavaPluginExtension> {
                 sourceCompatibility = Const.JAVA_VERSION
                 targetCompatibility = Const.JAVA_VERSION
             }
 
-            kotlin {
+            extensions.configure<KotlinProjectExtension> {
                 jvmToolchain(Const.JDK_VERSION)
             }
         }

@@ -1,5 +1,3 @@
-import com.kunize.convention.implementation
-import com.kunize.convention.kapt
 import com.kunize.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -9,17 +7,15 @@ class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
+                apply("com.google.devtools.ksp")
                 apply("dagger.hilt.android.plugin")
-                apply("kotlin-kapt")
             }
 
             dependencies {
-                implementation(libs.findLibrary("hilt.android"))
-                kapt(libs.findLibrary("hilt.compiler"))
-            }
-
-            kapt {
-                correctErrorTypes = true
+                "implementation"(libs.findLibrary("hilt.android").get())
+                "ksp"(libs.findLibrary("hilt.compiler").get())
+                "testImplementation"(libs.findLibrary("hilt.testing").get())
+                "kspTest"(libs.findLibrary("hilt.testing.compiler").get())
             }
         }
     }

@@ -13,13 +13,14 @@ internal fun Project.configureAndroidCompose(
         }
 
         composeOptions {
-            kotlinCompilerExtensionVersion =
-                libs.findVersion("androidx-compose-compiler").get().toString()
+            kotlinCompilerExtensionVersion = libs.findVersion("compose.compiler").get().requiredVersion
         }
 
         dependencies {
-            val bom = libs.findLibrary("androidx-compose-bom").get()
-            implementation(platform(bom))
+            // Disabling to work with Alpha
+            "api"(platform(libs.findLibrary("compose.bom").get()))
+            "implementation"(libs.findBundle("compose").get())
+            "debugImplementation"(libs.findBundle("compose.debug").get())
         }
     }
 }

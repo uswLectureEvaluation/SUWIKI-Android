@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.ApplicationExtension
+import com.kunize.convention.Const
 import com.kunize.convention.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -15,6 +16,7 @@ internal class AndroidApplicationConventionPlugin : Plugin<Project> {
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
+                defaultConfig.targetSdk = Const.targetSdk
             }
         }
     }
