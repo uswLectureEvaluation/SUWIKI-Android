@@ -1,4 +1,4 @@
-package com.suwiki.security
+package com.suwiki.database
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
