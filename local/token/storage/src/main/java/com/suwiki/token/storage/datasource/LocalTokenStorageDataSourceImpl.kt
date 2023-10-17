@@ -1,8 +1,8 @@
 package com.suwiki.token.storage.datasource
 
 import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
-import com.suwiki.model.Token
-import com.suwiki.security.SecurityPreferences
+import com.suwiki.core.model.Token
+import com.suwiki.core.security.SecurityPreferences
 import javax.inject.Inject
 
 class LocalTokenStorageDataSourceImpl @Inject constructor(

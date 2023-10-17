@@ -1,6 +1,6 @@
 package com.suwiki.lectureevaluation.viewer.response.lecture
 
-import com.suwiki.model.LectureMain
+import com.suwiki.core.model.LectureMain
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,7 +18,7 @@ data class LectureMainResponse(
     val lectureLearningAvg: Float,
 )
 
-internal fun LectureMainResponse.toModel() = LectureMain(
+internal fun LectureMainResponse.toModel() = com.suwiki.core.model.LectureMain(
     id = id,
     semester = semester,
     professor = professor,

@@ -4,10 +4,10 @@ import com.suwiki.core.network.retrofit.toResult
 import com.suwiki.data.datasource.remote.RemoteLectureProviderDataSource
 import com.suwiki.lectureevaluation.viewer.api.LectureViewerApi
 import com.suwiki.lectureevaluation.viewer.response.lecture.toModel
-import com.suwiki.model.LectureDetailEvaluationData
-import com.suwiki.model.LectureDetailInfo
-import com.suwiki.model.LectureMain
-import com.suwiki.model.Result
+import com.suwiki.core.model.LectureDetailEvaluationData
+import com.suwiki.core.model.LectureDetailInfo
+import com.suwiki.core.model.LectureMain
+import com.suwiki.core.model.Result
 import javax.inject.Inject
 
 class RemoteLectureProviderDataSourceImpl @Inject constructor(
@@ -17,7 +17,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
     override suspend fun getLectureDetailEvaluation(
         lectureId: Long,
         page: Int,
-    ): Result<LectureDetailEvaluationData> {
+    ): com.suwiki.core.model.Result<com.suwiki.core.model.LectureDetailEvaluationData> {
         return lectureApi.getLectureDetailEvaluation(lectureId = lectureId, page = page).toResult()
             .map {
                 it.toModel()
@@ -28,7 +28,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
         option: String,
         page: Int,
         majorType: String,
-    ): Result<List<LectureMain?>> {
+    ): com.suwiki.core.model.Result<List<com.suwiki.core.model.LectureMain?>> {
         return lectureApi.getLectureMainList(
             option = option,
             page = page,
@@ -41,7 +41,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
         option: String,
         page: Int,
         majorType: String,
-    ): Result<List<LectureMain?>> {
+    ): com.suwiki.core.model.Result<List<com.suwiki.core.model.LectureMain?>> {
         return lectureApi.getSearchResultDetail(
             searchValue = searchValue,
             option = option,
@@ -50,7 +50,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
         ).toResult().map { result -> result.data.map { it?.toModel() } }
     }
 
-    override suspend fun getLectureDetailInfo(lectureId: Long): Result<LectureDetailInfo> {
+    override suspend fun getLectureDetailInfo(lectureId: Long): com.suwiki.core.model.Result<com.suwiki.core.model.LectureDetailInfo> {
         return lectureApi.getLectureDetailInfo(lectureId).toResult().map { it.data.toModel() }
     }
 }

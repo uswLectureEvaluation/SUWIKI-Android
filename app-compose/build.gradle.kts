@@ -24,6 +24,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.database)
     implementation(projects.core.model)
     implementation(projects.core.network)
     implementation(projects.core.security)
@@ -31,7 +32,12 @@ dependencies {
     implementation(projects.data)
     implementation(projects.domain)
     implementation(projects.di)
-    implementation(projects.local)
+
+    implementation(projects.local.openmajor)
+    implementation(projects.local.timetable.editor)
+    implementation(projects.local.timetable.viewer)
+    implementation(projects.local.token.storage)
+    implementation(projects.local.user)
 
     implementation(projects.remote.lectureevaluation.editor)
     implementation(projects.remote.lectureevaluation.my)

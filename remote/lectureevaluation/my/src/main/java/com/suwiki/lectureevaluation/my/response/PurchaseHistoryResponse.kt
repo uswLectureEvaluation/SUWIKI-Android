@@ -1,6 +1,6 @@
 package com.suwiki.lectureevaluation.my.response
 
-import com.suwiki.model.PurchaseHistory
+import com.suwiki.core.model.PurchaseHistory
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.Serializable
@@ -14,7 +14,7 @@ data class PurchaseHistoryResponse(
     val createDate: LocalDateTime,
 )
 
-internal fun PurchaseHistoryResponse.toModel() = PurchaseHistory(
+internal fun PurchaseHistoryResponse.toModel() = com.suwiki.core.model.PurchaseHistory(
     id = id,
     lectureName = lectureName,
     professor = professor,

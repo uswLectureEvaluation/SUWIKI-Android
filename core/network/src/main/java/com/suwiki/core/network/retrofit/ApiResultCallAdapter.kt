@@ -1,6 +1,6 @@
 package com.suwiki.core.network.retrofit
 
-import com.suwiki.model.SuwikiError
+import com.suwiki.core.model.SuwikiError
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call

@@ -1,6 +1,6 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.Result
+import com.suwiki.core.model.Result
 
 interface RemoteExamEditorDataSource {
 
@@ -13,7 +13,7 @@ interface RemoteExamEditorDataSource {
         examType: String?,
         examDifficulty: String,
         content: String,
-    ): Result<Unit>
+    ): com.suwiki.core.model.Result<Unit>
 
     suspend fun updateLectureExam(
         lectureId: Long,
@@ -22,7 +22,7 @@ interface RemoteExamEditorDataSource {
         examType: String?,
         examDifficulty: String,
         content: String,
-    ): Result<Unit>
+    ): com.suwiki.core.model.Result<Unit>
 
-    suspend fun deleteExamInfo(id: Long): Result<Unit>
+    suspend fun deleteExamInfo(id: Long): com.suwiki.core.model.Result<Unit>
 }

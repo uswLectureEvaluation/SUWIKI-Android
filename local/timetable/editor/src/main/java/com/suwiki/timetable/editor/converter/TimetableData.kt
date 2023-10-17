@@ -1,7 +1,7 @@
 package com.suwiki.timetable.editor.converter
 
-import com.suwiki.database.model.TimetableEntity
-import com.suwiki.model.TimetableData
+import com.suwiki.core.database.model.TimetableEntity
+import com.suwiki.core.model.TimetableData
 
 fun TimetableData.toEntity(): TimetableEntity {
     return TimetableEntity(

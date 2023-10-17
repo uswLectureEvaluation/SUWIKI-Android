@@ -10,7 +10,7 @@ ksp {
 }
 
 android {
-    namespace = "com.suwiki.database"
+    namespace = "com.suwiki.core.database"
 }
 
 dependencies {

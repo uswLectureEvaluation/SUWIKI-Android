@@ -1,10 +1,10 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.Result
+import com.suwiki.core.model.Result
 
 interface RemoteOpenMajorDataSource {
-    suspend fun getOpenMajorVersion(): Result<Float>
-    suspend fun getOpenMajorList(): Result<List<String>>
-    suspend fun bookmarkMajor(majorName: String): Result<Unit>
-    suspend fun removeBookmarkMajor(majorName: String): Result<Unit>
+    suspend fun getOpenMajorVersion(): com.suwiki.core.model.Result<Float>
+    suspend fun getOpenMajorList(): com.suwiki.core.model.Result<List<String>>
+    suspend fun bookmarkMajor(majorName: String): com.suwiki.core.model.Result<Unit>
+    suspend fun removeBookmarkMajor(majorName: String): com.suwiki.core.model.Result<Unit>
 }

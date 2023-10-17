@@ -1,13 +1,13 @@
 package com.suwiki.openmajor.converter
 
-import com.suwiki.database.model.OpenMajorEntity
-import com.suwiki.model.OpenMajor
+import com.suwiki.core.database.model.OpenMajorEntity
+import com.suwiki.core.model.OpenMajor
 
-fun OpenMajorEntity.toModel() = OpenMajor(
+fun OpenMajorEntity.toModel() = com.suwiki.core.model.OpenMajor(
     id = id,
     name = name,
 )
 
-fun OpenMajor.toEntity() = OpenMajorEntity(name).also {
+fun com.suwiki.core.model.OpenMajor.toEntity() = OpenMajorEntity(name).also {
     it.id = id
 }

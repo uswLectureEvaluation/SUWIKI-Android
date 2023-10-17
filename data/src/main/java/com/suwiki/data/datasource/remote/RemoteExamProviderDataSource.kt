@@ -1,13 +1,13 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.LectureDetailExamData
-import com.suwiki.model.Result
+import com.suwiki.core.model.LectureDetailExamData
+import com.suwiki.core.model.Result
 
 interface RemoteExamProviderDataSource {
-    suspend fun buyExam(lectureId: Long): Result<Unit>
+    suspend fun buyExam(lectureId: Long): com.suwiki.core.model.Result<Unit>
 
     suspend fun getLectureDetailExam(
         lectureId: Long,
         page: Int,
-    ): Result<LectureDetailExamData>
+    ): com.suwiki.core.model.Result<com.suwiki.core.model.LectureDetailExamData>
 }

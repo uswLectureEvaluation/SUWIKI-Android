@@ -1,6 +1,6 @@
 package com.suwiki.data.datasource.local
 
-import com.suwiki.model.TimetableData
+import com.suwiki.core.model.TimetableData
 
 interface LocalTimetableStorageDatasource {
     suspend fun insert(data: TimetableData)

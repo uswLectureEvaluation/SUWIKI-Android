@@ -1,6 +1,6 @@
 package com.suwiki.lectureevaluation.my.response
 
-import com.suwiki.model.LectureExam
+import com.suwiki.core.model.LectureExam
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,7 +17,7 @@ data class LectureExamResponse(
     val content: String,
 )
 
-internal fun LectureExamResponse.toModel() = LectureExam(
+internal fun LectureExamResponse.toModel() = com.suwiki.core.model.LectureExam(
     id = id,
     lectureName = lectureName,
     professor = professor,

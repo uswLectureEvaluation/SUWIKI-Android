@@ -1,8 +1,8 @@
 package com.suwiki.timetable.viewer.datasource
 
 import com.suwiki.data.datasource.local.LocalTimetableProviderDatasource
-import com.suwiki.database.TimetableDatabase
-import com.suwiki.model.TimetableData
+import com.suwiki.core.database.TimetableDatabase
+import com.suwiki.core.model.TimetableData
 import com.suwiki.timetable.viewer.converter.toModel
 import javax.inject.Inject
 

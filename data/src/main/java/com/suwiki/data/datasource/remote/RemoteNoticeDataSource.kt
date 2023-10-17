@@ -1,12 +1,12 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.Notice
-import com.suwiki.model.NoticeDetail
-import com.suwiki.model.Result
+import com.suwiki.core.model.Notice
+import com.suwiki.core.model.NoticeDetail
+import com.suwiki.core.model.Result
 
 interface RemoteNoticeDataSource {
 
-    suspend fun getNoticeList(page: Int): Result<List<Notice>>
+    suspend fun getNoticeList(page: Int): com.suwiki.core.model.Result<List<com.suwiki.core.model.Notice>>
 
-    suspend fun getNotice(id: Long): Result<NoticeDetail>
+    suspend fun getNotice(id: Long): com.suwiki.core.model.Result<com.suwiki.core.model.NoticeDetail>
 }

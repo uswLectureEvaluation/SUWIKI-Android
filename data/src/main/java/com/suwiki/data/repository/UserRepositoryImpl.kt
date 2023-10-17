@@ -5,8 +5,8 @@ import com.suwiki.data.datasource.local.LocalUserStorageDataSource
 import com.suwiki.data.datasource.remote.RemoteUserDataSource
 import com.suwiki.domain.model.LoggedInUser
 import com.suwiki.domain.repository.UserRepository
-import com.suwiki.model.Result
-import com.suwiki.model.SuwikiError
+import com.suwiki.core.model.Result
+import com.suwiki.core.model.SuwikiError
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
@@ -21,7 +21,7 @@ class UserRepositoryImpl @Inject constructor(
     override val isLoggedIn: Flow<Boolean>
         get() = localUserProviderDataSource.isLoggedIn
 
-    override val userInfo: Flow<Result<LoggedInUser>>
+    override val userInfo: Flow<com.suwiki.core.model.Result<LoggedInUser>>
         get() = combine(
             localUserProviderDataSource.userId,
             localUserProviderDataSource.point,
@@ -31,7 +31,7 @@ class UserRepositoryImpl @Inject constructor(
             localUserProviderDataSource.email,
         ) { userInfo ->
             if (isLoggedIn.firstOrNull() != true) {
-                return@combine Result.Failure(SuwikiError.TokenExpired)
+                return@combine com.suwiki.core.model.Result.Failure(SuwikiError.TokenExpired)
             }
 
             val userId = (userInfo[0] as? String) ?: return@combine getRemoteUserInfoAndSetLocal()
@@ -51,10 +51,10 @@ class UserRepositoryImpl @Inject constructor(
                 email = email,
             )
 
-            Result.Success(loggedInUser)
+            com.suwiki.core.model.Result.Success(loggedInUser)
         }
 
-    private suspend fun getRemoteUserInfoAndSetLocal(): Result<LoggedInUser> {
+    private suspend fun getRemoteUserInfoAndSetLocal(): com.suwiki.core.model.Result<LoggedInUser> {
         val result = remoteUserDataSource.getUserData().map { user ->
             LoggedInUser(
                 userId = user.userId,

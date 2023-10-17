@@ -4,8 +4,8 @@ import com.suwiki.core.network.retrofit.toResult
 import com.suwiki.data.datasource.remote.RemoteExamProviderDataSource
 import com.suwiki.lectureevaluation.viewer.api.ExamViewerApi
 import com.suwiki.lectureevaluation.viewer.response.exam.toModel
-import com.suwiki.model.LectureDetailExamData
-import com.suwiki.model.Result
+import com.suwiki.core.model.LectureDetailExamData
+import com.suwiki.core.model.Result
 import javax.inject.Inject
 
 class RemoteExamProviderDataSourceImpl @Inject constructor(
@@ -15,12 +15,12 @@ class RemoteExamProviderDataSourceImpl @Inject constructor(
     override suspend fun getLectureDetailExam(
         lectureId: Long,
         page: Int,
-    ): Result<LectureDetailExamData> {
+    ): com.suwiki.core.model.Result<com.suwiki.core.model.LectureDetailExamData> {
         return examApi.getLectureDetailExam(lectureId = lectureId, page = page)
             .toResult().map { it.toModel() }
     }
 
-    override suspend fun buyExam(lectureId: Long): Result<Unit> {
+    override suspend fun buyExam(lectureId: Long): com.suwiki.core.model.Result<Unit> {
         return examApi.buyExam(lectureId).toResult()
     }
 }
