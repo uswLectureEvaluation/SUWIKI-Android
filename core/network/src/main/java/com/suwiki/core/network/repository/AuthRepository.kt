@@ -2,7 +2,7 @@ package com.suwiki.core.network.repository
 
 import kotlinx.coroutines.flow.Flow
 
-interface AuthRepository {
+internal interface AuthRepository {
     val accessToken: Flow<String>
 
     /**

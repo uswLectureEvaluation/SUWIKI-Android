@@ -88,7 +88,7 @@ object NetworkModule {
     @Singleton
     @Provides
     @AuthOkHttpClient
-    fun provideAuthHttpClient(
+    internal fun provideAuthHttpClient(
         authenticator: TokenAuthenticator,
         authenticationInterceptor: AuthenticationInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,

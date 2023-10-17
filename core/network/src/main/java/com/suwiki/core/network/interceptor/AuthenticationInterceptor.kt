@@ -8,7 +8,7 @@ import okhttp3.Interceptor
 import timber.log.Timber
 import javax.inject.Inject
 
-class AuthenticationInterceptor @Inject constructor(
+internal class AuthenticationInterceptor @Inject constructor(
     private val authRepository: AuthRepository,
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {

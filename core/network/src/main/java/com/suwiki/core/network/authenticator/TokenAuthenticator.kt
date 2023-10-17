@@ -10,7 +10,7 @@ import okhttp3.Route
 import timber.log.Timber
 import javax.inject.Inject
 
-class TokenAuthenticator @Inject constructor(
+internal class TokenAuthenticator @Inject constructor(
     private val authRepository: AuthRepository,
 ) : Authenticator {
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
