@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.lectureevaluation.report"
+    namespace = "com.suwiki.remote.lectureevaluation.report"
 }
 
 dependencies {

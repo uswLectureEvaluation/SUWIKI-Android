@@ -12,7 +12,6 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
-    implementation(project(":local"))
 
     implementation(libs.bundles.coroutine)
     implementation(libs.kotlinx.serialization.json)

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.openmajor"
+    namespace = "com.suwiki.remote.openmajor"
 }
 
 dependencies {

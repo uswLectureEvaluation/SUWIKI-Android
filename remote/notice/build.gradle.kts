@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.notice"
+    namespace = "com.suwiki.remote.notice"
 }
 
 dependencies {

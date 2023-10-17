@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.user"
+    namespace = "com.suwiki.remote.user"
 }
 
 dependencies {

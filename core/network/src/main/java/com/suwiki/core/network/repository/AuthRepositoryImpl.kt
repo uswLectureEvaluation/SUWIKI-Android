@@ -3,7 +3,7 @@ package com.suwiki.core.network.repository
 import com.suwiki.core.network.api.AuthApi
 import com.suwiki.core.network.retrofit.onFailure
 import com.suwiki.core.network.retrofit.onSuccess
-import com.suwiki.database.SecurityPreferences
+import com.suwiki.core.security.SecurityPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import timber.log.Timber
@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthRepositoryImpl @Inject constructor(
+internal class AuthRepositoryImpl @Inject constructor(
     private val authApi: AuthApi,
     private val securityPreferences: SecurityPreferences,
 ) : AuthRepository {

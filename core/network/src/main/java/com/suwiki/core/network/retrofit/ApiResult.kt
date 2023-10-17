@@ -1,7 +1,7 @@
 package com.suwiki.core.network.retrofit
 
-import com.suwiki.model.Result
-import com.suwiki.model.SuwikiError
+import com.suwiki.core.model.Result
+import com.suwiki.core.model.SuwikiError
 
 sealed interface ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>

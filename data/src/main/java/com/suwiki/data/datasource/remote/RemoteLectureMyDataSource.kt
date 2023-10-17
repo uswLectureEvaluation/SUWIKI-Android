@@ -1,9 +1,9 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.Evaluation
-import com.suwiki.model.Result
+import com.suwiki.core.model.Evaluation
+import com.suwiki.core.model.Result
 
 interface RemoteLectureMyDataSource {
 
-    suspend fun getLectureMyPosts(page: Int): Result<List<Evaluation>>
+    suspend fun getLectureMyPosts(page: Int): com.suwiki.core.model.Result<List<com.suwiki.core.model.Evaluation>>
 }

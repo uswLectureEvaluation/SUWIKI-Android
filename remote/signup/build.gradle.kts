@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.signup"
+    namespace = "com.suwiki.remote.signup"
 }
 
 dependencies {

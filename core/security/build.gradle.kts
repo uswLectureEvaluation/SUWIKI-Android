@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.security"
+    namespace = "com.suwiki.core.security"
 }
 
 dependencies {
-    implementation(project(":core:model"))
+    implementation(projects.core.model)
 
     implementation(libs.bundles.coroutine)
 

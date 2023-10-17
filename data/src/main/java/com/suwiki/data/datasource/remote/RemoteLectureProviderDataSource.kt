@@ -1,28 +1,28 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.LectureDetailEvaluationData
-import com.suwiki.model.LectureDetailInfo
-import com.suwiki.model.LectureMain
-import com.suwiki.model.Result
+import com.suwiki.core.model.LectureDetailEvaluationData
+import com.suwiki.core.model.LectureDetailInfo
+import com.suwiki.core.model.LectureMain
+import com.suwiki.core.model.Result
 
 interface RemoteLectureProviderDataSource {
     suspend fun getLectureMainList(
         option: String,
         page: Int = 1,
         majorType: String = "",
-    ): Result<List<LectureMain?>>
+    ): com.suwiki.core.model.Result<List<com.suwiki.core.model.LectureMain?>>
 
     suspend fun getSearchResultDetail(
         searchValue: String,
         option: String,
         page: Int,
         majorType: String,
-    ): Result<List<LectureMain?>>
+    ): com.suwiki.core.model.Result<List<com.suwiki.core.model.LectureMain?>>
 
-    suspend fun getLectureDetailInfo(lectureId: Long): Result<LectureDetailInfo>
+    suspend fun getLectureDetailInfo(lectureId: Long): com.suwiki.core.model.Result<com.suwiki.core.model.LectureDetailInfo>
 
     suspend fun getLectureDetailEvaluation(
         lectureId: Long,
         page: Int,
-    ): Result<LectureDetailEvaluationData>
+    ): com.suwiki.core.model.Result<com.suwiki.core.model.LectureDetailEvaluationData>
 }

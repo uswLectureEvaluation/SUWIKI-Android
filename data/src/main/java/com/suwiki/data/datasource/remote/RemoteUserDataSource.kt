@@ -1,31 +1,31 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.model.Result
-import com.suwiki.model.Token
-import com.suwiki.model.User
+import com.suwiki.core.model.Result
+import com.suwiki.core.model.Token
+import com.suwiki.core.model.User
 
 interface RemoteUserDataSource {
-    suspend fun findId(email: String): Result<Boolean>
+    suspend fun findId(email: String): com.suwiki.core.model.Result<Boolean>
 
     suspend fun findPassword(
         loginId: String,
         email: String,
-    ): Result<Boolean>
+    ): com.suwiki.core.model.Result<Boolean>
 
     suspend fun resetPassword(
         currentPassword: String,
         newPassword: String,
-    ): Result<Boolean>
+    ): com.suwiki.core.model.Result<Boolean>
 
     suspend fun login(
         loginId: String,
         password: String,
-    ): Result<Token>
+    ): com.suwiki.core.model.Result<Token>
 
     suspend fun quit(
         id: String,
         password: String,
-    ): Result<Boolean>
+    ): com.suwiki.core.model.Result<Boolean>
 
-    suspend fun getUserData(): Result<User>
+    suspend fun getUserData(): com.suwiki.core.model.Result<User>
 }
