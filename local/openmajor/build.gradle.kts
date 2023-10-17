@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.openmajor"
+    namespace = "com.suwiki.local.openmajor"
 }
 
 dependencies {

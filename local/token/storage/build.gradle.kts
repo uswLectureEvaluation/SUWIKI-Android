@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.token.storage"
+    namespace = "com.suwiki.local.token.storage"
 }
 
 dependencies {

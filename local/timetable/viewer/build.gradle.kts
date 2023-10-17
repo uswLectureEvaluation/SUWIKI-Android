@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.suwiki.timetable.viewer"
+    namespace = "com.suwiki.local.timetable.viewer"
 }
 
 dependencies {
