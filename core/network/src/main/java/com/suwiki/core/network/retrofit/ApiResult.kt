@@ -1,6 +1,5 @@
 package com.suwiki.core.network.retrofit
 
-import com.suwiki.core.model.Result
 import com.suwiki.core.model.SuwikiError
 
 sealed interface ApiResult<out T> {
@@ -73,21 +72,4 @@ internal fun ApiResult<*>.throwOnSuccess() {
 
 internal fun ApiResult<*>.throwFailure() {
     if (this is ApiResult.Failure) throw safeThrowable()
-}
-
-fun ApiResult.Failure.toSuwikiError(): SuwikiError {
-    return when (this) {
-        is ApiResult.Failure.CustomError -> error
-        is ApiResult.Failure.HttpError -> SuwikiError.HttpError(code, message, body)
-        is ApiResult.Failure.NetworkError -> SuwikiError.NetworkError
-        is ApiResult.Failure.UnknownError -> SuwikiError.CustomError(-1, throwable.message ?: "")
-    }
-}
-
-fun <T> ApiResult<T>.toResult(): Result<T> {
-    return if (this.isSuccess) {
-        Result.Success(getOrThrow())
-    } else {
-        Result.Failure(failureOrThrow().toSuwikiError())
-    }
 }

@@ -3,5 +3,5 @@ package com.suwiki.data.datasource.local
 import com.suwiki.core.model.OpenMajor
 
 interface LocalOpenMajorProviderDataSource {
-    suspend fun getLocalOpenMajorList(): List<com.suwiki.core.model.OpenMajor>
+    suspend fun getLocalOpenMajorList(): List<OpenMajor>
 }

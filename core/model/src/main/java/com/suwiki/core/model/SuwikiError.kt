@@ -2,7 +2,7 @@ package com.suwiki.core.model
 
 sealed interface SuwikiError {
     object RequestFailure : SuwikiError // 요청 실패
-    object TokenExpired : SuwikiError // JWT 만료
+    data object TokenExpired : SuwikiError // JWT 만료
     object RestrictApproach : SuwikiError // 제한된 유저의 접근
     object NoResult : SuwikiError // 결과 값이 없는 경우
     data class HttpError(val code: Int, val message: String, val body: String) : SuwikiError
