@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.viewer.response.exam
 
-import com.suwiki.core.model.LectureDetailExam
-import com.suwiki.core.model.LectureDetailExamData
+import com.suwiki.core.model.lectureevaluation.LectureDetailExam
+import com.suwiki.core.model.lectureevaluation.LectureDetailExamData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -12,7 +12,7 @@ data class LectureDetailExamDataResponse(
     val written: Boolean,
 )
 
-internal fun LectureDetailExamDataResponse.toModel() = com.suwiki.core.model.LectureDetailExamData(
+internal fun LectureDetailExamDataResponse.toModel() = LectureDetailExamData(
     data = data.map { it.toModel() },
     examDataExist = examDataExist,
     written = written,
@@ -28,7 +28,7 @@ data class LectureDetailExamResponse(
     val content: String,
 )
 
-internal fun LectureDetailExamResponse.toModel() = com.suwiki.core.model.LectureDetailExam(
+internal fun LectureDetailExamResponse.toModel() = LectureDetailExam(
     id = id,
     semester = semester,
     examInfo = examInfo,

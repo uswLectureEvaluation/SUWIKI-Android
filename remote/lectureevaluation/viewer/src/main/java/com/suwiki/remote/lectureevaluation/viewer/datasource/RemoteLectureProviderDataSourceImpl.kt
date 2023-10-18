@@ -1,8 +1,8 @@
 package com.suwiki.remote.lectureevaluation.viewer.datasource
 
-import com.suwiki.core.model.LectureDetailEvaluationData
-import com.suwiki.core.model.LectureDetailInfo
-import com.suwiki.core.model.LectureMain
+import com.suwiki.core.model.lectureevaluation.LectureDetailEvaluationData
+import com.suwiki.core.model.lectureevaluation.LectureDetailInfo
+import com.suwiki.core.model.lectureevaluation.LectureMain
 import com.suwiki.data.datasource.remote.RemoteLectureProviderDataSource
 import com.suwiki.remote.lectureevaluation.viewer.api.LectureViewerApi
 import com.suwiki.remote.lectureevaluation.viewer.response.lecture.toModel

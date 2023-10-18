@@ -1,6 +1,6 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.LectureDetailExamData
+import com.suwiki.core.model.lectureevaluation.LectureDetailExamData
 
 interface RemoteExamProviderDataSource {
     suspend fun buyExam(lectureId: Long)

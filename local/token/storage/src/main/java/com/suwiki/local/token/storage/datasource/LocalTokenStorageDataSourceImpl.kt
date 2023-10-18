@@ -1,7 +1,7 @@
 package com.suwiki.local.token.storage.datasource
 
 import com.suwiki.data.datasource.local.LocalTokenStorageDataSource
-import com.suwiki.core.model.Token
+import com.suwiki.core.model.user.Token
 import com.suwiki.core.security.SecurityPreferences
 import javax.inject.Inject
 

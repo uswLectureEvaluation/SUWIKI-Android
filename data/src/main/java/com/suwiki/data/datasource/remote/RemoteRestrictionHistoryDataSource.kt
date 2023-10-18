@@ -1,6 +1,6 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.Suspension
+import com.suwiki.core.model.user.Suspension
 
 interface RemoteRestrictionHistoryDataSource {
 

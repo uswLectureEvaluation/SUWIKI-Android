@@ -1,7 +1,7 @@
 package com.suwiki.remote.timetable.editor.datasource
 
 import com.google.firebase.database.FirebaseDatabase
-import com.suwiki.core.model.TimetableData
+import com.suwiki.core.model.timetable.TimetableData
 import com.suwiki.data.datasource.remote.RemoteTimetableDataSource
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.suwiki.core.model
+package com.suwiki.core.model.timetable
 
 data class TimetableData(
     val number: Long = 0, // 번호

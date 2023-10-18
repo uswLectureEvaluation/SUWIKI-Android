@@ -1,6 +1,6 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.Evaluation
+import com.suwiki.core.model.lectureevaluation.Evaluation
 
 interface RemoteLectureMyDataSource {
 

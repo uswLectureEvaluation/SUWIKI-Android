@@ -3,7 +3,7 @@ package com.suwiki.remote.lectureevaluation.viewer.datasource
 import com.suwiki.data.datasource.remote.RemoteExamProviderDataSource
 import com.suwiki.remote.lectureevaluation.viewer.api.ExamViewerApi
 import com.suwiki.remote.lectureevaluation.viewer.response.exam.toModel
-import com.suwiki.core.model.LectureDetailExamData
+import com.suwiki.core.model.lectureevaluation.LectureDetailExamData
 import javax.inject.Inject
 
 class RemoteExamProviderDataSourceImpl @Inject constructor(

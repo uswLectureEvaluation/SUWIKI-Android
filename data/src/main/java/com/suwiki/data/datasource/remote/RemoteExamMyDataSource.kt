@@ -1,7 +1,7 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.LectureExam
-import com.suwiki.core.model.PurchaseHistory
+import com.suwiki.core.model.lectureevaluation.LectureExam
+import com.suwiki.core.model.lectureevaluation.PurchaseHistory
 
 interface RemoteExamMyDataSource {
 

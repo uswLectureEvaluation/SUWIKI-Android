@@ -1,7 +1,7 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.Token
-import com.suwiki.core.model.User
+import com.suwiki.core.model.user.Token
+import com.suwiki.core.model.user.User
 
 interface RemoteUserDataSource {
     suspend fun findId(email: String): Boolean
