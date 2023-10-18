@@ -1,4 +1,4 @@
-package com.suwiki.core.model
+package com.suwiki.core.model.exception
 
 sealed interface SuwikiError {
     object RequestFailure : SuwikiError // 요청 실패
