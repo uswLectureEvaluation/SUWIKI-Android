@@ -47,10 +47,6 @@ private class ApiResultCall<R>(
                     )
                 }
 
-                SuwikiError.fromCode(code())?.let {
-                    return ApiResult.Failure.CustomError(code(), it)
-                }
-
                 body()?.let { body -> return ApiResult.successOf(body) }
 
                 return if (successType == Unit::class.java) {
