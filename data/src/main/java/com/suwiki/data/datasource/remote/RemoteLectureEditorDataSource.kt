@@ -1,7 +1,5 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.Result
-
 interface RemoteLectureEditorDataSource {
 
     suspend fun postLectureEvaluation(
@@ -15,7 +13,7 @@ interface RemoteLectureEditorDataSource {
         difficulty: Int,
         homework: Int,
         content: String,
-    ): com.suwiki.core.model.Result<Unit>
+    )
 
     suspend fun updateLectureEvaluation(
         lectureId: Long,
@@ -27,7 +25,7 @@ interface RemoteLectureEditorDataSource {
         difficulty: Int,
         homework: Int,
         content: String,
-    ): com.suwiki.core.model.Result<Unit>
+    )
 
-    suspend fun deleteLectureEvaluation(id: Long): com.suwiki.core.model.Result<Unit>
+    suspend fun deleteLectureEvaluation(id: Long)
 }

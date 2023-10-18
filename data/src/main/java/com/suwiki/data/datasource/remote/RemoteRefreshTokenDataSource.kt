@@ -1,10 +1,7 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.Result
-import com.suwiki.core.model.Suspension
-import com.suwiki.core.model.Token
-import com.suwiki.core.model.User
+import com.suwiki.core.model.user.Token
 
 interface RemoteRefreshTokenDataSource {
-    fun reissueRefreshToken(refresh: String): Result<Token>
+    fun reissueRefreshToken(refresh: String): Token
 }

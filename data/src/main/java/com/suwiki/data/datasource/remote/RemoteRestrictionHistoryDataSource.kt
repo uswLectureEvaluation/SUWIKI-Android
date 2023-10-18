@@ -1,11 +1,10 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.Result
-import com.suwiki.core.model.Suspension
+import com.suwiki.core.model.user.Suspension
 
 interface RemoteRestrictionHistoryDataSource {
 
-    suspend fun getSuspensionHistory(): Result<List<Suspension.Ban>>
+    suspend fun getSuspensionHistory(): List<Suspension.Ban>
 
-    suspend fun getBlacklistHistory(): Result<List<Suspension.Block>>
+    suspend fun getBlacklistHistory(): List<Suspension.Block>
 }

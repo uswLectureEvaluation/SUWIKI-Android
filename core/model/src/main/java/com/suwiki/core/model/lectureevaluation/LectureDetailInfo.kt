@@ -1,6 +1,6 @@
-package com.suwiki.core.model
+package com.suwiki.core.model.lectureevaluation
 
-data class LectureMain(
+data class LectureDetailInfo(
     val id: Long,
     val semester: String,
     val professor: String,
@@ -11,4 +11,7 @@ data class LectureMain(
     val lectureSatisfactionAvg: Float,
     val lectureHoneyAvg: Float,
     val lectureLearningAvg: Float,
+    val lectureTeamAvg: Float,
+    val lectureDifficultyAvg: Float,
+    val lectureHomeworkAvg: Float,
 )

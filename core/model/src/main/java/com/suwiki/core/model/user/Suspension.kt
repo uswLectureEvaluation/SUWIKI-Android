@@ -1,4 +1,4 @@
-package com.suwiki.core.model
+package com.suwiki.core.model.user
 
 import java.time.LocalDateTime
 

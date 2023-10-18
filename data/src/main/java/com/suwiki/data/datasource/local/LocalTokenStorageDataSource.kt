@@ -1,6 +1,6 @@
 package com.suwiki.data.datasource.local
 
-import com.suwiki.core.model.Token
+import com.suwiki.core.model.user.Token
 
 interface LocalTokenStorageDataSource {
 

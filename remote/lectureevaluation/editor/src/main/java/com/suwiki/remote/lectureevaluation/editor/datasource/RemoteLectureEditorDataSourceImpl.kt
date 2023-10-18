@@ -1,11 +1,9 @@
 package com.suwiki.remote.lectureevaluation.editor.datasource
 
-import com.suwiki.core.network.retrofit.toResult
 import com.suwiki.data.datasource.remote.RemoteLectureEditorDataSource
 import com.suwiki.remote.lectureevaluation.editor.api.LectureEditorApi
 import com.suwiki.remote.lectureevaluation.editor.request.LectureEvaluationRequest
 import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureEvaluationRequest
-import com.suwiki.core.model.Result
 import javax.inject.Inject
 
 class RemoteLectureEditorDataSourceImpl @Inject constructor(
@@ -23,7 +21,7 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
         difficulty: Int,
         homework: Int,
         content: String,
-    ): com.suwiki.core.model.Result<Unit> {
+    ) {
         val request = LectureEvaluationRequest(
             lectureName = lectureName,
             professor = professor,
@@ -39,7 +37,7 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
 
         return lectureApi.postLectureEvaluation(
             request,
-        ).toResult()
+        ).getOrThrow()
     }
 
     override suspend fun updateLectureEvaluation(
@@ -52,7 +50,7 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
         difficulty: Int,
         homework: Int,
         content: String,
-    ): com.suwiki.core.model.Result<Unit> {
+    ) {
         val request = UpdateLectureEvaluationRequest(
             selectedSemester = selectedSemester,
             satisfaction = satisfaction,
@@ -67,10 +65,10 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
         return lectureApi.updateLectureEvaluation(
             lectureId = lectureId,
             updateLectureEvaluationRequest = request,
-        ).toResult()
+        ).getOrThrow()
     }
 
-    override suspend fun deleteLectureEvaluation(id: Long): com.suwiki.core.model.Result<Unit> {
-        return lectureApi.deleteEvaluation(id = id).toResult()
+    override suspend fun deleteLectureEvaluation(id: Long) {
+        return lectureApi.deleteEvaluation(id = id).getOrThrow()
     }
 }

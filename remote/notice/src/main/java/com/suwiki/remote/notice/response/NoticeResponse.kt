@@ -1,6 +1,6 @@
 package com.suwiki.remote.notice.response
 
-import com.suwiki.core.model.Notice
+import com.suwiki.core.model.notice.Notice
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.SerialName
@@ -13,7 +13,7 @@ data class NoticeResponse(
     @SerialName("modifiedDate") val date: LocalDateTime,
 )
 
-internal fun NoticeResponse.toModel() = com.suwiki.core.model.Notice(
+internal fun NoticeResponse.toModel() = Notice(
     id = id,
     title = title,
     date = date.toJavaLocalDateTime()

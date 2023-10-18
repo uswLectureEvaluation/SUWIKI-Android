@@ -1,10 +1,8 @@
 package com.suwiki.remote.user.datasource
 
-import com.suwiki.core.network.retrofit.toResult
 import com.suwiki.data.datasource.remote.RemoteUserDataSource
-import com.suwiki.core.model.Result
-import com.suwiki.core.model.Token
-import com.suwiki.core.model.User
+import com.suwiki.core.model.user.Token
+import com.suwiki.core.model.user.User
 import com.suwiki.remote.user.api.UserApi
 import com.suwiki.remote.user.request.FindIdRequest
 import com.suwiki.remote.user.request.FindPasswordRequest
@@ -18,47 +16,47 @@ class RemoteUserDataSourceImpl @Inject constructor(
     private val userApi: UserApi,
 ) : RemoteUserDataSource {
 
-    override suspend fun findId(email: String): com.suwiki.core.model.Result<Boolean> {
-        return userApi.findId(FindIdRequest(email)).toResult().map { it.success }
+    override suspend fun findId(email: String): Boolean {
+        return userApi.findId(FindIdRequest(email)).getOrThrow().success
     }
 
-    override suspend fun findPassword(loginId: String, email: String): com.suwiki.core.model.Result<Boolean> {
+    override suspend fun findPassword(loginId: String, email: String): Boolean {
         return userApi.findPassword(
             FindPasswordRequest(loginId, email),
-        ).toResult().map { it.success }
+        ).getOrThrow().success
     }
 
     override suspend fun resetPassword(
         currentPassword: String,
         newPassword: String,
-    ): com.suwiki.core.model.Result<Boolean> {
+    ): Boolean {
         return userApi.resetPassword(
             ResetPasswordRequest(
                 currentPassword = currentPassword,
                 newPassword = newPassword,
             ),
-        ).toResult().map { it.success }
+        ).getOrThrow().success
     }
 
-    override suspend fun login(loginId: String, password: String): com.suwiki.core.model.Result<Token> {
+    override suspend fun login(loginId: String, password: String): Token {
         return userApi.login(
             LoginRequest(
                 loginId = loginId,
                 password = password,
             ),
-        ).toResult().map { it.toModel() }
+        ).getOrThrow().toModel()
     }
 
-    override suspend fun quit(id: String, password: String): com.suwiki.core.model.Result<Boolean> {
+    override suspend fun quit(id: String, password: String): Boolean {
         return userApi.quit(
             QuitRequest(
                 id = id,
                 password = password,
             ),
-        ).toResult().map { it.success }
+        ).getOrThrow().success
     }
 
-    override suspend fun getUserData(): com.suwiki.core.model.Result<User> {
-        return userApi.getUserData().toResult().map { it.toModel() }
+    override suspend fun getUserData(): User {
+        return userApi.getUserData().getOrThrow().toModel()
     }
 }

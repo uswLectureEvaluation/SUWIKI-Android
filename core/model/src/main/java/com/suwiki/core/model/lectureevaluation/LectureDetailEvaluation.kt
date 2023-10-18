@@ -1,4 +1,4 @@
-package com.suwiki.core.model
+package com.suwiki.core.model.lectureevaluation
 
 data class LectureDetailEvaluation(
     val id: Long,

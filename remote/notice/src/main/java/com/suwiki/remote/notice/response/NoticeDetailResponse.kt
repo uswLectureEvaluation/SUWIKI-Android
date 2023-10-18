@@ -1,6 +1,6 @@
 package com.suwiki.remote.notice.response
 
-import com.suwiki.core.model.NoticeDetail
+import com.suwiki.core.model.notice.NoticeDetail
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.SerialName
@@ -14,7 +14,7 @@ data class NoticeDetailResponse(
     val content: String,
 )
 
-internal fun NoticeDetailResponse.toModel() = com.suwiki.core.model.NoticeDetail(
+internal fun NoticeDetailResponse.toModel() = NoticeDetail(
     id = id,
     title = title,
     date = date?.toJavaLocalDateTime(),

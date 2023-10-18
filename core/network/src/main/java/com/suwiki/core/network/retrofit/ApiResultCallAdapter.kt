@@ -1,6 +1,5 @@
 package com.suwiki.core.network.retrofit
 
-import com.suwiki.core.model.SuwikiError
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call
@@ -32,7 +31,7 @@ private class ApiResultCall<R>(
                 val error = if (throwable is IOException) {
                     ApiResult.Failure.NetworkError(throwable)
                 } else {
-                    ApiResult.Failure.UnknownError(throwable)
+                    ApiResult.Failure.UnknownApiError(throwable)
                 }
                 callback.onResponse(this@ApiResultCall, Response.success(error))
             }
@@ -47,17 +46,13 @@ private class ApiResultCall<R>(
                     )
                 }
 
-                SuwikiError.fromCode(code())?.let {
-                    return ApiResult.Failure.CustomError(code(), it)
-                }
-
                 body()?.let { body -> return ApiResult.successOf(body) }
 
                 return if (successType == Unit::class.java) {
                     @Suppress("UNCHECKED_CAST")
                     ApiResult.successOf(Unit as R)
                 } else {
-                    ApiResult.Failure.UnknownError(
+                    ApiResult.Failure.UnknownApiError(
                         IllegalStateException(
                             "Body가 존재하지 않지만, Unit 이외의 타입으로 정의했습니다. ApiResult<Unit>로 정의하세요.",
                         ),
