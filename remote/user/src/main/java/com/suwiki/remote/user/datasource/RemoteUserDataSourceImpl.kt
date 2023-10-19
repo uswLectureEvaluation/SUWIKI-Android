@@ -1,8 +1,8 @@
 package com.suwiki.remote.user.datasource
 
-import com.suwiki.data.datasource.remote.RemoteUserDataSource
 import com.suwiki.core.model.user.Token
 import com.suwiki.core.model.user.User
+import com.suwiki.data.user.datasource.RemoteUserDataSource
 import com.suwiki.remote.user.api.UserApi
 import com.suwiki.remote.user.request.FindIdRequest
 import com.suwiki.remote.user.request.FindPasswordRequest

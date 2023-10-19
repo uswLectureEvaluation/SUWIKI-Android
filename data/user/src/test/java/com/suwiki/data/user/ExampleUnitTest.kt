@@ -1,4 +1,4 @@
-package com.suwiki.token.storage
+package com.suwiki.data.user
 
 import org.junit.Test
 

@@ -37,6 +37,7 @@ dependencies {
     implementation(projects.data.lectureevaluation.viewer)
     implementation(projects.data.lectureevaluation.report)
     implementation(projects.data.lectureevaluation.my)
+    implementation(projects.data.user)
 
     implementation(projects.domain)
     implementation(projects.di)
@@ -44,7 +45,6 @@ dependencies {
     implementation(projects.local.openmajor)
     implementation(projects.local.timetable.editor)
     implementation(projects.local.timetable.viewer)
-    implementation(projects.local.token.storage)
     implementation(projects.local.user)
 
     implementation(projects.remote.lectureevaluation.editor)

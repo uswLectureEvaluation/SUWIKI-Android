@@ -2,7 +2,7 @@ package com.suwiki.local.user.datasource
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.suwiki.data.datasource.local.LocalUserProviderDataSource
+import com.suwiki.data.user.datasource.LocalUserProviderDataSource
 import com.suwiki.local.user.EMAIL
 import com.suwiki.local.user.LOGGED_IN
 import com.suwiki.local.user.POINT

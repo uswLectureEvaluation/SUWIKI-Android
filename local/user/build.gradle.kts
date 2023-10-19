@@ -10,8 +10,9 @@ android {
 
 dependencies {
     implementation(projects.core.model)
-    implementation(projects.data)
+    implementation(projects.data.user)
     implementation(projects.core.database)
+    implementation(projects.core.security)
 
     implementation(libs.bundles.coroutine)
     implementation(libs.androidx.datastore.core)

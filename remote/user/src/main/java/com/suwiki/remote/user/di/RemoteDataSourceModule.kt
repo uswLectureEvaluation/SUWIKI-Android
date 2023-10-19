@@ -1,6 +1,6 @@
 package com.suwiki.remote.user.di
 
-import com.suwiki.data.datasource.remote.RemoteUserDataSource
+import com.suwiki.data.user.datasource.RemoteUserDataSource
 import com.suwiki.remote.user.datasource.RemoteUserDataSourceImpl
 import dagger.Binds
 import dagger.Module
