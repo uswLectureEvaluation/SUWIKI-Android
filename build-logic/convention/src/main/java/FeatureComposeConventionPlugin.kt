@@ -9,17 +9,17 @@ internal class FeatureComposeConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("suwiki.android.library")
+                apply("suwiki.android.library.compose")
                 apply("suwiki.android.hilt")
             }
 
             dependencies {
                 "implementation"(project(":domain"))
 
-                "implementation"(libs.findBundle("androidx.compose").get())
-
                 "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
                 "implementation"(libs.findLibrary("kotlinx.coroutines.core").get())
 
+                "androidTestImplementation"(libs.findLibrary("junit").get())
                 "implementation"(libs.findLibrary("timber").get())
             }
         }

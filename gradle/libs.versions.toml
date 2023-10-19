@@ -138,7 +138,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 
 oss = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "oss" }
-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 [bundles]

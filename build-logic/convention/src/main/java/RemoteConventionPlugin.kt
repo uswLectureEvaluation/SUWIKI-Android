@@ -19,7 +19,7 @@ internal class RemoteConventionPlugin : Plugin<Project> {
 
                 "implementation"(libs.findBundle("coroutine").get())
 
-                "androidTestImplementation"(libs.findLibrary("junit4").get())
+                "androidTestImplementation"(libs.findLibrary("junit").get())
                 "implementation"(libs.findLibrary("timber").get())
             }
         }
