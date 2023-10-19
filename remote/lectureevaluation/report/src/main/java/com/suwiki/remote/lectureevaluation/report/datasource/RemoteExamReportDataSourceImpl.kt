@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.report.datasource
 
-import com.suwiki.data.datasource.remote.RemoteExamReportDataSource
+import com.suwiki.data.lectureevaluation.report.datasource.RemoteExamReportDataSource
 import com.suwiki.remote.lectureevaluation.report.api.ExamReportApi
 import com.suwiki.remote.lectureevaluation.report.request.ReportExamRequest
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.report.di
 
-import com.suwiki.data.datasource.remote.RemoteExamReportDataSource
-import com.suwiki.data.datasource.remote.RemoteLectureReportDataSource
+import com.suwiki.data.lectureevaluation.report.datasource.RemoteExamReportDataSource
+import com.suwiki.data.lectureevaluation.report.datasource.RemoteLectureReportDataSource
 import com.suwiki.remote.lectureevaluation.report.datasource.RemoteExamReportDataSourceImpl
 import com.suwiki.remote.lectureevaluation.report.datasource.RemoteLectureReportDataSourceImpl
 import dagger.Binds
