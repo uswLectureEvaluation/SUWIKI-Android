@@ -1,7 +1,7 @@
 package com.suwiki.local.openmajor.di
 
-import com.suwiki.data.datasource.local.LocalOpenMajorProviderDataSource
-import com.suwiki.data.datasource.local.LocalOpenMajorStorageDataSource
+import com.suwiki.data.openmajor.datasource.LocalOpenMajorProviderDataSource
+import com.suwiki.data.openmajor.datasource.LocalOpenMajorStorageDataSource
 import com.suwiki.local.openmajor.datasource.LocalOpenMajorProviderDataSourceImpl
 import com.suwiki.local.openmajor.datasource.LocalOpenMajorStorageDataSourceImpl
 import dagger.Binds

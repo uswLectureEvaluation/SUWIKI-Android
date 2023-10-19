@@ -49,5 +49,9 @@ gradlePlugin {
             id = "suwiki.android.remote"
             implementationClass = "RemoteConventionPlugin"
         }
+        register("data") {
+            id = "suwiki.android.data"
+            implementationClass = "DataConventionPlugin"
+        }
     }
 }

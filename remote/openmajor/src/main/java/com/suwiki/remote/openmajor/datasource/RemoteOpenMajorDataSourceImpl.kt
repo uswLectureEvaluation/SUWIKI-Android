@@ -1,6 +1,6 @@
 package com.suwiki.remote.openmajor.datasource
 
-import com.suwiki.data.datasource.remote.RemoteOpenMajorDataSource
+import com.suwiki.data.openmajor.datasource.RemoteOpenMajorDataSource
 import com.suwiki.remote.openmajor.api.MajorApi
 import com.suwiki.remote.openmajor.request.BookmarkMajorRequest
 import javax.inject.Inject
@@ -17,10 +17,11 @@ class RemoteOpenMajorDataSourceImpl @Inject constructor(
     }
 
     override suspend fun bookmarkMajor(majorName: String) {
-        return majorApi.bookmarkMajor(BookmarkMajorRequest(majorType = majorName)).getOrThrow().run {  }
+        return majorApi.bookmarkMajor(BookmarkMajorRequest(majorType = majorName)).getOrThrow()
+            .run { }
     }
 
     override suspend fun removeBookmarkMajor(majorName: String) {
-        return majorApi.removeBookmarkMajor(majorName = majorName).getOrThrow().run {  }
+        return majorApi.removeBookmarkMajor(majorName = majorName).getOrThrow().run { }
     }
 }

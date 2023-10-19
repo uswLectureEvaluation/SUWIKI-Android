@@ -1,8 +1,8 @@
 package com.suwiki.local.openmajor.datasource
 
-import com.suwiki.data.datasource.local.LocalOpenMajorStorageDataSource
 import com.suwiki.core.database.OpenMajorDatabase
 import com.suwiki.core.model.openmajor.OpenMajor
+import com.suwiki.data.openmajor.datasource.LocalOpenMajorStorageDataSource
 import com.suwiki.local.openmajor.converter.toEntity
 import javax.inject.Inject
 

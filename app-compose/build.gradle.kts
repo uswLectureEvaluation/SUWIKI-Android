@@ -30,6 +30,8 @@ dependencies {
     implementation(projects.core.security)
 
     implementation(projects.data)
+    implementation(projects.data.openmajor)
+
     implementation(projects.domain)
     implementation(projects.di)
 
