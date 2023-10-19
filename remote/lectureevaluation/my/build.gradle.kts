@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.data)
+    implementation(projects.data.lectureevaluation.my)
 
     implementation(libs.retrofit.core)
     implementation(libs.kotlinx.serialization.json)

@@ -17,7 +17,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -33,6 +33,10 @@ dependencies {
     implementation(projects.data.openmajor)
     implementation(projects.data.timetable.viewer)
     implementation(projects.data.timetable.editor)
+    implementation(projects.data.lectureevaluation.editor)
+    implementation(projects.data.lectureevaluation.viewer)
+    implementation(projects.data.lectureevaluation.report)
+    implementation(projects.data.lectureevaluation.my)
 
     implementation(projects.domain)
     implementation(projects.di)
