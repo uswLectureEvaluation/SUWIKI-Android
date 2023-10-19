@@ -1,6 +1,6 @@
 package com.suwiki.remote.notice.di
 
-import com.suwiki.data.datasource.remote.RemoteNoticeDataSource
+import com.suwiki.data.notice.datasource.RemoteNoticeDataSource
 import com.suwiki.remote.notice.datasource.RemoteNoticeDataSourceImpl
 import dagger.Binds
 import dagger.Module

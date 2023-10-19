@@ -38,6 +38,7 @@ dependencies {
     implementation(projects.data.lectureevaluation.report)
     implementation(projects.data.lectureevaluation.my)
     implementation(projects.data.user)
+    implementation(projects.data.notice)
 
     implementation(projects.domain)
     implementation(projects.di)
