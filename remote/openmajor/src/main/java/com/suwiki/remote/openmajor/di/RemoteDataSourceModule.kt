@@ -1,6 +1,6 @@
 package com.suwiki.remote.openmajor.di
 
-import com.suwiki.data.datasource.remote.RemoteOpenMajorDataSource
+import com.suwiki.data.openmajor.datasource.RemoteOpenMajorDataSource
 import com.suwiki.remote.openmajor.datasource.RemoteOpenMajorDataSourceImpl
 import dagger.Binds
 import dagger.Module

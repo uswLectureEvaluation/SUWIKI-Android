@@ -17,7 +17,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -30,13 +30,23 @@ dependencies {
     implementation(projects.core.security)
 
     implementation(projects.data)
+    implementation(projects.data.openmajor)
+    implementation(projects.data.timetable.viewer)
+    implementation(projects.data.timetable.editor)
+    implementation(projects.data.lectureevaluation.editor)
+    implementation(projects.data.lectureevaluation.viewer)
+    implementation(projects.data.lectureevaluation.report)
+    implementation(projects.data.lectureevaluation.my)
+    implementation(projects.data.user)
+    implementation(projects.data.notice)
+    implementation(projects.data.signup)
+
     implementation(projects.domain)
     implementation(projects.di)
 
     implementation(projects.local.openmajor)
     implementation(projects.local.timetable.editor)
     implementation(projects.local.timetable.viewer)
-    implementation(projects.local.token.storage)
     implementation(projects.local.user)
 
     implementation(projects.remote.lectureevaluation.editor)
@@ -46,6 +56,6 @@ dependencies {
     implementation(projects.remote.notice)
     implementation(projects.remote.openmajor)
     implementation(projects.remote.signup)
-    implementation(projects.remote.timetable.editor)
+    implementation(projects.remote.timetable.viewer)
     implementation(projects.remote.user)
 }

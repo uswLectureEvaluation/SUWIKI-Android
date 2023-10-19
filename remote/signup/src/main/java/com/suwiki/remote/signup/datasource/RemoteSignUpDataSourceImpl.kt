@@ -1,6 +1,6 @@
 package com.suwiki.remote.signup.datasource
 
-import com.suwiki.data.datasource.remote.RemoteSignUpDataSource
+import com.suwiki.data.signup.datasource.RemoteSignUpDataSource
 import com.suwiki.remote.signup.api.SignUpApi
 import com.suwiki.remote.signup.request.CheckEmailRequest
 import com.suwiki.remote.signup.request.CheckIdRequest

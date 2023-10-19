@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.my.di
 
-import com.suwiki.data.datasource.remote.RemoteExamMyDataSource
-import com.suwiki.data.datasource.remote.RemoteLectureMyDataSource
+import com.suwiki.data.lectureevaluation.my.datasource.RemoteExamMyDataSource
+import com.suwiki.data.lectureevaluation.my.datasource.RemoteLectureMyDataSource
 import com.suwiki.remote.lectureevaluation.my.datasource.RemoteExamMyDataSourceImpl
 import com.suwiki.remote.lectureevaluation.my.datasource.RemoteLectureMyDataSourceImpl
 import dagger.Binds

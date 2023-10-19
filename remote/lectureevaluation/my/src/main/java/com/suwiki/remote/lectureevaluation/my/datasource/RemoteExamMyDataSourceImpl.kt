@@ -2,7 +2,7 @@ package com.suwiki.remote.lectureevaluation.my.datasource
 
 import com.suwiki.core.model.lectureevaluation.LectureExam
 import com.suwiki.core.model.lectureevaluation.PurchaseHistory
-import com.suwiki.data.datasource.remote.RemoteExamMyDataSource
+import com.suwiki.data.lectureevaluation.my.datasource.RemoteExamMyDataSource
 import com.suwiki.remote.lectureevaluation.my.api.ExamMyApi
 import com.suwiki.remote.lectureevaluation.my.response.toModel
 import javax.inject.Inject
