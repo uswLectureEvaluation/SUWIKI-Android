@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.editor.datasource
 
-import com.suwiki.data.datasource.remote.RemoteExamEditorDataSource
+import com.suwiki.data.lectureevaluation.editor.datasource.RemoteExamEditorDataSource
 import com.suwiki.remote.lectureevaluation.editor.api.ExamEditorApi
 import com.suwiki.remote.lectureevaluation.editor.request.PostLectureExamRequest
 import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureExamRequest

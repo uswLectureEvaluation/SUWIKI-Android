@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.editor.di
 
-import com.suwiki.data.datasource.remote.RemoteExamEditorDataSource
-import com.suwiki.data.datasource.remote.RemoteLectureEditorDataSource
+import com.suwiki.data.lectureevaluation.editor.datasource.RemoteExamEditorDataSource
+import com.suwiki.data.lectureevaluation.editor.datasource.RemoteLectureEditorDataSource
 import com.suwiki.remote.lectureevaluation.editor.datasource.RemoteExamEditorDataSourceImpl
 import com.suwiki.remote.lectureevaluation.editor.datasource.RemoteLectureEditorDataSourceImpl
 import dagger.Binds
