@@ -1,6 +1,6 @@
 package com.suwiki.remote.signup.di
 
-import com.suwiki.data.datasource.remote.RemoteSignUpDataSource
+import com.suwiki.data.signup.datasource.RemoteSignUpDataSource
 import com.suwiki.remote.signup.datasource.RemoteSignUpDataSourceImpl
 import dagger.Binds
 import dagger.Module
