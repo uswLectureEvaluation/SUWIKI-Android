@@ -31,6 +31,7 @@ dependencies {
 
     implementation(projects.data)
     implementation(projects.data.openmajor)
+    implementation(projects.data.timetable.viewer)
 
     implementation(projects.domain)
     implementation(projects.di)
@@ -48,6 +49,6 @@ dependencies {
     implementation(projects.remote.notice)
     implementation(projects.remote.openmajor)
     implementation(projects.remote.signup)
-    implementation(projects.remote.timetable.editor)
+    implementation(projects.remote.timetable.viewer)
     implementation(projects.remote.user)
 }

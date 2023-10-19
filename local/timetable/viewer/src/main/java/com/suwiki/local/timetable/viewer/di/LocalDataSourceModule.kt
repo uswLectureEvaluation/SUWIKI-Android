@@ -1,6 +1,6 @@
 package com.suwiki.local.timetable.viewer.di
 
-import com.suwiki.data.datasource.local.LocalTimetableProviderDatasource
+import com.suwiki.data.timetable.viewer.datasource.LocalTimetableProviderDatasource
 import com.suwiki.local.timetable.viewer.datasource.LocalTimetableProviderDatasourceImpl
 import dagger.Binds
 import dagger.Module
