@@ -1,9 +1,7 @@
 package com.suwiki.local.openmajor.di
 
-import com.suwiki.data.openmajor.datasource.LocalOpenMajorProviderDataSource
-import com.suwiki.data.openmajor.datasource.LocalOpenMajorStorageDataSource
-import com.suwiki.local.openmajor.datasource.LocalOpenMajorProviderDataSourceImpl
-import com.suwiki.local.openmajor.datasource.LocalOpenMajorStorageDataSourceImpl
+import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
+import com.suwiki.local.openmajor.datasource.LocalOpenMajorDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,13 +14,7 @@ abstract class LocalDataSourceModule {
 
     @Singleton
     @Binds
-    abstract fun bindLocalOpenMajorProviderDataSource(
-        localOpenMajorProviderDataSourceImpl: LocalOpenMajorProviderDataSourceImpl,
-    ): LocalOpenMajorProviderDataSource
-
-    @Singleton
-    @Binds
-    abstract fun bindLocalOpenMajorStorageDataSource(
-        localOpenMajorStorageDataSourceImpl: LocalOpenMajorStorageDataSourceImpl,
-    ): LocalOpenMajorStorageDataSource
+    abstract fun bindLocalOpenMajorDataSource(
+        localOpenMajorDataSourceImpl: LocalOpenMajorDataSourceImpl,
+    ): LocalOpenMajorDataSource
 }

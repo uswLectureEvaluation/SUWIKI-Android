@@ -18,6 +18,10 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
 
+    implementation(libs.bundles.coroutine)
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.datastore.preferences)
+
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit)
 }

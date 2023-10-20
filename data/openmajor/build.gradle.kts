@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "com.suwiki.data.openmajor"
 }
+
+dependencies {
+    implementation(projects.domain.openmajor)
+}
