@@ -38,6 +38,10 @@ class OpenMajorRepositoryImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun getBookmarkedOpenMajorList(): List<String> {
+        return remoteOpenMajorDataSource.getBookmarkedMajorList()
+    }
+
     override suspend fun bookmarkMajor(majorName: String) {
         remoteOpenMajorDataSource.bookmarkMajor(majorName)
     }

@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mangbaam.presentation.ui.theme.UswtimetableTheme
+import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
 import com.suwiki.domain.openmajor.usecase.GetOpenMajorListUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +28,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var getOpenMajorListUseCase: GetOpenMajorListUseCase
+    lateinit var getOpenMajorListUseCase: GetBookmarkedOpenMajorListUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,20 +50,16 @@ class MainActivity : ComponentActivity() {
 fun Greeting(
     name: String,
     modifier: Modifier = Modifier,
-    useCase: GetOpenMajorListUseCase,
+    useCase: GetBookmarkedOpenMajorListUseCase,
 ) {
     LaunchedEffect(key1 = Unit) {
         useCase()
-            .onStart {
-                Timber.d("onStart")
-            }
-            .onEach {
+            .onSuccess {
                 Timber.d("$it")
             }
-            .catch {
+            .onFailure {
                 Timber.d("$it")
             }
-            .launchIn(this)
     }
 
     Text(
