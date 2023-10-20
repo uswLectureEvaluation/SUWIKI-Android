@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import com.suwiki.core.database.OpenMajorDatabase
+import com.suwiki.core.database.di.NormalDataStore
 import com.suwiki.core.model.openmajor.OpenMajor
 import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
 import com.suwiki.local.openmajor.converter.toEntity
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LocalOpenMajorDataSourceImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
+    @NormalDataStore private val dataStore: DataStore<Preferences>,
     private val db: OpenMajorDatabase,
 ) : LocalOpenMajorDataSource {
 

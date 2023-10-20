@@ -8,6 +8,4 @@ fun OpenMajorEntity.toModel() = OpenMajor(
     name = name,
 )
 
-fun OpenMajor.toEntity() = OpenMajorEntity(name).also {
-    it.id = id
-}
+fun OpenMajor.toEntity() = OpenMajorEntity(name)

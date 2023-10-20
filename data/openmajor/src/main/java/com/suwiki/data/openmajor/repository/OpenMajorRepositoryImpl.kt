@@ -4,10 +4,11 @@ import com.suwiki.core.model.openmajor.OpenMajor
 import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
 import com.suwiki.data.openmajor.datasource.RemoteOpenMajorDataSource
 import com.suwiki.domain.openmajor.repository.OpenMajorRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class OpenMajorRepositoryImpl @Inject constructor(
@@ -15,17 +16,13 @@ class OpenMajorRepositoryImpl @Inject constructor(
     private val remoteOpenMajorDataSource: RemoteOpenMajorDataSource,
 ) : OpenMajorRepository {
     override suspend fun getOpenMajorList(): Flow<List<String>> = flow {
-        Timber.d("local Major List emit = ${localOpenMajorDataSource.getLocalOpenMajorList().map { it.name }}")
         emit(localOpenMajorDataSource.getLocalOpenMajorList().map { it.name })
 
         val localVersion = localOpenMajorDataSource.getLocalOpenMajorVersion().firstOrNull() ?: 0f
         val remoteVersion = remoteOpenMajorDataSource.getOpenMajorVersion()
 
-        Timber.d("localVersion = $localVersion, remoteVersion = $remoteVersion")
-
         if (remoteVersion > localVersion) {
             val remoteOpenMajorList = remoteOpenMajorDataSource.getOpenMajorList()
-            Timber.d("local Major List emit = $remoteOpenMajorList")
 
             emit(remoteOpenMajorList)
 
@@ -39,7 +36,7 @@ class OpenMajorRepositoryImpl @Inject constructor(
                 setLocalOpenMajorVersion(remoteVersion)
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun bookmarkMajor(majorName: String) {
         remoteOpenMajorDataSource.bookmarkMajor(majorName)
