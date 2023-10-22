@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
+  alias(libs.plugins.detekt)
   alias(libs.plugins.ktlint)
   alias(libs.plugins.android.application) apply false
   alias(libs.plugins.android.library) apply false
@@ -14,7 +15,17 @@ plugins {
 
 allprojects {
   apply {
+    plugin(rootProject.libs.plugins.detekt.get().pluginId)
     plugin(rootProject.libs.plugins.ktlint.get().pluginId)
+  }
+
+  afterEvaluate {
+    detekt {
+      parallel = true
+      buildUponDefaultConfig = true
+      toolVersion = libs.versions.detekt.get()
+      config.setFrom(files("$rootDir/detekt-config.yml"))
+    }
   }
 }
 

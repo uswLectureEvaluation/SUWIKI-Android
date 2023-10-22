@@ -30,6 +30,7 @@ kotlinx-coroutines = "1.7.3"
 kotlinx-serialization-json = "1.5.1"
 kotlinx-datetime = "0.4.0"
 ktlint = "11.5.1"
+detekt = "1.23.1"
 
 retrofit = "2.9.0"
 retrofit-kotlinx-serialization-json = "1.0.0"
@@ -60,6 +61,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -73,6 +75,9 @@ ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devt
 
 ###
 oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "oss-plugin" }
+
+# formatting
+detekt-plugin-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 # compose
 # compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
