@@ -11,8 +11,8 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
-    @Binds
-    abstract fun bindUserRepository(
-        userRepositoryImpl: UserRepositoryImpl,
-    ): UserRepository
+  @Binds
+  abstract fun bindUserRepository(
+    userRepositoryImpl: UserRepositoryImpl,
+  ): UserRepository
 }

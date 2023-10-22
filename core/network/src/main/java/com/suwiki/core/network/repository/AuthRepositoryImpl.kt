@@ -12,25 +12,25 @@ import javax.inject.Singleton
 
 @Singleton
 internal class AuthRepositoryImpl @Inject constructor(
-    private val authApi: AuthApi,
-    private val securityPreferences: SecurityPreferences,
+  private val authApi: AuthApi,
+  private val securityPreferences: SecurityPreferences,
 ) : AuthRepository {
-    private val refreshToken: Flow<String>
-        get() = securityPreferences.flowRefreshToken()
-    override val accessToken: Flow<String>
-        get() = securityPreferences.flowAccessToken()
+  private val refreshToken: Flow<String>
+    get() = securityPreferences.flowRefreshToken()
+  override val accessToken: Flow<String>
+    get() = securityPreferences.flowAccessToken()
 
-    private suspend fun saveTokens(access: String, refresh: String) {
-        securityPreferences.setAccessToken(access)
-        securityPreferences.setRefreshToken(refresh)
-    }
+  private suspend fun saveTokens(access: String, refresh: String) {
+    securityPreferences.setAccessToken(access)
+    securityPreferences.setRefreshToken(refresh)
+  }
 
-    override suspend fun reissueRefreshToken(): Boolean =
-        authApi.reissueRefreshToken(refreshToken.first()).onSuccess {
-            saveTokens(access = it.accessToken, refresh = it.refreshToken)
-        }.onFailure {
-            securityPreferences.clearAll()
-            Timber.tag("Network")
-                .d("TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다.")
-        }.isSuccess
+  override suspend fun reissueRefreshToken(): Boolean =
+    authApi.reissueRefreshToken(refreshToken.first()).onSuccess {
+      saveTokens(access = it.accessToken, refresh = it.refreshToken)
+    }.onFailure {
+      securityPreferences.clearAll()
+      Timber.tag("Network")
+        .d("TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다.")
+    }.isSuccess
 }

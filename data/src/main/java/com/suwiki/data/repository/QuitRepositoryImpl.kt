@@ -9,14 +9,14 @@ import com.suwiki.domain.repository.QuitRepository
 import javax.inject.Inject
 
 class QuitRepositoryImpl @Inject constructor(
-    @AuthApiService private val apiService: ApiService,
+  @AuthApiService private val apiService: ApiService,
 ) : QuitRepository {
 
-    /**
-     * @return 회원 탈퇴 성공시 true, 실패시 false 반환
-     * */
-    override suspend fun quit(id: String, password: String): Result<Boolean> =
-        apiService.quit(
-            QuitRequest(id = id, password = password),
-        ).toDomainResult().map { it.success }
+  /**
+   * @return 회원 탈퇴 성공시 true, 실패시 false 반환
+   * */
+  override suspend fun quit(id: String, password: String): Result<Boolean> =
+    apiService.quit(
+      QuitRequest(id = id, password = password),
+    ).toDomainResult().map { it.success }
 }

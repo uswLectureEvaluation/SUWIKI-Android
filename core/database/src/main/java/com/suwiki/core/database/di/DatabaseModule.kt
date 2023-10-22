@@ -15,27 +15,27 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    @Singleton
-    @Provides
-    fun provideOpenMajorDatabase(
-        @ApplicationContext context: Context,
-    ): OpenMajorDatabase {
-        return Room.databaseBuilder(
-            context,
-            OpenMajorDatabase::class.java,
-            "open-major-database",
-        ).build()
-    }
+  @Singleton
+  @Provides
+  fun provideOpenMajorDatabase(
+    @ApplicationContext context: Context,
+  ): OpenMajorDatabase {
+    return Room.databaseBuilder(
+      context,
+      OpenMajorDatabase::class.java,
+      "open-major-database",
+    ).build()
+  }
 
-    @Singleton
-    @Provides
-    fun provideTimetableDatabase(
-        @ApplicationContext context: Context,
-    ): TimetableDatabase {
-        return Room.databaseBuilder(
-            context,
-            TimetableDatabase::class.java,
-            "timetable-database",
-        ).build()
-    }
+  @Singleton
+  @Provides
+  fun provideTimetableDatabase(
+    @ApplicationContext context: Context,
+  ): TimetableDatabase {
+    return Room.databaseBuilder(
+      context,
+      TimetableDatabase::class.java,
+      "timetable-database",
+    ).build()
+  }
 }

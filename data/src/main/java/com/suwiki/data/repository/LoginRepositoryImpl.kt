@@ -6,9 +6,9 @@ import com.suwiki.domain.repository.LoginRepository
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
-    private val userInfoDataSource: LoginDataSource,
+  private val userInfoDataSource: LoginDataSource,
 ) : LoginRepository {
 
-    override suspend fun login(id: String, pw: String): Result<Unit> =
-        userInfoDataSource.login(id, pw)
+  override suspend fun login(id: String, pw: String): Result<Unit> =
+    userInfoDataSource.login(id, pw)
 }

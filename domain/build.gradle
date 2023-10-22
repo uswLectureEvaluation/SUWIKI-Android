@@ -1,20 +1,22 @@
 plugins {
-    id 'kotlin-kapt'
-    id 'java-library'
-    id 'org.jetbrains.kotlin.jvm'
+  id 'kotlin-kapt'
+  id 'java-library'
+  id 'org.jetbrains.kotlin.jvm'
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
-    implementation project(":core:model")
+  implementation project(":core:model")
 
-    // coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
+  detektPlugins libs.detekt.plugin.formatting
 
-    // inject
-    implementation 'javax.inject:javax.inject:1'
+  // coroutine
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
+
+  // inject
+  implementation 'javax.inject:javax.inject:1'
 }

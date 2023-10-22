@@ -7,10 +7,10 @@ import com.suwiki.local.timetable.viewer.converter.toModel
 import javax.inject.Inject
 
 class LocalTimetableProviderDatasourceImpl @Inject constructor(
-    private val timetableDatabase: TimetableDatabase,
+  private val timetableDatabase: TimetableDatabase,
 ) : LocalTimetableProviderDatasource {
 
-    override suspend fun getLocalTimetable(): List<TimetableData> {
-        return timetableDatabase.timetableDao().getAll().map { it.toModel() }
-    }
+  override suspend fun getLocalTimetable(): List<TimetableData> {
+    return timetableDatabase.timetableDao().getAll().map { it.toModel() }
+  }
 }

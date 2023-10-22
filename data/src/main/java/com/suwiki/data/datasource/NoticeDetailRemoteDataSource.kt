@@ -8,9 +8,9 @@ import com.suwiki.domain.model.Result
 import javax.inject.Inject
 
 class NoticeDetailRemoteDataSource @Inject constructor(
-    @OtherApiService private val apiService: ApiService,
+  @OtherApiService private val apiService: ApiService,
 ) : NoticeDetailDataSource {
-    override suspend fun getNotice(id: Long): Result<NoticeDetailDto> {
-        return apiService.getNotice(id).toDomainResult().map { it.data }
-    }
+  override suspend fun getNotice(id: Long): Result<NoticeDetailDto> {
+    return apiService.getNotice(id).toDomainResult().map { it.data }
+  }
 }

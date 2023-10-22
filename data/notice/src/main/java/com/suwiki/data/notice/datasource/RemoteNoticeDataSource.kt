@@ -5,7 +5,7 @@ import com.suwiki.core.model.notice.NoticeDetail
 
 interface RemoteNoticeDataSource {
 
-    suspend fun getNoticeList(page: Int): List<Notice>
+  suspend fun getNoticeList(page: Int): List<Notice>
 
-    suspend fun getNotice(id: Long): NoticeDetail
+  suspend fun getNotice(id: Long): NoticeDetail
 }

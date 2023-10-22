@@ -7,13 +7,13 @@ import com.suwiki.local.openmajor.converter.toEntity
 import javax.inject.Inject
 
 class LocalOpenMajorStorageDataSourceImpl @Inject constructor(
-    private val db: OpenMajorDatabase,
+  private val db: OpenMajorDatabase,
 ) : LocalOpenMajorStorageDataSource {
-    override suspend fun saveAllOpenMajors(majors: List<OpenMajor>) {
-        db.openMajorDao().insertAll(majors.map { it.toEntity() })
-    }
+  override suspend fun saveAllOpenMajors(majors: List<OpenMajor>) {
+    db.openMajorDao().insertAll(majors.map { it.toEntity() })
+  }
 
-    override suspend fun deleteAllOpenMajors() {
-        db.openMajorDao().deleteAll()
-    }
+  override suspend fun deleteAllOpenMajors() {
+    db.openMajorDao().deleteAll()
+  }
 }

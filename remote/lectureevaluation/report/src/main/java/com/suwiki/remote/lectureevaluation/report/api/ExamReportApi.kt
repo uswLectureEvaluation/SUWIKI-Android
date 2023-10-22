@@ -8,12 +8,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ExamReportApi {
-    companion object {
-        const val EXAM_POSTS: String = "/exam-posts"
-        const val QUERY_EXAM_IDX = "examIdx"
-    }
+  companion object {
+    const val EXAM_POSTS: String = "/exam-posts"
+    const val QUERY_EXAM_IDX = "examIdx"
+  }
 
-    // 시험 정보 신고하기
-    @POST("$USER/$REPORT/exam")
-    suspend fun reportExam(@Body reportExamRequest: ReportExamRequest): ApiResult<Unit>
+  // 시험 정보 신고하기
+  @POST("$USER/$REPORT/exam")
+  suspend fun reportExam(@Body reportExamRequest: ReportExamRequest): ApiResult<Unit>
 }

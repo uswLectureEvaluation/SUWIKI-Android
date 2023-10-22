@@ -7,16 +7,16 @@ import com.suwiki.domain.model.Result
 import javax.inject.Inject
 
 class EvaluationRemoteDataSourceImpl @Inject constructor(
-    private val apiService: ApiService,
+  private val apiService: ApiService,
 ) : EvaluationDataSource {
 
-    override suspend fun getEvaluationDataSource(
-        option: String,
-        page: Int,
-        majorType: String,
-    ): Result<MutableList<LectureMainDto?>> {
-        return apiService.getLectureMainList(option, majorType = majorType).toDomainResult().map {
-            it.data
-        }
+  override suspend fun getEvaluationDataSource(
+    option: String,
+    page: Int,
+    majorType: String,
+  ): Result<MutableList<LectureMainDto?>> {
+    return apiService.getLectureMainList(option, majorType = majorType).toDomainResult().map {
+      it.data
     }
+  }
 }

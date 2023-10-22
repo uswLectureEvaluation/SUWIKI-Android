@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalAccessTokenProviderDataSource {
 
-    fun getAccessToken(): Flow<String>
+  fun getAccessToken(): Flow<String>
 }

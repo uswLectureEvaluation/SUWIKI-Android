@@ -13,9 +13,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    @Singleton
-    @Provides
-    fun provideMajorApi(@AuthRetrofit retrofit: Retrofit): MajorApi {
-        return retrofit.create(MajorApi::class.java)
-    }
+  @Singleton
+  @Provides
+  fun provideMajorApi(@AuthRetrofit retrofit: Retrofit): MajorApi {
+    return retrofit.create(MajorApi::class.java)
+  }
 }

@@ -70,6 +70,7 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 [libraries]
 # Dependencies of the included build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
+gitlab-detekt-plugin-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-plugin-formatting", version.ref = "detekt" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 

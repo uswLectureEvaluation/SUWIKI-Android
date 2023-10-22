@@ -6,12 +6,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface LectureReportApi {
-    companion object {
-        const val USER = "/user"
-        const val REPORT = "report"
-    }
+  companion object {
+    const val USER = "/user"
+    const val REPORT = "report"
+  }
 
-    // 강의 평가 신고하기
-    @POST("$USER/$REPORT/evaluate")
-    suspend fun reportLecture(@Body reportLectureRequest: ReportLectureRequest): ApiResult<Unit>
+  // 강의 평가 신고하기
+  @POST("$USER/$REPORT/evaluate")
+  suspend fun reportLecture(@Body reportLectureRequest: ReportLectureRequest): ApiResult<Unit>
 }
