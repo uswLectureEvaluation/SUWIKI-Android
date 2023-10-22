@@ -9,24 +9,24 @@ import tech.thdev.useful.encrypted.data.store.preferences.ksp.annotations.value.
 @UsefulPreferences(/* option. Not use security - disableSecurity = true */)
 interface SecurityPreferences {
 
-    @GetValue(KEY_ACCESS_TOKEN, defaultValue = "")
-    fun flowAccessToken(): Flow<String>
+  @GetValue(KEY_ACCESS_TOKEN, defaultValue = "")
+  fun flowAccessToken(): Flow<String>
 
-    @SetValue(KEY_ACCESS_TOKEN)
-    suspend fun setAccessToken(value: String)
+  @SetValue(KEY_ACCESS_TOKEN)
+  suspend fun setAccessToken(value: String)
 
-    @GetValue(KEY_REFRESH_TOKEN, defaultValue = "")
-    fun flowRefreshToken(): Flow<String>
+  @GetValue(KEY_REFRESH_TOKEN, defaultValue = "")
+  fun flowRefreshToken(): Flow<String>
 
-    @SetValue(KEY_REFRESH_TOKEN)
-    suspend fun setRefreshToken(value: String)
+  @SetValue(KEY_REFRESH_TOKEN)
+  suspend fun setRefreshToken(value: String)
 
-    @ClearValues
-    suspend fun clearAll()
+  @ClearValues
+  suspend fun clearAll()
 
-    companion object {
+  companion object {
 
-        private const val KEY_ACCESS_TOKEN = "key-access-token"
-        private const val KEY_REFRESH_TOKEN = "key-refresh-token"
-    }
+    private const val KEY_ACCESS_TOKEN = "key-access-token"
+    private const val KEY_REFRESH_TOKEN = "key-refresh-token"
+  }
 }

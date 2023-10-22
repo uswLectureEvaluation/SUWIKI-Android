@@ -4,7 +4,7 @@ import com.suwiki.core.model.user.Suspension
 
 interface RemoteRestrictionHistoryDataSource {
 
-    suspend fun getSuspensionHistory(): List<Suspension.Ban>
+  suspend fun getSuspensionHistory(): List<Suspension.Ban>
 
-    suspend fun getBlacklistHistory(): List<Suspension.Block>
+  suspend fun getBlacklistHistory(): List<Suspension.Block>
 }

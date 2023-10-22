@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RemoteDataSourceModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindRemoteTimetableDataSource(
-        remoteTimetableDataSourceImpl: RemoteTimetableDataSourceImpl,
-    ): RemoteTimetableDataSource
+  @Singleton
+  @Binds
+  abstract fun bindRemoteTimetableDataSource(
+    remoteTimetableDataSourceImpl: RemoteTimetableDataSourceImpl,
+  ): RemoteTimetableDataSource
 }

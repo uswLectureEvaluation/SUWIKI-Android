@@ -13,9 +13,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    @Singleton
-    @Provides
-    fun provideNoticeApi(@NormalRetrofit retrofit: Retrofit): NoticeApi {
-        return retrofit.create(NoticeApi::class.java)
-    }
+  @Singleton
+  @Provides
+  fun provideNoticeApi(@NormalRetrofit retrofit: Retrofit): NoticeApi {
+    return retrofit.create(NoticeApi::class.java)
+  }
 }

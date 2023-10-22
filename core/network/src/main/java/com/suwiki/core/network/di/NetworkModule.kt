@@ -22,101 +22,102 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL: String = "https://api.suwiki.kr"
+  private const val BASE_URL: String = "https://api.suwiki.kr"
 
-    @Singleton
-    @Provides
-    @NormalOkHttpClient
-    fun provideNormalHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor,
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .build()
+  @Singleton
+  @Provides
+  @NormalOkHttpClient
+  fun provideNormalHttpClient(
+    loggingInterceptor: HttpLoggingInterceptor,
+  ): OkHttpClient {
+    return OkHttpClient.Builder()
+      .readTimeout(10, TimeUnit.SECONDS)
+      .connectTimeout(10, TimeUnit.SECONDS)
+      .writeTimeout(15, TimeUnit.SECONDS)
+      .addInterceptor(loggingInterceptor)
+      .build()
+  }
+
+  @Singleton
+  @Provides
+  fun provideJson(): Json {
+    return Json {
+      prettyPrint = true
+      coerceInputValues = true
+      ignoreUnknownKeys = true
     }
+  }
 
-    @Singleton
-    @Provides
-    fun provideJson(): Json {
-        return Json {
-            prettyPrint = true
-            coerceInputValues = true
-            ignoreUnknownKeys = true
+  @Singleton
+  @Provides
+  fun provideLoggingInterceptor(
+    json: Json,
+  ): HttpLoggingInterceptor {
+    val loggingInterceptor = HttpLoggingInterceptor { message ->
+      when {
+        !message.isJsonObject() && !message.isJsonArray() ->
+          Timber.tag(RETROFIT_TAG).d("CONNECTION INFO -> $message")
+
+        else -> kotlin.runCatching {
+          json.encodeToString(Json.parseToJsonElement(message))
+        }.onSuccess {
+          Timber.tag(RETROFIT_TAG).d(it)
+        }.onFailure {
+          Timber.tag(RETROFIT_TAG).d(message)
         }
+      }
     }
+    loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    return loggingInterceptor
+  }
 
-    @Singleton
-    @Provides
-    fun provideLoggingInterceptor(
-        json: Json,
-    ): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor { message ->
-            when {
-                !message.isJsonObject() && !message.isJsonArray() ->
-                    Timber.tag(RETROFIT_TAG).d("CONNECTION INFO -> $message")
+  @Singleton
+  @Provides
+  @NormalRetrofit
+  fun provideNormalRetrofit(
+    @NormalOkHttpClient okHttpClient: OkHttpClient,
+    json: Json,
+  ): Retrofit {
+    return Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .client(okHttpClient)
+      .addCallAdapterFactory(ResultCallAdapterFactory())
+      .addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
+      .build()
+  }
 
-                else -> try {
-                    val prettyMessage = json.encodeToString(Json.parseToJsonElement(message))
-                    Timber.tag(RETROFIT_TAG).d(prettyMessage)
-                } catch (e: Exception) {
-                    Timber.tag(RETROFIT_TAG).d(message)
-                }
-            }
-        }
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return loggingInterceptor
-    }
+  @Singleton
+  @Provides
+  @AuthOkHttpClient
+  internal fun provideAuthHttpClient(
+    authenticator: TokenAuthenticator,
+    authenticationInterceptor: AuthenticationInterceptor,
+    loggingInterceptor: HttpLoggingInterceptor,
+  ): OkHttpClient {
+    return OkHttpClient.Builder()
+      .readTimeout(10, TimeUnit.SECONDS)
+      .connectTimeout(10, TimeUnit.SECONDS)
+      .writeTimeout(15, TimeUnit.SECONDS)
+      .addInterceptor(loggingInterceptor)
+      .addInterceptor(authenticationInterceptor)
+      .authenticator(authenticator)
+      .build()
+  }
 
-    @Singleton
-    @Provides
-    @NormalRetrofit
-    fun provideNormalRetrofit(
-        @NormalOkHttpClient okHttpClient: OkHttpClient,
-        json: Json,
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addCallAdapterFactory(ResultCallAdapterFactory())
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    @AuthOkHttpClient
-    internal fun provideAuthHttpClient(
-        authenticator: TokenAuthenticator,
-        authenticationInterceptor: AuthenticationInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor,
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(authenticationInterceptor)
-            .authenticator(authenticator)
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    @AuthRetrofit
-    fun provideAuthRetrofit(
-        @AuthOkHttpClient okHttpClient: OkHttpClient,
-        json: Json,
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addCallAdapterFactory(ResultCallAdapterFactory())
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
-            .build()
-    }
+  @Singleton
+  @Provides
+  @AuthRetrofit
+  fun provideAuthRetrofit(
+    @AuthOkHttpClient okHttpClient: OkHttpClient,
+    json: Json,
+  ): Retrofit {
+    return Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .client(okHttpClient)
+      .addCallAdapterFactory(ResultCallAdapterFactory())
+      .addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
+      .build()
+  }
 }
 
 private fun String?.isJsonObject(): Boolean = this?.startsWith("{") == true && this.endsWith("}")

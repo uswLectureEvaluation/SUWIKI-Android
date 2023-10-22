@@ -14,38 +14,38 @@ import com.suwiki.domain.model.Result
 import javax.inject.Inject
 
 class OpenMajorRemoteDataSource @Inject constructor(
-    @AuthApiService private val apiService: ApiService,
-    private val db: OpenMajorDatabase,
+  @AuthApiService private val apiService: ApiService,
+  private val db: OpenMajorDatabase,
 ) : OpenMajorDataSource {
-    override suspend fun getOpenMajorVersion(): Result<OpenMajorVersionDto> {
-        return apiService.getOpenMajorVersion().toDomainResult()
-    }
+  override suspend fun getOpenMajorVersion(): Result<OpenMajorVersionDto> {
+    return apiService.getOpenMajorVersion().toDomainResult()
+  }
 
-    override suspend fun getOpenMajorList(): Result<OpenMajorListDto> {
-        return apiService.getOpenMajorList().toDomainResult()
-    }
+  override suspend fun getOpenMajorList(): Result<OpenMajorListDto> {
+    return apiService.getOpenMajorList().toDomainResult()
+  }
 
-    override suspend fun bookmarkMajor(majorName: String): Result<String> {
-        return apiService.bookmarkMajor(BookmarkMajorRequest(majorName)).toDomainResult()
-    }
+  override suspend fun bookmarkMajor(majorName: String): Result<String> {
+    return apiService.bookmarkMajor(BookmarkMajorRequest(majorName)).toDomainResult()
+  }
 
-    override suspend fun getBookmarkMajorList(): Result<OpenMajorListDto> {
-        return apiService.getBookmarkMajorList().toDomainResult()
-    }
+  override suspend fun getBookmarkMajorList(): Result<OpenMajorListDto> {
+    return apiService.getBookmarkMajorList().toDomainResult()
+  }
 
-    override suspend fun clearBookmarkMajor(majorName: String): Result<String> {
-        return apiService.clearBookmarkMajor(majorName).toDomainResult()
-    }
+  override suspend fun clearBookmarkMajor(majorName: String): Result<String> {
+    return apiService.clearBookmarkMajor(majorName).toDomainResult()
+  }
 
-    override suspend fun saveAllOpenMajors(majors: List<OpenMajor>) {
-        db.openMajorDao().insertAll(majors.map { it.toEntity() })
-    }
+  override suspend fun saveAllOpenMajors(majors: List<OpenMajor>) {
+    db.openMajorDao().insertAll(majors.map { it.toEntity() })
+  }
 
-    override suspend fun deleteAllOpenMajors() {
-        db.openMajorDao().deleteAll()
-    }
+  override suspend fun deleteAllOpenMajors() {
+    db.openMajorDao().deleteAll()
+  }
 
-    override suspend fun getLocalOpenMajorList(): List<OpenMajor> {
-        return db.openMajorDao().getAll().map { it.toDomain() }
-    }
+  override suspend fun getLocalOpenMajorList(): List<OpenMajor> {
+    return db.openMajorDao().getAll().map { it.toDomain() }
+  }
 }

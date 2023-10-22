@@ -12,8 +12,8 @@ import retrofit2.Retrofit
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    @Provides
-    fun provideSignUpApi(@NormalRetrofit retrofit: Retrofit): SignUpApi {
-        return retrofit.create(SignUpApi::class.java)
-    }
+  @Provides
+  fun provideSignUpApi(@NormalRetrofit retrofit: Retrofit): SignUpApi {
+    return retrofit.create(SignUpApi::class.java)
+  }
 }

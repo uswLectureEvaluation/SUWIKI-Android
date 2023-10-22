@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RemoteDataSourceModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindRemoteSignUpDatasource(
-        remoteSignUpDataSourceImpl: RemoteSignUpDataSourceImpl,
-    ): RemoteSignUpDataSource
+  @Singleton
+  @Binds
+  abstract fun bindRemoteSignUpDatasource(
+    remoteSignUpDataSourceImpl: RemoteSignUpDataSourceImpl,
+  ): RemoteSignUpDataSource
 }

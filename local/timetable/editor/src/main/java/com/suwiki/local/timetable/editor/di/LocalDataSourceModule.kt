@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class LocalDataSourceModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindLocalTimetableStorageDataSource(
-        localTimetableStorageDataSourceImpl: LocalTimetableStorageDatasourceImpl,
-    ): LocalTimetableStorageDatasource
+  @Singleton
+  @Binds
+  abstract fun bindLocalTimetableStorageDataSource(
+    localTimetableStorageDataSourceImpl: LocalTimetableStorageDatasourceImpl,
+  ): LocalTimetableStorageDatasource
 }

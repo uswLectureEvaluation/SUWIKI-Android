@@ -5,7 +5,7 @@ import com.suwiki.core.model.lectureevaluation.PurchaseHistory
 
 interface RemoteExamMyDataSource {
 
-    suspend fun getExamMyPosts(page: Int): List<LectureExam>
+  suspend fun getExamMyPosts(page: Int): List<LectureExam>
 
-    suspend fun getPurchaseHistory(): List<PurchaseHistory>
+  suspend fun getPurchaseHistory(): List<PurchaseHistory>
 }

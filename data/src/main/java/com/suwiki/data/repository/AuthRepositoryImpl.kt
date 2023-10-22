@@ -16,48 +16,48 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-    @OtherApiService private val apiService: ApiService,
+  @ApplicationContext private val context: Context,
+  @OtherApiService private val apiService: ApiService,
 ) : AuthRepository {
-    private val dataSource: DataStore<Preferences>
-        get() = context.dataStore
+  private val dataSource: DataStore<Preferences>
+    get() = context.dataStore
 
-    private val data: Flow<Preferences>
-        get() = dataSource.data
+  private val data: Flow<Preferences>
+    get() = dataSource.data
 
-    override val refreshToken: Flow<String> = data.map { it[REFRESH_TOKEN] ?: "" }
+  override val refreshToken: Flow<String> = data.map { it[REFRESH_TOKEN] ?: "" }
 
-    override val accessToken: Flow<String> = data.map { it[ACCESS_TOKEN] ?: "" }
+  override val accessToken: Flow<String> = data.map { it[ACCESS_TOKEN] ?: "" }
 
-    override suspend fun saveTokens(refresh: String, access: String) {
-        dataSource.edit {
-            it[REFRESH_TOKEN] = refresh
-            it[ACCESS_TOKEN] = access
-        }
+  override suspend fun saveTokens(refresh: String, access: String) {
+    dataSource.edit {
+      it[REFRESH_TOKEN] = refresh
+      it[ACCESS_TOKEN] = access
     }
+  }
 
-    override suspend fun clearTokens() {
-        saveTokens("", "")
+  override suspend fun clearTokens() {
+    saveTokens("", "")
+  }
+
+  override suspend fun requestRefreshToken(): Boolean {
+    val refresh = refreshToken.first()
+    val response = apiService.requestRefresh(refresh).execute()
+
+    return if (response.isSuccessful && response.body() != null) {
+      response.body()?.let {
+        saveTokens(it.refreshToken, it.accessToken)
+        true
+      } ?: run {
+        false
+      }
+    } else {
+      false
     }
+  }
 
-    override suspend fun requestRefreshToken(): Boolean {
-        val refresh = refreshToken.first()
-        val response = apiService.requestRefresh(refresh).execute()
-
-        return if (response.isSuccessful && response.body() != null) {
-            response.body()?.let {
-                saveTokens(it.refreshToken, it.accessToken)
-                true
-            } ?: run {
-                false
-            }
-        } else {
-            false
-        }
-    }
-
-    companion object {
-        private val REFRESH_TOKEN = stringPreferencesKey("[KEY] refresh token")
-        private val ACCESS_TOKEN = stringPreferencesKey("[KEY] access token")
-    }
+  companion object {
+    private val REFRESH_TOKEN = stringPreferencesKey("[KEY] refresh token")
+    private val ACCESS_TOKEN = stringPreferencesKey("[KEY] access token")
+  }
 }

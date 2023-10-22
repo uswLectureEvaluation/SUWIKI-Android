@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class OpenMajorListResponse(
-    val data: List<String>,
+  val data: List<String>,
 )

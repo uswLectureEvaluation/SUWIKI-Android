@@ -14,15 +14,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class LocalDataSourceModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindLocalUserProviderDataSource(
-        localUserProviderDataSourceImpl: LocalUserProviderDataSourceImpl,
-    ): LocalUserProviderDataSource
+  @Singleton
+  @Binds
+  abstract fun bindLocalUserProviderDataSource(
+    localUserProviderDataSourceImpl: LocalUserProviderDataSourceImpl,
+  ): LocalUserProviderDataSource
 
-    @Singleton
-    @Binds
-    abstract fun bindLocalUserStorageDataSource(
-        localUserStorageDataSourceImpl: LocalUserStorageDataSourceImpl,
-    ): LocalUserStorageDataSource
+  @Singleton
+  @Binds
+  abstract fun bindLocalUserStorageDataSource(
+    localUserStorageDataSourceImpl: LocalUserStorageDataSourceImpl,
+  ): LocalUserStorageDataSource
 }

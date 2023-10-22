@@ -9,16 +9,16 @@ import com.suwiki.data.db.dao.OpenMajorDao
 import com.suwiki.data.db.entity.OpenMajorEntity
 
 @Database(
-    entities = [OpenMajorEntity::class],
-    version = 2,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2, spec = OpenMajorDatabase.RenameTableAutoMigration::class),
-    ],
-    exportSchema = true,
+  entities = [OpenMajorEntity::class],
+  version = 2,
+  autoMigrations = [
+    AutoMigration(from = 1, to = 2, spec = OpenMajorDatabase.RenameTableAutoMigration::class),
+  ],
+  exportSchema = true,
 )
 abstract class OpenMajorDatabase : RoomDatabase() {
-    abstract fun openMajorDao(): OpenMajorDao
+  abstract fun openMajorDao(): OpenMajorDao
 
-    @RenameTable(fromTableName = "OpenMajorData", toTableName = "OpenMajorEntity")
-    class RenameTableAutoMigration : AutoMigrationSpec
+  @RenameTable(fromTableName = "OpenMajorData", toTableName = "OpenMajorEntity")
+  class RenameTableAutoMigration : AutoMigrationSpec
 }

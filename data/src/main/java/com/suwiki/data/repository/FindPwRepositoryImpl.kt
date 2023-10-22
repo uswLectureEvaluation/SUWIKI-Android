@@ -10,11 +10,11 @@ import javax.inject.Inject
 
 // TODO FindIdRepository 와 통합
 class FindPwRepositoryImpl @Inject constructor(
-    @OtherApiService private val apiService: ApiService,
+  @OtherApiService private val apiService: ApiService,
 ) : FindPwRepository {
 
-    override suspend fun findPw(id: String, email: String): Result<Boolean> =
-        apiService.findPassword(
-            FindPasswordRequest(id, email),
-        ).toDomainResult().map { it.success }
+  override suspend fun findPw(id: String, email: String): Result<Boolean> =
+    apiService.findPassword(
+      FindPasswordRequest(id, email),
+    ).toDomainResult().map { it.success }
 }

@@ -76,234 +76,234 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    // Refresh Token
-    @POST(REQUEST_REFRESH)
-    fun requestRefresh(@Header("Authorization") refresh: String): Call<Token>
+  // Refresh Token
+  @POST(REQUEST_REFRESH)
+  fun requestRefresh(@Header("Authorization") refresh: String): Call<Token>
 
-    // 회원가입 요청 API
-    @POST(SIGN_UP)
-    suspend fun signUp(@Body signupRequest: SignupRequest): ApiResult<SuccessCheckDto>
+  // 회원가입 요청 API
+  @POST(SIGN_UP)
+  suspend fun signUp(@Body signupRequest: SignupRequest): ApiResult<SuccessCheckDto>
 
-    // 아이디 중복 확인 요청 API
-    @POST(SIGN_UP_ID_CHECK)
-    suspend fun checkId(@Body checkIdRequest: CheckIdRequest): ApiResult<OverlapCheckDto>
+  // 아이디 중복 확인 요청 API
+  @POST(SIGN_UP_ID_CHECK)
+  suspend fun checkId(@Body checkIdRequest: CheckIdRequest): ApiResult<OverlapCheckDto>
 
-    // 이메일 중복 확인 요청 API
-    @POST(SIGN_UP_EMAIL_CHECK)
-    suspend fun checkEmail(@Body checkEmailRequest: CheckEmailRequest): ApiResult<OverlapCheckDto>
+  // 이메일 중복 확인 요청 API
+  @POST(SIGN_UP_EMAIL_CHECK)
+  suspend fun checkEmail(@Body checkEmailRequest: CheckEmailRequest): ApiResult<OverlapCheckDto>
 
-    // 공지사항 리스트 API
-    @GET(NOTICE_LIST)
-    suspend fun getNoticeList(@Query("page") page: Int): ApiResult<DataDto<List<NoticeDto>>>
+  // 공지사항 리스트 API
+  @GET(NOTICE_LIST)
+  suspend fun getNoticeList(@Query("page") page: Int): ApiResult<DataDto<List<NoticeDto>>>
 
-    // 공지사항 API
-    @GET(NOTICE)
-    suspend fun getNotice(@Query("noticeId") id: Long): ApiResult<DataDto<NoticeDetailDto>>
+  // 공지사항 API
+  @GET(NOTICE)
+  suspend fun getNotice(@Query("noticeId") id: Long): ApiResult<DataDto<NoticeDetailDto>>
 
-    // 아이디 찾기 API
-    @POST(ID)
-    suspend fun findId(@Body findIdRequest: FindIdRequest): ApiResult<SuccessCheckDto>
+  // 아이디 찾기 API
+  @POST(ID)
+  suspend fun findId(@Body findIdRequest: FindIdRequest): ApiResult<SuccessCheckDto>
 
-    // 비밀번호 찾기(임시 비밀번호 전송) API
-    @POST(PASSWORD)
-    suspend fun findPassword(@Body findPasswordRequest: FindPasswordRequest): ApiResult<SuccessCheckDto>
+  // 비밀번호 찾기(임시 비밀번호 전송) API
+  @POST(PASSWORD)
+  suspend fun findPassword(@Body findPasswordRequest: FindPasswordRequest): ApiResult<SuccessCheckDto>
 
-    // 비밀번호 재설정 API
-    @POST(PASSWORD_RESET)
-    suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): ApiResult<SuccessCheckDto>
+  // 비밀번호 재설정 API
+  @POST(PASSWORD_RESET)
+  suspend fun resetPassword(@Body resetPasswordRequest: ResetPasswordRequest): ApiResult<SuccessCheckDto>
 
-    // 로그인 요청 API
-    @POST(LOGIN)
-    suspend fun login(@Body loginRequest: LoginRequest): ApiResult<Token>
+  // 로그인 요청 API
+  @POST(LOGIN)
+  suspend fun login(@Body loginRequest: LoginRequest): ApiResult<Token>
 
-    // 회원탈퇴 요청 API
-    @POST(QUIT)
-    suspend fun quit(@Body quitRequest: QuitRequest): ApiResult<SuccessCheckDto>
+  // 회원탈퇴 요청 API
+  @POST(QUIT)
+  suspend fun quit(@Body quitRequest: QuitRequest): ApiResult<SuccessCheckDto>
 
-    // 내 정보 페이지 호출 API
-    @GET(MY_PAGE)
-    suspend fun getUserData(): Response<UserDataDto>
+  // 내 정보 페이지 호출 API
+  @GET(MY_PAGE)
+  suspend fun getUserData(): Response<UserDataDto>
 
-    // 내가 쓴 글 (강의평가)
-    @GET(EVALUATE_POST)
-    suspend fun getEvaluatePosts(@Query("page") page: Int): ApiResult<DataDto<List<MyEvaluationDto>>>
+  // 내가 쓴 글 (강의평가)
+  @GET(EVALUATE_POST)
+  suspend fun getEvaluatePosts(@Query("page") page: Int): ApiResult<DataDto<List<MyEvaluationDto>>>
 
-    // 내가 쓴 글 (시험 정보)
-    @GET(EXAM_POSTS)
-    suspend fun getExamPosts(@Query("page") page: Int): ApiResult<DataDto<List<LectureExamDto>>>
+  // 내가 쓴 글 (시험 정보)
+  @GET(EXAM_POSTS)
+  suspend fun getExamPosts(@Query("page") page: Int): ApiResult<DataDto<List<LectureExamDto>>>
 
-    @DELETE(DELETE_EVALUATE_POST)
-    suspend fun deleteEvaluation(@Query("evaluateIdx") id: Long)
+  @DELETE(DELETE_EVALUATE_POST)
+  suspend fun deleteEvaluation(@Query("evaluateIdx") id: Long)
 
-    @DELETE(DELETE_EXAM_POSTS)
-    suspend fun deleteExamInfo(@Query("examIdx") id: Long)
+  @DELETE(DELETE_EXAM_POSTS)
+  suspend fun deleteExamInfo(@Query("examIdx") id: Long)
 
-    // 시험정보 구매 이력
-    @GET(PURCHASE_HISTORY)
-    suspend fun getPurchaseHistory(): ApiResult<DataDto<List<PurchaseHistoryDto>>>
+  // 시험정보 구매 이력
+  @GET(PURCHASE_HISTORY)
+  suspend fun getPurchaseHistory(): ApiResult<DataDto<List<PurchaseHistoryDto>>>
 
-    // 이용제한 내역 조회
-    @GET(BAN_REASON)
-    suspend fun getSuspensionHistory(): ApiResult<List<SuspensionHistoryDto>>
+  // 이용제한 내역 조회
+  @GET(BAN_REASON)
+  suspend fun getSuspensionHistory(): ApiResult<List<SuspensionHistoryDto>>
 
-    // 블랙리스트 내역 조회
-    @GET(BLACKLIST_REASON)
-    suspend fun getBlacklistHistory(): ApiResult<List<BlacklistDto>>
+  // 블랙리스트 내역 조회
+  @GET(BLACKLIST_REASON)
+  suspend fun getBlacklistHistory(): ApiResult<List<BlacklistDto>>
 
-    // 검색결과 자세히 보기 (LECTURE)
-    @GET(LECTURE_DETAIL_INFO)
-    suspend fun getLectureDetailInfo(@Query("lectureId") lectureId: Long): ApiResult<DataDto<LectureDetailInfoDto>>
+  // 검색결과 자세히 보기 (LECTURE)
+  @GET(LECTURE_DETAIL_INFO)
+  suspend fun getLectureDetailInfo(@Query("lectureId") lectureId: Long): ApiResult<DataDto<LectureDetailInfoDto>>
 
-    // 검색결과 자세히 보기 (Evaluation)
-    @GET(LECTURE_DETAIL_EVALUATION)
-    suspend fun getLectureDetailEvaluation(
-        @Query("lectureId") lectureId: Long,
-        @Query("page") page: Int,
-    ): ApiResult<LectureDetailEvaluationDataDto>
+  // 검색결과 자세히 보기 (Evaluation)
+  @GET(LECTURE_DETAIL_EVALUATION)
+  suspend fun getLectureDetailEvaluation(
+    @Query("lectureId") lectureId: Long,
+    @Query("page") page: Int,
+  ): ApiResult<LectureDetailEvaluationDataDto>
 
-    // 검색결과 자세히 보기 (Exam)
-    @GET(LECTURE_DETAIL_EXAM)
-    suspend fun getLectureDetailExam(
-        @Query("lectureId") lectureId: Long,
-        @Query("page") page: Int,
-    ): ApiResult<LectureDetailExamDataDto>
+  // 검색결과 자세히 보기 (Exam)
+  @GET(LECTURE_DETAIL_EXAM)
+  suspend fun getLectureDetailExam(
+    @Query("lectureId") lectureId: Long,
+    @Query("page") page: Int,
+  ): ApiResult<LectureDetailExamDataDto>
 
-    // 검색결과 페이지 API(강의평)
-    @GET(SEARCH)
-    suspend fun getSearchResultDetail(
-        @Query("searchValue") searchValue: String,
-        @Query("option") option: String,
-        @Query("page") page: Int,
-        @Query("majorType") majorType: String,
-    ): ApiResult<DataDto<MutableList<LectureMainDto?>>>
+  // 검색결과 페이지 API(강의평)
+  @GET(SEARCH)
+  suspend fun getSearchResultDetail(
+    @Query("searchValue") searchValue: String,
+    @Query("option") option: String,
+    @Query("page") page: Int,
+    @Query("majorType") majorType: String,
+  ): ApiResult<DataDto<MutableList<LectureMainDto?>>>
 
-    // 메인 페이지
-    @GET(LECTURE_MAIN)
-    suspend fun getLectureMainList(
-        @Query("option") option: String,
-        @Query("page") page: Int = 1,
-        @Query("majorType") majorType: String = "",
-    ): ApiResult<DataDto<MutableList<LectureMainDto?>>>
+  // 메인 페이지
+  @GET(LECTURE_MAIN)
+  suspend fun getLectureMainList(
+    @Query("option") option: String,
+    @Query("page") page: Int = 1,
+    @Query("majorType") majorType: String = "",
+  ): ApiResult<DataDto<MutableList<LectureMainDto?>>>
 
-    // 강의평가 쓰기
-    @POST(WRITE_LECTURE_EVALUATION)
-    suspend fun postLectureEvaluation(
-        @Field("lectureName") lectureName: String,
-        @Field("professor") professor: String,
-        @Field("selectedSemester") selectedSemester: String,
-        @Field("satisfaction") satisfaction: Float,
-        @Field("learning") learning: Float,
-        @Field("honey") honey: Float,
-        @Field("team") team: Int,
-        @Field("difficulty") difficulty: Int,
-        @Field("homework") homework: Int,
-        @Field("content") content: String,
-    ): Response<String>
+  // 강의평가 쓰기
+  @POST(WRITE_LECTURE_EVALUATION)
+  suspend fun postLectureEvaluation(
+    @Field("lectureName") lectureName: String,
+    @Field("professor") professor: String,
+    @Field("selectedSemester") selectedSemester: String,
+    @Field("satisfaction") satisfaction: Float,
+    @Field("learning") learning: Float,
+    @Field("honey") honey: Float,
+    @Field("team") team: Int,
+    @Field("difficulty") difficulty: Int,
+    @Field("homework") homework: Int,
+    @Field("content") content: String,
+  ): Response<String>
 
-    // 시험정보 쓰기
-    @POST(WRITE_LECTURE_EXAM)
-    suspend fun postLectureExam(
-        @Query("lectureId") lectureId: Long,
-        @Field("lectureName") lectureName: String?,
-        @Field("professor") professor: String?,
-        @Field("selectedSemester") selectedSemester: String?,
-        @Field("examInfo") examInfo: String,
-        @Field("examType") examType: String?,
-        @Field("examDifficulty") examDifficulty: String,
-        @Field("content") content: String,
-    ): Response<String>
+  // 시험정보 쓰기
+  @POST(WRITE_LECTURE_EXAM)
+  suspend fun postLectureExam(
+    @Query("lectureId") lectureId: Long,
+    @Field("lectureName") lectureName: String?,
+    @Field("professor") professor: String?,
+    @Field("selectedSemester") selectedSemester: String?,
+    @Field("examInfo") examInfo: String,
+    @Field("examType") examType: String?,
+    @Field("examDifficulty") examDifficulty: String,
+    @Field("content") content: String,
+  ): Response<String>
 
-    // 강의평가 수정
-    @PUT(EDIT_LECTURE_EVALUATION)
-    suspend fun updateLectureEvaluation(
-        @Query("evaluateIdx") lectureId: Long,
-        @Field("selectedSemester") selectedSemester: String,
-        @Field("satisfaction") satisfaction: Float,
-        @Field("learning") learning: Float,
-        @Field("honey") honey: Float,
-        @Field("team") team: Int,
-        @Field("difficulty") difficulty: Int,
-        @Field("homework") homework: Int,
-        @Field("content") content: String,
-    ): Response<String>
+  // 강의평가 수정
+  @PUT(EDIT_LECTURE_EVALUATION)
+  suspend fun updateLectureEvaluation(
+    @Query("evaluateIdx") lectureId: Long,
+    @Field("selectedSemester") selectedSemester: String,
+    @Field("satisfaction") satisfaction: Float,
+    @Field("learning") learning: Float,
+    @Field("honey") honey: Float,
+    @Field("team") team: Int,
+    @Field("difficulty") difficulty: Int,
+    @Field("homework") homework: Int,
+    @Field("content") content: String,
+  ): Response<String>
 
-    // 시험 정보 구매
-    @POST(BUY_EXAM)
-    suspend fun buyExam(@Query("lectureId") lectureId: Long): ApiResult<String>
+  // 시험 정보 구매
+  @POST(BUY_EXAM)
+  suspend fun buyExam(@Query("lectureId") lectureId: Long): ApiResult<String>
 
-    // 시험 정보 수정
-    @PUT(EDIT_LECTURE_EXAM)
-    suspend fun updateLectureExam(
-        @Query("examIdx") lectureId: Long,
-        @Field("selectedSemester") selectedSemester: String?,
-        @Field("examInfo") examInfo: String,
-        @Field("examType") examType: String?,
-        @Field("examDifficulty") examDifficulty: String,
-        @Field("content") content: String,
-    ): Response<String>
+  // 시험 정보 수정
+  @PUT(EDIT_LECTURE_EXAM)
+  suspend fun updateLectureExam(
+    @Query("examIdx") lectureId: Long,
+    @Field("selectedSemester") selectedSemester: String?,
+    @Field("examInfo") examInfo: String,
+    @Field("examType") examType: String?,
+    @Field("examDifficulty") examDifficulty: String,
+    @Field("content") content: String,
+  ): Response<String>
 
-    @GET(OPEN_MAJOR_VERSION)
-    suspend fun getOpenMajorVersion(): ApiResult<OpenMajorVersionDto>
+  @GET(OPEN_MAJOR_VERSION)
+  suspend fun getOpenMajorVersion(): ApiResult<OpenMajorVersionDto>
 
-    @GET(OPEN_MAJOR_LIST_UPDATE)
-    suspend fun getOpenMajorList(): ApiResult<OpenMajorListDto>
+  @GET(OPEN_MAJOR_LIST_UPDATE)
+  suspend fun getOpenMajorList(): ApiResult<OpenMajorListDto>
 
-    @POST(BOOKMARK)
-    suspend fun bookmarkMajor(@Body bookmarkMajorRequest: BookmarkMajorRequest): ApiResult<String>
+  @POST(BOOKMARK)
+  suspend fun bookmarkMajor(@Body bookmarkMajorRequest: BookmarkMajorRequest): ApiResult<String>
 
-    @GET(BOOKMARK)
-    suspend fun getBookmarkMajorList(): ApiResult<OpenMajorListDto>
+  @GET(BOOKMARK)
+  suspend fun getBookmarkMajorList(): ApiResult<OpenMajorListDto>
 
-    @DELETE(BOOKMARK)
-    suspend fun clearBookmarkMajor(
-        @Query("majorType") majorName: String,
-    ): ApiResult<String>
+  @DELETE(BOOKMARK)
+  suspend fun clearBookmarkMajor(
+    @Query("majorType") majorName: String,
+  ): ApiResult<String>
 
-    // 강의평가 신고하기
-    @POST(REPORT_EVALUATION)
-    suspend fun reportLecture(@Body reportLectureRequest: ReportLectureRequest): ApiResult<Unit>
+  // 강의평가 신고하기
+  @POST(REPORT_EVALUATION)
+  suspend fun reportLecture(@Body reportLectureRequest: ReportLectureRequest): ApiResult<Unit>
 
-    // 시험정보 신고하기
-    @POST(REPORT_EXAM)
-    suspend fun reportExam(@Body reportExamRequest: ReportExamRequest): ApiResult<Unit>
+  // 시험정보 신고하기
+  @POST(REPORT_EXAM)
+  suspend fun reportExam(@Body reportExamRequest: ReportExamRequest): ApiResult<Unit>
 
-    companion object {
-        object API {
-            const val BASE_URL: String = "https://api.suwiki.kr"
-            const val REQUEST_REFRESH: String = "/user/refresh"
-            const val NOTICE_LIST: String = "/notice/all"
-            const val NOTICE: String = "/notice/"
-            const val SEARCH: String = "/lecture/search/"
-            const val ID: String = "/user/find-id"
-            const val PASSWORD: String = "/user/find-pw"
-            const val PASSWORD_RESET: String = "/user/reset-pw"
-            const val LOGIN: String = "/user/login"
-            const val QUIT: String = "/user/quit"
-            const val MY_PAGE: String = "/user/my-page"
-            const val BAN_REASON: String = "/user/restricted-reason"
-            const val BLACKLIST_REASON: String = "/user/blacklist-reason"
-            const val EVALUATE_POST: String = "/evaluate-posts/written"
-            const val DELETE_EVALUATE_POST: String = "/evaluate-posts/"
-            const val EXAM_POSTS: String = "/exam-posts/written"
-            const val DELETE_EXAM_POSTS: String = "/exam-posts/"
-            const val PURCHASE_HISTORY: String = "/exam-posts/purchase"
-            const val SIGN_UP: String = "/user/join"
-            const val SIGN_UP_ID_CHECK: String = "/user/check-id"
-            const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
-            const val LECTURE_MAIN: String = "/lecture/all/"
-            const val LECTURE_DETAIL_INFO = "/lecture/"
-            const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/"
-            const val LECTURE_DETAIL_EXAM = "/exam-posts/"
-            const val WRITE_LECTURE_EVALUATION = "/evaluate-posts/"
-            const val WRITE_LECTURE_EXAM = "/exam-posts/"
-            const val EDIT_LECTURE_EVALUATION = "/evaluate-posts/"
-            const val EDIT_LECTURE_EXAM = "/exam-posts/"
-            const val BUY_EXAM = "/exam-posts/purchase/"
-            const val OPEN_MAJOR_VERSION = "/suwiki/version/"
-            const val OPEN_MAJOR_LIST_UPDATE = "/suwiki/majorType"
-            const val BOOKMARK = "/user/favorite-major/"
-            const val REPORT_EVALUATION = "/user/report/evaluate"
-            const val REPORT_EXAM = "/user/report/exam"
-        }
+  companion object {
+    object API {
+      const val BASE_URL: String = "https://api.suwiki.kr"
+      const val REQUEST_REFRESH: String = "/user/refresh"
+      const val NOTICE_LIST: String = "/notice/all"
+      const val NOTICE: String = "/notice/"
+      const val SEARCH: String = "/lecture/search/"
+      const val ID: String = "/user/find-id"
+      const val PASSWORD: String = "/user/find-pw"
+      const val PASSWORD_RESET: String = "/user/reset-pw"
+      const val LOGIN: String = "/user/login"
+      const val QUIT: String = "/user/quit"
+      const val MY_PAGE: String = "/user/my-page"
+      const val BAN_REASON: String = "/user/restricted-reason"
+      const val BLACKLIST_REASON: String = "/user/blacklist-reason"
+      const val EVALUATE_POST: String = "/evaluate-posts/written"
+      const val DELETE_EVALUATE_POST: String = "/evaluate-posts/"
+      const val EXAM_POSTS: String = "/exam-posts/written"
+      const val DELETE_EXAM_POSTS: String = "/exam-posts/"
+      const val PURCHASE_HISTORY: String = "/exam-posts/purchase"
+      const val SIGN_UP: String = "/user/join"
+      const val SIGN_UP_ID_CHECK: String = "/user/check-id"
+      const val SIGN_UP_EMAIL_CHECK: String = "/user/check-email"
+      const val LECTURE_MAIN: String = "/lecture/all/"
+      const val LECTURE_DETAIL_INFO = "/lecture/"
+      const val LECTURE_DETAIL_EVALUATION = "/evaluate-posts/"
+      const val LECTURE_DETAIL_EXAM = "/exam-posts/"
+      const val WRITE_LECTURE_EVALUATION = "/evaluate-posts/"
+      const val WRITE_LECTURE_EXAM = "/exam-posts/"
+      const val EDIT_LECTURE_EVALUATION = "/evaluate-posts/"
+      const val EDIT_LECTURE_EXAM = "/exam-posts/"
+      const val BUY_EXAM = "/exam-posts/purchase/"
+      const val OPEN_MAJOR_VERSION = "/suwiki/version/"
+      const val OPEN_MAJOR_LIST_UPDATE = "/suwiki/majorType"
+      const val BOOKMARK = "/user/favorite-major/"
+      const val REPORT_EVALUATION = "/user/report/evaluate"
+      const val REPORT_EXAM = "/user/report/exam"
     }
+  }
 }

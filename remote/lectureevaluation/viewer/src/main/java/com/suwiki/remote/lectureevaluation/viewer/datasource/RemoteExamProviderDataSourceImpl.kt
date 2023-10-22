@@ -7,18 +7,18 @@ import com.suwiki.remote.lectureevaluation.viewer.response.exam.toModel
 import javax.inject.Inject
 
 class RemoteExamProviderDataSourceImpl @Inject constructor(
-    private val examApi: ExamViewerApi,
+  private val examApi: ExamViewerApi,
 ) : RemoteExamProviderDataSource {
 
-    override suspend fun getLectureDetailExam(
-        lectureId: Long,
-        page: Int,
-    ): LectureDetailExamData {
-        return examApi.getLectureDetailExam(lectureId = lectureId, page = page)
-            .getOrThrow().toModel()
-    }
+  override suspend fun getLectureDetailExam(
+    lectureId: Long,
+    page: Int,
+  ): LectureDetailExamData {
+    return examApi.getLectureDetailExam(lectureId = lectureId, page = page)
+      .getOrThrow().toModel()
+  }
 
-    override suspend fun buyExam(lectureId: Long) {
-        return examApi.buyExam(lectureId).getOrThrow()
-    }
+  override suspend fun buyExam(lectureId: Long) {
+    return examApi.buyExam(lectureId).getOrThrow()
+  }
 }

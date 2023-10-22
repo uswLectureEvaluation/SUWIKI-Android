@@ -8,10 +8,10 @@ import com.suwiki.domain.repository.NoticeRepository
 import javax.inject.Inject
 
 class NoticeRepositoryImpl @Inject constructor(
-    private val dataSource: NoticeDataSource,
+  private val dataSource: NoticeDataSource,
 ) : NoticeRepository {
-    override suspend fun getNoticeList(page: Int): Result<List<SimpleNotice>> =
-        dataSource.getNoticeList(page).map { notices ->
-            notices.map { it.toDomain() }
-        }
+  override suspend fun getNoticeList(page: Int): Result<List<SimpleNotice>> =
+    dataSource.getNoticeList(page).map { notices ->
+      notices.map { it.toDomain() }
+    }
 }

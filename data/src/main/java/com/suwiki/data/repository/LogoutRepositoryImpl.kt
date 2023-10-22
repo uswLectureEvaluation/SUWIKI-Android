@@ -6,12 +6,12 @@ import com.suwiki.domain.repository.LogoutRepository
 import javax.inject.Inject
 
 class LogoutRepositoryImpl @Inject constructor(
-    private val userPreference: UserPreference,
-    private val authRepository: AuthRepository,
+  private val userPreference: UserPreference,
+  private val authRepository: AuthRepository,
 ) : LogoutRepository {
 
-    override suspend fun logout() {
-        userPreference.logout()
-        authRepository.clearTokens()
-    }
+  override suspend fun logout() {
+    userPreference.logout()
+    authRepository.clearTokens()
+  }
 }

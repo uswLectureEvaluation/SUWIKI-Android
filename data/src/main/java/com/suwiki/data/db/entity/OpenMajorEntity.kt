@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class OpenMajorEntity(
-    val name: String,
+  val name: String,
 ) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+  @PrimaryKey(autoGenerate = true)
+  var id: Int = 0
 }

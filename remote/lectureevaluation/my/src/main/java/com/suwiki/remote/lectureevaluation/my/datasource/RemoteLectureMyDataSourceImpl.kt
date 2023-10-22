@@ -7,9 +7,9 @@ import com.suwiki.remote.lectureevaluation.my.response.toModel
 import javax.inject.Inject
 
 class RemoteLectureMyDataSourceImpl @Inject constructor(
-    private val lectureApi: LectureMyApi,
+  private val lectureApi: LectureMyApi,
 ) : RemoteLectureMyDataSource {
-    override suspend fun getLectureMyPosts(page: Int): List<Evaluation> {
-        return lectureApi.getEvaluateMyPosts(page).getOrThrow().data.map { it.toModel() }
-    }
+  override suspend fun getLectureMyPosts(page: Int): List<Evaluation> {
+    return lectureApi.getEvaluateMyPosts(page).getOrThrow().data.map { it.toModel() }
+  }
 }

@@ -7,8 +7,8 @@ import com.suwiki.domain.model.Result
 import javax.inject.Inject
 
 class NoticeDataSource @Inject constructor(
-    private val apiService: ApiService,
+  private val apiService: ApiService,
 ) {
-    suspend fun getNoticeList(page: Int): Result<List<NoticeDto>> =
-        apiService.getNoticeList(page).toDomainResult().map { it.data }
+  suspend fun getNoticeList(page: Int): Result<List<NoticeDto>> =
+    apiService.getNoticeList(page).toDomainResult().map { it.data }
 }

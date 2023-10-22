@@ -7,58 +7,58 @@ import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureExamReque
 import javax.inject.Inject
 
 class RemoteExamEditorDataSourceImpl @Inject constructor(
-    private val examApi: ExamEditorApi,
+  private val examApi: ExamEditorApi,
 ) : RemoteExamEditorDataSource {
 
-    override suspend fun postLectureExam(
-        lectureId: Long,
-        lectureName: String?,
-        professor: String?,
-        selectedSemester: String?,
-        examInfo: String,
-        examType: String?,
-        examDifficulty: String,
-        content: String,
-    ) {
-        val request = PostLectureExamRequest(
-            lectureName = lectureName,
-            professor = professor,
-            selectedSemester = selectedSemester,
-            examInfo = examInfo,
-            examType = examType,
-            examDifficulty = examDifficulty,
-            content = content,
-        )
+  override suspend fun postLectureExam(
+    lectureId: Long,
+    lectureName: String?,
+    professor: String?,
+    selectedSemester: String?,
+    examInfo: String,
+    examType: String?,
+    examDifficulty: String,
+    content: String,
+  ) {
+    val request = PostLectureExamRequest(
+      lectureName = lectureName,
+      professor = professor,
+      selectedSemester = selectedSemester,
+      examInfo = examInfo,
+      examType = examType,
+      examDifficulty = examDifficulty,
+      content = content,
+    )
 
-        return examApi.postLectureExam(
-            lectureId = lectureId,
-            request = request,
-        ).getOrThrow()
-    }
+    return examApi.postLectureExam(
+      lectureId = lectureId,
+      request = request,
+    ).getOrThrow()
+  }
 
-    override suspend fun updateLectureExam(
-        lectureId: Long,
-        selectedSemester: String?,
-        examInfo: String,
-        examType: String?,
-        examDifficulty: String,
-        content: String,
-    ) {
-        val request = UpdateLectureExamRequest(
-            selectedSemester = selectedSemester,
-            examInfo = examInfo,
-            examType = examType,
-            examDifficulty = examDifficulty,
-            content = content,
-        )
+  override suspend fun updateLectureExam(
+    lectureId: Long,
+    selectedSemester: String?,
+    examInfo: String,
+    examType: String?,
+    examDifficulty: String,
+    content: String,
+  ) {
+    val request = UpdateLectureExamRequest(
+      selectedSemester = selectedSemester,
+      examInfo = examInfo,
+      examType = examType,
+      examDifficulty = examDifficulty,
+      content = content,
+    )
 
-        return examApi.updateLectureExam(
-            lectureId = lectureId,
-            request = request,
-        ).getOrThrow()
-    }
+    return examApi.updateLectureExam(
+      lectureId = lectureId,
+      request = request,
+    ).getOrThrow()
+  }
 
-    override suspend fun deleteExamInfo(id: Long) {
-        return examApi.deleteExamInfo(id).getOrThrow()
-    }
+  override suspend fun deleteExamInfo(id: Long) {
+    return examApi.deleteExamInfo(id).getOrThrow()
+  }
 }

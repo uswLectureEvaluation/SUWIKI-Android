@@ -8,11 +8,11 @@ import com.suwiki.domain.model.Result
 import javax.inject.Inject
 
 class SuspensionHistoryRemoteDataSource @Inject constructor(
-    private val apiService: ApiService,
+  private val apiService: ApiService,
 ) : SuspensionHistoryDataSource {
-    override suspend fun getBanHistory(): Result<List<SuspensionHistoryDto>> =
-        apiService.getSuspensionHistory().toDomainResult()
+  override suspend fun getBanHistory(): Result<List<SuspensionHistoryDto>> =
+    apiService.getSuspensionHistory().toDomainResult()
 
-    override suspend fun getBlacklistHistory(): Result<List<BlacklistDto>> =
-        apiService.getBlacklistHistory().toDomainResult()
+  override suspend fun getBlacklistHistory(): Result<List<BlacklistDto>> =
+    apiService.getBlacklistHistory().toDomainResult()
 }

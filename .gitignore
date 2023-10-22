@@ -106,7 +106,6 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -138,7 +137,6 @@ out/
 # release/
 
 # Gradle files
-.gradle/
 build/
 
 # Local configuration file (sdk path, etc)
@@ -221,7 +219,6 @@ lint/tmp/
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -326,7 +323,6 @@ out/
 # release/
 
 # Gradle files
-.gradle/
 build/
 
 # Local configuration file (sdk path, etc)
@@ -417,7 +413,6 @@ out/
 # release/
 
 # Gradle files
-.gradle/
 build/
 
 # Local configuration file (sdk path, etc)
