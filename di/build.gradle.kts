@@ -19,8 +19,6 @@ dependencies {
   implementation(libs.retrofit.kotlin.serialization)
   implementation(libs.okhttp.logging)
 
-  implementation(libs.detekt.plugin.formatting)
-
   val bom = libs.firebase.bom
   add("implementation", platform(bom))
   implementation(libs.bundles.firebase)

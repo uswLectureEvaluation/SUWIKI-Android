@@ -1,7 +1,7 @@
 plugins {
-    id("suwiki.android.application")
-    id("suwiki.android.application.compose")
-    id("suwiki.android.hilt")
+  id("suwiki.android.application")
+  id("suwiki.android.application.compose")
+  id("suwiki.android.hilt")
 }
 
 android {
@@ -34,24 +34,24 @@ dependencies {
 
   implementation(projects.domain)
   implementation(projects.di)
-    implementation(projects.domain.openmajor)
+  implementation(projects.domain.openmajor)
 
   implementation(projects.local.openmajor)
   implementation(projects.local.timetable.editor)
   implementation(projects.local.timetable.viewer)
   implementation(projects.local.user)
 
-    implementation(projects.remote.lectureevaluation.editor)
-    implementation(projects.remote.lectureevaluation.my)
-    implementation(projects.remote.lectureevaluation.report)
-    implementation(projects.remote.lectureevaluation.viewer)
-    implementation(projects.remote.notice)
-    implementation(projects.remote.openmajor)
-    implementation(projects.remote.signup)
-    implementation(projects.remote.timetable.viewer)
-    implementation(projects.remote.user)
+  implementation(projects.remote.lectureevaluation.editor)
+  implementation(projects.remote.lectureevaluation.my)
+  implementation(projects.remote.lectureevaluation.report)
+  implementation(projects.remote.lectureevaluation.viewer)
+  implementation(projects.remote.notice)
+  implementation(projects.remote.openmajor)
+  implementation(projects.remote.signup)
+  implementation(projects.remote.timetable.viewer)
+  implementation(projects.remote.user)
 
-    implementation(projects.presentation)
+  implementation(projects.presentation)
 
-    implementation(libs.timber)
+  implementation(libs.timber)
 }
