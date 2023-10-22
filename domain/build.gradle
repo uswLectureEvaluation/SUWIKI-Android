@@ -12,6 +12,8 @@ java {
 dependencies {
   implementation project(":core:model")
 
+  detektPlugins libs.detekt.plugin.formatting
+
   // coroutine
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
 
