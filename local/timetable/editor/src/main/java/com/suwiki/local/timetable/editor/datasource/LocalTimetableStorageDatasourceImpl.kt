@@ -1,10 +1,10 @@
 package com.suwiki.local.timetable.editor.datasource
 
 import com.suwiki.core.database.TimetableDatabase
+import javax.inject.Inject
 import com.suwiki.core.model.timetable.TimetableData
 import com.suwiki.data.timetable.editor.datasource.LocalTimetableStorageDatasource
 import com.suwiki.local.timetable.editor.converter.toEntity
-import javax.inject.Inject
 
 class LocalTimetableStorageDatasourceImpl @Inject constructor(
     private val timetableDatabase: TimetableDatabase,
