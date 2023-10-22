@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class LocalDataSourceModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindLocalOpenMajorDataSource(
-        localOpenMajorDataSourceImpl: LocalOpenMajorDataSourceImpl,
-    ): LocalOpenMajorDataSource
+  @Singleton
+  @Binds
+  abstract fun bindLocalOpenMajorDataSource(
+    localOpenMajorDataSourceImpl: LocalOpenMajorDataSourceImpl,
+  ): LocalOpenMajorDataSource
 }

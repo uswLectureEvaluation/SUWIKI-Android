@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RemoteRepositoryModule {
+abstract class RepositoryModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindOpenMajorRepository(
-        openMajorRepositoryImpl: OpenMajorRepositoryImpl,
-    ): OpenMajorRepository
+  @Singleton
+  @Binds
+  abstract fun bindOpenMajorRepository(
+    openMajorRepositoryImpl: OpenMajorRepositoryImpl,
+  ): OpenMajorRepository
 }

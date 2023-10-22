@@ -1,11 +1,11 @@
 plugins {
-    id("suwiki.android.feature.compose")
+  id("suwiki.android.feature.compose")
 }
 
 android {
-    namespace = "com.mangbaam.presentation"
+  namespace = "com.mangbaam.presentation"
 }
 
 dependencies {
-    implementation(projects.domain.openmajor)
+  implementation(projects.domain.openmajor)
 }

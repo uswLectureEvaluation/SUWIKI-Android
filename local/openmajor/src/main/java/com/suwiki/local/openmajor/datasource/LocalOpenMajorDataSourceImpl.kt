@@ -15,33 +15,33 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LocalOpenMajorDataSourceImpl @Inject constructor(
-    @NormalDataStore private val dataStore: DataStore<Preferences>,
-    private val db: OpenMajorDatabase,
+  @NormalDataStore private val dataStore: DataStore<Preferences>,
+  private val db: OpenMajorDatabase,
 ) : LocalOpenMajorDataSource {
 
-    companion object {
-        private val OPEN_MAJOR_VERSION = floatPreferencesKey("[KEY] is open major version")
-    }
+  companion object {
+    private val OPEN_MAJOR_VERSION = floatPreferencesKey("[KEY] is open major version")
+  }
 
-    private val data: Flow<Preferences>
-        get() = dataStore.data
+  private val data: Flow<Preferences>
+    get() = dataStore.data
 
-    override suspend fun getLocalOpenMajorVersion(): Flow<Float> =
-        data.map { it[OPEN_MAJOR_VERSION] ?: 0f }
+  override suspend fun getLocalOpenMajorVersion(): Flow<Float> =
+    data.map { it[OPEN_MAJOR_VERSION] ?: 0f }
 
-    override suspend fun setLocalOpenMajorVersion(version: Float) {
-        dataStore.edit { it[OPEN_MAJOR_VERSION] = version }
-    }
+  override suspend fun setLocalOpenMajorVersion(version: Float) {
+    dataStore.edit { it[OPEN_MAJOR_VERSION] = version }
+  }
 
-    override suspend fun getLocalOpenMajorList(): List<OpenMajor> {
-        return db.openMajorDao().getAll().map { it.toModel() }
-    }
+  override suspend fun getLocalOpenMajorList(): List<OpenMajor> {
+    return db.openMajorDao().getAll().map { it.toModel() }
+  }
 
-    override suspend fun saveAllOpenMajors(majors: List<OpenMajor>) {
-        db.openMajorDao().insertAll(majors.map { it.toEntity() })
-    }
+  override suspend fun saveAllOpenMajors(majors: List<OpenMajor>) {
+    db.openMajorDao().insertAll(majors.map { it.toEntity() })
+  }
 
-    override suspend fun deleteAllOpenMajors() {
-        db.openMajorDao().deleteAll()
-    }
+  override suspend fun deleteAllOpenMajors() {
+    db.openMajorDao().deleteAll()
+  }
 }

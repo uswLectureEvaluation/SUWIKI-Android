@@ -13,64 +13,57 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mangbaam.presentation.ui.theme.UswtimetableTheme
 import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
-import com.suwiki.domain.openmajor.usecase.GetOpenMajorListUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var getOpenMajorListUseCase: GetBookmarkedOpenMajorListUseCase
+  @Inject
+  lateinit var getOpenMajorListUseCase: GetBookmarkedOpenMajorListUseCase
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            UswtimetableTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background,
-                ) {
-                    Greeting(name = "Suwiki", useCase = getOpenMajorListUseCase)
-                }
-            }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContent {
+      UswtimetableTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(
+          modifier = Modifier.fillMaxSize(),
+          color = MaterialTheme.colorScheme.background,
+        ) {
+          Greeting(name = "Suwiki", useCase = getOpenMajorListUseCase)
         }
+      }
     }
+  }
 }
 
 @Composable
 fun Greeting(
-    name: String,
-    modifier: Modifier = Modifier,
-    useCase: GetBookmarkedOpenMajorListUseCase,
+  name: String,
+  modifier: Modifier = Modifier,
+  useCase: GetBookmarkedOpenMajorListUseCase,
 ) {
-    LaunchedEffect(key1 = Unit) {
-        useCase()
-            .onSuccess {
-                Timber.d("$it")
-            }
-            .onFailure {
-                Timber.d("$it")
-            }
-    }
+  LaunchedEffect(key1 = Unit) {
+    useCase()
+      .onSuccess {
+        Timber.d("$it")
+      }
+      .onFailure {
+        Timber.d("$it")
+      }
+  }
 
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-    )
+  Text(
+    text = "Hello $name!",
+    modifier = modifier,
+  )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    UswtimetableTheme {
-    }
+  UswtimetableTheme {
+  }
 }
