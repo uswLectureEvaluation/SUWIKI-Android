@@ -10,20 +10,20 @@ import com.suwiki.domain.repository.SignUpRepository
 import javax.inject.Inject
 
 class SignUpRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+  private val apiService: ApiService,
 ) : SignUpRepository {
 
-    override suspend fun checkId(id: String): Result<Boolean> {
-        return apiService.checkId(CheckIdRequest(id)).toDomainResult().map { it.overlap }
-    }
+  override suspend fun checkId(id: String): Result<Boolean> {
+    return apiService.checkId(CheckIdRequest(id)).toDomainResult().map { it.overlap }
+  }
 
-    override suspend fun checkEmail(email: String): Result<Boolean> {
-        return apiService.checkEmail(CheckEmailRequest(email)).toDomainResult().map { it.overlap }
-    }
+  override suspend fun checkEmail(email: String): Result<Boolean> {
+    return apiService.checkEmail(CheckEmailRequest(email)).toDomainResult().map { it.overlap }
+  }
 
-    override suspend fun signUp(id: String, pw: String, email: String): Result<Boolean> {
-        return apiService.signUp(
-            SignupRequest(id, pw, email),
-        ).toDomainResult().map { it.success }
-    }
+  override suspend fun signUp(id: String, pw: String, email: String): Result<Boolean> {
+    return apiService.signUp(
+      SignupRequest(id, pw, email),
+    ).toDomainResult().map { it.success }
+  }
 }

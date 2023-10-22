@@ -8,15 +8,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NoticeDetailResponse(
-    val id: Long,
-    val title: String,
-    @SerialName("modifiedDate") val date: LocalDateTime?,
-    val content: String,
+  val id: Long,
+  val title: String,
+  @SerialName("modifiedDate") val date: LocalDateTime?,
+  val content: String,
 )
 
 internal fun NoticeDetailResponse.toModel() = NoticeDetail(
-    id = id,
-    title = title,
-    date = date?.toJavaLocalDateTime(),
-    content = content,
+  id = id,
+  title = title,
+  date = date?.toJavaLocalDateTime(),
+  content = content,
 )

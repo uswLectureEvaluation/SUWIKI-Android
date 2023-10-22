@@ -4,5 +4,5 @@ import com.suwiki.domain.model.Result
 import com.suwiki.domain.model.SimpleNotice
 
 interface NoticeRepository {
-    suspend fun getNoticeList(page: Int): Result<List<SimpleNotice>>
+  suspend fun getNoticeList(page: Int): Result<List<SimpleNotice>>
 }

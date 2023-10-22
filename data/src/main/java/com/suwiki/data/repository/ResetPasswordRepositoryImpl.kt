@@ -9,16 +9,16 @@ import com.suwiki.domain.repository.ResetPasswordRepository
 import javax.inject.Inject
 
 class ResetPasswordRepositoryImpl @Inject constructor(
-    @AuthApiService private val apiService: ApiService,
+  @AuthApiService private val apiService: ApiService,
 ) : ResetPasswordRepository {
-    /**
-     * @return 비밀번호 초기화 성공시 true, 실패시 false 반환
-     * */
-    override suspend fun resetPassword(current: String, new: String): Result<Boolean> =
-        apiService.resetPassword(
-            ResetPasswordRequest(
-                currentPassword = current,
-                newPassword = new,
-            ),
-        ).toDomainResult().map { it.success }
+  /**
+   * @return 비밀번호 초기화 성공시 true, 실패시 false 반환
+   * */
+  override suspend fun resetPassword(current: String, new: String): Result<Boolean> =
+    apiService.resetPassword(
+      ResetPasswordRequest(
+        currentPassword = current,
+        newPassword = new,
+      ),
+    ).toDomainResult().map { it.success }
 }

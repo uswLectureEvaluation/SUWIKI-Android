@@ -13,9 +13,9 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object DaoModule {
 
-    @Provides
-    fun provideOpenMajorDao(db: OpenMajorDatabase): OpenMajorDao = db.openMajorDao()
+  @Provides
+  fun provideOpenMajorDao(db: OpenMajorDatabase): OpenMajorDao = db.openMajorDao()
 
-    @Provides
-    fun provideTimetableDao(db: TimetableDatabase): TimetableDao = db.timetableDao()
+  @Provides
+  fun provideTimetableDao(db: TimetableDatabase): TimetableDao = db.timetableDao()
 }

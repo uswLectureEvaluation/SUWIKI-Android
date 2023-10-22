@@ -5,14 +5,14 @@ import java.io.Serializable
 import java.time.LocalDateTime
 
 data class NoticeDto(
-    val id: Long,
-    val title: String,
-    @SerializedName("modifiedDate") val date: LocalDateTime,
+  val id: Long,
+  val title: String,
+  @SerializedName("modifiedDate") val date: LocalDateTime,
 ) : Serializable
 
 data class NoticeDetailDto(
-    val id: Long,
-    val title: String,
-    @SerializedName("modifiedDate") val date: LocalDateTime?,
-    val content: String,
+  val id: Long,
+  val title: String,
+  @SerializedName("modifiedDate") val date: LocalDateTime?,
+  val content: String,
 ) : Serializable

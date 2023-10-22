@@ -5,5 +5,5 @@ import com.suwiki.domain.model.Suspension
 import kotlinx.coroutines.flow.Flow
 
 interface SuspensionRepository {
-    suspend fun getSuspensionHistory(): Flow<Result<List<Suspension>>>
+  suspend fun getSuspensionHistory(): Flow<Result<List<Suspension>>>
 }

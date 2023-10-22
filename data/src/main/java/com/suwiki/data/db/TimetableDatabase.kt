@@ -7,5 +7,5 @@ import com.suwiki.data.db.entity.TimetableEntity
 
 @Database(entities = [TimetableEntity::class], version = 1)
 abstract class TimetableDatabase : RoomDatabase() {
-    abstract fun timetableDao(): TimetableDao
+  abstract fun timetableDao(): TimetableDao
 }

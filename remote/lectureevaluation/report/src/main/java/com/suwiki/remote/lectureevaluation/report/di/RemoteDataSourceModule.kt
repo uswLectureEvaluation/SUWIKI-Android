@@ -14,15 +14,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RemoteDataSourceModule {
 
-    @Singleton
-    @Binds
-    abstract fun bindRemoteExamReportDatasource(
-        remoteOpenMajorDataSourceImpl: RemoteExamReportDataSourceImpl,
-    ): RemoteExamReportDataSource
+  @Singleton
+  @Binds
+  abstract fun bindRemoteExamReportDatasource(
+    remoteOpenMajorDataSourceImpl: RemoteExamReportDataSourceImpl,
+  ): RemoteExamReportDataSource
 
-    @Singleton
-    @Binds
-    abstract fun bindLectureExamReportDatasource(
-        remoteOpenMajorDataSourceImpl: RemoteLectureReportDataSourceImpl,
-    ): RemoteLectureReportDataSource
+  @Singleton
+  @Binds
+  abstract fun bindLectureExamReportDatasource(
+    remoteOpenMajorDataSourceImpl: RemoteLectureReportDataSourceImpl,
+  ): RemoteLectureReportDataSource
 }

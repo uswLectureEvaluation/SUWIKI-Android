@@ -24,22 +24,22 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
-    @Singleton
-    @Provides
-    @SecureDataStore
-    fun provideEncryptedDataStore(
-        @ApplicationContext applicationContext: Context,
-    ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
-        corruptionHandler = ReplaceFileCorruptionHandler(
-            produceNewData = { emptyPreferences() },
-        ),
-        scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-        produceFile = { applicationContext.preferencesDataStoreFile("security-preference") },
-    )
+  @Singleton
+  @Provides
+  @SecureDataStore
+  fun provideEncryptedDataStore(
+    @ApplicationContext applicationContext: Context,
+  ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
+    corruptionHandler = ReplaceFileCorruptionHandler(
+      produceNewData = { emptyPreferences() },
+    ),
+    scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+    produceFile = { applicationContext.preferencesDataStoreFile("security-preference") },
+  )
 
-    @Singleton
-    @Provides
-    fun provideSecurityPreference(
-        @SecureDataStore dataStore: DataStore<Preferences>,
-    ): SecurityPreferences = dataStore.generateSecurityPreferences(generateUsefulSecurity())
+  @Singleton
+  @Provides
+  fun provideSecurityPreference(
+    @SecureDataStore dataStore: DataStore<Preferences>,
+  ): SecurityPreferences = dataStore.generateSecurityPreferences(generateUsefulSecurity())
 }

@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class OverlapCheckResponse(
-    val overlap: Boolean,
+  val overlap: Boolean,
 )

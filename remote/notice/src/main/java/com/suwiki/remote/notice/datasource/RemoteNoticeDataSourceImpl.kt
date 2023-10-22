@@ -8,14 +8,14 @@ import com.suwiki.remote.notice.response.toModel
 import javax.inject.Inject
 
 class RemoteNoticeDataSourceImpl @Inject constructor(
-    private val noticeApi: NoticeApi,
+  private val noticeApi: NoticeApi,
 ) : RemoteNoticeDataSource {
 
-    override suspend fun getNoticeList(page: Int): List<Notice> {
-        return noticeApi.getNoticeList(page).getOrThrow().data.map { it.toModel() }
-    }
+  override suspend fun getNoticeList(page: Int): List<Notice> {
+    return noticeApi.getNoticeList(page).getOrThrow().data.map { it.toModel() }
+  }
 
-    override suspend fun getNotice(id: Long): NoticeDetail {
-        return noticeApi.getNotice(id).getOrThrow().data.toModel()
-    }
+  override suspend fun getNotice(id: Long): NoticeDetail {
+    return noticeApi.getNotice(id).getOrThrow().data.toModel()
+  }
 }

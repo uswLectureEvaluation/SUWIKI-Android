@@ -7,9 +7,9 @@ import com.suwiki.local.openmajor.converter.toModel
 import javax.inject.Inject
 
 class LocalOpenMajorProviderDataSourceImpl @Inject constructor(
-    private val db: OpenMajorDatabase,
+  private val db: OpenMajorDatabase,
 ) : LocalOpenMajorProviderDataSource {
-    override suspend fun getLocalOpenMajorList(): List<OpenMajor> {
-        return db.openMajorDao().getAll().map { it.toModel() }
-    }
+  override suspend fun getLocalOpenMajorList(): List<OpenMajor> {
+    return db.openMajorDao().getAll().map { it.toModel() }
+  }
 }

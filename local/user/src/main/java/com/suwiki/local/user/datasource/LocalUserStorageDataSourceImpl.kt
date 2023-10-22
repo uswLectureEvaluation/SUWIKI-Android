@@ -15,47 +15,47 @@ import com.suwiki.local.user.WRITTEN_EXAM
 import javax.inject.Inject
 
 class LocalUserStorageDataSourceImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
-    private val securityPreferences: SecurityPreferences,
+  private val dataStore: DataStore<Preferences>,
+  private val securityPreferences: SecurityPreferences,
 ) : LocalUserStorageDataSource {
 
-    override suspend fun login(
-        userId: String,
-        point: Int,
-        writtenEvaluation: Int,
-        writtenExam: Int,
-        viewExam: Int,
-        email: String,
-        accessToken: String,
-        refreshToken: String,
-    ) {
-        setUserInfo(userId, point, writtenEvaluation, writtenExam, viewExam, email)
-        securityPreferences.setAccessToken(accessToken)
-        securityPreferences.setRefreshToken(refreshToken)
-        dataStore.edit { it[LOGGED_IN] = true }
-    }
+  override suspend fun login(
+    userId: String,
+    point: Int,
+    writtenEvaluation: Int,
+    writtenExam: Int,
+    viewExam: Int,
+    email: String,
+    accessToken: String,
+    refreshToken: String,
+  ) {
+    setUserInfo(userId, point, writtenEvaluation, writtenExam, viewExam, email)
+    securityPreferences.setAccessToken(accessToken)
+    securityPreferences.setRefreshToken(refreshToken)
+    dataStore.edit { it[LOGGED_IN] = true }
+  }
 
-    override suspend fun logout() {
-        setUserInfo("", 0, 0, 0, 0, "")
-        securityPreferences.clearAll()
-        dataStore.edit { it[LOGGED_IN] = false }
-    }
+  override suspend fun logout() {
+    setUserInfo("", 0, 0, 0, 0, "")
+    securityPreferences.clearAll()
+    dataStore.edit { it[LOGGED_IN] = false }
+  }
 
-    private suspend fun setUserInfo(
-        userId: String,
-        point: Int,
-        writtenEvaluation: Int,
-        writtenExam: Int,
-        viewExam: Int,
-        email: String,
-    ) {
-        dataStore.edit {
-            it[USER_ID] = userId
-            it[POINT] = point
-            it[WRITTEN_EVALUATION] = writtenEvaluation
-            it[WRITTEN_EXAM] = writtenExam
-            it[VIEW_EXAM] = viewExam
-            it[EMAIL] = email
-        }
+  private suspend fun setUserInfo(
+    userId: String,
+    point: Int,
+    writtenEvaluation: Int,
+    writtenExam: Int,
+    viewExam: Int,
+    email: String,
+  ) {
+    dataStore.edit {
+      it[USER_ID] = userId
+      it[POINT] = point
+      it[WRITTEN_EVALUATION] = writtenEvaluation
+      it[WRITTEN_EXAM] = writtenExam
+      it[VIEW_EXAM] = viewExam
+      it[EMAIL] = email
     }
+  }
 }

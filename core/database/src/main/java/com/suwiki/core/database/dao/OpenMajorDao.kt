@@ -7,12 +7,12 @@ import com.suwiki.core.database.model.OpenMajorEntity
 
 @Dao
 interface OpenMajorDao {
-    @Insert
-    fun insertAll(lists: List<OpenMajorEntity>)
+  @Insert
+  fun insertAll(lists: List<OpenMajorEntity>)
 
-    @Query("DELETE FROM OpenMajorEntity")
-    fun deleteAll()
+  @Query("DELETE FROM OpenMajorEntity")
+  fun deleteAll()
 
-    @Query("SELECT * FROM OpenMajorEntity")
-    fun getAll(): List<OpenMajorEntity>
+  @Query("SELECT * FROM OpenMajorEntity")
+  fun getAll(): List<OpenMajorEntity>
 }

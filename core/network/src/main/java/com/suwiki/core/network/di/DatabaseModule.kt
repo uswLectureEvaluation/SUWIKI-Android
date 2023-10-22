@@ -11,9 +11,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    @Singleton
-    @Provides
-    fun provideFirebaseDatabase(): FirebaseDatabase {
-        return FirebaseDatabase.getInstance()
-    }
+  @Singleton
+  @Provides
+  fun provideFirebaseDatabase(): FirebaseDatabase {
+    return FirebaseDatabase.getInstance()
+  }
 }

@@ -1,3 +1,3 @@
 plugins {
-    id("suwiki.java.library")
+  id("suwiki.java.library")
 }

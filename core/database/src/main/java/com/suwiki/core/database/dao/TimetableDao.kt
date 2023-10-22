@@ -9,18 +9,18 @@ import com.suwiki.core.database.model.TimetableEntity
 
 @Dao
 interface TimetableDao {
-    @Query("SELECT * FROM TimetableEntity")
-    fun getAll(): List<TimetableEntity>
+  @Query("SELECT * FROM TimetableEntity")
+  fun getAll(): List<TimetableEntity>
 
-    @Insert
-    fun insert(data: TimetableEntity)
+  @Insert
+  fun insert(data: TimetableEntity)
 
-    @Query("DELETE FROM TimetableEntity")
-    fun deleteAll()
+  @Query("DELETE FROM TimetableEntity")
+  fun deleteAll()
 
-    @Delete
-    fun delete(data: TimetableEntity)
+  @Delete
+  fun delete(data: TimetableEntity)
 
-    @Update
-    fun update(data: TimetableEntity)
+  @Update
+  fun update(data: TimetableEntity)
 }

@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalRefreshTokenProviderDataSource {
 
-    fun getRefreshToken(): Flow<String>
+  fun getRefreshToken(): Flow<String>
 }

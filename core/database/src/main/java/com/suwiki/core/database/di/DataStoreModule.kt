@@ -21,16 +21,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
-    @Singleton
-    @Provides
-    @NormalDataStore
-    fun provideDataStore(
-        @ApplicationContext applicationContext: Context,
-    ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
-        corruptionHandler = ReplaceFileCorruptionHandler(
-            produceNewData = { emptyPreferences() },
-        ),
-        scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-        produceFile = { applicationContext.preferencesDataStoreFile("suwiki-preference") },
-    )
+  @Singleton
+  @Provides
+  @NormalDataStore
+  fun provideDataStore(
+    @ApplicationContext applicationContext: Context,
+  ): DataStore<Preferences> = PreferenceDataStoreFactory.create(
+    corruptionHandler = ReplaceFileCorruptionHandler(
+      produceNewData = { emptyPreferences() },
+    ),
+    scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+    produceFile = { applicationContext.preferencesDataStoreFile("suwiki-preference") },
+  )
 }

@@ -9,8 +9,8 @@ import com.suwiki.domain.repository.FindIdRepository
 import javax.inject.Inject
 
 class FindIdRepositoryImpl @Inject constructor(
-    @OtherApiService private val apiService: ApiService,
+  @OtherApiService private val apiService: ApiService,
 ) : FindIdRepository {
-    override suspend fun findId(email: String): Result<Boolean> =
-        apiService.findId(FindIdRequest(email)).toDomainResult().map { it.success }
+  override suspend fun findId(email: String): Result<Boolean> =
+    apiService.findId(FindIdRequest(email)).toDomainResult().map { it.success }
 }

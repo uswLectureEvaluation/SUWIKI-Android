@@ -14,15 +14,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    @Singleton
-    @Provides
-    fun provideExamMyApi(@AuthRetrofit retrofit: Retrofit): ExamMyApi {
-        return retrofit.create(ExamMyApi::class.java)
-    }
+  @Singleton
+  @Provides
+  fun provideExamMyApi(@AuthRetrofit retrofit: Retrofit): ExamMyApi {
+    return retrofit.create(ExamMyApi::class.java)
+  }
 
-    @Singleton
-    @Provides
-    fun provideLectureMyApi(@AuthRetrofit retrofit: Retrofit): LectureMyApi {
-        return retrofit.create(LectureMyApi::class.java)
-    }
+  @Singleton
+  @Provides
+  fun provideLectureMyApi(@AuthRetrofit retrofit: Retrofit): LectureMyApi {
+    return retrofit.create(LectureMyApi::class.java)
+  }
 }
