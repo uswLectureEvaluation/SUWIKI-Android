@@ -27,18 +27,9 @@ private class ApiResultCall<R>(
         callback.onResponse(this@ApiResultCall, Response.success(response.toApiResult()))
       }
 
-      override fun onFailure(call: Call<R>, throwable: Throwable) {
-        val error = if (throwable is IOException) {
-          ApiResult.Failure.NetworkError(throwable)
-        } else {
-          ApiResult.Failure.UnknownApiError(throwable)
-        }
-        callback.onResponse(this@ApiResultCall, Response.success(error))
-      }
-
       private fun Response<R>.toApiResult(): ApiResult<R> {
         if (!isSuccessful) { // Http 응답 에러
-          val errorBody = errorBody()?.toString()
+          val errorBody = errorBody()?.string()
           return ApiResult.Failure.HttpError(
             code = code(),
             message = message(),
@@ -58,6 +49,15 @@ private class ApiResultCall<R>(
             ),
           )
         }
+      }
+
+      override fun onFailure(call: Call<R>, throwable: Throwable) {
+        val error = if (throwable is IOException) {
+          ApiResult.Failure.NetworkError(throwable)
+        } else {
+          ApiResult.Failure.UnknownApiError(throwable)
+        }
+        callback.onResponse(this@ApiResultCall, Response.success(error))
       }
     },
   )

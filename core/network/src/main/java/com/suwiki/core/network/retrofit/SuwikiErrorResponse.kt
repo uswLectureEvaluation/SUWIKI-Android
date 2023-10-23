@@ -1,12 +1,13 @@
 package com.suwiki.core.network.retrofit
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class SuwikiErrorResponse(
   val exception: String,
-  val code: String,
+  @SerialName("code") val suwikiCode: String,
   val message: String,
-  val status: Int,
+  @SerialName("status") val httpStatusCode: Int,
   val error: String,
 )

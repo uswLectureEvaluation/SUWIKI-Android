@@ -8,6 +8,10 @@ class ForbiddenException(
   override val message: String = "제한된 요청이에요.",
 ) : RuntimeException()
 
+class NotFoundException(
+  override val message: String = "정보를 찾을 수 없어요.",
+) : RuntimeException()
+
 class NetworkException(
   override val message: String = "네트워크 연결 상태 또는 수위키 서버에 문제가 있어요.",
 ) : RuntimeException()

@@ -1,6 +1,6 @@
 package com.suwiki.core.model.exception
 
-enum class SuwikiServerError(val exception: Throwable) {
+enum class SuwikiServerError(val exception: Exception) {
   USER003(IncorrectEmailFormException()),
   USER004(UserNotExistException()),
   USER005(PasswordErrorException()),
