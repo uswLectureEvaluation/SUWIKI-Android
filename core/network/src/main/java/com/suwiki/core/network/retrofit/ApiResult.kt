@@ -6,7 +6,6 @@ import com.suwiki.core.model.exception.NotFoundException
 import com.suwiki.core.model.exception.RequestFailException
 import com.suwiki.core.model.exception.SuwikiServerError
 import com.suwiki.core.model.exception.UnknownException
-import timber.log.Timber
 
 sealed interface ApiResult<out T> {
   data class Success<T>(val data: T) : ApiResult<T>

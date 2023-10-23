@@ -33,7 +33,7 @@ enum class SuwikiServerError(val exception: Exception) {
   SECURITY001(UnAuthenticatedException()),
   SECURITY003(LoginFailedException()),
 
-  MAIL001(SendMailFailedException())
+  MAIL001(SendMailFailedException()),
 }
 
 class IncorrectEmailFormException(
