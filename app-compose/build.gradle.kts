@@ -1,6 +1,7 @@
 plugins {
   id("suwiki.android.application")
   id("suwiki.android.application.compose")
+  id("suwiki.android.hilt")
 }
 
 android {
@@ -33,6 +34,7 @@ dependencies {
 
   implementation(projects.domain)
   implementation(projects.di)
+  implementation(projects.domain.openmajor)
 
   implementation(projects.local.openmajor)
   implementation(projects.local.timetable.editor)
@@ -48,5 +50,8 @@ dependencies {
   implementation(projects.remote.signup)
   implementation(projects.remote.timetable.viewer)
   implementation(projects.remote.user)
-  implementation(libs.junit)
+
+  implementation(projects.presentation)
+
+  implementation(libs.timber)
 }

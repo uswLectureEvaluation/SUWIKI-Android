@@ -16,6 +16,10 @@ class RemoteOpenMajorDataSourceImpl @Inject constructor(
     return majorApi.getOpenMajorList().getOrThrow().data
   }
 
+  override suspend fun getBookmarkedMajorList(): List<String> {
+    return majorApi.getBookmarkMajorList().getOrThrow().data
+  }
+
   override suspend fun bookmarkMajor(majorName: String) {
     return majorApi.bookmarkMajor(BookmarkMajorRequest(majorType = majorName)).getOrThrow()
       .run { }

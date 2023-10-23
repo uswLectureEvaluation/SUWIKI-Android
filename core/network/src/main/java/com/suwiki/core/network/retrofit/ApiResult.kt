@@ -2,7 +2,9 @@ package com.suwiki.core.network.retrofit
 
 import com.suwiki.core.model.exception.ForbiddenException
 import com.suwiki.core.model.exception.NetworkException
+import com.suwiki.core.model.exception.NotFoundException
 import com.suwiki.core.model.exception.RequestFailException
+import com.suwiki.core.model.exception.SuwikiServerError
 import com.suwiki.core.model.exception.UnknownException
 
 sealed interface ApiResult<out T> {
@@ -13,9 +15,9 @@ sealed interface ApiResult<out T> {
     data class NetworkError(val throwable: Throwable) : Failure
     data class UnknownApiError(val throwable: Throwable) : Failure
 
-    fun safeThrowable(httpErrorHandler: HttpErrorHandler): Throwable =
+    fun safeThrowable(): Throwable =
       when (this) {
-        is HttpError -> httpErrorHandler.handleHttpError(this)
+        is HttpError -> handleHttpError(this)
         is NetworkError -> throwable
         is UnknownApiError -> throwable
       }
@@ -28,15 +30,7 @@ sealed interface ApiResult<out T> {
     get() = this is Failure
 
   fun getOrThrow(customHttpErrorHandler: (Failure.HttpError.() -> Exception)? = null): T {
-    val httpErrorHandler = customHttpErrorHandler?.let {
-      object : HttpErrorHandler {
-        override fun handleHttpError(httpError: Failure.HttpError): Exception {
-          return it(httpError)
-        }
-      }
-    } ?: DefaultHttpErrorHandler
-
-    throwFailure(httpErrorHandler)
+    throwFailure()
     return (this as Success).data
   }
 
@@ -53,7 +47,7 @@ sealed interface ApiResult<out T> {
 
   fun exceptionOrNull(): Throwable? =
     when (this) {
-      is Failure -> safeThrowable(DefaultHttpErrorHandler)
+      is Failure -> safeThrowable()
       else -> null
     }
 
@@ -80,25 +74,30 @@ internal fun ApiResult<*>.throwOnSuccess() {
   if (this is ApiResult.Success) throw IllegalStateException("Cannot be called under Success conditions.")
 }
 
-internal fun ApiResult<*>.throwFailure(httpErrorHandler: HttpErrorHandler) {
+internal fun ApiResult<*>.throwFailure() {
   if (this is ApiResult.Failure) {
-    throw safeThrowable(httpErrorHandler)
+    throw safeThrowable()
   }
 }
 
-interface HttpErrorHandler {
-  fun handleHttpError(
-    httpError: ApiResult.Failure.HttpError,
-  ): Exception
+private fun handleHttpError(httpError: ApiResult.Failure.HttpError): Exception {
+  return getSuwikiErrorBody(httpError.body).getOrNull()?.run {
+    handleSuwikiError(this)
+  } ?: handleNonSuwikiError(httpError.code)
 }
 
-object DefaultHttpErrorHandler : HttpErrorHandler {
-  override fun handleHttpError(httpError: ApiResult.Failure.HttpError): Exception {
-    return when (httpError.code) {
-      400 -> RequestFailException()
-      403 -> ForbiddenException()
-      500, 501, 502, 503, 504, 505 -> NetworkException()
-      else -> UnknownException()
-    }
-  }
+private fun handleSuwikiError(suwikiErrorResponse: SuwikiErrorResponse): Exception = runCatching {
+  SuwikiServerError.valueOf(suwikiErrorResponse.suwikiCode).exception
+}.getOrNull() ?: handleNonSuwikiError(suwikiErrorResponse.httpStatusCode)
+
+private fun handleNonSuwikiError(httpStatusCode: Int) = when (httpStatusCode) {
+  400 -> RequestFailException()
+  403 -> ForbiddenException()
+  404 -> NotFoundException()
+  500, 501, 502, 503, 504, 505 -> NetworkException()
+  else -> UnknownException()
+}
+
+private fun getSuwikiErrorBody(body: String) = runCatching {
+  KotlinSerializationUtil.json.decodeFromString<SuwikiErrorResponse>(body)
 }

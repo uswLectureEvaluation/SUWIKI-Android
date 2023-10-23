@@ -1,4 +1,4 @@
-package com.kunize.uswtimetable
+package com.mangbaam.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,11 +8,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.kunize.uswtimetable.ui.theme.UswtimetableTheme
+import com.mangbaam.presentation.ui.theme.UswtimetableTheme
+import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+  @Inject
+  lateinit var getOpenMajorListUseCase: GetBookmarkedOpenMajorListUseCase
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -22,7 +32,7 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background,
         ) {
-          Greeting("Android")
+          Greeting(name = "Suwiki", useCase = getOpenMajorListUseCase)
         }
       }
     }
@@ -30,7 +40,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(
+  name: String,
+  modifier: Modifier = Modifier,
+  useCase: GetBookmarkedOpenMajorListUseCase,
+) {
+  LaunchedEffect(key1 = Unit) {
+    useCase()
+      .onSuccess {
+        Timber.d("$it")
+      }
+      .onFailure {
+        Timber.d("$it")
+      }
+  }
+
   Text(
     text = "Hello $name!",
     modifier = modifier,
@@ -41,6 +65,5 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
   UswtimetableTheme {
-    Greeting("Android")
   }
 }
