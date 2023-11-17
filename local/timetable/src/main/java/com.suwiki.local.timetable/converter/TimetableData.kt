@@ -1,4 +1,4 @@
-package com.suwiki.local.timetable.editor.converter
+package com.suwiki.local.timetable.converter
 
 import com.suwiki.core.database.model.TimetableEntity
 import com.suwiki.core.model.timetable.TimetableData

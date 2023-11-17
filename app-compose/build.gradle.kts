@@ -37,8 +37,7 @@ dependencies {
   implementation(projects.domain.openmajor)
 
   implementation(projects.local.openmajor)
-  implementation(projects.local.timetable.editor)
-  implementation(projects.local.timetable.viewer)
+  implementation(projects.local.timetable)
   implementation(projects.local.user)
 
   implementation(projects.remote.lectureevaluation.editor)
