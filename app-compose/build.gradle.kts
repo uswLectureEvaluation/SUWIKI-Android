@@ -47,7 +47,7 @@ dependencies {
   implementation(projects.remote.notice)
   implementation(projects.remote.openmajor)
   implementation(projects.remote.signup)
-  implementation(projects.remote.timetable.viewer)
+  implementation(projects.remote.timetable)
   implementation(projects.remote.user)
 
   implementation(projects.presentation)

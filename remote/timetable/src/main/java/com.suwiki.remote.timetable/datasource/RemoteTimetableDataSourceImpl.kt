@@ -1,4 +1,4 @@
-package com.suwiki.remote.timetable.viewer.datasource
+package com.suwiki.remote.timetable.datasource
 
 import com.google.firebase.database.FirebaseDatabase
 import com.suwiki.core.model.timetable.TimetableData

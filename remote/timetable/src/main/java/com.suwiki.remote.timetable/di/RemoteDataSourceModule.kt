@@ -1,7 +1,7 @@
-package com.suwiki.remote.timetable.viewer.di
+package com.suwiki.remote.timetable.di
 
 import com.suwiki.data.timetable.viewer.datasource.RemoteTimetableDataSource
-import com.suwiki.remote.timetable.viewer.datasource.RemoteTimetableDataSourceImpl
+import com.suwiki.remote.timetable.datasource.RemoteTimetableDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

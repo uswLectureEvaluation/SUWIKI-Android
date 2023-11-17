@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-  namespace = "com.suwiki.remote.timetable.viewer"
+  namespace = "com.suwiki.remote.timetable"
 }
 
 dependencies {
