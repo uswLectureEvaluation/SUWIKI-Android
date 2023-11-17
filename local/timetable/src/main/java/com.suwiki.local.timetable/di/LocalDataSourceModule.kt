@@ -1,7 +1,7 @@
 package com.suwiki.local.timetable.di
 
-import com.suwiki.data.timetable.editor.datasource.LocalTimetableStorageDatasource
-import com.suwiki.data.timetable.viewer.datasource.LocalTimetableProviderDatasource
+import com.suwiki.data.timetable.datasource.LocalTimetableProviderDatasource
+import com.suwiki.data.timetable.datasource.LocalTimetableStorageDatasource
 import com.suwiki.local.timetable.datasource.LocalTimetableProviderDatasourceImpl
 import com.suwiki.local.timetable.datasource.LocalTimetableStorageDatasourceImpl
 import dagger.Binds

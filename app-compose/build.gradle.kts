@@ -41,8 +41,7 @@ dependencies {
 
   implementation(projects.remote.lectureevaluation.editor)
   implementation(projects.remote.lectureevaluation.my)
-  implementation(projects.remote.lectureevaluation.report)
-  implementation(projects.remote.lectureevaluation.viewer)
+  implementation(projects.remote.lectureevaluation.viewerreporter)
   implementation(projects.remote.notice)
   implementation(projects.remote.openmajor)
   implementation(projects.remote.signup)

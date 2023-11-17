@@ -2,7 +2,7 @@ package com.suwiki.local.timetable.datasource
 
 import com.suwiki.core.database.TimetableDatabase
 import com.suwiki.core.model.timetable.TimetableData
-import com.suwiki.data.timetable.editor.datasource.LocalTimetableStorageDatasource
+import com.suwiki.data.timetable.datasource.LocalTimetableStorageDatasource
 import com.suwiki.local.timetable.converter.toEntity
 import javax.inject.Inject
 
