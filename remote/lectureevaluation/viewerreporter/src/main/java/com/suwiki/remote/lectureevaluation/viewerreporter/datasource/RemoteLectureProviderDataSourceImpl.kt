@@ -3,7 +3,7 @@ package com.suwiki.remote.lectureevaluation.viewerreporter.datasource
 import com.suwiki.core.model.lectureevaluation.LectureDetailEvaluationData
 import com.suwiki.core.model.lectureevaluation.LectureDetailInfo
 import com.suwiki.core.model.lectureevaluation.LectureMain
-import com.suwiki.data.lectureevaluation.viewer.datasource.RemoteLectureProviderDataSource
+import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteLectureProviderDataSource
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.LectureViewerApi
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.toModel
 import javax.inject.Inject

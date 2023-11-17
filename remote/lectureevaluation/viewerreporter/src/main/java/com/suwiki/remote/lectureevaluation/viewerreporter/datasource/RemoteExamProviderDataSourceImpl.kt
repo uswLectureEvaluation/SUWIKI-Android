@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.datasource
 
 import com.suwiki.core.model.lectureevaluation.LectureDetailExamData
-import com.suwiki.data.lectureevaluation.viewer.datasource.RemoteExamProviderDataSource
+import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteExamProviderDataSource
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.ExamViewerApi
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.exam.toModel
 import javax.inject.Inject
