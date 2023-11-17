@@ -1,9 +1,9 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.di
 
-import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteExamReportDataSource
-import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteLectureReportDataSource
 import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteExamProviderDataSource
+import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteExamReportDataSource
 import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteLectureProviderDataSource
+import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteLectureReportDataSource
 import com.suwiki.remote.lectureevaluation.viewerreporter.datasource.RemoteExamProviderDataSourceImpl
 import com.suwiki.remote.lectureevaluation.viewerreporter.datasource.RemoteExamReportDataSourceImpl
 import com.suwiki.remote.lectureevaluation.viewerreporter.datasource.RemoteLectureProviderDataSourceImpl
