@@ -4,5 +4,5 @@ plugins {
 }
 
 android {
-  namespace = "com.suwiki.data.timetable.viewer"
+  namespace = "com.suwiki.data.timetable"
 }

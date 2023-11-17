@@ -11,8 +11,7 @@ android {
 
 dependencies {
   implementation(projects.core.model)
-  implementation(projects.data.timetable.viewer)
-  implementation(projects.data.timetable.editor)
+  implementation(projects.data.timetable)
   implementation(projects.core.database)
 
   ksp(libs.room.compiler)

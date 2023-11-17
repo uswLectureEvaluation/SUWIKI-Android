@@ -1,4 +1,4 @@
-package com.suwiki.data.timetable.editor.datasource
+package com.suwiki.data.timetable.datasource
 
 import com.suwiki.core.model.timetable.TimetableData
 

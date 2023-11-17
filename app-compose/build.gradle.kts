@@ -22,8 +22,7 @@ dependencies {
 
   implementation(projects.data)
   implementation(projects.data.openmajor)
-  implementation(projects.data.timetable.viewer)
-  implementation(projects.data.timetable.editor)
+  implementation(projects.data.timetable)
   implementation(projects.data.lectureevaluation.editor)
   implementation(projects.data.lectureevaluation.viewer)
   implementation(projects.data.lectureevaluation.report)

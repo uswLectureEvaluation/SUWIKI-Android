@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.data.timetable.viewer)
+  implementation(projects.data.timetable)
 
   val bom = libs.firebase.bom
   add("implementation", platform(bom))
