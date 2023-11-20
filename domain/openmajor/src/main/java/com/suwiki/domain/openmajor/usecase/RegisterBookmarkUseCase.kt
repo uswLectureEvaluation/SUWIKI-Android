@@ -7,9 +7,9 @@ import javax.inject.Inject
 class RegisterBookmarkUseCase @Inject constructor(
   private val openMajorRepository: OpenMajorRepository,
 ) {
-  suspend operator fun invoke(request: String): Result<Unit> = runCatchingIgnoreCancelled {
+  suspend operator fun invoke(major: String): Result<Unit> = runCatchingIgnoreCancelled {
     openMajorRepository.bookmarkMajor(
-      request,
+      major,
     )
   }
 }
