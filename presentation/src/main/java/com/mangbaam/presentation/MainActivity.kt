@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mangbaam.presentation.ui.theme.UswtimetableTheme
 import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
+import com.suwiki.domain.signup.usecase.CheckEmailOverlapUseCase
+import com.suwiki.domain.signup.usecase.CheckIdOverlapUseCase
+import com.suwiki.domain.signup.usecase.SignUpUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,7 +24,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
   @Inject
-  lateinit var getOpenMajorListUseCase: GetBookmarkedOpenMajorListUseCase
+  lateinit var useCase: CheckEmailOverlapUseCase
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -32,7 +35,7 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background,
         ) {
-          Greeting(name = "Suwiki", useCase = getOpenMajorListUseCase)
+          Greeting(name = "Suwiki", useCase = useCase)
         }
       }
     }
@@ -43,10 +46,12 @@ class MainActivity : ComponentActivity() {
 fun Greeting(
   name: String,
   modifier: Modifier = Modifier,
-  useCase: GetBookmarkedOpenMajorListUseCase,
+  useCase: CheckEmailOverlapUseCase,
 ) {
   LaunchedEffect(key1 = Unit) {
-    useCase()
+    useCase(
+      email = "pos1070@suwon.ac.kr"
+    )
       .onSuccess {
         Timber.d("$it")
       }

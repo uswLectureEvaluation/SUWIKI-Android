@@ -13,7 +13,7 @@ class RemoteSignUpDataSourceImpl @Inject constructor(
 ) : RemoteSignUpDataSource {
   override suspend fun signUp(id: String, password: String, email: String) {
     val request = SignupRequest(
-      id = id,
+      loginId = id,
       password = password,
       email = email,
     )

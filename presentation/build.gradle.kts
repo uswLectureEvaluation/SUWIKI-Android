@@ -8,4 +8,5 @@ android {
 
 dependencies {
   implementation(projects.domain.openmajor)
+  implementation(projects.domain.signup)
 }
