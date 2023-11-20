@@ -6,3 +6,7 @@ plugins {
 android {
   namespace = "com.suwiki.data.signup"
 }
+
+dependencies {
+  implementation(projects.domain.signup)
+}
