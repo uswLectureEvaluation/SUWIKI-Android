@@ -5,7 +5,7 @@ interface RemoteSignUpDataSource {
     id: String,
     password: String,
     email: String,
-  ): Boolean
+  )
 
   suspend fun checkIdOverlap(loginId: String): Boolean
 
