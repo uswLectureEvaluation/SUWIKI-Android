@@ -2,7 +2,8 @@
 plugins {
   id("suwiki.android.library")
   id("suwiki.android.hilt")
-  id("com.google.devtools.ksp")
+  alias(libs.plugins.ksp)
+  alias(libs.plugins.protobuf)
 }
 
 ksp {
@@ -13,6 +14,21 @@ android {
   namespace = "com.suwiki.core.database"
 }
 
+protobuf {
+  protoc {
+    artifact = libs.protobuf.protoc.get().toString()
+  }
+  generateProtoTasks {
+    all().forEach { task ->
+      task.builtins {
+        register("java") {
+          option("lite")
+        }
+      }
+    }
+  }
+}
+
 dependencies {
   ksp(libs.room.compiler)
   implementation(libs.room.runtime)
@@ -21,4 +37,5 @@ dependencies {
   implementation(libs.bundles.coroutine)
   implementation(libs.androidx.datastore.core)
   implementation(libs.androidx.datastore.preferences)
+  implementation(libs.protobuf.kotlin.lite)
 }

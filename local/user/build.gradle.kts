@@ -17,6 +17,7 @@ dependencies {
   implementation(libs.bundles.coroutine)
   implementation(libs.androidx.datastore.core)
   implementation(libs.androidx.datastore.preferences)
+  implementation(libs.protobuf.kotlin.lite)
 
   testImplementation(libs.junit4)
   androidTestImplementation(libs.junit)
