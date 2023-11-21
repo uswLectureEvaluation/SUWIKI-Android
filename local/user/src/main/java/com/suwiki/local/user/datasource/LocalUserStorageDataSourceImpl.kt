@@ -13,7 +13,7 @@ class LocalUserStorageDataSourceImpl @Inject constructor(
   private val securityPreferences: SecurityPreferences,
 ) : LocalUserStorageDataSource {
 
-  override suspend fun login(
+  override suspend fun setUserInfoAndToken(
     user: User,
     token: Token,
   ) {
@@ -37,7 +37,7 @@ class LocalUserStorageDataSourceImpl @Inject constructor(
     }
   }
 
-  override suspend fun logout() {
+  override suspend fun clearUserInfoAndToken() {
     securityPreferences.clearAll()
     dataStore.updateData { userPref ->
       userPref

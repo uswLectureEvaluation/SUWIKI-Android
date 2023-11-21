@@ -4,10 +4,10 @@ import com.suwiki.core.model.user.Token
 import com.suwiki.core.model.user.User
 
 interface LocalUserStorageDataSource {
-  suspend fun login(
+  suspend fun setUserInfoAndToken(
     user: User,
     token: Token,
   )
 
-  suspend fun logout()
+  suspend fun clearUserInfoAndToken()
 }
