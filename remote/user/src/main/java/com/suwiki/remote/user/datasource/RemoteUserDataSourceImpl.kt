@@ -1,5 +1,6 @@
 package com.suwiki.remote.user.datasource
 
+import com.suwiki.core.model.exception.RequestFailException
 import com.suwiki.core.model.user.Token
 import com.suwiki.core.model.user.User
 import com.suwiki.data.user.datasource.RemoteUserDataSource
@@ -16,26 +17,38 @@ class RemoteUserDataSourceImpl @Inject constructor(
   private val userApi: UserApi,
 ) : RemoteUserDataSource {
 
-  override suspend fun findId(email: String): Boolean {
-    return userApi.findId(FindIdRequest(email)).getOrThrow().success
+  override suspend fun findId(email: String) {
+    userApi
+      .findId(FindIdRequest(email))
+      .getOrThrow()
+      .run {
+        if (!success) throw RequestFailException()
+      }
   }
 
-  override suspend fun findPassword(loginId: String, email: String): Boolean {
-    return userApi.findPassword(
-      FindPasswordRequest(loginId, email),
-    ).getOrThrow().success
+  override suspend fun findPassword(loginId: String, email: String) {
+    userApi
+      .findPassword(
+        FindPasswordRequest(loginId, email),
+      )
+      .getOrThrow()
+      .run {
+        if (!success) throw RequestFailException()
+      }
   }
 
   override suspend fun resetPassword(
     currentPassword: String,
     newPassword: String,
-  ): Boolean {
-    return userApi.resetPassword(
+  ) {
+    userApi.resetPassword(
       ResetPasswordRequest(
         currentPassword = currentPassword,
         newPassword = newPassword,
       ),
-    ).getOrThrow().success
+    ).getOrThrow().run {
+      if (!success) throw RequestFailException()
+    }
   }
 
   override suspend fun login(loginId: String, password: String): Token {
@@ -47,13 +60,17 @@ class RemoteUserDataSourceImpl @Inject constructor(
     ).getOrThrow().toModel()
   }
 
-  override suspend fun quit(id: String, password: String): Boolean {
-    return userApi.quit(
+  override suspend fun quit(id: String, password: String) {
+    userApi.quit(
       QuitRequest(
         id = id,
         password = password,
       ),
-    ).getOrThrow().success
+    )
+      .getOrThrow()
+      .run {
+        if (!success) throw RequestFailException()
+      }
   }
 
   override suspend fun getUserData(): User {

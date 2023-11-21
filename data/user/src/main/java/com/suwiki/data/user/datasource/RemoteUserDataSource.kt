@@ -4,17 +4,17 @@ import com.suwiki.core.model.user.Token
 import com.suwiki.core.model.user.User
 
 interface RemoteUserDataSource {
-  suspend fun findId(email: String): Boolean
+  suspend fun findId(email: String)
 
   suspend fun findPassword(
     loginId: String,
     email: String,
-  ): Boolean
+  )
 
   suspend fun resetPassword(
     currentPassword: String,
     newPassword: String,
-  ): Boolean
+  )
 
   suspend fun login(
     loginId: String,
@@ -24,7 +24,7 @@ interface RemoteUserDataSource {
   suspend fun quit(
     id: String,
     password: String,
-  ): Boolean
+  )
 
   suspend fun getUserData(): User
 }
