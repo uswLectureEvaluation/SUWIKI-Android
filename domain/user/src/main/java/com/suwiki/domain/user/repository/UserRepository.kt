@@ -1,9 +1,12 @@
-package com.suwiki.data.user.datasource
+package com.suwiki.domain.user.repository
 
-import com.suwiki.core.model.user.Token
 import com.suwiki.core.model.user.User
+import kotlinx.coroutines.flow.Flow
 
-interface RemoteUserDataSource {
+interface UserRepository {
+
+  suspend fun logout()
+
   suspend fun findId(email: String)
 
   suspend fun findPassword(
@@ -19,12 +22,12 @@ interface RemoteUserDataSource {
   suspend fun login(
     loginId: String,
     password: String,
-  ): Token
+  )
 
   suspend fun quit(
     id: String,
     password: String,
   )
 
-  suspend fun getUserInfo(): User
+  suspend fun getUserInfo(): Flow<User>
 }

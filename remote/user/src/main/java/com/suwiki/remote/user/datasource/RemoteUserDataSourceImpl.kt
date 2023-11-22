@@ -73,7 +73,7 @@ class RemoteUserDataSourceImpl @Inject constructor(
       }
   }
 
-  override suspend fun getUserData(): User {
+  override suspend fun getUserInfo(): User {
     return userApi.getUserData().getOrThrow().toModel()
   }
 }
