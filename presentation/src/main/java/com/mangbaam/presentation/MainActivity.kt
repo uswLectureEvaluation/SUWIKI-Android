@@ -16,7 +16,13 @@ import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
 import com.suwiki.domain.signup.usecase.CheckEmailOverlapUseCase
 import com.suwiki.domain.signup.usecase.CheckIdOverlapUseCase
 import com.suwiki.domain.signup.usecase.SignUpUseCase
+import com.suwiki.domain.user.usecase.GetUserInfoUseCase
+import com.suwiki.domain.user.usecase.LoginUseCase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,7 +30,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
   @Inject
-  lateinit var useCase: CheckEmailOverlapUseCase
+  lateinit var useCase1: LoginUseCase
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -35,7 +41,7 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background,
         ) {
-          Greeting(name = "Suwiki", useCase = useCase)
+          Greeting(name = "Suwiki", useCase1 = useCase1)
         }
       }
     }
@@ -46,17 +52,17 @@ class MainActivity : ComponentActivity() {
 fun Greeting(
   name: String,
   modifier: Modifier = Modifier,
-  useCase: CheckEmailOverlapUseCase,
+  useCase1: LoginUseCase,
 ) {
   LaunchedEffect(key1 = Unit) {
-    useCase(
-      email = "pos1070@suwon.ac.kr"
+    useCase1(
+      loginId = "pos1070", password = "1q2w3e4r!"
     )
       .onSuccess {
-        Timber.d("$it")
+        Timber.tag("Retrofit2").d("$it")
       }
       .onFailure {
-        Timber.d("$it")
+        Timber.tag("Retrofit2").d("$it")
       }
   }
 

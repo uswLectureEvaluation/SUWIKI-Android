@@ -6,3 +6,7 @@ plugins {
 android {
   namespace = "com.suwiki.data.user"
 }
+
+dependencies {
+  implementation(projects.domain.user)
+}
