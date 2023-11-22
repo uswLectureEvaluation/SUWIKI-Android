@@ -1,7 +1,10 @@
 package com.suwiki.core.network.authenticator
 
+import com.suwiki.core.model.exception.SuwikiServerError
 import com.suwiki.core.network.di.RETROFIT_TAG
 import com.suwiki.core.network.repository.AuthRepository
+import com.suwiki.core.network.retrofit.KotlinSerializationUtil
+import com.suwiki.core.network.retrofit.SuwikiErrorResponse
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -14,9 +17,11 @@ internal class TokenAuthenticator @Inject constructor(
   private val authRepository: AuthRepository,
 ) : Authenticator {
   override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
+    if (response.isTokenExpired.not()) return null
+
     Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청")
     return runBlocking {
-      return@runBlocking if (authRepository.reissueRefreshToken()) {
+      if (authRepository.reissueRefreshToken()) {
         Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - authenticate() called / 중단된 API 재요청")
         response.request
           .newBuilder()
@@ -33,3 +38,14 @@ internal class TokenAuthenticator @Inject constructor(
     const val AUTH_HEADER = "Authorization"
   }
 }
+
+private val okhttp3.Response.isTokenExpired: Boolean
+  get() {
+    val exception = kotlin.runCatching {
+      // https://stackoverflow.com/questions/60671465/retrofit-java-lang-illegalstateexception-closed
+      val suwikiErrorResponse = KotlinSerializationUtil.json.decodeFromString<SuwikiErrorResponse>(peekBody(Long.MAX_VALUE).string())
+      SuwikiServerError.valueOf(suwikiErrorResponse.suwikiCode).exception
+    }.getOrNull() ?: return false
+
+    return exception == SuwikiServerError.TOKEN001.exception && code == 401
+  }
