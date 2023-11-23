@@ -6,14 +6,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LectureExamResponse(
   val id: Long? = null,
-  val lectureName: String? = null, // 과목 이름
-  val professor: String? = null, // 교수이름
-  val majorType: String? = null, // 개설학과
+  val lectureName: String? = null,
+  val professor: String? = null,
+  val majorType: String? = null,
   val selectedSemester: String? = null,
   val semesterList: String? = null,
-  val examInfo: String, // 시험 방식
+  val examInfo: String,
   val examType: String? = null,
-  val examDifficulty: String, // 시험 난이도
+  val examDifficulty: String,
   val content: String,
 )
 

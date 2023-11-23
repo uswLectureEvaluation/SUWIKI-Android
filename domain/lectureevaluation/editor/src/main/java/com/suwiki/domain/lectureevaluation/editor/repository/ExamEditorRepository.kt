@@ -4,20 +4,20 @@ interface ExamEditorRepository {
 
   suspend fun postExamEvaluation(
     lectureId: Long,
-    lectureName: String,
-    professor: String,
-    selectedSemester: String,
+    lectureName: String?,
+    professor: String?,
+    selectedSemester: String?,
     examInfo: String,
-    examType: String,
+    examType: String?,
     examDifficulty: String,
     content: String,
   )
 
   suspend fun updateExamEvaluation(
     lectureId: Long,
-    selectedSemester: String,
+    selectedSemester: String?,
     examInfo: String,
-    examType: String,
+    examType: String?,
     examDifficulty: String,
     content: String,
   )

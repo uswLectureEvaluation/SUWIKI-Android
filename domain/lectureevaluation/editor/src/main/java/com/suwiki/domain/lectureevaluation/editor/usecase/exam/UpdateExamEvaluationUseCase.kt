@@ -22,9 +22,9 @@ class UpdateExamEvaluationUseCase @Inject constructor(
 
   data class Param(
     val lectureId: Long,
-    val selectedSemester: String,
+    val selectedSemester: String?,
     val examInfo: String,
-    val examType: String,
+    val examType: String?,
     val examDifficulty: String,
     val content: String,
   )

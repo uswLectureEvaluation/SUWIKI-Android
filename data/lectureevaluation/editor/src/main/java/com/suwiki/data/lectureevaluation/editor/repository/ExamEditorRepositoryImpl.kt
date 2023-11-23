@@ -1,15 +1,12 @@
-package com.suwiki.remote.lectureevaluation.editor.datasource
+package com.suwiki.data.lectureevaluation.editor.repository
 
 import com.suwiki.data.lectureevaluation.editor.datasource.RemoteExamEditorDataSource
-import com.suwiki.remote.lectureevaluation.editor.api.ExamEditorApi
-import com.suwiki.remote.lectureevaluation.editor.request.PostLectureExamRequest
-import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureExamRequest
+import com.suwiki.domain.lectureevaluation.editor.repository.ExamEditorRepository
 import javax.inject.Inject
 
-class RemoteExamEditorDataSourceImpl @Inject constructor(
-  private val examApi: ExamEditorApi,
-) : RemoteExamEditorDataSource {
-
+class ExamEditorRepositoryImpl @Inject constructor(
+  private val remoteExamEditorDataSource: RemoteExamEditorDataSource,
+) : ExamEditorRepository {
   override suspend fun postExamEvaluation(
     lectureId: Long,
     lectureName: String?,
@@ -20,7 +17,8 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
     examDifficulty: String,
     content: String,
   ) {
-    val request = PostLectureExamRequest(
+    remoteExamEditorDataSource.postExamEvaluation(
+      lectureId = lectureId,
       lectureName = lectureName,
       professor = professor,
       selectedSemester = selectedSemester,
@@ -29,11 +27,6 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
       examDifficulty = examDifficulty,
       content = content,
     )
-
-    return examApi.postLectureExam(
-      lectureId = lectureId,
-      request = request,
-    ).getOrThrow()
   }
 
   override suspend fun updateExamEvaluation(
@@ -44,21 +37,17 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
     examDifficulty: String,
     content: String,
   ) {
-    val request = UpdateLectureExamRequest(
+    remoteExamEditorDataSource.updateExamEvaluation(
+      lectureId = lectureId,
       selectedSemester = selectedSemester,
       examInfo = examInfo,
       examType = examType,
       examDifficulty = examDifficulty,
       content = content,
     )
-
-    return examApi.updateLectureExam(
-      lectureId = lectureId,
-      request = request,
-    ).getOrThrow()
   }
 
   override suspend fun deleteExamEvaluation(id: Long) {
-    return examApi.deleteExamInfo(id).getOrThrow()
+    TODO("Not yet implemented")
   }
 }
