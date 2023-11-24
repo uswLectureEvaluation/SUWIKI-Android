@@ -10,7 +10,7 @@ import com.suwiki.core.database.model.OpenLectureEntity
 
 @Database(
   entities = [OpenLectureEntity::class],
-  version = 1,
+  version = 2,
   autoMigrations = [
     AutoMigration(from = 1, to = 2, spec = OpenLectureDatabase.RenameTableAutoMigration::class),
   ],

@@ -9,7 +9,7 @@ interface TimeTableDao {
   fun getAll(): List<TimetableEntity>
 
   @Query("SELECT * FROM TimetableEntity WHERE createTime = :createTime")
-  fun getOne(createTime: Long): TimetableEntity
+  fun get(createTime: Long): TimetableEntity
 
   @Insert
   fun insert(data: TimetableEntity)
