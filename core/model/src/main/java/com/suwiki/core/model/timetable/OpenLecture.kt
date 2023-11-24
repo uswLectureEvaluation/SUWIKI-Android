@@ -1,6 +1,6 @@
 package com.suwiki.core.model.timetable
 
-data class Timetable(
+data class OpenLecture(
   val number: Long = 0, // 번호
   val major: String = "", // 개설학과
   val grade: String = "", // 개설학년

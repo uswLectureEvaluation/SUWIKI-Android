@@ -1,10 +1,10 @@
 package com.suwiki.data.datasource.local
 
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.core.model.timetable.OpenLecture
 
 interface LocalTimetableStorageDatasource {
-  suspend fun insert(data: Timetable)
+  suspend fun insert(data: OpenLecture)
   suspend fun deleteAllLocalTimetable()
-  suspend fun deleteLocalTimetable(data: Timetable)
-  suspend fun updateLocalTimetable(data: Timetable)
+  suspend fun deleteLocalTimetable(data: OpenLecture)
+  suspend fun updateLocalTimetable(data: OpenLecture)
 }

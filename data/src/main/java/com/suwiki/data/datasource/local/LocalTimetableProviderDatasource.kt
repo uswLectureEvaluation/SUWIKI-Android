@@ -1,7 +1,7 @@
 package com.suwiki.data.datasource.local
 
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.core.model.timetable.OpenLecture
 
 interface LocalTimetableProviderDatasource {
-  suspend fun getLocalTimetable(): List<Timetable>
+  suspend fun getLocalTimetable(): List<OpenLecture>
 }

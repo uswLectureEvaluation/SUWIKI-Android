@@ -1,14 +1,14 @@
 package com.suwiki.remote.timetable.datasource
 
 import com.google.firebase.database.FirebaseDatabase
-import com.suwiki.core.model.timetable.Timetable
-import com.suwiki.data.timetable.datasource.RemoteTimetableDataSource
+import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.data.timetable.datasource.RemoteOpenLectureDataSource
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class RemoteTimetableDataSourceImpl @Inject constructor(
+class RemoteOpenLectureDataSourceImpl @Inject constructor(
   private val firebaseDatabase: FirebaseDatabase,
-) : RemoteTimetableDataSource {
+) : RemoteOpenLectureDataSource {
   companion object {
     private const val FIELD_MAJOR = "estbDpmNm"
     private const val FIELD_GRADE = "trgtGrdeCd"
@@ -27,7 +27,7 @@ class RemoteTimetableDataSourceImpl @Inject constructor(
     private const val DATABASE_TIMETABLE_VERSION = "version"
   }
 
-  override suspend fun fetchRemoteTimetableVersion(): Long {
+  override suspend fun getRemoteOpenLectureListVersion(): Long {
     val timetableVersionDatabase = firebaseDatabase.getReference(DATABASE_TIMETABLE_VERSION)
 
     var version = 0L
@@ -39,15 +39,15 @@ class RemoteTimetableDataSourceImpl @Inject constructor(
     return version
   }
 
-  override suspend fun fetchRemoteTimetable(): List<Timetable> {
+  override suspend fun getOpenLectureList(): List<OpenLecture> {
     val timetableDatabase = firebaseDatabase.getReference(DATABASE_TIMETABLE)
 
-    val timetables = mutableListOf<Timetable>()
+    val openLectureList = mutableListOf<OpenLecture>()
 
     timetableDatabase.get().addOnSuccessListener {
       it.children.forEachIndexed { i, snapshot ->
         val data = snapshot.value as HashMap<*, *>
-        val timetable = Timetable(
+        val openLecture = OpenLecture(
           number = i.toLong() + 1,
           major = data[FIELD_MAJOR].toString(),
           grade = data[FIELD_GRADE].toString() + SUFFIX_GRADE,
@@ -59,9 +59,9 @@ class RemoteTimetableDataSourceImpl @Inject constructor(
           time = data[FIELD_TIME]?.toString() ?: DEFAULT,
           credit = data[FIELD_CREDIT].toString(),
         )
-        timetables.add(timetable)
+        openLectureList.add(openLecture)
       }
     }.await()
-    return timetables
+    return openLectureList
   }
 }

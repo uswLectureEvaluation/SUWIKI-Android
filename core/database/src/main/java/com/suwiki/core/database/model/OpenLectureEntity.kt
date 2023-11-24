@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class TimetableEntity(
+data class OpenLectureEntity(
   @PrimaryKey val number: Long = 0,
   val major: String = "",
   val grade: String = "",

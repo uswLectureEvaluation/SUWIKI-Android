@@ -1,9 +1,9 @@
 package com.suwiki.local.timetable.converter
 
-import com.suwiki.core.database.model.TimetableEntity
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.core.database.model.OpenLectureEntity
+import com.suwiki.core.model.timetable.OpenLecture
 
-fun TimetableEntity.toModel() = Timetable(
+fun OpenLectureEntity.toModel() = OpenLecture(
   number,
   major,
   grade,

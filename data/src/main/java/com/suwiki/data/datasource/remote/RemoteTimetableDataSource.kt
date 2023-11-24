@@ -1,8 +1,8 @@
 package com.suwiki.data.datasource.remote
 
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.core.model.timetable.OpenLecture
 
 interface RemoteTimetableDataSource {
   suspend fun fetchRemoteTimetableVersion(): Long
-  suspend fun fetchRemoteTimetable(): List<Timetable>
+  suspend fun fetchRemoteTimetable(): List<OpenLecture>
 }

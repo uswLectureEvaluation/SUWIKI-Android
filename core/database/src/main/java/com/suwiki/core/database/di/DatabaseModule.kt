@@ -3,7 +3,7 @@ package com.suwiki.core.database.di
 import android.content.Context
 import androidx.room.Room
 import com.suwiki.core.database.OpenMajorDatabase
-import com.suwiki.core.database.TimetableDatabase
+import com.suwiki.core.database.OpenLectureDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,13 +29,13 @@ object DatabaseModule {
 
   @Singleton
   @Provides
-  fun provideTimetableDatabase(
+  fun provideOpenLectureDatabase(
     @ApplicationContext context: Context,
-  ): TimetableDatabase {
+  ): OpenLectureDatabase {
     return Room.databaseBuilder(
       context,
-      TimetableDatabase::class.java,
-      "timetable-database",
+      OpenLectureDatabase::class.java,
+      "open-lecture-database",
     ).build()
   }
 }
