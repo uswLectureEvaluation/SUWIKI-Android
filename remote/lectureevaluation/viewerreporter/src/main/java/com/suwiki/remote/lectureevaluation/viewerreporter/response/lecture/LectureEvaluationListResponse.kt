@@ -1,26 +1,25 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture
 
-import com.suwiki.core.model.lectureevaluation.LectureDetailEvaluation
-import com.suwiki.core.model.lectureevaluation.LectureDetailEvaluationData
-import kotlinx.serialization.SerialName
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LectureDetailEvaluationDataResponse(
-  val data: List<LectureDetailEvaluationResponse>,
+data class LectureEvaluationListResponse(
+  val data: List<LectureEvaluationResponse>,
   val written: Boolean,
 )
 
-internal fun LectureDetailEvaluationDataResponse.toModel() =
-  LectureDetailEvaluationData(
+internal fun LectureEvaluationListResponse.toModel() =
+  LectureEvaluationList(
     data = data.map { it.toModel() },
     written = written,
   )
 
 @Serializable
-data class LectureDetailEvaluationResponse(
+data class LectureEvaluationResponse(
   val id: Long,
-  @SerialName("selectedSemester") val semester: String,
+  val selectedSemester: String,
   val totalAvg: Float,
   val satisfaction: Float,
   val learning: Float,
@@ -31,10 +30,10 @@ data class LectureDetailEvaluationResponse(
   val content: String,
 )
 
-internal fun LectureDetailEvaluationResponse.toModel() =
-  LectureDetailEvaluation(
+internal fun LectureEvaluationResponse.toModel() =
+  LectureEvaluation(
     id = id,
-    semester = semester,
+    selectedSemester = selectedSemester,
     totalAvg = totalAvg,
     satisfaction = satisfaction,
     learning = learning,

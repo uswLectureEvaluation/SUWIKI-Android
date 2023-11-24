@@ -1,12 +1,8 @@
-package com.suwiki.core.model.lectureevaluation
+package com.suwiki.core.model.lectureevaluation.lecture
 
-data class LectureDetailInfo(
+data class LectureEvaluationExtraAverage(
   val id: Long,
-  val semester: String,
-  val professor: String,
-  val majorType: String,
-  val lectureType: String,
-  val lectureName: String,
+  val lectureInfo: LectureInfo,
   val lectureTotalAvg: Float,
   val lectureSatisfactionAvg: Float,
   val lectureHoneyAvg: Float,

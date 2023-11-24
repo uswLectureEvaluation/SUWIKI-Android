@@ -2,8 +2,8 @@ package com.suwiki.remote.lectureevaluation.editor.datasource
 
 import com.suwiki.data.lectureevaluation.editor.datasource.RemoteExamEditorDataSource
 import com.suwiki.remote.lectureevaluation.editor.api.ExamEditorApi
-import com.suwiki.remote.lectureevaluation.editor.request.PostLectureExamRequest
-import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureExamRequest
+import com.suwiki.remote.lectureevaluation.editor.request.PostExamRequest
+import com.suwiki.remote.lectureevaluation.editor.request.UpdateExamRequest
 import javax.inject.Inject
 
 class RemoteExamEditorDataSourceImpl @Inject constructor(
@@ -20,7 +20,7 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
     examDifficulty: String,
     content: String,
   ) {
-    val request = PostLectureExamRequest(
+    val request = PostExamRequest(
       lectureName = lectureName,
       professor = professor,
       selectedSemester = selectedSemester,
@@ -44,7 +44,7 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
     examDifficulty: String,
     content: String,
   ) {
-    val request = UpdateLectureExamRequest(
+    val request = UpdateExamRequest(
       selectedSemester = selectedSemester,
       examInfo = examInfo,
       examType = examType,

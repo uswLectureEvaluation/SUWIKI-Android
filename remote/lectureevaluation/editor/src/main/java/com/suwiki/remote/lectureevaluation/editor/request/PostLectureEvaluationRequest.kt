@@ -3,7 +3,7 @@ package com.suwiki.remote.lectureevaluation.editor.request
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LectureEvaluationRequest(
+data class PostLectureEvaluationRequest(
   val lectureName: String,
   val professor: String,
   val selectedSemester: String,

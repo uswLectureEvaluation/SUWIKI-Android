@@ -1,13 +1,13 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture
 
-import com.suwiki.core.model.lectureevaluation.LectureMain
-import kotlinx.serialization.SerialName
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LectureMainResponse(
+data class LectureEvaluationAverageResponse(
   val id: Long,
-  @SerialName("semesterList") val semester: String,
+  val semesterList: String,
   val professor: String,
   val majorType: String,
   val lectureType: String,
@@ -18,13 +18,15 @@ data class LectureMainResponse(
   val lectureLearningAvg: Float,
 )
 
-internal fun LectureMainResponse.toModel() = LectureMain(
+internal fun LectureEvaluationAverageResponse.toModel() = LectureEvaluationAverage(
   id = id,
-  semester = semester,
-  professor = professor,
-  majorType = majorType,
-  lectureType = lectureType,
-  lectureName = lectureName,
+  lectureInfo = LectureInfo(
+    semesterList = semesterList.split(","),
+    professor = professor,
+    majorType = majorType,
+    lectureType = lectureType,
+    lectureName = lectureName,
+  ),
   lectureTotalAvg = lectureTotalAvg,
   lectureSatisfactionAvg = lectureSatisfactionAvg,
   lectureHoneyAvg = lectureHoneyAvg,

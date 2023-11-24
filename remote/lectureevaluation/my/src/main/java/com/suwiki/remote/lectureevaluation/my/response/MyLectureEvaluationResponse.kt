@@ -1,10 +1,11 @@
 package com.suwiki.remote.lectureevaluation.my.response
 
-import com.suwiki.core.model.lectureevaluation.Evaluation
+import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MyEvaluationResponse(
+data class MyLectureEvaluationResponse(
   val id: Long,
   val lectureName: String, // 과목이름
   val professor: String, // 교수이름
@@ -21,13 +22,16 @@ data class MyEvaluationResponse(
   val content: String,
 )
 
-internal fun MyEvaluationResponse.toModel() = Evaluation(
+internal fun MyLectureEvaluationResponse.toModel() = MyLectureEvaluation(
   id = id,
-  lectureName = lectureName,
-  professor = professor,
-  majorType = majorType,
+  lectureInfo = LectureInfo(
+    semesterList = semesterList.split(","),
+    professor = professor,
+    majorType = majorType,
+    lectureType = null,
+    lectureName = lectureName,
+  ),
   selectedSemester = selectedSemester,
-  semesterList = semesterList,
   totalAvg = totalAvg,
   satisfaction = satisfaction,
   learning = learning,

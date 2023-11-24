@@ -1,23 +1,23 @@
-package com.suwiki.remote.lectureevaluation.viewerreporter.response.exam
+package com.suwiki.remote.lectureevaluation.my.response
 
-import com.suwiki.core.model.lectureevaluation.LectureExam
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LectureExamResponse(
+data class MyExamEvaluationResponse(
   val id: Long? = null,
-  val lectureName: String? = null,
-  val professor: String? = null,
-  val majorType: String? = null,
+  val lectureName: String? = null, // 과목 이름
+  val professor: String? = null, // 교수이름
+  val majorType: String? = null, // 개설학과
   val selectedSemester: String? = null,
   val semesterList: String? = null,
-  val examInfo: String,
+  val examInfo: String, // 시험 방식
   val examType: String? = null,
-  val examDifficulty: String,
+  val examDifficulty: String, // 시험 난이도
   val content: String,
 )
 
-internal fun LectureExamResponse.toModel() = LectureExam(
+internal fun MyExamEvaluationResponse.toModel() = MyExamEvaluation(
   id = id,
   lectureName = lectureName,
   professor = professor,

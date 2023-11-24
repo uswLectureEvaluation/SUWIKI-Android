@@ -2,9 +2,9 @@ package com.suwiki.remote.lectureevaluation.viewerreporter.api
 
 import com.suwiki.core.network.retrofit.ApiResult
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.DataResponse
-import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureDetailEvaluationDataResponse
-import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureDetailInfoResponse
-import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureMainResponse
+import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationListResponse
+import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationExtraAverageResponse
+import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationAverageResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -27,7 +27,7 @@ interface LectureViewerApi {
     @Query(QUERY_OPTION) option: String,
     @Query(QUERY_PAGE) page: Int = 1,
     @Query(QUERY_MAJOR_TYPE) majorType: String = "",
-  ): ApiResult<DataResponse<List<LectureMainResponse?>>>
+  ): ApiResult<DataResponse<List<LectureEvaluationAverageResponse?>>>
 
   // 통합 검색 결과
   @GET("$LECTURE/search/")
@@ -36,16 +36,16 @@ interface LectureViewerApi {
     @Query(QUERY_OPTION) option: String,
     @Query(QUERY_PAGE) page: Int,
     @Query(QUERY_MAJOR_TYPE) majorType: String,
-  ): ApiResult<DataResponse<List<LectureMainResponse?>>>
+  ): ApiResult<DataResponse<List<LectureEvaluationAverageResponse?>>>
 
   // 검색결과 자세히 보기 (LECTURE)
   @GET("$LECTURE/")
-  suspend fun getLectureDetailInfo(@Query(QUERY_LECTURE_ID) lectureId: Long): ApiResult<DataResponse<LectureDetailInfoResponse>>
+  suspend fun getLectureDetailInfo(@Query(QUERY_LECTURE_ID) lectureId: Long): ApiResult<DataResponse<LectureEvaluationExtraAverageResponse>>
 
   // 검색 결과 자세히 보기 (Evaluation)
   @GET(EVALUATE_POST)
   suspend fun getLectureDetailEvaluation(
     @Query(QUERY_LECTURE_ID) lectureId: Long,
     @Query(QUERY_PAGE) page: Int,
-  ): ApiResult<LectureDetailEvaluationDataResponse>
+  ): ApiResult<LectureEvaluationListResponse>
 }

@@ -1,7 +1,7 @@
 package com.suwiki.remote.timetable.datasource
 
 import com.google.firebase.database.FirebaseDatabase
-import com.suwiki.core.model.timetable.TimetableData
+import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.data.timetable.datasource.RemoteTimetableDataSource
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -39,15 +39,15 @@ class RemoteTimetableDataSourceImpl @Inject constructor(
     return version
   }
 
-  override suspend fun fetchRemoteTimetable(): List<TimetableData> {
+  override suspend fun fetchRemoteTimetable(): List<Timetable> {
     val timetableDatabase = firebaseDatabase.getReference(DATABASE_TIMETABLE)
 
-    val timetables = mutableListOf<TimetableData>()
+    val timetables = mutableListOf<Timetable>()
 
     timetableDatabase.get().addOnSuccessListener {
       it.children.forEachIndexed { i, snapshot ->
         val data = snapshot.value as HashMap<*, *>
-        val timetableData = TimetableData(
+        val timetable = Timetable(
           number = i.toLong() + 1,
           major = data[FIELD_MAJOR].toString(),
           grade = data[FIELD_GRADE].toString() + SUFFIX_GRADE,
@@ -59,7 +59,7 @@ class RemoteTimetableDataSourceImpl @Inject constructor(
           time = data[FIELD_TIME]?.toString() ?: DEFAULT,
           credit = data[FIELD_CREDIT].toString(),
         )
-        timetables.add(timetableData)
+        timetables.add(timetable)
       }
     }.await()
     return timetables

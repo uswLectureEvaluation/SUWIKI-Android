@@ -1,8 +1,8 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.datasource
 
-import com.suwiki.core.model.lectureevaluation.LectureDetailEvaluationData
-import com.suwiki.core.model.lectureevaluation.LectureDetailInfo
-import com.suwiki.core.model.lectureevaluation.LectureMain
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteLectureProviderDataSource
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.LectureViewerApi
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.toModel
@@ -15,7 +15,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
   override suspend fun getLectureDetailEvaluation(
     lectureId: Long,
     page: Int,
-  ): LectureDetailEvaluationData {
+  ): LectureEvaluationList {
     return lectureApi.getLectureDetailEvaluation(lectureId = lectureId, page = page)
       .getOrThrow().toModel()
   }
@@ -24,7 +24,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
     option: String,
     page: Int,
     majorType: String,
-  ): List<LectureMain?> {
+  ): List<LectureEvaluationAverage?> {
     return lectureApi.getLectureMainList(
       option = option,
       page = page,
@@ -37,7 +37,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
     option: String,
     page: Int,
     majorType: String,
-  ): List<LectureMain?> {
+  ): List<LectureEvaluationAverage?> {
     return lectureApi.getSearchResultDetail(
       searchValue = searchValue,
       option = option,
@@ -46,7 +46,7 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
     ).getOrThrow().data.map { it?.toModel() }
   }
 
-  override suspend fun getLectureDetailInfo(lectureId: Long): LectureDetailInfo {
+  override suspend fun getLectureDetailInfo(lectureId: Long): LectureEvaluationExtraAverage {
     return lectureApi.getLectureDetailInfo(lectureId).getOrThrow().data.toModel()
   }
 }

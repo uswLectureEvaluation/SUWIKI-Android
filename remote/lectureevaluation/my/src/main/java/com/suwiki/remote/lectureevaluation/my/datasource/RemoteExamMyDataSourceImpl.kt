@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.my.datasource
 
-import com.suwiki.core.model.lectureevaluation.LectureExam
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.PurchaseHistory
 import com.suwiki.data.lectureevaluation.my.datasource.RemoteExamMyDataSource
 import com.suwiki.remote.lectureevaluation.my.api.ExamMyApi
@@ -11,7 +11,7 @@ class RemoteExamMyDataSourceImpl @Inject constructor(
   private val examApi: ExamMyApi,
 ) : RemoteExamMyDataSource {
 
-  override suspend fun getExamMyPosts(page: Int): List<LectureExam> {
+  override suspend fun getExamMyPosts(page: Int): List<MyExamEvaluation> {
     return examApi.getExamPosts(page).getOrThrow().data.map { it.toModel() }
   }
 

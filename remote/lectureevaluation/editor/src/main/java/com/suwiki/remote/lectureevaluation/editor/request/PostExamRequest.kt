@@ -1,6 +1,9 @@
 package com.suwiki.remote.lectureevaluation.editor.request
 
-data class PostLectureExamRequest(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PostExamRequest(
   val lectureName: String?,
   val professor: String?,
   val selectedSemester: String?,

@@ -1,10 +1,10 @@
-package com.suwiki.data.datasource.remote
+package com.suwiki.domain.lectureevaluation.viewerreporter.repository
 
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 
-interface RemoteLectureProviderDataSource {
+interface LectureProviderRepository {
   suspend fun getLectureMainList(
     option: String,
     page: Int = 1,

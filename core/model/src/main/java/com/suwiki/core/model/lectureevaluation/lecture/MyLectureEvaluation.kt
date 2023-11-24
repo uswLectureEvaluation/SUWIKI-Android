@@ -1,12 +1,9 @@
-package com.suwiki.core.model.lectureevaluation
+package com.suwiki.core.model.lectureevaluation.lecture
 
-data class Evaluation(
+data class MyLectureEvaluation(
   val id: Long,
-  val lectureName: String, // 과목이름
-  val professor: String, // 교수이름
-  val majorType: String, // 개설학과
+  val lectureInfo: LectureInfo,
   val selectedSemester: String,
-  val semesterList: String,
   val totalAvg: Float, // 총점
   val satisfaction: Float, // 만족도
   val learning: Float, // 배움지수

@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.datasource
 
-import com.suwiki.core.model.lectureevaluation.LectureDetailExamData
+import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluationList
 import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteExamProviderDataSource
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.ExamViewerApi
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.exam.toModel
@@ -13,7 +13,7 @@ class RemoteExamProviderDataSourceImpl @Inject constructor(
   override suspend fun getLectureDetailExam(
     lectureId: Long,
     page: Int,
-  ): LectureDetailExamData {
+  ): ExamEvaluationList {
     return examApi.getLectureDetailExam(lectureId = lectureId, page = page)
       .getOrThrow().toModel()
   }

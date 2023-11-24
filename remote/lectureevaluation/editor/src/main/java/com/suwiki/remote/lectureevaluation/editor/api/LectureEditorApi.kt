@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.editor.api
 
 import com.suwiki.core.network.retrofit.ApiResult
-import com.suwiki.remote.lectureevaluation.editor.request.LectureEvaluationRequest
+import com.suwiki.remote.lectureevaluation.editor.request.PostLectureEvaluationRequest
 import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureEvaluationRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -19,7 +19,7 @@ interface LectureEditorApi {
   // 강의 평가 쓰기
   @POST(EVALUATE_POST)
   suspend fun postLectureEvaluation(
-    @Body lectureEvaluationRequest: LectureEvaluationRequest,
+    @Body postLectureEvaluationRequest: PostLectureEvaluationRequest,
   ): ApiResult<Unit>
 
   // 강의 평가 수정

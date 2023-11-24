@@ -1,9 +1,9 @@
 package com.suwiki.local.timetable.converter
 
 import com.suwiki.core.database.model.TimetableEntity
-import com.suwiki.core.model.timetable.TimetableData
+import com.suwiki.core.model.timetable.Timetable
 
-fun TimetableData.toEntity(): TimetableEntity {
+fun Timetable.toEntity(): TimetableEntity {
   return TimetableEntity(
     number,
     major,
