@@ -5,7 +5,7 @@ import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluationList
 interface ExamProviderRepository {
   suspend fun buyExam(lectureId: Long)
 
-  suspend fun getExamDetailList(
+  suspend fun getExamEvaluationList(
     lectureId: Long,
     page: Int,
   ): ExamEvaluationList

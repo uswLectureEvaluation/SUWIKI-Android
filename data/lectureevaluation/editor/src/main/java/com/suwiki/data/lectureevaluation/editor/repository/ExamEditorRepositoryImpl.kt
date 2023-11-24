@@ -48,6 +48,6 @@ class ExamEditorRepositoryImpl @Inject constructor(
   }
 
   override suspend fun deleteExamEvaluation(id: Long) {
-    TODO("Not yet implemented")
+    remoteExamEditorDataSource.deleteExamEvaluation(id = id)
   }
 }

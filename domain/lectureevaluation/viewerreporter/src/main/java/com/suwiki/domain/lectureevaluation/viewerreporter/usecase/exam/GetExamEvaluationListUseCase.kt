@@ -5,12 +5,12 @@ import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluationList
 import com.suwiki.domain.lectureevaluation.viewerreporter.repository.ExamProviderRepository
 import javax.inject.Inject
 
-class GetExamDetailListUseCase @Inject constructor(
+class GetExamEvaluationListUseCase @Inject constructor(
   private val examProviderRepository: ExamProviderRepository,
 ) {
   suspend operator fun invoke(param: Param): Result<ExamEvaluationList> = runCatchingIgnoreCancelled {
     param.run {
-      examProviderRepository.getExamDetailList(
+      examProviderRepository.getExamEvaluationList(
         lectureId = lectureId,
         page = page,
       )

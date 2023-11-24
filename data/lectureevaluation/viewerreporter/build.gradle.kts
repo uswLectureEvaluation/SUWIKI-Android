@@ -6,3 +6,7 @@ plugins {
 android {
   namespace = "com.suwiki.data.lectureevalution.viewerreporter"
 }
+
+dependencies {
+  implementation(projects.domain.lectureevaluation.viewerreporter)
+}
