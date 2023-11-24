@@ -1,6 +1,6 @@
 package com.suwiki.local.timetable.datasource
 
-import com.suwiki.core.database.OpenLectureDatabase
+import com.suwiki.core.database.database.OpenLectureDatabase
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.data.timetable.datasource.LocalOpenLectureProviderDatasource
 import com.suwiki.local.timetable.converter.toModel

@@ -1,4 +1,4 @@
-package com.suwiki.core.database
+package com.suwiki.core.database.database
 
 import androidx.room.AutoMigration
 import androidx.room.Database
@@ -10,7 +10,7 @@ import com.suwiki.core.database.model.OpenLectureEntity
 
 @Database(
   entities = [OpenLectureEntity::class],
-  version = 2,
+  version = 1,
   autoMigrations = [
     AutoMigration(from = 1, to = 2, spec = OpenLectureDatabase.RenameTableAutoMigration::class),
   ],
