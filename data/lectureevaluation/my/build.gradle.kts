@@ -6,3 +6,7 @@ plugins {
 android {
   namespace = "com.suwiki.data.lectureevalution.my"
 }
+
+dependencies {
+  implementation(projects.domain.lectureevaluation.my)
+}
