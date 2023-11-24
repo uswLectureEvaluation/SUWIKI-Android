@@ -5,22 +5,22 @@ import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAve
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 
 interface LectureProviderRepository {
-  suspend fun getLectureMainList(
+  suspend fun getLectureEvaluationAverageList(
     option: String,
     page: Int = 1,
     majorType: String = "",
   ): List<LectureEvaluationAverage?>
 
-  suspend fun getSearchResultDetail(
-    searchValue: String,
+  suspend fun retrieveLectureEvaluationAverageList(
+    search: String,
     option: String,
     page: Int,
     majorType: String,
   ): List<LectureEvaluationAverage?>
 
-  suspend fun getLectureDetailInfo(lectureId: Long): LectureEvaluationExtraAverage
+  suspend fun getLectureEvaluationExtraAverage(lectureId: Long): LectureEvaluationExtraAverage
 
-  suspend fun getLectureDetailEvaluation(
+  suspend fun getLectureEvaluationList(
     lectureId: Long,
     page: Int,
   ): LectureEvaluationList
