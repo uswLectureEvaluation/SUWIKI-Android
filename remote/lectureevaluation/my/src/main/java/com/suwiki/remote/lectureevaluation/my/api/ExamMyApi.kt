@@ -16,7 +16,7 @@ interface ExamMyApi {
 
   // 내가 쓴 글 (시험 정보)
   @GET("$EXAM_POSTS/written")
-  suspend fun getExamPosts(@Query(QUERY_PAGE) page: Int): ApiResult<DataResponse<List<MyExamEvaluationResponse>>>
+  suspend fun getMyExamEvaluationList(@Query(QUERY_PAGE) page: Int): ApiResult<DataResponse<List<MyExamEvaluationResponse>>>
 
   // 시험정보 구매 이력
   @GET("$EXAM_POSTS/purchase")

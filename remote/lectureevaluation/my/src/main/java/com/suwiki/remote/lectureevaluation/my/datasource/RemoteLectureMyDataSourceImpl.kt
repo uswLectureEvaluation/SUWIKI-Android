@@ -9,7 +9,7 @@ import javax.inject.Inject
 class RemoteLectureMyDataSourceImpl @Inject constructor(
   private val lectureApi: LectureMyApi,
 ) : RemoteLectureMyDataSource {
-  override suspend fun getLectureMyPosts(page: Int): List<MyLectureEvaluation> {
-    return lectureApi.getEvaluateMyPosts(page).getOrThrow().data.map { it.toModel() }
+  override suspend fun getMyLectureEvaluationList(page: Int): List<MyLectureEvaluation> {
+    return lectureApi.getMyLectureEvaluationList(page).getOrThrow().data.map { it.toModel() }
   }
 }

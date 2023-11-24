@@ -31,5 +31,5 @@ interface LectureEditorApi {
 
   // 강의 평가 삭제
   @DELETE(EVALUATE_POST)
-  suspend fun deleteEvaluation(@Query(QUERY_EVALUATE_ID) id: Long): ApiResult<Unit>
+  suspend fun deleteLectureEvaluation(@Query(QUERY_EVALUATE_ID) id: Long): ApiResult<Unit>
 }

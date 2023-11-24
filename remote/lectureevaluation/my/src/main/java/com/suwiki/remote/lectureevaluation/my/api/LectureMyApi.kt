@@ -15,5 +15,5 @@ interface LectureMyApi {
 
   // 내가 쓴 글 (강의평가)
   @GET("$EVALUATE_POST/written")
-  suspend fun getEvaluateMyPosts(@Query(QUERY_PAGE) page: Int): ApiResult<DataResponse<List<MyLectureEvaluationResponse>>>
+  suspend fun getMyLectureEvaluationList(@Query(QUERY_PAGE) page: Int): ApiResult<DataResponse<List<MyLectureEvaluationResponse>>>
 }

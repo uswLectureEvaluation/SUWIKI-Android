@@ -10,11 +10,11 @@ class RemoteExamProviderDataSourceImpl @Inject constructor(
   private val examApi: ExamViewerApi,
 ) : RemoteExamProviderDataSource {
 
-  override suspend fun getLectureDetailExam(
+  override suspend fun getExamEvaluationList(
     lectureId: Long,
     page: Int,
   ): ExamEvaluationList {
-    return examApi.getLectureDetailExam(lectureId = lectureId, page = page)
+    return examApi.getExamEvaluationList(lectureId = lectureId, page = page)
       .getOrThrow().toModel()
   }
 

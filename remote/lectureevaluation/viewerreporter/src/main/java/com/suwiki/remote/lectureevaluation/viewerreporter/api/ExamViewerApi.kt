@@ -15,7 +15,7 @@ interface ExamViewerApi {
 
   // 검색결과 자세히 보기 (Exam)
   @GET(EXAM_POSTS)
-  suspend fun getLectureDetailExam(
+  suspend fun getExamEvaluationList(
     @Query(QUERY_LECTURE_ID) lectureId: Long,
     @Query(QUERY_PAGE) page: Int,
   ): ApiResult<ExamEvaluationListResponse>

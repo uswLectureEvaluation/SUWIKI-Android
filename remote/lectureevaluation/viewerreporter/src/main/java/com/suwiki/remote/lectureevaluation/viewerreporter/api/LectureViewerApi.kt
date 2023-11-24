@@ -23,7 +23,7 @@ interface LectureViewerApi {
 
   // 메인 페이지
   @GET("$LECTURE/all/")
-  suspend fun getLectureMainList(
+  suspend fun getLectureEvaluationAverageList(
     @Query(QUERY_OPTION) option: String,
     @Query(QUERY_PAGE) page: Int = 1,
     @Query(QUERY_MAJOR_TYPE) majorType: String = "",
@@ -31,7 +31,7 @@ interface LectureViewerApi {
 
   // 통합 검색 결과
   @GET("$LECTURE/search/")
-  suspend fun getSearchResultDetail(
+  suspend fun retrieveLectureEvaluationAverageList(
     @Query(QUERY_SEARCH_VALUE) searchValue: String,
     @Query(QUERY_OPTION) option: String,
     @Query(QUERY_PAGE) page: Int,
@@ -40,11 +40,13 @@ interface LectureViewerApi {
 
   // 검색결과 자세히 보기 (LECTURE)
   @GET("$LECTURE/")
-  suspend fun getLectureDetailInfo(@Query(QUERY_LECTURE_ID) lectureId: Long): ApiResult<DataResponse<LectureEvaluationExtraAverageResponse>>
+  suspend fun getLectureEvaluationExtraAverage(
+    @Query(QUERY_LECTURE_ID) lectureId: Long
+  ): ApiResult<DataResponse<LectureEvaluationExtraAverageResponse>>
 
   // 검색 결과 자세히 보기 (Evaluation)
   @GET(EVALUATE_POST)
-  suspend fun getLectureDetailEvaluation(
+  suspend fun getLectureEvaluationList(
     @Query(QUERY_LECTURE_ID) lectureId: Long,
     @Query(QUERY_PAGE) page: Int,
   ): ApiResult<LectureEvaluationListResponse>

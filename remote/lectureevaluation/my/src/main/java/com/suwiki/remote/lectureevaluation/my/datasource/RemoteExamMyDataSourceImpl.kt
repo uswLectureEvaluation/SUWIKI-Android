@@ -11,8 +11,8 @@ class RemoteExamMyDataSourceImpl @Inject constructor(
   private val examApi: ExamMyApi,
 ) : RemoteExamMyDataSource {
 
-  override suspend fun getExamMyPosts(page: Int): List<MyExamEvaluation> {
-    return examApi.getExamPosts(page).getOrThrow().data.map { it.toModel() }
+  override suspend fun getMyExamEvaluationList(page: Int): List<MyExamEvaluation> {
+    return examApi.getMyExamEvaluationList(page).getOrThrow().data.map { it.toModel() }
   }
 
   override suspend fun getPurchaseHistory(): List<PurchaseHistory> {

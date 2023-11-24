@@ -69,6 +69,6 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
   }
 
   override suspend fun deleteLectureEvaluation(id: Long) {
-    return lectureApi.deleteEvaluation(id = id).getOrThrow()
+    return lectureApi.deleteLectureEvaluation(id = id).getOrThrow()
   }
 }

@@ -4,5 +4,5 @@ import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 
 interface RemoteLectureMyDataSource {
 
-  suspend fun getLectureMyPosts(page: Int): List<MyLectureEvaluation>
+  suspend fun getMyLectureEvaluationList(page: Int): List<MyLectureEvaluation>
 }

@@ -12,41 +12,41 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
   private val lectureApi: LectureViewerApi,
 ) : RemoteLectureProviderDataSource {
 
-  override suspend fun getLectureDetailEvaluation(
+  override suspend fun getLectureEvaluationList(
     lectureId: Long,
     page: Int,
   ): LectureEvaluationList {
-    return lectureApi.getLectureDetailEvaluation(lectureId = lectureId, page = page)
+    return lectureApi.getLectureEvaluationList(lectureId = lectureId, page = page)
       .getOrThrow().toModel()
   }
 
-  override suspend fun getLectureMainList(
+  override suspend fun getLectureEvaluationAverageList(
     option: String,
     page: Int,
     majorType: String,
   ): List<LectureEvaluationAverage?> {
-    return lectureApi.getLectureMainList(
+    return lectureApi.getLectureEvaluationAverageList(
       option = option,
       page = page,
       majorType = majorType,
     ).getOrThrow().data.map { it?.toModel() }
   }
 
-  override suspend fun getSearchResultDetail(
-    searchValue: String,
+  override suspend fun retrieveLectureEvaluationAverageList(
+    search: String,
     option: String,
     page: Int,
     majorType: String,
   ): List<LectureEvaluationAverage?> {
-    return lectureApi.getSearchResultDetail(
-      searchValue = searchValue,
+    return lectureApi.retrieveLectureEvaluationAverageList(
+      searchValue = search,
       option = option,
       page = page,
       majorType = majorType,
     ).getOrThrow().data.map { it?.toModel() }
   }
 
-  override suspend fun getLectureDetailInfo(lectureId: Long): LectureEvaluationExtraAverage {
-    return lectureApi.getLectureDetailInfo(lectureId).getOrThrow().data.toModel()
+  override suspend fun getLectureEvaluationExtraAverage(lectureId: Long): LectureEvaluationExtraAverage {
+    return lectureApi.getLectureEvaluationExtraAverage(lectureId).getOrThrow().data.toModel()
   }
 }

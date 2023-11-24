@@ -2,8 +2,8 @@ package com.suwiki.remote.lectureevaluation.editor.datasource
 
 import com.suwiki.data.lectureevaluation.editor.datasource.RemoteExamEditorDataSource
 import com.suwiki.remote.lectureevaluation.editor.api.ExamEditorApi
-import com.suwiki.remote.lectureevaluation.editor.request.PostExamRequest
-import com.suwiki.remote.lectureevaluation.editor.request.UpdateExamRequest
+import com.suwiki.remote.lectureevaluation.editor.request.PostExamEvaluationRequest
+import com.suwiki.remote.lectureevaluation.editor.request.UpdateExamEvaluationRequest
 import javax.inject.Inject
 
 class RemoteExamEditorDataSourceImpl @Inject constructor(
@@ -20,7 +20,7 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
     examDifficulty: String,
     content: String,
   ) {
-    val request = PostExamRequest(
+    val request = PostExamEvaluationRequest(
       lectureName = lectureName,
       professor = professor,
       selectedSemester = selectedSemester,
@@ -30,7 +30,7 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
       content = content,
     )
 
-    return examApi.postLectureExam(
+    return examApi.postExamEvaluation(
       lectureId = lectureId,
       request = request,
     ).getOrThrow()
@@ -44,7 +44,7 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
     examDifficulty: String,
     content: String,
   ) {
-    val request = UpdateExamRequest(
+    val request = UpdateExamEvaluationRequest(
       selectedSemester = selectedSemester,
       examInfo = examInfo,
       examType = examType,
@@ -52,13 +52,13 @@ class RemoteExamEditorDataSourceImpl @Inject constructor(
       content = content,
     )
 
-    return examApi.updateLectureExam(
+    return examApi.updateExamEvaluation(
       lectureId = lectureId,
       request = request,
     ).getOrThrow()
   }
 
   override suspend fun deleteExamEvaluation(id: Long) {
-    return examApi.deleteExamInfo(id).getOrThrow()
+    return examApi.deleteExamEvaluation(id).getOrThrow()
   }
 }
