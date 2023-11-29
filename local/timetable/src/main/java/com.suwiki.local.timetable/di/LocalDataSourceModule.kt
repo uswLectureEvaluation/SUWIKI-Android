@@ -1,10 +1,8 @@
 package com.suwiki.local.timetable.di
 
-import com.suwiki.data.timetable.datasource.LocalOpenLectureProviderDatasource
-import com.suwiki.data.timetable.datasource.LocalOpenLectureStorageDatasource
+import com.suwiki.data.timetable.datasource.LocalOpenLectureDatasource
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
-import com.suwiki.local.timetable.datasource.LocalOpenLectureProviderDatasourceImpl
-import com.suwiki.local.timetable.datasource.LocalOpenLectureStorageDatasourceImpl
+import com.suwiki.local.timetable.datasource.LocalOpenLectureDatasourceImpl
 import com.suwiki.local.timetable.datasource.LocalTimetableDatasourceImpl
 import dagger.Binds
 import dagger.Module
@@ -18,15 +16,9 @@ abstract class LocalDataSourceModule {
 
   @Singleton
   @Binds
-  abstract fun bindLocalOpenLectureStorageDataSource(
-    localOpenLectureStorageDataSourceImpl: LocalOpenLectureStorageDatasourceImpl,
-  ): LocalOpenLectureStorageDatasource
-
-  @Singleton
-  @Binds
-  abstract fun bindLocalOpenLectureProviderDataSource(
-    localOpenLectureProviderDataSourceImpl: LocalOpenLectureProviderDatasourceImpl,
-  ): LocalOpenLectureProviderDatasource
+  abstract fun bindLocalOpenLectureDataSource(
+    localOpenLectureDataSourceImpl: LocalOpenLectureDatasourceImpl,
+  ): LocalOpenLectureDatasource
 
   @Singleton
   @Binds

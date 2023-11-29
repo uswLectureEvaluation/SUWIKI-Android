@@ -2,8 +2,8 @@
 plugins {
   id("suwiki.android.library")
   id("suwiki.android.hilt")
-  id("org.jetbrains.kotlin.plugin.serialization")
-  id("com.google.devtools.ksp")
+  alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.ksp)
 }
 
 android {

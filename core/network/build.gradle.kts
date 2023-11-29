@@ -2,7 +2,7 @@
 plugins {
   id("suwiki.android.library")
   id("suwiki.android.hilt")
-  id("org.jetbrains.kotlin.plugin.serialization")
+  alias(libs.plugins.kotlin.serialization)
 }
 
 android {
