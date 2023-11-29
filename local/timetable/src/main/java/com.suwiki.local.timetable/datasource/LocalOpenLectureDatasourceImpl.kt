@@ -26,11 +26,11 @@ class LocalOpenLectureDatasourceImpl @Inject constructor(
   private val data: Flow<Preferences>
     get() = dataStore.data
 
-  override suspend fun getOpenLectureListVersion(version: Long) {
+  override suspend fun setOpenLectureListVersion(version: Long) {
     dataStore.edit { it[LOCAL_OPEN_LECTURE_VERSION] = version }
   }
 
-  override suspend fun setOpenLectureListVersion(): Flow<Long> {
+  override suspend fun getOpenLectureListVersion(): Flow<Long> {
     return data.map { it[LOCAL_OPEN_LECTURE_VERSION] ?: 0L }
   }
 

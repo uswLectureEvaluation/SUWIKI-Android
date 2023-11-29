@@ -7,6 +7,6 @@ interface LocalOpenLectureDatasource {
   suspend fun getOpenLectureList(): List<OpenLecture>
   suspend fun insertOpenLecture(data: OpenLecture)
   suspend fun deleteAllOpenLecture()
-  suspend fun setOpenLectureListVersion(): Flow<Long>
-  suspend fun getOpenLectureListVersion(version: Long)
+  suspend fun getOpenLectureListVersion(): Flow<Long>
+  suspend fun setOpenLectureListVersion(version: Long)
 }

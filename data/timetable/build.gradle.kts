@@ -6,3 +6,7 @@ plugins {
 android {
   namespace = "com.suwiki.data.timetable"
 }
+
+dependencies {
+  implementation(projects.domain.timetable)
+}
