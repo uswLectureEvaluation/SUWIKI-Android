@@ -27,7 +27,7 @@ class RemoteOpenLectureDataSourceImpl @Inject constructor(
     private const val DATABASE_TIMETABLE_VERSION = "version"
   }
 
-  override suspend fun getRemoteOpenLectureListVersion(): Long {
+  override suspend fun getOpenLectureListVersion(): Long {
     val timetableVersionDatabase = firebaseDatabase.getReference(DATABASE_TIMETABLE_VERSION)
 
     var version = 0L
