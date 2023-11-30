@@ -2,7 +2,7 @@ package com.suwiki.data.lectureevaluation.editor.datasource
 
 interface RemoteExamEditorDataSource {
 
-  suspend fun postLectureExam(
+  suspend fun postExamEvaluation(
     lectureId: Long,
     lectureName: String?,
     professor: String?,
@@ -13,7 +13,7 @@ interface RemoteExamEditorDataSource {
     content: String,
   )
 
-  suspend fun updateLectureExam(
+  suspend fun updateExamEvaluation(
     lectureId: Long,
     selectedSemester: String?,
     examInfo: String,
@@ -22,5 +22,5 @@ interface RemoteExamEditorDataSource {
     content: String,
   )
 
-  suspend fun deleteExamInfo(id: Long)
+  suspend fun deleteExamEvaluation(id: Long)
 }

@@ -1,6 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-  id("suwiki.android.remote")
+  alias(libs.plugins.suwiki.android.remote)
 }
 
 android {

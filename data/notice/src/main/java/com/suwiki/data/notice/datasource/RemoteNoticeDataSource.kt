@@ -7,5 +7,5 @@ interface RemoteNoticeDataSource {
 
   suspend fun getNoticeList(page: Int): List<Notice>
 
-  suspend fun getNotice(id: Long): NoticeDetail
+  suspend fun getNoticeDetail(id: Long): NoticeDetail
 }

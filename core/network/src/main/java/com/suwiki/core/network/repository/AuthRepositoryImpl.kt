@@ -1,6 +1,7 @@
 package com.suwiki.core.network.repository
 
 import com.suwiki.core.network.api.AuthApi
+import com.suwiki.core.network.di.RETROFIT_TAG
 import com.suwiki.core.network.retrofit.onFailure
 import com.suwiki.core.network.retrofit.onSuccess
 import com.suwiki.core.security.SecurityPreferences
@@ -26,11 +27,15 @@ internal class AuthRepositoryImpl @Inject constructor(
   }
 
   override suspend fun reissueRefreshToken(): Boolean =
-    authApi.reissueRefreshToken(refreshToken.first()).onSuccess {
-      saveTokens(access = it.accessToken, refresh = it.refreshToken)
-    }.onFailure {
-      securityPreferences.clearAll()
-      Timber.tag("Network")
-        .d("TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다.")
-    }.isSuccess
+    authApi
+      .reissueRefreshToken(refreshToken.first())
+      .onSuccess {
+        saveTokens(access = it.accessToken, refresh = it.refreshToken)
+      }
+      .onFailure {
+        securityPreferences.clearAll()
+        Timber.tag(RETROFIT_TAG)
+          .d("TokenAuthenticator - handleResponse() called / 리프레시 토큰이 만료되어 로그 아웃 되었습니다. $it")
+      }
+      .isSuccess
 }

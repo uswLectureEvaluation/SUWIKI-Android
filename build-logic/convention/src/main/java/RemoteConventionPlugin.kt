@@ -6,22 +6,22 @@ import org.gradle.kotlin.dsl.project
 
 internal class RemoteConventionPlugin : Plugin<Project> {
 
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply("suwiki.android.library")
-                apply("suwiki.android.hilt")
-            }
+  override fun apply(target: Project) {
+    with(target) {
+      with(pluginManager) {
+        apply("suwiki.android.library")
+        apply("suwiki.android.hilt")
+      }
 
-            dependencies {
-                "implementation"(project(":core:model"))
-                "implementation"(project(":core:network"))
+      dependencies {
+        "implementation"(project(":core:model"))
+        "implementation"(project(":core:network"))
 
-                "implementation"(libs.findBundle("coroutine").get())
+        "implementation"(libs.findBundle("coroutine").get())
 
-                "androidTestImplementation"(libs.findLibrary("junit").get())
-                "implementation"(libs.findLibrary("timber").get())
-            }
-        }
+        "androidTestImplementation"(libs.findLibrary("junit").get())
+        "implementation"(libs.findLibrary("timber").get())
+      }
     }
+  }
 }

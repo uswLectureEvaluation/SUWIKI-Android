@@ -2,7 +2,7 @@ package com.suwiki.remote.lectureevaluation.editor.datasource
 
 import com.suwiki.data.lectureevaluation.editor.datasource.RemoteLectureEditorDataSource
 import com.suwiki.remote.lectureevaluation.editor.api.LectureEditorApi
-import com.suwiki.remote.lectureevaluation.editor.request.LectureEvaluationRequest
+import com.suwiki.remote.lectureevaluation.editor.request.PostLectureEvaluationRequest
 import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureEvaluationRequest
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
     homework: Int,
     content: String,
   ) {
-    val request = LectureEvaluationRequest(
+    val request = PostLectureEvaluationRequest(
       lectureName = lectureName,
       professor = professor,
       selectedSemester = selectedSemester,
@@ -69,6 +69,6 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
   }
 
   override suspend fun deleteLectureEvaluation(id: Long) {
-    return lectureApi.deleteEvaluation(id = id).getOrThrow()
+    return lectureApi.deleteLectureEvaluation(id = id).getOrThrow()
   }
 }

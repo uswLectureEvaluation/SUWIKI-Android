@@ -1,9 +1,11 @@
 package com.suwiki.core.database.di
 
-import com.suwiki.core.database.OpenMajorDatabase
-import com.suwiki.core.database.TimetableDatabase
+import com.suwiki.core.database.dao.OpenLectureDao
 import com.suwiki.core.database.dao.OpenMajorDao
-import com.suwiki.core.database.dao.TimetableDao
+import com.suwiki.core.database.dao.TimeTableDao
+import com.suwiki.core.database.database.OpenLectureDatabase
+import com.suwiki.core.database.database.OpenMajorDatabase
+import com.suwiki.core.database.database.TimetableDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +19,8 @@ object DaoModule {
   fun provideOpenMajorDao(db: OpenMajorDatabase): OpenMajorDao = db.openMajorDao()
 
   @Provides
-  fun provideTimetableDao(db: TimetableDatabase): TimetableDao = db.timetableDao()
+  fun provideOpenLectureDao(db: OpenLectureDatabase): OpenLectureDao = db.openLectureDao()
+
+  @Provides
+  fun provideTimetableDao(db: TimetableDatabase): TimeTableDao = db.timetableDao()
 }

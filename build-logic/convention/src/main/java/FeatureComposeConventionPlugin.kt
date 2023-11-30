@@ -5,24 +5,21 @@ import org.gradle.kotlin.dsl.dependencies
 
 internal class FeatureComposeConventionPlugin : Plugin<Project> {
 
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply("suwiki.android.library")
-                apply("suwiki.android.library.compose")
-                apply("suwiki.android.hilt")
-            }
+  override fun apply(target: Project) {
+    with(target) {
+      with(pluginManager) {
+        apply("suwiki.android.library")
+        apply("suwiki.android.library.compose")
+        apply("suwiki.android.hilt")
+      }
 
-            dependencies {
-                "implementation"(project(":domain"))
-                "implementation"(project(":core:designsystem"))
+      dependencies {
+        "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
+        "implementation"(libs.findLibrary("kotlinx.coroutines.core").get())
 
-                "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
-                "implementation"(libs.findLibrary("kotlinx.coroutines.core").get())
-
-                "androidTestImplementation"(libs.findLibrary("junit").get())
-                "implementation"(libs.findLibrary("timber").get())
-            }
-        }
+        "androidTestImplementation"(libs.findLibrary("junit").get())
+        "implementation"(libs.findLibrary("timber").get())
+      }
     }
+  }
 }

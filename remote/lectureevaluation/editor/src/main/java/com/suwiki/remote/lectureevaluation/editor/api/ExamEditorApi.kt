@@ -1,8 +1,8 @@
 package com.suwiki.remote.lectureevaluation.editor.api
 
 import com.suwiki.core.network.retrofit.ApiResult
-import com.suwiki.remote.lectureevaluation.editor.request.PostLectureExamRequest
-import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureExamRequest
+import com.suwiki.remote.lectureevaluation.editor.request.PostExamEvaluationRequest
+import com.suwiki.remote.lectureevaluation.editor.request.UpdateExamEvaluationRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.POST
@@ -17,21 +17,18 @@ interface ExamEditorApi {
     const val QUERY_LECTURE_ID = "lectureId"
   }
 
-  // 시험정보 쓰기
   @POST(EXAM_POSTS)
-  suspend fun postLectureExam(
+  suspend fun postExamEvaluation(
     @Query(QUERY_LECTURE_ID) lectureId: Long,
-    @Body request: PostLectureExamRequest,
+    @Body request: PostExamEvaluationRequest,
   ): ApiResult<Unit>
 
-  // 시험 정보 수정
   @PUT(EXAM_POSTS)
-  suspend fun updateLectureExam(
+  suspend fun updateExamEvaluation(
     @Query(QUERY_EXAM_IDX) lectureId: Long,
-    @Body request: UpdateLectureExamRequest,
+    @Body request: UpdateExamEvaluationRequest,
   ): ApiResult<Unit>
 
-  // 시험 정보 삭제
   @DELETE(EXAM_POSTS)
-  suspend fun deleteExamInfo(@Query(QUERY_EXAM_IDX) id: Long): ApiResult<Unit>
+  suspend fun deleteExamEvaluation(@Query(QUERY_EXAM_IDX) id: Long): ApiResult<Unit>
 }

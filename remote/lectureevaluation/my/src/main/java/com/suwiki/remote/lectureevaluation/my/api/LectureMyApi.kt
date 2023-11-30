@@ -2,7 +2,7 @@ package com.suwiki.remote.lectureevaluation.my.api
 
 import com.suwiki.core.network.retrofit.ApiResult
 import com.suwiki.remote.lectureevaluation.my.response.DataResponse
-import com.suwiki.remote.lectureevaluation.my.response.MyEvaluationResponse
+import com.suwiki.remote.lectureevaluation.my.response.MyLectureEvaluationResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -15,5 +15,5 @@ interface LectureMyApi {
 
   // 내가 쓴 글 (강의평가)
   @GET("$EVALUATE_POST/written")
-  suspend fun getEvaluateMyPosts(@Query(QUERY_PAGE) page: Int): ApiResult<DataResponse<List<MyEvaluationResponse>>>
+  suspend fun getMyLectureEvaluationList(@Query(QUERY_PAGE) page: Int): ApiResult<DataResponse<List<MyLectureEvaluationResponse>>>
 }
