@@ -6,3 +6,7 @@ plugins {
 android {
   namespace = "com.suwiki.data.notice"
 }
+
+dependencies {
+  implementation(projects.domain.notice)
+}
