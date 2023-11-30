@@ -12,17 +12,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mangbaam.presentation.ui.theme.UswtimetableTheme
-import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
-import com.suwiki.domain.signup.usecase.CheckEmailOverlapUseCase
-import com.suwiki.domain.signup.usecase.CheckIdOverlapUseCase
-import com.suwiki.domain.signup.usecase.SignUpUseCase
-import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.domain.user.usecase.LoginUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,7 +47,8 @@ fun Greeting(
 ) {
   LaunchedEffect(key1 = Unit) {
     useCase1(
-      loginId = "pos1070", password = "1q2w3e4r!"
+      loginId = "pos1070",
+      password = "1q2w3e4r!",
     )
       .onSuccess {
         Timber.tag("Retrofit2").d("$it")

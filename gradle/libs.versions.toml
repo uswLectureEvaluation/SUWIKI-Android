@@ -71,6 +71,17 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 
+# Plugins defined by this project
+suwiki-android-application = { id = "suwiki.android.application", version = "unspecified" }
+suwiki-android-application-compose = { id = "suwiki.android.application.compose", version = "unspecified" }
+suwiki-android-library = { id = "suwiki.android.library", version = "unspecified" }
+suwiki-android-library-compose = { id = "suwiki.android.library.compose", version = "unspecified" }
+suwiki-android-hilt = { id = "suwiki.android.hilt", version = "unspecified" }
+suwiki-java-library = { id = "suwiki.java.library", version = "unspecified" }
+suwiki-android-feature-compose = { id = "suwiki.android.feature.compose", version = "unspecified" }
+suwiki-android-remote = { id = "suwiki.android.remote", version = "unspecified" }
+suwiki-android-data = { id = "suwiki.android.data", version = "unspecified" }
+
 [libraries]
 # Dependencies of the included build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }

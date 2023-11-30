@@ -2,9 +2,9 @@ package com.suwiki.remote.lectureevaluation.viewerreporter.api
 
 import com.suwiki.core.network.retrofit.ApiResult
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.DataResponse
-import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationListResponse
-import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationExtraAverageResponse
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationAverageResponse
+import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationExtraAverageResponse
+import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -41,7 +41,7 @@ interface LectureViewerApi {
   // 검색결과 자세히 보기 (LECTURE)
   @GET("$LECTURE/")
   suspend fun getLectureEvaluationExtraAverage(
-    @Query(QUERY_LECTURE_ID) lectureId: Long
+    @Query(QUERY_LECTURE_ID) lectureId: Long,
   ): ApiResult<DataResponse<LectureEvaluationExtraAverageResponse>>
 
   // 검색 결과 자세히 보기 (Evaluation)

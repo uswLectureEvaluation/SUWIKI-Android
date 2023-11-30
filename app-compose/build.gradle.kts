@@ -1,7 +1,8 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  id("suwiki.android.application")
-  id("suwiki.android.application.compose")
-  id("suwiki.android.hilt")
+  alias(libs.plugins.suwiki.android.application)
+  alias(libs.plugins.suwiki.android.application.compose)
+  alias(libs.plugins.suwiki.android.hilt)
 }
 
 android {
@@ -9,8 +10,8 @@ android {
 
   defaultConfig {
     applicationId = "com.kunize.uswtimetable"
-    versionCode = 1
-    versionName = "1.0"
+    versionCode = 31
+    versionName = "2.2.4"
   }
 }
 

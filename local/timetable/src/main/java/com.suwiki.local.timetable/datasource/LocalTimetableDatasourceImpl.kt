@@ -3,7 +3,6 @@ package com.suwiki.local.timetable.datasource
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import com.suwiki.core.database.database.TimetableDatabase
 import com.suwiki.core.database.di.NormalDataStore
@@ -12,7 +11,6 @@ import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.local.timetable.converter.toEntity
 import com.suwiki.local.timetable.converter.toModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

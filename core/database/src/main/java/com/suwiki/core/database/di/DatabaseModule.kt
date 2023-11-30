@@ -2,8 +2,8 @@ package com.suwiki.core.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.suwiki.core.database.database.OpenMajorDatabase
 import com.suwiki.core.database.database.OpenLectureDatabase
+import com.suwiki.core.database.database.OpenMajorDatabase
 import com.suwiki.core.database.database.TimetableDatabase
 import dagger.Module
 import dagger.Provides

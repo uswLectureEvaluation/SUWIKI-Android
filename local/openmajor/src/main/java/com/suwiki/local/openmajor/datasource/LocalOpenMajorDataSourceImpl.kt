@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LocalOpenMajorDataSourceImpl @Inject constructor(
-    @NormalDataStore private val dataStore: DataStore<Preferences>,
-    private val db: OpenMajorDatabase,
+  @NormalDataStore private val dataStore: DataStore<Preferences>,
+  private val db: OpenMajorDatabase,
 ) : LocalOpenMajorDataSource {
 
   companion object {

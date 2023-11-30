@@ -14,5 +14,3 @@ data class ExamEvaluation(
   val examDifficulty: String,
   val content: String,
 )
-
-

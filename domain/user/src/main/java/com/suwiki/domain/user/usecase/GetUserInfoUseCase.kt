@@ -1,6 +1,5 @@
 package com.suwiki.domain.user.usecase
 
-import com.suwiki.core.common.runCatchingIgnoreCancelled
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow

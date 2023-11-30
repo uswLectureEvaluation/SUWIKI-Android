@@ -1,8 +1,8 @@
 package com.suwiki.data.lectureevaluation.viewerreporter.datasource
 
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 
 interface RemoteLectureProviderDataSource {
   suspend fun getLectureEvaluationAverageList(

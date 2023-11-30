@@ -7,7 +7,6 @@ import com.suwiki.data.user.datasource.RemoteUserDataSource
 import com.suwiki.domain.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 

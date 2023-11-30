@@ -1,8 +1,8 @@
 package com.suwiki.domain.lectureevaluation.viewerreporter.repository
 
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 
 interface LectureProviderRepository {
   suspend fun getLectureEvaluationAverageList(

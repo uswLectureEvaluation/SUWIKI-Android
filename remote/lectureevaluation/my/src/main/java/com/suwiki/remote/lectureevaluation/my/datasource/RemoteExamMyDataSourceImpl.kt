@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.my.datasource
 
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.PurchaseHistory
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.data.lectureevaluation.my.datasource.RemoteExamMyDataSource
 import com.suwiki.remote.lectureevaluation.my.api.ExamMyApi
 import com.suwiki.remote.lectureevaluation.my.response.toModel
