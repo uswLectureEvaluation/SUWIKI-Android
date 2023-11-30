@@ -27,6 +27,7 @@ include(":core:common")
 include(":core:network")
 include(":core:security")
 include(":core:database")
+include(":core:designsystem")
 
 include(":remote:openmajor")
 include(":remote:timetable")
