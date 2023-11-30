@@ -15,7 +15,7 @@ class RemoteNoticeDataSourceImpl @Inject constructor(
     return noticeApi.getNoticeList(page).getOrThrow().data.map { it.toModel() }
   }
 
-  override suspend fun getNotice(id: Long): NoticeDetail {
+  override suspend fun getNoticeDetail(id: Long): NoticeDetail {
     return noticeApi.getNotice(id).getOrThrow().data.toModel()
   }
 }

@@ -1,9 +1,9 @@
-package com.suwiki.data.notice.datasource
+package com.suwiki.domain.notice.repository
 
 import com.suwiki.core.model.notice.Notice
 import com.suwiki.core.model.notice.NoticeDetail
 
-interface RemoteNoticeDataSource {
+interface NoticeRepository {
 
   suspend fun getNoticeList(page: Int): List<Notice>
 
