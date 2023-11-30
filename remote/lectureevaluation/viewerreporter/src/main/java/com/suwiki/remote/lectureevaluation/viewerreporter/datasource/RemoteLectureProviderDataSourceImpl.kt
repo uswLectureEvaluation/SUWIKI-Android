@@ -1,8 +1,8 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.datasource
 
-import com.suwiki.core.model.lectureevaluation.LectureDetailEvaluationData
-import com.suwiki.core.model.lectureevaluation.LectureDetailInfo
-import com.suwiki.core.model.lectureevaluation.LectureMain
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 import com.suwiki.data.lectureevaluation.viewerreporter.datasource.RemoteLectureProviderDataSource
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.LectureViewerApi
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.toModel
@@ -12,41 +12,41 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
   private val lectureApi: LectureViewerApi,
 ) : RemoteLectureProviderDataSource {
 
-  override suspend fun getLectureDetailEvaluation(
+  override suspend fun getLectureEvaluationList(
     lectureId: Long,
     page: Int,
-  ): LectureDetailEvaluationData {
-    return lectureApi.getLectureDetailEvaluation(lectureId = lectureId, page = page)
+  ): LectureEvaluationList {
+    return lectureApi.getLectureEvaluationList(lectureId = lectureId, page = page)
       .getOrThrow().toModel()
   }
 
-  override suspend fun getLectureMainList(
+  override suspend fun getLectureEvaluationAverageList(
     option: String,
     page: Int,
     majorType: String,
-  ): List<LectureMain?> {
-    return lectureApi.getLectureMainList(
+  ): List<LectureEvaluationAverage?> {
+    return lectureApi.getLectureEvaluationAverageList(
       option = option,
       page = page,
       majorType = majorType,
     ).getOrThrow().data.map { it?.toModel() }
   }
 
-  override suspend fun getSearchResultDetail(
-    searchValue: String,
+  override suspend fun retrieveLectureEvaluationAverageList(
+    search: String,
     option: String,
     page: Int,
     majorType: String,
-  ): List<LectureMain?> {
-    return lectureApi.getSearchResultDetail(
-      searchValue = searchValue,
+  ): List<LectureEvaluationAverage?> {
+    return lectureApi.retrieveLectureEvaluationAverageList(
+      searchValue = search,
       option = option,
       page = page,
       majorType = majorType,
     ).getOrThrow().data.map { it?.toModel() }
   }
 
-  override suspend fun getLectureDetailInfo(lectureId: Long): LectureDetailInfo {
-    return lectureApi.getLectureDetailInfo(lectureId).getOrThrow().data.toModel()
+  override suspend fun getLectureEvaluationExtraAverage(lectureId: Long): LectureEvaluationExtraAverage {
+    return lectureApi.getLectureEvaluationExtraAverage(lectureId).getOrThrow().data.toModel()
   }
 }

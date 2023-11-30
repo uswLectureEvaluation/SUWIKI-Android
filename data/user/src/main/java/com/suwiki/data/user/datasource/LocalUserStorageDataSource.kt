@@ -1,16 +1,16 @@
 package com.suwiki.data.user.datasource
 
+import com.suwiki.core.model.user.Token
+import com.suwiki.core.model.user.User
+
 interface LocalUserStorageDataSource {
-  suspend fun login(
-    userId: String,
-    point: Int,
-    writtenEvaluation: Int,
-    writtenExam: Int,
-    viewExam: Int,
-    email: String,
-    accessToken: String,
-    refreshToken: String,
+  suspend fun setUserInfo(
+    user: User,
   )
 
-  suspend fun logout()
+  suspend fun setToken(
+    token: Token,
+  )
+
+  suspend fun clearUserInfoAndToken()
 }

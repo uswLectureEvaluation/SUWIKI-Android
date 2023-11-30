@@ -54,7 +54,9 @@ oss = "17.0.1"
 junit = "1.1.5"
 espresso-core = "3.5.1"
 androidx-test-ext-junit = "1.1.5"
-androidx-compose-compose-bom = "2023.03.00"
+
+protobuf-plugin = "0.9.4"
+protobuf = "3.24.4"
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -67,6 +69,18 @@ android-application = { id = "com.android.application", version.ref = "android-g
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
+
+# Plugins defined by this project
+suwiki-android-application = { id = "suwiki.android.application", version = "unspecified" }
+suwiki-android-application-compose = { id = "suwiki.android.application.compose", version = "unspecified" }
+suwiki-android-library = { id = "suwiki.android.library", version = "unspecified" }
+suwiki-android-library-compose = { id = "suwiki.android.library.compose", version = "unspecified" }
+suwiki-android-hilt = { id = "suwiki.android.hilt", version = "unspecified" }
+suwiki-java-library = { id = "suwiki.java.library", version = "unspecified" }
+suwiki-android-feature-compose = { id = "suwiki.android.feature.compose", version = "unspecified" }
+suwiki-android-remote = { id = "suwiki.android.remote", version = "unspecified" }
+suwiki-android-data = { id = "suwiki.android.data", version = "unspecified" }
 
 [libraries]
 # Dependencies of the included build-logic
@@ -153,7 +167,9 @@ oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-lic
 junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-androidx-compose-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-compose-bom" }
+
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 
 [bundles]
 firebase = ["firebase-analytics", "firebase-database"]

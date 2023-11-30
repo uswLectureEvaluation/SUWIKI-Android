@@ -1,27 +1,27 @@
 package com.suwiki.data.lectureevaluation.viewerreporter.datasource
 
-import com.suwiki.core.model.lectureevaluation.LectureDetailEvaluationData
-import com.suwiki.core.model.lectureevaluation.LectureDetailInfo
-import com.suwiki.core.model.lectureevaluation.LectureMain
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 
 interface RemoteLectureProviderDataSource {
-  suspend fun getLectureMainList(
+  suspend fun getLectureEvaluationAverageList(
     option: String,
     page: Int = 1,
     majorType: String = "",
-  ): List<LectureMain?>
+  ): List<LectureEvaluationAverage?>
 
-  suspend fun getSearchResultDetail(
-    searchValue: String,
+  suspend fun retrieveLectureEvaluationAverageList(
+    search: String,
     option: String,
     page: Int,
     majorType: String,
-  ): List<LectureMain?>
+  ): List<LectureEvaluationAverage?>
 
-  suspend fun getLectureDetailInfo(lectureId: Long): LectureDetailInfo
+  suspend fun getLectureEvaluationExtraAverage(lectureId: Long): LectureEvaluationExtraAverage
 
-  suspend fun getLectureDetailEvaluation(
+  suspend fun getLectureEvaluationList(
     lectureId: Long,
     page: Int,
-  ): LectureDetailEvaluationData
+  ): LectureEvaluationList
 }

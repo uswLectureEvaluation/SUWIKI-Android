@@ -5,7 +5,7 @@ enum class SuwikiServerError(val exception: Exception) {
   USER004(UserNotExistException()),
   USER005(PasswordErrorException()),
   USER006(UserPointLackException()),
-  USER007(NeedLoginException()),
+  USER007(AuthorizationException.NeedLoginException()),
   USER008(RestrictedUserException()),
   USER009(BlackListUserException()),
   USER010(LoginIdOrEmailOverlapException()),
@@ -27,13 +27,35 @@ enum class SuwikiServerError(val exception: Exception) {
 
   EVALUATE_POST001(EvaluatePostNotFoundException()),
 
-  TOKEN001(TokenExpiredException()),
-  TOKEN002(TokenIsBrokenException()),
+  TOKEN001(AuthorizationException.TokenExpiredException()),
+  TOKEN002(AuthorizationException.TokenIsBrokenException()),
 
-  SECURITY001(UnAuthenticatedException()),
+  SECURITY001(AuthorizationException.UnAuthenticatedException()),
   SECURITY003(LoginFailedException()),
 
   MAIL001(SendMailFailedException()),
+}
+
+/**
+ * 인가(Authorization)가 실패한 경우 발생하는 Exception
+ * 다시 로그인을 시도해야함
+ */
+sealed interface AuthorizationException {
+  class TokenExpiredException(
+    override val message: String = "토큰이 만료되었습니다 다시 로그인 해주세요",
+  ) : RuntimeException(), AuthorizationException
+
+  class TokenIsBrokenException(
+    override val message: String = "토큰이 유효하지 않습니다.",
+  ) : RuntimeException(), AuthorizationException
+
+  class UnAuthenticatedException(
+    override val message: String = "로그인이 필요해요.",
+  ) : RuntimeException(), AuthorizationException
+
+  class NeedLoginException(
+    override val message: String = "로그인이 필요해요.",
+  ) : RuntimeException(), AuthorizationException
 }
 
 class IncorrectEmailFormException(
@@ -50,10 +72,6 @@ class PasswordErrorException(
 
 class UserPointLackException(
   override val message: String = "포인트가 부족해요.",
-) : RuntimeException()
-
-class NeedLoginException(
-  override val message: String = "로그인이 필요해요.",
 ) : RuntimeException()
 
 class RestrictedUserException(
@@ -118,18 +136,6 @@ class UserNotFoundByEmailException(
 
 class UserNotFoundByLoginIdException(
   override val message: String = "해당 아이디에 대한 유저를 찾을 수 없습니다.",
-) : RuntimeException()
-
-class TokenExpiredException(
-  override val message: String = "토큰이 만료되었습니다 다시 로그인 해주세요",
-) : RuntimeException()
-
-class TokenIsBrokenException(
-  override val message: String = "토큰이 유효하지 않습니다.",
-) : RuntimeException()
-
-class UnAuthenticatedException(
-  override val message: String = "로그인이 필요해요.",
 ) : RuntimeException()
 
 class LoginFailedException(

@@ -1,57 +1,57 @@
 plugins {
-    `kotlin-dsl`
+  `kotlin-dsl`
 }
 
 group = "com.kunize.convention"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
-    compileOnly(libs.android.gradle.plugin)
-    compileOnly(libs.kotlin.gradle.plugin)
-    compileOnly(libs.ksp.gradle.plugin)
+  compileOnly(libs.android.gradle.plugin)
+  compileOnly(libs.kotlin.gradle.plugin)
+  compileOnly(libs.ksp.gradle.plugin)
 }
 
 gradlePlugin {
-    plugins {
-        register("androidApplication") {
-            id = "suwiki.android.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
-        }
-        register("androidApplicationCompose") {
-            id = "suwiki.android.application.compose"
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
-        }
-        register("androidLibrary") {
-            id = "suwiki.android.library"
-            implementationClass = "AndroidLibraryConventionPlugin"
-        }
-        register("androidLibraryCompose") {
-            id = "suwiki.android.library.compose"
-            implementationClass = "AndroidLibraryComposeConventionPlugin"
-        }
-        register("androidHilt") {
-            id = "suwiki.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
-        }
-        register("javaLibrary") {
-            id = "suwiki.java.library"
-            implementationClass = "JavaLibraryConventionPlugin"
-        }
-        register("featureCompose") {
-            id = "suwiki.android.feature.compose"
-            implementationClass = "FeatureComposeConventionPlugin"
-        }
-        register("remote") {
-            id = "suwiki.android.remote"
-            implementationClass = "RemoteConventionPlugin"
-        }
-        register("data") {
-            id = "suwiki.android.data"
-            implementationClass = "DataConventionPlugin"
-        }
+  plugins {
+    register("androidApplication") {
+      id = "suwiki.android.application"
+      implementationClass = "AndroidApplicationConventionPlugin"
     }
+    register("androidApplicationCompose") {
+      id = "suwiki.android.application.compose"
+      implementationClass = "AndroidApplicationComposeConventionPlugin"
+    }
+    register("androidLibrary") {
+      id = "suwiki.android.library"
+      implementationClass = "AndroidLibraryConventionPlugin"
+    }
+    register("androidLibraryCompose") {
+      id = "suwiki.android.library.compose"
+      implementationClass = "AndroidLibraryComposeConventionPlugin"
+    }
+    register("androidHilt") {
+      id = "suwiki.android.hilt"
+      implementationClass = "AndroidHiltConventionPlugin"
+    }
+    register("javaLibrary") {
+      id = "suwiki.java.library"
+      implementationClass = "JavaLibraryConventionPlugin"
+    }
+    register("featureCompose") {
+      id = "suwiki.android.feature.compose"
+      implementationClass = "FeatureComposeConventionPlugin"
+    }
+    register("remote") {
+      id = "suwiki.android.remote"
+      implementationClass = "RemoteConventionPlugin"
+    }
+    register("data") {
+      id = "suwiki.android.data"
+      implementationClass = "DataConventionPlugin"
+    }
+  }
 }

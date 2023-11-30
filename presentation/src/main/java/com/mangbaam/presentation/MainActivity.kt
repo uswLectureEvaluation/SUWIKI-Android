@@ -12,7 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mangbaam.presentation.ui.theme.UswtimetableTheme
-import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
+import com.suwiki.domain.user.usecase.LoginUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
   @Inject
-  lateinit var getOpenMajorListUseCase: GetBookmarkedOpenMajorListUseCase
+  lateinit var useCase1: LoginUseCase
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background,
         ) {
-          Greeting(name = "Suwiki", useCase = getOpenMajorListUseCase)
+          Greeting(name = "Suwiki", useCase1 = useCase1)
         }
       }
     }
@@ -43,15 +43,18 @@ class MainActivity : ComponentActivity() {
 fun Greeting(
   name: String,
   modifier: Modifier = Modifier,
-  useCase: GetBookmarkedOpenMajorListUseCase,
+  useCase1: LoginUseCase,
 ) {
   LaunchedEffect(key1 = Unit) {
-    useCase()
+    useCase1(
+      loginId = "pos1070",
+      password = "1q2w3e4r!",
+    )
       .onSuccess {
-        Timber.d("$it")
+        Timber.tag("Retrofit2").d("$it")
       }
       .onFailure {
-        Timber.d("$it")
+        Timber.tag("Retrofit2").d("$it")
       }
   }
 

@@ -2,11 +2,15 @@ package com.suwiki.core.database.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.suwiki.core.database.UserPreference
+import com.suwiki.core.database.proto.UserPreferenceSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +24,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
+
+  @Provides
+  @Singleton
+  fun providesUserPreferencesDataStore(
+    @ApplicationContext context: Context,
+    userPreferenceSerializer: UserPreferenceSerializer,
+  ): DataStore<UserPreference> =
+    DataStoreFactory.create(
+      serializer = userPreferenceSerializer,
+      scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+    ) {
+      context.dataStoreFile("user_preference.pb")
+    }
 
   @Singleton
   @Provides

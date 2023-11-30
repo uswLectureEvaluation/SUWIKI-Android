@@ -14,5 +14,5 @@ interface AuthApi {
 
   // Refresh Token
   @POST("$USER/refresh")
-  fun reissueRefreshToken(@Header(AUTH_HEADER) refresh: String): ApiResult<TokenResponse>
+  suspend fun reissueRefreshToken(@Header(AUTH_HEADER) refresh: String): ApiResult<TokenResponse>
 }

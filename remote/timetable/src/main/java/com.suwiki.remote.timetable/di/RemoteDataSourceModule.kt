@@ -1,7 +1,7 @@
 package com.suwiki.remote.timetable.di
 
-import com.suwiki.data.timetable.datasource.RemoteTimetableDataSource
-import com.suwiki.remote.timetable.datasource.RemoteTimetableDataSourceImpl
+import com.suwiki.data.timetable.datasource.RemoteOpenLectureDataSource
+import com.suwiki.remote.timetable.datasource.RemoteOpenLectureDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,6 +15,6 @@ abstract class RemoteDataSourceModule {
   @Singleton
   @Binds
   abstract fun bindRemoteTimetableDataSource(
-    remoteTimetableDataSourceImpl: RemoteTimetableDataSourceImpl,
-  ): RemoteTimetableDataSource
+    remoteTimetableDataSourceImpl: RemoteOpenLectureDataSourceImpl,
+  ): RemoteOpenLectureDataSource
 }
