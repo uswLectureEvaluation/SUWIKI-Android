@@ -1,10 +1,13 @@
 package com.suwiki.core.designsystem.component.chipsAndLabel.ui.theme
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -30,7 +33,7 @@ enum class LabelType(val type: String) {
 class ChipsLabel {
 
   @Composable
-  fun LabelButton(type: LabelType, text: String) {
+  fun ContainedLabel(type: LabelType, text: String) {
     var labelState by remember { mutableStateOf(false) }
 
     val backgroundColor: Color
@@ -59,7 +62,7 @@ class ChipsLabel {
       }
     }
 
-    InactiveContainedLabel(
+    ContainedLabelText(
       text = text,
       backgroundColor = backgroundColor,
       contentColor = contentColor,
@@ -68,7 +71,33 @@ class ChipsLabel {
   }
 
   @Composable
-  fun InactiveContainedLabel(
+  fun OutlinedLabel(text: String) {
+    var labelState by remember { mutableStateOf(false) }
+
+    val backgroundColor: Color
+    val contentColor: Color
+
+    when (labelState) {
+      false -> {
+        backgroundColor = DA
+        contentColor = c95
+      }
+      true -> {
+        backgroundColor = Main
+        contentColor = Main
+      }
+    }
+
+    OutlinedLabelText(
+      text = text,
+      backgroundColor = backgroundColor,
+      contentColor = contentColor,
+      onBtnClicked = { labelState = !labelState },
+    )
+  }
+
+  @Composable
+  fun ContainedLabelText(
     text: String,
     backgroundColor: Color,
     contentColor: Color,
@@ -91,7 +120,32 @@ class ChipsLabel {
     }
   }
 
-  @Preview
+  @Composable
+  fun OutlinedLabelText(
+    text: String,
+    backgroundColor: Color,
+    contentColor: Color,
+    onBtnClicked: () -> Unit,
+  ) {
+    Box(
+      modifier = Modifier
+        .clip(RoundedCornerShape(5.dp))
+        .clickable { onBtnClicked() }
+        .size(41.dp, 26.dp)
+        .background(color = white)
+        .border(width = 1.dp, color = backgroundColor, shape = RoundedCornerShape(5.dp)),
+    ) {
+      Text(
+        text = text,
+        color = contentColor,
+        modifier = Modifier
+          .align(Alignment.Center),
+        fontSize = 12.sp,
+      )
+    }
+  }
+
+  @Preview(showBackground = false)
   @Composable
   fun PreviewLabel() {
     TestTheme {
@@ -99,7 +153,9 @@ class ChipsLabel {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        LabelButton(LabelType.ORANGE, "label")
+        ContainedLabel(LabelType.ORANGE, "label")
+        Spacer(modifier = Modifier.height(20.dp))
+        OutlinedLabel("label")
       }
     }
   }
