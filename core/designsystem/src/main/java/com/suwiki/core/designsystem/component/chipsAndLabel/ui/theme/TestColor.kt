@@ -21,4 +21,3 @@ val blue100 = Color(0xFF3D4EFB)
 val green10 = Color(0xFFEAF8EC)
 val green100 = Color(0xFF2DB942)
 val white = Color(0xFFFFFFFF)
-
