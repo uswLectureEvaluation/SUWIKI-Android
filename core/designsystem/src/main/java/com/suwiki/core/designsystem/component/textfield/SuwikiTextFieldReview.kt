@@ -33,7 +33,6 @@ fun SuwikiTextFieldReview(
   hint: String = "",
   value: String = "",
   onValueChange: (String) -> Unit = { _ -> },
-  onClickClearButton: () -> Unit = {},
   isError: Boolean = false,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
@@ -84,7 +83,6 @@ fun SuwikiTextFieldReviewPreview() {
       hint = "강의평가를 작성해주세요",
       value = normalValue,
       onValueChange = { normalValue = it },
-      onClickClearButton = { normalValue = "" },
     )
 
     SuwikiTextFieldReview(
@@ -92,7 +90,6 @@ fun SuwikiTextFieldReviewPreview() {
       value = normalValue,
       isError = true,
       onValueChange = { normalValue = it },
-      onClickClearButton = { normalValue = "" },
     )
   }
 }
