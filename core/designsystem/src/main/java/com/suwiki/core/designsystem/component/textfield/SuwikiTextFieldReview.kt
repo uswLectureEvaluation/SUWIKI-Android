@@ -6,12 +6,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
@@ -43,7 +40,7 @@ fun SuwikiTextFieldReview(
     interactionSource = interactionSource,
     cursorBrush = SolidColor(Color.Blue),
     decorationBox = { innerText ->
-      Column(
+      Box(
         modifier = Modifier
           .heightIn(min = 198.dp)
           .background(Color.LightGray, shape = RoundedCornerShape(10.dp))
@@ -53,16 +50,10 @@ fun SuwikiTextFieldReview(
             shape = RoundedCornerShape(10.dp),
           )
           .padding(horizontal = 16.dp, vertical = 24.dp),
+        contentAlignment = Alignment.TopStart,
       ) {
-        Spacer(modifier = Modifier.size(2.dp))
-
-        Box(
-          modifier = Modifier.wrapContentSize(),
-          contentAlignment = Alignment.CenterStart,
-        ) {
-          innerText()
-          if (value.isEmpty()) Text(text = hint, color = Color.Gray)
-        }
+        innerText()
+        if (value.isEmpty()) Text(text = hint, color = Color.Gray)
       }
     },
   )
@@ -77,7 +68,7 @@ fun SuwikiTextFieldReviewPreview() {
 
   Column(
     modifier = Modifier.padding(20.dp),
-    verticalArrangement = Arrangement.spacedBy(10.dp)
+    verticalArrangement = Arrangement.spacedBy(10.dp),
   ) {
     SuwikiTextFieldReview(
       hint = "강의평가를 작성해주세요",
