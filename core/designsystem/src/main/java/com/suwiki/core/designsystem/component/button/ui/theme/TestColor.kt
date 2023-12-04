@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.chipsAndLabel.ui.theme
+package com.suwiki.core.designsystem.component.button.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
