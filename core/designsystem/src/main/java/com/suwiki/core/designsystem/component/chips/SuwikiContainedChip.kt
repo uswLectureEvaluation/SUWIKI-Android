@@ -36,7 +36,7 @@ enum class SuwikiLabelType(val type: String) {
 }
 
 @Composable
-fun SuwikiContainedChips(type: SuwikiLabelType, text: String) {
+fun SuwikiContainedChip(type: SuwikiLabelType, text: String) {
   var chipState by remember { mutableStateOf(false) }
 
   val backgroundColor: Color
@@ -65,7 +65,7 @@ fun SuwikiContainedChips(type: SuwikiLabelType, text: String) {
     }
   }
 
-  SuwikiContainedChipsItem(
+  SuwikiContainedChipItem(
     text = text,
     backgroundColor = backgroundColor,
     contentColor = contentColor,
@@ -74,7 +74,7 @@ fun SuwikiContainedChips(type: SuwikiLabelType, text: String) {
 }
 
 @Composable
-fun SuwikiContainedChipsItem(
+fun SuwikiContainedChipItem(
   text: String,
   backgroundColor: Color,
   contentColor: Color,
@@ -99,13 +99,13 @@ fun SuwikiContainedChipsItem(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiContainedChipsPreview() {
+fun SuwikiContainedChipPreview() {
   TestTheme {
     Column(
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      SuwikiContainedChips(SuwikiLabelType.ORANGE, "label")
+      SuwikiContainedChip(SuwikiLabelType.ORANGE, "label")
     }
   }
 }

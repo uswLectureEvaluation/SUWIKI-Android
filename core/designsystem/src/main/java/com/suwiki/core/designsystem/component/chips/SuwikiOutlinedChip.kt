@@ -28,7 +28,7 @@ import com.suwiki.core.designsystem.component.chips.ui.theme.c95
 import com.suwiki.core.designsystem.component.chips.ui.theme.white
 
 @Composable
-fun SuwikiOutlinedChips(text: String) {
+fun SuwikiOutlinedChip(text: String) {
   var labelState by remember { mutableStateOf(false) }
 
   val backgroundColor: Color
@@ -45,7 +45,7 @@ fun SuwikiOutlinedChips(text: String) {
     }
   }
 
-  SuwikiOutlinedChipsItem(
+  SuwikiOutlinedChipItem(
     text = text,
     backgroundColor = backgroundColor,
     contentColor = contentColor,
@@ -54,7 +54,7 @@ fun SuwikiOutlinedChips(text: String) {
 }
 
 @Composable
-fun SuwikiOutlinedChipsItem(
+fun SuwikiOutlinedChipItem(
   text: String,
   backgroundColor: Color,
   contentColor: Color,
@@ -80,13 +80,13 @@ fun SuwikiOutlinedChipsItem(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiOutlinedChipsPreview() {
+fun SuwikiOutlinedChipPreview() {
   TestTheme {
     Column(
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      SuwikiOutlinedChips("label")
+      SuwikiOutlinedChip("label")
     }
   }
 }
