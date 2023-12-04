@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
@@ -30,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 
 @Composable
-fun SuwikiSearchBarWithFilter(
+fun SuwikiSearchBar(
   modifier: Modifier = Modifier,
   hint: String = "",
   value: String = "",
@@ -38,22 +37,19 @@ fun SuwikiSearchBarWithFilter(
   minLines: Int = 1,
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
-  onClickFilterButton: () -> Unit = {},
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
-  Row(
+  Box(
     Modifier
-      .background(Color.LightGray)
+      .background(Color.White)
       .padding(vertical = 10.dp, horizontal = 24.dp),
-    verticalAlignment = Alignment.CenterVertically,
+    contentAlignment = Alignment.Center,
   ) {
     BasicTextField(
       value = value,
       onValueChange = onValueChange,
       modifier = modifier
-        .weight(1f)
-        .shadow(elevation = 10.dp) // TODO Custom Shadow로 변경해야함
-        .background(Color.White, shape = RoundedCornerShape(10.dp))
+        .background(Color.LightGray, shape = RoundedCornerShape(10.dp))
         .padding(8.dp),
       singleLine = maxLines == 1,
       maxLines = if (minLines > maxLines) minLines else maxLines,
@@ -87,24 +83,12 @@ fun SuwikiSearchBarWithFilter(
         }
       },
     )
-
-    Spacer(modifier = Modifier.size(4.dp))
-
-    Image(
-      modifier = Modifier
-        .shadow(elevation = 10.dp) // TODO Custom Shadow로 변경해야함
-        .background(Color.White, shape = RoundedCornerShape(10.dp))
-        .clickable(onClick = onClickFilterButton)
-        .padding(8.dp),
-      painter = painterResource(id = R.drawable.ic_filter),
-      contentDescription = "",
-    )
   }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiSearchBarWithFilterPreview() {
+fun SuwikiSearchBarPreview() {
   var normalValue by remember {
     mutableStateOf("")
   }
@@ -112,7 +96,7 @@ fun SuwikiSearchBarWithFilterPreview() {
   Column(
     verticalArrangement = Arrangement.spacedBy(10.dp),
   ) {
-    SuwikiSearchBarWithFilter(
+    SuwikiSearchBar(
       hint = "Hinted search text",
       value = normalValue,
       onValueChange = { normalValue = it },
