@@ -1,7 +1,6 @@
-package com.suwiki.core.designsystem.component.button
+package com.suwiki.core.designsystem.component.chips
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,39 +20,61 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suwiki.core.designsystem.component.button.ui.theme.DA
-import com.suwiki.core.designsystem.component.button.ui.theme.Main
-import com.suwiki.core.designsystem.component.button.ui.theme.TestTheme
-import com.suwiki.core.designsystem.component.button.ui.theme.c95
-import com.suwiki.core.designsystem.component.button.ui.theme.white
+import com.suwiki.core.designsystem.component.chips.ui.theme.F6
+import com.suwiki.core.designsystem.component.chips.ui.theme.TestTheme
+import com.suwiki.core.designsystem.component.chips.ui.theme.blue10
+import com.suwiki.core.designsystem.component.chips.ui.theme.blue100
+import com.suwiki.core.designsystem.component.chips.ui.theme.c95
+import com.suwiki.core.designsystem.component.chips.ui.theme.green10
+import com.suwiki.core.designsystem.component.chips.ui.theme.green100
+import com.suwiki.core.designsystem.component.chips.ui.theme.orange10
+import com.suwiki.core.designsystem.component.chips.ui.theme.orange100
+enum class SuwikiLabelType(val type: String) {
+  ORANGE("orange"),
+  BLUE("blue"),
+  GREEN("green"),
+}
 
 @Composable
-fun SuwikiOutlinedChips(text: String) {
-  var labelState by remember { mutableStateOf(false) }
+fun SuwikiContainedChips(type: SuwikiLabelType, text: String) {
+  var chipState by remember { mutableStateOf(false) }
 
   val backgroundColor: Color
   val contentColor: Color
 
-  when (labelState) {
+  when (chipState) {
     false -> {
-      backgroundColor = DA
+      backgroundColor = F6
       contentColor = c95
     }
     true -> {
-      backgroundColor = Main
-      contentColor = Main
+      when (type) {
+        SuwikiLabelType.ORANGE -> {
+          backgroundColor = orange10
+          contentColor = orange100
+        }
+        SuwikiLabelType.BLUE -> {
+          backgroundColor = blue10
+          contentColor = blue100
+        }
+        SuwikiLabelType.GREEN -> {
+          backgroundColor = green10
+          contentColor = green100
+        }
+      }
     }
   }
 
-  SuwikiOutlinedChipsItem(
+  SuwikiContainedChipsItem(
     text = text,
     backgroundColor = backgroundColor,
     contentColor = contentColor,
-    onBtnClicked = { labelState = !labelState },
+    onBtnClicked = { chipState = !chipState },
   )
 }
+
 @Composable
-fun SuwikiOutlinedChipsItem(
+fun SuwikiContainedChipsItem(
   text: String,
   backgroundColor: Color,
   contentColor: Color,
@@ -62,10 +83,9 @@ fun SuwikiOutlinedChipsItem(
   Box(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
+      .background(color = backgroundColor)
       .clickable { onBtnClicked() }
-      .size(41.dp, 26.dp)
-      .background(color = white)
-      .border(width = 1.dp, color = backgroundColor, shape = RoundedCornerShape(5.dp)),
+      .size(41.dp, 26.dp),
   ) {
     Text(
       text = text,
@@ -79,13 +99,13 @@ fun SuwikiOutlinedChipsItem(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiOutlinedChipsPreview() {
+fun SuwikiContainedChipsPreview() {
   TestTheme {
     Column(
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      SuwikiOutlinedChips("label")
+      SuwikiContainedChips(SuwikiLabelType.ORANGE, "label")
     }
   }
 }

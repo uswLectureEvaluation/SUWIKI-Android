@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.button.ui.theme
+package com.suwiki.core.designsystem.component.chips.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
