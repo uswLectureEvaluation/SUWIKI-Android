@@ -23,7 +23,7 @@ fun SuwikiSliderTrack(
   value: Float,
   valueRange: ClosedFloatingPointRange<Float>,
   height: Dp = 6.dp,
-  shape: Shape = RoundedCornerShape(4.dp)
+  shape: Shape = RoundedCornerShape(4.dp),
 ) {
   Box(
     modifier = modifier
@@ -45,7 +45,7 @@ fun SuwikiSliderTrack(
 
 private fun Modifier.track(
   height: Dp = 6.dp,
-  shape: Shape = CircleShape
+  shape: Shape = CircleShape,
 ) = fillMaxWidth()
   .heightIn(min = height)
   .clip(shape)
@@ -54,7 +54,7 @@ private fun Modifier.progress(
   value: Float,
   valueRange: ClosedFloatingPointRange<Float>,
   height: Dp = 6.dp,
-  shape: Shape = CircleShape
+  shape: Shape = CircleShape,
 ) =
   fillMaxWidth(fraction = value / valueRange.endInclusive - valueRange.start)
     .heightIn(min = height)
