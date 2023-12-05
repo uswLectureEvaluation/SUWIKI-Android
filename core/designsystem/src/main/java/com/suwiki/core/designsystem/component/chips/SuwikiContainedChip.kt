@@ -22,7 +22,6 @@ enum class SuwikiChipType {
   ORANGE,
   BLUE,
   GREEN,
-//  DISABLE
 }
 
 @Composable
@@ -32,30 +31,16 @@ fun SuwikiContainedChip(
   type: SuwikiChipType,
   text: String,
 ) {
-  val backgroundColor: Color
-  val contentColor: Color
 
-  when (isChecked) {
-    true -> {
+  val (backgroundColor, contentColor) = when {
+    isChecked -> {
       when (type) {
-        SuwikiChipType.ORANGE -> {
-          backgroundColor = Color(0xFFFFF3EB)
-          contentColor = Color(0xFFFD873B)
-        }
-        SuwikiChipType.BLUE -> {
-          backgroundColor = Color(0xFFECEDFF)
-          contentColor = Color(0xFF3D4EFB)
-        }
-        SuwikiChipType.GREEN -> {
-          backgroundColor = Color(0xFFEAF8EC)
-          contentColor = Color(0xFF2DB942)
-        }
+        SuwikiChipType.ORANGE -> Color(0xFFFFF3EB) to Color(0xFFFD873B)
+        SuwikiChipType.BLUE -> Color(0xFFECEDFF) to Color(0xFF3D4EFB)
+        SuwikiChipType.GREEN -> Color(0xFFEAF8EC) to Color(0xFF2DB942)
       }
     }
-    false -> {
-      backgroundColor = Color(0xFFF6F6F6)
-      contentColor = Color(0xFF959595)
-    }
+    else -> Color(0xFFF6F6F6) to Color(0xFF959595)
   }
 
   Box(
