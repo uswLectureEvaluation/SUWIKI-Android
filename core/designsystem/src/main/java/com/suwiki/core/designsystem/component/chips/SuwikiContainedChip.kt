@@ -22,50 +22,42 @@ enum class SuwikiChipType {
   ORANGE,
   BLUE,
   GREEN,
-  DISABLE
+//  DISABLE
 }
 
 @Composable
-fun SuwikiContainedChip(type: SuwikiChipType, text: String) {
-  var chipState by remember { mutableStateOf(false) }
-
+fun SuwikiContainedChip(
+  isChecked: Boolean,
+  onClick: () -> Unit = {},
+  type: SuwikiChipType,
+  text: String,
+) {
   val backgroundColor: Color
   val contentColor: Color
 
-  when (type) {
-    SuwikiChipType.ORANGE -> {
-      backgroundColor = Color(0xFFFFF3EB)
-      contentColor = Color(0xFFFD873B)
+  when (isChecked) {
+    true -> {
+      when (type) {
+        SuwikiChipType.ORANGE -> {
+          backgroundColor = Color(0xFFFFF3EB)
+          contentColor = Color(0xFFFD873B)
+        }
+        SuwikiChipType.BLUE -> {
+          backgroundColor = Color(0xFFECEDFF)
+          contentColor = Color(0xFF3D4EFB)
+        }
+        SuwikiChipType.GREEN -> {
+          backgroundColor = Color(0xFFEAF8EC)
+          contentColor = Color(0xFF2DB942)
+        }
+      }
     }
-    SuwikiChipType.BLUE -> {
-      backgroundColor = Color(0xFFECEDFF)
-      contentColor = Color(0xFF3D4EFB)
-    }
-    SuwikiChipType.GREEN -> {
-      backgroundColor = Color(0xFFEAF8EC)
-      contentColor = Color(0xFF2DB942)
-    }
-    SuwikiChipType.DISABLE -> {
+    false -> {
       backgroundColor = Color(0xFFF6F6F6)
       contentColor = Color(0xFF959595)
     }
   }
 
-  SuwikiContainedChipItem(
-    text = text,
-    backgroundColor = backgroundColor,
-    contentColor = contentColor,
-    onClick = { chipState = !chipState },
-  )
-}
-
-@Composable
-fun SuwikiContainedChipItem(
-  text: String,
-  backgroundColor: Color,
-  contentColor: Color,
-  onClick: () -> Unit = {},
-) {
   Box(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
@@ -86,5 +78,12 @@ fun SuwikiContainedChipItem(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiContainedChipPreview() {
-  SuwikiContainedChip(SuwikiChipType.ORANGE, "label")
+  var isChecked by remember { mutableStateOf(false) }
+
+  SuwikiContainedChip(
+    isChecked = isChecked,
+    onClick = { isChecked = !isChecked },
+    type = SuwikiChipType.GREEN,
+    text = "label",
+  )
 }

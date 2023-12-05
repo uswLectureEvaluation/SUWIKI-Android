@@ -8,15 +8,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun SuwikiColorChip() {
-  var chipState by rememberSaveable { mutableStateOf(false) }
-
-  when (chipState) {
+fun SuwikiColorChip(
+  isChecked: Boolean,
+  onClick: () -> Unit = {},
+) {
+  when (isChecked) {
     true -> {
-      SuwikiCheckedColorChip { chipState = !chipState }
+      SuwikiCheckedColorChip(onClick = onClick)
     }
     false -> {
-      SuwikiNonCheckedColorChip { chipState = !chipState }
+      SuwikiNonCheckedColorChip(onClick = onClick)
     }
   }
 }
@@ -24,5 +25,10 @@ fun SuwikiColorChip() {
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiColorChipPreview() {
-  SuwikiColorChip()
+  var isChecked by rememberSaveable { mutableStateOf(false) }
+
+  SuwikiColorChip(
+    isChecked = isChecked,
+    onClick = { isChecked = !isChecked }
+  )
 }

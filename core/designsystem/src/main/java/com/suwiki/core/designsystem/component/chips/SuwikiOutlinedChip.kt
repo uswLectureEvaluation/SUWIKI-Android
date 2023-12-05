@@ -21,45 +21,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SuwikiOutlinedChip(text: String) {
-  var labelState by remember { mutableStateOf(false) }
-
-  val backgroundColor: Color
+fun SuwikiOutlinedChip(
+  text: String,
+  isChecked: Boolean,
+  onClick: () -> Unit = {},
+) {
+  val borderLineColor: Color
   val contentColor: Color
 
-  when (labelState) {
+  when (isChecked) {
     false -> {
-      backgroundColor = Color(0xFFDADADA)
+      borderLineColor = Color(0xFFDADADA)
       contentColor = Color(0xFF959595)
     }
     true -> {
-      backgroundColor = Color(0xFF346CFD)
+      borderLineColor = Color(0xFF346CFD)
       contentColor = Color(0xFF346CFD)
     }
   }
 
-  SuwikiOutlinedChipItem(
-    text = text,
-    backgroundColor = backgroundColor,
-    contentColor = contentColor,
-    onClick = { labelState = !labelState },
-  )
-}
-
-@Composable
-fun SuwikiOutlinedChipItem(
-  text: String,
-  backgroundColor: Color,
-  contentColor: Color,
-  onClick: () -> Unit = {},
-) {
   Box(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
       .clickable(onClick = onClick)
       .size(41.dp, 26.dp)
       .background(color = Color(0xFFFFFFFF))
-      .border(width = 1.dp, color = backgroundColor, shape = RoundedCornerShape(5.dp)),
+      .border(width = 1.dp, color = borderLineColor, shape = RoundedCornerShape(5.dp)),
   ) {
     Text(
       text = text,
@@ -74,5 +61,11 @@ fun SuwikiOutlinedChipItem(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiOutlinedChipPreview() {
-  SuwikiOutlinedChip("label")
+  var isChecked by remember { mutableStateOf(false) }
+
+  SuwikiOutlinedChip(
+    text = "label",
+    isChecked = isChecked,
+    onClick = { isChecked = !isChecked },
+  )
 }
