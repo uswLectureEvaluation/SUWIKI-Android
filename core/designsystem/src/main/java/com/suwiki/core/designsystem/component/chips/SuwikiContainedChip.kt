@@ -31,7 +31,6 @@ fun SuwikiContainedChip(
   type: SuwikiChipType,
   text: String,
 ) {
-
   val (backgroundColor, contentColor) = when {
     isChecked -> {
       when (type) {
