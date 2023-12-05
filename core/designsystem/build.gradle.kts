@@ -7,3 +7,7 @@ plugins {
 android {
   namespace = "com.suwiki.core.designsystem"
 }
+
+dependencies {
+  implementation(projects.core.ui)
+}
