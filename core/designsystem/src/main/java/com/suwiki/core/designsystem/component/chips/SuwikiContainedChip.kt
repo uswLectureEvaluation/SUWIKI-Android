@@ -2,9 +2,7 @@ package com.suwiki.core.designsystem.component.chips
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -20,15 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.suwiki.core.designsystem.component.chips.ui.theme.F6
-import com.suwiki.core.designsystem.component.chips.ui.theme.TestTheme
-import com.suwiki.core.designsystem.component.chips.ui.theme.blue10
-import com.suwiki.core.designsystem.component.chips.ui.theme.blue100
-import com.suwiki.core.designsystem.component.chips.ui.theme.c95
-import com.suwiki.core.designsystem.component.chips.ui.theme.green10
-import com.suwiki.core.designsystem.component.chips.ui.theme.green100
-import com.suwiki.core.designsystem.component.chips.ui.theme.orange10
-import com.suwiki.core.designsystem.component.chips.ui.theme.orange100
 enum class SuwikiChipType {
   ORANGE,
   BLUE,
@@ -45,20 +34,20 @@ fun SuwikiContainedChip(type: SuwikiChipType, text: String) {
 
   when (type) {
     SuwikiChipType.ORANGE -> {
-      backgroundColor = orange10
-      contentColor = orange100
+      backgroundColor = Color(0xFFFFF3EB)
+      contentColor = Color(0xFFFD873B)
     }
     SuwikiChipType.BLUE -> {
-      backgroundColor = blue10
-      contentColor = blue100
+      backgroundColor = Color(0xFFECEDFF)
+      contentColor = Color(0xFF3D4EFB)
     }
     SuwikiChipType.GREEN -> {
-      backgroundColor = green10
-      contentColor = green100
+      backgroundColor = Color(0xFFEAF8EC)
+      contentColor = Color(0xFF2DB942)
     }
     SuwikiChipType.DISABLE -> {
-      backgroundColor = F6
-      contentColor = c95
+      backgroundColor = Color(0xFFF6F6F6)
+      contentColor = Color(0xFF959595)
     }
   }
 
@@ -97,12 +86,5 @@ fun SuwikiContainedChipItem(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiContainedChipPreview() {
-  TestTheme {
-    Column(
-      verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-      SuwikiContainedChip(SuwikiChipType.ORANGE, "label")
-    }
-  }
+  SuwikiContainedChip(SuwikiChipType.ORANGE, "label")
 }
