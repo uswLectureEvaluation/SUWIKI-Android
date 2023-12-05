@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -51,16 +52,16 @@ fun SuwikiContainedChip(
       .clickable(onClick = onClick)
       .height(26.dp)
   ) {
-    Column(
+    Box(
       modifier = Modifier
-        .padding(top = 4.dp, bottom = 4.dp, start = 6.dp, end = 6.dp)
+        .padding(vertical = 4.dp, horizontal = 6.dp)
         .height(18.dp),
-      verticalArrangement = Arrangement.Center,
     ) {
       Text(
         text = text,
         color = contentColor,
         fontSize = 12.sp,
+        modifier = Modifier.align(Alignment.Center)
       )
     }
   }
