@@ -29,39 +29,36 @@ import com.suwiki.core.designsystem.component.chips.ui.theme.green10
 import com.suwiki.core.designsystem.component.chips.ui.theme.green100
 import com.suwiki.core.designsystem.component.chips.ui.theme.orange10
 import com.suwiki.core.designsystem.component.chips.ui.theme.orange100
-enum class SuwikiLabelType(val type: String) {
-  ORANGE("orange"),
-  BLUE("blue"),
-  GREEN("green"),
+enum class SuwikiChipType {
+  ORANGE,
+  BLUE,
+  GREEN,
+  DISABLE
 }
 
 @Composable
-fun SuwikiContainedChip(type: SuwikiLabelType, text: String) {
+fun SuwikiContainedChip(type: SuwikiChipType, text: String) {
   var chipState by remember { mutableStateOf(false) }
 
   val backgroundColor: Color
   val contentColor: Color
 
-  when (chipState) {
-    false -> {
+  when (type) {
+    SuwikiChipType.ORANGE -> {
+      backgroundColor = orange10
+      contentColor = orange100
+    }
+    SuwikiChipType.BLUE -> {
+      backgroundColor = blue10
+      contentColor = blue100
+    }
+    SuwikiChipType.GREEN -> {
+      backgroundColor = green10
+      contentColor = green100
+    }
+    SuwikiChipType.DISABLE -> {
       backgroundColor = F6
       contentColor = c95
-    }
-    true -> {
-      when (type) {
-        SuwikiLabelType.ORANGE -> {
-          backgroundColor = orange10
-          contentColor = orange100
-        }
-        SuwikiLabelType.BLUE -> {
-          backgroundColor = blue10
-          contentColor = blue100
-        }
-        SuwikiLabelType.GREEN -> {
-          backgroundColor = green10
-          contentColor = green100
-        }
-      }
     }
   }
 
@@ -105,7 +102,7 @@ fun SuwikiContainedChipPreview() {
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      SuwikiContainedChip(SuwikiLabelType.ORANGE, "label")
+      SuwikiContainedChip(SuwikiChipType.ORANGE, "label")
     }
   }
 }
