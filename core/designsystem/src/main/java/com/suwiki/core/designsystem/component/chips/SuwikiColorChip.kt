@@ -24,11 +24,7 @@ fun SuwikiColorChip(
     modifier = Modifier.size(40.dp),
   ) {
     Image(
-      painter = if (isChecked) {
-        painterResource(id = R.drawable.ic_color_checked_chip)
-      } else {
-        painterResource(id = R.drawable.ic_color_chip)
-      },
+      painter = painterResource(id = if (isChecked) R.drawable.ic_color_checked_chip else R.drawable.ic_color_chip),
       contentDescription = "",
       modifier = Modifier.clickable(onClick = onClick),
     )
