@@ -13,7 +13,7 @@ import com.suwiki.core.designsystem.R
 
 @Composable
 fun SuwikiNonCheckedColorChip(
-  onClicked: () -> Unit,
+  onClick: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier.size(40.dp),
@@ -21,7 +21,7 @@ fun SuwikiNonCheckedColorChip(
     Image(
       painter = painterResource(id = R.drawable.ic_color_chip),
       contentDescription = "",
-      modifier = Modifier.clickable { onClicked() },
+      modifier = Modifier.clickable(onClick = onClick),
     )
   }
 }

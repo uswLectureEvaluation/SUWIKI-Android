@@ -55,7 +55,7 @@ fun SuwikiContainedChip(type: SuwikiChipType, text: String) {
     text = text,
     backgroundColor = backgroundColor,
     contentColor = contentColor,
-    onBtnClicked = { chipState = !chipState },
+    onClick = { chipState = !chipState },
   )
 }
 
@@ -64,13 +64,13 @@ fun SuwikiContainedChipItem(
   text: String,
   backgroundColor: Color,
   contentColor: Color,
-  onBtnClicked: () -> Unit,
+  onClick: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
       .background(color = backgroundColor)
-      .clickable { onBtnClicked() }
+      .clickable(onClick = onClick)
       .size(41.dp, 26.dp),
   ) {
     Text(

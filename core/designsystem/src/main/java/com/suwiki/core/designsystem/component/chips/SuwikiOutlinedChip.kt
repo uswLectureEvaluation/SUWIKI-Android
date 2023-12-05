@@ -42,7 +42,7 @@ fun SuwikiOutlinedChip(text: String) {
     text = text,
     backgroundColor = backgroundColor,
     contentColor = contentColor,
-    onBtnClicked = { labelState = !labelState },
+    onClick = { labelState = !labelState },
   )
 }
 
@@ -51,12 +51,12 @@ fun SuwikiOutlinedChipItem(
   text: String,
   backgroundColor: Color,
   contentColor: Color,
-  onBtnClicked: () -> Unit,
+  onClick: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
-      .clickable { onBtnClicked() }
+      .clickable(onClick = onClick)
       .size(41.dp, 26.dp)
       .background(color = Color(0xFFFFFFFF))
       .border(width = 1.dp, color = backgroundColor, shape = RoundedCornerShape(5.dp)),
