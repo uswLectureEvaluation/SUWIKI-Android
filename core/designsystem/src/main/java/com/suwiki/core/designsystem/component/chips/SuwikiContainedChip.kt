@@ -2,9 +2,7 @@ package com.suwiki.core.designsystem.component.chips
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,15 +32,14 @@ fun SuwikiContainedChip(
   type: SuwikiChipType,
   text: String,
 ) {
-  val (backgroundColor, contentColor) = when {
-    isChecked -> {
-      when (type) {
-        SuwikiChipType.ORANGE -> Color(0xFFFFF3EB) to Color(0xFFFD873B)
-        SuwikiChipType.BLUE -> Color(0xFFECEDFF) to Color(0xFF3D4EFB)
-        SuwikiChipType.GREEN -> Color(0xFFEAF8EC) to Color(0xFF2DB942)
-      }
+  val (backgroundColor, contentColor) = if (isChecked) {
+    when (type) {
+      SuwikiChipType.ORANGE -> Color(0xFFFFF3EB) to Color(0xFFFD873B)
+      SuwikiChipType.BLUE -> Color(0xFFECEDFF) to Color(0xFF3D4EFB)
+      SuwikiChipType.GREEN -> Color(0xFFEAF8EC) to Color(0xFF2DB942)
     }
-    else -> Color(0xFFF6F6F6) to Color(0xFF959595)
+  } else {
+    Color(0xFFF6F6F6) to Color(0xFF959595)
   }
 
   Box(
@@ -50,7 +47,7 @@ fun SuwikiContainedChip(
       .clip(RoundedCornerShape(5.dp))
       .background(color = backgroundColor)
       .clickable(onClick = onClick)
-      .height(26.dp)
+      .height(26.dp),
   ) {
     Box(
       modifier = Modifier
@@ -61,7 +58,7 @@ fun SuwikiContainedChip(
         text = text,
         color = contentColor,
         fontSize = 12.sp,
-        modifier = Modifier.align(Alignment.Center)
+        modifier = Modifier.align(Alignment.Center),
       )
     }
   }

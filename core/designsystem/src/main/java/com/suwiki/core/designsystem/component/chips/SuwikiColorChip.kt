@@ -24,13 +24,10 @@ fun SuwikiColorChip(
     modifier = Modifier.size(40.dp),
   ) {
     Image(
-      painter = when (isChecked) {
-        true -> {
-          painterResource(id = R.drawable.ic_color_checked_chip)
-        }
-        false -> {
-          painterResource(id = R.drawable.ic_color_chip)
-        }
+      painter = if (isChecked) {
+        painterResource(id = R.drawable.ic_color_checked_chip)
+      } else {
+        painterResource(id = R.drawable.ic_color_chip)
       },
       contentDescription = "",
       modifier = Modifier.clickable(onClick = onClick),
@@ -45,6 +42,6 @@ fun SuwikiColorChipPreview() {
 
   SuwikiColorChip(
     isChecked = isChecked,
-    onClick = { isChecked = !isChecked }
+    onClick = { isChecked = !isChecked },
   )
 }

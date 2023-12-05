@@ -3,9 +3,7 @@ package com.suwiki.core.designsystem.component.chips
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -60,7 +58,7 @@ fun SuwikiOutlinedChip(
         text = text,
         color = contentColor,
         fontSize = 12.sp,
-        modifier = Modifier.align(Alignment.Center)
+        modifier = Modifier.align(Alignment.Center),
       )
     }
   }
