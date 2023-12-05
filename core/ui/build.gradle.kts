@@ -5,9 +5,5 @@ plugins {
 }
 
 android {
-  namespace = "com.suwiki.core.designsystem"
-}
-
-dependencies {
-  implementation(projects.core.ui)
+  namespace = "com.suwiki.core.ui"
 }

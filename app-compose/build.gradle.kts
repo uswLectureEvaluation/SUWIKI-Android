@@ -23,6 +23,7 @@ dependencies {
   implementation(projects.core.network)
   implementation(projects.core.security)
   implementation(projects.core.database)
+  implementation(projects.core.ui)
 
   implementation(projects.remote.openmajor)
   implementation(projects.remote.timetable)
