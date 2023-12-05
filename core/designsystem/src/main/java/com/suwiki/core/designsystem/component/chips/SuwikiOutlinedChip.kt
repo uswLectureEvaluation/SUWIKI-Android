@@ -27,18 +27,10 @@ fun SuwikiOutlinedChip(
   isChecked: Boolean,
   onClick: () -> Unit = {},
 ) {
-  val borderLineColor: Color
-  val contentColor: Color
-
-  when (isChecked) {
-    false -> {
-      borderLineColor = Color(0xFFDADADA)
-      contentColor = Color(0xFF959595)
-    }
-    true -> {
-      borderLineColor = Color(0xFF346CFD)
-      contentColor = Color(0xFF346CFD)
-    }
+  val (borderLineColor, contentColor) = if (isChecked) {
+    Color(0xFFDADADA) to Color(0xFF959595)
+  } else {
+    Color(0xFF346CFD) to Color(0xFF346CFD)
   }
 
   Box(
