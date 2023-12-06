@@ -153,6 +153,7 @@ fun SuwikiOutlinedBigButton(
     pressedBackgroundColor = Color(0xFFFBFBFB),
     textColor = Color(0xFF346CFD),
     enabled = enabled,
+    borderColor = Color(0xFF346CFD),
   )
 }
 

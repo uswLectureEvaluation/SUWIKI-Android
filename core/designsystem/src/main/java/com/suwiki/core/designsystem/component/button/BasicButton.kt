@@ -2,16 +2,15 @@ package com.suwiki.core.designsystem.component.button
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
@@ -113,7 +112,7 @@ fun BasicContainedMiddleButton(
   onClick: () -> Unit,
   enabledBackGroundColor: Color,
   textColor: Color,
-  padding: PaddingValues = PaddingValues(0.dp, 0.dp)
+  padding: PaddingValues = PaddingValues(0.dp, 0.dp),
 ) {
   val contentColor = textColor
 
@@ -164,7 +163,7 @@ fun BasicContainedMiddleIconButton(
     content = {
       Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(vertical = 8.dp , horizontal = 16.dp)
+        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
       ) {
         Image(
           painter = icon,
@@ -190,11 +189,17 @@ fun BasicOutlineBigButton(
   enabledBackGroundColor: Color,
   pressedBackgroundColor: Color,
   textColor: Color,
+  borderColor: Color,
 ) {
   BasicButton(
     modifier = modifier
       .fillMaxWidth()
-      .height(BasicBigButtonHeight),
+      .height(BasicBigButtonHeight)
+      .border(
+        width = 1.dp,
+        color = borderColor,
+        shape = shape,
+      ),
     shape = shape,
     enabled = enabled,
     onClick = onClick,
