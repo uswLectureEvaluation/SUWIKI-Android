@@ -44,6 +44,25 @@ fun SuwikiContainedBigButton(
 }
 
 @Composable
+fun SuwikiContainedMiddleButton(
+  modifier: Modifier = Modifier,
+  round: Dp = SuwikiBigRoundButtonDefaultRound,
+  text: String,
+  enabled: Boolean = true,
+  onClick: () -> Unit,
+) {
+  BasicContainedMiddleButton(
+    modifier = modifier,
+    text = text,
+    shape = RoundedCornerShape(round),
+    onClick = onClick,
+    enabledBackGroundColor = Color(0xFF346CFD),
+    textColor = Color(0xFFFFFFFF),
+    enabled = enabled,
+  )
+}
+
+@Composable
 fun SuwikiOutlinedBigButton(
   modifier: Modifier = Modifier,
   round: Dp = SuwikiBigRoundButtonDefaultRound,
@@ -84,6 +103,11 @@ fun ButtonPreview() {
 
     SuwikiOutlinedBigButton(
       text = "버튼",
+    ) {
+    }
+
+    SuwikiContainedMiddleButton(
+      text = "강의평가 작성하기",
     ) {
     }
   }
