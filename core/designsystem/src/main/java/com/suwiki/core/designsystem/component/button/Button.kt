@@ -22,14 +22,14 @@ internal object ButtonDefaultRound {
 private val SuwikiBigRoundButtonDefaultRound = ButtonDefaultRound.Medium
 
 @Composable
-fun SuwikiBigRoundButton(
+fun SuwikiContainedBigButton(
   modifier: Modifier = Modifier,
   round: Dp = SuwikiBigRoundButtonDefaultRound,
   text: String,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
-  BasicBigButton(
+  BasicContainedBigButton(
     modifier = modifier,
     text = text,
     shape = RoundedCornerShape(round),
@@ -43,6 +43,26 @@ fun SuwikiBigRoundButton(
   )
 }
 
+@Composable
+fun SuwikiOutlinedBigButton(
+  modifier: Modifier = Modifier,
+  round: Dp = SuwikiBigRoundButtonDefaultRound,
+  text: String,
+  enabled: Boolean = true,
+  onClick: () -> Unit,
+) {
+  BasicOutlineBigButton(
+    modifier = modifier,
+    text = text,
+    shape = RoundedCornerShape(round),
+    onClick = onClick,
+    enabledBackGroundColor = Color(0xFFFFFFFF),
+    pressedBackgroundColor = Color(0xFFFBFBFB),
+    textColor = Color(0xFF346CFD),
+    enabled = enabled,
+  )
+}
+
 @Preview
 @Composable
 fun ButtonPreview() {
@@ -51,14 +71,19 @@ fun ButtonPreview() {
     verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
 
-    SuwikiBigRoundButton(
-      text = "NEXT",
+    SuwikiContainedBigButton(
+      text = "버튼",
     ) {
     }
 
-    SuwikiBigRoundButton(
-      text = "NEXT",
+    SuwikiContainedBigButton(
+      text = "버튼",
       enabled = false,
+    ) {
+    }
+
+    SuwikiOutlinedBigButton(
+      text = "버튼",
     ) {
     }
   }

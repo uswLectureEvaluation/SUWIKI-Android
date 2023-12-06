@@ -28,15 +28,14 @@ fun BasicButton(
   enabledBackGroundColor: Color,
   pressedBackgroundColor: Color,
   disabledBackgroundColor: Color,
+  interactionSource: MutableInteractionSource =
+    remember { MutableInteractionSource() },
   content: @Composable (isPressed: Boolean) -> Unit,
 ) {
-
-  val interactionSource = remember { MutableInteractionSource() }
-
-  val isPressed = interactionSource.collectIsPressedAsState()
+  val isPressed by interactionSource.collectIsPressedAsState()
 
   val btnColor =
-    if (!enabled) disabledBackgroundColor else if (isPressed.value) pressedBackgroundColor else enabledBackGroundColor
+    if (!enabled) disabledBackgroundColor else if (isPressed) pressedBackgroundColor else enabledBackGroundColor
 
   Box(
     modifier = modifier
@@ -51,7 +50,7 @@ fun BasicButton(
       ),
     contentAlignment = Alignment.Center,
   ) {
-    content(isPressed.value)
+    content(isPressed)
   }
 }
 
@@ -60,7 +59,7 @@ fun BasicButton(
 private val BasicBigButtonHeight = 50.dp
 
 @Composable
-fun BasicBigButton(
+fun BasicContainedBigButton(
   text: String,
   modifier: Modifier = Modifier,
   shape: Shape = RectangleShape,
@@ -84,10 +83,41 @@ fun BasicBigButton(
     enabledBackGroundColor = enabledBackGroundColor,
     pressedBackgroundColor = pressedBackgroundColor,
     disabledBackgroundColor = disabledBackgroundColor,
-  ) {
-    Text(
-      text = text,
-      color = contentColor,
-    )
-  }
+    content = {isPressed ->
+      Text(
+        text = text,
+        color = contentColor,
+      )
+    }
+  )
+}
+
+@Composable
+fun BasicOutlineBigButton(
+  text: String,
+  modifier: Modifier = Modifier,
+  shape: Shape = RectangleShape,
+  enabled: Boolean = true,
+  onClick: () -> Unit,
+  enabledBackGroundColor: Color,
+  pressedBackgroundColor: Color,
+  textColor: Color,
+) {
+  BasicButton(
+    modifier = modifier
+      .fillMaxWidth()
+      .height(BasicBigButtonHeight),
+    shape = shape,
+    enabled = enabled,
+    onClick = onClick,
+    enabledBackGroundColor = enabledBackGroundColor,
+    pressedBackgroundColor = pressedBackgroundColor,
+    disabledBackgroundColor = enabledBackGroundColor,
+    content = {isPressed ->
+      Text(
+        text = text,
+        color = textColor,
+      )
+    }
+  )
 }
