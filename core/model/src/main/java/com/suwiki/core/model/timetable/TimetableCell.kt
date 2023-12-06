@@ -8,9 +8,9 @@ data class TimetableCell(
   val professor: String = "",
   val location: String = "",
   val day: String = "",
-  val startTime: Int? = null,
-  val endTime: Int? = null,
-  val color: Int,
+  val startTime: Int = 0,
+  val endTime: Int = 0,
+  val color: TimetableCellColor,
   val credit: String = "",
 )
 
