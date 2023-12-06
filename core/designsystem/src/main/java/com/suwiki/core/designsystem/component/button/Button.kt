@@ -8,9 +8,12 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.R
 
 internal object ButtonDefaultRound {
   val Small = 5.dp
@@ -63,6 +66,29 @@ fun SuwikiContainedMiddleButton(
 }
 
 @Composable
+fun SuwikiContainedMiddleIconButton(
+  modifier: Modifier = Modifier,
+  painter: Painter,
+  round: Dp = SuwikiBigRoundButtonDefaultRound,
+  text: String,
+  contentDescription: String?,
+  enabled: Boolean = true,
+  onClick: () -> Unit,
+) {
+  BasicContainedMiddleIconButton(
+    modifier = modifier,
+    text = text,
+    shape = RoundedCornerShape(round),
+    onClick = onClick,
+    enabledBackGroundColor = Color(0xFF346CFD),
+    textColor = Color(0xFFFFFFFF),
+    enabled = enabled,
+    icon = painter,
+    contentDescription = contentDescription
+  )
+}
+
+@Composable
 fun SuwikiOutlinedBigButton(
   modifier: Modifier = Modifier,
   round: Dp = SuwikiBigRoundButtonDefaultRound,
@@ -108,6 +134,13 @@ fun ButtonPreview() {
 
     SuwikiContainedMiddleButton(
       text = "강의평가 작성하기",
+    ) {
+    }
+
+    SuwikiContainedMiddleIconButton(
+      painter = painterResource(id = R.drawable.ic_color_checked_chip),
+      contentDescription = "suwiki",
+      text = "작성하기",
     ) {
     }
   }

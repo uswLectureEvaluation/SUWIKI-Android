@@ -1,12 +1,16 @@
 package com.suwiki.core.designsystem.component.button
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.ui.extension.suwikiClickable
 
@@ -129,6 +134,47 @@ fun BasicContainedMiddleButton(
   )
 }
 
+@Composable
+fun BasicContainedMiddleIconButton(
+  text: String,
+  modifier: Modifier = Modifier,
+  contentDescription: String?,
+  shape: Shape = RectangleShape,
+  enabled: Boolean = true,
+  onClick: () -> Unit,
+  enabledBackGroundColor: Color,
+  textColor: Color,
+  icon: Painter, // 이 부분에 이미지를 나타내는 Painter를 전달합니다.
+) {
+  val contentColor = textColor
+
+  BasicButton(
+    modifier = modifier
+      .wrapContentWidth()
+      .height(BasicContainedMiddleButtonHeight),
+    shape = shape,
+    enabled = enabled,
+    onClick = onClick,
+    enabledBackGroundColor = enabledBackGroundColor,
+    pressedBackgroundColor = enabledBackGroundColor,
+    disabledBackgroundColor = enabledBackGroundColor,
+    content = {
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 8.dp , horizontal = 16.dp)
+      ) {
+        Image(
+          painter = icon,
+          contentDescription = contentDescription,
+        )
+        Text(
+          text = text,
+          color = contentColor,
+        )
+      }
+    },
+  )
+}
 @Composable
 fun BasicOutlineBigButton(
   text: String,
