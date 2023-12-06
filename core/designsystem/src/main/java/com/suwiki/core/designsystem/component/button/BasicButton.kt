@@ -6,11 +6,13 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -111,13 +113,14 @@ fun BasicContainedMiddleButton(
   onClick: () -> Unit,
   enabledBackGroundColor: Color,
   textColor: Color,
+  padding: PaddingValues = PaddingValues(0.dp, 0.dp)
 ) {
   val contentColor = textColor
 
   BasicButton(
     modifier = modifier
       .wrapContentWidth()
-      .height(BasicContainedMiddleButtonHeight),
+      .wrapContentHeight(),
     shape = shape,
     enabled = enabled,
     onClick = onClick,
@@ -128,7 +131,7 @@ fun BasicContainedMiddleButton(
       Text(
         text = text,
         color = contentColor,
-        modifier = Modifier.padding(horizontal = 22.dp, vertical = 9.dp),
+        modifier = Modifier.padding(padding),
       )
     },
   )
@@ -144,7 +147,7 @@ fun BasicContainedMiddleIconButton(
   onClick: () -> Unit,
   enabledBackGroundColor: Color,
   textColor: Color,
-  icon: Painter, // 이 부분에 이미지를 나타내는 Painter를 전달합니다.
+  icon: Painter,
 ) {
   val contentColor = textColor
 
@@ -175,6 +178,8 @@ fun BasicContainedMiddleIconButton(
     },
   )
 }
+
+
 @Composable
 fun BasicOutlineBigButton(
   text: String,

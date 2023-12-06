@@ -2,6 +2,7 @@ package com.suwiki.core.designsystem.component.button
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -22,7 +23,7 @@ internal object ButtonDefaultRound {
 }
 
 @Stable
-private val SuwikiBigRoundButtonDefaultRound = ButtonDefaultRound.Medium
+private val SuwikiBigRoundButtonDefaultRound = ButtonDefaultRound.Large
 
 @Composable
 fun SuwikiContainedBigButton(
@@ -46,10 +47,13 @@ fun SuwikiContainedBigButton(
   )
 }
 
+@Stable
+private val SuwikiMiddleRoundButtonDefaultRound = ButtonDefaultRound.Medium
+
 @Composable
 fun SuwikiContainedMiddleButton(
   modifier: Modifier = Modifier,
-  round: Dp = SuwikiBigRoundButtonDefaultRound,
+  round: Dp = SuwikiMiddleRoundButtonDefaultRound,
   text: String,
   enabled: Boolean = true,
   onClick: () -> Unit,
@@ -62,6 +66,7 @@ fun SuwikiContainedMiddleButton(
     enabledBackGroundColor = Color(0xFF346CFD),
     textColor = Color(0xFFFFFFFF),
     enabled = enabled,
+    padding = PaddingValues(22.dp, 9.dp),
   )
 }
 
@@ -69,7 +74,7 @@ fun SuwikiContainedMiddleButton(
 fun SuwikiContainedMiddleIconButton(
   modifier: Modifier = Modifier,
   painter: Painter,
-  round: Dp = SuwikiBigRoundButtonDefaultRound,
+  round: Dp = SuwikiMiddleRoundButtonDefaultRound,
   text: String,
   contentDescription: String?,
   enabled: Boolean = true,
@@ -84,7 +89,50 @@ fun SuwikiContainedMiddleIconButton(
     textColor = Color(0xFFFFFFFF),
     enabled = enabled,
     icon = painter,
-    contentDescription = contentDescription
+    contentDescription = contentDescription,
+  )
+}
+
+@Composable
+fun SuwikiContainedSmallButton(
+  modifier: Modifier = Modifier,
+  round: Dp = SuwikiMiddleRoundButtonDefaultRound,
+  text: String,
+  enabled: Boolean = true,
+  onClick: () -> Unit,
+) {
+  BasicContainedMiddleButton(
+    modifier = modifier,
+    text = text,
+    shape = RoundedCornerShape(round),
+    onClick = onClick,
+    enabledBackGroundColor = Color(0xFFFFFFFF),
+    textColor = Color(0xFF346CFD),
+    enabled = enabled,
+    padding = PaddingValues(8.dp, 4.dp),
+  )
+}
+
+@Stable
+private val SuwikiSmallRoundButtonDefaultRound = ButtonDefaultRound.Small
+
+@Composable
+fun SuwikiContainedSmallGreyButton(
+  modifier: Modifier = Modifier,
+  round: Dp = SuwikiSmallRoundButtonDefaultRound,
+  text: String,
+  enabled: Boolean = true,
+  onClick: () -> Unit,
+) {
+  BasicContainedMiddleButton(
+    modifier = modifier,
+    text = text,
+    shape = RoundedCornerShape(round),
+    onClick = onClick,
+    enabledBackGroundColor = Color(0xFFF6F6F6),
+    textColor = Color(0xFF959595),
+    enabled = enabled,
+    padding = PaddingValues(6.dp, 2.dp),
   )
 }
 
@@ -141,6 +189,15 @@ fun ButtonPreview() {
       painter = painterResource(id = R.drawable.ic_color_checked_chip),
       contentDescription = "suwiki",
       text = "작성하기",
+    ) {
+    }
+    SuwikiContainedSmallButton(
+      text = "text",
+    ) {
+    }
+
+    SuwikiContainedSmallGreyButton(
+      text = "신고",
     ) {
     }
   }
