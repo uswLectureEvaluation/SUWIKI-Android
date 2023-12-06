@@ -164,7 +164,6 @@ fun ButtonPreview() {
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
-
     SuwikiContainedBigButton(
       text = "버튼",
     ) {

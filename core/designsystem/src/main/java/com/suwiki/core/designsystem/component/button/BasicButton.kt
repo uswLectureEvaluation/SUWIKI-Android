@@ -62,7 +62,6 @@ fun BasicButton(
   }
 }
 
-
 @Stable
 private val BasicBigButtonHeight = 50.dp
 
@@ -177,7 +176,6 @@ fun BasicContainedMiddleIconButton(
     },
   )
 }
-
 
 @Composable
 fun BasicOutlineBigButton(
