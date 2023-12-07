@@ -18,22 +18,22 @@ import com.suwiki.core.designsystem.R
 
 internal object ButtonDefaultRound {
   val Small = 5.dp
-  val Medium = 10.dp
+  val Regular = 10.dp
   val Large = 15.dp
 }
 
 @Stable
-private val SuwikiBigRoundButtonDefaultRound = ButtonDefaultRound.Large
+private val SuwikiButtonLargeDefaultRound = ButtonDefaultRound.Large
 
 @Composable
-fun SuwikiContainedBigButton(
+fun SuwikiContainedButtonLarge(
   modifier: Modifier = Modifier,
-  round: Dp = SuwikiBigRoundButtonDefaultRound,
+  round: Dp = SuwikiButtonLargeDefaultRound,
   text: String,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
-  BasicContainedBigButton(
+  BasicContainedButtonLarge(
     modifier = modifier,
     text = text,
     shape = RoundedCornerShape(round),
@@ -48,17 +48,17 @@ fun SuwikiContainedBigButton(
 }
 
 @Stable
-private val SuwikiMiddleRoundButtonDefaultRound = ButtonDefaultRound.Medium
+private val SuwikiRoundButtonRegularDefaultRound = ButtonDefaultRound.Regular
 
 @Composable
-fun SuwikiContainedMiddleButton(
+fun SuwikiContainedButtonRegular(
   modifier: Modifier = Modifier,
-  round: Dp = SuwikiMiddleRoundButtonDefaultRound,
+  round: Dp = SuwikiRoundButtonRegularDefaultRound,
   text: String,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
-  BasicContainedMiddleButton(
+  BasicContainedButton(
     modifier = modifier,
     text = text,
     shape = RoundedCornerShape(round),
@@ -71,16 +71,16 @@ fun SuwikiContainedMiddleButton(
 }
 
 @Composable
-fun SuwikiContainedMiddleIconButton(
+fun SuwikiContainedIconButtonRegular(
   modifier: Modifier = Modifier,
   painter: Painter,
-  round: Dp = SuwikiMiddleRoundButtonDefaultRound,
+  round: Dp = SuwikiRoundButtonRegularDefaultRound,
   text: String,
   contentDescription: String?,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
-  BasicContainedMiddleIconButton(
+  BasicContainedIconButtonRegular(
     modifier = modifier,
     text = text,
     shape = RoundedCornerShape(round),
@@ -94,14 +94,14 @@ fun SuwikiContainedMiddleIconButton(
 }
 
 @Composable
-fun SuwikiContainedSmallButton(
+fun SuwikiContainedButtonSmall(
   modifier: Modifier = Modifier,
-  round: Dp = SuwikiMiddleRoundButtonDefaultRound,
+  round: Dp = SuwikiRoundButtonRegularDefaultRound,
   text: String,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
-  BasicContainedMiddleButton(
+  BasicContainedButton(
     modifier = modifier,
     text = text,
     shape = RoundedCornerShape(round),
@@ -117,14 +117,14 @@ fun SuwikiContainedSmallButton(
 private val SuwikiSmallRoundButtonDefaultRound = ButtonDefaultRound.Small
 
 @Composable
-fun SuwikiContainedSmallGreyButton(
+fun SuwikiContainedGreyButtonSmall(
   modifier: Modifier = Modifier,
   round: Dp = SuwikiSmallRoundButtonDefaultRound,
   text: String,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
-  BasicContainedMiddleButton(
+  BasicContainedButton(
     modifier = modifier,
     text = text,
     shape = RoundedCornerShape(round),
@@ -137,14 +137,14 @@ fun SuwikiContainedSmallGreyButton(
 }
 
 @Composable
-fun SuwikiOutlinedBigButton(
+fun SuwikiOutlinedButtonLarge(
   modifier: Modifier = Modifier,
-  round: Dp = SuwikiBigRoundButtonDefaultRound,
+  round: Dp = SuwikiButtonLargeDefaultRound,
   text: String,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
-  BasicOutlineBigButton(
+  BasicOutlineButtonLarge(
     modifier = modifier,
     text = text,
     shape = RoundedCornerShape(round),
@@ -164,39 +164,39 @@ fun ButtonPreview() {
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
-    SuwikiContainedBigButton(
+    SuwikiContainedButtonLarge(
       text = "버튼",
     ) {
     }
 
-    SuwikiContainedBigButton(
+    SuwikiContainedButtonLarge(
       text = "버튼",
       enabled = false,
     ) {
     }
 
-    SuwikiOutlinedBigButton(
+    SuwikiOutlinedButtonLarge(
       text = "버튼",
     ) {
     }
 
-    SuwikiContainedMiddleButton(
+    SuwikiContainedButtonRegular(
       text = "강의평가 작성하기",
     ) {
     }
 
-    SuwikiContainedMiddleIconButton(
+    SuwikiContainedIconButtonRegular(
       painter = painterResource(id = R.drawable.ic_color_checked_chip),
       contentDescription = "suwiki",
       text = "작성하기",
     ) {
     }
-    SuwikiContainedSmallButton(
+    SuwikiContainedButtonSmall(
       text = "text",
     ) {
     }
 
-    SuwikiContainedSmallGreyButton(
+    SuwikiContainedGreyButtonSmall(
       text = "신고",
     ) {
     }

@@ -42,9 +42,11 @@ fun BasicButton(
 ) {
   val isPressed by interactionSource.collectIsPressedAsState()
 
-  val btnColor =
-    if (!enabled) disabledBackgroundColor else if (isPressed) pressedBackgroundColor else enabledBackGroundColor
-
+  val btnColor = when {
+    !enabled -> disabledBackgroundColor
+    isPressed -> pressedBackgroundColor
+    else -> enabledBackGroundColor
+  }
   Box(
     modifier = modifier
       .background(
@@ -63,10 +65,10 @@ fun BasicButton(
 }
 
 @Stable
-private val BasicBigButtonHeight = 50.dp
+private val BasicButtonLargeHeight = 50.dp
 
 @Composable
-fun BasicContainedBigButton(
+fun BasicContainedButtonLarge(
   text: String,
   modifier: Modifier = Modifier,
   shape: Shape = RectangleShape,
@@ -78,12 +80,10 @@ fun BasicContainedBigButton(
   textColor: Color,
   disabledTextColor: Color,
 ) {
-  val contentColor = if (enabled) textColor else disabledTextColor
-
   BasicButton(
     modifier = modifier
       .fillMaxWidth()
-      .height(BasicBigButtonHeight),
+      .height(BasicButtonLargeHeight),
     shape = shape,
     enabled = enabled,
     onClick = onClick,
@@ -93,17 +93,17 @@ fun BasicContainedBigButton(
     content = {
       Text(
         text = text,
-        color = contentColor,
+        color = if (enabled) textColor else disabledTextColor,
       )
     },
   )
 }
 
 @Stable
-private val BasicContainedMiddleButtonHeight = 40.dp
+private val BasicContainedButtonRegularHeight = 40.dp
 
 @Composable
-fun BasicContainedMiddleButton(
+fun BasicContainedButton(
   text: String,
   modifier: Modifier = Modifier,
   shape: Shape = RectangleShape,
@@ -113,8 +113,6 @@ fun BasicContainedMiddleButton(
   textColor: Color,
   padding: PaddingValues = PaddingValues(0.dp, 0.dp),
 ) {
-  val contentColor = textColor
-
   BasicButton(
     modifier = modifier
       .wrapContentWidth()
@@ -128,7 +126,7 @@ fun BasicContainedMiddleButton(
     content = {
       Text(
         text = text,
-        color = contentColor,
+        color = textColor,
         modifier = Modifier.padding(padding),
       )
     },
@@ -136,7 +134,7 @@ fun BasicContainedMiddleButton(
 }
 
 @Composable
-fun BasicContainedMiddleIconButton(
+fun BasicContainedIconButtonRegular(
   text: String,
   modifier: Modifier = Modifier,
   contentDescription: String?,
@@ -152,7 +150,7 @@ fun BasicContainedMiddleIconButton(
   BasicButton(
     modifier = modifier
       .wrapContentWidth()
-      .height(BasicContainedMiddleButtonHeight),
+      .height(BasicContainedButtonRegularHeight),
     shape = shape,
     enabled = enabled,
     onClick = onClick,
@@ -178,7 +176,7 @@ fun BasicContainedMiddleIconButton(
 }
 
 @Composable
-fun BasicOutlineBigButton(
+fun BasicOutlineButtonLarge(
   text: String,
   modifier: Modifier = Modifier,
   shape: Shape = RectangleShape,
@@ -192,7 +190,7 @@ fun BasicOutlineBigButton(
   BasicButton(
     modifier = modifier
       .fillMaxWidth()
-      .height(BasicBigButtonHeight)
+      .height(BasicButtonLargeHeight)
       .border(
         width = 1.dp,
         color = borderColor,
