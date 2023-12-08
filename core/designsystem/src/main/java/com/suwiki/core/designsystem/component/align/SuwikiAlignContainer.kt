@@ -42,12 +42,12 @@ fun SuwikiAlignContainer(
       .size(width = 360.dp, height = 50.dp)
       .suwikiClickable(
         onClick = onClick,
-        rippleColor = Color(0xFF6a6a6a)
+        rippleColor = Color(0xFF6a6a6a),
       ),
   ) {
     Row(
       horizontalArrangement = Arrangement.Start,
-      modifier = Modifier.padding(start = 24.dp, end = 16.dp, top = 13.dp, bottom = 14.dp)
+      modifier = Modifier.padding(start = 24.dp, end = 16.dp, top = 13.dp, bottom = 14.dp),
     ) {
       Text(
         text = text,
@@ -75,7 +75,7 @@ fun SuwikiAlignContainerPreview() {
 
   Column(
     verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally
+    horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     SuwikiAlignContainer(
       text = "메뉴",

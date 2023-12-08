@@ -38,17 +38,17 @@ fun SuwikiFilterButton(
         text = text,
         color = Color(0xFF346CFD),
         fontSize = 16.sp,
-        modifier = Modifier.fillMaxHeight()
+        modifier = Modifier.fillMaxHeight(),
       )
       Box(
         modifier = Modifier
-          .size(24.dp)
+          .size(24.dp),
       ) {
         Icon(
           painter = painterResource(id = R.drawable.ic_filter_arrow_down),
           contentDescription = "",
           tint = Color(0xFF346CFD),
-          modifier = Modifier.align(Alignment.Center)
+          modifier = Modifier.align(Alignment.Center),
         )
       }
     }
