@@ -85,6 +85,6 @@ fun SuwikiFilterContainerPreview() {
     isChecked = isChecked,
     isStared = isStared,
     onClick = { isChecked = !isChecked },
-    onStarClick = {isStared = !isStared},
+    onStarClick = { isStared = !isStared },
   )
 }
