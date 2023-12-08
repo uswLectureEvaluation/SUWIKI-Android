@@ -1,11 +1,11 @@
-package com.suwiki.core.designsystem.component.align
+package com.suwiki.core.designsystem.component.filter
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,65 +22,60 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
-fun SuwikiContainerAlign(
+fun SuwikiFilterContainer(
   text: String,
-  isChecked: Boolean = false,
+  isChecked: Boolean,
   onClick: () -> Unit = {},
 ) {
-  val textColor = if (isChecked) {
-    Color(0xFF346CFD)
+  val (textColor, backgroundColor) = if (isChecked) {
+    Color(0xFF346CFD) to Color(0xFFF5F8FF)
   } else {
-    Color(0xFF6A6A6A)
+    Color(0xFF222222) to Color(0xFFFFFFFF)
   }
+
   Box(
     modifier = Modifier
-      .background(Color(0xFFFFFFFF))
-      .size(width = 360.dp, height = 50.dp)
-      .suwikiClickable(
-        onClick = onClick,
-        rippleColor = Color(0xFF6a6a6a)
-      ),
+      .background(backgroundColor)
+      .size(width = 360.dp, height = 48.dp)
+      .suwikiClickable(onClick = onClick),
   ) {
     Row(
+      verticalAlignment = Alignment.Top,
       horizontalArrangement = Arrangement.Start,
-      modifier = Modifier.padding(start = 24.dp, end = 16.dp, top = 13.dp, bottom = 14.dp)
+      modifier = Modifier
+        .padding(vertical = 12.dp, horizontal = 24.dp),
     ) {
+      Icon(
+        painter = painterResource(id = R.drawable.ic_filter_stared),
+        contentDescription = "",
+        tint = Color(0xFF346CFD),
+        modifier = Modifier
+          .size(24.dp),
+      )
+      Spacer(modifier = Modifier.width(4.dp))
       Text(
         text = text,
         color = textColor,
-        modifier = Modifier
-          .size(width = 284.dp, height = 23.dp),
+        fontSize = 15.sp,
+        modifier = Modifier.height(23.dp),
       )
-      Spacer(modifier = Modifier.width(12.dp))
-      if (isChecked) {
-        Icon(
-          painter = painterResource(id = R.drawable.ic_align_checked),
-          contentDescription = "",
-          modifier = Modifier.size(24.dp),
-          tint = Color(0xFF346CFD),
-        )
-      }
     }
   }
 }
 
-@Preview(widthDp = 400, heightDp = 200)
+@Preview
 @Composable
-fun SuwikiAlignPreview() {
+fun SuwikiFilterContainerPreview() {
   var isChecked by remember { mutableStateOf(false) }
 
-  Column(
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally
-  ) {
-    SuwikiContainerAlign(
-      text = "메뉴",
-      isChecked = isChecked,
-      onClick = { isChecked = !isChecked },
-    )
-  }
+  SuwikiFilterContainer(
+    text = "개설학과명",
+    isChecked = isChecked,
+    onClick = { isChecked = !isChecked },
+  )
 }
