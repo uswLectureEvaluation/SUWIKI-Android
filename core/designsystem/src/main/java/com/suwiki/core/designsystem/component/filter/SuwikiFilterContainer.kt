@@ -53,7 +53,7 @@ fun SuwikiFilterContainer(
       Icon(
         painter = painterResource(id = R.drawable.ic_filter_stared),
         contentDescription = "",
-        tint = if(isChecked) Color(0xFF346CFD) else Color(0xFFDADADA),
+        tint = if (isChecked) Color(0xFF346CFD) else Color(0xFFDADADA),
         modifier = Modifier
           .size(24.dp),
       )
