@@ -30,7 +30,9 @@ import com.suwiki.core.ui.extension.suwikiClickable
 fun SuwikiFilterContainer(
   text: String,
   isChecked: Boolean,
+  isStared: Boolean,
   onClick: () -> Unit = {},
+  onStarClick: () -> Unit = {},
 ) {
   val (textColor, backgroundColor) = if (isChecked) {
     Color(0xFF346CFD) to Color(0xFFF5F8FF)
@@ -53,9 +55,13 @@ fun SuwikiFilterContainer(
       Icon(
         painter = painterResource(id = R.drawable.ic_filter_stared),
         contentDescription = "",
-        tint = if (isChecked) Color(0xFF346CFD) else Color(0xFFDADADA),
         modifier = Modifier
-          .size(24.dp),
+          .size(24.dp)
+          .suwikiClickable(
+            onClick = onStarClick,
+            rippleEnabled = false,
+          ),
+        tint = if (isStared) Color(0xFF346CFD) else Color(0xFFDADADA),
       )
       Spacer(modifier = Modifier.width(4.dp))
       Text(
@@ -72,10 +78,13 @@ fun SuwikiFilterContainer(
 @Composable
 fun SuwikiFilterContainerPreview() {
   var isChecked by remember { mutableStateOf(false) }
+  var isStared by remember { mutableStateOf(false) }
 
   SuwikiFilterContainer(
     text = "개설학과명",
     isChecked = isChecked,
+    isStared = isStared,
     onClick = { isChecked = !isChecked },
+    onStarClick = {isStared = !isStared},
   )
 }
