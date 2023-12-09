@@ -57,7 +57,7 @@ internal val timetableHeightPerHour = 48.dp
 internal val timetableHeightPer10Minute = 8.dp
 
 @Composable
-fun TimetableCell(
+fun TimetableClassCell(
   modifier: Modifier = Modifier,
   type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
   data: TimetableCell,
@@ -100,11 +100,11 @@ fun TimetableCell(
 
 @Preview
 @Composable
-fun TimetableCellPreview() {
+fun TimetableClassCellPreview() {
   Column(
     verticalArrangement = Arrangement.spacedBy(20.dp),
   ) {
-    TimetableCell(
+    TimetableClassCell(
       modifier = Modifier.width(50.dp),
       type = TimetableCellType.CLASSNAME,
       data = TimetableCell(
@@ -118,7 +118,7 @@ fun TimetableCellPreview() {
       ),
     )
 
-    TimetableCell(
+    TimetableClassCell(
       modifier = Modifier.width(50.dp),
       type = TimetableCellType.CLASSNAME_PROFESSOR,
       data = TimetableCell(
@@ -132,7 +132,7 @@ fun TimetableCellPreview() {
       ),
     )
 
-    TimetableCell(
+    TimetableClassCell(
       modifier = Modifier.width(50.dp),
       type = TimetableCellType.CLASSNAME_LOCATION,
       data = TimetableCell(
@@ -146,7 +146,7 @@ fun TimetableCellPreview() {
       ),
     )
 
-    TimetableCell(
+    TimetableClassCell(
       modifier = Modifier.width(50.dp),
       type = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
       data = TimetableCell(
