@@ -22,3 +22,7 @@ enum class TimetableCellColor {
   SKY,
   VIOLET_LIGHT,
 }
+
+enum class TimetableDay {
+  MON, TUE, WED, THU, FRI, SAT, NONE
+}
