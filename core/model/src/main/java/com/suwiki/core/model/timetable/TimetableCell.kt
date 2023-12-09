@@ -7,9 +7,9 @@ data class TimetableCell(
   val name: String = "",
   val professor: String = "",
   val location: String = "",
-  val day: TimetableDay = TimetableDay.NONE,
-  val startTime: Int = 0,
-  val endTime: Int = 0,
+  val day: TimetableDay = TimetableDay.E_LEARNING,
+  val startPeriod: Int = 0,
+  val endPeriod: Int = 0,
   val color: TimetableCellColor,
   val credit: String = "",
 )

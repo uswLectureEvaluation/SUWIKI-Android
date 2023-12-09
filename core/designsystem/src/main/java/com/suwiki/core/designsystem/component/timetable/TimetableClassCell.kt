@@ -4,11 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -67,7 +65,7 @@ fun TimetableClassCell(
     TimetableCellType.CLASSNAME_PROFESSOR_LOCATION -> (true to true)
   }
 
-  val height = (data.endTime - data.startTime) * timetableHeightPerHour
+  val height = (data.endPeriod - data.startPeriod) * timetableHeightPerHour
 
   Column(
     modifier = modifier
@@ -75,23 +73,16 @@ fun TimetableClassCell(
       .height(height)
       .border(width = timetableBorderWidth, color = Color.Gray)
       .padding(timetableBorderWidth)
+      .background(Color(timetableCellColorToHex(data.color)))
       .suwikiClickable {
         onClick(data)
       },
   ) {
-    Column(
-      modifier = Modifier
-        .weight(1f)
-        .background(Color(timetableCellColorToHex(data.color))),
-    ) {
-      Text(text = data.name)
+    Text(text = data.name)
 
-      if (showProfessor) Text(text = data.professor)
+    if (showProfessor) Text(text = data.professor)
 
-      if (showLocation) Text(text = data.location)
-    }
-
-    Spacer(modifier = Modifier.size(timetableHeightPer10Minute))
+    if (showLocation) Text(text = data.location)
   }
 }
 
@@ -108,9 +99,8 @@ fun TimetableClassCellPreview() {
         name = "도전과 창조",
         professor = "김수미",
         location = "미래혁신관B202",
-        day = "",
-        startTime = 1,
-        endTime = 3,
+        startPeriod = 1,
+        endPeriod = 3,
         color = TimetableCellColor.GREEN,
       ),
     )
@@ -122,9 +112,8 @@ fun TimetableClassCellPreview() {
         name = "도전과 창조",
         professor = "김수미",
         location = "미래혁신관B202",
-        day = "",
-        startTime = 1,
-        endTime = 3,
+        startPeriod = 1,
+        endPeriod = 3,
         color = TimetableCellColor.GREEN,
       ),
     )
@@ -136,9 +125,8 @@ fun TimetableClassCellPreview() {
         name = "도전과 창조",
         professor = "김수미",
         location = "미래혁신관B202",
-        day = "",
-        startTime = 1,
-        endTime = 3,
+        startPeriod = 1,
+        endPeriod = 3,
         color = TimetableCellColor.GREEN,
       ),
     )
@@ -150,9 +138,8 @@ fun TimetableClassCellPreview() {
         name = "도전과 창조",
         professor = "김수미",
         location = "미래혁신관B202",
-        day = "",
-        startTime = 1,
-        endTime = 3,
+        startPeriod = 1,
+        endPeriod = 3,
         color = TimetableCellColor.GREEN,
       ),
     )

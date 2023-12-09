@@ -24,5 +24,5 @@ enum class TimetableCellColor {
 }
 
 enum class TimetableDay {
-  MON, TUE, WED, THU, FRI, SAT, NONE
+  MON, TUE, WED, THU, FRI, SAT, E_LEARNING
 }

@@ -19,12 +19,13 @@ import androidx.compose.ui.unit.times
 @Composable
 fun TimetableEmptyCell(
   modifier: Modifier = Modifier,
+  minute: Int = HOUR_TO_MIN,
   text: String? = null,
 ) {
   Column(
     modifier = modifier
       .fillMaxWidth()
-      .height(timetableHeightPerHour)
+      .height(timetableHeightPerHour * minute / HOUR_TO_MIN)
       .border(width = timetableBorderWidth, color = Color.Gray)
       .padding(timetableBorderWidth),
     verticalArrangement = Arrangement.Center,
