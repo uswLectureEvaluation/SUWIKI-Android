@@ -1,10 +1,14 @@
 package com.suwiki.core.designsystem.component.timetable
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.ui.extension.suwikiClickable
@@ -22,9 +27,6 @@ enum class TimetableCellType {
   CLASSNAME_PROFESSOR,
   CLASSNAME_PROFESSOR_LOCATION,
 }
-
-const val TIMETABLE_HEIGHT_PER_HOUR = 48
-const val TIMETABLE_HEIGHT_PER_10MINUTE = 8
 
 internal fun timetableCellColorToHex(color: TimetableCellColor): Long {
   return when (color) {
@@ -51,6 +53,9 @@ internal fun timetableCellColorToHex(color: TimetableCellColor): Long {
   }
 }
 
+internal val timetableHeightPerHour = 48.dp
+internal val timetableHeightPer10Minute = 8.dp
+
 @Composable
 fun TimetableCell(
   modifier: Modifier = Modifier,
@@ -65,22 +70,31 @@ fun TimetableCell(
     TimetableCellType.CLASSNAME_PROFESSOR_LOCATION -> (true to true)
   }
 
-  val height = (data.endTime - data.startTime) * TIMETABLE_HEIGHT_PER_HOUR - TIMETABLE_HEIGHT_PER_10MINUTE
+  val height = (data.endTime - data.startTime) * timetableHeightPerHour
 
   Column(
     modifier = modifier
       .fillMaxWidth()
-      .height(height.dp)
-      .background(Color(timetableCellColorToHex(data.color)))
+      .height(height)
+      .border(width = 0.5.dp, color = Color.Gray)
+      .padding(0.5.dp)
       .suwikiClickable {
         onClick(data)
       },
   ) {
-    Text(text = data.name)
+    Column(
+      modifier = Modifier
+        .weight(1f)
+        .background(Color(timetableCellColorToHex(data.color))),
+    ) {
+      Text(text = data.name)
 
-    if (showProfessor) Text(text = data.professor)
+      if (showProfessor) Text(text = data.professor)
 
-    if (showLocation) Text(text = data.location)
+      if (showLocation) Text(text = data.location)
+    }
+
+    Spacer(modifier = Modifier.size(timetableHeightPer10Minute))
   }
 }
 
