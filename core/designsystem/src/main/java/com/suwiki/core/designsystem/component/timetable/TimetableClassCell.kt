@@ -53,9 +53,6 @@ internal fun timetableCellColorToHex(color: TimetableCellColor): Long {
   }
 }
 
-internal val timetableHeightPerHour = 48.dp
-internal val timetableHeightPer10Minute = 8.dp
-
 @Composable
 fun TimetableClassCell(
   modifier: Modifier = Modifier,
@@ -76,8 +73,8 @@ fun TimetableClassCell(
     modifier = modifier
       .fillMaxWidth()
       .height(height)
-      .border(width = 0.5.dp, color = Color.Gray)
-      .padding(0.5.dp)
+      .border(width = timetableBorderWidth, color = Color.Gray)
+      .padding(timetableBorderWidth)
       .suwikiClickable {
         onClick(data)
       },
