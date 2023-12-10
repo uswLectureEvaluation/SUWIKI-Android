@@ -6,5 +6,5 @@ internal val timetableHeightPerHour = 48.dp
 
 internal val timetableBorderWidth = 0.5.dp
 
-const val HOUR_TO_MIN = 60
-const val HALF_HOUR_TO_MIN = 30
+const val MINUTE60 = 60
+const val MINUTE10 = 10

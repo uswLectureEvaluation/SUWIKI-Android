@@ -65,7 +65,7 @@ fun TimetableClassCell(
     TimetableCellType.CLASSNAME_PROFESSOR_LOCATION -> (true to true)
   }
 
-  val height = (data.endPeriod - data.startPeriod) * timetableHeightPerHour
+  val height = (data.endPeriod - data.startPeriod + 1) * timetableHeightPerHour - 8.dp
 
   Column(
     modifier = modifier

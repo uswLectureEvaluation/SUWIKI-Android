@@ -25,16 +25,18 @@ internal fun timetableDayToString(day: TimetableDay): String {
   }
 }
 
-internal fun Int.classPeriodToMinute(): Int {
-  return (this + 8) * HOUR_TO_MIN + HALF_HOUR_TO_MIN
+internal fun TimetableCell.getStartAndEndMinute(): Pair<Int, Int> {
+  val startMinute = (this.startPeriod + 8) * MINUTE60 + 3 * MINUTE10
+  val endMinute = (this.endPeriod + 9) * MINUTE60 + 2 * MINUTE10
+  return (startMinute to endMinute)
 }
 
-internal fun Int.periodToMinute(): Int {
-  return (this + 8) * HOUR_TO_MIN
+internal fun Int.endPeriodToMinute(): Int {
+  return (this + 9) * MINUTE60
 }
 
 internal fun Int.isNotOnTime(): Boolean {
-  return this % HOUR_TO_MIN == HALF_HOUR_TO_MIN
+  return this % MINUTE60 != 0
 }
 
 @Composable
@@ -52,15 +54,15 @@ fun TimetableCellColumn(
       text = timetableDayToString(day),
     )
 
-    var emptyStartTime = 9 * HOUR_TO_MIN
+    var prevEndTime = 9 * MINUTE60
     sortedCellList.forEach { cell ->
-      val emptyEndTime = cell.startPeriod.classPeriodToMinute()
-      FillEmptyTime(emptyStartTime, emptyEndTime)
+      val (startMinute, endMinute) = cell.getStartAndEndMinute()
+      FillEmptyTime(prevEndTime, startMinute)
       TimetableClassCell(data = cell)
-      emptyStartTime = cell.endPeriod.classPeriodToMinute()
+      prevEndTime = endMinute
     }
 
-    FillEmptyTime(emptyStartTime, (lastPeriod + 1).periodToMinute())
+    FillEmptyTime(prevEndTime, lastPeriod.endPeriodToMinute())
   }
 }
 
@@ -70,17 +72,24 @@ fun FillEmptyTime(emptyStartTime: Int, emptyEndTime: Int) {
 
   while (filledEmptyTime < emptyEndTime) {
     val insertEmptyTimeAmount = when {
-      // 정각이 아니거나 종료 시간까지 30분이 남은 경우, 30분을 채운다.
-      filledEmptyTime.isNotOnTime() || emptyEndTime - filledEmptyTime == HALF_HOUR_TO_MIN -> {
-        HALF_HOUR_TO_MIN
+      // 종료 시각까지 1시간이 안되는 경우, 종료 시각까지 남은 시간을 채운다.
+      emptyEndTime - filledEmptyTime < MINUTE60 -> {
+        emptyEndTime - filledEmptyTime
       }
+
+      // 정각이 아닌 경우 정각까지 남은 시간을 채운다.
+      filledEmptyTime.isNotOnTime() -> {
+        MINUTE60 - filledEmptyTime % MINUTE60
+      }
+
       // 그렇지 않다면 1시간을 채운다.
       else -> {
-        HOUR_TO_MIN
+        MINUTE60
       }
     }
+
     TimetableEmptyCell(
-      minute = insertEmptyTimeAmount
+      minute = insertEmptyTimeAmount,
     )
 
     filledEmptyTime += insertEmptyTimeAmount
@@ -102,7 +111,7 @@ fun TimetableCellColumnPreview() {
       }
     }
 
-    repeat(5) {
+    repeat(1) {
       TimetableCellColumn(
         modifier = Modifier.weight(1f),
         day = TimetableDay.FRI,
@@ -112,23 +121,23 @@ fun TimetableCellColumnPreview() {
             professor = "김수미",
             location = "미래혁신관B202",
             startPeriod = 1,
-            endPeriod = 3,
+            endPeriod = 2,
             color = TimetableCellColor.GREEN,
           ),
           TimetableCell(
             name = "도전과 창조",
             professor = "김수미",
             location = "미래혁신관B202",
-            startPeriod = 4,
-            endPeriod = 5,
+            startPeriod = 3,
+            endPeriod = 4,
             color = TimetableCellColor.PINK,
           ),
           TimetableCell(
             name = "도전과 창조",
             professor = "김수미",
             location = "미래혁신관B202",
-            startPeriod = 5,
-            endPeriod = 8,
+            startPeriod = 6,
+            endPeriod = 6,
             color = TimetableCellColor.BROWN,
           ),
         ),
