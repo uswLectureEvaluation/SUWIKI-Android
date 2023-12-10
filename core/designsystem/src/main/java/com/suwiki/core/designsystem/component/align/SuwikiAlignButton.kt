@@ -25,8 +25,8 @@ fun SuwikiAlignButton(
   Box(
     modifier = Modifier
       .size(40.dp)
-      .suwikiClickable(onClick = onClick)
       .clip(RoundedCornerShape(10.dp))
+      .suwikiClickable(onClick = onClick)
       .background(Color(0xFFFFFFFF)),
   ) {
     Icon(
