@@ -12,8 +12,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mangbaam.presentation.ui.theme.UswtimetableTheme
+import com.suwiki.domain.openmajor.usecase.GetOpenMajorListUseCase
 import com.suwiki.domain.user.usecase.LoginUseCase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,7 +23,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
   @Inject
-  lateinit var useCase1: LoginUseCase
+  lateinit var useCase1: GetOpenMajorListUseCase
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,19 +45,10 @@ class MainActivity : ComponentActivity() {
 fun Greeting(
   name: String,
   modifier: Modifier = Modifier,
-  useCase1: LoginUseCase,
+  useCase1: GetOpenMajorListUseCase,
 ) {
   LaunchedEffect(key1 = Unit) {
-    useCase1(
-      loginId = "pos1070",
-      password = "1q2w3e4r!",
-    )
-      .onSuccess {
-        Timber.tag("Retrofit2").d("$it")
-      }
-      .onFailure {
-        Timber.tag("Retrofit2").d("$it")
-      }
+    useCase1().collect { Timber.d("$it") }
   }
 
   Text(

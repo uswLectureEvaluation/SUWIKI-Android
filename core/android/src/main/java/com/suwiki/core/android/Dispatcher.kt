@@ -1,4 +1,4 @@
-package com.suwiki.core.common
+package com.suwiki.core.android
 
 import javax.inject.Qualifier
 

@@ -1,4 +1,4 @@
-package com.suwiki.core.common
+package com.suwiki.core.android
 
 import dagger.Module
 import dagger.Provides

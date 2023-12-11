@@ -2,8 +2,3 @@
 plugins {
   alias(libs.plugins.suwiki.java.library)
 }
-
-dependencies {
-  implementation(libs.hilt.core)
-  implementation(libs.kotlinx.coroutines.core)
-}
