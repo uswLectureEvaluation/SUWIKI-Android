@@ -2,13 +2,14 @@ package com.suwiki.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
+val Primary = Color(0xFF346CFD)
+
 val Black = Color(0xFF222222)
 val White = Color(0xFFFFFFFF)
 
-val Red100 = Color(0xFFF05C2E)
+val Error = Color(0xFFF05C2E)
 
 val Blue100 = Color(0xFF3D4EFB)
-val Blue80 = Color(0xFF346CFD)
 val Blue30 = Color(0xFFC5CAFE)
 val Blue10 = Color(0xFFECEDFF)
 val Blue5 = Color(0xFFF5F8FF)
