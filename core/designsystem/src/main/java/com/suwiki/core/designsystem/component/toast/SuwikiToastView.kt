@@ -34,7 +34,7 @@ fun SuwikiToastView(
         ),
       color = Color.Transparent,
     ) {
-     Text(
+      Text(
         text = messageTxt,
         textAlign = TextAlign.Center,
         color = Color(0XFFFFFFFF),
