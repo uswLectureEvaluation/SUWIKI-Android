@@ -1,6 +1,7 @@
 package com.suwiki.core.designsystem.theme
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -145,3 +146,29 @@ data class SuwikiTypography(
   val caption6: TextStyle,
   val caption7: TextStyle,
 )
+
+val LocalTypography = staticCompositionLocalOf {
+  SuwikiTypography(
+    header1 = notoSansStyle,
+    header2 = notoSansStyle,
+    header3 = notoSansStyle,
+    header4 = notoSansStyle,
+    header5 = notoSansStyle,
+    header6 = notoSansStyle,
+    header7 = notoSansStyle,
+    body1 = notoSansStyle,
+    body2 = notoSansStyle,
+    body3 = notoSansStyle,
+    body4 = notoSansStyle,
+    body5 = notoSansStyle,
+    body6 = notoSansStyle,
+    body7 = notoSansStyle,
+    caption1 = notoSansStyle,
+    caption2 = notoSansStyle,
+    caption3 = notoSansStyle,
+    caption4 = notoSansStyle,
+    caption5 = notoSansStyle,
+    caption6 = notoSansStyle,
+    caption7 = notoSansStyle,
+  )
+}
