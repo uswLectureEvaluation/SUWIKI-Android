@@ -33,7 +33,6 @@ object DataStoreModule {
   ): DataStore<UserPreference> =
     DataStoreFactory.create(
       serializer = userPreferenceSerializer,
-      scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
     ) {
       context.dataStoreFile("user_preference.pb")
     }
@@ -47,7 +46,6 @@ object DataStoreModule {
     corruptionHandler = ReplaceFileCorruptionHandler(
       produceNewData = { emptyPreferences() },
     ),
-    scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
     produceFile = { applicationContext.preferencesDataStoreFile("suwiki-preference") },
   )
 }

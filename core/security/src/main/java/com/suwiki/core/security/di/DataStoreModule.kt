@@ -33,7 +33,6 @@ object DataStoreModule {
     corruptionHandler = ReplaceFileCorruptionHandler(
       produceNewData = { emptyPreferences() },
     ),
-    scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
     produceFile = { applicationContext.preferencesDataStoreFile("security-preference") },
   )
 
