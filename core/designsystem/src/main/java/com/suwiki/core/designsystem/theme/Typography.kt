@@ -23,12 +23,12 @@ private val notoSansStyle = TextStyle(
   fontFamily = notoSansFamily,
   lineHeight = 1.5.em,
   platformStyle = PlatformTextStyle(
-    includeFontPadding = false
+    includeFontPadding = false,
   ),
   lineHeightStyle = LineHeightStyle(
     alignment = LineHeightStyle.Alignment.Center,
-    trim = LineHeightStyle.Trim.None
-  )
+    trim = LineHeightStyle.Trim.None,
+  ),
 )
 
 internal val Typography = SuwikiTypography(
