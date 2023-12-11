@@ -42,8 +42,8 @@ fun SuwikiDialog(
   confirmButtonText: String,
   dismissButtonText: String,
   onDismissRequest: () -> Unit,
-  onConfirmClick: () -> Unit,
-  onDismissClicked: () -> Unit,
+  onClickConfirm: () -> Unit,
+  onClickDismiss: () -> Unit,
 ) {
   basicAlertDialog(
     onDismissRequest = onDismissRequest,
@@ -72,12 +72,12 @@ fun SuwikiDialog(
             horizontalArrangement = Arrangement.End,
           ) {
             SuwikiContainedGreyButtonSmall(
-              onClick = onDismissClicked,
+              onClick = onClickDismiss,
               text = dismissButtonText,
               modifier = Modifier.padding(2.dp),
             )
             SuwikiContainedButtonSmall(
-              onClick = onConfirmClick,
+              onClick = onClickConfirm,
               text = confirmButtonText,
             )
           }
@@ -96,7 +96,7 @@ fun DialogPreview() {
     confirmButtonText = "Action 2",
     dismissButtonText = "Action 1",
     onDismissRequest = { /*TODO*/ },
-    onConfirmClick = { /*TODO*/ },
+    onClickConfirm = { /*TODO*/ },
   ) {
   }
 }
