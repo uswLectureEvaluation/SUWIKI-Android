@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.theme.Primary
 
 internal object ButtonDefaultRound {
   val Small = 5.dp
@@ -98,6 +99,7 @@ fun SuwikiContainedButtonSmall(
   modifier: Modifier = Modifier,
   round: Dp = SuwikiRoundButtonRegularDefaultRound,
   text: String,
+  textColor: Color,
   enabled: Boolean = true,
   onClick: () -> Unit,
 ) {
@@ -107,7 +109,7 @@ fun SuwikiContainedButtonSmall(
     shape = RoundedCornerShape(round),
     onClick = onClick,
     enabledBackGroundColor = Color(0xFFFFFFFF),
-    textColor = Color(0xFF346CFD),
+    textColor = textColor,
     enabled = enabled,
     padding = PaddingValues(8.dp, 4.dp),
   )
@@ -193,6 +195,7 @@ fun ButtonPreview() {
     }
     SuwikiContainedButtonSmall(
       text = "text",
+      textColor = Primary,
     ) {
     }
 
