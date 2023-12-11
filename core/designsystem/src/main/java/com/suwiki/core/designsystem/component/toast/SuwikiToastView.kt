@@ -32,19 +32,18 @@ fun SuwikiToastView(
   ) {
     Surface(
       modifier = Modifier
-        .wrapContentSize(),
+        .wrapContentSize()
+        .background(
+          color = Color(0xFF959595),
+          shape = RoundedCornerShape(25.dp),
+        ),
       color = Color.Transparent,
     ) {
       // 아이콘이 추가 될수 있을거 같아 일단 Row로 해두었습니다.
       Row(
         modifier = Modifier
-          .background(
-            color = Color(0xFF959595),
-            shape = RoundedCornerShape(25.dp),
-          )
           .wrapContentWidth()
-          .wrapContentHeight()
-          .padding(8.dp),
+          .wrapContentHeight(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
       ) {
@@ -52,7 +51,7 @@ fun SuwikiToastView(
           text = messageTxt,
           textAlign = TextAlign.Center,
           color = Color(0XFFFFFFFF),
-          modifier = Modifier.padding(PaddingValues(16.dp, 10.dp)),
+          modifier = Modifier.padding(16.dp, 10.dp),
         )
       }
     }

@@ -43,18 +43,18 @@ fun SuwikiDialog(
   dismissButtonText: String,
   onDismissRequest: () -> Unit,
   onConfirmClick: () -> Unit,
-  onDisMissClicked: () -> Unit,
+  onDismissClicked: () -> Unit,
 ) {
   basicAlertDialog(
     onDismissRequest = onDismissRequest,
     content = {
       Surface(
-        modifier = modifier,
+        modifier = modifier
+          .fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
       ) {
         Column(
           modifier = Modifier
-            .fillMaxWidth()
             .padding(top = 20.dp, bottom = 15.dp, start = 15.dp, end = 22.dp),
         ) {
           Text(
@@ -72,9 +72,9 @@ fun SuwikiDialog(
             horizontalArrangement = Arrangement.End,
           ) {
             SuwikiContainedGreyButtonSmall(
-              onClick = onDisMissClicked,
+              onClick = onDismissClicked,
               text = dismissButtonText,
-              modifier = Modifier.padding(vertical = 2.dp),
+              modifier = Modifier.padding(2.dp),
             )
             SuwikiContainedButtonSmall(
               onClick = onConfirmClick,
