@@ -15,10 +15,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.White
 
 @Composable
 fun SuwikiToastView(
-  messageTxt: String,
+  messageText: String,
 ) {
   Box(
     modifier = Modifier
@@ -29,15 +32,16 @@ fun SuwikiToastView(
       modifier = Modifier
         .wrapContentSize()
         .background(
-          color = Color(0xFF959595),
+          color = Gray95,
           shape = RoundedCornerShape(25.dp),
         ),
       color = Color.Transparent,
     ) {
       Text(
-        text = messageTxt,
+        text = messageText,
         textAlign = TextAlign.Center,
-        color = Color(0XFFFFFFFF),
+        style = SuwikiTheme.typography.body5,
+        color = White,
         modifier = Modifier.padding(16.dp, 10.dp),
       )
     }
@@ -47,7 +51,9 @@ fun SuwikiToastView(
 @Preview
 @Composable
 fun SetViewPreview() {
-  SuwikiToastView(
-    messageTxt = "text",
-  )
+  SuwikiTheme {
+    SuwikiToastView(
+      messageText = "text",
+    )
+  }
 }

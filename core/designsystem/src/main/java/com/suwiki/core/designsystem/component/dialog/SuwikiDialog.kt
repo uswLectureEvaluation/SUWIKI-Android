@@ -19,20 +19,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.suwiki.core.designsystem.component.button.SuwikiContainedButtonSmall
 import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
-
-@Composable
-fun basicAlertDialog(
-  onDismissRequest: () -> Unit,
-  properties: DialogProperties = DialogProperties(),
-  content: @Composable () -> Unit,
-) {
-  Dialog(
-    onDismissRequest = onDismissRequest,
-    properties = properties,
-  ) {
-    content()
-  }
-}
+import com.suwiki.core.designsystem.theme.Black
+import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.SuwikiTypography
 
 @Composable
 fun SuwikiDialog(
@@ -45,7 +36,7 @@ fun SuwikiDialog(
   onClickConfirm: () -> Unit,
   onClickDismiss: () -> Unit,
 ) {
-  basicAlertDialog(
+  Dialog(
     onDismissRequest = onDismissRequest,
     content = {
       Surface(
@@ -59,26 +50,29 @@ fun SuwikiDialog(
         ) {
           Text(
             text = headerText,
-            color = Color(0xFF222222),
+            style = SuwikiTheme.typography.header5,
+            color = Black,
           )
           Spacer(modifier = Modifier.height(4.dp))
           Text(
             text = bodyText,
-            color = Color(0xFF222222),
+            style = SuwikiTheme.typography.body5,
+            color = Black,
           )
           Spacer(modifier = Modifier.height(37.dp))
           Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
           ) {
-            SuwikiContainedGreyButtonSmall(
+            SuwikiContainedButtonSmall(
               onClick = onClickDismiss,
               text = dismissButtonText,
-              modifier = Modifier.padding(2.dp),
+              textColor = Gray95,
             )
             SuwikiContainedButtonSmall(
               onClick = onClickConfirm,
               text = confirmButtonText,
+              textColor = Primary,
             )
           }
         }
@@ -90,13 +84,15 @@ fun SuwikiDialog(
 @Preview
 @Composable
 fun DialogPreview() {
-  SuwikiDialog(
-    headerText = "Header text",
-    bodyText = "Body text",
-    confirmButtonText = "Action 2",
-    dismissButtonText = "Action 1",
-    onDismissRequest = { /*TODO*/ },
-    onClickConfirm = { /*TODO*/ },
-  ) {
+  SuwikiTheme {
+    SuwikiDialog(
+      headerText = "Header text",
+      bodyText = "Body text",
+      confirmButtonText = "Action 2",
+      dismissButtonText = "Action 1",
+      onDismissRequest = { /*TODO*/ },
+      onClickConfirm = { /*TODO*/ },
+    ) {
+    }
   }
 }
