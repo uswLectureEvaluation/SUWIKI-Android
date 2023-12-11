@@ -87,7 +87,6 @@ fun SuwikiDialog(
   )
 }
 
-
 @Preview
 @Composable
 fun DialogPreview() {
@@ -99,8 +98,5 @@ fun DialogPreview() {
     onDismissRequest = { /*TODO*/ },
     onConfirmClick = { /*TODO*/ },
   ) {
-
   }
 }
-
-
