@@ -15,8 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Blue100
 import com.suwiki.core.designsystem.theme.Primary
 
 internal object ButtonDefaultRound {
