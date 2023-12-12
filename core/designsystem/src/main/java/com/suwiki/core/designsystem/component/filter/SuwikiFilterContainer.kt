@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +34,7 @@ fun SuwikiFilterContainer(
   isChecked: Boolean,
   isStared: Boolean,
   onClick: () -> Unit = {},
-  onStarClick: () -> Unit = {},
+  onClickStar: () -> Unit = {},
 ) {
   val (textColor, backgroundColor) = if (isChecked) {
     Color(0xFF346CFD) to Color(0xFFF5F8FF)
@@ -43,7 +45,8 @@ fun SuwikiFilterContainer(
   Box(
     modifier = Modifier
       .background(backgroundColor)
-      .size(width = 360.dp, height = 48.dp)
+      .fillMaxWidth()
+      .wrapContentHeight()
       .suwikiClickable(onClick = onClick),
   ) {
     Row(
@@ -58,7 +61,7 @@ fun SuwikiFilterContainer(
         modifier = Modifier
           .size(24.dp)
           .suwikiClickable(
-            onClick = onStarClick,
+            onClick = onClickStar,
             rippleEnabled = false,
           ),
         tint = if (isStared) Color(0xFF346CFD) else Color(0xFFDADADA),
@@ -68,13 +71,13 @@ fun SuwikiFilterContainer(
         text = text,
         color = textColor,
         fontSize = 15.sp,
-        modifier = Modifier.height(23.dp),
+        modifier = Modifier.wrapContentHeight(),
       )
     }
   }
 }
 
-@Preview
+@Preview(widthDp = 300, heightDp = 50)
 @Composable
 fun SuwikiFilterContainerPreview() {
   var isChecked by remember { mutableStateOf(false) }
@@ -85,6 +88,6 @@ fun SuwikiFilterContainerPreview() {
     isChecked = isChecked,
     isStared = isStared,
     onClick = { isChecked = !isChecked },
-    onStarClick = { isStared = !isStared },
+    onClickStar = { isStared = !isStared },
   )
 }

@@ -61,6 +61,6 @@ fun SuwikiFilterButtonPreview() {
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
-    SuwikiFilterButton(text = "정보통신공학과")
+    SuwikiFilterButton(text = "학과필터")
   }
 }
