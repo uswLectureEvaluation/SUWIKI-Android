@@ -34,5 +34,5 @@ class OpenLectureRepositoryImpl @Inject constructor(
         setOpenLectureListVersion(remoteVersion)
       }
     }
-  }.flowOn(Dispatchers.IO)
+  }
 }

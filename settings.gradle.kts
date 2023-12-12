@@ -22,6 +22,7 @@ rootProject.name = "uswtimetable"
 include(":presentation")
 include(":app-compose")
 
+include(":core:android")
 include(":core:model")
 include(":core:common")
 include(":core:network")
@@ -60,4 +61,3 @@ include(":domain:lectureevaluation:my")
 include(":domain:lectureevaluation:editor")
 include(":domain:timetable")
 include(":domain:notice")
-include(":core:android")

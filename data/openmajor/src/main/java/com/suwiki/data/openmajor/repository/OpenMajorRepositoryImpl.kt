@@ -4,11 +4,9 @@ import com.suwiki.core.model.openmajor.OpenMajor
 import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
 import com.suwiki.data.openmajor.datasource.RemoteOpenMajorDataSource
 import com.suwiki.domain.openmajor.repository.OpenMajorRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class OpenMajorRepositoryImpl @Inject constructor(
@@ -36,7 +34,7 @@ class OpenMajorRepositoryImpl @Inject constructor(
         setLocalOpenMajorVersion(remoteVersion)
       }
     }
-  }.flowOn(Dispatchers.IO)
+  }
 
   override suspend fun getBookmarkedOpenMajorList(): List<String> {
     return remoteOpenMajorDataSource.getBookmarkedMajorList()
