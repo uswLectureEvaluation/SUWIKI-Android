@@ -11,8 +11,10 @@ android {
 
 dependencies {
   implementation(projects.core.model)
-  implementation(projects.data.openmajor)
+  implementation(projects.core.android)
   implementation(projects.core.database)
+
+  implementation(projects.data.openmajor)
 
   ksp(libs.room.compiler)
   implementation(libs.room.runtime)
