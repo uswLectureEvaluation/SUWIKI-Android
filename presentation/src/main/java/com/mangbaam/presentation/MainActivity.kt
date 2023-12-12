@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mangbaam.presentation.ui.theme.UswtimetableTheme
 import com.suwiki.domain.openmajor.usecase.GetOpenMajorListUseCase
-import com.suwiki.domain.user.usecase.LoginUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import timber.log.Timber
