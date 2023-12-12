@@ -4,11 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,36 +39,37 @@ fun SuwikiAlignContainer(
   Box(
     modifier = Modifier
       .background(Color(0xFFFFFFFF))
-      .size(width = 360.dp, height = 50.dp)
+      .fillMaxWidth()
+      .height(50.dp)
       .suwikiClickable(
         onClick = onClick,
         rippleColor = Color(0xFF6a6a6a),
       ),
   ) {
-    Row(
-      horizontalArrangement = Arrangement.Start,
-      modifier = Modifier.padding(start = 24.dp, end = 16.dp, top = 13.dp, bottom = 14.dp),
-    ) {
-      Text(
-        text = text,
-        color = textColor,
+    Text(
+      text = text,
+      color = textColor,
+      modifier = Modifier
+        .align(Alignment.CenterStart)
+        .padding(start = 24.dp, end = 52.dp)
+        .fillMaxWidth()
+        .wrapContentHeight(),
+    )
+    if (isChecked) {
+      Icon(
+        painter = painterResource(id = R.drawable.ic_align_checked),
+        contentDescription = "",
         modifier = Modifier
-          .size(width = 284.dp, height = 23.dp),
+          .align(Alignment.CenterEnd)
+          .padding(end = 16.dp)
+          .size(24.dp),
+        tint = Color(0xFF346CFD),
       )
-      Spacer(modifier = Modifier.width(12.dp))
-      if (isChecked) {
-        Icon(
-          painter = painterResource(id = R.drawable.ic_align_checked),
-          contentDescription = "",
-          modifier = Modifier.size(24.dp),
-          tint = Color(0xFF346CFD),
-        )
-      }
     }
   }
 }
 
-@Preview(widthDp = 400, heightDp = 200)
+@Preview(widthDp = 300, heightDp = 200)
 @Composable
 fun SuwikiAlignContainerPreview() {
   var isChecked by remember { mutableStateOf(false) }
