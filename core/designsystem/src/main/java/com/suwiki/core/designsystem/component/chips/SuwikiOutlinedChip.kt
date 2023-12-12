@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,10 +16,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.GrayDA
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.White
 
 @Composable
 fun SuwikiOutlinedChip(
@@ -28,31 +31,27 @@ fun SuwikiOutlinedChip(
   onClick: () -> Unit = {},
 ) {
   val (borderLineColor, contentColor) = if (isChecked) {
-    Color(0xFFDADADA) to Color(0xFF959595)
+    Primary to Primary
   } else {
-    Color(0xFF346CFD) to Color(0xFF346CFD)
+    GrayDA to Gray95
   }
 
   Box(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
       .clickable(onClick = onClick)
-      .height(26.dp)
-      .background(color = Color(0xFFFFFFFF))
-      .border(width = 1.dp, color = borderLineColor, shape = RoundedCornerShape(5.dp)),
+      .wrapContentHeight()
+      .background(color = White)
+      .border(width = 1.dp, color = borderLineColor, shape = RoundedCornerShape(5.dp))
+      .padding(vertical = 4.dp, horizontal = 6.dp),
   ) {
-    Box(
+    Text(
+      text = text,
+      style = SuwikiTheme.typography.caption1,
+      color = contentColor,
       modifier = Modifier
-        .padding(vertical = 4.dp, horizontal = 6.dp)
-        .height(18.dp),
-    ) {
-      Text(
-        text = text,
-        color = contentColor,
-        fontSize = 12.sp,
-        modifier = Modifier.align(Alignment.Center),
-      )
-    }
+        .align(Alignment.Center),
+    )
   }
 }
 
@@ -61,9 +60,11 @@ fun SuwikiOutlinedChip(
 fun SuwikiOutlinedChipPreview() {
   var isChecked by remember { mutableStateOf(false) }
 
-  SuwikiOutlinedChip(
-    text = "label",
-    isChecked = isChecked,
-    onClick = { isChecked = !isChecked },
-  )
+  SuwikiTheme {
+    SuwikiOutlinedChip(
+      text = "label",
+      isChecked = isChecked,
+      onClick = { isChecked = !isChecked },
+    )
+  }
 }

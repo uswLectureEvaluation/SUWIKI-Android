@@ -10,11 +10,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.theme.Gray6A
+import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
@@ -28,9 +29,9 @@ fun SuwikiAlignButton(
       .size(40.dp)
       .clip(RoundedCornerShape(10.dp))
       .suwikiClickable(onClick = onClick)
-      .background(Color(0xFFFFFFFF))
+      .background(White)
       .padding(8.dp),
-    tint = Color(0xFF6A6A6A),
+    tint = Gray6A,
   )
 }
 

@@ -18,11 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.theme.Gray6A
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
@@ -31,24 +34,21 @@ fun SuwikiAlignContainer(
   isChecked: Boolean = false,
   onClick: () -> Unit = {},
 ) {
-  val textColor = if (isChecked) {
-    Color(0xFF346CFD)
-  } else {
-    Color(0xFF6A6A6A)
-  }
+  val textColor = if (isChecked) Primary else Gray6A
   Box(
     modifier = Modifier
-      .background(Color(0xFFFFFFFF))
+      .background(White)
       .fillMaxWidth()
       .height(50.dp)
       .suwikiClickable(
         onClick = onClick,
-        rippleColor = Color(0xFF6a6a6a),
+        rippleColor = Gray6A,
       ),
   ) {
     Text(
       text = text,
       color = textColor,
+      style = SuwikiTheme.typography.body2,
       modifier = Modifier
         .align(Alignment.CenterStart)
         .padding(start = 24.dp, end = 52.dp)
@@ -63,7 +63,7 @@ fun SuwikiAlignContainer(
           .align(Alignment.CenterEnd)
           .padding(end = 16.dp)
           .size(24.dp),
-        tint = Color(0xFF346CFD),
+        tint = Primary,
       )
     }
   }
@@ -74,14 +74,16 @@ fun SuwikiAlignContainer(
 fun SuwikiAlignContainerPreview() {
   var isChecked by remember { mutableStateOf(false) }
 
-  Column(
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally,
-  ) {
-    SuwikiAlignContainer(
-      text = "메뉴",
-      isChecked = isChecked,
-      onClick = { isChecked = !isChecked },
-    )
+  SuwikiTheme {
+    Column(
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+      SuwikiAlignContainer(
+        text = "메뉴",
+        isChecked = isChecked,
+        onClick = { isChecked = !isChecked },
+      )
+    }
   }
 }

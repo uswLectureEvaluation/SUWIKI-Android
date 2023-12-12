@@ -12,12 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
@@ -32,20 +32,21 @@ fun SuwikiFilterButton(
       .padding(vertical = 4.dp, horizontal = 8.dp),
   ) {
     Row(
+      verticalAlignment = Alignment.CenterVertically,
       modifier = Modifier
         .wrapContentHeight(),
     ) {
       Text(
         text = text,
-        color = Color(0xFF346CFD),
-        fontSize = 16.sp,
+        style = SuwikiTheme.typography.header6,
+        color = Primary,
         modifier = Modifier
           .wrapContentHeight(),
       )
       Icon(
         painter = painterResource(id = R.drawable.ic_filter_arrow_down),
         contentDescription = "",
-        tint = Color(0xFF346CFD),
+        tint = Primary,
         modifier = Modifier
           .size(24.dp)
           .padding(vertical = 9.dp, horizontal = 7.dp),
@@ -57,10 +58,12 @@ fun SuwikiFilterButton(
 @Preview(widthDp = 400, heightDp = 50)
 @Composable
 fun SuwikiFilterButtonPreview() {
-  Column(
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally,
-  ) {
-    SuwikiFilterButton(text = "학과필터")
+  SuwikiTheme {
+    Column(
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+      SuwikiFilterButton(text = "학과필터")
+    }
   }
 }

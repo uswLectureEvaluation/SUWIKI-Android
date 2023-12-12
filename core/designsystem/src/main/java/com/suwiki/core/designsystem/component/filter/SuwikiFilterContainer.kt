@@ -19,12 +19,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.theme.Black
+import com.suwiki.core.designsystem.theme.Blue5
+import com.suwiki.core.designsystem.theme.GrayDA
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
@@ -36,9 +40,9 @@ fun SuwikiFilterContainer(
   onClickStar: () -> Unit = {},
 ) {
   val (textColor, backgroundColor) = if (isChecked) {
-    Color(0xFF346CFD) to Color(0xFFF5F8FF)
+    Primary to Blue5
   } else {
-    Color(0xFF222222) to Color(0xFFFFFFFF)
+    Black to White
   }
 
   Box(
@@ -49,7 +53,7 @@ fun SuwikiFilterContainer(
       .suwikiClickable(onClick = onClick),
   ) {
     Row(
-      verticalAlignment = Alignment.Top,
+      verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.Start,
       modifier = Modifier
         .padding(vertical = 12.dp, horizontal = 24.dp),
@@ -63,14 +67,15 @@ fun SuwikiFilterContainer(
             onClick = onClickStar,
             rippleEnabled = false,
           ),
-        tint = if (isStared) Color(0xFF346CFD) else Color(0xFFDADADA),
+        tint = if (isStared) Primary else GrayDA,
       )
       Spacer(modifier = Modifier.width(4.dp))
       Text(
         text = text,
+        style = SuwikiTheme.typography.body2,
         color = textColor,
-        fontSize = 15.sp,
-        modifier = Modifier.wrapContentHeight(),
+        modifier = Modifier
+          .wrapContentHeight(),
       )
     }
   }
@@ -82,11 +87,13 @@ fun SuwikiFilterContainerPreview() {
   var isChecked by remember { mutableStateOf(false) }
   var isStared by remember { mutableStateOf(false) }
 
-  SuwikiFilterContainer(
-    text = "개설학과명",
-    isChecked = isChecked,
-    isStared = isStared,
-    onClick = { isChecked = !isChecked },
-    onClickStar = { isStared = !isStared },
-  )
+  SuwikiTheme {
+    SuwikiFilterContainer(
+      text = "개설학과명",
+      isChecked = isChecked,
+      isStared = isStared,
+      onClick = { isChecked = !isChecked },
+      onClickStar = { isStared = !isStared },
+    )
+  }
 }
