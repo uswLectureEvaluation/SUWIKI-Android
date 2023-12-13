@@ -74,8 +74,6 @@ fun SuwikiFilterContainer(
         text = text,
         style = SuwikiTheme.typography.body2,
         color = textColor,
-        modifier = Modifier
-          .wrapContentHeight(),
       )
     }
   }

@@ -33,15 +33,11 @@ fun SuwikiFilterButton(
   ) {
     Row(
       verticalAlignment = Alignment.CenterVertically,
-      modifier = Modifier
-        .wrapContentHeight(),
     ) {
       Text(
         text = text,
         style = SuwikiTheme.typography.header6,
         color = Primary,
-        modifier = Modifier
-          .wrapContentHeight(),
       )
       Icon(
         painter = painterResource(id = R.drawable.ic_filter_arrow_down),

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,9 +50,7 @@ fun SuwikiAlignContainer(
       style = SuwikiTheme.typography.body2,
       modifier = Modifier
         .align(Alignment.CenterStart)
-        .padding(start = 24.dp, end = 52.dp)
-        .fillMaxWidth()
-        .wrapContentHeight(),
+        .padding(start = 24.dp, end = 52.dp),
     )
     if (isChecked) {
       Icon(
