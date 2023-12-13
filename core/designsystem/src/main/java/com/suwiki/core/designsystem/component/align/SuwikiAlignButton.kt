@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -28,7 +27,6 @@ fun SuwikiAlignButton(
     contentDescription = "",
     modifier = Modifier
       .shadow(elevation = 10.dp)
-      .size(40.dp)
       .clip(RoundedCornerShape(10.dp))
       .suwikiClickable(onClick = onClick)
       .background(White)

@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +38,7 @@ fun SuwikiAlignContainer(
     modifier = Modifier
       .background(White)
       .fillMaxWidth()
-      .height(50.dp)
+      .wrapContentHeight()
       .suwikiClickable(
         onClick = onClick,
         rippleColor = Gray6A,
@@ -50,7 +50,7 @@ fun SuwikiAlignContainer(
       style = SuwikiTheme.typography.body2,
       modifier = Modifier
         .align(Alignment.CenterStart)
-        .padding(start = 24.dp, end = 52.dp),
+        .padding(top = 13.dp, bottom = 14.dp, start = 24.dp, end = 52.dp),
     )
     if (isChecked) {
       Icon(
