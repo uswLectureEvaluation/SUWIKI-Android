@@ -18,11 +18,14 @@ import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiAppBar(
   modifier: Modifier = Modifier,
   title: String = "",
+  onClickBack: () -> Unit = {},
+  onClickRemove: () -> Unit = {},
 ) {
   Row(
     horizontalArrangement = Arrangement.SpaceBetween,
@@ -38,6 +41,7 @@ fun SuwikiAppBar(
       tint = Gray95,
       modifier = Modifier
         .size(24.dp)
+        .suwikiClickable(onClick = onClickBack)
         .padding(top = 3.dp, bottom = 2.dp, end = 13.dp)
     )
     Text(
@@ -50,6 +54,7 @@ fun SuwikiAppBar(
       tint = Gray95,
       modifier = Modifier
         .size(24.dp)
+        .suwikiClickable(onClick = onClickRemove)
         .padding(3.dp)
     )
   }
@@ -61,6 +66,8 @@ fun SuwikiAppBarPreview() {
   SuwikiTheme {
     SuwikiAppBar(
       title = "타이틀",
+      onClickBack = { /*TODO*/ },
+      onClickRemove = { /*TODO*/ },
     )
   }
 }
