@@ -23,6 +23,6 @@ enum class TimetableCellColor {
   VIOLET_LIGHT,
 }
 
-enum class TimetableDay {
-  MON, TUE, WED, THU, FRI, SAT, E_LEARNING
+enum class TimetableDay(val idx: Int) {
+  MON(0), TUE(1), WED(2), THU(3), FRI(4), SAT(5), E_LEARNING(6)
 }

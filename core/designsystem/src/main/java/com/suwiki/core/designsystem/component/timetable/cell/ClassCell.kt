@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.timetable
+package com.suwiki.core.designsystem.component.timetable.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import com.suwiki.core.designsystem.component.timetable.timetableBorderWidth
+import com.suwiki.core.designsystem.component.timetable.timetableHeightPerHour
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
@@ -55,7 +57,7 @@ internal fun timetableCellColorToHex(color: TimetableCellColor): Long {
 }
 
 @Composable
-fun TimetableClassCell(
+internal fun ClassCell(
   modifier: Modifier = Modifier,
   type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
   data: TimetableCell,
@@ -112,7 +114,7 @@ fun TimetableClassCellPreview() {
     Column(
       verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-      TimetableClassCell(
+      ClassCell(
         modifier = Modifier.width(50.dp),
         type = TimetableCellType.CLASSNAME,
         data = TimetableCell(
@@ -125,7 +127,7 @@ fun TimetableClassCellPreview() {
         ),
       )
 
-      TimetableClassCell(
+      ClassCell(
         modifier = Modifier.width(50.dp),
         type = TimetableCellType.CLASSNAME_PROFESSOR,
         data = TimetableCell(
@@ -138,7 +140,7 @@ fun TimetableClassCellPreview() {
         ),
       )
 
-      TimetableClassCell(
+      ClassCell(
         modifier = Modifier.width(50.dp),
         type = TimetableCellType.CLASSNAME_LOCATION,
         data = TimetableCell(
@@ -151,7 +153,7 @@ fun TimetableClassCellPreview() {
         ),
       )
 
-      TimetableClassCell(
+      ClassCell(
         modifier = Modifier.width(50.dp),
         type = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
         data = TimetableCell(

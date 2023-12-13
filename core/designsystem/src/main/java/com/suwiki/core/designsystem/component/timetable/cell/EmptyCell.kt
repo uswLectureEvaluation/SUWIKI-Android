@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.timetable
+package com.suwiki.core.designsystem.component.timetable.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,13 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.component.timetable.MINUTE60
+import com.suwiki.core.designsystem.component.timetable.timetableBorderWidth
+import com.suwiki.core.designsystem.component.timetable.timetableHeightPerHour
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 
 @Composable
-fun TimetableEmptyCell(
+internal fun EmptyCell(
   modifier: Modifier = Modifier,
   minute: Int = MINUTE60,
   text: String? = null,
@@ -51,9 +54,9 @@ fun TimetableEmptyCellPreview() {
     Column(
       verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-      TimetableEmptyCell()
+      EmptyCell()
 
-      TimetableEmptyCell(text = "월")
+      EmptyCell(text = "월")
     }
   }
 }

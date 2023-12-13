@@ -1,30 +1,20 @@
-package com.suwiki.core.designsystem.component.timetable
+package com.suwiki.core.designsystem.component.timetable.column
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.component.timetable.MINUTE10
+import com.suwiki.core.designsystem.component.timetable.MINUTE60
+import com.suwiki.core.designsystem.component.timetable.cell.ClassCell
+import com.suwiki.core.designsystem.component.timetable.cell.EmptyCell
+import com.suwiki.core.designsystem.component.timetable.toText
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
-
-@Composable
-internal fun timetableDayToString(day: TimetableDay): String {
-  return when (day) {
-    TimetableDay.MON -> stringResource(R.string.word_mon)
-    TimetableDay.TUE -> stringResource(R.string.word_tue)
-    TimetableDay.WED -> stringResource(R.string.word_wed)
-    TimetableDay.THU -> stringResource(R.string.word_thu)
-    TimetableDay.FRI -> stringResource(R.string.word_fri)
-    TimetableDay.SAT -> stringResource(R.string.word_sat)
-    TimetableDay.E_LEARNING -> stringResource(R.string.word_elearning)
-  }
-}
 
 internal fun TimetableCell.getStartAndEndMinute(): Pair<Int, Int> {
   val startMinute = (this.startPeriod + 8) * MINUTE60 + 3 * MINUTE10
@@ -41,25 +31,26 @@ internal fun Int.isNotOnTime(): Boolean {
 }
 
 @Composable
-fun TimetableCellColumn(
+internal fun ClassColumn(
   modifier: Modifier = Modifier,
   day: TimetableDay,
   cellList: List<TimetableCell>,
   lastPeriod: Int,
+  onClickClassCell: (TimetableCell) -> Unit = { _ -> },
 ) {
   val sortedCellList = cellList.sortedBy { it.startPeriod }
   Column(
     modifier = modifier,
   ) {
-    TimetableEmptyCell(
-      text = timetableDayToString(day),
+    EmptyCell(
+      text = day.toText(),
     )
 
     var prevEndTime = 9 * MINUTE60
     sortedCellList.forEach { cell ->
       val (startMinute, endMinute) = cell.getStartAndEndMinute()
       FillEmptyTime(prevEndTime, startMinute)
-      TimetableClassCell(data = cell)
+      ClassCell(data = cell, onClick = onClickClassCell)
       prevEndTime = endMinute
     }
 
@@ -89,7 +80,7 @@ fun FillEmptyTime(emptyStartTime: Int, emptyEndTime: Int) {
       }
     }
 
-    TimetableEmptyCell(
+    EmptyCell(
       minute = insertEmptyTimeAmount,
     )
 
@@ -108,14 +99,14 @@ fun TimetableCellColumnPreview() {
       Column(
         modifier = Modifier.weight(1f),
       ) {
-        TimetableEmptyCell(text = "")
+        EmptyCell(text = "")
         repeat(8) {
-          TimetableEmptyCell(text = "${it + 9}")
+          EmptyCell(text = "${it + 9}")
         }
       }
 
       repeat(5) {
-        TimetableCellColumn(
+        ClassColumn(
           modifier = Modifier.weight(1f),
           day = TimetableDay.FRI,
           cellList = listOf(
