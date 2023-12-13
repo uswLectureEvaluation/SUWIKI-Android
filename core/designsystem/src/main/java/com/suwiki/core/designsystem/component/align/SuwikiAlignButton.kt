@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +27,7 @@ fun SuwikiAlignButton(
     painter = painterResource(id = R.drawable.ic_filter),
     contentDescription = "",
     modifier = Modifier
+      .shadow(elevation = 10.dp)
       .size(40.dp)
       .clip(RoundedCornerShape(10.dp))
       .suwikiClickable(onClick = onClick)
