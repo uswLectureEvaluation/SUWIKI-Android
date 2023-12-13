@@ -15,6 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import com.suwiki.core.designsystem.theme.GrayF6
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.ui.extension.suwikiClickable
@@ -71,77 +74,95 @@ fun TimetableClassCell(
     modifier = modifier
       .fillMaxWidth()
       .height(height)
-      .border(width = timetableBorderWidth, color = Color.Gray)
+      .border(width = timetableBorderWidth, color = GrayF6)
       .padding(timetableBorderWidth)
       .background(Color(timetableCellColorToHex(data.color)))
       .suwikiClickable {
         onClick(data)
       },
   ) {
-    Text(text = data.name)
+    Text(
+      style = SuwikiTheme.typography.caption3,
+      text = data.name,
+      color = White,
+    )
 
-    if (showProfessor) Text(text = data.professor)
+    if (showProfessor) {
+      Text(
+        style = SuwikiTheme.typography.caption6,
+        text = data.professor,
+        color = White,
+      )
+    }
 
-    if (showLocation) Text(text = data.location)
+    if (showLocation) {
+      Text(
+        style = SuwikiTheme.typography.caption6,
+        text = data.location,
+        color = White,
+      )
+    }
   }
 }
 
 @Preview
 @Composable
 fun TimetableClassCellPreview() {
-  Column(
-    verticalArrangement = Arrangement.spacedBy(20.dp),
-  ) {
-    TimetableClassCell(
-      modifier = Modifier.width(50.dp),
-      type = TimetableCellType.CLASSNAME,
-      data = TimetableCell(
-        name = "도전과 창조",
-        professor = "김수미",
-        location = "미래혁신관B202",
-        startPeriod = 1,
-        endPeriod = 3,
-        color = TimetableCellColor.GREEN,
-      ),
-    )
+  SuwikiTheme {
+    Column(
+      verticalArrangement = Arrangement.spacedBy(20.dp),
+    ) {
+      TimetableClassCell(
+        modifier = Modifier.width(50.dp),
+        type = TimetableCellType.CLASSNAME,
+        data = TimetableCell(
+          name = "도전과 창조",
+          professor = "김수미",
+          location = "미래혁신관B202",
+          startPeriod = 1,
+          endPeriod = 3,
+          color = TimetableCellColor.GREEN,
+        ),
+      )
 
-    TimetableClassCell(
-      modifier = Modifier.width(50.dp),
-      type = TimetableCellType.CLASSNAME_PROFESSOR,
-      data = TimetableCell(
-        name = "도전과 창조",
-        professor = "김수미",
-        location = "미래혁신관B202",
-        startPeriod = 1,
-        endPeriod = 3,
-        color = TimetableCellColor.GREEN,
-      ),
-    )
+      TimetableClassCell(
+        modifier = Modifier.width(50.dp),
+        type = TimetableCellType.CLASSNAME_PROFESSOR,
+        data = TimetableCell(
+          name = "도전과 창조",
+          professor = "김수미",
+          location = "미래혁신관B202",
+          startPeriod = 1,
+          endPeriod = 3,
+          color = TimetableCellColor.GREEN,
+        ),
+      )
 
-    TimetableClassCell(
-      modifier = Modifier.width(50.dp),
-      type = TimetableCellType.CLASSNAME_LOCATION,
-      data = TimetableCell(
-        name = "도전과 창조",
-        professor = "김수미",
-        location = "미래혁신관B202",
-        startPeriod = 1,
-        endPeriod = 3,
-        color = TimetableCellColor.GREEN,
-      ),
-    )
+      TimetableClassCell(
+        modifier = Modifier.width(50.dp),
+        type = TimetableCellType.CLASSNAME_LOCATION,
+        data = TimetableCell(
+          name = "도전과 창조",
+          professor = "김수미",
+          location = "미래혁신관B202",
+          startPeriod = 1,
+          endPeriod = 3,
+          color = TimetableCellColor.GREEN,
+        ),
+      )
 
-    TimetableClassCell(
-      modifier = Modifier.width(50.dp),
-      type = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
-      data = TimetableCell(
-        name = "도전과 창조",
-        professor = "김수미",
-        location = "미래혁신관B202",
-        startPeriod = 1,
-        endPeriod = 3,
-        color = TimetableCellColor.GREEN,
-      ),
-    )
+      TimetableClassCell(
+        modifier = Modifier.width(50.dp),
+        type = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
+        data = TimetableCell(
+          name = "도전과 창조",
+          professor = "김수미",
+          location = "미래혁신관B202",
+          startPeriod = 1,
+          endPeriod = 3,
+          color = TimetableCellColor.GREEN,
+        ),
+      )
+    }
   }
 }

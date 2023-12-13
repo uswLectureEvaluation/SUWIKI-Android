@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
@@ -99,50 +100,53 @@ fun FillEmptyTime(emptyStartTime: Int, emptyEndTime: Int) {
 @Preview(showSystemUi = true)
 @Composable
 fun TimetableCellColumnPreview() {
-  Row(
-    modifier = Modifier.fillMaxWidth(),
-  ) {
-    Column(
-      modifier = Modifier.weight(1f),
+  SuwikiTheme {
+    Row(
+      modifier = Modifier
+        .fillMaxWidth(),
     ) {
-      TimetableEmptyCell(text = "")
-      repeat(8) {
-        TimetableEmptyCell(text = "${it + 9}")
-      }
-    }
-
-    repeat(1) {
-      TimetableCellColumn(
+      Column(
         modifier = Modifier.weight(1f),
-        day = TimetableDay.FRI,
-        cellList = listOf(
-          TimetableCell(
-            name = "도전과 창조",
-            professor = "김수미",
-            location = "미래혁신관B202",
-            startPeriod = 1,
-            endPeriod = 2,
-            color = TimetableCellColor.GREEN,
+      ) {
+        TimetableEmptyCell(text = "")
+        repeat(8) {
+          TimetableEmptyCell(text = "${it + 9}")
+        }
+      }
+
+      repeat(5) {
+        TimetableCellColumn(
+          modifier = Modifier.weight(1f),
+          day = TimetableDay.FRI,
+          cellList = listOf(
+            TimetableCell(
+              name = "도전과 창조",
+              professor = "김수미",
+              location = "미래혁신관B202",
+              startPeriod = 1,
+              endPeriod = 2,
+              color = TimetableCellColor.GREEN,
+            ),
+            TimetableCell(
+              name = "도전과 창조",
+              professor = "김수미",
+              location = "미래혁신관B202",
+              startPeriod = 3,
+              endPeriod = 4,
+              color = TimetableCellColor.PINK,
+            ),
+            TimetableCell(
+              name = "도전과 창조",
+              professor = "김수미",
+              location = "미래혁신관B202",
+              startPeriod = 6,
+              endPeriod = 6,
+              color = TimetableCellColor.BROWN,
+            ),
           ),
-          TimetableCell(
-            name = "도전과 창조",
-            professor = "김수미",
-            location = "미래혁신관B202",
-            startPeriod = 3,
-            endPeriod = 4,
-            color = TimetableCellColor.PINK,
-          ),
-          TimetableCell(
-            name = "도전과 창조",
-            professor = "김수미",
-            location = "미래혁신관B202",
-            startPeriod = 6,
-            endPeriod = 6,
-            color = TimetableCellColor.BROWN,
-          ),
-        ),
-        lastPeriod = 8,
-      )
+          lastPeriod = 8,
+        )
+      }
     }
   }
 }
