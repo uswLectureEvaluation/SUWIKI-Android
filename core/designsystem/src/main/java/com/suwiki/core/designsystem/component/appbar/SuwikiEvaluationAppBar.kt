@@ -19,9 +19,10 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 
 @Composable
 fun SuwikiEvaluationAppBar(
+  modifier: Modifier = Modifier,
   title: String,
   major: String,
-  modifier: Modifier = Modifier,
+  onClickMajor: () -> Unit = {}
 ) {
   Box(
     modifier = modifier
@@ -40,6 +41,7 @@ fun SuwikiEvaluationAppBar(
       )
       SuwikiFilterButton(
         text = major,
+        onClick = onClickMajor,
         modifier = Modifier
           .align(CenterVertically)
       )
@@ -53,7 +55,8 @@ fun SuwikiEvaluationAppBarPreview() {
   SuwikiTheme {
     SuwikiEvaluationAppBar(
       title = "강의평가",
-      major = "학과명"
+      major = "학과명",
+      onClickMajor = { /*TODO*/ }
     )
   }
 }
