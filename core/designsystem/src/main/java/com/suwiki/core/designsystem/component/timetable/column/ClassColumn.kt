@@ -10,6 +10,7 @@ import com.suwiki.core.designsystem.component.timetable.MINUTE10
 import com.suwiki.core.designsystem.component.timetable.MINUTE60
 import com.suwiki.core.designsystem.component.timetable.cell.ClassCell
 import com.suwiki.core.designsystem.component.timetable.cell.EmptyCell
+import com.suwiki.core.designsystem.component.timetable.cell.TimetableCellType
 import com.suwiki.core.designsystem.component.timetable.toText
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.TimetableCell
@@ -34,6 +35,7 @@ internal fun Int.isNotOnTime(): Boolean {
 internal fun ClassColumn(
   modifier: Modifier = Modifier,
   day: TimetableDay,
+  type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
   cellList: List<TimetableCell>,
   lastPeriod: Int,
   onClickClassCell: (TimetableCell) -> Unit = { _ -> },
@@ -50,7 +52,7 @@ internal fun ClassColumn(
     sortedCellList.forEach { cell ->
       val (startMinute, endMinute) = cell.getStartAndEndMinute()
       FillEmptyTime(prevEndTime, startMinute)
-      ClassCell(data = cell, onClick = onClickClassCell)
+      ClassCell(type = type, data = cell, onClick = onClickClassCell)
       prevEndTime = endMinute
     }
 

@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.timetable.cell.ELearningCell
+import com.suwiki.core.designsystem.component.timetable.cell.TimetableCellType
 import com.suwiki.core.designsystem.component.timetable.column.TimeColumn
 import com.suwiki.core.designsystem.component.timetable.column.ClassColumn
 import com.suwiki.core.designsystem.theme.Black
@@ -37,7 +38,7 @@ import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.suwikiClickable
 import kotlin.math.max
 
-internal const val MIN_MAX_PERIOD = 8
+private const val MIN_MAX_PERIOD = 8
 
 internal fun List<TimetableCell>.maxPeriod(): Int {
   return max((maxOfOrNull { it.endPeriod }?.plus(1)) ?: MIN_MAX_PERIOD, MIN_MAX_PERIOD)
@@ -46,6 +47,7 @@ internal fun List<TimetableCell>.maxPeriod(): Int {
 @Composable
 fun Timetable(
   modifier: Modifier = Modifier,
+  type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
   timetable: Timetable,
   onClickAdd: () -> Unit = {},
   onClickHamburger: () -> Unit = {},
@@ -73,6 +75,7 @@ fun Timetable(
 
     Body(
       scrollState = scrollState,
+      type = type,
       maxPeriod = maxPeriod,
       cellGroupedByDay = cellGroupedByDay,
       onClickClassCell = onClickClassCell,
@@ -120,7 +123,6 @@ private fun Header(
 
     Icon(
       modifier = Modifier.suwikiClickable(onClick = onClickSetting),
-
       painter = painterResource(id = R.drawable.ic_timetable_setting),
       contentDescription = "",
       tint = Gray95,
@@ -131,6 +133,7 @@ private fun Header(
 @Composable
 private fun Body(
   modifier: Modifier = Modifier,
+  type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
   scrollState: ScrollState,
   maxPeriod: Int,
   cellGroupedByDay: Map<TimetableDay, List<TimetableCell>>,
@@ -154,6 +157,7 @@ private fun Body(
         .forEach { day ->
           ClassColumn(
             modifier = Modifier.weight(1f),
+            type = type,
             day = day,
             cellList = cellGroupedByDay[day] ?: emptyList(),
             lastPeriod = maxPeriod,
@@ -183,7 +187,7 @@ fun TimetablePreview() {
         createTime = 0L,
         year = "",
         semester = "",
-        name = "Previewaaaaaaaaaeeeeeaaaa",
+        name = "프리뷰입니다 프리뷰입니다 프리뷰입니다",
         cellList = listOf(
           TimetableCell(
             name = "도전과 창조",
