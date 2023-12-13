@@ -22,11 +22,12 @@ import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiFilterButton(
+  modifier: Modifier = Modifier,
   text: String,
   onClick: () -> Unit = {},
 ) {
   Box(
-    modifier = Modifier
+    modifier = modifier
       .suwikiClickable(onClick = onClick)
       .wrapContentHeight()
       .padding(vertical = 4.dp, horizontal = 8.dp),

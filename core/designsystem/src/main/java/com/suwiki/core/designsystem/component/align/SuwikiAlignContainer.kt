@@ -29,13 +29,14 @@ import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiAlignContainer(
+  modifier: Modifier = Modifier,
   text: String,
   isChecked: Boolean = false,
   onClick: () -> Unit = {},
 ) {
   val textColor = if (isChecked) Primary else Gray6A
   Box(
-    modifier = Modifier
+    modifier = modifier
       .background(White)
       .fillMaxWidth()
       .wrapContentHeight()
