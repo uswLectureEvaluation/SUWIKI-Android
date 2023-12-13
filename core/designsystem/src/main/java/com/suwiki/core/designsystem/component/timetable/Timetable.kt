@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.timetable.cell.ELearningCell
 import com.suwiki.core.designsystem.component.timetable.cell.TimetableCellType
-import com.suwiki.core.designsystem.component.timetable.column.TimeColumn
 import com.suwiki.core.designsystem.component.timetable.column.ClassColumn
+import com.suwiki.core.designsystem.component.timetable.column.TimeColumn
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayF6

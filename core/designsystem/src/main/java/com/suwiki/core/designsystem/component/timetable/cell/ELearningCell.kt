@@ -16,8 +16,11 @@ internal fun ELearningCell(
   val nameAndDay = "${cell.name} / ${cell.day.toText()}"
   val period = "(${cell.startPeriod} ~ ${cell.endPeriod})"
 
-  val text = if (cell.startPeriod != 0 && cell.endPeriod != 0) nameAndDay + period
-  else nameAndDay
+  val text = if (cell.startPeriod != 0 && cell.endPeriod != 0) {
+    nameAndDay + period
+  } else {
+    nameAndDay
+  }
 
   EmptyCell(
     modifier = modifier
