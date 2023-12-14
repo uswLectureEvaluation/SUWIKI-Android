@@ -55,6 +55,8 @@ fun Timetable(
   onClickClassCell: (TimetableCell) -> Unit = { _ -> },
 ) {
   val scrollState = rememberScrollState()
+
+  // TODO 테스트 필요
   val maxPeriod by remember {
     derivedStateOf { timetable.cellList.maxPeriod() }
   }
