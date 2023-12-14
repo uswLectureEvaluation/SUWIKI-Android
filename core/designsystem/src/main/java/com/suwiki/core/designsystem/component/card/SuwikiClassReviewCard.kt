@@ -5,12 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
@@ -30,6 +31,7 @@ import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -63,77 +65,76 @@ fun SuwikiClassReviewCard(
         .fillMaxWidth(),
       shape = RoundedCornerShape(10.dp),
     ) {
-      Column(
+      Row(
         modifier = Modifier
           .fillMaxWidth()
           .padding(15.dp, 14.dp, 18.dp, 12.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
       ) {
-        // Header
-        Row(
-          modifier = Modifier.fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-          Column {
-            Text(
-              text = className,
-              style = SuwikiTheme.typography.header3,
-              color = Black,
-            )
-            Row(
-              verticalAlignment = Alignment.CenterVertically,
-              modifier = Modifier.wrapContentSize(),
-            ) {
-              Text(
-                text = department,
-                style = SuwikiTheme.typography.body7,
-                color = Gray6A,
-              )
-              VerticalDivider(
-                modifier = Modifier
-                  .width(9.dp)
-                  .padding(4.dp)
-                  .fillMaxHeight(0.02f)
-                  .background(Black),
-              )
-              Text(
-                text = professor,
-                style = SuwikiTheme.typography.body7,
-                color = Gray6A,
-              )
-            }
-            Row(
-              verticalAlignment = Alignment.CenterVertically,
-              modifier = Modifier.wrapContentWidth(),
-            ) {
-              Image(
-                painter = painterResource(id = R.drawable.ic_star),
-                contentDescription = null,
-              )
-              Text(
-                text = rating,
-                style = SuwikiTheme.typography.body1,
-                color = Primary,
-              )
-              Text(
-                text = reviewCount,
-                style = SuwikiTheme.typography.body3,
-                color = Gray95,
-              )
-            }
-          }
+        Column {
           Text(
-            text = classType,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-            modifier = Modifier
-              .background(color = GrayF6, shape = RoundedCornerShape(10.dp))
-              .padding(6.dp, 2.dp),
+            text = className,
+            style = SuwikiTheme.typography.header3,
+            color = Black,
           )
+          Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+              .wrapContentSize()
+              .height(IntrinsicSize.Min),
+          ) {
+            Text(
+              text = department,
+              style = SuwikiTheme.typography.body7,
+              color = Gray6A,
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            VerticalDivider(
+              color = GrayDA,
+              modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp),
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+              text = professor,
+              style = SuwikiTheme.typography.body7,
+              color = Gray6A,
+            )
+          }
+          Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.wrapContentWidth(),
+          ) {
+            Image(
+              painter = painterResource(id = R.drawable.ic_star),
+              contentDescription = null,
+            )
+            Text(
+              text = rating,
+              style = SuwikiTheme.typography.body1,
+              color = Primary,
+            )
+            Text(
+              text = reviewCount,
+              style = SuwikiTheme.typography.body3,
+              color = Gray95,
+            )
+          }
         }
+        Text(
+          text = classType,
+          style = SuwikiTheme.typography.caption4,
+          color = Gray6A,
+          modifier = Modifier
+            .background(color = GrayF6, shape = RoundedCornerShape(10.dp))
+            .padding(6.dp, 2.dp),
+        )
       }
     }
   }
 }
+
 
 @Preview
 @Composable
