@@ -41,12 +41,14 @@ presentation layer에서는 UDF(단방향 데이터 흐름) 패턴을 사용합�
 #### 1. Clean Architecture의 Layer와 앱의 Feature 단위로 분리
 
 ex) 시간표, 강의평가
+
 `domain:timetable`, `data:timetable`, `feature:timetable`
 `domain:lectureevaluation`, `data:lectureevaluation`, `feature:lectureevaluatioin`
 
 #### 2. 모듈의 특정 부분이 여러 곳에서 사용된다면 분리
 
 ex) 강의평가 Create/Read/Update/Delete 기능 중 Create/Update/Delete 부분이 `feature:myinfo`, `feature:lectureevaluation`에서 사용되는 경우
+
 강의평가 Read 기능과 Create/Update/Delete 기능을 분리합니다. -> `feature:lectureevaluation:viewer`, `feature:lectureevaluation:editor`
 
 ### 모듈 설명
