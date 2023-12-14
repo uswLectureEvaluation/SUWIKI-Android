@@ -2,7 +2,6 @@ package com.suwiki.core.designsystem.component.card
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -65,71 +64,76 @@ fun SuwikiClassReviewCard(
         .fillMaxWidth(),
       shape = RoundedCornerShape(10.dp),
     ) {
-      Row(
+      Column(
         modifier = Modifier
           .fillMaxWidth()
           .padding(15.dp, 14.dp, 18.dp, 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
       ) {
-        Column {
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          modifier = Modifier
+            .fillMaxWidth(),
+        ) {
           Text(
             text = className,
             style = SuwikiTheme.typography.header3,
             color = Black,
           )
-          Row(
-            verticalAlignment = Alignment.CenterVertically,
+          Text(
+            text = classType,
+            style = SuwikiTheme.typography.caption4,
+            color = Gray6A,
             modifier = Modifier
-              .wrapContentSize()
-              .height(IntrinsicSize.Min),
-          ) {
-            Text(
-              text = department,
-              style = SuwikiTheme.typography.body7,
-              color = Gray6A,
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            VerticalDivider(
-              color = GrayDA,
-              modifier = Modifier
-                .fillMaxHeight()
-                .width(1.dp),
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-              text = professor,
-              style = SuwikiTheme.typography.body7,
-              color = Gray6A,
-            )
-          }
-          Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.wrapContentWidth(),
-          ) {
-            Image(
-              painter = painterResource(id = R.drawable.ic_star),
-              contentDescription = null,
-            )
-            Text(
-              text = rating,
-              style = SuwikiTheme.typography.body1,
-              color = Primary,
-            )
-            Text(
-              text = reviewCount,
-              style = SuwikiTheme.typography.body3,
-              color = Gray95,
-            )
-          }
+              .weight(1f)
+              .wrapContentWidth(Alignment.End)
+              .background(color = GrayF6, shape = RoundedCornerShape(10.dp))
+              .padding(6.dp, 2.dp),
+          )
         }
-        Text(
-          text = classType,
-          style = SuwikiTheme.typography.caption4,
-          color = Gray6A,
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier
-            .background(color = GrayF6, shape = RoundedCornerShape(10.dp))
-            .padding(6.dp, 2.dp),
-        )
+            .wrapContentSize()
+            .height(IntrinsicSize.Min),
+        ) {
+          Text(
+            text = department,
+            style = SuwikiTheme.typography.body7,
+            color = Gray6A,
+          )
+          Spacer(modifier = Modifier.width(4.dp))
+          VerticalDivider(
+            color = GrayDA,
+            modifier = Modifier
+              .fillMaxHeight()
+              .width(1.dp),
+          )
+          Spacer(modifier = Modifier.width(4.dp))
+          Text(
+            text = professor,
+            style = SuwikiTheme.typography.body7,
+            color = Gray6A,
+          )
+        }
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          modifier = Modifier.wrapContentWidth(),
+        ) {
+          Image(
+            painter = painterResource(id = R.drawable.ic_star),
+            contentDescription = null,
+          )
+          Text(
+            text = rating,
+            style = SuwikiTheme.typography.body1,
+            color = Primary,
+          )
+          Text(
+            text = reviewCount,
+            style = SuwikiTheme.typography.body3,
+            color = Gray95,
+          )
+        }
       }
     }
   }
