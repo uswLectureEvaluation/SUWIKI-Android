@@ -42,6 +42,7 @@ fun SuwikiClassInformationCard(
   classType: String,
   offeredDepartment: String,
   onClick: () -> Unit,
+  onClickAdd: () -> Unit,
   pressedBackgroundColor: Color,
 ) {
   Box(
@@ -113,13 +114,11 @@ fun SuwikiClassInformationCard(
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
+          Spacer(modifier = Modifier.weight(1f))
           SuwikiContainedGreyButtonSmall(
-            modifier = Modifier
-              .weight(1f)
-              .wrapContentWidth(Alignment.End),
             text = "추가",
-          ) {
-          }
+            onClick = onClickAdd,
+          )
         }
         Spacer(modifier = Modifier.height(2.dp))
         Row(
@@ -153,7 +152,6 @@ fun SuwikiClassInformationCard(
 @Preview
 @Composable
 fun ClassInformationPreview() {
-
   SuwikiTheme {
     Column {
       SuwikiClassInformationCard(
@@ -167,6 +165,7 @@ fun ClassInformationPreview() {
         classType = "강의유형",
         offeredDepartment = "개설학과",
         onClick = {},
+        onClickAdd = {},
         pressedBackgroundColor = Primary,
       )
     }

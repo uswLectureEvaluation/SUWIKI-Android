@@ -79,13 +79,12 @@ fun SuwikiClassReviewCard(
             style = SuwikiTheme.typography.header3,
             color = Black,
           )
+          Spacer(modifier = Modifier.weight(1f))
           Text(
             text = classType,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
             modifier = Modifier
-              .weight(1f)
-              .wrapContentWidth(Alignment.End)
               .background(color = GrayF6, shape = RoundedCornerShape(10.dp))
               .padding(6.dp, 2.dp),
           )
@@ -138,7 +137,6 @@ fun SuwikiClassReviewCard(
     }
   }
 }
-
 
 @Preview
 @Composable
