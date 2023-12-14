@@ -1,6 +1,5 @@
 package com.suwiki.core.designsystem.component.card
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -12,10 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -28,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -37,12 +33,26 @@ import com.suwiki.core.ui.extension.suwikiClickable
 @Composable
 fun SuwikiClassInformationCard(
   modifier: Modifier = Modifier,
+  className: String,
+  professor: String,
+  day: String,
+  classPeriod: String,
+  lectureRoom: String,
+  grade: String,
+  classType: String,
+  offeredDepartment: String,
+  onClick: () -> Unit,
+  pressedBackgroundColor: Color,
 ) {
   Box(
     modifier = modifier
       .fillMaxWidth()
-      .wrapContentHeight(),
-//      .suwikiClickable(),
+      .wrapContentHeight()
+      .suwikiClickable(
+        rippleEnabled = true,
+        rippleColor = pressedBackgroundColor,
+        onClick = onClick,
+      ),
     contentAlignment = Alignment.Center,
   ) {
     Surface(
@@ -58,11 +68,11 @@ fun SuwikiClassInformationCard(
         Row(
           verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier
-            .wrapContentSize()
+            .fillMaxWidth()
             .height(IntrinsicSize.Min),
         ) {
           Text(
-            text = "강의명",
+            text = className,
             style = SuwikiTheme.typography.body6,
             color = Black,
           )
@@ -75,7 +85,7 @@ fun SuwikiClassInformationCard(
           )
           Spacer(modifier = Modifier.width(6.dp))
           Text(
-            text = "교수명",
+            text = professor,
             style = SuwikiTheme.typography.body6,
             color = Black,
           )
@@ -83,45 +93,54 @@ fun SuwikiClassInformationCard(
         Spacer(modifier = Modifier.height(2.dp))
         Row(
           verticalAlignment = Alignment.CenterVertically,
-          modifier = Modifier.wrapContentSize(),
+          modifier = Modifier
+            .fillMaxWidth(),
         ) {
           Text(
-            text = "요일",
+            text = day,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
           Spacer(modifier = Modifier.width(2.dp))
           Text(
-            text = "교시",
+            text = classPeriod,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
           Spacer(modifier = Modifier.width(2.dp))
           Text(
-            text = "강의실",
+            text = lectureRoom,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
+          SuwikiContainedGreyButtonSmall(
+            modifier = Modifier
+              .weight(1f)
+              .wrapContentWidth(Alignment.End),
+            text = "추가",
+          ) {
+          }
         }
         Spacer(modifier = Modifier.height(2.dp))
         Row(
           verticalAlignment = Alignment.CenterVertically,
-          modifier = Modifier.wrapContentWidth(),
+          modifier = Modifier
+            .fillMaxWidth(),
         ) {
           Text(
-            text = "학년",
+            text = grade,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
           Spacer(modifier = Modifier.width(2.dp))
           Text(
-            text = "강의유형",
+            text = classType,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
           Spacer(modifier = Modifier.width(2.dp))
           Text(
-            text = "개설학과",
+            text = offeredDepartment,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
@@ -129,7 +148,6 @@ fun SuwikiClassInformationCard(
       }
     }
   }
-
 }
 
 @Preview
@@ -138,9 +156,19 @@ fun ClassInformationPreview() {
 
   SuwikiTheme {
     Column {
-      SuwikiClassInformationCard()
+      SuwikiClassInformationCard(
+        modifier = Modifier,
+        className = "강의명",
+        professor = "교수명",
+        day = "요일",
+        classPeriod = "교시",
+        lectureRoom = "강의실",
+        grade = "학년",
+        classType = "강의유형",
+        offeredDepartment = "개설학과",
+        onClick = {},
+        pressedBackgroundColor = Primary,
+      )
     }
   }
-
-
 }
