@@ -3,3 +3,7 @@
 plugins {
   alias(libs.plugins.suwiki.java.library)
 }
+
+dependencies {
+  compileOnly(libs.compose.stable.marker)
+}
