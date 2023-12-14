@@ -3,8 +3,8 @@ package com.suwiki.core.designsystem.component.chips
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +18,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.suwiki.core.designsystem.theme.Blue10
+import com.suwiki.core.designsystem.theme.Blue100
+import com.suwiki.core.designsystem.theme.Green10
+import com.suwiki.core.designsystem.theme.Green100
+import com.suwiki.core.designsystem.theme.Orange10
+import com.suwiki.core.designsystem.theme.Orange100
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+
 enum class SuwikiChipType {
   ORANGE,
   BLUE,
@@ -34,9 +41,9 @@ fun SuwikiContainedChip(
 ) {
   val (backgroundColor, contentColor) = if (isChecked) {
     when (type) {
-      SuwikiChipType.ORANGE -> Color(0xFFFFF3EB) to Color(0xFFFD873B)
-      SuwikiChipType.BLUE -> Color(0xFFECEDFF) to Color(0xFF3D4EFB)
-      SuwikiChipType.GREEN -> Color(0xFFEAF8EC) to Color(0xFF2DB942)
+      SuwikiChipType.ORANGE -> Orange10 to Orange100
+      SuwikiChipType.BLUE -> Blue10 to Blue100
+      SuwikiChipType.GREEN -> Green10 to Green100
     }
   } else {
     Color(0xFFF6F6F6) to Color(0xFF959595)
@@ -47,20 +54,15 @@ fun SuwikiContainedChip(
       .clip(RoundedCornerShape(5.dp))
       .background(color = backgroundColor)
       .clickable(onClick = onClick)
-      .height(26.dp),
+      .wrapContentHeight()
+      .padding(vertical = 4.dp, horizontal = 6.dp),
   ) {
-    Box(
-      modifier = Modifier
-        .padding(vertical = 4.dp, horizontal = 6.dp)
-        .height(18.dp),
-    ) {
-      Text(
-        text = text,
-        color = contentColor,
-        fontSize = 12.sp,
-        modifier = Modifier.align(Alignment.Center),
-      )
-    }
+    Text(
+      text = text,
+      style = SuwikiTheme.typography.caption1,
+      color = contentColor,
+      modifier = Modifier.align(Alignment.Center),
+    )
   }
 }
 
@@ -69,10 +71,12 @@ fun SuwikiContainedChip(
 fun SuwikiContainedChipPreview() {
   var isChecked by remember { mutableStateOf(false) }
 
-  SuwikiContainedChip(
-    isChecked = isChecked,
-    onClick = { isChecked = !isChecked },
-    type = SuwikiChipType.GREEN,
-    text = "label",
-  )
+  SuwikiTheme {
+    SuwikiContainedChip(
+      isChecked = isChecked,
+      onClick = { isChecked = !isChecked },
+      type = SuwikiChipType.GREEN,
+      text = "label",
+    )
+  }
 }
