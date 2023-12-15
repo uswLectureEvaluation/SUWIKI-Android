@@ -6,7 +6,7 @@
   <string name="word_thu">목</string>
   <string name="word_fri">금</string>
   <string name="word_sat">토</string>
-  <string name="뷰">이러닝</string>
+  <string name="word_elearning">이러닝</string>
   <string name="honey_quality">꿀강지수</string>
   <string name="learning_quality">배움지수</string>
   <string name="satisfaction_quality">만족지수</string>
