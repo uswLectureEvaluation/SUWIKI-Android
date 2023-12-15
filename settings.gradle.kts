@@ -22,6 +22,7 @@ rootProject.name = "uswtimetable"
 include(":presentation")
 include(":app-compose")
 
+include(":core:android")
 include(":core:model")
 include(":core:common")
 include(":core:network")

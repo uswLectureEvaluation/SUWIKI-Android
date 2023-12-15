@@ -1,13 +1,16 @@
 package com.suwiki.core.model.timetable
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class TimetableCell(
   val name: String = "",
   val professor: String = "",
   val location: String = "",
-  val day: String = "",
-  val startTime: String = "",
-  val endTime: String = "",
-  val color: Int,
+  val day: TimetableDay = TimetableDay.E_LEARNING,
+  val startPeriod: Int = 0,
+  val endPeriod: Int = 0,
+  val color: TimetableCellColor,
   val credit: String = "",
 )
 

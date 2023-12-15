@@ -12,6 +12,7 @@ compose-compiler = "1.5.3"
 compose-bom = "2023.10.00-alpha02"
 compose-material3 = "1.2.0-alpha07"
 activity-compose = "1.7.2"
+compose-stable-marker = "1.0.3"
 androidx-hilt-navigation-compose = "1.0.0"
 
 androidx-app-compat = "1.6.1"
@@ -111,6 +112,7 @@ activity-compose = { group = "androidx.activity", name = "activity-compose", ver
 lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt-navigation-compose" }
+compose-stable-marker = { group = "com.github.skydoves", name = "compose-stable-marker", version.ref = "compose-stable-marker" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
