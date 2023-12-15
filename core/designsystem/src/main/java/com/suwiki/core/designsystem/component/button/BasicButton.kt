@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
@@ -126,6 +127,7 @@ fun BasicContainedButton(
     content = {
       Text(
         text = text,
+        style = SuwikiTheme.typography.caption6,
         color = textColor,
         modifier = Modifier.padding(padding),
       )

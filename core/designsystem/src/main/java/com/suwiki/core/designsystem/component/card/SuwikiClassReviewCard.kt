@@ -1,7 +1,7 @@
 package com.suwiki.core.designsystem.component.card
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -22,16 +22,17 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.component.chips.SuwikiChipType
+import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayDA
-import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
@@ -42,11 +43,11 @@ fun SuwikiClassReviewCard(
   className: String,
   department: String,
   professor: String,
-  rating: String,
-  reviewCount: String,
+  rating: Float,
+  reviewCount: Int,
   classType: String,
+  isChecked: Boolean,
   onClick: () -> Unit,
-  pressedBackgroundColor: Color,
 ) {
   Box(
     modifier = modifier
@@ -54,9 +55,10 @@ fun SuwikiClassReviewCard(
       .wrapContentHeight()
       .suwikiClickable(
         rippleEnabled = true,
-        rippleColor = pressedBackgroundColor,
+        rippleColor = Primary,
         onClick = onClick,
-      ),
+      )
+      .shadow(4.dp),
     contentAlignment = Alignment.Center,
   ) {
     Surface(
@@ -80,40 +82,38 @@ fun SuwikiClassReviewCard(
             color = Black,
           )
           Spacer(modifier = Modifier.weight(1f))
-          Text(
+          SuwikiContainedChip(
             text = classType,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-            modifier = Modifier
-              .background(color = GrayF6, shape = RoundedCornerShape(10.dp))
-              .padding(6.dp, 2.dp),
+            isChecked = isChecked,
+            type = SuwikiChipType.GREEN,
           )
         }
         Row(
-          verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier
             .wrapContentSize()
             .height(IntrinsicSize.Min),
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
           Text(
             text = department,
             style = SuwikiTheme.typography.body7,
             color = Gray6A,
           )
-          Spacer(modifier = Modifier.width(4.dp))
           VerticalDivider(
             color = GrayDA,
             modifier = Modifier
               .fillMaxHeight()
-              .width(1.dp),
+              .width(1.dp)
+              .padding(vertical = 3.dp),
           )
-          Spacer(modifier = Modifier.width(4.dp))
           Text(
             text = professor,
             style = SuwikiTheme.typography.body7,
             color = Gray6A,
           )
         }
+        Spacer(modifier = Modifier.height(3.dp))
         Row(
           verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier.wrapContentWidth(),
@@ -123,12 +123,12 @@ fun SuwikiClassReviewCard(
             contentDescription = null,
           )
           Text(
-            text = rating,
+            text = "$rating",
             style = SuwikiTheme.typography.body1,
             color = Primary,
           )
           Text(
-            text = reviewCount,
+            text = "($reviewCount)",
             style = SuwikiTheme.typography.body3,
             color = Gray95,
           )
@@ -147,11 +147,11 @@ fun CardPreview() {
       className = "강의명",
       department = "개설학과",
       professor = "교수명",
-      rating = "평점",
-      reviewCount = "(리뷰개수)",
+      rating = 4.0f,
+      reviewCount = 3,
       classType = "강의 유형",
+      isChecked = false,
       onClick = {},
-      pressedBackgroundColor = Primary,
     )
   }
 }

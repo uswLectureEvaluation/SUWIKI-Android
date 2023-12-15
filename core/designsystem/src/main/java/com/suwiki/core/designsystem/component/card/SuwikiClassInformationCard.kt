@@ -1,5 +1,6 @@
 package com.suwiki.core.designsystem.component.card
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -18,7 +19,6 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
@@ -42,7 +42,6 @@ fun SuwikiClassInformationCard(
   offeredDepartment: String,
   onClick: () -> Unit,
   onClickAdd: () -> Unit,
-  pressedBackgroundColor: Color,
 ) {
   Box(
     modifier = modifier
@@ -50,7 +49,7 @@ fun SuwikiClassInformationCard(
       .wrapContentHeight()
       .suwikiClickable(
         rippleEnabled = true,
-        rippleColor = pressedBackgroundColor,
+        rippleColor = Primary,
         onClick = onClick,
       ),
     contentAlignment = Alignment.Center,
@@ -64,6 +63,7 @@ fun SuwikiClassInformationCard(
         modifier = Modifier
           .fillMaxWidth()
           .padding(24.dp, 14.dp, 24.dp, 19.dp),
+        verticalArrangement = Arrangement.spacedBy(2.dp),
       ) {
         Row(
           verticalAlignment = Alignment.CenterVertically,
@@ -81,7 +81,8 @@ fun SuwikiClassInformationCard(
             color = GrayDA,
             modifier = Modifier
               .fillMaxHeight()
-              .width(1.dp),
+              .width(1.dp)
+              .padding(vertical = 3.dp),
           )
           Spacer(modifier = Modifier.width(6.dp))
           Text(
@@ -90,24 +91,22 @@ fun SuwikiClassInformationCard(
             color = Black,
           )
         }
-        Spacer(modifier = Modifier.height(2.dp))
         Row(
-          verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier
             .fillMaxWidth(),
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(2.dp),
         ) {
           Text(
             text = day,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
-          Spacer(modifier = Modifier.width(2.dp))
           Text(
             text = classPeriod,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
-          Spacer(modifier = Modifier.width(2.dp))
           Text(
             text = lectureRoom,
             style = SuwikiTheme.typography.caption4,
@@ -119,24 +118,22 @@ fun SuwikiClassInformationCard(
             onClick = onClickAdd,
           )
         }
-        Spacer(modifier = Modifier.height(2.dp))
         Row(
-          verticalAlignment = Alignment.CenterVertically,
           modifier = Modifier
             .fillMaxWidth(),
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(2.dp),
         ) {
           Text(
             text = grade,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
-          Spacer(modifier = Modifier.width(2.dp))
           Text(
             text = classType,
             style = SuwikiTheme.typography.caption4,
             color = Gray6A,
           )
-          Spacer(modifier = Modifier.width(2.dp))
           Text(
             text = offeredDepartment,
             style = SuwikiTheme.typography.caption4,
@@ -165,7 +162,6 @@ fun ClassInformationPreview() {
         offeredDepartment = "개설학과",
         onClick = {},
         onClickAdd = {},
-        pressedBackgroundColor = Primary,
       )
     }
   }
