@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
@@ -41,6 +42,7 @@ fun SuwikiTimeTableAppBar(
       text = timeTableName,
       style = SuwikiTheme.typography.header1,
       maxLines = 1,
+      overflow = TextOverflow.Ellipsis,
       modifier = Modifier
         .padding(top = 28.dp, bottom = 12.dp, start = 24.dp, end = 130.dp)
     )
