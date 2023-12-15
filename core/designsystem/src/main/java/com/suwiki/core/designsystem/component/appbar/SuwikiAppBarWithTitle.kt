@@ -33,7 +33,7 @@ fun SuwikiAppBarWithTitle(
       .fillMaxWidth()
       .wrapContentHeight()
       .background(White)
-      .padding(vertical = 15.dp, horizontal = 24.dp)
+      .padding(vertical = 15.dp, horizontal = 24.dp),
   ) {
     Icon(
       painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
@@ -42,11 +42,11 @@ fun SuwikiAppBarWithTitle(
       modifier = Modifier
         .size(24.dp)
         .suwikiClickable(onClick = onClickBack)
-        .padding(top = 3.dp, bottom = 2.dp, end = 13.dp)
+        .padding(top = 3.dp, bottom = 2.dp, end = 13.dp),
     )
     Text(
       text = title,
-      style = SuwikiTheme.typography.header6
+      style = SuwikiTheme.typography.header6,
     )
     Icon(
       painter = painterResource(id = R.drawable.ic_appbar_x_mark),
@@ -55,7 +55,7 @@ fun SuwikiAppBarWithTitle(
       modifier = Modifier
         .size(24.dp)
         .suwikiClickable(onClick = onClickRemove)
-        .padding(3.dp)
+        .padding(3.dp),
     )
   }
 }

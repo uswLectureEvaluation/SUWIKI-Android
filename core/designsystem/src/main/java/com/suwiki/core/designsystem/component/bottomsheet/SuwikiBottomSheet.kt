@@ -26,7 +26,6 @@ import com.suwiki.core.designsystem.theme.White
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuwikiBottomSheet(
-  modifier: Modifier = Modifier,
   isSheetOpen: Boolean,
   changeSheetOpen: () -> Unit = {},
   bottomSheetItem: List<@Composable () -> Unit>,
@@ -54,10 +53,10 @@ fun SuwikiBottomSheetItem(
     text = title,
     style = SuwikiTheme.typography.body5,
     color = Gray95,
-    modifier = Modifier
+    modifier = modifier
       .fillMaxWidth()
       .background(White)
-      .padding(vertical = 14.dp, horizontal = 24.dp)
+      .padding(vertical = 14.dp, horizontal = 24.dp),
   )
 }
 
@@ -78,12 +77,14 @@ fun SuwikiBottomSheetPreview() {
       changeSheetOpen = { isSheetOpen = !isSheetOpen },
       bottomSheetItem = listOf(
         { SuwikiBottomSheetItem(title = "타이틀") },
-        { SuwikiAlignContainer(
-          text = "메뉴",
-          isChecked = isChecked,
-          onClick = { isChecked = !isChecked },
-        ) },
-      )
+        {
+          SuwikiAlignContainer(
+            text = "메뉴",
+            isChecked = isChecked,
+            onClick = { isChecked = !isChecked },
+          )
+        },
+      ),
     )
   }
 }

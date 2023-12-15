@@ -36,7 +36,7 @@ fun SuwikiTimeTableAppBar(
     modifier = modifier
       .fillMaxWidth()
       .wrapContentHeight()
-      .background(GrayFB)
+      .background(GrayFB),
   ) {
     Text(
       text = timeTableName,
@@ -44,12 +44,12 @@ fun SuwikiTimeTableAppBar(
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
       modifier = Modifier
-        .padding(top = 28.dp, bottom = 12.dp, start = 24.dp, end = 130.dp)
+        .padding(top = 28.dp, bottom = 12.dp, start = 24.dp, end = 130.dp),
     )
     Row(
       modifier = Modifier
         .align(Alignment.CenterEnd)
-        .padding(top = 37.dp, bottom = 12.dp, end = 20.dp)
+        .padding(top = 37.dp, bottom = 12.dp, end = 20.dp),
     ) {
       Icon(
         painter = painterResource(id = R.drawable.ic_appbar_add),

@@ -33,11 +33,11 @@ fun SuwikiTabBar(
   Box(
     modifier = modifier
       .fillMaxWidth()
-      .wrapContentHeight()
+      .wrapContentHeight(),
   ) {
     Row(
       modifier = Modifier
-        .padding(start = 24.dp, top = 6.dp)
+        .padding(start = 24.dp, top = 6.dp),
     ) {
       SuwikiTabBarLeftItem(leftContent)
       Spacer(modifier = Modifier.width(12.dp))
@@ -82,7 +82,7 @@ fun SuwikiTabBarPreview() {
             clickIndicator = LeftRightIndicate.LEFT,
             itemContentCnt = 0,
             title = "메뉴",
-            changeActive = changeActive
+            changeActive = changeActive,
           )
         },
         rightContent = {
@@ -93,7 +93,7 @@ fun SuwikiTabBarPreview() {
             clickIndicator = LeftRightIndicate.RIGHT,
             itemContentCnt = 0,
             title = "메뉴",
-            changeActive = changeActive
+            changeActive = changeActive,
           )
         },
       )
@@ -122,12 +122,12 @@ fun SetTabItemActive(
   if (isActive) {
     SuwikiTabBarActiveItem(
       title = if (isHasCount) "$title($itemContentCnt)" else title,
-      onClickItem = changeActive
+      onClickItem = changeActive,
     )
   } else {
     SuwikiTabBarInActiveItem(
       title = if (isHasCount) "$title($itemContentCnt)" else title,
-      onClickItem = changeActive
+      onClickItem = changeActive,
     )
   }
 }

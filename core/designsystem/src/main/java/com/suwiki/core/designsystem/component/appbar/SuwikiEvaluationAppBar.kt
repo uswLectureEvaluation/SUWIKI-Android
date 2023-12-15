@@ -22,28 +22,28 @@ fun SuwikiEvaluationAppBar(
   modifier: Modifier = Modifier,
   title: String,
   major: String,
-  onClickMajor: () -> Unit = {}
+  onClickMajor: () -> Unit = {},
 ) {
   Box(
     modifier = modifier
       .fillMaxWidth()
       .wrapContentHeight()
-      .background(GrayFB)
+      .background(GrayFB),
   ) {
     Row(
       modifier = Modifier
         .align(Alignment.CenterStart)
-        .padding(top = 28.dp, bottom = 3.dp, start = 24.dp, end = 24.dp)
+        .padding(top = 28.dp, bottom = 3.dp, start = 24.dp, end = 24.dp),
     ) {
       Text(
         text = title,
-        style = SuwikiTheme.typography.header1
+        style = SuwikiTheme.typography.header1,
       )
       SuwikiFilterButton(
         text = major,
         onClick = onClickMajor,
         modifier = Modifier
-          .align(CenterVertically)
+          .align(CenterVertically),
       )
     }
   }
@@ -56,7 +56,7 @@ fun SuwikiEvaluationAppBarPreview() {
     SuwikiEvaluationAppBar(
       title = "강의평가",
       major = "학과명",
-      onClickMajor = { /*TODO*/ }
+      onClickMajor = { /*TODO*/ },
     )
   }
 }

@@ -34,7 +34,7 @@ fun SuwikiTabBarActiveItem(
           color = Black,
           start = Offset(0f, y),
           end = Offset(size.width, y),
-          strokeWidth = borderWidth
+          strokeWidth = borderWidth,
         )
       }
       .suwikiClickable(onClick = onClickItem)
