@@ -40,6 +40,7 @@ fun SuwikiClassInformationCard(
   grade: String,
   classType: String,
   offeredDepartment: String,
+  buttonText: String,
   onClick: () -> Unit,
   onClickAdd: () -> Unit,
 ) {
@@ -114,7 +115,7 @@ fun SuwikiClassInformationCard(
           )
           Spacer(modifier = Modifier.weight(1f))
           SuwikiContainedGreyButtonSmall(
-            text = "추가",
+            text = buttonText,
             onClick = onClickAdd,
           )
         }
@@ -160,6 +161,7 @@ fun ClassInformationPreview() {
         grade = "학년",
         classType = "강의유형",
         offeredDepartment = "개설학과",
+        buttonText = "추가",
         onClick = {},
         onClickAdd = {},
       )

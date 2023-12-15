@@ -30,8 +30,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayDA
@@ -90,7 +92,7 @@ fun SuwikiReviewGradeCard(
           RatingBar(ratingCount.toInt())
           if (reviewCount > 0) {
             Text(
-              text = "$reviewCount 개의 리뷰",
+              text = "$reviewCount${stringResource(id = R.string.review_count)}",
               style = SuwikiTheme.typography.caption7,
               color = Gray95,
             )
@@ -107,9 +109,9 @@ fun SuwikiReviewGradeCard(
           verticalArrangement = Arrangement.Center,
           horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-          SuwikiProgressLine("꿀강지수", "$honeyQualityCount", reviewIndicatorColor, honeyQualityCount)
-          SuwikiProgressLine("배움지수", "$learningQualityCount", reviewIndicatorColor, learningQualityCount)
-          SuwikiProgressLine("만족도수", "$satisfactionCount", reviewIndicatorColor, satisfactionCount)
+          SuwikiProgressLine(stringResource(id = R.string.honey_quality), "$honeyQualityCount", reviewIndicatorColor, honeyQualityCount)
+          SuwikiProgressLine(stringResource(id = R.string.learning_quality), "$learningQualityCount", reviewIndicatorColor, learningQualityCount)
+          SuwikiProgressLine(stringResource(id = R.string.satisfaction_quality), "$satisfactionCount", reviewIndicatorColor, satisfactionCount)
         }
       }
     }
