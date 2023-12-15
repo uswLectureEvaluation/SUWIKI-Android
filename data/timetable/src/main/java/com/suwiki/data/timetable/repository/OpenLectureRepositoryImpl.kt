@@ -4,11 +4,9 @@ import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.data.timetable.datasource.LocalOpenLectureDatasource
 import com.suwiki.data.timetable.datasource.RemoteOpenLectureDataSource
 import com.suwiki.domain.timetable.repository.OpenLectureRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class OpenLectureRepositoryImpl @Inject constructor(
@@ -34,5 +32,5 @@ class OpenLectureRepositoryImpl @Inject constructor(
         setOpenLectureListVersion(remoteVersion)
       }
     }
-  }.flowOn(Dispatchers.IO)
+  }
 }

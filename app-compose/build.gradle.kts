@@ -18,6 +18,7 @@ android {
 dependencies {
   implementation(projects.presentation)
 
+  implementation(projects.core.android)
   implementation(projects.core.model)
   implementation(projects.core.common)
   implementation(projects.core.network)
