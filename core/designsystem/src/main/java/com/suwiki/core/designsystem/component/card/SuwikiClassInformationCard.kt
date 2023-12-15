@@ -70,13 +70,13 @@ fun SuwikiClassInformationCard(
           modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
+          horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
           Text(
             text = className,
             style = SuwikiTheme.typography.body6,
             color = Black,
           )
-          Spacer(modifier = Modifier.width(6.dp))
           VerticalDivider(
             color = GrayDA,
             modifier = Modifier
@@ -84,7 +84,6 @@ fun SuwikiClassInformationCard(
               .width(1.dp)
               .padding(vertical = 3.dp),
           )
-          Spacer(modifier = Modifier.width(6.dp))
           Text(
             text = professor,
             style = SuwikiTheme.typography.body6,
