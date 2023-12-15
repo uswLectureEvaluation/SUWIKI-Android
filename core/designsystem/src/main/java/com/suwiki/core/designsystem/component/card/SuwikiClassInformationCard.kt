@@ -70,7 +70,7 @@ fun SuwikiClassInformationCard(
           modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
-          horizontalArrangement = Arrangement.spacedBy(6.dp)
+          horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
           Text(
             text = className,
