@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
@@ -60,86 +61,89 @@ fun SuwikiClassInformationCard(
         .fillMaxWidth(),
       shape = RoundedCornerShape(10.dp),
     ) {
-      Column(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(24.dp, 14.dp, 24.dp, 19.dp),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
-      ) {
-        Row(
-          verticalAlignment = Alignment.CenterVertically,
+      Row {
+
+        Column(
           modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min),
+            .padding(24.dp, 14.dp, 24.dp, 19.dp),
         ) {
-          Text(
-            text = className,
-            style = SuwikiTheme.typography.body6,
-            color = Black,
-          )
-          Spacer(modifier = Modifier.width(6.dp))
-          VerticalDivider(
-            color = GrayDA,
+          Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-              .fillMaxHeight()
-              .width(1.dp)
-              .padding(vertical = 3.dp),
-          )
-          Spacer(modifier = Modifier.width(6.dp))
-          Text(
-            text = professor,
-            style = SuwikiTheme.typography.body6,
-            color = Black,
-          )
-        }
-        Row(
-          modifier = Modifier
-            .fillMaxWidth(),
-          verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-          Text(
-            text = day,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-          )
-          Text(
-            text = classPeriod,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-          )
-          Text(
-            text = lectureRoom,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-          )
-          Spacer(modifier = Modifier.weight(1f))
-          SuwikiContainedGreyButtonSmall(
-            text = buttonText,
-            onClick = onClickAdd,
-          )
-        }
-        Row(
-          modifier = Modifier
-            .fillMaxWidth(),
-          verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-          Text(
-            text = grade,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-          )
-          Text(
-            text = classType,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-          )
-          Text(
-            text = offeredDepartment,
-            style = SuwikiTheme.typography.caption4,
-            color = Gray6A,
-          )
+              .fillMaxWidth()
+              .height(IntrinsicSize.Min),
+          ) {
+            Text(
+              text = className,
+              style = SuwikiTheme.typography.body6,
+              color = Black,
+            )
+            Spacer(modifier = Modifier.width(6.dp))
+            VerticalDivider(
+              color = GrayDA,
+              modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp)
+                .padding(vertical = 3.dp),
+            )
+            Spacer(modifier = Modifier.width(6.dp))
+            Text(
+              text = professor,
+              style = SuwikiTheme.typography.body6,
+              color = Black,
+            )
+          }
+          Spacer(modifier = Modifier.height(1.dp))
+          Row(
+            modifier = Modifier
+              .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+          ) {
+            Text(
+              text = day,
+              style = SuwikiTheme.typography.caption4,
+              color = Gray6A,
+            )
+            Text(
+              text = classPeriod,
+              style = SuwikiTheme.typography.caption4,
+              color = Gray6A,
+            )
+            Text(
+              text = lectureRoom,
+              style = SuwikiTheme.typography.caption4,
+              color = Gray6A,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            SuwikiContainedGreyButtonSmall(
+              text = buttonText,
+              onClick = onClickAdd,
+            )
+          }
+          Row(
+            modifier = Modifier
+              .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+          ) {
+            Text(
+              text = grade,
+              style = SuwikiTheme.typography.caption4,
+              color = Gray6A,
+            )
+            Text(
+              text = classType,
+              style = SuwikiTheme.typography.caption4,
+              color = Gray6A,
+            )
+            Text(
+              text = offeredDepartment,
+              style = SuwikiTheme.typography.caption4,
+              color = Gray6A,
+            )
+          }
         }
       }
     }
