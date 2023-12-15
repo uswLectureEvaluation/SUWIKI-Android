@@ -1,7 +1,9 @@
 package com.suwiki.core.designsystem.component.bottomsheet
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,20 +27,17 @@ import com.suwiki.core.designsystem.theme.White
 @Composable
 fun SuwikiBottomSheet(
   modifier: Modifier = Modifier,
+  isSheetOpen: Boolean,
+  changeSheetOpen: () -> Unit = {},
   bottomSheetItem: List<@Composable () -> Unit>,
 ) {
-  var isSheetOpen by rememberSaveable { mutableStateOf(false) }
-
-  // 테스트용 버튼
-  Button(onClick = { isSheetOpen = true }) {
-    Text("Bottom Sheet 열기")
-  }
-
   if (isSheetOpen) {
     ModalBottomSheet(
-      onDismissRequest = { isSheetOpen = false },
-      containerColor = White
+      onDismissRequest = changeSheetOpen,
+      containerColor = White,
+      dragHandle = null,
     ) {
+      Spacer(modifier = Modifier.height(36.dp))
       bottomSheetItem.forEach { item ->
         item()
       }
@@ -66,9 +65,17 @@ fun SuwikiBottomSheetItem(
 @Composable
 fun SuwikiBottomSheetPreview() {
   var isChecked by remember { mutableStateOf(false) }
+  var isSheetOpen by rememberSaveable { mutableStateOf(false) }
+
+  // 테스트용 버튼
+  Button(onClick = { isSheetOpen = true }) {
+    Text("Bottom Sheet 열기")
+  }
 
   SuwikiTheme {
     SuwikiBottomSheet(
+      isSheetOpen = isSheetOpen,
+      changeSheetOpen = { isSheetOpen = !isSheetOpen },
       bottomSheetItem = listOf(
         { SuwikiBottomSheetItem(title = "타이틀") },
         { SuwikiAlignContainer(
