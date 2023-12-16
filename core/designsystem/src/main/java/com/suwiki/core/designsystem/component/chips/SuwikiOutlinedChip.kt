@@ -23,6 +23,7 @@ import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiOutlinedChip(
@@ -39,7 +40,7 @@ fun SuwikiOutlinedChip(
   Box(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
-      .clickable(onClick = onClick)
+      .suwikiClickable(onClick = onClick)
       .wrapContentHeight()
       .background(color = White)
       .border(width = 1.dp, color = borderLineColor, shape = RoundedCornerShape(5.dp))

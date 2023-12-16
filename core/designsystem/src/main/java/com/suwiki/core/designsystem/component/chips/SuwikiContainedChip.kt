@@ -25,6 +25,7 @@ import com.suwiki.core.designsystem.theme.Green100
 import com.suwiki.core.designsystem.theme.Orange10
 import com.suwiki.core.designsystem.theme.Orange100
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.ui.extension.suwikiClickable
 
 enum class SuwikiChipType {
   ORANGE,
@@ -53,7 +54,7 @@ fun SuwikiContainedChip(
     modifier = Modifier
       .clip(RoundedCornerShape(5.dp))
       .background(color = backgroundColor)
-      .clickable(onClick = onClick)
+      .suwikiClickable(onClick = onClick)
       .wrapContentHeight()
       .padding(vertical = 4.dp, horizontal = 6.dp),
   ) {

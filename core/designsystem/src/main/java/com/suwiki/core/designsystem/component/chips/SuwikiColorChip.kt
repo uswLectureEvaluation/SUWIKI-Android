@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiColorChip(
@@ -26,7 +27,7 @@ fun SuwikiColorChip(
     Image(
       painter = painterResource(id = if (isChecked) R.drawable.ic_color_checked_chip else R.drawable.ic_color_chip),
       contentDescription = "",
-      modifier = Modifier.clickable(onClick = onClick),
+      modifier = Modifier.suwikiClickable(onClick = onClick),
     )
   }
 }
