@@ -22,12 +22,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.component.align.SuwikiAlignButton
+import com.suwiki.core.designsystem.theme.Black
+import com.suwiki.core.designsystem.theme.GrayCB
+import com.suwiki.core.designsystem.theme.GrayFB
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.White
 
 @Composable
 fun SuwikiSearchBarWithFilter(
@@ -43,7 +49,7 @@ fun SuwikiSearchBarWithFilter(
 ) {
   Row(
     Modifier
-      .background(Color.LightGray)
+      .background(GrayFB)
       .padding(vertical = 10.dp, horizontal = 24.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
@@ -53,13 +59,14 @@ fun SuwikiSearchBarWithFilter(
       modifier = modifier
         .weight(1f)
         .shadow(elevation = 10.dp) // TODO Custom Shadow로 변경해야함
-        .background(Color.White, shape = RoundedCornerShape(10.dp))
+        .background(White, shape = RoundedCornerShape(10.dp))
         .padding(8.dp),
+      textStyle = SuwikiTheme.typography.header7.copy(color = Black),
       singleLine = maxLines == 1,
       maxLines = if (minLines > maxLines) minLines else maxLines,
       minLines = minLines,
       interactionSource = interactionSource,
-      cursorBrush = SolidColor(Color.Blue),
+      cursorBrush = SolidColor(Primary),
       decorationBox = { innerText ->
         Row(
           verticalAlignment = Alignment.CenterVertically,
@@ -73,7 +80,13 @@ fun SuwikiSearchBarWithFilter(
             contentAlignment = Alignment.CenterStart,
           ) {
             innerText()
-            if (value.isEmpty()) Text(text = hint, color = Color.Gray)
+            if (value.isEmpty()) {
+              Text(
+                text = hint,
+                color = GrayCB,
+                style = SuwikiTheme.typography.header7,
+              )
+            }
           }
 
           if (value.isNotEmpty()) {
@@ -90,14 +103,8 @@ fun SuwikiSearchBarWithFilter(
 
     Spacer(modifier = Modifier.size(4.dp))
 
-    Image(
-      modifier = Modifier
-        .shadow(elevation = 10.dp) // TODO Custom Shadow로 변경해야함
-        .background(Color.White, shape = RoundedCornerShape(10.dp))
-        .clickable(onClick = onClickFilterButton)
-        .padding(8.dp),
-      painter = painterResource(id = R.drawable.ic_filter),
-      contentDescription = "",
+    SuwikiAlignButton(
+      onClick = onClickFilterButton,
     )
   }
 }
@@ -105,18 +112,20 @@ fun SuwikiSearchBarWithFilter(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiSearchBarWithFilterPreview() {
-  var normalValue by remember {
-    mutableStateOf("")
-  }
+  SuwikiTheme {
+    var normalValue by remember {
+      mutableStateOf("")
+    }
 
-  Column(
-    verticalArrangement = Arrangement.spacedBy(10.dp),
-  ) {
-    SuwikiSearchBarWithFilter(
-      hint = "Hinted search text",
-      value = normalValue,
-      onValueChange = { normalValue = it },
-      onClickClearButton = { normalValue = "" },
-    )
+    Column(
+      verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+      SuwikiSearchBarWithFilter(
+        hint = "Hinted search text",
+        value = normalValue,
+        onValueChange = { normalValue = it },
+        onClickClearButton = { normalValue = "" },
+      )
+    }
   }
 }
