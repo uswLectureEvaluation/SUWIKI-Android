@@ -34,6 +34,7 @@ import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiTextFieldSmall(
@@ -93,7 +94,7 @@ fun SuwikiTextFieldSmall(
             Image(
               modifier = Modifier
                 .size(21.dp)
-                .clickable(onClick = onClickClearButton),
+                .suwikiClickable(onClick = onClickClearButton),
               painter = painterResource(id = R.drawable.ic_textfield_clear),
               contentDescription = "",
             )

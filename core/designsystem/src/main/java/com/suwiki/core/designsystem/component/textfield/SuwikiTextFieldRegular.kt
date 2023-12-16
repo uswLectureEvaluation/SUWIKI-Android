@@ -35,6 +35,7 @@ import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiTextFieldRegular(
@@ -110,7 +111,7 @@ fun SuwikiTextFieldRegular(
 
           if (value.isNotEmpty()) {
             Image(
-              modifier = Modifier.clickable(onClick = onClickClearButton),
+              modifier = Modifier.suwikiClickable(onClick = onClickClearButton),
               painter = painterResource(id = R.drawable.ic_textfield_clear),
               contentDescription = "",
             )
