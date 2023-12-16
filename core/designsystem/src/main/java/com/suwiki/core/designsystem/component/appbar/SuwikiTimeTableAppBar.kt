@@ -28,7 +28,7 @@ import com.suwiki.core.ui.extension.suwikiClickable
 fun SuwikiTimeTableAppBar(
   modifier: Modifier = Modifier,
   timeTableName: String,
-  onClickPlus: () -> Unit = {},
+  onClickAdd: () -> Unit = {},
   onClickList: () -> Unit = {},
   onClickSetting: () -> Unit = {},
 ) {
@@ -57,7 +57,7 @@ fun SuwikiTimeTableAppBar(
         tint = Gray95,
         modifier = Modifier
           .size(24.dp)
-          .suwikiClickable(onClick = onClickPlus)
+          .suwikiClickable(onClick = onClickAdd)
           .padding(5.dp),
       )
       Spacer(modifier = Modifier.width(18.dp))
@@ -90,7 +90,7 @@ fun SuwikiTimeTableAppBarPreview() {
   SuwikiTheme {
     SuwikiTimeTableAppBar(
       timeTableName = "재밌는시간표",
-      onClickPlus = { /*TODO*/ },
+      onClickAdd = { /*TODO*/ },
       onClickList = { /*TODO*/ },
       onClickSetting = { /*TODO*/ },
     )
