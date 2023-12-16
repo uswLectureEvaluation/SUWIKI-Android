@@ -1,13 +1,12 @@
 package com.suwiki.core.designsystem.component.appbar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -47,6 +46,7 @@ fun SuwikiTimeTableAppBar(
         .padding(top = 28.dp, bottom = 12.dp, start = 24.dp, end = 130.dp),
     )
     Row(
+      horizontalArrangement = Arrangement.spacedBy(18.dp),
       modifier = Modifier
         .align(Alignment.CenterEnd)
         .padding(top = 37.dp, bottom = 12.dp, end = 20.dp),
@@ -60,7 +60,6 @@ fun SuwikiTimeTableAppBar(
           .suwikiClickable(onClick = onClickAdd)
           .padding(5.dp),
       )
-      Spacer(modifier = Modifier.width(18.dp))
       Icon(
         painter = painterResource(id = R.drawable.ic_appbar_list),
         contentDescription = "",
@@ -70,7 +69,6 @@ fun SuwikiTimeTableAppBar(
           .suwikiClickable(onClick = onClickList)
           .padding(vertical = 6.dp, horizontal = 4.dp),
       )
-      Spacer(modifier = Modifier.width(18.dp))
       Icon(
         painter = painterResource(id = R.drawable.ic_appbar_setting),
         contentDescription = "",
