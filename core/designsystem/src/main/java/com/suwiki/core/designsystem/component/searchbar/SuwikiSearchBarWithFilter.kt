@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.align.SuwikiAlignButton
+import com.suwiki.core.designsystem.component.button.TextFieldClearButton
 import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.GrayCB
@@ -94,11 +95,8 @@ fun SuwikiSearchBarWithFilter(
           }
 
           if (value.isNotEmpty()) {
-            Image(
-              modifier = Modifier
-                .suwikiClickable(onClick = onClickClearButton),
-              painter = painterResource(id = R.drawable.ic_textfield_clear),
-              contentDescription = "",
+            TextFieldClearButton(
+              onClick = onClickClearButton,
             )
           }
         }
