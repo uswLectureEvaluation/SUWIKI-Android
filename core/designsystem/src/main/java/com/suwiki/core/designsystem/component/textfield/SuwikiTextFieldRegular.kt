@@ -23,12 +23,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.theme.Black
+import com.suwiki.core.designsystem.theme.Error
+import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.GrayCB
+import com.suwiki.core.designsystem.theme.GrayF6
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
 
 @Composable
 fun SuwikiTextFieldRegular(
@@ -47,16 +53,16 @@ fun SuwikiTextFieldRegular(
   val isFocused by interactionSource.collectIsFocusedAsState()
 
   val (labelColor, helperTextColor) = when {
-    isError -> (Color.Red to Color.Red)
-    isFocused -> (Color.Blue to Color.Blue)
-    else -> (Color.Gray to Color.Gray)
+    isError -> (Error to Error)
+    isFocused -> (Primary to Primary)
+    else -> (Gray95 to Gray95)
   }
 
   val underlineColor = when {
-    isError -> Color.Red
-    isFocused -> Color.Blue
-    value.isEmpty() -> Color.Gray
-    else -> Color.LightGray
+    isError -> Error
+    isFocused -> Primary
+    value.isEmpty() -> Gray95
+    else -> GrayF6
   }
 
   BasicTextField(
@@ -66,13 +72,15 @@ fun SuwikiTextFieldRegular(
     singleLine = maxLines == 1,
     maxLines = if (minLines > maxLines) minLines else maxLines,
     minLines = minLines,
+    textStyle = SuwikiTheme.typography.header4.copy(color = Black),
     interactionSource = interactionSource,
-    cursorBrush = SolidColor(Color.Blue),
+    cursorBrush = SolidColor(Primary),
     decorationBox = { innerText ->
       Column {
         Text(
           text = label,
           color = labelColor,
+          style = SuwikiTheme.typography.caption2,
         )
 
         Spacer(modifier = Modifier.size(2.dp))
@@ -91,7 +99,13 @@ fun SuwikiTextFieldRegular(
             contentAlignment = Alignment.CenterStart,
           ) {
             innerText()
-            if (value.isEmpty()) Text(text = hint, color = Color.LightGray)
+            if (value.isEmpty()) {
+              Text(
+                text = hint,
+                color = GrayCB,
+                style = SuwikiTheme.typography.header4,
+              )
+            }
           }
 
           if (value.isNotEmpty()) {
@@ -115,6 +129,7 @@ fun SuwikiTextFieldRegular(
         Text(
           text = helperText,
           color = helperTextColor,
+          style = SuwikiTheme.typography.caption2,
         )
       }
     },
@@ -124,34 +139,36 @@ fun SuwikiTextFieldRegular(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiTextFieldRegularPreview() {
-  var normalValue by remember {
-    mutableStateOf("")
-  }
+  SuwikiTheme {
+    var normalValue by remember {
+      mutableStateOf("")
+    }
 
-  var errorValue by remember {
-    mutableStateOf("")
-  }
+    var errorValue by remember {
+      mutableStateOf("")
+    }
 
-  Column(
-    verticalArrangement = Arrangement.spacedBy(10.dp),
-  ) {
-    SuwikiTextFieldRegular(
-      label = "라벨",
-      hint = "플레이스 홀더",
-      value = normalValue,
-      onValueChange = { normalValue = it },
-      onClickClearButton = { normalValue = "" },
-      helperText = "도움말 메세지",
-    )
+    Column(
+      verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+      SuwikiTextFieldRegular(
+        label = "라벨",
+        hint = "플레이스 홀더",
+        value = normalValue,
+        onValueChange = { normalValue = it },
+        onClickClearButton = { normalValue = "" },
+        helperText = "도움말 메세지",
+      )
 
-    SuwikiTextFieldRegular(
-      label = "라벨",
-      hint = "플레이스 홀더",
-      value = errorValue,
-      onValueChange = { errorValue = it },
-      onClickClearButton = { errorValue = "" },
-      helperText = "도움말 메세지",
-      isError = true,
-    )
+      SuwikiTextFieldRegular(
+        label = "라벨",
+        hint = "플레이스 홀더",
+        value = errorValue,
+        onValueChange = { errorValue = it },
+        onClickClearButton = { errorValue = "" },
+        helperText = "도움말 메세지",
+        isError = true,
+      )
+    }
   }
 }
