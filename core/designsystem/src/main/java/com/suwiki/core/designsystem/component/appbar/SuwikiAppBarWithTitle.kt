@@ -49,7 +49,7 @@ fun SuwikiAppBarWithTitle(
       style = SuwikiTheme.typography.header6,
     )
     Icon(
-      painter = painterResource(id = R.drawable.ic_appbar_x_mark),
+      painter = painterResource(id = R.drawable.ic_appbar_close_mark),
       contentDescription = "",
       tint = Gray95,
       modifier = Modifier
