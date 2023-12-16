@@ -22,7 +22,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
-fun SuwikiAppBarWithTextBtn(
+fun SuwikiAppBarWithTextButton(
   modifier: Modifier = Modifier,
   buttonText: String = "",
   onClickBack: () -> Unit = {},
@@ -60,7 +60,7 @@ fun SuwikiAppBarWithTextBtn(
 @Composable
 fun SuwikiAddClassAppBarPreview() {
   SuwikiTheme {
-    SuwikiAppBarWithTextBtn(
+    SuwikiAppBarWithTextButton(
       buttonText = "text",
       onClickBack = { /*TODO*/ },
       onClickTextButton = { /*TODO*/ },
