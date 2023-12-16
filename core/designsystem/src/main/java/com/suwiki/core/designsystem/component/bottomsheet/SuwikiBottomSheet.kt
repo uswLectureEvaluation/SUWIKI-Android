@@ -27,12 +27,12 @@ import com.suwiki.core.designsystem.theme.White
 @Composable
 fun SuwikiBottomSheet(
   isSheetOpen: Boolean,
-  changeSheetOpen: () -> Unit = {},
+  onDismissRequest: () -> Unit = {},
   bottomSheetItem: List<@Composable () -> Unit>,
 ) {
   if (isSheetOpen) {
     ModalBottomSheet(
-      onDismissRequest = changeSheetOpen,
+      onDismissRequest = onDismissRequest,
       containerColor = White,
       dragHandle = null,
     ) {
@@ -74,7 +74,7 @@ fun SuwikiBottomSheetPreview() {
   SuwikiTheme {
     SuwikiBottomSheet(
       isSheetOpen = isSheetOpen,
-      changeSheetOpen = { isSheetOpen = !isSheetOpen },
+      onDismissRequest = { isSheetOpen = !isSheetOpen },
       bottomSheetItem = listOf(
         { SuwikiBottomSheetItem(title = "타이틀") },
         {
