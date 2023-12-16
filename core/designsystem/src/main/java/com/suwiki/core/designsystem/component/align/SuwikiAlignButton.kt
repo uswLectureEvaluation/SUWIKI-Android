@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
+import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
@@ -26,7 +27,7 @@ fun SuwikiAlignButton(
     painter = painterResource(id = R.drawable.ic_filter),
     contentDescription = "",
     modifier = Modifier
-      .shadow(elevation = 10.dp)
+      .cardShadow()
       .clip(RoundedCornerShape(10.dp))
       .suwikiClickable(onClick = onClick)
       .background(White)

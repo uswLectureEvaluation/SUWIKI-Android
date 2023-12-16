@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.align.SuwikiAlignButton
+import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayFB
@@ -59,8 +61,9 @@ fun SuwikiSearchBarWithFilter(
       onValueChange = onValueChange,
       modifier = modifier
         .weight(1f)
-        .shadow(elevation = 10.dp) // TODO Custom Shadow로 변경해야함
+        .cardShadow()
         .background(White, shape = RoundedCornerShape(10.dp))
+        .height(40.dp)
         .padding(8.dp),
       textStyle = SuwikiTheme.typography.header7.copy(color = Black),
       singleLine = maxLines == 1,
