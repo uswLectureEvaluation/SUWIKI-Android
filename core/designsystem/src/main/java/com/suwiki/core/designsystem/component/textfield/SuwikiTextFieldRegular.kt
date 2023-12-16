@@ -1,5 +1,6 @@
 package com.suwiki.core.designsystem.component.textfield
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,7 @@ import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.designsystem.theme.White
 
 @Composable
 fun SuwikiTextFieldRegular(
@@ -144,6 +146,7 @@ fun SuwikiTextFieldRegularPreview() {
     }
 
     Column(
+      modifier = Modifier.background(White),
       verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
       SuwikiTextFieldRegular(
