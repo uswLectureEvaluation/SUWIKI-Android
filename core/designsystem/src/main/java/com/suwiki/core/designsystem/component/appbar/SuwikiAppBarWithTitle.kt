@@ -33,7 +33,9 @@ fun SuwikiAppBarWithTitle(
       .fillMaxWidth()
       .wrapContentHeight()
       .background(White)
-      .padding(vertical = 15.dp, horizontal = 24.dp),
+//      .padding(vertical = 15.dp, horizontal = 24.dp),
+      .padding(top = 15.dp, bottom = 15.dp, start = 18.dp, end = 24.dp),
+
   ) {
     Icon(
       painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
@@ -42,7 +44,7 @@ fun SuwikiAppBarWithTitle(
       modifier = Modifier
         .size(24.dp)
         .suwikiClickable(onClick = onClickBack)
-        .padding(top = 3.dp, bottom = 2.dp, end = 13.dp),
+        .padding(vertical = 2.dp, horizontal = 6.5.dp),
     )
     Text(
       text = title,
