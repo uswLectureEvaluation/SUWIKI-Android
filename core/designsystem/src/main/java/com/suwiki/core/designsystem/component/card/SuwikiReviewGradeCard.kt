@@ -51,7 +51,6 @@ fun SuwikiReviewGradeCard(
   learningQualityCount: Float,
   satisfactionCount: Float,
   onClick: () -> Unit,
-  pressedBackgroundColor: Color,
 ) {
   val reviewCountColor = if (reviewCount > 0) Primary else GrayDA
   val reviewIndicatorColor = if (reviewCount > 0) Black else GrayDA
@@ -61,7 +60,7 @@ fun SuwikiReviewGradeCard(
       .wrapContentHeight()
       .suwikiClickable(
         rippleEnabled = true,
-        rippleColor = pressedBackgroundColor,
+        rippleColor = Primary,
         onClick = onClick,
       )
       .shadow(4.dp),
@@ -194,7 +193,6 @@ fun SuwikiReviewGradeCardPreview() {
         honeyQualityCount = 3.4f,
         learningQualityCount = 3.4f,
         satisfactionCount = 4.4f,
-        pressedBackgroundColor = Primary,
       )
       Spacer(modifier = Modifier.height(20.dp))
       SuwikiReviewGradeCard(
@@ -205,7 +203,6 @@ fun SuwikiReviewGradeCardPreview() {
         honeyQualityCount = 0.0f,
         learningQualityCount = 0.0f,
         satisfactionCount = 0.0f,
-        pressedBackgroundColor = Primary,
       )
     }
   }
