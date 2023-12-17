@@ -34,6 +34,7 @@ enum class SuwikiChipType {
 
 @Composable
 fun SuwikiContainedChip(
+  modifier: Modifier = Modifier,
   isChecked: Boolean,
   onClick: () -> Unit = {},
   type: SuwikiChipType,
@@ -50,7 +51,7 @@ fun SuwikiContainedChip(
   }
 
   Box(
-    modifier = Modifier
+    modifier = modifier
       .clip(RoundedCornerShape(5.dp))
       .background(color = backgroundColor)
       .suwikiClickable(onClick = onClick)

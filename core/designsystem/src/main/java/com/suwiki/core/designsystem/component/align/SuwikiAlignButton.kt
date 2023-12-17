@@ -20,12 +20,13 @@ import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiAlignButton(
+  modifier: Modifier = Modifier,
   onClick: () -> Unit = {},
 ) {
   Icon(
     painter = painterResource(id = R.drawable.ic_filter),
     contentDescription = "",
-    modifier = Modifier
+    modifier = modifier
       .cardShadow()
       .clip(RoundedCornerShape(10.dp))
       .suwikiClickable(onClick = onClick)

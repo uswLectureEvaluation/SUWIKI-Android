@@ -26,6 +26,7 @@ import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiOutlinedChip(
+  modifier: Modifier = Modifier,
   text: String,
   isChecked: Boolean,
   onClick: () -> Unit = {},
@@ -37,7 +38,7 @@ fun SuwikiOutlinedChip(
   }
 
   Box(
-    modifier = Modifier
+    modifier = modifier
       .clip(RoundedCornerShape(5.dp))
       .suwikiClickable(onClick = onClick)
       .wrapContentHeight()

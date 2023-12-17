@@ -17,11 +17,12 @@ import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiColorChip(
+  modifier: Modifier = Modifier,
   isChecked: Boolean,
   onClick: () -> Unit = {},
 ) {
   Box(
-    modifier = Modifier.size(40.dp),
+    modifier = modifier.size(40.dp),
   ) {
     Image(
       painter = painterResource(id = if (isChecked) R.drawable.ic_color_checked_chip else R.drawable.ic_color_chip),
