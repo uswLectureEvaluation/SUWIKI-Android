@@ -31,9 +31,7 @@ enum class BottomNavigationIndicate {
 @Composable
 fun SuwikiBottomNavigation(
   modifier: Modifier = Modifier,
-  timeTableComposable: @Composable () -> Unit,
-  evaluationComposable: @Composable () -> Unit = @Composable {},
-  myInfoComposable: @Composable () -> Unit = @Composable {},
+  content: List<@Composable () -> Unit>,
 ) {
   Box(
     modifier = modifier
@@ -46,11 +44,9 @@ fun SuwikiBottomNavigation(
     Row(
       horizontalArrangement = Arrangement.SpaceBetween
     ) {
-      val itemModifier = Modifier.weight(1f)
-
-      timeTableComposable()
-      evaluationComposable()
-      myInfoComposable()
+      content.forEach { item ->
+        item()
+      }
     }
   }
 }
@@ -61,33 +57,16 @@ fun SetBottomNavigationItemActive(
   isTimeTableActive: Boolean,
   isEvaluationActive: Boolean,
   isMyInfoActive: Boolean,
-  timeTableItemIcon: Int,
-  evaluationItemIcon: Int,
-  myInfoItemIcon: Int,
+  iconId: Int,
   changeTimeTableActive: () -> Unit,
   changeEvaluationActive: () -> Unit,
   changeMyInfoActive: () -> Unit,
   itemIndicator: BottomNavigationIndicate,
 ) {
-  val (isActive, iconId, changeActive) = when (itemIndicator) {
-    BottomNavigationIndicate.TIMETABLE ->
-      Triple(
-        isTimeTableActive,
-        timeTableItemIcon,
-        changeTimeTableActive,
-      )
-    BottomNavigationIndicate.EVALUATION ->
-      Triple(
-        isEvaluationActive,
-        evaluationItemIcon,
-        changeEvaluationActive,
-      )
-    BottomNavigationIndicate.MYINFO ->
-      Triple(
-        isMyInfoActive,
-        myInfoItemIcon,
-        changeMyInfoActive,
-      )
+  val (isActive, changeActive) = when (itemIndicator) {
+    BottomNavigationIndicate.TIMETABLE -> isTimeTableActive to changeTimeTableActive
+    BottomNavigationIndicate.EVALUATION -> isEvaluationActive to changeEvaluationActive
+    BottomNavigationIndicate.MYINFO -> isMyInfoActive to changeMyInfoActive
   }
 
   if (isActive) {
@@ -133,48 +112,47 @@ fun SuwikiBottomNavigationPreview() {
       }
 
       SuwikiBottomNavigation(
-        timeTableComposable = {
-          SetBottomNavigationItemActive(
-            isTimeTableActive = isTimeTableActive,
-            isEvaluationActive = isEvaluationActive,
-            isMyInfoActive = isMyInfoActive,
-            timeTableItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            evaluationItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            myInfoItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            changeTimeTableActive = changeTimeTableActive,
-            changeEvaluationActive = changeEvaluationActive,
-            changeMyInfoActive = changeMyInfoActive,
-            itemIndicator = BottomNavigationIndicate.TIMETABLE
-          )
-        },
-        evaluationComposable = {
-          SetBottomNavigationItemActive(
-            isTimeTableActive = isTimeTableActive,
-            isEvaluationActive = isEvaluationActive,
-            isMyInfoActive = isMyInfoActive,
-            timeTableItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            evaluationItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            myInfoItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            changeTimeTableActive = changeTimeTableActive,
-            changeEvaluationActive = changeEvaluationActive,
-            changeMyInfoActive = changeMyInfoActive,
-            itemIndicator = BottomNavigationIndicate.EVALUATION
-          )
-        },
-        myInfoComposable = {
-          SetBottomNavigationItemActive(
-            isTimeTableActive = isTimeTableActive,
-            isEvaluationActive = isEvaluationActive,
-            isMyInfoActive = isMyInfoActive,
-            timeTableItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            evaluationItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            myInfoItemIcon = R.drawable.ic_bottom_navigation_evaluation,
-            changeTimeTableActive = changeTimeTableActive,
-            changeEvaluationActive = changeEvaluationActive,
-            changeMyInfoActive = changeMyInfoActive,
-            itemIndicator = BottomNavigationIndicate.MYINFO
-          )
-        }
+        content = listOf(
+          {
+            SetBottomNavigationItemActive(
+              modifier = Modifier.weight(1f),
+              isTimeTableActive = isTimeTableActive,
+              isEvaluationActive = isEvaluationActive,
+              isMyInfoActive = isMyInfoActive,
+              iconId = R.drawable.ic_bottom_navigation_evaluation,
+              changeTimeTableActive = changeTimeTableActive,
+              changeEvaluationActive = changeEvaluationActive,
+              changeMyInfoActive = changeMyInfoActive,
+              itemIndicator = BottomNavigationIndicate.TIMETABLE,
+            )
+          },
+          {
+            SetBottomNavigationItemActive(
+              modifier = Modifier.weight(1f),
+              isTimeTableActive = isTimeTableActive,
+              isEvaluationActive = isEvaluationActive,
+              isMyInfoActive = isMyInfoActive,
+              iconId = R.drawable.ic_bottom_navigation_evaluation,
+              changeTimeTableActive = changeTimeTableActive,
+              changeEvaluationActive = changeEvaluationActive,
+              changeMyInfoActive = changeMyInfoActive,
+              itemIndicator = BottomNavigationIndicate.EVALUATION,
+            )
+          },
+          {
+            SetBottomNavigationItemActive(
+              modifier = Modifier.weight(1f),
+              isTimeTableActive = isTimeTableActive,
+              isEvaluationActive = isEvaluationActive,
+              isMyInfoActive = isMyInfoActive,
+              iconId = R.drawable.ic_bottom_navigation_evaluation,
+              changeTimeTableActive = changeTimeTableActive,
+              changeEvaluationActive = changeEvaluationActive,
+              changeMyInfoActive = changeMyInfoActive,
+              itemIndicator = BottomNavigationIndicate.MYINFO,
+            )
+          },
+        ),
       )
     }
   }
