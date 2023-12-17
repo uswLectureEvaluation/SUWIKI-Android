@@ -29,7 +29,12 @@ enum class SuwikiChipType {
   BLUE,
   GREEN,
 }
-
+/**
+ * 뱃지의 활용도가 궁금합니다.
+ * 뱃지의 2가지 텍스트의 폰트가 다른데 라벨만을 위한건지
+ * 범용성까지 생각해서 경우에 따른 폰트적용인지
+ * 아니면 항상 2가지 폰트가 공존하는지
+ * **/
 @Composable
 fun SuwikiColorBadge(
   modifier: Modifier = Modifier,
