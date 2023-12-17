@@ -1,5 +1,8 @@
 package com.suwiki.core.model.timetable
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class Timetable(
   val createTime: Long,
   val year: String,

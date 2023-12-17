@@ -22,7 +22,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
-fun SuwikiAppBarWithTextBtn(
+fun SuwikiAppBarWithTextButton(
   modifier: Modifier = Modifier,
   buttonText: String = "",
   onClickBack: () -> Unit = {},
@@ -33,7 +33,7 @@ fun SuwikiAppBarWithTextBtn(
       .fillMaxWidth()
       .wrapContentHeight()
       .background(White)
-      .padding(start = 24.dp, end = 18.dp),
+      .padding(vertical = 15.dp, horizontal = 18.dp),
   ) {
     Icon(
       painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
@@ -43,15 +43,14 @@ fun SuwikiAppBarWithTextBtn(
         .size(24.dp)
         .suwikiClickable(onClick = onClickBack)
         .align(Alignment.CenterStart)
-        .padding(top = 3.dp, bottom = 2.dp, end = 13.dp),
+        .padding(vertical = 2.dp, horizontal = 6.5.dp),
     )
     SuwikiContainedButtonSmall(
       text = buttonText,
       textColor = Primary,
       onClick = onClickTextButton,
       modifier = Modifier
-        .align(Alignment.CenterEnd)
-        .padding(top = 13.dp, bottom = 13.dp),
+        .align(Alignment.CenterEnd),
     )
   }
 }
@@ -60,7 +59,7 @@ fun SuwikiAppBarWithTextBtn(
 @Composable
 fun SuwikiAddClassAppBarPreview() {
   SuwikiTheme {
-    SuwikiAppBarWithTextBtn(
+    SuwikiAppBarWithTextButton(
       buttonText = "text",
       onClickBack = { /*TODO*/ },
       onClickTextButton = { /*TODO*/ },
