@@ -83,7 +83,5 @@ fun SuwikiSelectionContainerPreview() {
         onClick = {},
       )
     }
-
   }
 }
-

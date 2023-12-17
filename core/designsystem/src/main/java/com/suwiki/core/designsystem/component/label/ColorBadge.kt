@@ -29,6 +29,7 @@ enum class SuwikiChipType {
   BLUE,
   GREEN,
 }
+
 /**
  * 뱃지의 활용도가 궁금합니다.
  * 뱃지의 2가지 텍스트의 폰트가 다른데 라벨만을 위한건지
@@ -72,11 +73,9 @@ fun SuwikiColorBadge(
   }
 }
 
-
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiColorBadgePreview() {
-
   SuwikiTheme {
     Column {
       SuwikiColorBadge(
