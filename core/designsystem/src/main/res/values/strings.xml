@@ -11,4 +11,8 @@
   <string name="learning_quality">배움지수</string>
   <string name="satisfaction_quality">만족지수</string>
   <string name="review_count">개의 리뷰</string>
+  <string name="word_my">MY</string>
+  <string name="word_semester">학시</string>
+  <string name="word_edit">신고</string>
+  <string name="word_report">수정</string>
 </resources>
