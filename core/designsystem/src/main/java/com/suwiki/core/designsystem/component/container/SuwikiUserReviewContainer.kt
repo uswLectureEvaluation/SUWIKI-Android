@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
 import com.suwiki.core.designsystem.component.card.RatingBar
-import com.suwiki.core.designsystem.component.label.SuwikiBasicLabel
+import com.suwiki.core.designsystem.component.badge.SuwikiBasicLabel
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayF6

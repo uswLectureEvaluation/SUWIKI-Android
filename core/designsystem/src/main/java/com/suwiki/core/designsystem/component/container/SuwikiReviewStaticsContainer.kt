@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.card.SuwikiReviewGradeCard
-import com.suwiki.core.designsystem.component.label.SuwikiBasicLabel
-import com.suwiki.core.designsystem.component.label.SuwikiChipType
-import com.suwiki.core.designsystem.component.label.SuwikiColorBadge
+import com.suwiki.core.designsystem.component.badge.SuwikiBasicLabel
+import com.suwiki.core.designsystem.component.badge.SuwikiChipType
+import com.suwiki.core.designsystem.component.badge.SuwikiColorBadge
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayDA

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
-import com.suwiki.core.designsystem.component.label.SuwikiBasicLabel
+import com.suwiki.core.designsystem.component.badge.SuwikiBasicLabel
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayF6

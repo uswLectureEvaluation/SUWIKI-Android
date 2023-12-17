@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.label
+package com.suwiki.core.designsystem.component.badge
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
