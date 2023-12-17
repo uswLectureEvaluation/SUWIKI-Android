@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.Container
+package com.suwiki.core.designsystem.component.container
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,7 +29,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 
 @Composable
-fun SuwikiUserReviewCard(
+fun SuwikiUserReviewContainer(
   modifier: Modifier = Modifier,
   text: String,
   isChecked: Boolean,
@@ -84,23 +84,18 @@ fun SuwikiUserReviewCard(
     }
   }
 }
-@Composable
-fun SuwikiUserTypeExamReviewCard() {
-
-}
-
 
 @Preview
 @Composable
 fun ReviewContainerPreview() {
   SuwikiTheme {
     Column {
-      SuwikiUserReviewCard(
+      SuwikiUserReviewContainer(
         isChecked = false,
         text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
         onClick = {},
       )
-      SuwikiUserReviewCard(
+      SuwikiUserReviewContainer(
         isChecked = true,
         text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
         onClick = {},
