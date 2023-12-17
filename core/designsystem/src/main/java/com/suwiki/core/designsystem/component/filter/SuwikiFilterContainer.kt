@@ -33,6 +33,7 @@ import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiFilterContainer(
+  modifier: Modifier = Modifier,
   text: String,
   isChecked: Boolean,
   isStared: Boolean,
@@ -46,7 +47,7 @@ fun SuwikiFilterContainer(
   }
 
   Box(
-    modifier = Modifier
+    modifier = modifier
       .background(backgroundColor)
       .fillMaxWidth()
       .wrapContentHeight()
