@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -21,6 +25,12 @@ import com.suwiki.core.designsystem.theme.White
 @Composable
 fun SuwikiBottomNavigation(
   modifier: Modifier = Modifier,
+  isTimeTableChecked: Boolean,
+  isEvaluationChecked: Boolean,
+  isMyInfoChecked: Boolean,
+  onClickTimeTableItem: () -> Unit = {},
+  onClickEvaluationItem: () -> Unit = {},
+  onClickMyInfoItem: () -> Unit = {},
 ) {
   Box(
     modifier = modifier
@@ -33,17 +43,23 @@ fun SuwikiBottomNavigation(
     Row(
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-      SuwikiBottomNavigationActiveItem(
+      SuwikiBottomNavigationItem(
         modifier = Modifier.weight(1f),
+        isChecked = isTimeTableChecked,
         iconId = R.drawable.ic_bottom_navigation_evaluation,
+        onClickItem = onClickTimeTableItem,
       )
-      SuwikiBottomNavigationInActiveItem(
+      SuwikiBottomNavigationItem(
         modifier = Modifier.weight(1f),
+        isChecked = isEvaluationChecked,
         iconId = R.drawable.ic_bottom_navigation_evaluation,
+        onClickItem = onClickEvaluationItem,
       )
-      SuwikiBottomNavigationInActiveItem(
+      SuwikiBottomNavigationItem(
         modifier = Modifier.weight(1f),
+        isChecked = isMyInfoChecked,
         iconId = R.drawable.ic_bottom_navigation_evaluation,
+        onClickItem = onClickMyInfoItem,
       )
     }
   }
@@ -52,9 +68,20 @@ fun SuwikiBottomNavigation(
 @Preview(showSystemUi = true)
 @Composable
 fun SuwikiBottomNavigationPreview() {
+  var isTimeTableChecked by remember { mutableStateOf(true) }
+  var isEvaluationChecked by remember { mutableStateOf(false) }
+  var isMyInfoChecked by remember { mutableStateOf(false) }
+
   SuwikiTheme {
     Column {
-      SuwikiBottomNavigation()
+      SuwikiBottomNavigation(
+        isTimeTableChecked = isTimeTableChecked,
+        isEvaluationChecked = isEvaluationChecked,
+        isMyInfoChecked = isMyInfoChecked,
+        onClickTimeTableItem = { isTimeTableChecked = !isTimeTableChecked },
+        onClickEvaluationItem = { isEvaluationChecked = !isEvaluationChecked },
+        onClickMyInfoItem = { isMyInfoChecked = !isMyInfoChecked },
+      )
     }
   }
 }
