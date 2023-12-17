@@ -28,22 +28,22 @@ fun SuwikiBottomNavigation(
       .clip(RoundedCornerShape(10.dp, 10.dp, 0.dp, 0.dp))
       .background(White)
       .fillMaxWidth()
-      .wrapContentHeight()
+      .wrapContentHeight(),
   ) {
     Row(
-      horizontalArrangement = Arrangement.SpaceBetween
+      horizontalArrangement = Arrangement.SpaceBetween,
     ) {
       SuwikiBottomNavigationActiveItem(
         modifier = Modifier.weight(1f),
-        iconId = R.drawable.ic_bottom_navigation_evaluation
+        iconId = R.drawable.ic_bottom_navigation_evaluation,
       )
       SuwikiBottomNavigationInActiveItem(
         modifier = Modifier.weight(1f),
-        iconId = R.drawable.ic_bottom_navigation_evaluation
+        iconId = R.drawable.ic_bottom_navigation_evaluation,
       )
       SuwikiBottomNavigationInActiveItem(
         modifier = Modifier.weight(1f),
-        iconId = R.drawable.ic_bottom_navigation_evaluation
+        iconId = R.drawable.ic_bottom_navigation_evaluation,
       )
     }
   }

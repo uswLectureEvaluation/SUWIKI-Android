@@ -26,7 +26,7 @@ fun SuwikiBottomNavigationActiveItem(
     tint = Primary,
     modifier = modifier
       .suwikiClickable(onClick = onClickItem)
-      .padding(vertical = 16.dp, horizontal = 48.dp)
+      .padding(vertical = 16.dp, horizontal = 48.dp),
   )
 }
 
@@ -42,7 +42,7 @@ fun SuwikiBottomNavigationInActiveItem(
     tint = GrayDA,
     modifier = modifier
       .suwikiClickable(onClick = onClickItem)
-      .padding(vertical = 16.dp, horizontal = 48.dp)
+      .padding(vertical = 16.dp, horizontal = 48.dp),
   )
 }
 
@@ -52,10 +52,10 @@ fun SuwikiBottomNavigationItemPreview() {
   SuwikiTheme {
     Row {
       SuwikiBottomNavigationActiveItem(
-        iconId = R.drawable.ic_bottom_navigation_evaluation
+        iconId = R.drawable.ic_bottom_navigation_evaluation,
       )
       SuwikiBottomNavigationInActiveItem(
-        iconId = R.drawable.ic_bottom_navigation_evaluation
+        iconId = R.drawable.ic_bottom_navigation_evaluation,
       )
     }
   }
