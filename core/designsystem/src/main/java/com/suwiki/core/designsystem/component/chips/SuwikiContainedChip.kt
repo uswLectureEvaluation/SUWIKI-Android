@@ -1,7 +1,6 @@
 package com.suwiki.core.designsystem.component.chips
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -25,6 +24,7 @@ import com.suwiki.core.designsystem.theme.Green100
 import com.suwiki.core.designsystem.theme.Orange10
 import com.suwiki.core.designsystem.theme.Orange100
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.ui.extension.suwikiClickable
 
 enum class SuwikiChipType {
   ORANGE,
@@ -54,7 +54,7 @@ fun SuwikiContainedChip(
     modifier = modifier
       .clip(RoundedCornerShape(5.dp))
       .background(color = backgroundColor)
-      .clickable(onClick = onClick)
+      .suwikiClickable(onClick = onClick)
       .wrapContentHeight()
       .padding(vertical = 4.dp, horizontal = 6.dp),
   ) {

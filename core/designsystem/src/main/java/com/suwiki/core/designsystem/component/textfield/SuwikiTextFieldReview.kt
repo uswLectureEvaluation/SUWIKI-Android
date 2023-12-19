@@ -23,6 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.theme.Black
+import com.suwiki.core.designsystem.theme.Error
+import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.GrayF6
+import com.suwiki.core.designsystem.theme.Primary
+import com.suwiki.core.designsystem.theme.SuwikiTheme
 
 @Composable
 fun SuwikiTextFieldReview(
@@ -37,23 +43,30 @@ fun SuwikiTextFieldReview(
     value = value,
     onValueChange = onValueChange,
     modifier = modifier.fillMaxWidth(),
+    textStyle = SuwikiTheme.typography.body7.copy(Black),
     interactionSource = interactionSource,
-    cursorBrush = SolidColor(Color.Blue),
+    cursorBrush = SolidColor(Primary),
     decorationBox = { innerText ->
       Box(
         modifier = Modifier
           .heightIn(min = 198.dp)
-          .background(Color.LightGray, shape = RoundedCornerShape(10.dp))
+          .background(GrayF6, shape = RoundedCornerShape(10.dp))
           .border(
             width = 1.dp,
-            color = if (isError) Color.Red else Color.Unspecified,
+            color = if (isError) Error else Color.Unspecified,
             shape = RoundedCornerShape(10.dp),
           )
           .padding(horizontal = 16.dp, vertical = 24.dp),
         contentAlignment = Alignment.TopStart,
       ) {
         innerText()
-        if (value.isEmpty()) Text(text = hint, color = Color.Gray)
+        if (value.isEmpty()) {
+          Text(
+            text = hint,
+            color = Gray95,
+            style = SuwikiTheme.typography.body7,
+          )
+        }
       }
     },
   )
@@ -62,25 +75,27 @@ fun SuwikiTextFieldReview(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiTextFieldReviewPreview() {
-  var normalValue by remember {
-    mutableStateOf("")
-  }
+  SuwikiTheme {
+    var normalValue by remember {
+      mutableStateOf("")
+    }
 
-  Column(
-    modifier = Modifier.padding(20.dp),
-    verticalArrangement = Arrangement.spacedBy(10.dp),
-  ) {
-    SuwikiTextFieldReview(
-      hint = "강의평가를 작성해주세요",
-      value = normalValue,
-      onValueChange = { normalValue = it },
-    )
+    Column(
+      modifier = Modifier.padding(20.dp),
+      verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+      SuwikiTextFieldReview(
+        hint = "강의평가를 작성해주세요",
+        value = normalValue,
+        onValueChange = { normalValue = it },
+      )
 
-    SuwikiTextFieldReview(
-      hint = "강의평가를 작성해주세요",
-      value = normalValue,
-      isError = true,
-      onValueChange = { normalValue = it },
-    )
+      SuwikiTextFieldReview(
+        hint = "강의평가를 작성해주세요",
+        value = normalValue,
+        isError = true,
+        onValueChange = { normalValue = it },
+      )
+    }
   }
 }
