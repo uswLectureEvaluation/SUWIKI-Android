@@ -53,7 +53,6 @@ fun SuwikiNoticeContainer(
   }
 }
 
-
 @Composable
 @Preview
 fun SuwikiNoticeContainerPreview() {
