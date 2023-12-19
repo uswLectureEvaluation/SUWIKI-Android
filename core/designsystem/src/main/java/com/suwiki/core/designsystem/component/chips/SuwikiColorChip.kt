@@ -36,7 +36,6 @@ fun SuwikiColorChip(
 @Composable
 fun SuwikiColorChipPreview() {
   var isChecked by rememberSaveable { mutableStateOf(false) }
-
   SuwikiColorChip(
     isChecked = isChecked,
     onClick = { isChecked = !isChecked },

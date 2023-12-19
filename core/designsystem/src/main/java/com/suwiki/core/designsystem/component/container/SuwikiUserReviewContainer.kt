@@ -32,6 +32,7 @@ fun SuwikiUserReviewContainer(
   isChecked: Boolean,
   onClick: (Boolean) -> Unit,
 ) {
+  val buttonText = if (isChecked) stringResource(id = R.string.word_edit) else stringResource(id = R.string.word_report)
   Box(
     modifier = modifier
       .fillMaxWidth()
@@ -64,7 +65,6 @@ fun SuwikiUserReviewContainer(
             text = stringResource(id = R.string.word_semester),
           )
           Spacer(modifier = Modifier.weight(1f))
-          val buttonText = if (isChecked) stringResource(id = R.string.word_edit) else stringResource(id = R.string.word_report)
           SuwikiContainedGreyButtonSmall(text = buttonText, onClick = { onClick(isChecked) })
         }
         RatingBar(3)

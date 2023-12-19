@@ -1,7 +1,6 @@
 package com.suwiki.core.designsystem.component.container
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +29,7 @@ fun SuwikiSelectionContainer(
   text: String,
   onClick: () -> Unit = {},
 ) {
-  Box(
+  Surface(
     modifier = modifier
       .fillMaxWidth()
       .suwikiClickable(
@@ -39,30 +38,25 @@ fun SuwikiSelectionContainer(
         onClick = onClick,
       ),
   ) {
-    Surface(
+    Row(
       modifier = Modifier
-        .fillMaxWidth(),
+        .fillMaxWidth()
+        .padding(24.dp, 18.dp),
+      verticalAlignment = Alignment.CenterVertically,
     ) {
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(24.dp, 18.dp),
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        SuwikiColorChip(
-          isChecked = isChecked,
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        Text(
-          text = text,
-          style = SuwikiTheme.typography.body2,
-          color = Black,
-        )
-        Image(
-          painter = painterResource(id = R.drawable.ic_arrow_gray_right),
-          contentDescription = "",
-        )
-      }
+      SuwikiColorChip(
+        isChecked = isChecked,
+      )
+      Spacer(modifier = Modifier.width(4.dp))
+      Text(
+        text = text,
+        style = SuwikiTheme.typography.body2,
+        color = Black,
+      )
+      Image(
+        painter = painterResource(id = R.drawable.ic_arrow_gray_right),
+        contentDescription = "",
+      )
     }
   }
 }

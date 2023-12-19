@@ -1,6 +1,5 @@
 package com.suwiki.core.designsystem.component.container
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,33 +26,28 @@ fun SuwikiReviewEditContainer(
   buttonText: String,
   onClick: () -> Unit = {},
 ) {
-  Box(
+  Surface(
     modifier = modifier
       .fillMaxWidth(),
   ) {
-    Surface(
+    Row(
       modifier = Modifier
-        .fillMaxWidth(),
+        .fillMaxWidth()
+        .padding(24.dp),
+      verticalAlignment = Alignment.CenterVertically,
     ) {
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(24.dp),
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        Text(
-          text = classNameText,
-          style = SuwikiTheme.typography.header6,
-          color = Black,
-        )
-        Spacer(modifier = Modifier.width(6.dp))
-        SuwikiGrayLabel(text = semesterText)
-        Spacer(modifier = Modifier.weight(1f))
-        SuwikiContainedGreyButtonSmall(
-          text = buttonText,
-          onClick = onClick,
-        )
-      }
+      Text(
+        text = classNameText,
+        style = SuwikiTheme.typography.header6,
+        color = Black,
+      )
+      Spacer(modifier = Modifier.width(6.dp))
+      SuwikiGrayLabel(text = semesterText)
+      Spacer(modifier = Modifier.weight(1f))
+      SuwikiContainedGreyButtonSmall(
+        text = buttonText,
+        onClick = onClick,
+      )
     }
   }
 }

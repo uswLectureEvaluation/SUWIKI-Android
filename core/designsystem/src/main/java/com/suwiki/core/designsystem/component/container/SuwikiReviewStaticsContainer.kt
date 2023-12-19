@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.badge.SuwikiChipType
+import com.suwiki.core.designsystem.component.badge.BadgeType
 import com.suwiki.core.designsystem.component.badge.SuwikiColorBadge
 import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
 import com.suwiki.core.designsystem.component.card.SuwikiReviewGradeCard
@@ -58,7 +58,7 @@ fun SuwikiReviewStaticsContainer(
       Column(
         modifier = Modifier
           .fillMaxWidth()
-          .padding(24.dp),
+          .padding(top = 14.dp, bottom = 24.dp, start = 24.dp, end = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         SuwikiGrayLabel(text = typeLessonText)
@@ -100,17 +100,17 @@ fun SuwikiReviewStaticsContainer(
             horizontalArrangement = Arrangement.spacedBy(7.dp),
           ) {
             SuwikiColorBadge(
-              type = SuwikiChipType.GREEN,
+              type = BadgeType.GREEN,
               text = "학점",
               englishText = "label",
             )
             SuwikiColorBadge(
-              type = SuwikiChipType.BLUE,
+              type = BadgeType.BLUE,
               text = "과제",
               englishText = "label",
             )
             SuwikiColorBadge(
-              type = SuwikiChipType.ORANGE,
+              type = BadgeType.ORANGE,
               text = "팀지",
               englishText = "label",
             )

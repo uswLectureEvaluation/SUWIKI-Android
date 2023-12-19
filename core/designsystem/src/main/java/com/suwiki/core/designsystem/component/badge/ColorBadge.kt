@@ -24,29 +24,23 @@ import com.suwiki.core.designsystem.theme.Orange10
 import com.suwiki.core.designsystem.theme.Orange100
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 
-enum class SuwikiChipType {
+enum class BadgeType {
   ORANGE,
   BLUE,
   GREEN,
 }
 
-/**
- * 뱃지의 활용도가 궁금합니다.
- * 뱃지의 2가지 텍스트의 폰트가 다른데 라벨만을 위한건지
- * 범용성까지 생각해서 경우에 따른 폰트적용인지
- * 아니면 항상 2가지 폰트가 공존하는지
- * **/
 @Composable
 fun SuwikiColorBadge(
   modifier: Modifier = Modifier,
-  type: SuwikiChipType,
+  type: BadgeType,
   text: String,
   englishText: String,
 ) {
   val (backgroundColor, contentColor) = when (type) {
-    SuwikiChipType.ORANGE -> Orange10 to Orange100
-    SuwikiChipType.BLUE -> Blue10 to Blue100
-    SuwikiChipType.GREEN -> Green10 to Green100
+    BadgeType.ORANGE -> Orange10 to Orange100
+    BadgeType.BLUE -> Blue10 to Blue100
+    BadgeType.GREEN -> Green10 to Green100
   }
   Box(
     modifier = modifier
@@ -79,17 +73,17 @@ fun SuwikiColorBadgePreview() {
   SuwikiTheme {
     Column {
       SuwikiColorBadge(
-        type = SuwikiChipType.GREEN,
+        type = BadgeType.GREEN,
         text = "학점",
         englishText = "label",
       )
       SuwikiColorBadge(
-        type = SuwikiChipType.BLUE,
+        type = BadgeType.BLUE,
         text = "학점",
         englishText = "label",
       )
       SuwikiColorBadge(
-        type = SuwikiChipType.ORANGE,
+        type = BadgeType.ORANGE,
         text = "학점",
         englishText = "label",
       )

@@ -1,6 +1,5 @@
 package com.suwiki.core.designsystem.component.container
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +24,7 @@ fun SuwikiNoticeContainer(
   dateText: String,
   onClick: () -> Unit = {},
 ) {
-  Box(
+  Surface(
     modifier = modifier
       .fillMaxWidth()
       .suwikiClickable(
@@ -34,30 +33,26 @@ fun SuwikiNoticeContainer(
         onClick = onClick,
       ),
   ) {
-    Surface(
+    Column(
       modifier = Modifier
-        .fillMaxWidth(),
+        .fillMaxWidth()
+        .padding(24.dp, 15.dp),
     ) {
-      Column(
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(24.dp, 15.dp),
-      ) {
-        Text(
-          text = titleText,
-          style = SuwikiTheme.typography.header6,
-          color = Black,
-        )
-        Spacer(modifier = Modifier.height(2.dp))
-        Text(
-          text = dateText,
-          style = SuwikiTheme.typography.caption6,
-          color = Gray95,
-        )
-      }
+      Text(
+        text = titleText,
+        style = SuwikiTheme.typography.header6,
+        color = Black,
+      )
+      Spacer(modifier = Modifier.height(2.dp))
+      Text(
+        text = dateText,
+        style = SuwikiTheme.typography.caption6,
+        color = Gray95,
+      )
     }
   }
 }
+
 
 @Composable
 @Preview
