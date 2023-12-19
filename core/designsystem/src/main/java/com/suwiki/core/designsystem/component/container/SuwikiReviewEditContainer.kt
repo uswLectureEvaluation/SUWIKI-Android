@@ -14,11 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.badge.SuwikiBasicLabel
+import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
 import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
 import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 
 @Composable
@@ -49,11 +47,7 @@ fun SuwikiReviewEditContainer(
           color = Black,
         )
         Spacer(modifier = Modifier.width(6.dp))
-        SuwikiBasicLabel(
-          text = semesterText,
-          textColor = Gray6A,
-          backgroundColor = GrayF6,
-        )
+        SuwikiGrayLabel(text = semesterText)
         Spacer(modifier = Modifier.weight(1f))
         SuwikiContainedGreyButtonSmall(
           text = buttonText,

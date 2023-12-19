@@ -18,15 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.component.badge.SuwikiBasicLabel
+import com.suwiki.core.designsystem.component.badge.SuwikiBlueLabel
+import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
 import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
 import com.suwiki.core.designsystem.component.card.RatingBar
 import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.GrayF6
-import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
 
 @Composable
 fun SuwikiUserReviewContainer(
@@ -58,17 +55,13 @@ fun SuwikiUserReviewContainer(
            * Suwiki Componet Badge로 교체 필요
            * **/
           if (isChecked) {
-            SuwikiBasicLabel(
+            SuwikiBlueLabel(
               text = stringResource(id = R.string.word_my),
-              textColor = White,
-              backgroundColor = Primary,
             )
             Spacer(modifier = Modifier.width(8.dp))
           }
-          SuwikiBasicLabel(
+          SuwikiGrayLabel(
             text = stringResource(id = R.string.word_semester),
-            textColor = Gray6A,
-            backgroundColor = GrayF6,
           )
           Spacer(modifier = Modifier.weight(1f))
           val buttonText = if (isChecked) stringResource(id = R.string.word_edit) else stringResource(id = R.string.word_report)

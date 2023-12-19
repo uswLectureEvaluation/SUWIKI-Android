@@ -21,14 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.badge.SuwikiBasicLabel
 import com.suwiki.core.designsystem.component.badge.SuwikiChipType
 import com.suwiki.core.designsystem.component.badge.SuwikiColorBadge
+import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
 import com.suwiki.core.designsystem.component.card.SuwikiReviewGradeCard
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayDA
-import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 
 @Composable
@@ -62,11 +61,7 @@ fun SuwikiReviewStaticsContainer(
           .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        SuwikiBasicLabel(
-          text = typeLessonText,
-          textColor = Gray6A,
-          backgroundColor = GrayF6,
-        )
+        SuwikiGrayLabel(text = typeLessonText)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
           text = titleText,
