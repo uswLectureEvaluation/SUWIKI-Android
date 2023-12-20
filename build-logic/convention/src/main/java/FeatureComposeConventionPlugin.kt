@@ -20,6 +20,8 @@ internal class FeatureComposeConventionPlugin : Plugin<Project> {
         "implementation"(project(":core:ui"))
         "implementation"(project(":core:designsystem"))
 
+        "implementation"(libs.findBundle("orbit").get())
+
         "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
         "implementation"(libs.findLibrary("kotlinx.coroutines.core").get())
 
