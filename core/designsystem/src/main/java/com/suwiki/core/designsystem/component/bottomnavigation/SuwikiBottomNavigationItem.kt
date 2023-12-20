@@ -44,7 +44,7 @@ fun SuwikiBottomNavigationItemPreview() {
     SuwikiBottomNavigationItem(
       isChecked = isChecked,
       iconId = R.drawable.ic_bottom_navigation_evaluation,
-      onClickItem = { isChecked = !isChecked }
+      onClickItem = { isChecked = !isChecked },
     )
   }
 }
