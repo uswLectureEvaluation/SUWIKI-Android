@@ -8,16 +8,27 @@ import com.suwiki.core.model.user.DEFAULT_USER_POINT
 import com.suwiki.core.model.user.DEFAULT_USER_VIEW_EXAM
 import com.suwiki.core.model.user.DEFAULT_USER_WRITTEN_EVALUATION
 import com.suwiki.core.model.user.DEFAULT_USER_WRITTEN_EXAM
-import com.suwiki.core.model.user.Token
 import com.suwiki.core.model.user.User
-import com.suwiki.core.security.SecurityPreferences
-import com.suwiki.data.user.datasource.LocalUserStorageDataSource
+import com.suwiki.data.user.datasource.LocalUserDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class LocalUserStorageDataSourceImpl @Inject constructor(
+class LocalUserDataSourceImpl @Inject constructor(
   private val dataStore: DataStore<UserPreference>,
-  private val securityPreferences: SecurityPreferences,
-) : LocalUserStorageDataSource {
+) : LocalUserDataSource {
+
+  override val user: Flow<User>
+    get() = dataStore.data.map {
+      User(
+        userId = it.userId,
+        email = it.email,
+        point = it.point,
+        writtenEvaluation = it.writtenEvaluation,
+        writtenExam = it.writtenExam,
+        viewExam = it.viewExam,
+      )
+    }
 
   override suspend fun setUserInfo(user: User) {
     user.run {
@@ -35,15 +46,7 @@ class LocalUserStorageDataSourceImpl @Inject constructor(
     }
   }
 
-  override suspend fun setToken(token: Token) {
-    token.run {
-      securityPreferences.setAccessToken(accessToken)
-      securityPreferences.setRefreshToken(refreshToken)
-    }
-  }
-
-  override suspend fun clearUserInfoAndToken() {
-    securityPreferences.clearAll()
+  override suspend fun clearUserInfo() {
     dataStore.updateData { userPref ->
       userPref
         .toBuilder()

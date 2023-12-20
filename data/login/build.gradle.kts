@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-  namespace = "com.suwiki.data.user"
+  namespace = "com.suwiki.data.login"
 }
 
 dependencies {
   implementation(projects.core.security)
-  implementation(projects.domain.user)
+  implementation(projects.domain.login)
 }

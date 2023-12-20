@@ -1,13 +1,9 @@
 package com.suwiki.remote.user.api
 
 import com.suwiki.core.network.retrofit.ApiResult
-import com.suwiki.remote.user.request.FindIdRequest
-import com.suwiki.remote.user.request.FindPasswordRequest
-import com.suwiki.remote.user.request.LoginRequest
 import com.suwiki.remote.user.request.QuitRequest
 import com.suwiki.remote.user.request.ResetPasswordRequest
 import com.suwiki.remote.user.response.SuccessCheckResponse
-import com.suwiki.remote.user.response.TokenResponse
 import com.suwiki.remote.user.response.UserResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,24 +14,6 @@ interface UserApi {
   companion object {
     const val USER = "/user"
   }
-
-  // 아이디 찾기 API
-  @POST("$USER/find-id")
-  suspend fun findId(
-    @Body findIdRequest: FindIdRequest,
-  ): ApiResult<SuccessCheckResponse>
-
-  // 비밀번호 찾기(임시 비밀번호 전송) API
-  @POST("$USER/find-pw")
-  suspend fun findPassword(
-    @Body findPasswordRequest: FindPasswordRequest,
-  ): ApiResult<SuccessCheckResponse>
-
-  // 로그인 요청 API
-  @POST("$USER/login")
-  suspend fun login(
-    @Body loginRequest: LoginRequest,
-  ): ApiResult<TokenResponse>
 
   // 비밀번호 재설정 API
   @POST("$USER/reset-pw")

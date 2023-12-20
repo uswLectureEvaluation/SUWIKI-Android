@@ -1,13 +1,13 @@
-package com.suwiki.domain.user.usecase
+package com.suwiki.domain.login.usecase
 
 import com.suwiki.core.common.runCatchingIgnoreCancelled
-import com.suwiki.domain.user.repository.UserRepository
+import com.suwiki.domain.login.repository.LoginRepository
 import javax.inject.Inject
 
 class FindIdUseCase @Inject constructor(
-  private val userRepository: UserRepository,
+  private val loginRepository: LoginRepository,
 ) {
   suspend operator fun invoke(email: String): Result<Unit> = runCatchingIgnoreCancelled {
-    userRepository.findId(email)
+    loginRepository.findId(email)
   }
 }

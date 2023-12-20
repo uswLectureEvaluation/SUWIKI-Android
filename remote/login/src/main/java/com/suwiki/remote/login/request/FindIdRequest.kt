@@ -1,4 +1,4 @@
-package com.suwiki.remote.user.request
+package com.suwiki.remote.login.request
 
 import kotlinx.serialization.Serializable
 
