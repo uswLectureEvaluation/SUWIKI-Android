@@ -60,6 +60,8 @@ internal fun MainScreen(
   var toastMessage: String? by remember { mutableStateOf(null) }
   var toastVisible by remember { mutableStateOf(false) }
 
+  // TODO REMOVE
+  @Suppress("detekt:UnusedPrivateProperty")
   val onShowToast: (message: String) -> Unit = { message ->
     coroutineScope.launch {
       mutex.lock()
@@ -104,7 +106,8 @@ internal fun MainScreen(
     bottomBar = {
       MainBottomBar(
         visible = navigator.shouldShowBottomBar(),
-        tabs = MainTab.entries, currentTab = navigator.currentTab,
+        tabs = MainTab.entries,
+        currentTab = navigator.currentTab,
         onTabSelected = navigator::navigate,
       )
     },

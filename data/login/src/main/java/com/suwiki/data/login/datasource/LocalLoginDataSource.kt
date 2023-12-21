@@ -4,6 +4,6 @@ import com.suwiki.core.model.user.Token
 
 interface LocalLoginDataSource {
   suspend fun setToken(
-    token: Token
+    token: Token,
   )
 }
