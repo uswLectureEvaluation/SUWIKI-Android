@@ -3,6 +3,8 @@ plugins {
   alias(libs.plugins.suwiki.android.application)
   alias(libs.plugins.suwiki.android.application.compose)
   alias(libs.plugins.suwiki.android.hilt)
+  alias(libs.plugins.google.services)
+  alias(libs.plugins.firebase.crashlytics)
 }
 
 android {

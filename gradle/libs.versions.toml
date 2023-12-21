@@ -5,7 +5,8 @@ junit4 = "4.13.2"
 espresso = "3.4.0"
 ksp = "1.9.10-1.0.13"
 google-service = "4.3.15"
-firebase-bom = "32.3.1"
+firebase-bom = "32.7.0"
+firebase-crashlytics = "2.9.9"
 
 compose-compiler = "1.5.3"
 # compose-bom = "2023.09.00"
@@ -73,6 +74,7 @@ android-library = { id = "com.android.library", version.ref = "android-gradle-pl
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
 
 # Plugins defined by this project
 suwiki-android-application = { id = "suwiki.android.application", version = "unspecified" }
@@ -160,6 +162,7 @@ encrypted-datastore-preference-security = { group = "tech.thdev", name = "useful
 
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 
 ted-permission = { group = "io.github.ParkSangGwon", name = "tedpermission-normal", version.ref = "ted-permission" }
@@ -186,6 +189,6 @@ androidx-lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-view
 androidx-navigation = ["navigation-fragment-ktx", "navigation-ui-ktx"]
 coroutine = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
 compose = ["ui", "ui-graphics", "ui-tooling-preview", "material3-compose", "coil-compose", "ui-foundation", "activity-compose", "lifecycle-compose", "navigation-compose"]
-compose-debug = ["ui-tooling", "ui-test-manifest" ]
+compose-debug = ["ui-tooling", "ui-test-manifest"]
 
 orbit = ["orbit-core", "orbit-viewmodel", "orbit-compose"]

@@ -7,3 +7,10 @@ plugins {
 android {
   namespace = "com.suwiki.core.android"
 }
+
+dependencies {
+  implementation(projects.core.model)
+
+  implementation(platform(libs.firebase.bom))
+  implementation(libs.firebase.crashlytics)
+}
