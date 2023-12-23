@@ -42,6 +42,8 @@ import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -106,7 +108,7 @@ internal fun MainScreen(
     bottomBar = {
       MainBottomBar(
         visible = navigator.shouldShowBottomBar(),
-        tabs = MainTab.entries,
+        tabs = MainTab.entries.toImmutableList(),
         currentTab = navigator.currentTab,
         onTabSelected = navigator::navigate,
       )
@@ -125,7 +127,7 @@ fun MainScreenPreview() {
 @Composable
 private fun MainBottomBar(
   visible: Boolean,
-  tabs: EnumEntries<MainTab>,
+  tabs: ImmutableList<MainTab>,
   currentTab: MainTab?,
   onTabSelected: (MainTab) -> Unit,
 ) {
