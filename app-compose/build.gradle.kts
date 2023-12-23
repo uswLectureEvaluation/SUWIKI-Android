@@ -20,6 +20,28 @@ android {
 dependencies {
   implementation(projects.feature.navigator)
 
+  implementation(projects.remote.openmajor)
+  implementation(projects.remote.timetable)
+  implementation(projects.remote.lectureevaluation.viewerreporter)
+  implementation(projects.remote.lectureevaluation.my)
+  implementation(projects.remote.lectureevaluation.editor)
+  implementation(projects.remote.signup)
+  implementation(projects.remote.notice)
+  implementation(projects.remote.user)
+
+  implementation(projects.local.openmajor)
+  implementation(projects.local.timetable)
+  implementation(projects.local.user)
+
+  implementation(projects.data.openmajor)
+  implementation(projects.data.timetable)
+  implementation(projects.data.lectureevaluation.viewerreporter)
+  implementation(projects.data.lectureevaluation.editor)
+  implementation(projects.data.lectureevaluation.my)
+  implementation(projects.data.user)
+  implementation(projects.data.notice)
+  implementation(projects.data.signup)
+
   implementation(platform(libs.firebase.bom))
   implementation(libs.firebase.crashlytics)
   implementation(libs.firebase.analytics)
