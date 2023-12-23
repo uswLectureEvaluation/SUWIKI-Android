@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -40,6 +38,7 @@ import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
@@ -166,11 +165,8 @@ private fun RowScope.MainBottomBarItem(
     modifier = Modifier
       .weight(1f)
       .fillMaxHeight()
-      .selectable(
-        selected = selected,
-        indication = null,
-        role = null,
-        interactionSource = remember { MutableInteractionSource() },
+      .suwikiClickable(
+        rippleEnabled = false,
         onClick = onClick,
       ),
     contentAlignment = Alignment.Center,
