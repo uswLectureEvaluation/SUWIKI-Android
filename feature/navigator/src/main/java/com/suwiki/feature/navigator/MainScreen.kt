@@ -45,6 +45,7 @@ import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
+import kotlin.enums.EnumEntries
 
 private const val SHOW_TOAST_LENGTH = 2000L
 val mutex = Mutex()
@@ -124,7 +125,7 @@ fun MainScreenPreview() {
 @Composable
 private fun MainBottomBar(
   visible: Boolean,
-  tabs: List<MainTab>,
+  tabs: EnumEntries<MainTab>,
   currentTab: MainTab?,
   onTabSelected: (MainTab) -> Unit,
 ) {

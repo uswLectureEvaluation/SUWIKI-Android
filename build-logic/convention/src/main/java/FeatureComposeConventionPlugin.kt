@@ -22,6 +22,7 @@ internal class FeatureComposeConventionPlugin : Plugin<Project> {
 
         "implementation"(libs.findBundle("orbit").get())
 
+        "implementation"(libs.findLibrary("kotlinx.immutable").get())
         "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
         "implementation"(libs.findLibrary("kotlinx.coroutines.core").get())
 
