@@ -1,7 +1,6 @@
 package com.suwiki.core.designsystem.component.appbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,28 +23,23 @@ fun SuwikiEvaluationAppBar(
   major: String,
   onClickMajor: () -> Unit = {},
 ) {
-  Box(
+  Row(
     modifier = modifier
       .fillMaxWidth()
       .wrapContentHeight()
-      .background(GrayFB),
+      .background(GrayFB)
+      .padding(top = 28.dp, bottom = 3.dp, start = 24.dp, end = 24.dp),
   ) {
-    Row(
+    Text(
+      text = title,
+      style = SuwikiTheme.typography.header1,
+    )
+    SuwikiFilterButton(
+      text = major,
+      onClick = onClickMajor,
       modifier = Modifier
-        .align(Alignment.CenterStart)
-        .padding(top = 28.dp, bottom = 3.dp, start = 24.dp, end = 24.dp),
-    ) {
-      Text(
-        text = title,
-        style = SuwikiTheme.typography.header1,
-      )
-      SuwikiFilterButton(
-        text = major,
-        onClick = onClickMajor,
-        modifier = Modifier
-          .align(CenterVertically),
-      )
-    }
+        .align(CenterVertically),
+    )
   }
 }
 
