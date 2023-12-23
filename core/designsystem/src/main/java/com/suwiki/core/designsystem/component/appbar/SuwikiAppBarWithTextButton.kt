@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.component.button.SuwikiContainedButtonSmall
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -45,13 +44,13 @@ fun SuwikiAppBarWithTextButton(
         .align(Alignment.CenterStart)
         .padding(vertical = 2.dp, horizontal = 6.5.dp),
     )
-    SuwikiContainedButtonSmall(
-      text = buttonText,
-      textColor = Primary,
-      onClick = onClickTextButton,
-      modifier = Modifier
-        .align(Alignment.CenterEnd),
-    )
+//    SuwikiContainedButtonSmall(
+//      text = buttonText,
+//      textColor = Primary,
+//      onClick = onClickTextButton,
+//      modifier = Modifier
+//        .align(Alignment.CenterEnd),
+//    )
   }
 }
 

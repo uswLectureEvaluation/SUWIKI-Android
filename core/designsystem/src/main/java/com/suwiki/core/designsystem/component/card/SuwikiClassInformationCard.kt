@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayDA
@@ -113,10 +112,10 @@ fun SuwikiClassInformationCard(
             color = Gray6A,
           )
           Spacer(modifier = Modifier.weight(1f))
-          SuwikiContainedGreyButtonSmall(
-            text = buttonText,
-            onClick = onClickAdd,
-          )
+//          SuwikiContainedGreyButtonSmall(
+//            text = buttonText,
+//            onClick = onClickAdd,
+//          )
         }
         Row(
           modifier = Modifier

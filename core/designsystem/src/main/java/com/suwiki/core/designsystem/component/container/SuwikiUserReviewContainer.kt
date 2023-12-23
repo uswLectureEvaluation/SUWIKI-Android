@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.badge.SuwikiBlueLabel
 import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
-import com.suwiki.core.designsystem.component.button.SuwikiContainedGreyButtonSmall
 import com.suwiki.core.designsystem.component.card.RatingBar
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -65,7 +64,7 @@ fun SuwikiUserReviewContainer(
             text = stringResource(id = R.string.word_semester),
           )
           Spacer(modifier = Modifier.weight(1f))
-          SuwikiContainedGreyButtonSmall(text = buttonText, onClick = { onClick(isChecked) })
+//          SuwikiContainedGreyButtonSmall(text = buttonText, onClick = { onClick(isChecked) })
         }
         RatingBar(3)
         Text(

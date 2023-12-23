@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.suwiki.core.designsystem.component.button.SuwikiContainedButtonSmall
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.Primary
@@ -60,16 +59,16 @@ fun SuwikiDialog(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
           ) {
-            SuwikiContainedButtonSmall(
-              onClick = onClickDismiss,
-              text = dismissButtonText,
-              textColor = Gray95,
-            )
-            SuwikiContainedButtonSmall(
-              onClick = onClickConfirm,
-              text = confirmButtonText,
-              textColor = Primary,
-            )
+//            SuwikiContainedButtonSmall(
+//              onClick = onClickDismiss,
+//              text = dismissButtonText,
+//              textColor = Gray95,
+//            )
+//            SuwikiContainedButtonSmall(
+//              onClick = onClickConfirm,
+//              text = confirmButtonText,
+//              textColor = Primary,
+//            )
           }
         }
       }
