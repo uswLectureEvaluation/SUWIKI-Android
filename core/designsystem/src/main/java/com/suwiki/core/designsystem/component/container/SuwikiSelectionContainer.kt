@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,8 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.component.chips.SuwikiColorChip
 import com.suwiki.core.designsystem.theme.Black
+import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
@@ -44,8 +45,10 @@ fun SuwikiSelectionContainer(
         .padding(24.dp, 18.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      SuwikiColorChip(
-        isChecked = isChecked,
+      Icon(
+        painter = painterResource(id = R.drawable.ic_check_filled),
+        tint = if (isChecked) Primary else GrayDA,
+        contentDescription = "",
       )
       Spacer(modifier = Modifier.width(4.dp))
       Text(
@@ -61,8 +64,8 @@ fun SuwikiSelectionContainer(
   }
 }
 
-@Composable
 @Preview
+@Composable
 fun SuwikiSelectionContainerPreview() {
   SuwikiTheme {
     Column {

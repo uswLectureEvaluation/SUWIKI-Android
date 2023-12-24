@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +40,6 @@ fun SuwikiOutlinedChip(
     modifier = modifier
       .clip(RoundedCornerShape(5.dp))
       .suwikiClickable(onClick = onClick)
-      .wrapContentHeight()
       .background(color = White)
       .border(width = 1.dp, color = borderLineColor, shape = RoundedCornerShape(5.dp))
       .padding(vertical = 4.dp, horizontal = 6.dp),
