@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,9 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.component.badge.SuwikiBlueLabel
-import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
-import com.suwiki.core.designsystem.component.card.RatingBar
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 
@@ -54,19 +50,19 @@ fun SuwikiUserReviewContainer(
           /**
            * Suwiki Componet Badge로 교체 필요
            * **/
-          if (isChecked) {
-            SuwikiBlueLabel(
-              text = stringResource(id = R.string.word_my),
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-          }
-          SuwikiGrayLabel(
-            text = stringResource(id = R.string.word_semester),
-          )
+//          if (isChecked) {
+//            SuwikiBlueLabel(
+//              text = stringResource(id = R.string.word_my),
+//            )
+//            Spacer(modifier = Modifier.width(8.dp))
+//          }
+//          SuwikiGrayLabel(
+//            text = stringResource(id = R.string.word_semester),
+//          )
           Spacer(modifier = Modifier.weight(1f))
 //          SuwikiContainedGreyButtonSmall(text = buttonText, onClick = { onClick(isChecked) })
         }
-        RatingBar(3)
+        //RatingBar(rating = 3.0f)
         Text(
           text = text,
           style = SuwikiTheme.typography.body7,

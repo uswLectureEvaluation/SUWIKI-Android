@@ -1,6 +1,7 @@
 package com.suwiki.core.designsystem.component.badge
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,58 +21,52 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 
-@Composable
-fun SuwikiBasicLabel(
-  modifier: Modifier = Modifier,
-  text: String,
-  textColor: Color,
-  backgroundColor: Color,
+enum class BadgeColor(
+  val textColor: Color,
+  val backgroundColor: Color,
 ) {
-  Box(
-    modifier = modifier
-      .clip(RoundedCornerShape(10.dp))
-      .background(color = backgroundColor)
-      .wrapContentHeight()
-      .padding(vertical = 2.dp, horizontal = 6.dp),
-  ) {
-    Text(
-      text = text,
-      style = SuwikiTheme.typography.caption4,
-      color = textColor,
-      modifier = Modifier.align(Alignment.Center),
-    )
-  }
-}
-
-@Composable
-fun SuwikiGrayLabel(
-  text: String,
-) {
-  SuwikiBasicLabel(
-    text = text,
+  Gray(
     textColor = Gray6A,
     backgroundColor = GrayF6,
+  ),
+  Blue(
+    textColor = White,
+    backgroundColor = Primary
   )
 }
 
 @Composable
-fun SuwikiBlueLabel(
-  text: String,
+fun SuwikiBadge(
+  modifier: Modifier = Modifier,
+  text: String = "",
+  color: BadgeColor,
 ) {
-  SuwikiBasicLabel(
-    text = text,
-    textColor = White,
-    backgroundColor = Primary,
-  )
+  with(color) {
+    Box(
+      modifier = modifier
+        .clip(RoundedCornerShape(10.dp))
+        .background(color = backgroundColor)
+        .padding(vertical = 2.dp, horizontal = 6.dp),
+    ) {
+      Text(
+        text = text,
+        style = SuwikiTheme.typography.caption4,
+        color = textColor,
+        modifier = Modifier.align(Alignment.Center),
+      )
+    }
+  }
 }
 
 @Preview
 @Composable
 fun BadgePreview() {
   SuwikiTheme {
-    Column {
-      SuwikiBlueLabel(text = "label")
-      SuwikiGrayLabel(text = "label")
+    Column(
+      verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+      SuwikiBadge(text = "label", color = BadgeColor.Blue)
+      SuwikiBadge(text = "label", color = BadgeColor.Gray)
     }
   }
 }

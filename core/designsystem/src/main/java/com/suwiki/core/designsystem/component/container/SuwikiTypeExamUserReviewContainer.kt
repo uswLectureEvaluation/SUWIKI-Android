@@ -17,8 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.component.badge.SuwikiBlueLabel
-import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -46,19 +44,19 @@ fun SuwikiTypeExamText(
       Row(
         modifier = Modifier.fillMaxWidth(),
       ) {
-        if (isChecked) {
-          SuwikiBlueLabel(
-            text = stringResource(id = R.string.word_my),
-          )
-          Spacer(modifier = Modifier.width(8.dp))
-        }
-        SuwikiGrayLabel(
-          text = stringResource(id = R.string.word_semester),
-        )
-        Spacer(modifier = Modifier.width(6.dp))
-        SuwikiGrayLabel(
-          text = stringResource(id = R.string.word_type_exam),
-        )
+//        if (isChecked) {
+//          SuwikiBlueLabel(
+//            text = stringResource(id = R.string.word_my),
+//          )
+//          Spacer(modifier = Modifier.width(8.dp))
+//        }
+//        SuwikiGrayLabel(
+//          text = stringResource(id = R.string.word_semester),
+//        )
+//        Spacer(modifier = Modifier.width(6.dp))
+//        SuwikiGrayLabel(
+//          text = stringResource(id = R.string.word_type_exam),
+//        )
         Spacer(modifier = Modifier.weight(1f))
       }
       Spacer(modifier = Modifier.height(10.dp))

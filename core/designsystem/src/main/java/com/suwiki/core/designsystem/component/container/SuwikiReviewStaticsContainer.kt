@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.badge.BadgeType
 import com.suwiki.core.designsystem.component.badge.SuwikiColorBadge
-import com.suwiki.core.designsystem.component.badge.SuwikiGrayLabel
 import com.suwiki.core.designsystem.component.card.SuwikiReviewGradeCard
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
@@ -61,7 +60,7 @@ fun SuwikiReviewStaticsContainer(
           .padding(top = 14.dp, bottom = 24.dp, start = 24.dp, end = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        SuwikiGrayLabel(text = typeLessonText)
+        //SuwikiGrayLabel(text = typeLessonText)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
           text = titleText,
@@ -119,10 +118,10 @@ fun SuwikiReviewStaticsContainer(
         Spacer(modifier = Modifier.height(23.dp))
         SuwikiReviewGradeCard(
           reviewCount = reviewCount,
-          ratingCount = ratingCount,
-          honeyQualityCount = honeyQualityCount,
-          learningQualityCount = learningQualityCount,
-          satisfactionCount = satisfactionCount,
+          rating = ratingCount,
+          honeyRating = honeyQualityCount,
+          learningRating = learningQualityCount,
+          satisfactionRating = satisfactionCount,
           onClick = onClick,
         )
       }
