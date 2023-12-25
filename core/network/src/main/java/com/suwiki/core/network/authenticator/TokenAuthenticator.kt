@@ -3,7 +3,7 @@ package com.suwiki.core.network.authenticator
 import com.suwiki.core.model.exception.SuwikiServerError
 import com.suwiki.core.network.di.RETROFIT_TAG
 import com.suwiki.core.network.repository.AuthRepository
-import com.suwiki.core.network.retrofit.KotlinSerializationUtil
+import com.suwiki.core.network.retrofit.Json
 import com.suwiki.core.network.retrofit.SuwikiErrorResponse
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -43,7 +43,7 @@ private val okhttp3.Response.isTokenExpired: Boolean
   get() {
     val exception = kotlin.runCatching {
       // https://stackoverflow.com/questions/60671465/retrofit-java-lang-illegalstateexception-closed
-      val suwikiErrorResponse = KotlinSerializationUtil.json.decodeFromString<SuwikiErrorResponse>(peekBody(Long.MAX_VALUE).string())
+      val suwikiErrorResponse = Json.getSuwikiErrorBody(peekBody(Long.MAX_VALUE).string())
       SuwikiServerError.valueOf(suwikiErrorResponse.suwikiCode).exception
     }.getOrNull() ?: return false
 

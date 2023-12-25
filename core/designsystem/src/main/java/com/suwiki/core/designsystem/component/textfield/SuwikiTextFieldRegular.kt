@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,15 +40,17 @@ import com.suwiki.core.designsystem.theme.White
 @Composable
 fun SuwikiTextFieldRegular(
   modifier: Modifier = Modifier,
-  label: String = "",
-  hint: String = "",
+  label: String? = "",
+  placeholder: String = "",
   value: String = "",
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
-  helperText: String = "",
+  helperText: String? = "",
   isError: Boolean = false,
   maxLines: Int = 1,
   minLines: Int = 1,
+  keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+  keyboardActions: KeyboardActions = KeyboardActions.Default,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
   val isFocused by interactionSource.collectIsFocusedAsState()
@@ -74,13 +78,17 @@ fun SuwikiTextFieldRegular(
     textStyle = SuwikiTheme.typography.header4.copy(color = Black),
     interactionSource = interactionSource,
     cursorBrush = SolidColor(Primary),
+    keyboardOptions = keyboardOptions,
+    keyboardActions = keyboardActions,
     decorationBox = { innerText ->
       Column {
-        Text(
-          text = label,
-          color = labelColor,
-          style = SuwikiTheme.typography.caption2,
-        )
+        if (label != null) {
+          Text(
+            text = label,
+            color = labelColor,
+            style = SuwikiTheme.typography.caption2,
+          )
+        }
 
         Spacer(modifier = Modifier.size(2.dp))
 
@@ -100,7 +108,7 @@ fun SuwikiTextFieldRegular(
             innerText()
             if (value.isEmpty()) {
               Text(
-                text = hint,
+                text = placeholder,
                 color = GrayCB,
                 style = SuwikiTheme.typography.header4,
               )
@@ -123,11 +131,13 @@ fun SuwikiTextFieldRegular(
 
         Spacer(modifier = Modifier.height(3.dp))
 
-        Text(
-          text = helperText,
-          color = helperTextColor,
-          style = SuwikiTheme.typography.caption2,
-        )
+        if (helperText != null) {
+          Text(
+            text = helperText,
+            color = helperTextColor,
+            style = SuwikiTheme.typography.caption2,
+          )
+        }
       }
     },
   )
@@ -151,7 +161,7 @@ fun SuwikiTextFieldRegularPreview() {
     ) {
       SuwikiTextFieldRegular(
         label = "라벨",
-        hint = "플레이스 홀더",
+        placeholder = "플레이스 홀더",
         value = normalValue,
         onValueChange = { normalValue = it },
         onClickClearButton = { normalValue = "" },
@@ -160,7 +170,7 @@ fun SuwikiTextFieldRegularPreview() {
 
       SuwikiTextFieldRegular(
         label = "라벨",
-        hint = "플레이스 홀더",
+        placeholder = "플레이스 홀더",
         value = errorValue,
         onValueChange = { errorValue = it },
         onClickClearButton = { errorValue = "" },

@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,12 +40,14 @@ import com.suwiki.core.designsystem.theme.White
 @Composable
 fun SuwikiTextFieldSmall(
   modifier: Modifier = Modifier,
-  hint: String = "",
+  placeholder: String = "",
   value: String = "",
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
   maxLines: Int = 1,
   minLines: Int = 1,
+  keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+  keyboardActions: KeyboardActions = KeyboardActions.Default,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
   val isFocused by interactionSource.collectIsFocusedAsState()
@@ -64,6 +68,8 @@ fun SuwikiTextFieldSmall(
     minLines = minLines,
     interactionSource = interactionSource,
     cursorBrush = SolidColor(Primary),
+    keyboardOptions = keyboardOptions,
+    keyboardActions = keyboardActions,
     decorationBox = { innerText ->
       Column {
         Row(
@@ -82,7 +88,7 @@ fun SuwikiTextFieldSmall(
             innerText()
             if (value.isEmpty()) {
               Text(
-                text = hint,
+                text = placeholder,
                 color = GrayCB,
                 style = SuwikiTheme.typography.body5,
               )
@@ -124,14 +130,14 @@ fun SuwikiTextFieldSmallPreview() {
       verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
       SuwikiTextFieldSmall(
-        hint = "플레이스 홀더",
+        placeholder = "플레이스 홀더",
         value = normalValue,
         onValueChange = { normalValue = it },
         onClickClearButton = { normalValue = "" },
       )
 
       SuwikiTextFieldSmall(
-        hint = "플레이스 홀더",
+        placeholder = "플레이스 홀더",
         value = normalValue,
         onValueChange = { normalValue = it },
         onClickClearButton = { normalValue = "" },
