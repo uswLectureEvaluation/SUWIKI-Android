@@ -12,9 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayCB
-import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.White
 
 fun Modifier.cardShadow(

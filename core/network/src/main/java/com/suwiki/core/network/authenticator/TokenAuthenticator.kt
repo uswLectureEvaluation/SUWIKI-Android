@@ -4,7 +4,6 @@ import com.suwiki.core.model.exception.SuwikiServerError
 import com.suwiki.core.network.di.RETROFIT_TAG
 import com.suwiki.core.network.repository.AuthRepository
 import com.suwiki.core.network.retrofit.Json
-import com.suwiki.core.network.retrofit.SuwikiErrorResponse
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
