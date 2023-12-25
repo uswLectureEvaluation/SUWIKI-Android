@@ -2,6 +2,7 @@ import com.kunize.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.project
 
 internal class FeatureComposeConventionPlugin : Plugin<Project> {
 
@@ -14,6 +15,14 @@ internal class FeatureComposeConventionPlugin : Plugin<Project> {
       }
 
       dependencies {
+        "implementation"(project(":core:model"))
+        "implementation"(project(":core:android"))
+        "implementation"(project(":core:ui"))
+        "implementation"(project(":core:designsystem"))
+
+        "implementation"(libs.findBundle("orbit").get())
+
+        "implementation"(libs.findLibrary("kotlinx.immutable").get())
         "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
         "implementation"(libs.findLibrary("kotlinx.coroutines.core").get())
 

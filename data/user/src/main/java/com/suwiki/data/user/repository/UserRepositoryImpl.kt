@@ -1,8 +1,8 @@
 package com.suwiki.data.user.repository
 
 import com.suwiki.core.model.user.User
-import com.suwiki.data.user.datasource.LocalUserProviderDataSource
-import com.suwiki.data.user.datasource.LocalUserStorageDataSource
+import com.suwiki.core.security.SecurityPreferences
+import com.suwiki.data.user.datasource.LocalUserDataSource
 import com.suwiki.data.user.datasource.RemoteUserDataSource
 import com.suwiki.domain.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,23 +11,13 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-  private val localUserProviderDataSource: LocalUserProviderDataSource,
-  private val localUserStorageDataSource: LocalUserStorageDataSource,
+  private val localUserDataSource: LocalUserDataSource,
   private val remoteUserDataSource: RemoteUserDataSource,
+  private val securityPreferences: SecurityPreferences,
 ) : UserRepository {
   override suspend fun logout() {
-    localUserStorageDataSource.clearUserInfoAndToken()
-  }
-
-  override suspend fun findId(email: String) {
-    remoteUserDataSource.findId(email = email)
-  }
-
-  override suspend fun findPassword(loginId: String, email: String) {
-    remoteUserDataSource.findPassword(
-      loginId = loginId,
-      email = email,
-    )
+    localUserDataSource.clearUserInfo()
+    securityPreferences.clearAll()
   }
 
   override suspend fun resetPassword(currentPassword: String, newPassword: String) {
@@ -35,15 +25,6 @@ class UserRepositoryImpl @Inject constructor(
       currentPassword = currentPassword,
       newPassword = newPassword,
     )
-  }
-
-  override suspend fun login(loginId: String, password: String) {
-    val token = remoteUserDataSource.login(
-      loginId = loginId,
-      password = password,
-    )
-
-    localUserStorageDataSource.setToken(token)
   }
 
   override suspend fun quit(id: String, password: String) {
@@ -54,12 +35,12 @@ class UserRepositoryImpl @Inject constructor(
   }
 
   override suspend fun getUserInfo(): Flow<User> = flow {
-    val localUserInfo = localUserProviderDataSource.user.first()
+    val localUserInfo = localUserDataSource.user.first()
     emit(localUserInfo)
 
     val remoteUserInfo = remoteUserDataSource.getUserInfo()
     emit(remoteUserInfo)
 
-    localUserStorageDataSource.setUserInfo(remoteUserInfo)
+    localUserDataSource.setUserInfo(remoteUserInfo)
   }
 }

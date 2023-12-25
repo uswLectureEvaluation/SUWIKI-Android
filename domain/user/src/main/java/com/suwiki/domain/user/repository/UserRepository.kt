@@ -7,21 +7,9 @@ interface UserRepository {
 
   suspend fun logout()
 
-  suspend fun findId(email: String)
-
-  suspend fun findPassword(
-    loginId: String,
-    email: String,
-  )
-
   suspend fun resetPassword(
     currentPassword: String,
     newPassword: String,
-  )
-
-  suspend fun login(
-    loginId: String,
-    password: String,
   )
 
   suspend fun quit(

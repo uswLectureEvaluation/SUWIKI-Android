@@ -19,7 +19,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "uswtimetable"
-include(":presentation")
 include(":app-compose")
 
 include(":core:android")
@@ -39,10 +38,12 @@ include(":remote:lectureevaluation:editor")
 include(":remote:signup")
 include(":remote:notice")
 include(":remote:user")
+include(":remote:login")
 
 include(":local:openmajor")
 include(":local:timetable")
 include(":local:user")
+include(":local:login")
 
 include(":data:openmajor")
 include(":data:timetable")
@@ -52,6 +53,7 @@ include(":data:lectureevaluation:my")
 include(":data:user")
 include(":data:notice")
 include(":data:signup")
+include(":data:login")
 
 include(":domain:openmajor")
 include(":domain:user")
@@ -61,3 +63,15 @@ include(":domain:lectureevaluation:my")
 include(":domain:lectureevaluation:editor")
 include(":domain:timetable")
 include(":domain:notice")
+include(":domain:login")
+
+include(":feature:navigator")
+include(":feature:openmajor")
+include(":feature:timetable")
+include(":feature:lectureevaluation:viewerreporter")
+include(":feature:lectureevaluation:editor")
+include(":feature:lectureevaluation:my")
+include(":feature:myinfo")
+include(":feature:notice")
+include(":feature:signup")
+include(":feature:login")

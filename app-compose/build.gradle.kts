@@ -3,6 +3,8 @@ plugins {
   alias(libs.plugins.suwiki.android.application)
   alias(libs.plugins.suwiki.android.application.compose)
   alias(libs.plugins.suwiki.android.hilt)
+  alias(libs.plugins.google.services)
+  alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -16,15 +18,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.presentation)
-
-  implementation(projects.core.android)
-  implementation(projects.core.model)
-  implementation(projects.core.common)
-  implementation(projects.core.network)
-  implementation(projects.core.security)
-  implementation(projects.core.database)
-  implementation(projects.core.ui)
+  implementation(projects.feature.navigator)
 
   implementation(projects.remote.openmajor)
   implementation(projects.remote.timetable)
@@ -48,14 +42,9 @@ dependencies {
   implementation(projects.data.notice)
   implementation(projects.data.signup)
 
-  implementation(projects.domain.openmajor)
-  implementation(projects.domain.user)
-  implementation(projects.domain.signup)
-  implementation(projects.domain.lectureevaluation.viewerreporter)
-  implementation(projects.domain.lectureevaluation.my)
-  implementation(projects.domain.lectureevaluation.editor)
-  implementation(projects.domain.timetable)
-  implementation(projects.domain.notice)
+  implementation(platform(libs.firebase.bom))
+  implementation(libs.firebase.crashlytics)
+  implementation(libs.firebase.analytics)
 
   implementation(libs.timber)
 }

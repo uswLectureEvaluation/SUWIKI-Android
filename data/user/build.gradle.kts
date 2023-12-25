@@ -8,5 +8,6 @@ android {
 }
 
 dependencies {
+  implementation(projects.core.security)
   implementation(projects.domain.user)
 }
