@@ -100,32 +100,35 @@ fun SuwikiReviewStatisticsContainer(
         color = Gray6A,
       )
     }
-    if (rating > 0.0f &&
-      grade != null &&
-      gradeLabelColor != null &&
-      homework != null &&
-      homeworkLabelColor != null &&
-      team != null &&
-      teamLabelColor != null
+
+    val isGradeValid = grade != null && gradeLabelColor != null
+    val isHomeworkValid = homework != null && homeworkLabelColor != null
+    val isTeamValid = team != null && teamLabelColor != null
+
+    if (
+      rating > 0.0f &&
+      isGradeValid &&
+      isHomeworkValid &&
+      isTeamValid
     ) {
       Spacer(modifier = Modifier.height(14.dp))
       Row(
         horizontalArrangement = Arrangement.spacedBy(7.dp),
       ) {
         StatisticsLabel(
-          color = gradeLabelColor,
+          color = gradeLabelColor!!,
           name = stringResource(R.string.word_grade),
-          value = grade,
+          value = grade!!,
         )
         StatisticsLabel(
-          color = homeworkLabelColor,
+          color = homeworkLabelColor!!,
           name = stringResource(R.string.word_homework),
-          value = homework,
+          value = homework!!,
         )
         StatisticsLabel(
-          color = teamLabelColor,
+          color = teamLabelColor!!,
           name = stringResource(R.string.word_team),
-          value = team,
+          value = team!!,
         )
       }
     }

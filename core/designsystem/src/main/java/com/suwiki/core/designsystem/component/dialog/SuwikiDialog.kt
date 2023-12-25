@@ -39,7 +39,7 @@ fun SuwikiDialog(
     onDismissRequest = onDismissRequest,
     content = {
       Column(
-        modifier = Modifier
+        modifier = modifier
           .clip(RoundedCornerShape(10.dp))
           .background(White)
           .padding(top = 20.dp, bottom = 15.dp, start = 15.dp, end = 22.dp),
