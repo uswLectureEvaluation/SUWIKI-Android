@@ -13,9 +13,12 @@
   <string name="review_count">%d개의 리뷰</string>
   <string name="word_my">MY</string>
   <string name="word_semester">학기</string>
-  <string name="word_edit">신고</string>
-  <string name="word_report">수정</string>
+  <string name="word_edit">수정</string>
+  <string name="word_report">신고</string>
   <string name="word_type_exam">시험유형</string>
   <string name="word_difficulcy">난이도</string>
     <string name="word_add">추가</string>
+    <string name="word_grade">학점</string>
+  <string name="word_homework">과제</string>
+  <string name="word_team">팀플</string>
 </resources>

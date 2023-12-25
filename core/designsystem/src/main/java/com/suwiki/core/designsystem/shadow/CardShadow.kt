@@ -12,6 +12,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.White
 
@@ -20,10 +22,10 @@ fun Modifier.cardShadow(
   borderRadius: Dp = 0.dp,
 ) = this.then(
   modifier.suwikiShadow(
-    color = GrayDA,
+    color = GrayCB,
     spread = 0.1.dp,
     borderRadius = borderRadius,
-    blurRadius = 8.dp,
+    blurRadius = 12.dp,
     offsetY = 8.dp,
     offsetX = 8.dp,
   ),

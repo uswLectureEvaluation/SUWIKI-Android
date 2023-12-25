@@ -42,7 +42,6 @@ fun SuwikiReviewGradeCard(
   honeyRating: Float,
   learningRating: Float,
   satisfactionRating: Float,
-  onClick: () -> Unit,
 ) {
   val reviewCountColor = if (reviewCount > 0) Primary else GrayDA
   val reviewIndicatorColor = if (reviewCount > 0) Black else GrayDA
@@ -51,7 +50,6 @@ fun SuwikiReviewGradeCard(
       .fillMaxWidth()
       .cardShadow()
       .clip(RoundedCornerShape(10.dp))
-      .suwikiClickable(onClick = onClick)
       .background(White)
       .padding(16.dp),
     verticalAlignment = Alignment.CenterVertically,
@@ -150,7 +148,6 @@ fun SuwikiReviewGradeCardPreview() {
     ) {
       SuwikiReviewGradeCard(
         modifier = Modifier,
-        onClick = {},
         reviewCount = 4,
         rating = 4.3f,
         honeyRating = 3.4f,
@@ -160,7 +157,6 @@ fun SuwikiReviewGradeCardPreview() {
       Spacer(modifier = Modifier.height(20.dp))
       SuwikiReviewGradeCard(
         modifier = Modifier,
-        onClick = {},
         reviewCount = 0,
         rating = 0.0f,
         honeyRating = 0.0f,
