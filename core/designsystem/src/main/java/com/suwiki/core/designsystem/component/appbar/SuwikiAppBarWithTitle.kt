@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,14 +30,12 @@ fun SuwikiAppBarWithTitle(
   onClickRemove: () -> Unit = {},
 ) {
   Row(
-    horizontalArrangement = Arrangement.SpaceBetween,
     modifier = modifier
       .fillMaxWidth()
       .wrapContentHeight()
       .background(White)
-//      .padding(vertical = 15.dp, horizontal = 24.dp),
       .padding(top = 15.dp, bottom = 15.dp, start = 18.dp, end = 24.dp),
-
+    horizontalArrangement = Arrangement.SpaceBetween,
   ) {
     Icon(
       painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
@@ -43,6 +43,7 @@ fun SuwikiAppBarWithTitle(
       tint = Gray95,
       modifier = Modifier
         .size(24.dp)
+        .clip(CircleShape)
         .suwikiClickable(onClick = onClickBack)
         .padding(vertical = 2.dp, horizontal = 6.5.dp),
     )
@@ -56,6 +57,7 @@ fun SuwikiAppBarWithTitle(
       tint = Gray95,
       modifier = Modifier
         .size(24.dp)
+        .clip(CircleShape)
         .suwikiClickable(onClick = onClickRemove)
         .padding(3.dp),
     )

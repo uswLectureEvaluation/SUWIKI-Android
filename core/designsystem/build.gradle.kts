@@ -11,4 +11,6 @@ android {
 dependencies {
   implementation(projects.core.model)
   implementation(projects.core.ui)
+
+  implementation(libs.compose.rating.bar)
 }

@@ -1,7 +1,6 @@
 package com.suwiki.core.designsystem.component.filter
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -26,29 +25,26 @@ fun SuwikiFilterButton(
   text: String,
   onClick: () -> Unit = {},
 ) {
-  Box(
+  Row(
     modifier = modifier
       .suwikiClickable(onClick = onClick)
       .wrapContentHeight()
       .padding(vertical = 4.dp, horizontal = 8.dp),
+    verticalAlignment = Alignment.CenterVertically,
   ) {
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-    ) {
-      Text(
-        text = text,
-        style = SuwikiTheme.typography.header6,
-        color = Primary,
-      )
-      Icon(
-        painter = painterResource(id = R.drawable.ic_filter_arrow_down),
-        contentDescription = "",
-        tint = Primary,
-        modifier = Modifier
-          .size(24.dp)
-          .padding(vertical = 9.dp, horizontal = 7.dp),
-      )
-    }
+    Text(
+      text = text,
+      style = SuwikiTheme.typography.header6,
+      color = Primary,
+    )
+    Icon(
+      painter = painterResource(id = R.drawable.ic_filter_arrow_down),
+      contentDescription = "",
+      tint = Primary,
+      modifier = Modifier
+        .size(24.dp)
+        .padding(vertical = 9.dp, horizontal = 7.dp),
+    )
   }
 }
 

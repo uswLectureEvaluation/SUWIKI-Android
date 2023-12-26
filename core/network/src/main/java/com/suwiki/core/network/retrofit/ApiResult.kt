@@ -80,11 +80,11 @@ internal fun ApiResult<*>.throwFailure() {
   }
 }
 
-private fun handleHttpError(httpError: ApiResult.Failure.HttpError): Exception {
-  return getSuwikiErrorBody(httpError.body).getOrNull()?.run {
-    handleSuwikiError(this)
-  } ?: handleNonSuwikiError(httpError.code)
-}
+private fun handleHttpError(httpError: ApiResult.Failure.HttpError): Exception = runCatching {
+  Json.getSuwikiErrorBody(httpError.body)
+}.getOrNull()?.run {
+  handleSuwikiError(this)
+} ?: handleNonSuwikiError(httpError.code)
 
 private fun handleSuwikiError(suwikiErrorResponse: SuwikiErrorResponse): Exception = runCatching {
   SuwikiServerError.valueOf(suwikiErrorResponse.suwikiCode).exception
@@ -96,8 +96,4 @@ private fun handleNonSuwikiError(httpStatusCode: Int) = when (httpStatusCode) {
   404 -> NotFoundException()
   500, 501, 502, 503, 504, 505 -> NetworkException()
   else -> UnknownException()
-}
-
-private fun getSuwikiErrorBody(body: String) = runCatching {
-  KotlinSerializationUtil.json.decodeFromString<SuwikiErrorResponse>(body)
 }

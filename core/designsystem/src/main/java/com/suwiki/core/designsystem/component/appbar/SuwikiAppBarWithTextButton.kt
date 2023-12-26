@@ -1,20 +1,23 @@
 package com.suwiki.core.designsystem.component.appbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.component.button.SuwikiContainedButtonSmall
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -28,12 +31,14 @@ fun SuwikiAppBarWithTextButton(
   onClickBack: () -> Unit = {},
   onClickTextButton: () -> Unit = {},
 ) {
-  Box(
+  Row(
     modifier = modifier
       .fillMaxWidth()
       .wrapContentHeight()
       .background(White)
       .padding(vertical = 15.dp, horizontal = 18.dp),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.SpaceBetween,
   ) {
     Icon(
       painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
@@ -41,16 +46,17 @@ fun SuwikiAppBarWithTextButton(
       tint = Gray95,
       modifier = Modifier
         .size(24.dp)
+        .clip(CircleShape)
         .suwikiClickable(onClick = onClickBack)
-        .align(Alignment.CenterStart)
         .padding(vertical = 2.dp, horizontal = 6.5.dp),
     )
-    SuwikiContainedButtonSmall(
-      text = buttonText,
-      textColor = Primary,
-      onClick = onClickTextButton,
+    Text(
       modifier = Modifier
-        .align(Alignment.CenterEnd),
+        .suwikiClickable(onClick = onClickTextButton)
+        .padding(vertical = 4.dp, horizontal = 8.dp),
+      color = Primary,
+      style = SuwikiTheme.typography.body6,
+      text = buttonText,
     )
   }
 }
