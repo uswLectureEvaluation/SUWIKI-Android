@@ -1,3 +1,5 @@
+
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
   alias(libs.plugins.suwiki.android.library)
@@ -7,6 +9,16 @@ plugins {
 
 android {
   namespace = "com.suwiki.core.network"
+
+  buildTypes {
+    getByName("debug") {
+      buildConfigField("String", "BASE_URL", "\"http://54.180.72.97:8080\"")
+    }
+
+    getByName("release") {
+      buildConfigField("String", "BASE_URL", "\"https://api.suwiki.kr\"")
+    }
+  }
 }
 
 dependencies {

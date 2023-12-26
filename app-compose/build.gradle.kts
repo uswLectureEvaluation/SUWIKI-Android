@@ -28,10 +28,12 @@ dependencies {
   implementation(projects.remote.signup)
   implementation(projects.remote.notice)
   implementation(projects.remote.user)
+  implementation(projects.remote.login)
 
   implementation(projects.local.openmajor)
   implementation(projects.local.timetable)
   implementation(projects.local.user)
+  implementation(projects.local.login)
 
   implementation(projects.data.openmajor)
   implementation(projects.data.timetable)
@@ -41,6 +43,7 @@ dependencies {
   implementation(projects.data.user)
   implementation(projects.data.notice)
   implementation(projects.data.signup)
+  implementation(projects.data.login)
 
   implementation(platform(libs.firebase.bom))
   implementation(libs.firebase.crashlytics)
