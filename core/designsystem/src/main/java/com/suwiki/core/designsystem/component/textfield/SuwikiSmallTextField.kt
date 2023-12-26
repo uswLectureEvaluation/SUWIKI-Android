@@ -38,7 +38,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 
 @Composable
-fun SuwikiTextFieldSmall(
+fun SuwikiSmallTextField(
   modifier: Modifier = Modifier,
   placeholder: String = "",
   value: String = "",
@@ -117,7 +117,7 @@ fun SuwikiTextFieldSmall(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiTextFieldSmallPreview() {
+fun SuwikiSmallTextFieldPreview() {
   SuwikiTheme {
     var normalValue by remember {
       mutableStateOf("")
@@ -129,14 +129,14 @@ fun SuwikiTextFieldSmallPreview() {
         .padding(vertical = 10.dp),
       verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-      SuwikiTextFieldSmall(
+      SuwikiSmallTextField(
         placeholder = "플레이스 홀더",
         value = normalValue,
         onValueChange = { normalValue = it },
         onClickClearButton = { normalValue = "" },
       )
 
-      SuwikiTextFieldSmall(
+      SuwikiSmallTextField(
         placeholder = "플레이스 홀더",
         value = normalValue,
         onValueChange = { normalValue = it },

@@ -38,7 +38,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 
 @Composable
-fun SuwikiTextFieldRegular(
+fun SuwikiRegularTextField(
   modifier: Modifier = Modifier,
   label: String? = "",
   placeholder: String = "",
@@ -145,7 +145,7 @@ fun SuwikiTextFieldRegular(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiTextFieldRegularPreview() {
+fun SuwikiRegularTextFieldPreview() {
   SuwikiTheme {
     var normalValue by remember {
       mutableStateOf("")
@@ -159,7 +159,7 @@ fun SuwikiTextFieldRegularPreview() {
       modifier = Modifier.background(White),
       verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-      SuwikiTextFieldRegular(
+      SuwikiRegularTextField(
         label = "라벨",
         placeholder = "플레이스 홀더",
         value = normalValue,
@@ -168,7 +168,7 @@ fun SuwikiTextFieldRegularPreview() {
         helperText = "도움말 메세지",
       )
 
-      SuwikiTextFieldRegular(
+      SuwikiRegularTextField(
         label = "라벨",
         placeholder = "플레이스 홀더",
         value = errorValue,

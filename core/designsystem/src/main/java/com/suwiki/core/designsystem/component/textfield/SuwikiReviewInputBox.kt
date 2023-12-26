@@ -31,7 +31,7 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 
 @Composable
-fun SuwikiTextFieldReview(
+fun SuwikiReviewInputBox(
   modifier: Modifier = Modifier,
   hint: String = "",
   value: String = "",
@@ -74,7 +74,7 @@ fun SuwikiTextFieldReview(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiTextFieldReviewPreview() {
+fun SuwikiReviewInputBoxPreview() {
   SuwikiTheme {
     var normalValue by remember {
       mutableStateOf("")
@@ -84,13 +84,13 @@ fun SuwikiTextFieldReviewPreview() {
       modifier = Modifier.padding(20.dp),
       verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-      SuwikiTextFieldReview(
+      SuwikiReviewInputBox(
         hint = "강의평가를 작성해주세요",
         value = normalValue,
         onValueChange = { normalValue = it },
       )
 
-      SuwikiTextFieldReview(
+      SuwikiReviewInputBox(
         hint = "강의평가를 작성해주세요",
         value = normalValue,
         isError = true,

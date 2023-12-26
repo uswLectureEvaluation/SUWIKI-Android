@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="word_login">로그인</string>
+  <string name="word_id">아이디</string>
+  <string name="word_password">비밀번호</string>
+  <string name="login_screen_id_textfield_placeholder">아이디를 입력하세요</string>
+  <string name="login_screen_password_textfield_placeholder">비밀번호를 입력하세요</string>
+  <string name="login_screen_find_id">아이디 찾기</string>
+  <string name="login_screen_find_password">비밀번호 찾기</string>
+  <string name="word_signup">회원가입</string>
+</resources>
