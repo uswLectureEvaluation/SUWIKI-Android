@@ -13,9 +13,13 @@ fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
 
 fun NavGraphBuilder.lectureEvaluationNavGraph(
   padding: PaddingValues,
+  navigateLogin: () -> Unit,
 ) {
   composable(route = LectureEvaluationRoute.route) {
-    LectureEvaluationRoute(padding)
+    LectureEvaluationRoute(
+      padding = padding,
+      navigateLogin = navigateLogin,
+    )
   }
 }
 

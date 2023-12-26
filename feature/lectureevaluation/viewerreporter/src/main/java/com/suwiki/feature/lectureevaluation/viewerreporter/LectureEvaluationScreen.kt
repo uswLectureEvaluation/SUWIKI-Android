@@ -24,12 +24,18 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun LectureEvaluationRoute(
   padding: PaddingValues,
   viewModel: LectureEvaluationViewModel = hiltViewModel(),
+  navigateLogin: () -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
-  viewModel.collectSideEffect { sideEffect -> }
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      LectureEvaluationSideEffect.NavigateToLogin -> navigateLogin()
+      LectureEvaluationSideEffect.NavigateToSignUp -> TODO()
+    }
+  }
 
   LaunchedEffect(key1 = viewModel) {
-    viewModel.showOnboardingBottomSheetIfNeed()
+    viewModel.checkLoggedInShowBottomSheetIfNeed()
   }
 
   val pagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT })
@@ -39,6 +45,10 @@ fun LectureEvaluationRoute(
     uiState = uiState,
     pagerState = pagerState,
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
+    onClickLoginButton = {
+      viewModel.hideOnboardingBottomSheet()
+      viewModel.navigateToLogin()
+    },
   )
 }
 

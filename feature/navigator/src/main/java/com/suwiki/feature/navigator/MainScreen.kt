@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -40,6 +39,8 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
+import com.suwiki.feature.login.navigation.loginNavGraph
+import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.collections.immutable.ImmutableList
@@ -86,12 +87,15 @@ internal fun MainScreen(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
       ) {
+        loginNavGraph()
+
         timetableNavGraph(
           padding = innerPadding,
         )
 
         lectureEvaluationNavGraph(
           padding = innerPadding,
+          navigateLogin = navigator::navigateLogin,
         )
 
         myInfoNavGraph(

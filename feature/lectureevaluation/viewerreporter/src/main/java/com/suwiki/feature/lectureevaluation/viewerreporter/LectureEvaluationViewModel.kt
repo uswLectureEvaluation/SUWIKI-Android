@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -20,12 +21,23 @@ class LectureEvaluationViewModel @Inject constructor(
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> = container(LectureEvaluationState())
 
+  private var isLoggedIn: Boolean = false
+  private var isFirstVisit: Boolean = true
+
   // TODO 로그인 이후 네트워크 연결이 없는 상태에서 잘 동작하는지 테스트
-  fun showOnboardingBottomSheetIfNeed() = intent {
-    viewModelScope.launch {
-      if (getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn != true) showOnboardingBottomSheet()
+  private suspend fun checkLoggedIn() {
+    isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
+  }
+
+  fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
+    checkLoggedIn()
+    if (isLoggedIn.not() && isFirstVisit) {
+      isFirstVisit = false
+      showOnboardingBottomSheet()
     }
   }
+
+  fun navigateToLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateToLogin) }
 
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }
