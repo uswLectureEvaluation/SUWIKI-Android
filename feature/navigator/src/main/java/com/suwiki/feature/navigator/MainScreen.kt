@@ -41,6 +41,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
+import com.suwiki.feature.notice.navigation.noticeNavGraph
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -96,6 +97,12 @@ internal fun MainScreen(
 
         myInfoNavGraph(
           padding = innerPadding,
+          navigateNotice = navigator::navigateNotice
+        )
+
+        noticeNavGraph(
+          padding = innerPadding,
+          navigateNoticeDetail = navigator::navigateNoticeDetail
         )
       }
 

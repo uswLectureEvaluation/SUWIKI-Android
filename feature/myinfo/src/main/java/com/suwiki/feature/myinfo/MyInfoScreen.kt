@@ -38,9 +38,20 @@ import com.suwiki.core.ui.extension.suwikiClickable
 import okhttp3.internal.immutableListOf
 
 @Composable
+fun MyInfoRoute(
+  padding: PaddingValues,
+  navigateNotice: () -> Unit,
+) {
+  MyInfoScreen(
+    padding = padding,
+    navigateNotice = navigateNotice,
+  )
+}
+@Composable
 fun MyInfoScreen(
   padding: PaddingValues,
-  isLogin: Boolean = false,
+  isLogin: Boolean = true,
+  navigateNotice: () -> Unit,
 ) {
   val loginList = immutableListOf(
     R.string.my_info_point,
@@ -75,7 +86,8 @@ fun MyInfoScreen(
         ) {
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_notice),
-            iconId = R.drawable.ic_my_info_notice
+            iconId = R.drawable.ic_my_info_notice,
+            onClickItem = navigateNotice,
           )
           VerticalDivider(
             modifier = Modifier
@@ -275,6 +287,7 @@ fun MyInfoScreenScreenPreview() {
     MyInfoScreen(
       padding = PaddingValues(0.dp),
       isLogin = true,
+      navigateNotice = {},
     )
   }
 }

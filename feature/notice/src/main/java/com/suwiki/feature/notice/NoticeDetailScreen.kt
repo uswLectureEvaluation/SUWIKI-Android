@@ -139,7 +139,7 @@ fun NoticeDetailScreenPreview() {
         "\n" +
         "양해부탁드립니다. \n" +
         "\n" +
-        "감사합니다."
+        "감사합니다.",
     )
   }
 }

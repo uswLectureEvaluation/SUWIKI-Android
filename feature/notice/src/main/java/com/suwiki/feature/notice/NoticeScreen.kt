@@ -3,6 +3,7 @@ package com.suwiki.feature.notice
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,9 +31,23 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 import okhttp3.internal.immutableListOf
 
+@Composable
+fun NoticeRoute(
+  padding: PaddingValues,
+  navigateNoticeDetail: () -> Unit,
+) {
+  NoticeScreen(
+    padding = padding,
+    navigateNoticeDetail = navigateNoticeDetail,
+  )
+}
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun NoticeScreen() {
+fun NoticeScreen(
+  padding: PaddingValues,
+  navigateNoticeDetail: () -> Unit,
+) {
   // TODO REMOVE
   val sampleNoticeTitle = immutableListOf(
     "회원가입 필독",
@@ -53,7 +68,7 @@ fun NoticeScreen() {
           SuwikiNoticeContainer(
             titleText = title,
             dateText = "2023.04.17",
-            onClick = { /*TODO*/ }
+            onClick = navigateNoticeDetail,
           )
         }
       }
@@ -96,6 +111,6 @@ private fun NoticeScreenAppBar(
 @Composable
 fun NoticeScreenPreview() {
   SuwikiTheme {
-    NoticeScreen()
+//    NoticeScreen(padding = PaddingValues(0.dp))
   }
 }
