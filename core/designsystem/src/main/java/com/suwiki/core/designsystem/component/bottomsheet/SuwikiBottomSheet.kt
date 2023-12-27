@@ -65,7 +65,6 @@ fun SuwikiBottomSheetItem(
 @Preview
 @Composable
 fun SuwikiBottomSheetPreview() {
-  var isChecked by remember { mutableStateOf(false) }
   var isSheetOpen by rememberSaveable { mutableStateOf(false) }
 
   // 테스트용 버튼

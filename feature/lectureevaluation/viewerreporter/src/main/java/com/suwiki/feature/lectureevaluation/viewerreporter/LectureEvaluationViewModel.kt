@@ -37,7 +37,7 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
-  fun navigateToLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateToLogin) }
+  fun navigateLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLogin) }
 
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }

@@ -78,7 +78,7 @@ private fun OnboardingBottomSheetContent(
 
     Spacer(modifier = Modifier.size(50.dp))
 
-    SuwikiContainedLargeButton(text = stringResource(R.string.word_signup), onClick = onClickSignupButton)
+    SuwikiContainedLargeButton(text = stringResource(R.string.onboarding_button_signup), onClick = onClickSignupButton)
     Spacer(modifier = Modifier.size(12.dp))
     SuwikiOutlinedButton(text = stringResource(R.string.word_login), onClick = onClickLoginButton)
   }

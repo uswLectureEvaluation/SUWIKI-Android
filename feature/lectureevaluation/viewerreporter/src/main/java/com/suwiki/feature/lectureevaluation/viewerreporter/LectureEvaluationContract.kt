@@ -5,6 +5,6 @@ data class LectureEvaluationState(
 )
 
 sealed interface LectureEvaluationSideEffect {
-  data object NavigateToLogin : LectureEvaluationSideEffect
-  data object NavigateToSignUp : LectureEvaluationSideEffect
+  data object NavigateLogin : LectureEvaluationSideEffect
+  data object NavigateSignUp : LectureEvaluationSideEffect
 }

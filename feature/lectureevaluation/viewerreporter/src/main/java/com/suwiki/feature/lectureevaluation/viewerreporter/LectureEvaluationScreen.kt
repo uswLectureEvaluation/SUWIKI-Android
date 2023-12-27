@@ -29,8 +29,8 @@ fun LectureEvaluationRoute(
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      LectureEvaluationSideEffect.NavigateToLogin -> navigateLogin()
-      LectureEvaluationSideEffect.NavigateToSignUp -> TODO()
+      LectureEvaluationSideEffect.NavigateLogin -> navigateLogin()
+      LectureEvaluationSideEffect.NavigateSignUp -> TODO()
     }
   }
 
@@ -47,7 +47,7 @@ fun LectureEvaluationRoute(
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
     onClickLoginButton = {
       viewModel.hideOnboardingBottomSheet()
-      viewModel.navigateToLogin()
+      viewModel.navigateLogin()
     },
   )
 }

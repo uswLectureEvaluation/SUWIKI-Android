@@ -2,7 +2,7 @@
 <resources>
   <string name="content_description_logo">로고</string>
   <string name="word_login">로그인</string>
-  <string name="word_signup">가입하기</string>
+  <string name="onboarding_button_signup">가입하기</string>
   <string name="onboarding_title">수원대 학생이라면\n수위키로 한 번에 해결!</string>
   <string name="onboarding1_description">재학생들의 솔직한 강의평가 확인하기</string>
   <string name="onboarding2_description">재학생들의 솔직한 강의평가 확인하기</string>
