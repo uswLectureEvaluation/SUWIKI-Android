@@ -19,12 +19,12 @@ import javax.inject.Inject
 class LectureEvaluationViewModel @Inject constructor(
   private val getUserInfoUseCase: GetUserInfoUseCase,
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
-  override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> = container(LectureEvaluationState())
+  override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
+    container(LectureEvaluationState())
 
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
 
-  // TODO 로그인 이후 네트워크 연결이 없는 상태에서 잘 동작하는지 테스트
   private suspend fun checkLoggedIn() {
     isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
   }
