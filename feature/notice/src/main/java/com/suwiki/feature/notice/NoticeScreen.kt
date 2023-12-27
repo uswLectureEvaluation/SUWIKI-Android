@@ -34,10 +34,29 @@ import okhttp3.internal.immutableListOf
 @Composable
 fun NoticeRoute(
   padding: PaddingValues,
+//  viewModel: NoticeViewModel = hiltViewModel(),
   navigateNoticeDetail: () -> Unit,
 ) {
+//  val uiState = viewModel.collectAsState().value
+//  viewModel.collectSideEffect { sideEffect ->
+//    when (sideEffect) {
+//      NoticeSideEffect.NavigateNoticeDetail -> navigateNoticeDetail()
+//    }
+//  }
+//
+//  LaunchedEffect(key1 = viewModel) {
+//    viewModel.checkNoticeListLoaded()
+//  }
+//
+//  NoticeScreen(
+//    padding = padding,
+//    uiState = uiState,
+//    navigateNoticeDetail = { viewModel.navigateNoticeDetail() },
+//  )
+
   NoticeScreen(
     padding = padding,
+    uiState = NoticeState(),
     navigateNoticeDetail = navigateNoticeDetail,
   )
 }
@@ -46,6 +65,7 @@ fun NoticeRoute(
 @Composable
 fun NoticeScreen(
   padding: PaddingValues,
+  uiState: NoticeState, // TODO(progress bar visible에 사용할 예정)
   navigateNoticeDetail: () -> Unit,
 ) {
   // TODO REMOVE

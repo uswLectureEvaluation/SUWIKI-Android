@@ -40,18 +40,37 @@ import okhttp3.internal.immutableListOf
 @Composable
 fun MyInfoRoute(
   padding: PaddingValues,
+//  viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
 ) {
+//  val uiState = viewModel.collectAsState().value
+//  viewModel.collectSideEffect { sideEffect ->
+//    when (sideEffect) {
+//      MyInfoSideEffect.NavigateNotice -> navigateNotice()
+//    }
+//  }
+//
+//  LaunchedEffect(key1 = viewModel) {
+//    viewModel.checkLoggedIn()
+//  }
+//
+//  MyInfoScreen(
+//    padding = padding,
+//    uiState = uiState,
+//    onClickNoticeButton = { viewModel.navigateNotice() },
+//  )
   MyInfoScreen(
     padding = padding,
-    navigateNotice = navigateNotice,
+    uiState = MyInfoState(),
+    onClickNoticeButton = { },
   )
 }
+
 @Composable
 fun MyInfoScreen(
   padding: PaddingValues,
-  isLogin: Boolean = true,
-  navigateNotice: () -> Unit,
+  uiState: MyInfoState,
+  onClickNoticeButton: () -> Unit,
 ) {
   val loginList = immutableListOf(
     R.string.my_info_point,
@@ -67,12 +86,12 @@ fun MyInfoScreen(
     modifier = Modifier.padding(padding)
   ) {
     Box(
-      modifier = Modifier.background(if (isLogin) GrayF6 else White)
+      modifier = Modifier.background(if (uiState.isLoggedIn) GrayF6 else White)
     ) {
       Column(
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        if (isLogin) {
+        if (uiState.isLoggedIn) {
           LoginMyInfo()
         } else {
           LogoutMyInfo()
@@ -87,7 +106,7 @@ fun MyInfoScreen(
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_notice),
             iconId = R.drawable.ic_my_info_notice,
-            onClickItem = navigateNotice,
+            onClickItem = onClickNoticeButton,
           )
           VerticalDivider(
             modifier = Modifier
@@ -115,7 +134,7 @@ fun MyInfoScreen(
         .background(White)
         .fillMaxSize()
     ) {
-      if (isLogin) {
+      if (uiState.isLoggedIn) {
         LazyColumn {
           item {
             SuwikiBottomSheetItem(title = stringResource(R.string.my_info_my))
@@ -284,9 +303,13 @@ private fun MyInfoListItem(
 @Composable
 fun MyInfoScreenScreenPreview() {
   SuwikiTheme {
-    MyInfoScreen(
+//    MyInfoScreen(
+//      padding = PaddingValues(0.dp),
+//      uiState = MyInfoState(),
+//      onClickNoticeButton = {},
+//    )
+    MyInfoRoute(
       padding = PaddingValues(0.dp),
-      isLogin = true,
       navigateNotice = {},
     )
   }

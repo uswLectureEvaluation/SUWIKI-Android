@@ -189,7 +189,7 @@ firebase = ["firebase-analytics", "firebase-database"]
 androidx-lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx"]
 androidx-navigation = ["navigation-fragment-ktx", "navigation-ui-ktx"]
 coroutine = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
-compose = ["ui", "ui-graphics", "ui-tooling-preview", "material3-compose", "coil-compose", "ui-foundation", "activity-compose", "lifecycle-compose", "navigation-compose"]
+compose = ["ui", "ui-graphics", "ui-tooling-preview", "material3-compose", "coil-compose", "ui-foundation", "activity-compose", "lifecycle-compose", "navigation-compose", "hilt-navigation-compose"]
 compose-debug = ["ui-tooling", "ui-test-manifest"]
 
 orbit = ["orbit-core", "orbit-viewmodel", "orbit-compose"]

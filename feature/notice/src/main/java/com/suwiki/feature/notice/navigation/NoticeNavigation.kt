@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.suwiki.feature.notice.NoticeDetailRoute
 import com.suwiki.feature.notice.NoticeDetailScreen
 import com.suwiki.feature.notice.NoticeRoute
 
@@ -26,10 +27,8 @@ fun NavGraphBuilder.noticeNavGraph(
     )
   }
   composable(route = NoticeDetailRoute.route) {
-    NoticeDetailScreen(
-      title = "asd",
-      date = "2030.03.12",
-      content = "adsasdasd\nsadasd\nasd\n\nasdasd",
+    NoticeDetailRoute(
+      padding = padding,
     )
   }
 }
