@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -62,7 +63,7 @@ fun MyInfoRoute(
   MyInfoScreen(
     padding = padding,
     uiState = uiState,
-    onClickNoticeButton = { viewModel.navigateNotice() },
+    onClickNoticeButton = viewModel::navigateNotice,
   )
 }
 
@@ -72,7 +73,7 @@ fun MyInfoScreen(
   uiState: MyInfoState,
   onClickNoticeButton: () -> Unit,
 ) {
-  val loginList = immutableListOf(
+  val myList = immutableListOf(
     R.string.my_info_point,
     R.string.my_info_ban_history,
   )
@@ -97,11 +98,11 @@ fun MyInfoScreen(
           LogoutMyInfo()
         }
         Row(
-          horizontalArrangement = Arrangement.spacedBy(24.dp),
+          horizontalArrangement = Arrangement.SpaceBetween,
           modifier = Modifier
             .padding(vertical = 28.dp, horizontal = 41.dp)
-            .wrapContentWidth()
-            .height(49.dp),
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min),
         ) {
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_notice),
@@ -110,8 +111,9 @@ fun MyInfoScreen(
           )
           VerticalDivider(
             modifier = Modifier
-              .width(1.dp)
               .padding(vertical = 5.dp),
+            thickness = 1.dp,
+            color = GrayF6,
           )
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_contact),
@@ -119,8 +121,9 @@ fun MyInfoScreen(
           )
           VerticalDivider(
             modifier = Modifier
-              .width(1.dp)
               .padding(vertical = 5.dp),
+            thickness = 1.dp,
+            color = GrayF6,
           )
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_account_manage),
@@ -129,26 +132,24 @@ fun MyInfoScreen(
         }
       }
     }
-    Column(
+    LazyColumn(
       modifier = Modifier
         .background(White)
         .fillMaxSize(),
     ) {
       if (uiState.showMyInfoCard) {
-        LazyColumn {
-          item {
-            SuwikiBottomSheetItem(title = stringResource(R.string.my_info_my))
-          }
-          items(items = loginList) { title ->
+        item {
+          SuwikiBottomSheetItem(title = stringResource(R.string.my_info_my))
+
+          myList.forEach { title ->
             MyInfoListItem(title = stringResource(title))
           }
         }
       }
-      LazyColumn {
-        item {
-          SuwikiBottomSheetItem(title = stringResource(R.string.my_info_service))
-        }
-        items(items = serviceList) { title ->
+      item {
+        SuwikiBottomSheetItem(title = stringResource(R.string.my_info_service))
+
+        serviceList.forEach { title ->
           MyInfoListItem(title = stringResource(title))
         }
       }
