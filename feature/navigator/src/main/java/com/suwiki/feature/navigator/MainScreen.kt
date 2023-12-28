@@ -40,6 +40,7 @@ import com.suwiki.feature.login.R
 import com.suwiki.feature.login.navigation.loginNavGraph
 import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
+import com.suwiki.feature.openmajor.OpenMajorRoute
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -56,31 +57,32 @@ internal fun MainScreen(
   Scaffold(
     modifier = modifier,
     content = { innerPadding ->
-      NavHost(
-        navController = navigator.navController,
-        startDestination = navigator.startDestination,
-      ) {
-        loginNavGraph(
-          popBackStack = navigator::popBackStackIfNotHome,
-          navigateFindId = { /* TODO */ },
-          navigateFindPassword = { /* TODO */ },
-          navigateSignup = { /* TODO */ },
-          handleException = viewModel::handleException,
-        )
-
-        timetableNavGraph(
-          padding = innerPadding,
-        )
-
-        lectureEvaluationNavGraph(
-          padding = innerPadding,
-          navigateLogin = navigator::navigateLogin,
-        )
-
-        myInfoNavGraph(
-          padding = innerPadding,
-        )
-      }
+      OpenMajorRoute(popBackStack = { /*TODO*/ }, handleException = {})
+//      NavHost(
+//        navController = navigator.navController,
+//        startDestination = navigator.startDestination,
+//      ) {
+//        loginNavGraph(
+//          popBackStack = navigator::popBackStackIfNotHome,
+//          navigateFindId = { /* TODO */ },
+//          navigateFindPassword = { /* TODO */ },
+//          navigateSignup = { /* TODO */ },
+//          handleException = viewModel::handleException,
+//        )
+//
+//        timetableNavGraph(
+//          padding = innerPadding,
+//        )
+//
+//        lectureEvaluationNavGraph(
+//          padding = innerPadding,
+//          navigateLogin = navigator::navigateLogin,
+//        )
+//
+//        myInfoNavGraph(
+//          padding = innerPadding,
+//        )
+//      }
 
       if (uiState.showNetworkErrorDialog) {
         SuwikiDialog(

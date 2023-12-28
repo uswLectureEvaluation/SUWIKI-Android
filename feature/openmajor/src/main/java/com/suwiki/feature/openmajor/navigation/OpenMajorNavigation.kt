@@ -16,10 +16,11 @@ fun NavGraphBuilder.openMajorNavGraph(
   handleException: (Throwable) -> Unit,
 ) {
   composable(
-    route = OpenMajorRoute.route("{selectedOpenMajor}"),
+    route = OpenMajorRoute.route("{${OpenMajorRoute.ARGUMENT_NAME}}"),
     arguments = listOf(
-      navArgument("selectedOpenMajor") {
+      navArgument(OpenMajorRoute.ARGUMENT_NAME) {
         type = NavType.StringType
+        defaultValue = "전체"
       },
     ),
   ) {
@@ -31,5 +32,6 @@ fun NavGraphBuilder.openMajorNavGraph(
 }
 
 object OpenMajorRoute {
-  fun route(selectedOpenMajor: String) = "open-major/$selectedOpenMajor"
+  const val ARGUMENT_NAME = "selectedOpenMajor"
+  fun route(selectedOpenMajor: String = "전체") = "open-major/$selectedOpenMajor"
 }
