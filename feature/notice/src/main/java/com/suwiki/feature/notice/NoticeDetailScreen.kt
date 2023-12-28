@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,8 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,7 +53,7 @@ fun NoticeDetailRoute(
     title = viewModel.noticeDetail.title,
     date = viewModel.noticeDetail.date.toString(),
     content = viewModel.noticeDetail.content,
-    popBackStack = { viewModel.popBackStack() },
+    popBackStack = viewModel::popBackStack,
   )
 }
 
@@ -67,42 +66,32 @@ fun NoticeDetailScreen(
   content: String,
   popBackStack: () -> Unit,
 ) {
-  Scaffold(
-    modifier = Modifier.padding(padding),
-    topBar = {
-      NoticeDetailScreenAppBar(onClickBack = popBackStack)
-    },
-    content = { appBarPadding ->
-      Column(
-        modifier = Modifier
-          .padding(appBarPadding)
-          .background(White)
-          .fillMaxSize(),
-      ) {
-        NoticeDetailTitleContainer(
-          modifier = Modifier
-            .drawBehind {
-              drawLine(
-                color = GrayF6,
-                Offset(0f, size.height),
-                Offset(size.width, size.height),
-                strokeWidth = 4.dp.toPx(),
-              )
-            },
-          title = title,
-          date = date,
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(
-          modifier = Modifier
-            .padding(24.dp),
-          text = content,
-          style = SuwikiTheme.typography.body7,
-        )
-      }
-    },
-  )
+  Column(
+    modifier = Modifier
+      .padding(padding)
+      .background(White)
+      .fillMaxSize()
+  ) {
+    NoticeDetailScreenAppBar(onClickBack = popBackStack)
 
+    Column {
+      NoticeDetailTitleContainer(
+        title = title,
+        date = date,
+      )
+      HorizontalDivider(
+        thickness = 4.dp,
+        color = GrayF6,
+      )
+      Spacer(modifier = Modifier.height(24.dp))
+      Text(
+        modifier = Modifier
+          .padding(24.dp),
+        text = content,
+        style = SuwikiTheme.typography.body7,
+      )
+    }
+  }
   if (uiState.isLoading) {
     LoadingScreen()
   }
