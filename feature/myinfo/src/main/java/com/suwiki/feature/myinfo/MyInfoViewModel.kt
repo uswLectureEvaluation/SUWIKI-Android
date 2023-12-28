@@ -1,8 +1,12 @@
 package com.suwiki.feature.myinfo
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -19,13 +23,15 @@ class MyInfoViewModel @Inject constructor(
 
   private var isLoggedIn: Boolean = false
 
-  fun checkLoggedIn() {
-    // TODO(사용자 정보 받아서 로그인 여부 판단하는 로직으로 변경)
+  suspend fun checkLoggedIn() {
+    viewModelScope.launch {
+      isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
 
-    if (isLoggedIn) {
-      showMyService()
-    } else {
-      hideMyService()
+      if (isLoggedIn) {
+        showMyService()
+      } else {
+        hideMyService()
+      }
     }
   }
 

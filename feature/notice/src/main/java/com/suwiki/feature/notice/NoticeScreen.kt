@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -31,32 +30,33 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.notice.Notice
 import com.suwiki.core.ui.extension.suwikiClickable
-import okhttp3.internal.immutableListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.time.LocalDateTime
 
 @Composable
 fun NoticeRoute(
   padding: PaddingValues,
   viewModel: NoticeViewModel = hiltViewModel(),
   navigateNoticeDetail: () -> Unit,
+  popBackStack: () -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       NoticeSideEffect.NavigateNoticeDetail -> navigateNoticeDetail()
+      NoticeSideEffect.PopBackStack -> popBackStack()
     }
-  }
-
-  LaunchedEffect(key1 = viewModel) {
-    viewModel.checkNoticeListLoaded()
   }
 
   NoticeScreen(
     padding = padding,
+    noticeList = viewModel.noticeList,
     uiState = uiState,
     navigateNoticeDetail = { viewModel.navigateNoticeDetail() },
+    popBackStack = { viewModel.popBackStack() },
   )
 }
 
@@ -64,29 +64,30 @@ fun NoticeRoute(
 @Composable
 fun NoticeScreen(
   padding: PaddingValues,
-  uiState: NoticeState, // TODO(progress bar visible에 사용할 예정)
+  noticeList: List<Notice>,
+  uiState: NoticeState,
   navigateNoticeDetail: () -> Unit,
+  popBackStack: () -> Unit,
 ) {
-  // TODO REMOVE
-  val sampleNoticeTitle = immutableListOf(
-    "회원가입 필독",
-    "2023년 04월 17일 데이터베이스 문제",
-    "개인정보 처리방침 개정 안내",
-    "아이폰 유저 시간표 반영 주의사항"
-  )
   Scaffold(
-    topBar = { NoticeScreenAppBar(title = stringResource(R.string.notice)) },
+    modifier = Modifier.padding(padding),
+    topBar = {
+      NoticeScreenAppBar(
+        title = stringResource(R.string.notice),
+        onClickBack = popBackStack,
+      )
+    },
     content = { appBarPadding ->
       LazyColumn(
         modifier = Modifier
           .fillMaxSize()
           .padding(appBarPadding)
-          .background(White)
+          .background(White),
       ) {
-        items(items = sampleNoticeTitle) { title ->
+        items(items = noticeList) { notice ->
           SuwikiNoticeContainer(
-            titleText = title,
-            dateText = "2023.04.17",
+            titleText = notice.title,
+            dateText = notice.date.toString(),
             onClick = navigateNoticeDetail,
           )
         }
@@ -133,11 +134,19 @@ private fun NoticeScreenAppBar(
 @Preview
 @Composable
 fun NoticeScreenPreview() {
+  val sampleNoticeList = listOf(
+    Notice(id = 1, title = "회원가입 필독", date = LocalDateTime.now()),
+    Notice(id = 2, title = "2023년 04월 17일 데이터베이스 문제", date = LocalDateTime.now()),
+    Notice(id = 3, title = "개인정보 처리방침 개정 안내", date = LocalDateTime.now()),
+    Notice(id = 4, title = "아이폰 유저 시간표 반영 주의사항", date = LocalDateTime.now()),
+  )
   SuwikiTheme {
     NoticeScreen(
       padding = PaddingValues(0.dp),
       uiState = NoticeState(false),
+      noticeList = sampleNoticeList,
       navigateNoticeDetail = {},
+      popBackStack = {},
     )
   }
 }

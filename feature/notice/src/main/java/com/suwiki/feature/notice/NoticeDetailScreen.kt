@@ -16,7 +16,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,30 +48,27 @@ fun NoticeDetailRoute(
     }
   }
 
-  LaunchedEffect(key1 = viewModel) {
-    viewModel.checkNoticeDetailLoaded()
-  }
-
   NoticeDetailScreen(
     padding = padding,
     uiState = uiState,
-    title = "asd",
-    date = "2030.03.12",
-    content = "adsasdasd\nsadasd\nasd\n\nasdasd",
-    popBackStack = { viewModel.popBackStack() }
+    title = viewModel.noticeDetail.title,
+    date = viewModel.noticeDetail.date.toString(),
+    content = viewModel.noticeDetail.content,
+    popBackStack = { viewModel.popBackStack() },
   )
 }
 
 @Composable
 fun NoticeDetailScreen(
   padding: PaddingValues,
-  uiState: NoticeDetailState, // TODO(progress bar visible에 사용할 예정)
+  uiState: NoticeDetailState,
   title: String,
   date: String,
   content: String,
   popBackStack: () -> Unit,
 ) {
   Scaffold(
+    modifier = Modifier.padding(padding),
     topBar = {
       NoticeDetailScreenAppBar(onClickBack = popBackStack)
     },
@@ -81,7 +77,7 @@ fun NoticeDetailScreen(
         modifier = Modifier
           .padding(appBarPadding)
           .background(White)
-          .fillMaxSize()
+          .fillMaxSize(),
       ) {
         NoticeDetailTitleContainer(
           modifier = Modifier
@@ -90,7 +86,7 @@ fun NoticeDetailScreen(
                 color = GrayF6,
                 Offset(0f, size.height),
                 Offset(size.width, size.height),
-                strokeWidth = 4.dp.toPx()
+                strokeWidth = 4.dp.toPx(),
               )
             },
           title = title,
@@ -101,7 +97,7 @@ fun NoticeDetailScreen(
           modifier = Modifier
             .padding(24.dp),
           text = content,
-          style = SuwikiTheme.typography.body7
+          style = SuwikiTheme.typography.body7,
         )
       }
     },

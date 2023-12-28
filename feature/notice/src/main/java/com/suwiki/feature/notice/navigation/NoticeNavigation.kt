@@ -24,12 +24,13 @@ fun NavGraphBuilder.noticeNavGraph(
     NoticeRoute(
       padding = padding,
       navigateNoticeDetail = navigateNoticeDetail,
+      popBackStack = popBackStack,
     )
   }
   composable(route = NoticeDetailRoute.route) {
     NoticeDetailRoute(
       padding = padding,
-      popBackStack = popBackStack
+      popBackStack = popBackStack,
     )
   }
 }

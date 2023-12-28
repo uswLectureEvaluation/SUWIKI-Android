@@ -6,4 +6,5 @@ data class NoticeState(
 
 sealed interface NoticeSideEffect {
   data object NavigateNoticeDetail : NoticeSideEffect
+  data object PopBackStack : NoticeSideEffect
 }

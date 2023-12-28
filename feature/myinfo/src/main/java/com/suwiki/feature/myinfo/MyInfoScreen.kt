@@ -73,22 +73,22 @@ fun MyInfoScreen(
 ) {
   val loginList = immutableListOf(
     R.string.my_info_point,
-    R.string.my_info_ban_history
+    R.string.my_info_ban_history,
   )
   val serviceList = immutableListOf(
     R.string.my_info_send_feedback,
     R.string.my_info_use_terms,
     R.string.my_info_privacy_policy,
-    R.string.my_info_open_source_library
+    R.string.my_info_open_source_library,
   )
   Column(
-    modifier = Modifier.padding(padding)
+    modifier = Modifier.padding(padding),
   ) {
     Box(
-      modifier = Modifier.background(if (uiState.isLoggedIn) GrayF6 else White)
+      modifier = Modifier.background(if (uiState.isLoggedIn) GrayF6 else White),
     ) {
       Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         if (uiState.isLoggedIn) {
           LoginMyInfo()
@@ -100,7 +100,7 @@ fun MyInfoScreen(
           modifier = Modifier
             .padding(vertical = 28.dp, horizontal = 41.dp)
             .wrapContentWidth()
-            .height(49.dp)
+            .height(49.dp),
         ) {
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_notice),
@@ -110,11 +110,11 @@ fun MyInfoScreen(
           VerticalDivider(
             modifier = Modifier
               .width(1.dp)
-              .padding(vertical = 5.dp)
+              .padding(vertical = 5.dp),
           )
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_contact),
-            iconId = R.drawable.ic_my_info_comment
+            iconId = R.drawable.ic_my_info_comment,
           )
           VerticalDivider(
             modifier = Modifier
@@ -123,7 +123,7 @@ fun MyInfoScreen(
           )
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_account_manage),
-            iconId = R.drawable.ic_my_info_setting
+            iconId = R.drawable.ic_my_info_setting,
           )
         }
       }
@@ -131,7 +131,7 @@ fun MyInfoScreen(
     Column(
       modifier = Modifier
         .background(White)
-        .fillMaxSize()
+        .fillMaxSize(),
     ) {
       if (uiState.isLoggedIn) {
         LazyColumn {
@@ -166,7 +166,7 @@ fun LogoutMyInfo(
       .background(
         color = GrayF6,
         shape = RoundedCornerShape(10.dp),
-      )
+      ),
   ) {
     Row(
       verticalAlignment = Alignment.CenterVertically,
@@ -177,7 +177,7 @@ fun LogoutMyInfo(
       Text(
         text = stringResource(R.string.my_info_login),
         style = SuwikiTheme.typography.header2,
-        color = Black
+        color = Black,
       )
       Image(
         painter = painterResource(id = R.drawable.ic_arrow_gray_right),
@@ -206,7 +206,7 @@ fun LoginMyInfo(
       .background(
         color = White,
         shape = RoundedCornerShape(10.dp),
-      )
+      ),
   ) {
     Column {
       Text(
