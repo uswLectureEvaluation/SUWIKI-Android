@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.container.SuwikiNoticeContainer
+import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
@@ -92,6 +93,10 @@ fun NoticeScreen(
       }
     },
   )
+
+  if (uiState.isLoading) {
+    LoadingScreen()
+  }
 }
 
 @Composable
@@ -131,7 +136,7 @@ fun NoticeScreenPreview() {
   SuwikiTheme {
     NoticeScreen(
       padding = PaddingValues(0.dp),
-      uiState = NoticeState(),
+      uiState = NoticeState(false),
       navigateNoticeDetail = {},
     )
   }

@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayF6
@@ -105,6 +106,10 @@ fun NoticeDetailScreen(
       }
     },
   )
+
+  if (uiState.isLoading) {
+    LoadingScreen()
+  }
 }
 
 @Composable
@@ -176,7 +181,7 @@ fun NoticeDetailScreenPreview() {
         "양해부탁드립니다. \n" +
         "\n" +
         "감사합니다.",
-      uiState = NoticeDetailState(),
+      uiState = NoticeDetailState(true),
       popBackStack = {},
     )
   }
