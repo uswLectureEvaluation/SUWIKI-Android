@@ -29,6 +29,7 @@ private val notoSansStyle = TextStyle(
     alignment = LineHeightStyle.Alignment.Center,
     trim = LineHeightStyle.Trim.None,
   ),
+  color = Black,
 )
 
 internal val Typography = SuwikiTypography(

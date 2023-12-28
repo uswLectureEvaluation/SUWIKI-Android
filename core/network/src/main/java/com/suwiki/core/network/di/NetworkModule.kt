@@ -1,6 +1,7 @@
 package com.suwiki.core.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.suwiki.core.network.BuildConfig
 import com.suwiki.core.network.authenticator.TokenAuthenticator
 import com.suwiki.core.network.interceptor.AuthenticationInterceptor
 import com.suwiki.core.network.retrofit.ResultCallAdapterFactory
@@ -21,8 +22,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
-  private const val BASE_URL: String = "https://api.suwiki.kr"
 
   @Singleton
   @Provides
@@ -79,7 +78,7 @@ object NetworkModule {
     json: Json,
   ): Retrofit {
     return Retrofit.Builder()
-      .baseUrl(BASE_URL)
+      .baseUrl(BuildConfig.BASE_URL)
       .client(okHttpClient)
       .addCallAdapterFactory(ResultCallAdapterFactory())
       .addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
@@ -112,7 +111,7 @@ object NetworkModule {
     json: Json,
   ): Retrofit {
     return Retrofit.Builder()
-      .baseUrl(BASE_URL)
+      .baseUrl(BuildConfig.BASE_URL)
       .client(okHttpClient)
       .addCallAdapterFactory(ResultCallAdapterFactory())
       .addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))

@@ -8,6 +8,7 @@ import com.suwiki.domain.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -39,8 +40,22 @@ class UserRepositoryImpl @Inject constructor(
     emit(localUserInfo)
 
     val remoteUserInfo = remoteUserDataSource.getUserInfo()
-    emit(remoteUserInfo)
 
+    val isTokenExpired = with(securityPreferences) {
+      val (accessToken, refreshToken) = flowAccessToken().zip(flowRefreshToken()) { accessToken, refreshToken ->
+        (accessToken to refreshToken)
+      }.first()
+
+      accessToken.isEmpty() && refreshToken.isEmpty()
+    }
+
+    if (isTokenExpired) {
+      logout()
+      emit(User())
+      return@flow
+    }
+
+    emit(remoteUserInfo)
     localUserDataSource.setUserInfo(remoteUserInfo)
   }
 }

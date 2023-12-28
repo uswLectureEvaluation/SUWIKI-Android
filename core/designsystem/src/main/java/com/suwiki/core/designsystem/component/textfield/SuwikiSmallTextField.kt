@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -25,11 +26,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.button.TextFieldClearButton
 import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Error
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayF6
@@ -38,31 +39,22 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 
 @Composable
-fun SuwikiTextFieldRegular(
+fun SuwikiSmallTextField(
   modifier: Modifier = Modifier,
-  label: String? = "",
   placeholder: String = "",
   value: String = "",
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
-  helperText: String? = "",
-  isError: Boolean = false,
   maxLines: Int = 1,
   minLines: Int = 1,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   keyboardActions: KeyboardActions = KeyboardActions.Default,
+  visualTransformation: VisualTransformation = VisualTransformation.None,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
   val isFocused by interactionSource.collectIsFocusedAsState()
 
-  val (labelColor, helperTextColor) = when {
-    isError -> (Error to Error)
-    isFocused -> (Primary to Primary)
-    else -> (Gray95 to Gray95)
-  }
-
   val underlineColor = when {
-    isError -> Error
     isFocused -> Primary
     value.isEmpty() -> Gray95
     else -> GrayF6
@@ -73,30 +65,21 @@ fun SuwikiTextFieldRegular(
     onValueChange = onValueChange,
     modifier = modifier.fillMaxWidth(),
     singleLine = maxLines == 1,
+    textStyle = SuwikiTheme.typography.body5.copy(Black),
     maxLines = if (minLines > maxLines) minLines else maxLines,
     minLines = minLines,
-    textStyle = SuwikiTheme.typography.header4.copy(color = Black),
     interactionSource = interactionSource,
     cursorBrush = SolidColor(Primary),
     keyboardOptions = keyboardOptions,
     keyboardActions = keyboardActions,
+    visualTransformation = visualTransformation,
     decorationBox = { innerText ->
       Column {
-        if (label != null) {
-          Text(
-            text = label,
-            color = labelColor,
-            style = SuwikiTheme.typography.caption2,
-          )
-        }
-
-        Spacer(modifier = Modifier.size(2.dp))
-
         Row(
           modifier = Modifier
             .fillMaxWidth()
             .heightIn(
-              min = 27.dp,
+              min = 21.dp,
             ),
           horizontalArrangement = Arrangement.SpaceBetween,
           verticalAlignment = Alignment.CenterVertically,
@@ -110,34 +93,26 @@ fun SuwikiTextFieldRegular(
               Text(
                 text = placeholder,
                 color = GrayCB,
-                style = SuwikiTheme.typography.header4,
+                style = SuwikiTheme.typography.body5,
               )
             }
           }
 
           if (value.isNotEmpty()) {
             TextFieldClearButton(
+              modifier = Modifier
+                .size(21.dp),
               onClick = onClickClearButton,
             )
           }
         }
 
-        Spacer(modifier = Modifier.height(if (isFocused || isError) 4.dp else 5.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         HorizontalDivider(
-          thickness = if (isFocused || isError) 2.dp else 1.dp,
+          thickness = 1.dp,
           color = underlineColor,
         )
-
-        Spacer(modifier = Modifier.height(3.dp))
-
-        if (helperText != null) {
-          Text(
-            text = helperText,
-            color = helperTextColor,
-            style = SuwikiTheme.typography.caption2,
-          )
-        }
       }
     },
   )
@@ -145,37 +120,30 @@ fun SuwikiTextFieldRegular(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun SuwikiTextFieldRegularPreview() {
+fun SuwikiSmallTextFieldPreview() {
   SuwikiTheme {
     var normalValue by remember {
       mutableStateOf("")
     }
 
-    var errorValue by remember {
-      mutableStateOf("")
-    }
-
     Column(
-      modifier = Modifier.background(White),
+      modifier = Modifier
+        .background(White)
+        .padding(vertical = 10.dp),
       verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-      SuwikiTextFieldRegular(
-        label = "라벨",
+      SuwikiSmallTextField(
         placeholder = "플레이스 홀더",
         value = normalValue,
         onValueChange = { normalValue = it },
         onClickClearButton = { normalValue = "" },
-        helperText = "도움말 메세지",
       )
 
-      SuwikiTextFieldRegular(
-        label = "라벨",
+      SuwikiSmallTextField(
         placeholder = "플레이스 홀더",
-        value = errorValue,
-        onValueChange = { errorValue = it },
-        onClickClearButton = { errorValue = "" },
-        helperText = "도움말 메세지",
-        isError = true,
+        value = normalValue,
+        onValueChange = { normalValue = it },
+        onClickClearButton = { normalValue = "" },
       )
     }
   }
