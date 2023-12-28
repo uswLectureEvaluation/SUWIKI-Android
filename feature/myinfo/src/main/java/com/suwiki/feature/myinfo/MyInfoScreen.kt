@@ -90,9 +90,9 @@ fun MyInfoScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         if (uiState.showMyInfoCard) {
-          LoginMyInfo()
+          LoginMyInfoCard()
         } else {
-          LogoutMyInfo()
+          LogoutMyInfoCard()
         }
         Row(
           horizontalArrangement = Arrangement.SpaceBetween,
@@ -158,7 +158,7 @@ fun MyInfoScreen(
 }
 
 @Composable
-fun LogoutMyInfo(
+fun LogoutMyInfoCard(
   onClickLogin: () -> Unit = {},
 ) {
   Column(
@@ -196,7 +196,7 @@ fun LogoutMyInfo(
 }
 
 @Composable
-fun LoginMyInfo(
+fun LoginMyInfoCard(
   onClickMyPost: () -> Unit = {},
 ) {
   Row(
