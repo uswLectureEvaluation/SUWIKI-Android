@@ -1,7 +1,6 @@
 package com.suwiki.feature.notice
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -9,28 +8,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.suwikiClickable
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -72,7 +63,12 @@ fun NoticeDetailScreen(
       .background(White)
       .fillMaxSize()
   ) {
-    NoticeDetailScreenAppBar(onClickBack = popBackStack)
+    SuwikiAppBarWithTitle(
+      title = "",
+      onClickBack = popBackStack,
+      enabledBack = true,
+      enabledRemove = false,
+    )
 
     Column {
       NoticeDetailTitleContainer(
@@ -94,31 +90,6 @@ fun NoticeDetailScreen(
   }
   if (uiState.isLoading) {
     LoadingScreen()
-  }
-}
-
-@Composable
-private fun NoticeDetailScreenAppBar(
-  onClickBack: () -> Unit = {},
-) {
-  Box(
-    modifier = Modifier
-      .fillMaxWidth()
-      .wrapContentHeight()
-      .background(White)
-      .padding(top = 15.dp, bottom = 15.dp, start = 18.dp),
-  ) {
-    Icon(
-      painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
-      contentDescription = "",
-      tint = Gray95,
-      modifier = Modifier
-        .size(24.dp)
-        .clip(CircleShape)
-        .suwikiClickable(onClick = onClickBack)
-        .padding(vertical = 2.dp, horizontal = 6.5.dp)
-        .align(Alignment.CenterStart),
-    )
   }
 }
 
