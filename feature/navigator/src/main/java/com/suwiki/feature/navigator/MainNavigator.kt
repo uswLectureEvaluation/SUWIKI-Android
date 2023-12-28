@@ -9,6 +9,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
+import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
@@ -43,6 +44,10 @@ internal class MainNavigator(
       MainTab.LECTURE_EVALUATION -> navController.navigateLectureEvaluation(navOptions)
       MainTab.MY_INFO -> navController.navigateMyInfo(navOptions)
     }
+  }
+
+  fun navigateLogin() {
+    navController.navigateLogin()
   }
 
   fun navigateNotice() {

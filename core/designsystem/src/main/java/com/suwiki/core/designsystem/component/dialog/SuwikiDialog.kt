@@ -30,10 +30,10 @@ fun SuwikiDialog(
   headerText: String,
   bodyText: String,
   confirmButtonText: String,
-  dismissButtonText: String,
+  dismissButtonText: String? = null,
   onDismissRequest: () -> Unit,
   onClickConfirm: () -> Unit,
-  onClickDismiss: () -> Unit,
+  onClickDismiss: () -> Unit = {},
 ) {
   Dialog(
     onDismissRequest = onDismissRequest,
@@ -60,12 +60,14 @@ fun SuwikiDialog(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.End,
         ) {
-          Text(
-            modifier = Modifier.suwikiClickable(rippleEnabled = false, onClick = onClickDismiss),
-            text = dismissButtonText,
-            style = SuwikiTheme.typography.body4,
-            color = Gray95,
-          )
+          if (dismissButtonText != null) {
+            Text(
+              modifier = Modifier.suwikiClickable(rippleEnabled = false, onClick = onClickDismiss),
+              text = dismissButtonText,
+              style = SuwikiTheme.typography.body4,
+              color = Gray95,
+            )
+          }
 
           Spacer(modifier = Modifier.width(30.dp))
 

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">SUWIKI</string>
+    <string name="dialog_network_header">네트워크에 문제가 있어요.</string>
+  <string name="dialog_network_body">네트워크 연결 상태 또는 수위키 서버에 문제가 있어요. 문제가 지속된다면 내 정보 -> 문의하기를 통해 연락 주세요.</string>
 </resources>

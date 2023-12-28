@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.suwiki.feature.lectureevaluation.viewerreporter.LectureEvaluationScreen
+import com.suwiki.feature.lectureevaluation.viewerreporter.LectureEvaluationRoute
 
 fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
   navigate(LectureEvaluationRoute.route, navOptions)
@@ -13,9 +13,13 @@ fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
 
 fun NavGraphBuilder.lectureEvaluationNavGraph(
   padding: PaddingValues,
+  navigateLogin: () -> Unit,
 ) {
   composable(route = LectureEvaluationRoute.route) {
-    LectureEvaluationScreen(padding)
+    LectureEvaluationRoute(
+      padding = padding,
+      navigateLogin = navigateLogin,
+    )
   }
 }
 
