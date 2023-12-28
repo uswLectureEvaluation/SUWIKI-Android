@@ -3,6 +3,7 @@ package com.suwiki.core.designsystem.component.appbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,6 +29,8 @@ fun SuwikiAppBarWithTitle(
   title: String = "",
   onClickBack: () -> Unit = {},
   onClickRemove: () -> Unit = {},
+  enabledBack: Boolean,
+  enabledRemove: Boolean,
 ) {
   Row(
     modifier = modifier
@@ -37,30 +40,38 @@ fun SuwikiAppBarWithTitle(
       .padding(top = 15.dp, bottom = 15.dp, start = 18.dp, end = 24.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
   ) {
-    Icon(
-      painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
-      contentDescription = "",
-      tint = Gray95,
-      modifier = Modifier
-        .size(24.dp)
-        .clip(CircleShape)
-        .suwikiClickable(onClick = onClickBack)
-        .padding(vertical = 2.dp, horizontal = 6.5.dp),
-    )
+    if (enabledBack) {
+      Icon(
+        painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
+        contentDescription = "",
+        tint = Gray95,
+        modifier = Modifier
+          .size(24.dp)
+          .clip(CircleShape)
+          .suwikiClickable(onClick = onClickBack)
+          .padding(vertical = 2.dp, horizontal = 6.5.dp),
+      )
+    } else {
+      Spacer(modifier = Modifier.size(24.dp))
+    }
     Text(
       text = title,
       style = SuwikiTheme.typography.header6,
     )
-    Icon(
-      painter = painterResource(id = R.drawable.ic_appbar_close_mark),
-      contentDescription = "",
-      tint = Gray95,
-      modifier = Modifier
-        .size(24.dp)
-        .clip(CircleShape)
-        .suwikiClickable(onClick = onClickRemove)
-        .padding(3.dp),
-    )
+    if (enabledRemove) {
+      Icon(
+        painter = painterResource(id = R.drawable.ic_appbar_close_mark),
+        contentDescription = "",
+        tint = Gray95,
+        modifier = Modifier
+          .size(24.dp)
+          .clip(CircleShape)
+          .suwikiClickable(onClick = onClickRemove)
+          .padding(3.dp),
+      )
+    } else {
+      Spacer(modifier = Modifier.size(24.dp))
+    }
   }
 }
 
@@ -72,6 +83,8 @@ fun SuwikiAppBarPreview() {
       title = "타이틀",
       onClickBack = { /*TODO*/ },
       onClickRemove = { /*TODO*/ },
+      enabledBack = true,
+      enabledRemove = true,
     )
   }
 }
