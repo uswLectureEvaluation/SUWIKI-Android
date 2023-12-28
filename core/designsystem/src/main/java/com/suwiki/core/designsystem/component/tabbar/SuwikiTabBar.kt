@@ -54,7 +54,7 @@ data class TabPosition(
 @Composable
 fun SuwikiTabBar(
   indicatorColor: Color = Black,
-  paddingValues: PaddingValues = PaddingValues(start = 24.dp, end = 12.dp),
+  paddingValues: PaddingValues = PaddingValues(start = 12.dp, end = 12.dp),
   animationSpec: AnimationSpec<Dp> = tween(durationMillis = 250, easing = FastOutSlowInEasing),
   selectedTabPosition: Int = 0,
   tabItem: @Composable () -> Unit,
