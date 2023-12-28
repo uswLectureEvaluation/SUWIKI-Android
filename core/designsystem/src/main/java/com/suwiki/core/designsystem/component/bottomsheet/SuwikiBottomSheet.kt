@@ -45,7 +45,7 @@ fun SuwikiBottomSheet(
 }
 
 @Composable
-fun SuwikiBottomSheetItem(
+fun SuwikiMenuItem(
   modifier: Modifier = Modifier,
   title: String,
 ) {

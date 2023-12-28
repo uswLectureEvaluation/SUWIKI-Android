@@ -12,11 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -29,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetItem
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Black
@@ -139,7 +136,7 @@ fun MyInfoScreen(
     ) {
       if (uiState.showMyInfoCard) {
         item {
-          SuwikiBottomSheetItem(title = stringResource(R.string.my_info_my))
+          SuwikiMenuItem(title = stringResource(R.string.my_info_my))
 
           myList.forEach { title ->
             MyInfoListItem(title = stringResource(title))
@@ -147,7 +144,7 @@ fun MyInfoScreen(
         }
       }
       item {
-        SuwikiBottomSheetItem(title = stringResource(R.string.my_info_service))
+        SuwikiMenuItem(title = stringResource(R.string.my_info_service))
 
         serviceList.forEach { title ->
           MyInfoListItem(title = stringResource(title))
