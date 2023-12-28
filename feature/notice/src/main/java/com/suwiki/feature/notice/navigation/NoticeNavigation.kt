@@ -5,7 +5,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.suwiki.feature.notice.NoticeDetailRoute
-import com.suwiki.feature.notice.NoticeDetailScreen
 import com.suwiki.feature.notice.NoticeRoute
 
 fun NavController.navigateNotice() {
@@ -18,6 +17,7 @@ fun NavController.navigateNoticeDetail() {
 
 fun NavGraphBuilder.noticeNavGraph(
   padding: PaddingValues,
+  popBackStack: () -> Unit = {},
   navigateNoticeDetail: () -> Unit = {},
 ) {
   composable(route = NoticeRoute.route) {
@@ -29,6 +29,7 @@ fun NavGraphBuilder.noticeNavGraph(
   composable(route = NoticeDetailRoute.route) {
     NoticeDetailRoute(
       padding = padding,
+      popBackStack = popBackStack
     )
   }
 }

@@ -80,12 +80,13 @@ internal fun MainScreen(
 
         myInfoNavGraph(
           padding = innerPadding,
-          navigateNotice = navigator::navigateNotice
+          navigateNotice = navigator::navigateNotice,
         )
 
         noticeNavGraph(
           padding = innerPadding,
-          navigateNoticeDetail = navigator::navigateNoticeDetail
+          popBackStack = navigator::popBackStackIfNotHome,
+          navigateNoticeDetail = navigator::navigateNoticeDetail,
         )
       }
 

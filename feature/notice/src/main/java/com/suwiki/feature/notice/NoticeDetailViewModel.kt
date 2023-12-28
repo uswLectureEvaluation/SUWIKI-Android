@@ -27,5 +27,5 @@ class NoticeDetailViewModel @Inject constructor() : ContainerHost<NoticeDetailSt
 
   private fun showProgressBar() = intent { reduce { state.copy(isLoading = false) } }
   private fun hideProgressBar() = intent { reduce { state.copy(isLoading = true) } }
-  fun navigateNoticeDetail() = intent { postSideEffect(NoticeDetailSideEffect.NavigateBack) }
+  fun popBackStack() = intent { postSideEffect(NoticeDetailSideEffect.PopBackStack) }
 }

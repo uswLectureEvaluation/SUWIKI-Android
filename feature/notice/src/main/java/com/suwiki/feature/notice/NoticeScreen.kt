@@ -18,46 +18,44 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.container.SuwikiNoticeContainer
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 import okhttp3.internal.immutableListOf
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun NoticeRoute(
   padding: PaddingValues,
-//  viewModel: NoticeViewModel = hiltViewModel(),
+  viewModel: NoticeViewModel = hiltViewModel(),
   navigateNoticeDetail: () -> Unit,
 ) {
-//  val uiState = viewModel.collectAsState().value
-//  viewModel.collectSideEffect { sideEffect ->
-//    when (sideEffect) {
-//      NoticeSideEffect.NavigateNoticeDetail -> navigateNoticeDetail()
-//    }
-//  }
-//
-//  LaunchedEffect(key1 = viewModel) {
-//    viewModel.checkNoticeListLoaded()
-//  }
-//
-//  NoticeScreen(
-//    padding = padding,
-//    uiState = uiState,
-//    navigateNoticeDetail = { viewModel.navigateNoticeDetail() },
-//  )
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      NoticeSideEffect.NavigateNoticeDetail -> navigateNoticeDetail()
+    }
+  }
+
+  LaunchedEffect(key1 = viewModel) {
+    viewModel.checkNoticeListLoaded()
+  }
 
   NoticeScreen(
     padding = padding,
-    uiState = NoticeState(),
-    navigateNoticeDetail = navigateNoticeDetail,
+    uiState = uiState,
+    navigateNoticeDetail = { viewModel.navigateNoticeDetail() },
   )
 }
 
@@ -131,6 +129,10 @@ private fun NoticeScreenAppBar(
 @Composable
 fun NoticeScreenPreview() {
   SuwikiTheme {
-//    NoticeScreen(padding = PaddingValues(0.dp))
+    NoticeScreen(
+      padding = PaddingValues(0.dp),
+      uiState = NoticeState(),
+      navigateNoticeDetail = {},
+    )
   }
 }

@@ -20,12 +20,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetItem
 import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Black
@@ -36,33 +38,30 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 import okhttp3.internal.immutableListOf
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyInfoRoute(
   padding: PaddingValues,
-//  viewModel: MyInfoViewModel = hiltViewModel(),
+  viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
 ) {
-//  val uiState = viewModel.collectAsState().value
-//  viewModel.collectSideEffect { sideEffect ->
-//    when (sideEffect) {
-//      MyInfoSideEffect.NavigateNotice -> navigateNotice()
-//    }
-//  }
-//
-//  LaunchedEffect(key1 = viewModel) {
-//    viewModel.checkLoggedIn()
-//  }
-//
-//  MyInfoScreen(
-//    padding = padding,
-//    uiState = uiState,
-//    onClickNoticeButton = { viewModel.navigateNotice() },
-//  )
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      MyInfoSideEffect.NavigateNotice -> navigateNotice()
+    }
+  }
+
+  LaunchedEffect(key1 = viewModel) {
+    viewModel.checkLoggedIn()
+  }
+
   MyInfoScreen(
     padding = padding,
-    uiState = MyInfoState(),
-    onClickNoticeButton = { },
+    uiState = uiState,
+    onClickNoticeButton = { viewModel.navigateNotice() },
   )
 }
 
@@ -303,14 +302,10 @@ private fun MyInfoListItem(
 @Composable
 fun MyInfoScreenScreenPreview() {
   SuwikiTheme {
-//    MyInfoScreen(
-//      padding = PaddingValues(0.dp),
-//      uiState = MyInfoState(),
-//      onClickNoticeButton = {},
-//    )
-    MyInfoRoute(
+    MyInfoScreen(
       padding = PaddingValues(0.dp),
-      navigateNotice = {},
+      uiState = MyInfoState(true),
+      onClickNoticeButton = {},
     )
   }
 }

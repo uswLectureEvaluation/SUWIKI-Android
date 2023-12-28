@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,39 +32,33 @@ import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun NoticeDetailRoute(
   padding: PaddingValues,
-//  viewModel: NoticeDetailViewModel = hiltViewModel(),
-  navigateBack: () -> Unit = {},
+  viewModel: NoticeDetailViewModel = hiltViewModel(),
+  popBackStack: () -> Unit = {},
 ) {
-//  val uiState = viewModel.collectAsState().value
-//  viewModel.collectSideEffect { sideEffect ->
-//    when (sideEffect) {
-//      NoticeDetailSideEffect.NavigateBack -> navigateBack()
-//    }
-//  }
-//
-//  LaunchedEffect(key1 = viewModel) {
-//    viewModel.checkNoticeDetailLoaded()
-//  }
-//
-//  NoticeDetailScreen(
-//    padding = padding,
-//    uiState = uiState,
-//    title = "asd",
-//    date = "2030.03.12",
-//    content = "adsasdasd\nsadasd\nasd\n\nasdasd",
-//    navigateBack = { viewModel.navigateNoticeDetail() }
-//  )
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      NoticeDetailSideEffect.PopBackStack -> popBackStack()
+    }
+  }
+
+  LaunchedEffect(key1 = viewModel) {
+    viewModel.checkNoticeDetailLoaded()
+  }
+
   NoticeDetailScreen(
     padding = padding,
-    uiState = NoticeDetailState(),
+    uiState = uiState,
     title = "asd",
     date = "2030.03.12",
     content = "adsasdasd\nsadasd\nasd\n\nasdasd",
-    navigateBack = navigateBack
+    popBackStack = { viewModel.popBackStack() }
   )
 }
 
@@ -74,11 +69,11 @@ fun NoticeDetailScreen(
   title: String,
   date: String,
   content: String,
-  navigateBack: () -> Unit,
+  popBackStack: () -> Unit,
 ) {
   Scaffold(
     topBar = {
-      NoticeDetailScreenAppBar()
+      NoticeDetailScreenAppBar(onClickBack = popBackStack)
     },
     content = { appBarPadding ->
       Column(
@@ -167,19 +162,22 @@ private fun NoticeDetailTitleContainer(
 @Composable
 fun NoticeDetailScreenPreview() {
   SuwikiTheme {
-//    NoticeDetailScreen(
-//      title = "2023년 04월 17일 데이터베이스 문제",
-//      date = "2023.04.17",
-//      content = "데이터 베이스의 불문명현 원인으로 인해 특정 되돌리는 풀백을 수행했습니다. \n" +
-//        "\n" +
-//        "이로 인해 회원가입을 진행해주셨으나 회원가입 처리가 \n" +
-//        "되어있지 않는 현상 및 \n" +
-//        "강의평가 시험정보 작성을 하였으나 등록되지 않는 \n" +
-//        "경우가 발생할 수 있습니다\n" +
-//        "\n" +
-//        "양해부탁드립니다. \n" +
-//        "\n" +
-//        "감사합니다.",
-//    )
+    NoticeDetailScreen(
+      padding = PaddingValues(0.dp),
+      title = "2023년 04월 17일 데이터베이스 문제",
+      date = "2023.04.17",
+      content = "데이터 베이스의 불문명현 원인으로 인해 특정 되돌리는 풀백을 수행했습니다. \n" +
+        "\n" +
+        "이로 인해 회원가입을 진행해주셨으나 회원가입 처리가 \n" +
+        "되어있지 않는 현상 및 \n" +
+        "강의평가 시험정보 작성을 하였으나 등록되지 않는 \n" +
+        "경우가 발생할 수 있습니다\n" +
+        "\n" +
+        "양해부탁드립니다. \n" +
+        "\n" +
+        "감사합니다.",
+      uiState = NoticeDetailState(),
+      popBackStack = {},
+    )
   }
 }
