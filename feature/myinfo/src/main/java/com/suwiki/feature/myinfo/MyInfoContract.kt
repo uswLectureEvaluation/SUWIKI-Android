@@ -1,7 +1,8 @@
 package com.suwiki.feature.myinfo
 
 data class MyInfoState(
-  val isLoggedIn: Boolean = false,
+  val showMyInfoCard: Boolean = false,
+  val isLoading: Boolean = false,
 )
 
 sealed interface MyInfoSideEffect {

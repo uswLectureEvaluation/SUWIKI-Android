@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetItem
+import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
@@ -85,12 +86,12 @@ fun MyInfoScreen(
     modifier = Modifier.padding(padding),
   ) {
     Box(
-      modifier = Modifier.background(if (uiState.isLoggedIn) GrayF6 else White),
+      modifier = Modifier.background(if (uiState.showMyInfoCard) GrayF6 else White),
     ) {
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        if (uiState.isLoggedIn) {
+        if (uiState.showMyInfoCard) {
           LoginMyInfo()
         } else {
           LogoutMyInfo()
@@ -133,7 +134,7 @@ fun MyInfoScreen(
         .background(White)
         .fillMaxSize(),
     ) {
-      if (uiState.isLoggedIn) {
+      if (uiState.showMyInfoCard) {
         LazyColumn {
           item {
             SuwikiBottomSheetItem(title = stringResource(R.string.my_info_my))
@@ -151,6 +152,9 @@ fun MyInfoScreen(
           MyInfoListItem(title = stringResource(title))
         }
       }
+    }
+    if (uiState.isLoading) {
+      LoadingScreen()
     }
   }
 }
