@@ -9,8 +9,6 @@ import com.suwiki.domain.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.zip
-import timber.log.Timber
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -44,13 +42,13 @@ class UserRepositoryImpl @Inject constructor(
     val remoteUserInfo = runCatching {
       remoteUserDataSource.getUserInfo()
     }.getOrElse { exception ->
-      if(exception is AuthorizationException) {
+      if (exception is AuthorizationException) {
         logout()
         emit(User())
         return@flow
+      } else {
+        throw exception
       }
-
-      else throw exception
     }
 
     emit(remoteUserInfo)

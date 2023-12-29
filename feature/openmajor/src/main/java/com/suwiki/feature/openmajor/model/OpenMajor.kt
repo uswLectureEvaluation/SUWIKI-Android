@@ -14,8 +14,11 @@ fun List<String>.toBookmarkedOpenMajorList(
   searchValue: String,
   selectedOpenMajor: String,
 ) = filter { openMajor ->
-  if (searchValue.isNotEmpty()) searchValue in openMajor
-  else true
+  if (searchValue.isNotEmpty()) {
+    searchValue in openMajor
+  } else {
+    true
+  }
 }.map { name ->
   OpenMajor(
     name = name,
@@ -29,8 +32,11 @@ fun List<String>.toOpenMajorList(
   bookmarkedOpenMajorList: List<String>,
   selectedOpenMajor: String,
 ) = filter { openMajor ->
-  if (searchValue.isNotEmpty()) searchValue in openMajor
-  else true
+  if (searchValue.isNotEmpty()) {
+    searchValue in openMajor
+  } else {
+    true
+  }
 }.map { name ->
   OpenMajor(
     name = name,

@@ -4,7 +4,6 @@ import com.suwiki.core.model.openmajor.OpenMajor
 import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
 import com.suwiki.data.openmajor.datasource.RemoteOpenMajorDataSource
 import com.suwiki.domain.openmajor.repository.OpenMajorRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow

@@ -42,7 +42,7 @@ import com.suwiki.core.ui.extension.suwikiClickable
 enum class SubComposeID {
   PRE_CALCULATE_ITEM,
   ITEM,
-  INDICATOR
+  INDICATOR,
 }
 
 data class TabPosition(
@@ -117,11 +117,13 @@ private fun Modifier.tabIndicator(
 ) {
   val currentTabWidth by animateDpAsState(
     targetValue = tabPosition.width,
-    animationSpec = animationSpec, label = "",
+    animationSpec = animationSpec,
+    label = "",
   )
   val indicatorOffset by animateDpAsState(
     targetValue = tabPosition.left,
-    animationSpec = animationSpec, label = "",
+    animationSpec = animationSpec,
+    label = "",
   )
   fillMaxWidth()
     .wrapContentSize(Alignment.BottomStart)
@@ -158,7 +160,8 @@ fun SuwikiTabBarPreview() {
     var selectedTabPosition by remember { mutableIntStateOf(0) }
 
     val items = listOf(
-      "메뉴(0)", "메뉴(0)",
+      "메뉴(0)",
+      "메뉴(0)",
     )
 
     SuwikiTabBar(

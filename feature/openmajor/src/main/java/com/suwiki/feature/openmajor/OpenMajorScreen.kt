@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,10 +45,8 @@ import com.suwiki.feature.openmajor.component.OpenMajorContainer
 import com.suwiki.feature.openmajor.model.OpenMajor
 import com.suwiki.feature.openmajor.model.OpenMajorTap
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import timber.log.Timber
 
 private val OPEN_MAJOR_PAGE_COUNT = OpenMajorTap.entries.size
 
@@ -124,7 +121,7 @@ fun OpenMajorRoute(
     onClickOpenMajorBookmark = viewModel::registerOrUnRegisterBookmark,
     onClickTab = viewModel::syncPagerState,
     onValueChangeSearchBar = viewModel::updateSearchValue,
-    onClickSearchBarClearButton = { viewModel.updateSearchValue("") }
+    onClickSearchBarClearButton = { viewModel.updateSearchValue("") },
   )
 }
 
@@ -183,7 +180,7 @@ fun OpenMajorScreen(
       ) { page ->
         when (OpenMajorTap.entries[page]) {
           OpenMajorTap.ALL -> {
-            if(uiState.showAllOpenMajorEmptySearchResultScreen) {
+            if (uiState.showAllOpenMajorEmptySearchResultScreen) {
               EmptyText(stringResource(R.string.open_major_empty_search_result))
             } else {
               OpenMajorLazyColumn(
@@ -196,12 +193,11 @@ fun OpenMajorScreen(
           }
 
           OpenMajorTap.BOOKMARK -> {
-            if(uiState.showAllOpenMajorEmptySearchResultScreen) {
+            if (uiState.showAllOpenMajorEmptySearchResultScreen) {
               EmptyText(stringResource(R.string.open_major_empty_search_result))
-            } else if(uiState.showBookmarkedOpenMajorEmptyScreen) {
+            } else if (uiState.showBookmarkedOpenMajorEmptyScreen) {
               EmptyText(stringResource(R.string.open_major_empty_bookmark))
-            }
-            else {
+            } else {
               OpenMajorLazyColumn(
                 listState = bookmarkedOpenMajorListState,
                 openMajorList = uiState.filteredBookmarkedOpenMajorList,
@@ -271,7 +267,7 @@ private fun OpenMajorLazyColumn(
           isChecked = isSelected,
           isStared = isBookmarked,
           onClick = { onClickOpenMajorContainer(name) },
-          onClickStar = { onClickOpenMajorBookmark(name) }
+          onClickStar = { onClickOpenMajorBookmark(name) },
         )
       }
     }

@@ -1,13 +1,11 @@
 package com.suwiki.feature.navigator
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.suwiki.core.android.recordException
 import com.suwiki.core.model.exception.NetworkException
 import com.suwiki.core.model.exception.UnknownException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
@@ -25,13 +23,11 @@ class MainViewModel @Inject constructor() : ContainerHost<MainState, MainSideEff
   private val mutex = Mutex()
 
   fun onShowToast(msg: String) = intent {
-
-      mutex.withLock {
-        reduce { state.copy(toastMessage = msg, toastVisible = true) }
-        delay(SHOW_TOAST_LENGTH)
-        reduce { state.copy(toastVisible = false) }
-      }
-
+    mutex.withLock {
+      reduce { state.copy(toastMessage = msg, toastVisible = true) }
+      delay(SHOW_TOAST_LENGTH)
+      reduce { state.copy(toastVisible = false) }
+    }
   }
 
   fun handleException(throwable: Throwable) = intent {

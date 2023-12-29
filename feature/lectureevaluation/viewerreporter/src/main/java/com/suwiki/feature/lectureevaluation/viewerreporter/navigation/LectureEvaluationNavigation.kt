@@ -6,7 +6,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.suwiki.feature.lectureevaluation.viewerreporter.LectureEvaluationRoute
-import timber.log.Timber
 
 fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
   navigate(LectureEvaluationRoute.route, navOptions)

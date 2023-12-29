@@ -13,12 +13,10 @@ import com.suwiki.feature.openmajor.model.toBookmarkedOpenMajorList
 import com.suwiki.feature.openmajor.model.toOpenMajorList
 import com.suwiki.feature.openmajor.navigation.OpenMajorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -146,8 +144,11 @@ class OpenMajorViewModel @Inject constructor(
         reduceOpenMajorList()
       }
       .onFailure {
-        if (it is AuthorizationException) isLoggedIn = false
-        else postSideEffect(OpenMajorSideEffect.HandleException(it))
+        if (it is AuthorizationException) {
+          isLoggedIn = false
+        } else {
+          postSideEffect(OpenMajorSideEffect.HandleException(it))
+        }
       }
   }
 
@@ -155,7 +156,8 @@ class OpenMajorViewModel @Inject constructor(
     reduce {
       state.copy(
         filteredBookmarkedOpenMajorList = bookmarkedOpenMajorList.toBookmarkedOpenMajorList(
-          searchValue = searchValue, selectedOpenMajor = selectedOpenMajor
+          searchValue = searchValue,
+          selectedOpenMajor = selectedOpenMajor,
         ),
       )
     }
