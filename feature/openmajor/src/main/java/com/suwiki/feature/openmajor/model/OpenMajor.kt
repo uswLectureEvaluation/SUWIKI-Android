@@ -11,8 +11,12 @@ data class OpenMajor(
 )
 
 fun List<String>.toBookmarkedOpenMajorList(
+  searchValue: String,
   selectedOpenMajor: String,
-) = map { name ->
+) = filter { openMajor ->
+  if (searchValue.isNotEmpty()) searchValue in openMajor
+  else true
+}.map { name ->
   OpenMajor(
     name = name,
     isBookmarked = true,
@@ -21,9 +25,13 @@ fun List<String>.toBookmarkedOpenMajorList(
 }.toPersistentList()
 
 fun List<String>.toOpenMajorList(
+  searchValue: String,
   bookmarkedOpenMajorList: List<String>,
   selectedOpenMajor: String,
-) = map { name ->
+) = filter { openMajor ->
+  if (searchValue.isNotEmpty()) searchValue in openMajor
+  else true
+}.map { name ->
   OpenMajor(
     name = name,
     isBookmarked = name in bookmarkedOpenMajorList,

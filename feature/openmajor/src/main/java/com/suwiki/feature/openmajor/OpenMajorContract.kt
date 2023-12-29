@@ -9,8 +9,13 @@ data class OpenMajorState(
   val filteredBookmarkedOpenMajorList: PersistentList<OpenMajor> = persistentListOf(),
   val showBottomShadow: Boolean = true,
   val currentPage: Int = 0,
+  val searchValue: String = "",
   val isLoading: Boolean = false,
-)
+) {
+  val showAllOpenMajorEmptySearchResultScreen: Boolean = searchValue.isNotEmpty() && filteredAllOpenMajorList.isEmpty()
+  val showBookmarkedOpenMajorSearchEmptyResultScreen: Boolean = searchValue.isNotEmpty() && filteredBookmarkedOpenMajorList.isEmpty()
+  val showBookmarkedOpenMajorEmptyScreen: Boolean = searchValue.isEmpty() && filteredBookmarkedOpenMajorList.isEmpty()
+}
 
 sealed interface OpenMajorSideEffect {
   data class HandleException(val throwable: Throwable) : OpenMajorSideEffect

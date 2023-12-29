@@ -21,6 +21,8 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -41,6 +43,13 @@ class OpenMajorViewModel @Inject constructor(
   private var selectedOpenMajor = savedStateHandle[OpenMajorRoute.ARGUMENT_NAME] ?: "전체"
   private val allOpenMajorList = mutableListOf<String>()
   private val bookmarkedOpenMajorList = mutableListOf<String>()
+
+  @OptIn(OrbitExperimental::class)
+  fun updateSearchValue(searchValue: String) = blockingIntent {
+    reduce { state.copy(searchValue = searchValue) }
+    reduceOpenMajorList(searchValue)
+    reduceBookmarkedOpenMajorList(searchValue)
+  }
 
   fun registerOrUnRegisterBookmark(openMajor: String) = intent {
     if (isLoggedIn.not()) {
@@ -117,10 +126,11 @@ class OpenMajorViewModel @Inject constructor(
     }.launchIn(viewModelScope)
   }
 
-  private fun reduceOpenMajorList() = intent {
+  private fun reduceOpenMajorList(searchValue: String = container.stateFlow.value.searchValue) = intent {
     reduce {
       state.copy(
         filteredAllOpenMajorList = allOpenMajorList.toOpenMajorList(
+          searchValue = searchValue,
           bookmarkedOpenMajorList = bookmarkedOpenMajorList,
           selectedOpenMajor = selectedOpenMajor,
         ),
@@ -141,10 +151,12 @@ class OpenMajorViewModel @Inject constructor(
       }
   }
 
-  private fun reduceBookmarkedOpenMajorList() = intent {
+  private fun reduceBookmarkedOpenMajorList(searchValue: String = container.stateFlow.value.searchValue) = intent {
     reduce {
       state.copy(
-        filteredBookmarkedOpenMajorList = bookmarkedOpenMajorList.toBookmarkedOpenMajorList(selectedOpenMajor),
+        filteredBookmarkedOpenMajorList = bookmarkedOpenMajorList.toBookmarkedOpenMajorList(
+          searchValue = searchValue, selectedOpenMajor = selectedOpenMajor
+        ),
       )
     }
   }
