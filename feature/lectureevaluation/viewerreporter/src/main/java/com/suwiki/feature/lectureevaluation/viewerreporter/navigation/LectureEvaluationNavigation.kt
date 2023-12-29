@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.suwiki.feature.lectureevaluation.viewerreporter.LectureEvaluationRoute
+import timber.log.Timber
 
 fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
   navigate(LectureEvaluationRoute.route, navOptions)
@@ -13,12 +14,17 @@ fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
 
 fun NavGraphBuilder.lectureEvaluationNavGraph(
   padding: PaddingValues,
+  argumentName: String,
   navigateLogin: () -> Unit,
+  navigateOpenMajor: (String) -> Unit,
 ) {
-  composable(route = LectureEvaluationRoute.route) {
+  composable(route = LectureEvaluationRoute.route) { navBackStackEntry ->
+    val selectedOpenMajor = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "전체"
     LectureEvaluationRoute(
       padding = padding,
+      selectedOpenMajor = selectedOpenMajor,
       navigateLogin = navigateLogin,
+      navigateOpenMajor = navigateOpenMajor,
     )
   }
 }

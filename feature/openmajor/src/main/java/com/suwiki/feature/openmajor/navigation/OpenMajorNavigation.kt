@@ -13,6 +13,7 @@ fun NavController.navigateOpenMajor(selectedOpenMajor: String = "") {
 
 fun NavGraphBuilder.openMajorNavGraph(
   popBackStack: () -> Unit,
+  popBackStackWithArgument: (String) -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
   composable(
@@ -26,6 +27,7 @@ fun NavGraphBuilder.openMajorNavGraph(
   ) {
     OpenMajorRoute(
       popBackStack = popBackStack,
+      popBackStackWithArgument = popBackStackWithArgument,
       handleException = handleException,
     )
   }
