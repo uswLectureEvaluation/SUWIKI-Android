@@ -2,7 +2,6 @@ package com.suwiki.feature.notice
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suwiki.core.model.notice.Notice
 import com.suwiki.domain.notice.usecase.GetNoticeListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,24 +20,21 @@ class NoticeViewModel @Inject constructor(
 
   override val container: Container<NoticeState, NoticeSideEffect> = container(NoticeState())
 
-  private var _noticeList: List<Notice> = listOf()
-  val noticeList = _noticeList
-
-  init {
+  suspend fun loadNoticeList() {
     viewModelScope.launch {
       getNoticeListUseCase(1)
         .onSuccess { notices ->
-          _noticeList = notices
-          hideProgressBar()
+          intent { reduce { state.copy(noticeList = notices) } }
+          hideLoadingScreen()
         }
         .onFailure {
-          showProgressBar()
+          showLoadingScreen()
         }
     }
   }
 
-  private fun showProgressBar() = intent { reduce { state.copy(isLoading = true) } }
-  private fun hideProgressBar() = intent { reduce { state.copy(isLoading = false) } }
+  private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
+  private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
   fun navigateNoticeDetail() = intent { postSideEffect(NoticeSideEffect.NavigateNoticeDetail) }
   fun popBackStack() = intent { postSideEffect(NoticeSideEffect.PopBackStack) }
 }

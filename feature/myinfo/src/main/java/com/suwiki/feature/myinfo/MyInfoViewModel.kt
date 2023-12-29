@@ -25,7 +25,7 @@ class MyInfoViewModel @Inject constructor(
 
   suspend fun checkLoggedIn() {
     viewModelScope.launch {
-      showProgressBar()
+      showLoadingScreen()
       isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
 
       if (isLoggedIn) {
@@ -33,14 +33,14 @@ class MyInfoViewModel @Inject constructor(
       } else {
         hideMyService()
       }
-      hideProgressBar()
+      hideLoadingScreen()
     }
   }
 
   private fun showMyService() = intent { reduce { state.copy(showMyInfoCard = true) } }
   private fun hideMyService() = intent { reduce { state.copy(showMyInfoCard = false) } }
-  private fun showProgressBar() = intent { reduce { state.copy(isLoading = true) } }
-  private fun hideProgressBar() = intent { reduce { state.copy(isLoading = false) } }
+  private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
+  private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
   fun navigateNotice() = intent { postSideEffect(MyInfoSideEffect.NavigateNotice) }
 }

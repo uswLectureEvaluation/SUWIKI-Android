@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,12 +39,16 @@ fun NoticeDetailRoute(
     }
   }
 
+  LaunchedEffect(key1 = viewModel) {
+    viewModel.loadNoticeDetail()
+  }
+
   NoticeDetailScreen(
     padding = padding,
     uiState = uiState,
-    title = viewModel.noticeDetail.title,
-    date = viewModel.noticeDetail.date.toString(),
-    content = viewModel.noticeDetail.content,
+    title = uiState.noticeDetail.title,
+    date = uiState.noticeDetail.date.toString(),
+    content = uiState.noticeDetail.content,
     popBackStack = viewModel::popBackStack,
   )
 }

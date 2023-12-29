@@ -2,7 +2,6 @@ package com.suwiki.feature.notice
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suwiki.core.model.notice.NoticeDetail
 import com.suwiki.domain.notice.usecase.GetNoticeDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,23 +19,20 @@ class NoticeDetailViewModel @Inject constructor(
 ) : ContainerHost<NoticeDetailState, NoticeDetailSideEffect>, ViewModel() {
   override val container: Container<NoticeDetailState, NoticeDetailSideEffect> = container(NoticeDetailState())
 
-  private var _noticeDetail = NoticeDetail()
-  val noticeDetail = _noticeDetail
-
-  init {
+  suspend fun loadNoticeDetail() {
     viewModelScope.launch {
       getNoticeDetailUseCase(1)
-        .onSuccess {
-          _noticeDetail = it
-          hideProgressBar()
+        .onSuccess { noticeDetail ->
+          intent { reduce { state.copy(noticeDetail = noticeDetail) } }
+          hideLoadingScreen()
         }
         .onFailure {
-          showProgressBar()
+          showLoadingScreen()
         }
     }
   }
 
-  private fun showProgressBar() = intent { reduce { state.copy(isLoading = true) } }
-  private fun hideProgressBar() = intent { reduce { state.copy(isLoading = false) } }
+  private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
+  private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
   fun popBackStack() = intent { postSideEffect(NoticeDetailSideEffect.PopBackStack) }
 }
