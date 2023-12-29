@@ -25,7 +25,8 @@ import com.suwiki.core.ui.extension.suwikiClickable
 @Composable
 fun SuwikiAppBarWithTitle(
   modifier: Modifier = Modifier,
-  title: String = "",
+  title: String? = null,
+  showCloseIcon: Boolean = true,
   showBackIcon: Boolean = true,
   onClickBack: () -> Unit = {},
   onClickClose: () -> Unit = {},
@@ -50,22 +51,28 @@ fun SuwikiAppBarWithTitle(
         tint = Gray95,
       )
     }
-    Text(
-      modifier = Modifier.align(Alignment.Center),
-      text = title,
-      style = SuwikiTheme.typography.header6,
-    )
-    Icon(
-      modifier = Modifier
-        .align(Alignment.CenterEnd)
-        .size(24.dp)
-        .clip(CircleShape)
-        .suwikiClickable(onClick = onClickClose)
-        .padding(3.dp),
-      painter = painterResource(id = R.drawable.ic_appbar_close_mark),
-      contentDescription = "",
-      tint = Gray95,
-    )
+
+    if(title != null) {
+      Text(
+        modifier = Modifier.align(Alignment.Center),
+        text = title,
+        style = SuwikiTheme.typography.header6,
+      )
+    }
+
+    if (showCloseIcon) {
+      Icon(
+        modifier = Modifier
+          .align(Alignment.CenterEnd)
+          .size(24.dp)
+          .clip(CircleShape)
+          .suwikiClickable(onClick = onClickClose)
+          .padding(3.dp),
+        painter = painterResource(id = R.drawable.ic_appbar_close_mark),
+        contentDescription = "",
+        tint = Gray95,
+      )
+    }
   }
 }
 
