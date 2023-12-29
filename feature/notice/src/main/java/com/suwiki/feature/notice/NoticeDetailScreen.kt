@@ -66,7 +66,7 @@ fun NoticeDetailScreen(
     modifier = Modifier
       .padding(padding)
       .background(White)
-      .fillMaxSize()
+      .fillMaxSize(),
   ) {
     SuwikiAppBarWithTitle(
       title = "",
