@@ -52,7 +52,7 @@ fun SuwikiAppBarWithTitle(
       )
     }
 
-    if(title != null) {
+    if (title != null) {
       Text(
         modifier = Modifier.align(Alignment.Center),
         text = title,
