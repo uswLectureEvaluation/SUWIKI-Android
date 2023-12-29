@@ -193,7 +193,7 @@ fun OpenMajorScreen(
           }
 
           OpenMajorTap.BOOKMARK -> {
-            if (uiState.showAllOpenMajorEmptySearchResultScreen) {
+            if (uiState.showBookmarkedOpenMajorSearchEmptyResultScreen) {
               EmptyText(stringResource(R.string.open_major_empty_search_result))
             } else if (uiState.showBookmarkedOpenMajorEmptyScreen) {
               EmptyText(stringResource(R.string.open_major_empty_bookmark))
