@@ -1,6 +1,7 @@
 package com.suwiki.feature.myinfo
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,8 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -46,6 +48,7 @@ fun MyInfoRoute(
   viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
 ) {
+  val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
@@ -60,6 +63,7 @@ fun MyInfoRoute(
   MyInfoScreen(
     padding = padding,
     uiState = uiState,
+    scrollState = scrollState,
     onClickNoticeButton = viewModel::navigateNotice,
   )
 }
@@ -68,6 +72,7 @@ fun MyInfoRoute(
 fun MyInfoScreen(
   padding: PaddingValues,
   uiState: MyInfoState,
+  scrollState: ScrollState,
   onClickNoticeButton: () -> Unit,
 ) {
   val myList = immutableListOf(
@@ -129,26 +134,23 @@ fun MyInfoScreen(
         }
       }
     }
-    LazyColumn(
+    Column(
       modifier = Modifier
         .background(White)
-        .fillMaxSize(),
+        .fillMaxSize()
+        .verticalScroll(scrollState),
     ) {
       if (uiState.showMyInfoCard) {
-        item {
-          SuwikiMenuItem(title = stringResource(R.string.my_info_my))
+        SuwikiMenuItem(title = stringResource(R.string.my_info_my))
 
-          myList.forEach { title ->
-            MyInfoListItem(title = stringResource(title))
-          }
-        }
-      }
-      item {
-        SuwikiMenuItem(title = stringResource(R.string.my_info_service))
-
-        serviceList.forEach { title ->
+        myList.forEach { title ->
           MyInfoListItem(title = stringResource(title))
         }
+      }
+      SuwikiMenuItem(title = stringResource(R.string.my_info_service))
+
+      serviceList.forEach { title ->
+        MyInfoListItem(title = stringResource(title))
       }
     }
     if (uiState.isLoading) {
@@ -303,10 +305,13 @@ private fun MyInfoListItem(
 @Preview(showSystemUi = true)
 @Composable
 fun MyInfoScreenScreenPreview() {
+  val scrollState = rememberScrollState()
+
   SuwikiTheme {
     MyInfoScreen(
       padding = PaddingValues(0.dp),
       uiState = MyInfoState(true),
+      scrollState = scrollState,
       onClickNoticeButton = {},
     )
   }
