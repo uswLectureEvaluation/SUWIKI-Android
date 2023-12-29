@@ -30,7 +30,7 @@ interface MajorApi {
 
   // 전공 즐겨찾기 하기
   @POST(MAJOR)
-  suspend fun bookmarkMajor(@Body bookmarkMajorRequest: BookmarkMajorRequest): ApiResult<String>
+  suspend fun bookmarkMajor(@Body bookmarkMajorRequest: BookmarkMajorRequest): ApiResult<Unit>
 
   // 전공 즐겨찾기 조회
   @GET(MAJOR)
@@ -40,5 +40,5 @@ interface MajorApi {
   @DELETE(MAJOR)
   suspend fun removeBookmarkMajor(
     @Query(MAJOR_TYPE) majorName: String,
-  ): ApiResult<String>
+  ): ApiResult<Unit>
 }

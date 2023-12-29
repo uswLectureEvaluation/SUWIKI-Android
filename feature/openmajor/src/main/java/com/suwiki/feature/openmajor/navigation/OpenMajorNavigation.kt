@@ -15,6 +15,7 @@ fun NavGraphBuilder.openMajorNavGraph(
   popBackStack: () -> Unit,
   popBackStackWithArgument: (String) -> Unit,
   handleException: (Throwable) -> Unit,
+  onShowToast: (String) -> Unit,
 ) {
   composable(
     route = OpenMajorRoute.route("{${OpenMajorRoute.ARGUMENT_NAME}}"),
@@ -29,6 +30,7 @@ fun NavGraphBuilder.openMajorNavGraph(
       popBackStack = popBackStack,
       popBackStackWithArgument = popBackStackWithArgument,
       handleException = handleException,
+      onShowToast = onShowToast,
     )
   }
 }

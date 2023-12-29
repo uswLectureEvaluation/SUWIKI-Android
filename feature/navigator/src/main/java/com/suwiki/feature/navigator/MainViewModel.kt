@@ -25,13 +25,13 @@ class MainViewModel @Inject constructor() : ContainerHost<MainState, MainSideEff
   private val mutex = Mutex()
 
   fun onShowToast(msg: String) = intent {
-    viewModelScope.launch {
+
       mutex.withLock {
         reduce { state.copy(toastMessage = msg, toastVisible = true) }
         delay(SHOW_TOAST_LENGTH)
         reduce { state.copy(toastVisible = false) }
       }
-    }
+
   }
 
   fun handleException(throwable: Throwable) = intent {

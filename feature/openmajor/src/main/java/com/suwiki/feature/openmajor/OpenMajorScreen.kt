@@ -18,8 +18,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,14 +36,18 @@ import com.suwiki.core.designsystem.component.tabbar.TabTitle
 import com.suwiki.core.designsystem.shadow.suwikiShadow
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.isScrolledToEnd
 import com.suwiki.feature.openmajor.component.OpenMajorContainer
 import com.suwiki.feature.openmajor.model.OpenMajor
+import com.suwiki.feature.openmajor.model.OpenMajorTap
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import timber.log.Timber
 
-private const val OPEN_MAJOR_PAGE_COUNT = 2
+private val OPEN_MAJOR_PAGE_COUNT = OpenMajorTap.entries.size
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -49,17 +56,31 @@ fun OpenMajorRoute(
   popBackStack: () -> Unit,
   popBackStackWithArgument: (String) -> Unit,
   handleException: (Throwable) -> Unit,
+  onShowToast: (String) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+
+  val context = LocalContext.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is OpenMajorSideEffect.HandleException -> handleException(sideEffect.throwable)
       OpenMajorSideEffect.PopBackStack -> popBackStack()
       is OpenMajorSideEffect.PopBackStackWithArgument -> popBackStackWithArgument(sideEffect.argument)
+      is OpenMajorSideEffect.ShowNeedLoginToast -> {
+        onShowToast(context.getString(R.string.open_major_need_login_toast))
+      }
     }
   }
 
   val pagerState = rememberPagerState(pageCount = { OPEN_MAJOR_PAGE_COUNT })
+
+  LaunchedEffect(key1 = uiState.currentPage) {
+    pagerState.animateScrollToPage(uiState.currentPage)
+  }
+
+  snapshotFlow { pagerState.currentPage }.collectWithLifecycle {
+    viewModel.syncPagerState(it)
+  }
 
   val allOpenMajorListState = rememberLazyListState()
   val bookmarkedOpenMajorListState = rememberLazyListState()
@@ -96,6 +117,8 @@ fun OpenMajorRoute(
     onClickClose = viewModel::popBackStack,
     onClickConfirmButton = viewModel::popBackStackWithArgument,
     onClickOpenMajorContainer = viewModel::updateSelectedOpenMajor,
+    onClickOpenMajorBookmark = viewModel::registerOrUnRegisterBookmark,
+    onClickTab = viewModel::syncPagerState,
   )
 }
 
@@ -109,6 +132,8 @@ fun OpenMajorScreen(
   onClickClose: () -> Unit = {},
   onClickConfirmButton: () -> Unit = {},
   onClickOpenMajorContainer: (String) -> Unit = {},
+  onClickOpenMajorBookmark: (String) -> Unit = {},
+  onClickTab: (Int) -> Unit = {},
 ) {
   Box(
     modifier = Modifier.background(White),
@@ -124,29 +149,41 @@ fun OpenMajorScreen(
 
       SuwikiSearchBar()
 
-      SuwikiTabBar {
-        TabTitle(title = "전체", position = 0, selected = true, onClick = {})
-        TabTitle(title = "즐겨찾기", position = 1, selected = false, onClick = {})
+      SuwikiTabBar(
+        selectedTabPosition = pagerState.currentPage,
+      ) {
+        OpenMajorTap.entries.forEach { tab ->
+          with(tab) {
+            TabTitle(
+              title = stringResource(id = titleId),
+              position = position,
+              selected = pagerState.currentPage == position,
+              onClick = { onClickTab(position) },
+            )
+          }
+        }
       }
 
       HorizontalPager(
         modifier = Modifier.weight(1f),
         state = pagerState,
       ) { page ->
-        when (page) {
-          0 -> {
+        when (OpenMajorTap.entries[page]) {
+          OpenMajorTap.ALL -> {
             OpenMajorLazyColumn(
               listState = allOpenMajorListState,
               openMajorList = uiState.filteredAllOpenMajorList,
               onClickOpenMajorContainer = onClickOpenMajorContainer,
+              onClickOpenMajorBookmark = onClickOpenMajorBookmark,
             )
           }
 
-          1 -> {
+          OpenMajorTap.BOOKMARK -> {
             OpenMajorLazyColumn(
               listState = bookmarkedOpenMajorListState,
               openMajorList = uiState.filteredBookmarkedOpenMajorList,
               onClickOpenMajorContainer = onClickOpenMajorContainer,
+              onClickOpenMajorBookmark = onClickOpenMajorBookmark,
             )
           }
         }
@@ -177,6 +214,7 @@ private fun OpenMajorLazyColumn(
   listState: LazyListState,
   openMajorList: PersistentList<OpenMajor>,
   onClickOpenMajorContainer: (String) -> Unit = {},
+  onClickOpenMajorBookmark: (String) -> Unit = {},
 ) {
   LazyColumn(
     modifier = Modifier.fillMaxSize(),
@@ -185,7 +223,7 @@ private fun OpenMajorLazyColumn(
   ) {
     items(
       count = openMajorList.size,
-      key = { index -> openMajorList[index].name },
+      key = { index -> openMajorList[index].id },
     ) { index ->
       with(openMajorList[index]) {
         OpenMajorContainer(
@@ -193,6 +231,7 @@ private fun OpenMajorLazyColumn(
           isChecked = isSelected,
           isStared = isBookmarked,
           onClick = { onClickOpenMajorContainer(name) },
+          onClickStar = { onClickOpenMajorBookmark(name) }
         )
       }
     }
