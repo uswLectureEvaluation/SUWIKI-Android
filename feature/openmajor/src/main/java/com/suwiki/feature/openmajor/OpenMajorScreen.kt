@@ -118,7 +118,7 @@ fun OpenMajorRoute(
     onClickClose = viewModel::popBackStack,
     onClickConfirmButton = viewModel::popBackStackWithArgument,
     onClickOpenMajorContainer = viewModel::updateSelectedOpenMajor,
-    onClickOpenMajorBookmark = viewModel::registerOrUnRegisterBookmark,
+    onClickOpenMajorBookmark = viewModel::toggleBookmark,
     onClickTab = viewModel::syncPagerState,
     onValueChangeSearchBar = viewModel::updateSearchValue,
     onClickSearchBarClearButton = { viewModel.updateSearchValue("") },

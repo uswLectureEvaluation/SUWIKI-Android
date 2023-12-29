@@ -49,7 +49,7 @@ class OpenMajorViewModel @Inject constructor(
     reduceBookmarkedOpenMajorList(searchValue)
   }
 
-  fun registerOrUnRegisterBookmark(openMajor: String) = intent {
+  fun toggleBookmark(openMajor: String) = intent {
     if (isLoggedIn.not()) {
       postSideEffect(OpenMajorSideEffect.ShowNeedLoginToast)
       return@intent
