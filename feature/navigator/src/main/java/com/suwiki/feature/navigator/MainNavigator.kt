@@ -11,6 +11,8 @@ import androidx.navigation.navOptions
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
 import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
+import com.suwiki.feature.notice.navigation.navigateNotice
+import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
@@ -46,6 +48,14 @@ internal class MainNavigator(
 
   fun navigateLogin() {
     navController.navigateLogin()
+  }
+
+  fun navigateNotice() {
+    navController.navigateNotice()
+  }
+
+  fun navigateNoticeDetail() {
+    navController.navigateNoticeDetail()
   }
 
   fun popBackStackIfNotHome() {

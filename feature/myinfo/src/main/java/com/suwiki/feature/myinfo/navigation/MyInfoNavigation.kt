@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.suwiki.feature.myinfo.MyInfoScreen
+import com.suwiki.feature.myinfo.MyInfoRoute
 
 fun NavController.navigateMyInfo(navOptions: NavOptions) {
   navigate(MyInfoRoute.route, navOptions)
@@ -13,9 +13,13 @@ fun NavController.navigateMyInfo(navOptions: NavOptions) {
 
 fun NavGraphBuilder.myInfoNavGraph(
   padding: PaddingValues,
+  navigateNotice: () -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
-    MyInfoScreen(padding)
+    MyInfoRoute(
+      padding = padding,
+      navigateNotice = navigateNotice,
+    )
   }
 }
 

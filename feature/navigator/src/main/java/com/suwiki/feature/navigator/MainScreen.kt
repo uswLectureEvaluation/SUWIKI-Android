@@ -40,6 +40,7 @@ import com.suwiki.feature.login.R
 import com.suwiki.feature.login.navigation.loginNavGraph
 import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
+import com.suwiki.feature.notice.navigation.noticeNavGraph
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -79,6 +80,13 @@ internal fun MainScreen(
 
         myInfoNavGraph(
           padding = innerPadding,
+          navigateNotice = navigator::navigateNotice,
+        )
+
+        noticeNavGraph(
+          padding = innerPadding,
+          popBackStack = navigator::popBackStackIfNotHome,
+          navigateNoticeDetail = navigator::navigateNoticeDetail,
         )
       }
 
