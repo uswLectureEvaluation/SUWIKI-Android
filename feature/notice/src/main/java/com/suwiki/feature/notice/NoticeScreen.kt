@@ -21,6 +21,8 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.notice.Notice
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.time.LocalDateTime
@@ -57,7 +59,7 @@ fun NoticeRoute(
 @Composable
 fun NoticeScreen(
   padding: PaddingValues,
-  noticeList: List<Notice>,
+  noticeList: PersistentList<Notice>,
   uiState: NoticeState,
   navigateNoticeDetail: () -> Unit,
   popBackStack: () -> Unit,
@@ -102,7 +104,7 @@ fun NoticeScreenPreview() {
     NoticeScreen(
       padding = PaddingValues(0.dp),
       uiState = NoticeState(false),
-      noticeList = sampleNoticeList,
+      noticeList = sampleNoticeList.toPersistentList(),
       navigateNoticeDetail = {},
       popBackStack = {},
     )

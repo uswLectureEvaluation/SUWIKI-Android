@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.domain.notice.usecase.GetNoticeListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -24,7 +25,7 @@ class NoticeViewModel @Inject constructor(
     viewModelScope.launch {
       getNoticeListUseCase(1)
         .onSuccess { notices ->
-          intent { reduce { state.copy(noticeList = notices) } }
+          intent { reduce { state.copy(noticeList = notices.toPersistentList()) } }
           hideLoadingScreen()
         }
         .onFailure {
