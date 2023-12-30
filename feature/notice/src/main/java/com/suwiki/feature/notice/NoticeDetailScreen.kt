@@ -143,7 +143,7 @@ fun NoticeDetailScreenPreview() {
       uiState = NoticeDetailState(
         isLoading = false,
         noticeDetail =
-        sampleNoticeDetail
+        sampleNoticeDetail,
       ),
       popBackStack = {},
     )
