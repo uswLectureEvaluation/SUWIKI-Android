@@ -2,6 +2,8 @@ package com.suwiki.feature.notice
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suwiki.core.model.exception.NetworkException
+import com.suwiki.core.model.notice.NoticeDetail
 import com.suwiki.domain.notice.usecase.GetNoticeDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,13 +23,14 @@ class NoticeDetailViewModel @Inject constructor(
 
   suspend fun loadNoticeDetail() {
     viewModelScope.launch {
+      showLoadingScreen()
       getNoticeDetailUseCase(1)
         .onSuccess { noticeDetail ->
           intent { reduce { state.copy(noticeDetail = noticeDetail) } }
           hideLoadingScreen()
         }
         .onFailure {
-          showLoadingScreen()
+          intent { reduce { state.copy(noticeDetail = NoticeDetail()) } }
         }
     }
   }

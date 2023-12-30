@@ -2,8 +2,11 @@ package com.suwiki.feature.notice
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suwiki.core.model.notice.Notice
 import com.suwiki.domain.notice.usecase.GetNoticeListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
@@ -22,6 +25,7 @@ class NoticeViewModel @Inject constructor(
   override val container: Container<NoticeState, NoticeSideEffect> = container(NoticeState())
 
   suspend fun loadNoticeList() {
+    showLoadingScreen()
     viewModelScope.launch {
       getNoticeListUseCase(1)
         .onSuccess { notices ->
@@ -29,7 +33,7 @@ class NoticeViewModel @Inject constructor(
           hideLoadingScreen()
         }
         .onFailure {
-          showLoadingScreen()
+          intent { reduce { state.copy(noticeList = persistentListOf(Notice())) } }
         }
     }
   }
