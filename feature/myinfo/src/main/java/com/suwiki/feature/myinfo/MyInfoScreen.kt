@@ -86,7 +86,9 @@ fun MyInfoScreen(
     R.string.my_info_open_source_library,
   )
   Column(
-    modifier = Modifier.padding(padding),
+    modifier = Modifier
+      .padding(padding)
+      .verticalScroll(scrollState),
   ) {
     Box(
       modifier = Modifier.background(if (uiState.showMyInfoCard) GrayF6 else White),
@@ -137,8 +139,7 @@ fun MyInfoScreen(
     Column(
       modifier = Modifier
         .background(White)
-        .fillMaxSize()
-        .verticalScroll(scrollState),
+        .fillMaxSize(),
     ) {
       if (uiState.showMyInfoCard) {
         SuwikiMenuItem(title = stringResource(R.string.my_info_my))
