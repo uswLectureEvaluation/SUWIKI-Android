@@ -23,8 +23,10 @@ import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.notice.NoticeDetail
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.time.LocalDateTime
 
 @Composable
 fun NoticeDetailRoute(
@@ -46,9 +48,6 @@ fun NoticeDetailRoute(
   NoticeDetailScreen(
     padding = padding,
     uiState = uiState,
-    title = uiState.noticeDetail.title,
-    date = uiState.noticeDetail.date.toString(),
-    content = uiState.noticeDetail.content,
     popBackStack = viewModel::popBackStack,
   )
 }
@@ -57,9 +56,6 @@ fun NoticeDetailRoute(
 fun NoticeDetailScreen(
   padding: PaddingValues,
   uiState: NoticeDetailState,
-  title: String,
-  date: String,
-  content: String,
   popBackStack: () -> Unit,
 ) {
   Column(
@@ -77,8 +73,8 @@ fun NoticeDetailScreen(
 
     Column {
       NoticeDetailTitleContainer(
-        title = title,
-        date = date,
+        title = uiState.noticeDetail.title,
+        date = uiState.noticeDetail.date.toString(),
       )
       HorizontalDivider(
         thickness = 4.dp,
@@ -88,7 +84,7 @@ fun NoticeDetailScreen(
       Text(
         modifier = Modifier
           .padding(24.dp),
-        text = content,
+        text = uiState.noticeDetail.content,
         style = SuwikiTheme.typography.body7,
       )
     }
@@ -127,22 +123,28 @@ private fun NoticeDetailTitleContainer(
 @Preview
 @Composable
 fun NoticeDetailScreenPreview() {
+  val sampleNoticeDetail = NoticeDetail(
+    title = "2023년 04월 17일 데이터베이스 문제",
+    date = LocalDateTime.now(),
+    content = "데이터 베이스의 불문명현 원인으로 인해 특정 되돌리는 풀백을 수행했습니다. \n" +
+      "\n" +
+      "이로 인해 회원가입을 진행해주셨으나 회원가입 처리가 \n" +
+      "되어있지 않는 현상 및 \n" +
+      "강의평가 시험정보 작성을 하였으나 등록되지 않는 \n" +
+      "경우가 발생할 수 있습니다\n" +
+      "\n" +
+      "양해부탁드립니다. \n" +
+      "\n" +
+      "감사합니다.",
+  )
   SuwikiTheme {
     NoticeDetailScreen(
       padding = PaddingValues(0.dp),
-      title = "2023년 04월 17일 데이터베이스 문제",
-      date = "2023.04.17",
-      content = "데이터 베이스의 불문명현 원인으로 인해 특정 되돌리는 풀백을 수행했습니다. \n" +
-        "\n" +
-        "이로 인해 회원가입을 진행해주셨으나 회원가입 처리가 \n" +
-        "되어있지 않는 현상 및 \n" +
-        "강의평가 시험정보 작성을 하였으나 등록되지 않는 \n" +
-        "경우가 발생할 수 있습니다\n" +
-        "\n" +
-        "양해부탁드립니다. \n" +
-        "\n" +
-        "감사합니다.",
-      uiState = NoticeDetailState(true),
+      uiState = NoticeDetailState(
+        isLoading = false,
+        noticeDetail =
+        sampleNoticeDetail
+      ),
       popBackStack = {},
     )
   }
