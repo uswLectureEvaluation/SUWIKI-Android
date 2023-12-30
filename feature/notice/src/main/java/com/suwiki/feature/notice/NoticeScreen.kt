@@ -71,8 +71,8 @@ fun NoticeScreen(
     SuwikiAppBarWithTitle(
       title = stringResource(R.string.notice),
       onClickBack = popBackStack,
-      enabledBack = true,
-      enabledRemove = false,
+      showBackIcon = true,
+      showCloseIcon = false,
     )
     LazyColumn {
       items(items = noticeList) { notice ->

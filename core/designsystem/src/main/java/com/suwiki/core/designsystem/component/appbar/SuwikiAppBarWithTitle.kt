@@ -1,9 +1,7 @@
 package com.suwiki.core.designsystem.component.appbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -26,51 +25,53 @@ import com.suwiki.core.ui.extension.suwikiClickable
 @Composable
 fun SuwikiAppBarWithTitle(
   modifier: Modifier = Modifier,
-  title: String = "",
+  title: String? = null,
+  showCloseIcon: Boolean = true,
+  showBackIcon: Boolean = true,
   onClickBack: () -> Unit = {},
-  onClickRemove: () -> Unit = {},
-  enabledBack: Boolean,
-  enabledRemove: Boolean,
+  onClickClose: () -> Unit = {},
 ) {
-  Row(
+  Box(
     modifier = modifier
       .fillMaxWidth()
       .wrapContentHeight()
       .background(White)
       .padding(top = 15.dp, bottom = 15.dp, start = 18.dp, end = 24.dp),
-    horizontalArrangement = Arrangement.SpaceBetween,
   ) {
-    if (enabledBack) {
+    if (showBackIcon) {
       Icon(
-        painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
-        contentDescription = "",
-        tint = Gray95,
         modifier = Modifier
+          .align(Alignment.CenterStart)
           .size(24.dp)
           .clip(CircleShape)
           .suwikiClickable(onClick = onClickBack)
           .padding(vertical = 2.dp, horizontal = 6.5.dp),
+        painter = painterResource(id = R.drawable.ic_appbar_arrow_left),
+        contentDescription = "",
+        tint = Gray95,
       )
-    } else {
-      Spacer(modifier = Modifier.size(24.dp))
     }
-    Text(
-      text = title,
-      style = SuwikiTheme.typography.header6,
-    )
-    if (enabledRemove) {
+
+    if (title != null) {
+      Text(
+        modifier = Modifier.align(Alignment.Center),
+        text = title,
+        style = SuwikiTheme.typography.header6,
+      )
+    }
+
+    if (showCloseIcon) {
       Icon(
+        modifier = Modifier
+          .align(Alignment.CenterEnd)
+          .size(24.dp)
+          .clip(CircleShape)
+          .suwikiClickable(onClick = onClickClose)
+          .padding(3.dp),
         painter = painterResource(id = R.drawable.ic_appbar_close_mark),
         contentDescription = "",
         tint = Gray95,
-        modifier = Modifier
-          .size(24.dp)
-          .clip(CircleShape)
-          .suwikiClickable(onClick = onClickRemove)
-          .padding(3.dp),
       )
-    } else {
-      Spacer(modifier = Modifier.size(24.dp))
     }
   }
 }
@@ -82,9 +83,7 @@ fun SuwikiAppBarPreview() {
     SuwikiAppBarWithTitle(
       title = "타이틀",
       onClickBack = { /*TODO*/ },
-      onClickRemove = { /*TODO*/ },
-      enabledBack = true,
-      enabledRemove = true,
+      onClickClose = { /*TODO*/ },
     )
   }
 }

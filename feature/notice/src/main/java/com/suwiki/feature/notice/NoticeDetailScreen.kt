@@ -71,8 +71,8 @@ fun NoticeDetailScreen(
     SuwikiAppBarWithTitle(
       title = "",
       onClickBack = popBackStack,
-      enabledBack = true,
-      enabledRemove = false,
+      showBackIcon = true,
+      showCloseIcon = false,
     )
 
     Column {
