@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -258,10 +259,10 @@ private fun OpenMajorLazyColumn(
     contentPadding = PaddingValues(top = 12.dp),
   ) {
     items(
-      count = openMajorList.size,
-      key = { index -> openMajorList[index].id },
-    ) { index ->
-      with(openMajorList[index]) {
+      items = openMajorList,
+      key = { it.id },
+    ) { openMajor ->
+      with(openMajor) {
         OpenMajorContainer(
           text = name,
           isChecked = isSelected,
