@@ -45,7 +45,7 @@ fun SuwikiClassReviewCard(
   openMajor: String,
   professor: String,
   rating: Float,
-  reviewCount: Int,
+  reviewCount: Int?,
   classType: String,
   onClick: () -> Unit,
 ) {
@@ -104,11 +104,13 @@ fun SuwikiClassReviewCard(
           style = SuwikiTheme.typography.body1,
           color = Primary,
         )
-        Text(
-          text = "($reviewCount)",
-          style = SuwikiTheme.typography.body3,
-          color = Gray95,
-        )
+        if (reviewCount != null) {
+          Text(
+            text = "($reviewCount)",
+            style = SuwikiTheme.typography.body3,
+            color = Gray95,
+          )
+        }
       }
     }
 
