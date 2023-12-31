@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationAverageListUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.lectureevaluation.viewerreporter.model.toLectureEvaluation
@@ -13,6 +14,8 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -22,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LectureEvaluationViewModel @Inject constructor(
   private val getUserInfoUseCase: GetUserInfoUseCase,
-  private val getLectureEvaluationListUseCase: RetrieveLectureEvaluationAverageListUseCase,
+  private val getLectureEvaluationListUseCase: GetLectureEvaluationAverageListUseCase,
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
     container(LectureEvaluationState())
@@ -31,6 +34,11 @@ class LectureEvaluationViewModel @Inject constructor(
   private var isFirstVisit: Boolean = true
   private val lectureEvaluationInfoList = mutableListOf<LectureEvaluationAverage?>()
 
+  @OptIn(OrbitExperimental::class)
+  fun updateSearchValue(searchValue: String) = blockingIntent {
+    reduce { state.copy(searchValue = searchValue) }
+    reduceLectureEvaluationInfoList(searchValue)
+  }
   fun updateSelectedOpenMajor(openMajor: String) = intent { reduce { state.copy(selectedOpenMajor = openMajor) } }
 
   fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
@@ -40,13 +48,13 @@ class LectureEvaluationViewModel @Inject constructor(
       showOnboardingBottomSheet()
     }
   }
-  fun initData() = intent {
+  fun initData(page: Int) = intent {
     reduce { state.copy(isLoading = true) }
-    getLectureEvaluationList()
+    getLectureEvaluationList(page)
     reduce { state.copy(isLoading = false) }
   }
-  private fun getLectureEvaluationList() = intent {
-    getLectureEvaluationListUseCase(RetrieveLectureEvaluationAverageListUseCase.Param("", "", 1, "전체"))
+   fun getLectureEvaluationList(page:Int) = intent {
+    getLectureEvaluationListUseCase(GetLectureEvaluationAverageListUseCase.Param("",  page, "전체"))
       .onSuccess {
         lectureEvaluationInfoList.addAll(it)
         reduceLectureEvaluationInfoList()

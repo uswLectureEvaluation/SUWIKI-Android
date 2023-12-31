@@ -15,7 +15,8 @@ data class LectureEvaluation(
 
 fun List<LectureEvaluationAverage?>.toLectureEvaluation(
   searchValue: String,
-) = filter {
+) =
+  filter {
   if (searchValue.isNotEmpty()) {
     searchValue in it!!.lectureInfo.lectureName
     searchValue in it.lectureInfo.professor
@@ -23,7 +24,8 @@ fun List<LectureEvaluationAverage?>.toLectureEvaluation(
   else {
     true
   }
-}.map {
+}.
+  map {
   LectureEvaluation(
     id = it!!.id,
     lectureName = it.lectureInfo.lectureName,

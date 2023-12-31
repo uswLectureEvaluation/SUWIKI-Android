@@ -17,14 +17,17 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiEvaluationAppBar
 import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
@@ -59,6 +62,9 @@ fun LectureEvaluationRoute(
   val pagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT })
   val allLectureEvaluationListState = rememberLazyListState()
 
+  allLectureEvaluationListState.OnBottomReached{
+    viewModel.getLectureEvaluationList(2)
+  }
   LaunchedEffect(key1 = viewModel) {
     viewModel.checkLoggedInShowBottomSheetIfNeed()
   }
@@ -68,7 +74,7 @@ fun LectureEvaluationRoute(
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.initData()
+    viewModel.initData(1)
   }
 
   LectureEvaluationScreen(
@@ -82,6 +88,8 @@ fun LectureEvaluationRoute(
       viewModel.navigateLogin()
     },
     onClickTempText = navigateOpenMajor,
+    onValueChangeSearchBar = viewModel::updateSearchValue,
+    onClickSearchBarClearButton = { viewModel.updateSearchValue("") },
   )
 }
 
@@ -95,11 +103,10 @@ fun LectureEvaluationScreen(
   hideOnboardingBottomSheet: () -> Unit = {},
   onClickLoginButton: () -> Unit = {},
   onClickSignupButton: () -> Unit = {},
+  onValueChangeSearchBar: (String) -> Unit = {},
+  onClickSearchBarClearButton: () -> Unit = {},
   onClickTempText: (String) -> Unit = {}, // TODO 개설학과 선택 페이지로 임시로 넘어가기 위한 람다입니다. 마음대로 삭제 가능.
-) {
-  var normalValue by remember {
-    mutableStateOf("")
-  }
+  ) {
   Box(
     modifier = Modifier
       .background(White),
@@ -116,9 +123,9 @@ fun LectureEvaluationScreen(
       )
       SuwikiSearchBarWithFilter(
         placeHolder = "강의명 혹은 교수명을 검색하세요",
-        value = normalValue,
-        onValueChange = { normalValue = it },
-        onClickClearButton = { normalValue = "" },
+        value = uiState.searchValue,
+        onValueChange = onValueChangeSearchBar,
+        onClickClearButton = onClickSearchBarClearButton,
       )
       Text(
         modifier = Modifier
@@ -175,8 +182,29 @@ private fun LectureEvaluationLazyColumn(
       }
     }
   }
-}
 
+}
+@Composable
+fun LazyListState.OnBottomReached(
+  loadMore : () -> Unit
+){
+  val shouldLoadMore = remember {
+    derivedStateOf {
+      val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
+        ?: return@derivedStateOf true
+
+      lastVisibleItem.index == layoutInfo.totalItemsCount - 1
+    }
+  }
+
+  // Convert the state into a cold flow and collect
+  LaunchedEffect(shouldLoadMore){
+    snapshotFlow { shouldLoadMore.value }
+      .collect {
+        if (it) loadMore()
+      }
+  }
+}
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
