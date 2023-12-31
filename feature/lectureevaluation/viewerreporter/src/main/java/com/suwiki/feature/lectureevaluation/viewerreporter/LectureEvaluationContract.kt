@@ -5,9 +5,12 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 data class LectureEvaluationState(
-  val filteredAllOpenMajorList: PersistentList<LectureEvaluation> = persistentListOf(),
+  val filteredLectureEvaluationList: PersistentList<LectureEvaluation> = persistentListOf(),
   val showOnboardingBottomSheet: Boolean = false,
   val selectedOpenMajor: String = "",
+  val currentPage: Int = 0,
+  val searchValue: String = "",
+  val isLoading: Boolean = false,
 )
 
 sealed interface LectureEvaluationSideEffect {
