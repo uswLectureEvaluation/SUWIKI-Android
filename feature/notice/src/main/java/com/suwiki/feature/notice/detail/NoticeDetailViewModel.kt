@@ -2,8 +2,6 @@ package com.suwiki.feature.notice.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.exception.UnknownException
-import com.suwiki.core.model.notice.NoticeDetail
 import com.suwiki.domain.notice.usecase.GetNoticeDetailUseCase
 import com.suwiki.feature.notice.navigation.NoticeRoute
 import dagger.hilt.android.lifecycle.HiltViewModel

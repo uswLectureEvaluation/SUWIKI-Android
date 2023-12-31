@@ -6,8 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.suwiki.feature.notice.detail.NoticeDetailRoute
 import com.suwiki.feature.notice.NoticeRoute
+import com.suwiki.feature.notice.detail.NoticeDetailRoute
 
 fun NavController.navigateNotice() {
   navigate(NoticeRoute.route)
