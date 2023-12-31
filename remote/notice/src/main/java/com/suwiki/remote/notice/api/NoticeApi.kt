@@ -21,7 +21,7 @@ interface NoticeApi {
   ): ApiResult<DataResponse<List<NoticeResponse>>>
 
   // 공지사항 API
-  @GET(NOTICE)
+  @GET("$NOTICE/")
   suspend fun getNotice(
     @Query(QUERY_NOTICE_ID) id: Long,
   ): ApiResult<DataResponse<NoticeDetailResponse>>

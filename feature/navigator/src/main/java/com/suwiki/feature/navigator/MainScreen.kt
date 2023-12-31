@@ -106,6 +106,7 @@ internal fun MainScreen(
           padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
           navigateNoticeDetail = navigator::navigateNoticeDetail,
+          handleException = viewModel::handleException,
         )
       }
 

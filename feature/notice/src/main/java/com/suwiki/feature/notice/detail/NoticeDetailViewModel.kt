@@ -1,11 +1,12 @@
-package com.suwiki.feature.notice
+package com.suwiki.feature.notice.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.suwiki.core.model.exception.UnknownException
 import com.suwiki.core.model.notice.NoticeDetail
 import com.suwiki.domain.notice.usecase.GetNoticeDetailUseCase
+import com.suwiki.feature.notice.navigation.NoticeRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -17,21 +18,22 @@ import javax.inject.Inject
 @HiltViewModel
 class NoticeDetailViewModel @Inject constructor(
   private val getNoticeDetailUseCase: GetNoticeDetailUseCase,
+  savedStateHandle: SavedStateHandle,
 ) : ContainerHost<NoticeDetailState, NoticeDetailSideEffect>, ViewModel() {
   override val container: Container<NoticeDetailState, NoticeDetailSideEffect> = container(NoticeDetailState())
 
-  suspend fun loadNoticeDetail() {
-    viewModelScope.launch {
-      showLoadingScreen()
-      getNoticeDetailUseCase(1)
-        .onSuccess { noticeDetail ->
-          intent { reduce { state.copy(noticeDetail = noticeDetail) } }
-          hideLoadingScreen()
-        }
-        .onFailure {
-          intent { reduce { state.copy(noticeDetail = NoticeDetail()) } }
-        }
-    }
+  private val noticeId: Long = savedStateHandle.get<String>(NoticeRoute.DETAIL_ARGUMENT_NAME)!!.toLong()
+
+  fun loadNoticeDetail() = intent {
+    showLoadingScreen()
+    getNoticeDetailUseCase(noticeId)
+      .onSuccess { noticeDetail ->
+        reduce { state.copy(noticeDetail = noticeDetail) }
+      }
+      .onFailure {
+        postSideEffect(NoticeDetailSideEffect.HandleException(it))
+      }
+    hideLoadingScreen()
   }
 
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }

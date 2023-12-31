@@ -23,22 +23,20 @@ class NoticeViewModel @Inject constructor(
 
   override val container: Container<NoticeState, NoticeSideEffect> = container(NoticeState())
 
-  suspend fun loadNoticeList() {
+  fun loadNoticeList() = intent {
     showLoadingScreen()
-    viewModelScope.launch {
-      getNoticeListUseCase(1)
-        .onSuccess { notices ->
-          intent { reduce { state.copy(noticeList = notices.toPersistentList()) } }
-          hideLoadingScreen()
-        }
-        .onFailure {
-          intent { reduce { state.copy(noticeList = persistentListOf(Notice())) } }
-        }
-    }
+    getNoticeListUseCase(1)
+      .onSuccess { notices ->
+        reduce { state.copy(noticeList = notices.toPersistentList()) }
+      }
+      .onFailure {
+        postSideEffect(NoticeSideEffect.HandleException(it))
+      }
+    hideLoadingScreen()
   }
 
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
-  fun navigateNoticeDetail() = intent { postSideEffect(NoticeSideEffect.NavigateNoticeDetail) }
+  fun navigateNoticeDetail(noticeId: Long) = intent { postSideEffect(NoticeSideEffect.NavigateNoticeDetail(noticeId)) }
   fun popBackStack() = intent { postSideEffect(NoticeSideEffect.PopBackStack) }
 }

@@ -55,8 +55,8 @@ internal class MainNavigator(
     navController.navigateNotice()
   }
 
-  fun navigateNoticeDetail() {
-    navController.navigateNoticeDetail()
+  fun navigateNoticeDetail(noticeId: Long) {
+    navController.navigateNoticeDetail(noticeId)
   }
 
   fun navigateOpenMajor(selectedOpenMajor: String) {
