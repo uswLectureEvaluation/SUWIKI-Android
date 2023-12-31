@@ -2,6 +2,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,6 +37,7 @@ import com.suwiki.feature.lectureevaluation.viewerreporter.model.LectureEvaluati
 import kotlinx.collections.immutable.PersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -55,6 +56,9 @@ fun LectureEvaluationRoute(
     }
   }
 
+  val pagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT })
+  val allLectureEvaluationListState = rememberLazyListState()
+
   LaunchedEffect(key1 = viewModel) {
     viewModel.checkLoggedInShowBottomSheetIfNeed()
   }
@@ -63,11 +67,14 @@ fun LectureEvaluationRoute(
     viewModel.updateSelectedOpenMajor(selectedOpenMajor)
   }
 
-  val pagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT })
+  LaunchedEffect(key1 = Unit) {
+    viewModel.initData()
+  }
 
   LectureEvaluationScreen(
     padding = padding,
     uiState = uiState,
+    allLectureEvaluationListState = allLectureEvaluationListState,
     pagerState = pagerState,
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
     onClickLoginButton = {
@@ -83,7 +90,7 @@ fun LectureEvaluationRoute(
 fun LectureEvaluationScreen(
   padding: PaddingValues,
   uiState: LectureEvaluationState,
-  allOpenMajorListState: LazyListState = rememberLazyListState(),
+  allLectureEvaluationListState: LazyListState = rememberLazyListState(),
   pagerState: PagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT }),
   hideOnboardingBottomSheet: () -> Unit = {},
   onClickLoginButton: () -> Unit = {},
@@ -115,15 +122,15 @@ fun LectureEvaluationScreen(
       )
       Text(
         modifier = Modifier
-          .padding(start = 24.dp, top = 10.dp)
-          .fillMaxSize(),
+          .padding(start = 24.dp, top = 10.dp),
         text = "최근 올라온 강의",
         style = SuwikiTheme.typography.body2,
         color = Gray95,
       )
+      Timber.tag("SAK").d("${uiState.filteredLectureEvaluationList}")
       LectureEvaluationLazyColumn(
-        listState = allOpenMajorListState,
-        openMajorList = uiState.filteredAllOpenMajorList,
+        listState = allLectureEvaluationListState,
+        openLectureEvaluationInfoList = uiState.filteredLectureEvaluationList,
       )
     }
     OnboardingBottomSheet(
@@ -139,27 +146,30 @@ fun LectureEvaluationScreen(
 @Composable
 private fun LectureEvaluationLazyColumn(
   listState: LazyListState,
-  openMajorList: PersistentList<LectureEvaluation>,
+  openLectureEvaluationInfoList: PersistentList<LectureEvaluation>,
   onClickOpenLectureEvaluationDetail: (String) -> Unit = {},
 ) {
   LazyColumn(
-    modifier = Modifier.fillMaxSize(),
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(start = 24.dp, end = 24.dp, top = 15.dp),
     state = listState,
-    contentPadding = PaddingValues(top = 12.dp),
+    verticalArrangement = Arrangement.spacedBy(12.dp)
   ) {
     items(
-      items = openMajorList,
+      items = openLectureEvaluationInfoList,
       key = { it.id },
-    ) { openMajor ->
-      with(openMajor) {
+    ) { lectureEvaluation ->
+      Timber.tag("SAK").d("${lectureEvaluation}")
+      with(lectureEvaluation) {
         SuwikiClassReviewCard(
           modifier = Modifier,
-          className = "강의명",
-          openMajor = "개설학과",
-          professor = "교수명",
-          rating = 4.0f,
-          reviewCount = 3,
-          classType = "강의 유형",
+          className = lectureName,
+          openMajor = majorType,
+          professor = professor,
+          rating = lectureTotalAvg,
+          reviewCount = null,
+          classType = lectureType ?: "",
           onClick = { onClickOpenLectureEvaluationDetail },
         )
       }
