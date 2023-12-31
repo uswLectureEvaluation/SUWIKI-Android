@@ -18,14 +18,12 @@ fun List<LectureEvaluationAverage?>.toLectureEvaluation(
 ) =
   filter {
   if (searchValue.isNotEmpty()) {
-    searchValue in it!!.lectureInfo.lectureName
-    searchValue in it.lectureInfo.professor
-  }
-  else {
+    if(searchValue in it!!.lectureInfo.lectureName) true
+    else searchValue in it.lectureInfo.professor
+  } else {
     true
   }
-}.
-  map {
+}.map {
   LectureEvaluation(
     id = it!!.id,
     lectureName = it.lectureInfo.lectureName,

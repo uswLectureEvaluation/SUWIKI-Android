@@ -4,13 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationAverageListUseCase
-import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.lectureevaluation.viewerreporter.model.toLectureEvaluation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -39,6 +37,7 @@ class LectureEvaluationViewModel @Inject constructor(
     reduce { state.copy(searchValue = searchValue) }
     reduceLectureEvaluationInfoList(searchValue)
   }
+
   fun updateSelectedOpenMajor(openMajor: String) = intent { reduce { state.copy(selectedOpenMajor = openMajor) } }
 
   fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
@@ -48,13 +47,9 @@ class LectureEvaluationViewModel @Inject constructor(
       showOnboardingBottomSheet()
     }
   }
-  fun initData(page: Int) = intent {
-    reduce { state.copy(isLoading = true) }
-    getLectureEvaluationList(page)
-    reduce { state.copy(isLoading = false) }
-  }
-   fun getLectureEvaluationList(page:Int) = intent {
-    getLectureEvaluationListUseCase(GetLectureEvaluationAverageListUseCase.Param("",  page, "전체"))
+
+  fun getLectureEvaluationList(page: Int, majorType: String) = intent {
+    getLectureEvaluationListUseCase(GetLectureEvaluationAverageListUseCase.Param("최근 올라온 강의", page, majorType))
       .onSuccess {
         lectureEvaluationInfoList.addAll(it)
         reduceLectureEvaluationInfoList()
@@ -64,7 +59,9 @@ class LectureEvaluationViewModel @Inject constructor(
       }
   }
 
-  private fun reduceLectureEvaluationInfoList(searchValue: String = container.stateFlow.value.searchValue) = intent {
+  private fun reduceLectureEvaluationInfoList(
+    searchValue: String = container.stateFlow.value.searchValue,
+  ) = intent {
     reduce {
       state.copy(
         filteredLectureEvaluationList = lectureEvaluationInfoList.toLectureEvaluation(

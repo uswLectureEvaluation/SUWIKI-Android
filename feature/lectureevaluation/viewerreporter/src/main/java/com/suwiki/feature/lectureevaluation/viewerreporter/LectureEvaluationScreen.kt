@@ -69,13 +69,8 @@ fun LectureEvaluationRoute(
     viewModel.updateSelectedOpenMajor(selectedOpenMajor)
   }
 
-//  LaunchedEffect(key1 = Unit) {
-//    viewModel.initData(2)
-//  }
-
   allLectureEvaluationListState.OnBottomReached {
-    Timber.tag("test").d(it.toString())
-    viewModel.getLectureEvaluationList(it)
+    viewModel.getLectureEvaluationList(it,selectedOpenMajor)
   }
 
   LectureEvaluationScreen(
