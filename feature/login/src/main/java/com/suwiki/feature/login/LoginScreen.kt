@@ -54,8 +54,8 @@ fun LoginRoute(
 
   LoginScreen(
     uiState = uiState,
-    onIdTextFieldValueChange = viewModel::updateId,
-    onPasswordTextFieldValueChange = viewModel::updatePassword,
+    onValueChangeIdTextField = viewModel::updateId,
+    onValueChangePasswordTextField = viewModel::updatePassword,
     onClickIdClearButton = { viewModel.updateId("") },
     onClickPasswordClearButton = { viewModel.updatePassword("") },
     onClickPasswordEyeIcon = viewModel::toggleShowPassword,
@@ -71,8 +71,8 @@ fun LoginRoute(
 @Composable
 fun LoginScreen(
   uiState: LoginState = LoginState(),
-  onIdTextFieldValueChange: (String) -> Unit = {},
-  onPasswordTextFieldValueChange: (String) -> Unit = {},
+  onValueChangeIdTextField: (String) -> Unit = {},
+  onValueChangePasswordTextField: (String) -> Unit = {},
   onClickIdClearButton: () -> Unit = {},
   onClickPasswordClearButton: () -> Unit = {},
   onClickPasswordEyeIcon: () -> Unit = {},
@@ -97,7 +97,7 @@ fun LoginScreen(
 
       SuwikiRegularTextField(
         value = uiState.id,
-        onValueChange = onIdTextFieldValueChange,
+        onValueChange = onValueChangeIdTextField,
         onClickClearButton = onClickIdClearButton,
         label = stringResource(R.string.word_id),
         placeholder = stringResource(R.string.login_screen_id_textfield_placeholder),
@@ -107,7 +107,7 @@ fun LoginScreen(
 
       SuwikiRegularTextField(
         value = uiState.password,
-        onValueChange = onPasswordTextFieldValueChange,
+        onValueChange = onValueChangePasswordTextField,
         onClickClearButton = onClickPasswordClearButton,
         showEyeIcon = true,
         showValue = uiState.showPassword,

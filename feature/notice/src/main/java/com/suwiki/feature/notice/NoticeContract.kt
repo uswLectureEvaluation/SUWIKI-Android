@@ -10,6 +10,7 @@ data class NoticeState(
 )
 
 sealed interface NoticeSideEffect {
-  data object NavigateNoticeDetail : NoticeSideEffect
+  data class NavigateNoticeDetail(val noticeId: Long) : NoticeSideEffect
   data object PopBackStack : NoticeSideEffect
+  data class HandleException(val exception: Throwable) : NoticeSideEffect
 }

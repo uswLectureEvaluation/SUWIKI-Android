@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,6 +42,9 @@ import com.suwiki.feature.login.navigation.loginNavGraph
 import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
 import com.suwiki.feature.notice.navigation.noticeNavGraph
+import com.suwiki.feature.openmajor.OpenMajorRoute
+import com.suwiki.feature.openmajor.navigation.OpenMajorRoute
+import com.suwiki.feature.openmajor.navigation.openMajorNavGraph
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -69,13 +73,28 @@ internal fun MainScreen(
           handleException = viewModel::handleException,
         )
 
+        openMajorNavGraph(
+          popBackStack = navigator::popBackStackIfNotHome,
+          popBackStackWithArgument = { openMajor ->
+            navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
+              OpenMajorRoute.ARGUMENT_NAME,
+              openMajor,
+            )
+            navigator.popBackStackIfNotHome()
+          },
+          handleException = viewModel::handleException,
+          onShowToast = viewModel::onShowToast,
+        )
+
         timetableNavGraph(
           padding = innerPadding,
         )
 
         lectureEvaluationNavGraph(
           padding = innerPadding,
+          argumentName = OpenMajorRoute.ARGUMENT_NAME,
           navigateLogin = navigator::navigateLogin,
+          navigateOpenMajor = navigator::navigateOpenMajor,
         )
 
         myInfoNavGraph(
@@ -87,6 +106,7 @@ internal fun MainScreen(
           padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
           navigateNoticeDetail = navigator::navigateNoticeDetail,
+          handleException = viewModel::handleException,
         )
       }
 

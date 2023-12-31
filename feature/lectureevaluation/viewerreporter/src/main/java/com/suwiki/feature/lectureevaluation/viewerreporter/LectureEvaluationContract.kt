@@ -2,6 +2,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 
 data class LectureEvaluationState(
   val showOnboardingBottomSheet: Boolean = false,
+  val selectedOpenMajor: String = "",
 )
 
 sealed interface LectureEvaluationSideEffect {

@@ -2,6 +2,7 @@ package com.suwiki.domain.openmajor.usecase
 
 import com.suwiki.domain.openmajor.repository.OpenMajorRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetOpenMajorListUseCase @Inject constructor(
@@ -16,6 +17,6 @@ class GetOpenMajorListUseCase @Inject constructor(
    * 그 이후 LocalVersion과 LocalOpenMajorList를 최신화 합니다.
    */
   suspend operator fun invoke(): Flow<List<String>> {
-    return openMajorRepository.getOpenMajorList()
+    return openMajorRepository.getOpenMajorList().map { listOf("전체") + it } // TODO v2 api 리팩토링
   }
 }

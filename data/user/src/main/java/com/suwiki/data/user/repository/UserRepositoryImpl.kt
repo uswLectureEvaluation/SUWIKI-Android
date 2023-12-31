@@ -1,5 +1,6 @@
 package com.suwiki.data.user.repository
 
+import com.suwiki.core.model.exception.AuthorizationException
 import com.suwiki.core.model.user.User
 import com.suwiki.core.security.SecurityPreferences
 import com.suwiki.data.user.datasource.LocalUserDataSource
@@ -8,7 +9,6 @@ import com.suwiki.domain.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -39,20 +39,16 @@ class UserRepositoryImpl @Inject constructor(
     val localUserInfo = localUserDataSource.user.first()
     emit(localUserInfo)
 
-    val remoteUserInfo = remoteUserDataSource.getUserInfo()
-
-    val isTokenExpired = with(securityPreferences) {
-      val (accessToken, refreshToken) = flowAccessToken().zip(flowRefreshToken()) { accessToken, refreshToken ->
-        (accessToken to refreshToken)
-      }.first()
-
-      accessToken.isEmpty() && refreshToken.isEmpty()
-    }
-
-    if (isTokenExpired) {
-      logout()
-      emit(User())
-      return@flow
+    val remoteUserInfo = runCatching {
+      remoteUserDataSource.getUserInfo()
+    }.getOrElse { exception ->
+      if (exception is AuthorizationException) {
+        logout()
+        emit(User())
+        return@flow
+      } else {
+        throw exception
+      }
     }
 
     emit(remoteUserInfo)
