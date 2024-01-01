@@ -74,7 +74,7 @@ private fun FilterSelectionBottomSheetContent(
           isChecked = isChecked,
           onClick = {
             selectedItem = index
-드            onClickSelectedItem(item)
+            onClickSelectedItem(item)
           },
         )
       }
