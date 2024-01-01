@@ -40,7 +40,6 @@ import com.suwiki.feature.lectureevaluation.viewerreporter.model.LectureEvaluati
 import kotlinx.collections.immutable.PersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -48,7 +47,6 @@ fun LectureEvaluationRoute(
   padding: PaddingValues,
   viewModel: LectureEvaluationViewModel = hiltViewModel(),
   selectedOpenMajor: String,
-  selectedFilter:String,
   navigateLogin: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
@@ -71,11 +69,8 @@ fun LectureEvaluationRoute(
     viewModel.updateSelectedOpenMajor(selectedOpenMajor)
   }
 
-  LaunchedEffect(key1 = selectedFilter) {
-    viewModel.updateSelectedFilter(selectedFilter)
-  }
   allLectureEvaluationListState.OnBottomReached {
-    viewModel.getLectureEvaluationList(it,selectedOpenMajor)
+    viewModel.getLectureEvaluationList(it, selectedOpenMajor)
   }
 
   LectureEvaluationScreen(
@@ -85,7 +80,7 @@ fun LectureEvaluationRoute(
     pagerState = pagerState,
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
     hideFilterSelectionBottomSheet = viewModel::hideFilterSelectionBottomSheet,
-    showFilterSelectionBottomSheet = {viewModel.showFilterSelectionBottomSheet()},
+    showFilterSelectionBottomSheet = { viewModel.showFilterSelectionBottomSheet() },
     onClickLoginButton = {
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateLogin()
@@ -93,7 +88,9 @@ fun LectureEvaluationRoute(
     onClickSelectedOpenMajor = navigateOpenMajor,
     onValueChangeSearchBar = viewModel::updateSearchValue,
     onClickSearchBarClearButton = { viewModel.updateSearchValue("") },
-    onClickSelectedItem = {}
+    onClickSelectedItem = {
+      viewModel.updateSelectedFilter(it)
+    },
   )
 }
 
@@ -109,10 +106,10 @@ fun LectureEvaluationScreen(
   showFilterSelectionBottomSheet: () -> Unit = {},
   onClickLoginButton: () -> Unit = {},
   onClickSignupButton: () -> Unit = {},
-  onClickSelectedItem: () -> Unit = {},
+  onClickSelectedItem: (String) -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
-  onClickSelectedOpenMajor: (String) -> Unit = {}, // TODO 개설학과 선택 페이지로 임시로 넘어가기 위한 람다입니다. 마음대로 삭제 가능.
+  onClickSelectedOpenMajor: (String) -> Unit = {},
 ) {
   Box(
     modifier = Modifier
@@ -133,7 +130,7 @@ fun LectureEvaluationScreen(
         value = uiState.searchValue,
         onValueChange = onValueChangeSearchBar,
         onClickClearButton = onClickSearchBarClearButton,
-        onClickFilterButton = showFilterSelectionBottomSheet
+        onClickFilterButton = showFilterSelectionBottomSheet,
       )
       Text(
         modifier = Modifier
@@ -142,7 +139,6 @@ fun LectureEvaluationScreen(
         style = SuwikiTheme.typography.body2,
         color = Gray95,
       )
-      Timber.tag("SAK").d("${uiState.filteredLectureEvaluationList}")
       LectureEvaluationLazyColumn(
         listState = allLectureEvaluationListState,
         openLectureEvaluationInfoList = uiState.filteredLectureEvaluationList,
@@ -157,8 +153,8 @@ fun LectureEvaluationScreen(
     )
     FilterSelectionBottomSheet(
       uiState = uiState,
-      hideFilterSelectionBottomSheet =  hideFilterSelectionBottomSheet,
-      onClickSelectedItem = onClickSelectedItem
+      hideFilterSelectionBottomSheet = hideFilterSelectionBottomSheet,
+      onClickSelectedItem = onClickSelectedItem,
     )
   }
 }
@@ -180,7 +176,6 @@ private fun LectureEvaluationLazyColumn(
       items = openLectureEvaluationInfoList,
       key = { it.id },
     ) { lectureEvaluation ->
-      Timber.tag("SAK").d("${lectureEvaluation}")
       with(lectureEvaluation) {
         SuwikiClassReviewCard(
           modifier = Modifier,

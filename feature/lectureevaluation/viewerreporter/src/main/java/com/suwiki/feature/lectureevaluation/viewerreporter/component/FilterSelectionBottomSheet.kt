@@ -1,16 +1,16 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter.component
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,7 +29,7 @@ import kotlinx.collections.immutable.toPersistentList
 fun FilterSelectionBottomSheet(
   uiState: LectureEvaluationState,
   hideFilterSelectionBottomSheet: () -> Unit,
-  onClickSelectedItem: () -> Unit,
+  onClickSelectedItem: (String) -> Unit,
 ) {
   SuwikiBottomSheet(
     sheetState = rememberModalBottomSheetState(
@@ -39,32 +39,39 @@ fun FilterSelectionBottomSheet(
     onDismissRequest = hideFilterSelectionBottomSheet,
   ) {
     FilterSelectionBottomSheetContent(
-      onClickSelectedItem = onClickSelectedItem
+      onClickSelectedItem = onClickSelectedItem,
     )
   }
 }
 
 @Composable
 private fun FilterSelectionBottomSheetContent(
-  onClickSelectedItem: () -> Unit = {},
+  onClickSelectedItem: (String) -> Unit = {},
 ) {
-  Column {
+  Column(
+    modifier = Modifier
+      .padding(top = 36.dp, bottom = 45.dp),
+  ) {
     Text(
       text = "정렬",
       style = SuwikiTheme.typography.body5,
       color = Gray95,
       modifier = Modifier.padding(horizontal = 24.dp, vertical = 15.dp),
     )
-    val yourList = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5")
-    LazyColumn {
-      items(items = yourList.toPersistentList()) { item ->
-        var isChecked by remember { mutableStateOf(false) }
+    val filterList = listOf("최근 올라온 강의", "꿀 강의", "만족도 높은 강의", "배울게 많은 강의", "BEST 강의")
+    var selectedItem by remember { mutableIntStateOf(-1) }
+    LazyColumn(
+      state = rememberLazyListState(),
+    ) {
+      itemsIndexed(items = filterList.toPersistentList()) { index, item ->
+        val isChecked = selectedItem == index
+
         SuwikiAlignContainer(
           text = item,
           isChecked = isChecked,
           onClick = {
-            isChecked = !isChecked
-            onClickSelectedItem.invoke()
+            selectedItem = index
+            onClickSelectedItem.invoke(item)
           },
         )
       }
@@ -72,7 +79,6 @@ private fun FilterSelectionBottomSheetContent(
   }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
 fun FilterSelectionBottomSheetContentPreview() {

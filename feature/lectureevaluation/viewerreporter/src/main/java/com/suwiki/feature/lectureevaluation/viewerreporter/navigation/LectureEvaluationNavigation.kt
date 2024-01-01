@@ -19,11 +19,9 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
 ) {
   composable(route = LectureEvaluationRoute.route) { navBackStackEntry ->
     val selectedOpenMajor = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "전체"
-    val selectedFilter = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "최근 올라온 강의"
     LectureEvaluationRoute(
       padding = padding,
       selectedOpenMajor = selectedOpenMajor,
-      selectedFilter =selectedFilter,
       navigateLogin = navigateLogin,
       navigateOpenMajor = navigateOpenMajor,
     )

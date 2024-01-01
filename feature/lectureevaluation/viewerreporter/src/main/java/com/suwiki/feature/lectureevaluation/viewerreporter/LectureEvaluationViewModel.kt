@@ -1,5 +1,6 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
