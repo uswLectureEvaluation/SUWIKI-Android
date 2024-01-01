@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -121,12 +122,12 @@ fun LectureEvaluationScreen(
         .padding(padding),
     ) {
       SuwikiEvaluationAppBar(
-        title = "강의평가",
+        title = stringResource(R.string.word_lecture_evaluation),
         major = uiState.selectedOpenMajor,
         onClickMajor = { onClickSelectedOpenMajor(uiState.selectedOpenMajor) },
       )
       SuwikiSearchBarWithFilter(
-        placeHolder = "강의명 혹은 교수명을 검색하세요",
+        placeHolder = stringResource(R.string.word_search_placeholder),
         value = uiState.searchValue,
         onValueChange = onValueChangeSearchBar,
         onClickClearButton = onClickSearchBarClearButton,
@@ -185,7 +186,7 @@ private fun LectureEvaluationLazyColumn(
           rating = lectureTotalAvg,
           reviewCount = null,
           classType = lectureType ?: "",
-          onClick = { onClickOpenLectureEvaluationDetail },
+          onClick = { onClickOpenLectureEvaluationDetail(id.toString()) },
         )
       }
     }
@@ -202,7 +203,7 @@ fun LazyListState.OnBottomReached(
     derivedStateOf {
       val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
         ?: return@derivedStateOf true
-      lastVisibleItem.index == layoutInfo.totalItemsCount - 1
+      lastVisibleItem.index == layoutInfo.totalItemsCount - 2
     }
   }
   LaunchedEffect(shouldLoadMore) {

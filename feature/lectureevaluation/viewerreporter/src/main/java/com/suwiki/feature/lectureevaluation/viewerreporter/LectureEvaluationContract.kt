@@ -6,6 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class LectureEvaluationState(
   val filteredLectureEvaluationList: PersistentList<LectureEvaluation> = persistentListOf(),
+  val filterDataList:PersistentList<String> = persistentListOf("최근 올라온 강의", "꿀 강의", "만족도 높은 강의", "배울게 많은 강의", "BEST 강의"),
   val showOnboardingBottomSheet: Boolean = false,
   val showFilterSelectionBottomSheet: Boolean = false,
   val selectedOpenMajor: String = "",
