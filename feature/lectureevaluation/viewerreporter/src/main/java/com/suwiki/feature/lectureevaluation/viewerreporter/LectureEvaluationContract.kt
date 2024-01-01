@@ -8,6 +8,7 @@ data class LectureEvaluationState(
   val filteredLectureEvaluationList: PersistentList<LectureEvaluation> = persistentListOf(),
   val showOnboardingBottomSheet: Boolean = false,
   val selectedOpenMajor: String = "",
+  val selectedFilter: String = "",
   val currentPage: Int = 0,
   val searchValue: String = "",
   val isLoading: Boolean = false,

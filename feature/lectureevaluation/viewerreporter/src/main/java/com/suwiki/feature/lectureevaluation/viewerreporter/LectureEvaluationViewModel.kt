@@ -35,11 +35,16 @@ class LectureEvaluationViewModel @Inject constructor(
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
     reduce { state.copy(searchValue = searchValue) }
-    reduceLectureEvaluationInfoList(searchValue)
+    reduceLectureEvaluationInfoList(searchValue = searchValue)
   }
 
-  fun updateSelectedOpenMajor(openMajor: String) = intent { reduce { state.copy(selectedOpenMajor = openMajor) } }
+  fun updateSelectedOpenMajor(openMajor: String) = intent {
+    reduce { state.copy(selectedOpenMajor = openMajor) }
+  }
 
+  fun updateSelectedFilter(selectedFilter: String) = intent {
+    reduce { state.copy(selectedFilter = selectedFilter) }
+  }
   fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
     checkLoggedIn()
     if (isLoggedIn.not() && isFirstVisit) {
@@ -48,8 +53,8 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
-  fun getLectureEvaluationList(page: Int, majorType: String) = intent {
-    getLectureEvaluationListUseCase(GetLectureEvaluationAverageListUseCase.Param("최근 올라온 강의", page, majorType))
+  fun getLectureEvaluationList(page: Int , majorType:String) = intent {
+    getLectureEvaluationListUseCase(GetLectureEvaluationAverageListUseCase.Param("", page, majorType))
       .onSuccess {
         lectureEvaluationInfoList.addAll(it)
         reduceLectureEvaluationInfoList()

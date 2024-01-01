@@ -47,6 +47,7 @@ fun LectureEvaluationRoute(
   padding: PaddingValues,
   viewModel: LectureEvaluationViewModel = hiltViewModel(),
   selectedOpenMajor: String,
+  selectedFilter:String,
   navigateLogin: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
@@ -69,6 +70,9 @@ fun LectureEvaluationRoute(
     viewModel.updateSelectedOpenMajor(selectedOpenMajor)
   }
 
+  LaunchedEffect(key1 = selectedFilter) {
+    viewModel.updateSelectedFilter(selectedFilter)
+  }
   allLectureEvaluationListState.OnBottomReached {
     viewModel.getLectureEvaluationList(it,selectedOpenMajor)
   }
@@ -83,7 +87,7 @@ fun LectureEvaluationRoute(
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateLogin()
     },
-    onClickTempText = navigateOpenMajor,
+    onClickSelectedOpenMajor = navigateOpenMajor,
     onValueChangeSearchBar = viewModel::updateSearchValue,
     onClickSearchBarClearButton = { viewModel.updateSearchValue("") },
   )
@@ -101,7 +105,8 @@ fun LectureEvaluationScreen(
   onClickSignupButton: () -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
-  onClickTempText: (String) -> Unit = {}, // TODO 개설학과 선택 페이지로 임시로 넘어가기 위한 람다입니다. 마음대로 삭제 가능.
+  onClickFilterButton: (String) -> Unit = {},
+  onClickSelectedOpenMajor: (String) -> Unit = {}, // TODO 개설학과 선택 페이지로 임시로 넘어가기 위한 람다입니다. 마음대로 삭제 가능.
 ) {
   Box(
     modifier = Modifier
@@ -115,18 +120,19 @@ fun LectureEvaluationScreen(
       SuwikiEvaluationAppBar(
         title = "강의평가",
         major = uiState.selectedOpenMajor,
-        onClickMajor = { onClickTempText(uiState.selectedOpenMajor) },
+        onClickMajor = { onClickSelectedOpenMajor(uiState.selectedOpenMajor) },
       )
       SuwikiSearchBarWithFilter(
         placeHolder = "강의명 혹은 교수명을 검색하세요",
         value = uiState.searchValue,
         onValueChange = onValueChangeSearchBar,
         onClickClearButton = onClickSearchBarClearButton,
+        onClickFilterButton = {onClickFilterButton(uiState.selectedFilter)}
       )
       Text(
         modifier = Modifier
           .padding(start = 24.dp, top = 10.dp),
-        text = "최근 올라온 강의",
+        text = uiState.selectedFilter,
         style = SuwikiTheme.typography.body2,
         color = Gray95,
       )
@@ -193,7 +199,6 @@ fun LazyListState.OnBottomReached(
       lastVisibleItem.index == layoutInfo.totalItemsCount - 1
     }
   }
-  // Convert the state into a cold flow and collect
   LaunchedEffect(shouldLoadMore) {
     snapshotFlow { shouldLoadMore.value }
       .collect {
