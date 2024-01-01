@@ -26,7 +26,6 @@ import com.suwiki.feature.lectureevaluation.viewerreporter.R
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterSelectionBottomSheet(

@@ -191,7 +191,6 @@ private fun LectureEvaluationLazyColumn(
       }
     }
   }
-
 }
 
 @Composable

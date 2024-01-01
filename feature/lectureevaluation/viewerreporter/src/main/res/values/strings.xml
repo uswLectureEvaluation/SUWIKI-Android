@@ -10,4 +10,10 @@
   <string name="word_sort">정렬</string>
   <string name="word_lecture_evaluation">강의평가</string>>
   <string name="word_search_placeholder">강의명 혹은 교수명을 검색하세요</string>
+
+  <string name="word_recent_lectures">최근 올라온 강의</string>
+  <string name="word_great_lectures">꿀 강의</string>
+  <string name="word_high_satisfaction_lectures">만족도 높은 강의</string>
+  <string name="word_knowledgeable_lectures">배울 게 많은 강의</string>
+  <string name="word_best_lectures">BEST 강의</string>
 </resources>

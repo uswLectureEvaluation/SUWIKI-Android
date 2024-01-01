@@ -1,6 +1,5 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
@@ -46,6 +45,7 @@ class LectureEvaluationViewModel @Inject constructor(
   fun updateSelectedFilter(selectedFilter: String) = intent {
     reduce { state.copy(selectedFilter = selectedFilter) }
   }
+
   fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
     checkLoggedIn()
     if (isLoggedIn.not() && isFirstVisit) {
@@ -54,14 +54,13 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
-  fun getLectureEvaluationList(page: Int , majorType:String) = intent {
+  fun getLectureEvaluationList(page: Int, majorType: String) = intent {
     getLectureEvaluationListUseCase(GetLectureEvaluationAverageListUseCase.Param("", page, majorType))
       .onSuccess {
         lectureEvaluationInfoList.addAll(it)
         reduceLectureEvaluationInfoList()
       }
       .onFailure {
-
       }
   }
 

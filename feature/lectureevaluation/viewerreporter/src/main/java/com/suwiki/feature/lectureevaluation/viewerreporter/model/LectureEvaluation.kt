@@ -18,8 +18,11 @@ fun List<LectureEvaluationAverage?>.toLectureEvaluation(
 ) =
   filter {
     if (searchValue.isNotEmpty()) {
-      if (searchValue in it!!.lectureInfo.lectureName) true
-      else searchValue in it.lectureInfo.professor
+      if (searchValue in it!!.lectureInfo.lectureName) {
+        true
+      } else {
+        searchValue in it.lectureInfo.professor
+      }
     } else {
       true
     }
