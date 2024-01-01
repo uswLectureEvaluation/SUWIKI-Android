@@ -84,4 +84,7 @@ class LectureEvaluationViewModel @Inject constructor(
 
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }
+
+  fun showFilterSelectionBottomSheet() = intent { reduce { state.copy(showFilterSelectionBottomSheet = true) } }
+  fun hideFilterSelectionBottomSheet() = intent { reduce { state.copy(showFilterSelectionBottomSheet = false) } }
 }

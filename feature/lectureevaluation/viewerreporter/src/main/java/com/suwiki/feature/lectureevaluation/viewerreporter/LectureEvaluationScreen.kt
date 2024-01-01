@@ -33,6 +33,7 @@ import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilte
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.lectureevaluation.viewerreporter.component.FilterSelectionBottomSheet
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
 import com.suwiki.feature.lectureevaluation.viewerreporter.model.LectureEvaluation
@@ -83,6 +84,8 @@ fun LectureEvaluationRoute(
     allLectureEvaluationListState = allLectureEvaluationListState,
     pagerState = pagerState,
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
+    hideFilterSelectionBottomSheet = viewModel::hideFilterSelectionBottomSheet,
+    showFilterSelectionBottomSheet = {viewModel.showFilterSelectionBottomSheet()},
     onClickLoginButton = {
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateLogin()
@@ -90,6 +93,7 @@ fun LectureEvaluationRoute(
     onClickSelectedOpenMajor = navigateOpenMajor,
     onValueChangeSearchBar = viewModel::updateSearchValue,
     onClickSearchBarClearButton = { viewModel.updateSearchValue("") },
+    onClickSelectedItem = {}
   )
 }
 
@@ -101,11 +105,13 @@ fun LectureEvaluationScreen(
   allLectureEvaluationListState: LazyListState = rememberLazyListState(),
   pagerState: PagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT }),
   hideOnboardingBottomSheet: () -> Unit = {},
+  hideFilterSelectionBottomSheet: () -> Unit = {},
+  showFilterSelectionBottomSheet: () -> Unit = {},
   onClickLoginButton: () -> Unit = {},
   onClickSignupButton: () -> Unit = {},
+  onClickSelectedItem: () -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
-  onClickFilterButton: (String) -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {}, // TODO 개설학과 선택 페이지로 임시로 넘어가기 위한 람다입니다. 마음대로 삭제 가능.
 ) {
   Box(
@@ -127,7 +133,7 @@ fun LectureEvaluationScreen(
         value = uiState.searchValue,
         onValueChange = onValueChangeSearchBar,
         onClickClearButton = onClickSearchBarClearButton,
-        onClickFilterButton = {onClickFilterButton(uiState.selectedFilter)}
+        onClickFilterButton = showFilterSelectionBottomSheet
       )
       Text(
         modifier = Modifier
@@ -148,6 +154,11 @@ fun LectureEvaluationScreen(
       pagerState = pagerState,
       onClickLoginButton = onClickLoginButton,
       onClickSignupButton = onClickSignupButton,
+    )
+    FilterSelectionBottomSheet(
+      uiState = uiState,
+      hideFilterSelectionBottomSheet =  hideFilterSelectionBottomSheet,
+      onClickSelectedItem = onClickSelectedItem
     )
   }
 }
