@@ -48,7 +48,7 @@ enum class TestStudyTypeLabelItem {
   BOOK,
   NOTES,
   PPT,
-  APPLY
+  APPLY,
 }
 
 enum class TestTypeLabelItem {
@@ -66,8 +66,6 @@ fun MyTestReviewEditScreen(
   padding: PaddingValues,
   scrollState: ScrollState,
   uiState: MyTestReviewEditState,
-  isSemesterBottomSheetExpanded: Boolean = false,
-  isTestTypeBottomSheetExpanded: Boolean = false,
   onClickSemesterButton: () -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onClickTestTypeButton: () -> Unit = {},
@@ -92,7 +90,7 @@ fun MyTestReviewEditScreen(
       .padding(padding)
       .background(White)
       .fillMaxSize()
-      .verticalScroll(scrollState)
+      .verticalScroll(scrollState),
   ) {
     SuwikiAppBarWithTitle(
       title = stringResource(R.string.my_test_review_info),
@@ -135,7 +133,7 @@ fun MyTestReviewEditScreen(
     Row(
       modifier = Modifier
         .padding(horizontal = 24.dp)
-        .fillMaxWidth()
+        .fillMaxWidth(),
     ) {
       Text(
         modifier = Modifier
@@ -171,7 +169,7 @@ fun MyTestReviewEditScreen(
     Row(
       modifier = Modifier
         .padding(horizontal = 24.dp)
-        .fillMaxWidth()
+        .fillMaxWidth(),
     ) {
       Text(
         modifier = Modifier
@@ -295,7 +293,7 @@ fun MyTestReviewEditScreenPreview() {
   var isShowDeleteTestReviewDialog by remember { mutableStateOf(false) }
 
   fun clickDifficultyItem(
-    clickItemType: DifficultyLabelItem
+    clickItemType: DifficultyLabelItem,
   ) {
     difficultyEasyChecked = false
     difficultyNormalChecked = false
@@ -309,7 +307,7 @@ fun MyTestReviewEditScreenPreview() {
   }
 
   fun clickTestStudyTypeItem(
-    clickItemType: TestStudyTypeLabelItem
+    clickItemType: TestStudyTypeLabelItem,
   ) {
     testTypeExamGuidesChecked = false
     testTypeBookChecked = false
@@ -327,7 +325,7 @@ fun MyTestReviewEditScreenPreview() {
   }
 
   fun clickTestTypeItem(
-    clickItemType: TestTypeLabelItem
+    clickItemType: TestTypeLabelItem,
   ) {
     testTypePracticeChecked = false
     testTypeHomeworkChecked = false
@@ -358,8 +356,6 @@ fun MyTestReviewEditScreenPreview() {
         showSemesterBottomSheet = isSemesterBottomSheetExpanded,
         showTestTypeBottomSheet = isTestTypeBottomSheetExpanded,
       ),
-      isSemesterBottomSheetExpanded = isSemesterBottomSheetExpanded,
-      isTestTypeBottomSheetExpanded = isTestTypeBottomSheetExpanded,
       onClickSemesterButton = { isSemesterBottomSheetExpanded = true },
       onSemesterBottomSheetDismissRequest = { isSemesterBottomSheetExpanded = false },
       onClickTestTypeButton = { isTestTypeBottomSheetExpanded = true },

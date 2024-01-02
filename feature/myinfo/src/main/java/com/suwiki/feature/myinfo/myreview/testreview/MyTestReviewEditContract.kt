@@ -23,4 +23,3 @@ data class MyTestReviewEditState(
 sealed interface MyTestReviewEditSideEffect {
   data object PopBackStack : MyTestReviewEditSideEffect
 }
-

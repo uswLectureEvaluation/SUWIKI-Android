@@ -15,6 +15,7 @@ data class MyClassReviewEditState(
   val teamNoneChecked: Boolean = false,
   val teamExistChecked: Boolean = false,
   val classReview: String = "",
+  val showSemesterBottomSheet: Boolean = false,
   val showDeleteClassReviewDialog: Boolean = false,
 )
 

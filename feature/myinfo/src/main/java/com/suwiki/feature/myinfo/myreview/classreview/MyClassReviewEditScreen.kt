@@ -1,9 +1,7 @@
 package com.suwiki.feature.myinfo.myreview.classreview
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,10 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -29,13 +25,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetButton
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
 import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.ChipColor
@@ -44,8 +39,6 @@ import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.component.slider.SuwikiSlider
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
-import com.suwiki.core.designsystem.theme.Gray95
-import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
@@ -94,7 +87,6 @@ fun MyClassReviewEditScreen(
   padding: PaddingValues,
   uiState: MyClassReviewEditState,
   scrollState: ScrollState,
-  isSemesterBottomSheetExpanded: Boolean,
   onClickSemesterButton: () -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onHoneyRatingValueChange: (Float) -> Unit = {},
@@ -133,28 +125,12 @@ fun MyClassReviewEditScreen(
         .fillMaxWidth()
         .padding(horizontal = 24.dp),
     ) {
-      Row(
-        modifier = Modifier
-          .clip(RoundedCornerShape(10.dp))
-          .clickable(onClick = onClickSemesterButton)
-          .background(GrayF6)
-          .padding(
-            horizontal = 9.dp,
-            vertical = 6.dp,
-          ),
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        Text(
-          text = "2023-2",
-          color = Gray95,
-        )
-        Image(
-          painter = painterResource(id = R.drawable.ic_dropdown_arrow_down),
-          contentDescription = "",
-        )
-      }
+      SuwikiBottomSheetButton(
+        title = "2023-2",
+        onClick = onClickSemesterButton,
+      )
       SuwikiBottomSheet(
-        isSheetOpen = isSemesterBottomSheetExpanded,
+        isSheetOpen = uiState.showSemesterBottomSheet,
         onDismissRequest = onSemesterBottomSheetDismissRequest,
         content = {
           SuwikiMenuItem(title = "")
@@ -205,7 +181,7 @@ fun MyClassReviewEditScreen(
       Text(
         modifier = Modifier.weight(0.17f),
         text = stringResource(R.string.my_class_review_learning_rating),
-        style = SuwikiTheme.typography.body4
+        style = SuwikiTheme.typography.body4,
       )
       SuwikiSlider(
         modifier = Modifier.weight(0.82f),
@@ -246,7 +222,8 @@ fun MyClassReviewEditScreen(
         modifier = Modifier
           .fillMaxWidth()
           .weight(0.82f)
-          .padding(start = 16.dp)
+          .padding(start = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         SuwikiContainedChip(
           isChecked = uiState.gradeGenerousChecked,
@@ -254,14 +231,12 @@ fun MyClassReviewEditScreen(
           text = stringResource(R.string.my_class_review_generous),
           onClick = onClickGradeGenerous,
         )
-        Spacer(modifier = Modifier.width(4.dp))
         SuwikiContainedChip(
           isChecked = uiState.gradeNormalChecked,
           color = ChipColor.BLUE,
           text = stringResource(R.string.my_class_review_normal),
           onClick = onClickGradeNormal,
         )
-        Spacer(modifier = Modifier.width(4.dp))
         SuwikiContainedChip(
           isChecked = uiState.gradePickyChecked,
           color = ChipColor.BLUE,
@@ -286,7 +261,8 @@ fun MyClassReviewEditScreen(
         modifier = Modifier
           .fillMaxWidth()
           .weight(0.82f)
-          .padding(start = 16.dp)
+          .padding(start = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         SuwikiContainedChip(
           isChecked = uiState.homeworkNoneChecked,
@@ -294,19 +270,17 @@ fun MyClassReviewEditScreen(
           text = stringResource(R.string.my_class_review_none),
           onClick = onClickHomeworkNone,
         )
-        Spacer(modifier = Modifier.width(4.dp))
         SuwikiContainedChip(
           isChecked = uiState.homeworkNormalChecked,
           color = ChipColor.GREEN,
           text = stringResource(R.string.my_class_review_normal),
           onClick = onClickHomeworkNormal,
         )
-        Spacer(modifier = Modifier.width(4.dp))
         SuwikiContainedChip(
           isChecked = uiState.homeworkMuchChecked,
           color = ChipColor.GREEN,
           text = stringResource(R.string.my_class_review_much),
-          onClick = onClickHomeworkMuch
+          onClick = onClickHomeworkMuch,
         )
       }
     }
@@ -326,7 +300,8 @@ fun MyClassReviewEditScreen(
         modifier = Modifier
           .fillMaxWidth()
           .weight(0.82f)
-          .padding(start = 16.dp)
+          .padding(start = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         SuwikiContainedChip(
           isChecked = uiState.teamNoneChecked,
@@ -334,7 +309,6 @@ fun MyClassReviewEditScreen(
           text = stringResource(R.string.my_class_review_none),
           onClick = onClickTeamNone,
         )
-        Spacer(modifier = Modifier.width(4.dp))
         SuwikiContainedChip(
           isChecked = uiState.teamExistChecked,
           color = ChipColor.ORANGE,
@@ -345,12 +319,11 @@ fun MyClassReviewEditScreen(
     }
     SuwikiReviewInputBox(
       value = uiState.classReview,
-      modifier = Modifier
-        .weight(1f)
-        .padding(24.dp),
+      modifier = Modifier.padding(24.dp),
       hint = stringResource(R.string.my_class_review_input_box_hint),
-      onValueChange = onClassReviewValueChange
+      onValueChange = onClassReviewValueChange,
     )
+    Spacer(modifier = Modifier.weight(1f))
     Row(
       horizontalArrangement = Arrangement.spacedBy(16.dp),
       modifier = Modifier
@@ -462,10 +435,10 @@ fun MyClassReviewEditPreview() {
         teamNoneChecked = teamNoneChecked,
         teamExistChecked = teamExistChecked,
         classReview = classReview,
+        showSemesterBottomSheet = isSemesterBottomSheetExpanded,
         showDeleteClassReviewDialog = isShowDeleteClassReviewDialog,
       ),
       scrollState = scrollState,
-      isSemesterBottomSheetExpanded = isSemesterBottomSheetExpanded,
       onClickSemesterButton = { isSemesterBottomSheetExpanded = true },
       onSemesterBottomSheetDismissRequest = { isSemesterBottomSheetExpanded = false },
       onHoneyRatingValueChange = { honeyRating = if (it < 0.5) 0.5F else it },
