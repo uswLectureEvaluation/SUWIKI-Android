@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -25,7 +26,7 @@ fun SuwikiAlignBottomSheet(
   itemList: List<String>,
   bottomSheetTitle: String,
 ) {
-  var selectedItem by remember { mutableStateOf(1) }
+  val selectedItem by remember { mutableIntStateOf(0) }
   SuwikiBottomSheet(
     sheetState = rememberModalBottomSheetState(
       skipPartiallyExpanded = true,
@@ -49,6 +50,8 @@ fun SuwikiAlignBottomSheetContent(
   bottomSheetTitle: String,
   itemList: List<String>,
 ) {
+  var localSelectedItem by remember { mutableIntStateOf(selectedItem) }
+
   Column(
     modifier = Modifier
       .padding(top = 36.dp, bottom = 45.dp),
@@ -59,13 +62,18 @@ fun SuwikiAlignBottomSheetContent(
       color = Gray95,
       modifier = Modifier.padding(horizontal = 24.dp, vertical = 15.dp),
     )
+
     itemList.forEachIndexed { index, item ->
-      val isChecked = selectedItem == index
+      val isChecked = localSelectedItem == index
       SuwikiAlignContainer(
         text = item,
         isChecked = isChecked,
         onClick = {
-          onClickAlignBottomSheetItem(item)
+          // 선택 전환
+          if (!isChecked) {
+            localSelectedItem = index
+            onClickAlignBottomSheetItem(item)
+          }
         },
       )
     }
