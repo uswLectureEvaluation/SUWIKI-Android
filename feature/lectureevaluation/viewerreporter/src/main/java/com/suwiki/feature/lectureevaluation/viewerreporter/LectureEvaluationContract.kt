@@ -13,7 +13,17 @@ data class LectureEvaluationState(
   val currentPage: Int = 0,
   val searchValue: String = "",
   val isLoading: Boolean = false,
-)
+) {
+  fun selectedFilterValue(): String {
+    return when (selectedFilter) {
+      "꿀 강의" -> "lectureSatisfactionAvg"
+      "만족도 높은 강의" -> "lectureHoneyAvg"
+      "배울게 많은 강의" -> "lectureLearningAvg"
+      "BEST 강의" -> "lectureTotalAvg"
+      else -> "modifiedDate"
+    }
+  }
+}
 
 sealed interface LectureEvaluationSideEffect {
   data object NavigateLogin : LectureEvaluationSideEffect

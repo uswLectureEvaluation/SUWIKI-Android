@@ -76,7 +76,7 @@ class LectureEvaluationViewModel @Inject constructor(
     getLectureEvaluationListUseCase(
       RetrieveLectureEvaluationAverageListUseCase.Param(
         container.stateFlow.value.searchValue,
-        container.stateFlow.value.selectedFilter,
+        container.stateFlow.value.selectedFilterValue(),
         loadMoreCounter,
         majorType,
       ),

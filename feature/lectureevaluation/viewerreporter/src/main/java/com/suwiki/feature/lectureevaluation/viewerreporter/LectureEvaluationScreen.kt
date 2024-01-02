@@ -153,7 +153,7 @@ fun LectureEvaluationScreen(
       "BEST 강의",
     ),
     bottomSheetTitle = stringResource(R.string.word_sort),
-    selectedItem = 0,
+    selectedItem = -1,
   )
 }
 

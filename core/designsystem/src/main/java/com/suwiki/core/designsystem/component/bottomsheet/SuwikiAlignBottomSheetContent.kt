@@ -68,7 +68,6 @@ fun SuwikiAlignBottomSheetContent(
         text = item,
         isChecked = isChecked,
         onClick = {
-          // 선택 전환
           if (!isChecked) {
             localSelectedItem = index
             onClickAlignBottomSheetItem(item)
