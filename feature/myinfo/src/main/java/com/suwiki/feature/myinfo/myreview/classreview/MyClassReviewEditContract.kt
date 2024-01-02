@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo
+package com.suwiki.feature.myinfo.myreview.classreview
 
 data class MyClassReviewEditState(
   val isLoading: Boolean = false,

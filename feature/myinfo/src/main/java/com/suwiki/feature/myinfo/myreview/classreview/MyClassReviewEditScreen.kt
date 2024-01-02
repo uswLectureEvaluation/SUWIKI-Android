@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo
+package com.suwiki.feature.myinfo.myreview.classreview
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
@@ -49,6 +49,7 @@ import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.myinfo.R
 
 enum class GradeLabelItem {
   GENEROUS,
@@ -404,7 +405,7 @@ fun MyClassReviewEditPreview() {
     var teamNoneChecked by rememberSaveable { mutableStateOf(true) }
     var teamExistChecked by rememberSaveable { mutableStateOf(false) }
     var classReview by rememberSaveable { mutableStateOf("") }
-    var showDeleteClassReviewDialog by remember { mutableStateOf(false) }
+    var isShowDeleteClassReviewDialog by remember { mutableStateOf(false) }
 
     fun clickGradeItem(
       clickItem: GradeLabelItem,
@@ -461,7 +462,7 @@ fun MyClassReviewEditPreview() {
         teamNoneChecked = teamNoneChecked,
         teamExistChecked = teamExistChecked,
         classReview = classReview,
-        showDeleteClassReviewDialog = showDeleteClassReviewDialog,
+        showDeleteClassReviewDialog = isShowDeleteClassReviewDialog,
       ),
       scrollState = scrollState,
       isSemesterBottomSheetExpanded = isSemesterBottomSheetExpanded,
@@ -480,8 +481,8 @@ fun MyClassReviewEditPreview() {
       onClickTeamExist = { clickTeamItem(TeamLabelItem.EXIST) },
       onClassReviewValueChange = { classReview = it },
       onClickClassReviewReviseButton = { /*TODO("PopBackStack")*/ },
-      onClickClassReviewDeleteButton = { showDeleteClassReviewDialog = true },
-      onDismissClassReviewDelete = { showDeleteClassReviewDialog = false },
+      onClickClassReviewDeleteButton = { isShowDeleteClassReviewDialog = true },
+      onDismissClassReviewDelete = { isShowDeleteClassReviewDialog = false },
     )
   }
 }
