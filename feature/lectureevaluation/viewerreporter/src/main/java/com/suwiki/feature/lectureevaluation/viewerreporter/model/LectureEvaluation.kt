@@ -13,27 +13,14 @@ data class LectureEvaluation(
   val reviewCount: Int?,
 )
 
-fun List<LectureEvaluationAverage?>.toLectureEvaluation(
-  searchValue: String,
-) =
-  filter {
-    if (searchValue.isNotEmpty()) {
-      if (searchValue in it!!.lectureInfo.lectureName) {
-        true
-      } else {
-        searchValue in it.lectureInfo.professor
-      }
-    } else {
-      true
-    }
-  }.map {
-    LectureEvaluation(
-      id = it!!.id,
-      lectureName = it.lectureInfo.lectureName,
-      lectureType = it.lectureInfo.lectureType,
-      majorType = it.lectureInfo.majorType,
-      professor = it.lectureInfo.professor,
-      lectureTotalAvg = it.lectureTotalAvg,
-      reviewCount = null,
-    )
-  }.toPersistentList()
+fun List<LectureEvaluationAverage?>.toLectureEvaluation() = map {
+  LectureEvaluation(
+    id = it!!.id,
+    lectureName = it.lectureInfo.lectureName,
+    lectureType = it.lectureInfo.lectureType,
+    majorType = it.lectureInfo.majorType,
+    professor = it.lectureInfo.professor,
+    lectureTotalAvg = it.lectureTotalAvg,
+    reviewCount = null,
+  )
+}.toPersistentList()

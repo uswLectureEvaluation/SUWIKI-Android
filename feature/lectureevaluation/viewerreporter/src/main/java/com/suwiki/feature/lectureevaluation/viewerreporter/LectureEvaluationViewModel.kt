@@ -1,9 +1,12 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
-import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationAverageListUseCase
+import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.lectureevaluation.viewerreporter.model.toLectureEvaluation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LectureEvaluationViewModel @Inject constructor(
   private val getUserInfoUseCase: GetUserInfoUseCase,
-  private val getLectureEvaluationListUseCase: GetLectureEvaluationAverageListUseCase,
+  private val getLectureEvaluationListUseCase: RetrieveLectureEvaluationAverageListUseCase,
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
     container(LectureEvaluationState())
@@ -31,15 +34,24 @@ class LectureEvaluationViewModel @Inject constructor(
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
   private val lectureEvaluationInfoList = mutableListOf<LectureEvaluationAverage?>()
+  private val _loadMoreCounter = mutableIntStateOf(1)
+  private val loadMoreCounter: Int by _loadMoreCounter
+
+  private fun incrementLoadMoreCounter() {
+    _loadMoreCounter.intValue++
+  }
 
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
     reduce { state.copy(searchValue = searchValue) }
-    reduceLectureEvaluationInfoList(searchValue = searchValue)
+    reduceLectureEvaluationInfoList()
   }
 
   fun updateSelectedOpenMajor(openMajor: String) = intent {
     reduce { state.copy(selectedOpenMajor = openMajor) }
+    _loadMoreCounter.intValue = 1
+    lectureEvaluationInfoList.clear()
+    reduceLectureEvaluationInfoList()
   }
 
   fun updateAlignItem(selectedFilter: String) = intent {
@@ -54,24 +66,21 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
-  fun getLectureEvaluationList(page: Int, majorType: String) = intent {
-    getLectureEvaluationListUseCase(GetLectureEvaluationAverageListUseCase.Param("", page, majorType))
+  fun getLectureEvaluationList(majorType: String) = intent {
+    getLectureEvaluationListUseCase(RetrieveLectureEvaluationAverageListUseCase.Param("", "", loadMoreCounter, majorType))
       .onSuccess {
         lectureEvaluationInfoList.addAll(it)
+        incrementLoadMoreCounter()
         reduceLectureEvaluationInfoList()
       }
       .onFailure {
       }
   }
 
-  private fun reduceLectureEvaluationInfoList(
-    searchValue: String = container.stateFlow.value.searchValue,
-  ) = intent {
+  private fun reduceLectureEvaluationInfoList() = intent {
     reduce {
       state.copy(
-        lectureEvaluationList = lectureEvaluationInfoList.toLectureEvaluation(
-          searchValue = searchValue,
-        ),
+        lectureEvaluationList = lectureEvaluationInfoList.toLectureEvaluation(),
       )
     }
   }

@@ -31,6 +31,7 @@ import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.AlignBottomSheet
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
@@ -68,7 +69,7 @@ fun LectureEvaluationRoute(
   }
 
   allLectureEvaluationListState.OnBottomReached {
-    viewModel.getLectureEvaluationList(it, selectedOpenMajor)
+    viewModel.getLectureEvaluationList(selectedOpenMajor)
   }
 
   LectureEvaluationScreen(
