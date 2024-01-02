@@ -32,6 +32,7 @@ import kotlin.math.round
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuwikiSlider(
+  modifier: Modifier = Modifier,
   value: Float = 2.5f,
   onValueChange: (Float) -> Unit = { _ -> },
   @IntRange(from = 0)
@@ -46,7 +47,7 @@ fun SuwikiSlider(
   val label = (round(value * 100) / 100).toString()
 
   Row(
-    modifier = Modifier
+    modifier = modifier
       .fillMaxWidth(),
     verticalAlignment = Alignment.Bottom,
   ) {
