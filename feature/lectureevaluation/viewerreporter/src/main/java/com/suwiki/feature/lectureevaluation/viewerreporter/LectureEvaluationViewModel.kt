@@ -1,6 +1,5 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
@@ -44,12 +43,14 @@ class LectureEvaluationViewModel @Inject constructor(
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
     reduce { state.copy(searchValue = searchValue) }
+    if(loadMoreCounter>1) _loadMoreCounter.intValue = 1
+    lectureEvaluationInfoList.clear()
     reduceLectureEvaluationInfoList()
   }
-
-  fun updateSelectedOpenMajor(openMajor: String) = intent {
+  @OptIn(OrbitExperimental::class)
+  fun updateSelectedOpenMajor(openMajor: String) = blockingIntent {
     reduce { state.copy(selectedOpenMajor = openMajor) }
-    _loadMoreCounter.intValue = 1
+    if(loadMoreCounter>1) _loadMoreCounter.intValue = 1
     lectureEvaluationInfoList.clear()
     reduceLectureEvaluationInfoList()
   }
@@ -67,7 +68,14 @@ class LectureEvaluationViewModel @Inject constructor(
   }
 
   fun getLectureEvaluationList(majorType: String) = intent {
-    getLectureEvaluationListUseCase(RetrieveLectureEvaluationAverageListUseCase.Param("", "", loadMoreCounter, majorType))
+    getLectureEvaluationListUseCase(
+      RetrieveLectureEvaluationAverageListUseCase.Param(
+        container.stateFlow.value.searchValue,
+        "",
+        loadMoreCounter,
+        majorType,
+      ),
+    )
       .onSuccess {
         lectureEvaluationInfoList.addAll(it)
         incrementLoadMoreCounter()
