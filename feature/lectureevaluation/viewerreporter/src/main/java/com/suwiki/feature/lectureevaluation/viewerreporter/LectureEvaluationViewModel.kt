@@ -42,7 +42,7 @@ class LectureEvaluationViewModel @Inject constructor(
     reduce { state.copy(selectedOpenMajor = openMajor) }
   }
 
-  fun updateSelectedFilter(selectedFilter: String) = intent {
+  fun updateAlignItem(selectedFilter: String) = intent {
     reduce { state.copy(selectedFilter = selectedFilter) }
   }
 
@@ -69,7 +69,7 @@ class LectureEvaluationViewModel @Inject constructor(
   ) = intent {
     reduce {
       state.copy(
-        filteredLectureEvaluationList = lectureEvaluationInfoList.toLectureEvaluation(
+        lectureEvaluationList = lectureEvaluationInfoList.toLectureEvaluation(
           searchValue = searchValue,
         ),
       )
@@ -85,6 +85,6 @@ class LectureEvaluationViewModel @Inject constructor(
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }
 
-  fun showFilterSelectionBottomSheet() = intent { reduce { state.copy(showFilterSelectionBottomSheet = true) } }
-  fun hideFilterSelectionBottomSheet() = intent { reduce { state.copy(showFilterSelectionBottomSheet = false) } }
+  fun showAlignBottomSheet() = intent { reduce { state.copy(showFilterSelectionBottomSheet = true) } }
+  fun hideAlignBottomSheet() = intent { reduce { state.copy(showFilterSelectionBottomSheet = false) } }
 }

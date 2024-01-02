@@ -28,30 +28,35 @@ import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterSelectionBottomSheet(
+fun AlignBottomSheet(
   uiState: LectureEvaluationState,
-  hideFilterSelectionBottomSheet: () -> Unit,
-  onClickSelectedItem: (String) -> Unit,
+  hideAlignBottomSheet: () -> Unit,
+  onClickAlignBottomSheetItem: (String) -> Unit,
 ) {
   SuwikiBottomSheet(
     sheetState = rememberModalBottomSheetState(
       skipPartiallyExpanded = true,
     ),
     isSheetOpen = uiState.showFilterSelectionBottomSheet,
-    onDismissRequest = hideFilterSelectionBottomSheet,
+    onDismissRequest = hideAlignBottomSheet,
   ) {
-    FilterSelectionBottomSheetContent(
-      onClickSelectedItem = onClickSelectedItem,
-      filterList = uiState.filterDataList,
+    AlignBottomSheetContent(
+      onClickAlignBottomSheetItem = onClickAlignBottomSheetItem,
     )
   }
 }
 
 @Composable
-private fun FilterSelectionBottomSheetContent(
-  onClickSelectedItem: (String) -> Unit = {},
-  filterList: PersistentList<String>,
+private fun AlignBottomSheetContent(
+  onClickAlignBottomSheetItem: (String) -> Unit = {},
 ) {
+  val filterDataList: PersistentList<String> = persistentListOf(
+    "최근 올라온 강의",
+    "꿀 강의",
+    "만족도 높은 강의",
+    "배울게 많은 강의",
+    "BEST 강의",
+  )
   Column(
     modifier = Modifier
       .padding(top = 36.dp, bottom = 45.dp),
@@ -66,7 +71,7 @@ private fun FilterSelectionBottomSheetContent(
     LazyColumn(
       state = rememberLazyListState(),
     ) {
-      itemsIndexed(items = filterList) { index, item ->
+      itemsIndexed(items = filterDataList) { index, item ->
         val isChecked = selectedItem == index
 
         SuwikiAlignContainer(
@@ -74,7 +79,7 @@ private fun FilterSelectionBottomSheetContent(
           isChecked = isChecked,
           onClick = {
             selectedItem = index
-            onClickSelectedItem(item)
+            onClickAlignBottomSheetItem(item)
           },
         )
       }
@@ -86,8 +91,6 @@ private fun FilterSelectionBottomSheetContent(
 @Composable
 fun FilterSelectionBottomSheetContentPreview() {
   SuwikiTheme {
-    FilterSelectionBottomSheetContent(
-      filterList = persistentListOf("최근 올라온 강의", "꿀 강의", "만족도 높은 강의", "배울게 많은 강의", "BEST 강의"),
-    )
+    AlignBottomSheetContent()
   }
 }

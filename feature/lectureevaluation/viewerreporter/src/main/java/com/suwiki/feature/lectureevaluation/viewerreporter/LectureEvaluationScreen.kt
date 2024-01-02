@@ -1,9 +1,7 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,8 +31,7 @@ import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
-import com.suwiki.feature.lectureevaluation.viewerreporter.component.FilterSelectionBottomSheet
+import com.suwiki.feature.lectureevaluation.viewerreporter.component.AlignBottomSheet
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
 import com.suwiki.feature.lectureevaluation.viewerreporter.model.LectureEvaluation
@@ -80,8 +77,8 @@ fun LectureEvaluationRoute(
     allLectureEvaluationListState = allLectureEvaluationListState,
     pagerState = pagerState,
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
-    hideFilterSelectionBottomSheet = viewModel::hideFilterSelectionBottomSheet,
-    showFilterSelectionBottomSheet = { viewModel.showFilterSelectionBottomSheet() },
+    hideAlignBottomSheet = viewModel::hideAlignBottomSheet,
+    showAlignBottomSheet = { viewModel.showAlignBottomSheet() },
     onClickLoginButton = {
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateLogin()
@@ -89,8 +86,8 @@ fun LectureEvaluationRoute(
     onClickSelectedOpenMajor = navigateOpenMajor,
     onValueChangeSearchBar = viewModel::updateSearchValue,
     onClickSearchBarClearButton = { viewModel.updateSearchValue("") },
-    onClickSelectedItem = {
-      viewModel.updateSelectedFilter(it)
+    onClickAlignBottomSelectedItem = {
+      viewModel.updateAlignItem(it)
     },
   )
 }
@@ -103,61 +100,56 @@ fun LectureEvaluationScreen(
   allLectureEvaluationListState: LazyListState = rememberLazyListState(),
   pagerState: PagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT }),
   hideOnboardingBottomSheet: () -> Unit = {},
-  hideFilterSelectionBottomSheet: () -> Unit = {},
-  showFilterSelectionBottomSheet: () -> Unit = {},
+  hideAlignBottomSheet: () -> Unit = {},
+  showAlignBottomSheet: () -> Unit = {},
   onClickLoginButton: () -> Unit = {},
   onClickSignupButton: () -> Unit = {},
-  onClickSelectedItem: (String) -> Unit = {},
+  onClickAlignBottomSelectedItem: (String) -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {},
 ) {
-  Box(
+  Column(
     modifier = Modifier
-      .background(White),
+      .fillMaxSize()
+      .padding(padding),
   ) {
-    Column(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(padding),
-    ) {
-      SuwikiEvaluationAppBar(
-        title = stringResource(R.string.word_lecture_evaluation),
-        major = uiState.selectedOpenMajor,
-        onClickMajor = { onClickSelectedOpenMajor(uiState.selectedOpenMajor) },
-      )
-      SuwikiSearchBarWithFilter(
-        placeHolder = stringResource(R.string.word_search_placeholder),
-        value = uiState.searchValue,
-        onValueChange = onValueChangeSearchBar,
-        onClickClearButton = onClickSearchBarClearButton,
-        onClickFilterButton = showFilterSelectionBottomSheet,
-      )
-      Text(
-        modifier = Modifier
-          .padding(start = 24.dp, top = 10.dp),
-        text = uiState.selectedFilter,
-        style = SuwikiTheme.typography.body2,
-        color = Gray95,
-      )
-      LectureEvaluationLazyColumn(
-        listState = allLectureEvaluationListState,
-        openLectureEvaluationInfoList = uiState.filteredLectureEvaluationList,
-      )
-    }
-    OnboardingBottomSheet(
-      uiState = uiState,
-      hideOnboardingBottomSheet = hideOnboardingBottomSheet,
-      pagerState = pagerState,
-      onClickLoginButton = onClickLoginButton,
-      onClickSignupButton = onClickSignupButton,
+    SuwikiEvaluationAppBar(
+      title = stringResource(R.string.word_lecture_evaluation),
+      major = uiState.selectedOpenMajor,
+      onClickMajor = { onClickSelectedOpenMajor(uiState.selectedOpenMajor) },
     )
-    FilterSelectionBottomSheet(
-      uiState = uiState,
-      hideFilterSelectionBottomSheet = hideFilterSelectionBottomSheet,
-      onClickSelectedItem = onClickSelectedItem,
+    SuwikiSearchBarWithFilter(
+      placeHolder = stringResource(R.string.word_search_placeholder),
+      value = uiState.searchValue,
+      onValueChange = onValueChangeSearchBar,
+      onClickClearButton = onClickSearchBarClearButton,
+      onClickFilterButton = showAlignBottomSheet,
+    )
+    Text(
+      modifier = Modifier
+        .padding(start = 24.dp, top = 10.dp),
+      text = uiState.selectedFilter,
+      style = SuwikiTheme.typography.body2,
+      color = Gray95,
+    )
+    LectureEvaluationLazyColumn(
+      listState = allLectureEvaluationListState,
+      openLectureEvaluationInfoList = uiState.lectureEvaluationList,
     )
   }
+  OnboardingBottomSheet(
+    uiState = uiState,
+    hideOnboardingBottomSheet = hideOnboardingBottomSheet,
+    pagerState = pagerState,
+    onClickLoginButton = onClickLoginButton,
+    onClickSignupButton = onClickSignupButton,
+  )
+  AlignBottomSheet(
+    uiState = uiState,
+    hideAlignBottomSheet = hideAlignBottomSheet,
+    onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
+  )
 }
 
 @Composable

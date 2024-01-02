@@ -45,7 +45,7 @@ fun SuwikiClassReviewCard(
   openMajor: String,
   professor: String,
   rating: Float,
-  reviewCount: Int?,
+  reviewCount: Int? = null,
   classType: String,
   onClick: () -> Unit,
 ) {
