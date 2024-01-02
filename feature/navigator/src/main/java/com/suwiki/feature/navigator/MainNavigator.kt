@@ -13,6 +13,7 @@ import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
+import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
@@ -54,8 +55,12 @@ internal class MainNavigator(
     navController.navigateNotice()
   }
 
-  fun navigateNoticeDetail() {
-    navController.navigateNoticeDetail()
+  fun navigateNoticeDetail(noticeId: Long) {
+    navController.navigateNoticeDetail(noticeId)
+  }
+
+  fun navigateOpenMajor(selectedOpenMajor: String) {
+    navController.navigateOpenMajor(selectedOpenMajor)
   }
 
   fun popBackStackIfNotHome() {

@@ -3,42 +3,53 @@ package com.suwiki.feature.notice.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import com.suwiki.feature.notice.NoticeDetailRoute
+import androidx.navigation.navArgument
 import com.suwiki.feature.notice.NoticeRoute
+import com.suwiki.feature.notice.detail.NoticeDetailRoute
 
 fun NavController.navigateNotice() {
   navigate(NoticeRoute.route)
 }
 
-fun NavController.navigateNoticeDetail() {
-  navigate(NoticeDetailRoute.route)
+fun NavController.navigateNoticeDetail(noticeId: Long) {
+  navigate(NoticeRoute.detailRoute(noticeId.toString()))
 }
 
 fun NavGraphBuilder.noticeNavGraph(
   padding: PaddingValues,
   popBackStack: () -> Unit = {},
-  navigateNoticeDetail: () -> Unit = {},
+  navigateNoticeDetail: (Long) -> Unit = {},
+  handleException: (Throwable) -> Unit,
 ) {
   composable(route = NoticeRoute.route) {
     NoticeRoute(
       padding = padding,
       navigateNoticeDetail = navigateNoticeDetail,
       popBackStack = popBackStack,
+      handleException = handleException,
     )
   }
-  composable(route = NoticeDetailRoute.route) {
+  composable(
+    route = NoticeRoute.detailRoute("{${NoticeRoute.DETAIL_ARGUMENT_NAME}}"),
+    arguments = listOf(
+      navArgument(NoticeRoute.DETAIL_ARGUMENT_NAME) {
+        type = NavType.StringType
+      },
+    ),
+  ) {
     NoticeDetailRoute(
       padding = padding,
       popBackStack = popBackStack,
+      handleException = handleException,
     )
   }
 }
 
 object NoticeRoute {
   const val route = "notice"
-}
+  const val DETAIL_ARGUMENT_NAME = "noticeId"
 
-object NoticeDetailRoute {
-  const val route = "notice-detail"
+  fun detailRoute(noticeId: String) = "notice/detail/$noticeId"
 }

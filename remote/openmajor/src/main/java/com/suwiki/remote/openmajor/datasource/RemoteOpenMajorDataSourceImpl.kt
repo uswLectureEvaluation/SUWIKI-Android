@@ -22,10 +22,9 @@ class RemoteOpenMajorDataSourceImpl @Inject constructor(
 
   override suspend fun bookmarkMajor(majorName: String) {
     return majorApi.bookmarkMajor(BookmarkMajorRequest(majorType = majorName)).getOrThrow()
-      .run { }
   }
 
   override suspend fun removeBookmarkMajor(majorName: String) {
-    return majorApi.removeBookmarkMajor(majorName = majorName).getOrThrow().run { }
+    return majorApi.removeBookmarkMajor(majorName = majorName).getOrThrow()
   }
 }

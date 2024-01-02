@@ -12,5 +12,6 @@ dependencies {
   implementation(projects.core.model)
   implementation(projects.core.ui)
 
+  implementation(libs.kotlinx.immutable)
   implementation(libs.compose.rating.bar)
 }

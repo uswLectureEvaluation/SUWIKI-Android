@@ -25,9 +25,7 @@ class LectureEvaluationViewModel @Inject constructor(
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
 
-  private suspend fun checkLoggedIn() {
-    isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
-  }
+  fun updateSelectedOpenMajor(openMajor: String) = intent { reduce { state.copy(selectedOpenMajor = openMajor) } }
 
   fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
     checkLoggedIn()
@@ -35,6 +33,10 @@ class LectureEvaluationViewModel @Inject constructor(
       isFirstVisit = false
       showOnboardingBottomSheet()
     }
+  }
+
+  private suspend fun checkLoggedIn() {
+    isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
   }
 
   fun navigateLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLogin) }

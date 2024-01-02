@@ -13,12 +13,17 @@ fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
 
 fun NavGraphBuilder.lectureEvaluationNavGraph(
   padding: PaddingValues,
+  argumentName: String,
   navigateLogin: () -> Unit,
+  navigateOpenMajor: (String) -> Unit,
 ) {
-  composable(route = LectureEvaluationRoute.route) {
+  composable(route = LectureEvaluationRoute.route) { navBackStackEntry ->
+    val selectedOpenMajor = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "전체"
     LectureEvaluationRoute(
       padding = padding,
+      selectedOpenMajor = selectedOpenMajor,
       navigateLogin = navigateLogin,
+      navigateOpenMajor = navigateOpenMajor,
     )
   }
 }

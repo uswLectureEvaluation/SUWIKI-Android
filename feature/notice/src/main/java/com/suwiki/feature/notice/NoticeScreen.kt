@@ -31,14 +31,16 @@ import java.time.LocalDateTime
 fun NoticeRoute(
   padding: PaddingValues,
   viewModel: NoticeViewModel = hiltViewModel(),
-  navigateNoticeDetail: () -> Unit,
+  navigateNoticeDetail: (Long) -> Unit,
   popBackStack: () -> Unit,
+  handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      NoticeSideEffect.NavigateNoticeDetail -> navigateNoticeDetail()
+      is NoticeSideEffect.NavigateNoticeDetail -> navigateNoticeDetail(sideEffect.noticeId)
       NoticeSideEffect.PopBackStack -> popBackStack()
+      is NoticeSideEffect.HandleException -> handleException(sideEffect.exception)
     }
   }
 
@@ -50,7 +52,7 @@ fun NoticeRoute(
     padding = padding,
     noticeList = uiState.noticeList,
     uiState = uiState,
-    navigateNoticeDetail = { viewModel.navigateNoticeDetail() },
+    navigateNoticeDetail = viewModel::navigateNoticeDetail,
     popBackStack = viewModel::popBackStack,
   )
 }
@@ -61,7 +63,7 @@ fun NoticeScreen(
   padding: PaddingValues,
   noticeList: PersistentList<Notice>,
   uiState: NoticeState,
-  navigateNoticeDetail: () -> Unit,
+  navigateNoticeDetail: (Long) -> Unit,
   popBackStack: () -> Unit,
 ) {
   Column(
@@ -77,11 +79,11 @@ fun NoticeScreen(
       showCloseIcon = false,
     )
     LazyColumn {
-      items(items = noticeList) { notice ->
+      items(items = noticeList, key = { it.id }) { notice ->
         SuwikiNoticeContainer(
           titleText = notice.title,
           dateText = notice.date.toString(),
-          onClick = navigateNoticeDetail,
+          onClick = { navigateNoticeDetail(notice.id) },
         )
       }
     }

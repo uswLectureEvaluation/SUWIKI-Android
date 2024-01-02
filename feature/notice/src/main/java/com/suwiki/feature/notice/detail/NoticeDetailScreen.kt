@@ -1,4 +1,4 @@
-package com.suwiki.feature.notice
+package com.suwiki.feature.notice.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -33,11 +33,13 @@ fun NoticeDetailRoute(
   padding: PaddingValues,
   viewModel: NoticeDetailViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
+  handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       NoticeDetailSideEffect.PopBackStack -> popBackStack()
+      is NoticeDetailSideEffect.HandleException -> handleException(sideEffect.exception)
     }
   }
 
@@ -74,7 +76,7 @@ fun NoticeDetailScreen(
     Column {
       NoticeDetailTitleContainer(
         title = uiState.noticeDetail.title,
-        date = uiState.noticeDetail.date.toString(),
+        date = uiState.noticeDetail.date?.toString() ?: "",
       )
       HorizontalDivider(
         thickness = 4.dp,

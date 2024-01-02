@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="word_confirm">확인</string>
+  <string name="word_all">전체</string>
+  <string name="word_bookmark">즐겨찾기</string>
+  <string name="open_major_need_login_toast">즐겨찾기는 로그인 이후에 사용할 수 있어요.</string>
+  <string name="open_major_screen_search_bar_placeholder">개설학과를 검색하세요</string>
+  <string name="open_major_empty_search_result">검색 결과가 없습니다.\n검색어가 정확한지 확인하세요.</string>
+  <string name="open_major_empty_bookmark">등록된 즐겨찾기가 없어요.</string>
+</resources>
