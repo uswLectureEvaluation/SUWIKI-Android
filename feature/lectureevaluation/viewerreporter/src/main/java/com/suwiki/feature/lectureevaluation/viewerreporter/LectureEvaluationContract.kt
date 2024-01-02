@@ -7,7 +7,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class LectureEvaluationState(
   val lectureEvaluationList: PersistentList<LectureEvaluationAverage?> = persistentListOf(),
   val showOnboardingBottomSheet: Boolean = false,
-  val showFilterSelectionBottomSheet: Boolean = false,
+  val showAlignBottomSheet: Boolean = false,
   val selectedOpenMajor: String = "",
   val selectedFilter: String = "",
   val currentPage: Int = 0,

@@ -26,7 +26,7 @@ import kotlinx.collections.immutable.persistentListOf
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlignBottomSheet(
-  uiState: LectureEvaluationState,
+  showFilterSelectionBottomSheet: Boolean,
   hideAlignBottomSheet: () -> Unit,
   onClickAlignBottomSheetItem: (String) -> Unit,
 ) {
@@ -35,7 +35,7 @@ fun AlignBottomSheet(
     sheetState = rememberModalBottomSheetState(
       skipPartiallyExpanded = true,
     ),
-    isSheetOpen = uiState.showFilterSelectionBottomSheet,
+    isSheetOpen = showFilterSelectionBottomSheet,
     onDismissRequest = hideAlignBottomSheet,
   ) {
     AlignBottomSheetContent(

@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -128,10 +129,10 @@ fun LectureEvaluationScreen(
       style = SuwikiTheme.typography.body2,
       color = Gray95,
     )
-    LectureEvaluationLazyColumn(
-      listState = allLectureEvaluationListState,
-      openLectureEvaluationInfoList = uiState.lectureEvaluationList,
-    )
+      LectureEvaluationLazyColumn(
+        listState = allLectureEvaluationListState,
+        openLectureEvaluationInfoList = uiState.lectureEvaluationList,
+      )
   }
   OnboardingBottomSheet(
     uiState = uiState,
@@ -141,7 +142,7 @@ fun LectureEvaluationScreen(
     onClickSignupButton = onClickSignupButton,
   )
   AlignBottomSheet(
-    uiState = uiState,
+    showFilterSelectionBottomSheet = uiState.showAlignBottomSheet,
     hideAlignBottomSheet = hideAlignBottomSheet,
     onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
   )
@@ -178,6 +179,21 @@ private fun LectureEvaluationLazyColumn(
       }
     }
   }
+}
+
+@Composable
+private fun EmptyText(
+  text: String = "",
+) {
+  Text(
+    modifier = Modifier
+      .padding(52.dp)
+      .fillMaxSize(),
+    textAlign = TextAlign.Center,
+    text = text,
+    style = SuwikiTheme.typography.header4,
+    color = Gray95,
+  )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
