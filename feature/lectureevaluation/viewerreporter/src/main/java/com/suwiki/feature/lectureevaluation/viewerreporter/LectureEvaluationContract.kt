@@ -1,15 +1,15 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
-import com.suwiki.feature.lectureevaluation.viewerreporter.model.LectureEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 data class LectureEvaluationState(
-  val lectureEvaluationList: PersistentList<LectureEvaluation> = persistentListOf(),
+  val lectureEvaluationList: PersistentList<LectureEvaluationAverage?> = persistentListOf(),
   val showOnboardingBottomSheet: Boolean = false,
   val showFilterSelectionBottomSheet: Boolean = false,
   val selectedOpenMajor: String = "",
-  val selectedFilter: String = "최근 올라온 강의",
+  val selectedFilter: String = "",
   val currentPage: Int = 0,
   val searchValue: String = "",
   val isLoading: Boolean = false,

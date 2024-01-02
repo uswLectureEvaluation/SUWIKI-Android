@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
-import com.suwiki.feature.lectureevaluation.viewerreporter.model.toLectureEvaluation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
@@ -88,7 +88,7 @@ class LectureEvaluationViewModel @Inject constructor(
   private fun reduceLectureEvaluationInfoList() = intent {
     reduce {
       state.copy(
-        lectureEvaluationList = lectureEvaluationInfoList.toLectureEvaluation(),
+        lectureEvaluationList = lectureEvaluationInfoList.toPersistentList(),
       )
     }
   }
