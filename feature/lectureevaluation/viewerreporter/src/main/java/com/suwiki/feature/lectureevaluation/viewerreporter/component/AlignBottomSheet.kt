@@ -2,15 +2,12 @@ package com.suwiki.feature.lectureevaluation.viewerreporter.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -33,6 +30,7 @@ fun AlignBottomSheet(
   hideAlignBottomSheet: () -> Unit,
   onClickAlignBottomSheetItem: (String) -> Unit,
 ) {
+  var selectedItem by remember { mutableStateOf(-1) }
   SuwikiBottomSheet(
     sheetState = rememberModalBottomSheetState(
       skipPartiallyExpanded = true,
@@ -41,14 +39,18 @@ fun AlignBottomSheet(
     onDismissRequest = hideAlignBottomSheet,
   ) {
     AlignBottomSheetContent(
+      selectedItem = selectedItem,
       onClickAlignBottomSheetItem = onClickAlignBottomSheetItem,
+      bottomSheetTitle = stringResource(R.string.word_sort),
     )
   }
 }
 
 @Composable
 private fun AlignBottomSheetContent(
+  selectedItem: Int,
   onClickAlignBottomSheetItem: (String) -> Unit = {},
+  bottomSheetTitle: String,
 ) {
   val filterDataList: PersistentList<String> = persistentListOf(
     "최근 올라온 강의",
@@ -62,27 +64,20 @@ private fun AlignBottomSheetContent(
       .padding(top = 36.dp, bottom = 45.dp),
   ) {
     Text(
-      text = stringResource(R.string.word_sort),
+      text = bottomSheetTitle,
       style = SuwikiTheme.typography.body5,
       color = Gray95,
       modifier = Modifier.padding(horizontal = 24.dp, vertical = 15.dp),
     )
-    var selectedItem by remember { mutableIntStateOf(-1) }
-    LazyColumn(
-      state = rememberLazyListState(),
-    ) {
-      itemsIndexed(items = filterDataList) { index, item ->
-        val isChecked = selectedItem == index
-
-        SuwikiAlignContainer(
-          text = item,
-          isChecked = isChecked,
-          onClick = {
-            selectedItem = index
-            onClickAlignBottomSheetItem(item)
-          },
-        )
-      }
+    filterDataList.forEachIndexed { index, item ->
+      val isChecked = selectedItem == index
+      SuwikiAlignContainer(
+        text = item,
+        isChecked = isChecked,
+        onClick = {
+          onClickAlignBottomSheetItem(item)
+        },
+      )
     }
   }
 }
@@ -91,6 +86,6 @@ private fun AlignBottomSheetContent(
 @Composable
 fun FilterSelectionBottomSheetContentPreview() {
   SuwikiTheme {
-    AlignBottomSheetContent()
+    AlignBottomSheetContent(bottomSheetTitle = stringResource(R.string.word_sort), selectedItem = -1)
   }
 }
