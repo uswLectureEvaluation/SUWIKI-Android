@@ -43,14 +43,15 @@ class LectureEvaluationViewModel @Inject constructor(
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
     reduce { state.copy(searchValue = searchValue) }
-    if(loadMoreCounter>1) _loadMoreCounter.intValue = 1
+    if (loadMoreCounter > 1) _loadMoreCounter.intValue = 1
     lectureEvaluationInfoList.clear()
     reduceLectureEvaluationInfoList()
   }
+
   @OptIn(OrbitExperimental::class)
   fun updateSelectedOpenMajor(openMajor: String) = blockingIntent {
     reduce { state.copy(selectedOpenMajor = openMajor) }
-    if(loadMoreCounter>1) _loadMoreCounter.intValue = 1
+    if (loadMoreCounter > 1) _loadMoreCounter.intValue = 1
     lectureEvaluationInfoList.clear()
     reduceLectureEvaluationInfoList()
   }

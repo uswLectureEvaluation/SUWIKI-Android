@@ -167,7 +167,7 @@ private fun LectureEvaluationLazyColumn(
       with(lectureEvaluation) {
         SuwikiClassReviewCard(
           modifier = Modifier,
-          className = this!!.lectureInfo.lectureName ,
+          className = this!!.lectureInfo.lectureName,
           openMajor = lectureInfo.majorType,
           professor = lectureInfo.professor,
           rating = lectureTotalAvg,
