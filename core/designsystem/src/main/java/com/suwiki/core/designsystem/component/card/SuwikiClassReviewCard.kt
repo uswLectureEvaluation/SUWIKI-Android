@@ -37,6 +37,7 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
+import java.util.Locale
 
 @Composable
 fun SuwikiClassReviewCard(
@@ -100,7 +101,7 @@ fun SuwikiClassReviewCard(
           contentDescription = null,
         )
         Text(
-          text = String.format("%.1f", rating),
+          text = "%.1f".format(Locale.US, rating),
           style = SuwikiTheme.typography.body1,
           color = Primary,
         )

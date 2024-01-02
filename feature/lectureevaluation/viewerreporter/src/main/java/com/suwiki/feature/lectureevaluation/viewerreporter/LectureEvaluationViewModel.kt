@@ -51,6 +51,7 @@ class LectureEvaluationViewModel @Inject constructor(
     reduce { state.copy(selectedOpenMajor = openMajor) }
     setFilterLectureEvaluationList()
   }
+
   @OptIn(OrbitExperimental::class)
   fun updateAlignItem(selectedFilter: String) = blockingIntent {
     reduce { state.copy(selectedFilter = selectedFilter) }
