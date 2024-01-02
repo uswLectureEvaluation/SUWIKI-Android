@@ -93,7 +93,7 @@ class LectureEvaluationViewModel @Inject constructor(
   private fun reduceLectureEvaluationInfoList() = intent {
     reduce {
       state.copy(
-        lectureEvaluationList = lectureEvaluationInfoList.toPersistentList(),
+        lectureEvaluationList = lectureEvaluationInfoList.distinctBy { it?.id }.toPersistentList(),
       )
     }
   }
