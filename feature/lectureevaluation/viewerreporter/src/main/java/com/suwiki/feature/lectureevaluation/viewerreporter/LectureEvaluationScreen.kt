@@ -17,21 +17,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiEvaluationAppBar
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAlignBottomSheet
 import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.core.ui.extension.OnBottomReached
-import com.suwiki.feature.lectureevaluation.viewerreporter.component.AlignBottomSheet
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -129,10 +129,10 @@ fun LectureEvaluationScreen(
       style = SuwikiTheme.typography.body2,
       color = Gray95,
     )
-      LectureEvaluationLazyColumn(
-        listState = allLectureEvaluationListState,
-        openLectureEvaluationInfoList = uiState.lectureEvaluationList,
-      )
+    LectureEvaluationLazyColumn(
+      listState = allLectureEvaluationListState,
+      openLectureEvaluationInfoList = uiState.lectureEvaluationList,
+    )
   }
   OnboardingBottomSheet(
     uiState = uiState,
@@ -141,10 +141,18 @@ fun LectureEvaluationScreen(
     onClickLoginButton = onClickLoginButton,
     onClickSignupButton = onClickSignupButton,
   )
-  AlignBottomSheet(
+  SuwikiAlignBottomSheet(
     showFilterSelectionBottomSheet = uiState.showAlignBottomSheet,
     hideAlignBottomSheet = hideAlignBottomSheet,
     onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
+    itemList = persistentListOf(
+      "최근 올라온 강의",
+      "꿀 강의",
+      "만족도 높은 강의",
+      "배울게 많은 강의",
+      "BEST 강의",
+    ),
+    bottomSheetTitle = stringResource(R.string.word_sort),
   )
 }
 
@@ -179,21 +187,6 @@ private fun LectureEvaluationLazyColumn(
       }
     }
   }
-}
-
-@Composable
-private fun EmptyText(
-  text: String = "",
-) {
-  Text(
-    modifier = Modifier
-      .padding(52.dp)
-      .fillMaxSize(),
-    textAlign = TextAlign.Center,
-    text = text,
-    style = SuwikiTheme.typography.header4,
-    color = Gray95,
-  )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
