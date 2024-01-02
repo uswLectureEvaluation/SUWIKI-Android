@@ -100,7 +100,7 @@ fun SuwikiClassReviewCard(
           contentDescription = null,
         )
         Text(
-          text = "$rating",
+          text = String.format("%.1f", rating),
           style = SuwikiTheme.typography.body1,
           color = Primary,
         )
