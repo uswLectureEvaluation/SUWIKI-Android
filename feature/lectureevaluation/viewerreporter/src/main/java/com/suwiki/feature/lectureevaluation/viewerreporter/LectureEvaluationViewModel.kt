@@ -43,21 +43,24 @@ class LectureEvaluationViewModel @Inject constructor(
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
     reduce { state.copy(searchValue = searchValue) }
-    if (loadMoreCounter > 1) _loadMoreCounter.intValue = 1
-    lectureEvaluationInfoList.clear()
-    reduceLectureEvaluationInfoList()
+    setFilterLectureEvaluationList()
   }
 
   @OptIn(OrbitExperimental::class)
   fun updateSelectedOpenMajor(openMajor: String) = blockingIntent {
     reduce { state.copy(selectedOpenMajor = openMajor) }
+    setFilterLectureEvaluationList()
+  }
+  @OptIn(OrbitExperimental::class)
+  fun updateAlignItem(selectedFilter: String) = blockingIntent {
+    reduce { state.copy(selectedFilter = selectedFilter) }
+    setFilterLectureEvaluationList()
+  }
+
+  private fun setFilterLectureEvaluationList() {
     if (loadMoreCounter > 1) _loadMoreCounter.intValue = 1
     lectureEvaluationInfoList.clear()
     reduceLectureEvaluationInfoList()
-  }
-
-  fun updateAlignItem(selectedFilter: String) = intent {
-    reduce { state.copy(selectedFilter = selectedFilter) }
   }
 
   fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
@@ -72,7 +75,7 @@ class LectureEvaluationViewModel @Inject constructor(
     getLectureEvaluationListUseCase(
       RetrieveLectureEvaluationAverageListUseCase.Param(
         container.stateFlow.value.searchValue,
-        "",
+        container.stateFlow.value.selectedFilter,
         loadMoreCounter,
         majorType,
       ),
