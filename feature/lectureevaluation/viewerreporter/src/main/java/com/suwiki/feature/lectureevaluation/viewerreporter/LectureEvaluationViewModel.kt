@@ -1,13 +1,11 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
@@ -32,7 +30,6 @@ class LectureEvaluationViewModel @Inject constructor(
 
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
-  private val lectureEvaluationInfoList = mutableListOf<LectureEvaluationAverage?>()
   private var loadMoreCounter: Int = 1
 
   private fun incrementLoadMoreCounter() {
@@ -57,10 +54,9 @@ class LectureEvaluationViewModel @Inject constructor(
     setFilterLectureEvaluationList()
   }
 
-  private fun setFilterLectureEvaluationList() {
+  private fun setFilterLectureEvaluationList() = intent {
     if (loadMoreCounter > 1) loadMoreCounter = 1
-    lectureEvaluationInfoList.clear()
-    reduceLectureEvaluationInfoList()
+    reduce { state.copy(lectureEvaluationList = persistentListOf()) }
   }
 
   fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
@@ -81,20 +77,13 @@ class LectureEvaluationViewModel @Inject constructor(
       ),
     )
       .onSuccess {
-        lectureEvaluationInfoList.addAll(it)
+        reduce {
+          state.copy(lectureEvaluationList = (container.stateFlow.value.lectureEvaluationList + it).distinctBy { it?.id }.toPersistentList())
+        }
         incrementLoadMoreCounter()
-        reduceLectureEvaluationInfoList()
       }
       .onFailure {
       }
-  }
-
-  private fun reduceLectureEvaluationInfoList() = intent {
-    reduce {
-      state.copy(
-        lectureEvaluationList = lectureEvaluationInfoList.distinctBy { it?.id }.toPersistentList(),
-      )
-    }
   }
 
   private suspend fun checkLoggedIn() {

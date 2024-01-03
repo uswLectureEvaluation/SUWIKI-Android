@@ -45,7 +45,6 @@ fun SuwikiAlignBottomSheetContent(
   bottomSheetTitle: String,
   itemList: List<String>,
 ) {
-
   Column(
     modifier = Modifier
       .padding(top = 36.dp, bottom = 45.dp),
