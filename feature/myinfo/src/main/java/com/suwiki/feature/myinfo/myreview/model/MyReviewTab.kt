@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myreview
+package com.suwiki.feature.myinfo.myreview.model
 
 import androidx.annotation.StringRes
 import com.suwiki.feature.myinfo.R

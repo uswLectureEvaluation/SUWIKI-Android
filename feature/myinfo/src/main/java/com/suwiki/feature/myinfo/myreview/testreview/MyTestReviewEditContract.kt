@@ -2,9 +2,12 @@ package com.suwiki.feature.myinfo.myreview.testreview
 
 data class MyTestReviewEditState(
   val isLoading: Boolean = false,
-  val semester: String = "",
-  val testType: String = "",
+  val selectedSemester: String = "",
+  val selectedTestType: String = "",
   val testReview: String = "",
+  val examDifficulty: String = "",
+  val examInfo: String = "",
+  val examType: String? = null,
   val difficultyEasyChecked: Boolean = false,
   val difficultyNormalChecked: Boolean = false,
   val difficultyHardChecked: Boolean = false,

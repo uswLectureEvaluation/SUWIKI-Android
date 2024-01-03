@@ -30,6 +30,7 @@ import com.suwiki.core.designsystem.component.tabbar.TabTitle
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
+import com.suwiki.feature.myinfo.myreview.model.MyReviewTab
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState

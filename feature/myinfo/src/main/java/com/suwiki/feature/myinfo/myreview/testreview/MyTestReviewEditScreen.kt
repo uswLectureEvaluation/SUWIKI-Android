@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetButton
@@ -36,6 +37,8 @@ import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 enum class DifficultyLabelItem {
   EASY,
@@ -57,7 +60,41 @@ enum class TestTypeLabelItem {
 }
 
 @Composable
-fun MyTestReviewEditRoute() {
+fun MyTestReviewEditRoute(
+  padding: PaddingValues,
+  viewModel: MyTestReviewEditViewModel = hiltViewModel(),
+  popBackStack: () -> Unit = {},
+) {
+  val scrollState = rememberScrollState()
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      MyTestReviewEditSideEffect.PopBackStack -> popBackStack()
+    }
+  }
+
+  MyTestReviewEditScreen(
+    padding = padding,
+    scrollState = scrollState,
+    uiState = uiState,
+    onClickSemesterButton = viewModel::showSemesterBottomSheet,
+    onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
+    onClickTestTypeButton = viewModel::showTestTypeBottomSheet,
+    onTestTypeBottomSheetDismissRequest = viewModel::hideTestTypeBottomSheet,
+    onClickDifficultyEasy = viewModel::setExamDifficultyEasy,
+    onClickDifficultyNormal = viewModel::setExamDifficultyNormal,
+    onClickDifficultyHard = viewModel::setExamDifficultyHard,
+    onClickTestStudyTypeExamGuides = viewModel::setExamInfoExamGuides,
+    onClickTestStudyTypeBook = viewModel::setExamInfoBook,
+    onClickTestStudyTypeNotes = viewModel::setExamInfoNotes,
+    onClickTestStudyTypePPT = viewModel::setExamInfoPPT,
+    onClickTestStudyTypeApply = viewModel::setExamInfoApply,
+    onClickTestTypePractice = viewModel::setExamTypePractice,
+    onClickTestTypeHomework = viewModel::setExamTypeHomework,
+    onTestReviewValueChange = viewModel::updateMyClassReviewValue,
+    onClickTestReviewDeleteButton = viewModel::showMyTestReviewDeleteDialog,
+    onDismissTestReviewDelete = viewModel::hideMyTestReviewDeleteDialog,
+  )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -149,17 +186,17 @@ fun MyTestReviewEditScreen(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         SuwikiOutlinedChip(
-          isChecked = uiState.difficultyEasyChecked,
+          isChecked = uiState.examDifficulty == "easy",
           text = stringResource(R.string.my_test_review_easy),
           onClick = onClickDifficultyEasy,
         )
         SuwikiOutlinedChip(
-          isChecked = uiState.difficultyNormalChecked,
+          isChecked = uiState.examDifficulty == "normal",
           text = stringResource(R.string.my_class_review_normal),
           onClick = onClickDifficultyNormal,
         )
         SuwikiOutlinedChip(
-          isChecked = uiState.difficultyHardChecked,
+          isChecked = uiState.examDifficulty == "hard",
           text = stringResource(R.string.my_test_review_hard),
           onClick = onClickDifficultyHard,
         )
@@ -188,27 +225,27 @@ fun MyTestReviewEditScreen(
           horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
           SuwikiOutlinedChip(
-            isChecked = uiState.testTypeExamGuidesChecked,
+            isChecked = uiState.examInfo == "exam_guides",
             text = stringResource(R.string.my_test_review_exam_guides),
             onClick = onClickTestStudyTypeExamGuides,
           )
           SuwikiOutlinedChip(
-            isChecked = uiState.testTypeBookChecked,
+            isChecked = uiState.examInfo == "book",
             text = stringResource(R.string.my_test_review_book),
             onClick = onClickTestStudyTypeBook,
           )
           SuwikiOutlinedChip(
-            isChecked = uiState.testTypeNotesChecked,
+            isChecked = uiState.examInfo == "notes",
             text = stringResource(R.string.my_test_review_notes),
             onClick = onClickTestStudyTypeNotes,
           )
           SuwikiOutlinedChip(
-            isChecked = uiState.testTypePPTChecked,
+            isChecked = uiState.examInfo == "ppt",
             text = stringResource(R.string.my_test_review_ppt),
             onClick = onClickTestStudyTypePPT,
           )
           SuwikiOutlinedChip(
-            isChecked = uiState.testTypeApplyChecked,
+            isChecked = uiState.examInfo == "apply",
             text = stringResource(R.string.my_test_review_apply),
             onClick = onClickTestStudyTypeApply,
           )
@@ -217,12 +254,12 @@ fun MyTestReviewEditScreen(
           horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
           SuwikiOutlinedChip(
-            isChecked = uiState.testTypePracticeChecked,
+            isChecked = uiState.examType == "practice",
             text = stringResource(R.string.my_test_review_practice),
             onClick = onClickTestTypePractice,
           )
           SuwikiOutlinedChip(
-            isChecked = uiState.testTypeHomeworkChecked,
+            isChecked = uiState.examType == "homework",
             text = stringResource(R.string.my_class_review_homework),
             onClick = onClickTestTypeHomework,
           )
