@@ -64,7 +64,7 @@ fun LectureEvaluationRoute(
   }
 
   allLectureEvaluationListState.OnBottomReached {
-    viewModel.getLectureEvaluationList(selectedOpenMajor)
+    viewModel.getLectureEvaluationList()
   }
 
   LectureEvaluationScreen(
@@ -175,7 +175,7 @@ private fun LectureEvaluationLazyColumn(
   ) {
     items(
       items = openLectureEvaluationInfoList,
-      key = { it!!.id },
+      key = { it?.id ?:1 },
     ) { lectureEvaluation ->
       with(lectureEvaluation) {
         SuwikiClassReviewCard(

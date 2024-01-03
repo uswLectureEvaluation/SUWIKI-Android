@@ -1,5 +1,6 @@
 package com.suwiki.core.ui.extension
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,17 +23,26 @@ fun LazyListState.OnBottomReached(
   val shouldLoadMore = remember {
     derivedStateOf {
       val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
-        ?: return@derivedStateOf true
 
-      // subtract buffer from the total items
+      if (lastVisibleItem == null) {
+        Log.d("Sak","list = null ")
+        return@derivedStateOf true
+      }
+
       lastVisibleItem.index >= layoutInfo.totalItemsCount - 1 - buffer
     }
   }
-
-  LaunchedEffect(shouldLoadMore) {
+  Log.d("Sak","$shouldLoadMore ")
+  LaunchedEffect(shouldLoadMore.value) {
     snapshotFlow { shouldLoadMore.value }
-      .collect { if (it) onLoadMore() }
+      .collect {
+        if (it) {
+          Log.d("Sak"," Get Data")
+          onLoadMore()
+        }
+      }
   }
 }
 
 fun LazyListState.isScrolledToEnd() = layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1
+

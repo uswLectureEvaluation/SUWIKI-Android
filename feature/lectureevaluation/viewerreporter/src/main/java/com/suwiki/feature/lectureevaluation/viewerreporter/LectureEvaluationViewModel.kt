@@ -39,6 +39,7 @@ class LectureEvaluationViewModel @Inject constructor(
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
     reduce { state.copy(searchValue = searchValue) }
+    getLectureEvaluationList()
     setFilterLectureEvaluationList()
   }
 
@@ -67,13 +68,13 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
-  fun getLectureEvaluationList(majorType: String) = intent {
+  fun getLectureEvaluationList() = intent {
     getLectureEvaluationListUseCase(
       RetrieveLectureEvaluationAverageListUseCase.Param(
         container.stateFlow.value.searchValue,
         container.stateFlow.value.selectedFilterValue(),
         loadMoreCounter,
-        majorType,
+        container.stateFlow.value.selectedOpenMajor,
       ),
     )
       .onSuccess {
