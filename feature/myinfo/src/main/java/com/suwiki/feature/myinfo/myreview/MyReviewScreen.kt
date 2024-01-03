@@ -13,6 +13,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.container.SuwikiReviewEditContainer
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
@@ -30,13 +32,42 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 private val MY_REVIEW_PAGE_COUNT = MyReviewTab.entries.size
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MyReviewRoute(
-  paddingValues: PaddingValues,
+  padding: PaddingValues,
+  viewModel: MyReviewViewModel = hiltViewModel(),
+  popBackStack: () -> Unit = {},
+  navigateMyClassReview: () -> Unit = {},
+  navigateMyTestReview: () -> Unit = {},
 ) {
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      MyReviewSideEffect.PopBackStack -> popBackStack()
+      MyReviewSideEffect.NavigateMyClassReview -> navigateMyClassReview()
+      MyReviewSideEffect.NavigateMyTestReview -> navigateMyTestReview()
+    }
+  }
+  val pagerState = rememberPagerState(pageCount = { MY_REVIEW_PAGE_COUNT })
+
+  LaunchedEffect(key1 = Unit) {
+    viewModel.loadInitList()
+  }
+
+  MyReviewScreen(
+    padding = padding,
+    uiState = uiState,
+    pagerState = pagerState,
+    onClickBack = viewModel::popBackStack,
+    onClickClassReviewEditButton = viewModel::navigateMyClassReview,
+    onClickTestReviewEditButton = viewModel::navigateMyTestReview,
+  )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -47,6 +78,9 @@ fun MyReviewScreen(
   uiState: MyReviewState,
   pagerState: PagerState = rememberPagerState(pageCount = { MY_REVIEW_PAGE_COUNT }),
   onClickTab: (Int) -> Unit = {},
+  onClickBack: () -> Unit = {},
+  onClickClassReviewEditButton: () -> Unit = {},
+  onClickTestReviewEditButton: () -> Unit = {},
 ) {
   // TODO(REMOVE)
   val myLectureReviewList: PersistentList<String> = persistentListOf("머신러닝", "머신러닝", "과목명", "과목명")
@@ -61,6 +95,7 @@ fun MyReviewScreen(
       title = stringResource(R.string.my_info_my_post),
       showCloseIcon = false,
       showBackIcon = true,
+      onClickBack = onClickBack,
     )
     SuwikiTabBar(
       selectedTabPosition = pagerState.currentPage,
@@ -84,11 +119,13 @@ fun MyReviewScreen(
         MyReviewTab.LECTUREEVALUATION -> {
           MyReviewLazyColumn(
             itemList = myLectureReviewList,
+            onClickEditButton = onClickClassReviewEditButton,
           )
         }
         MyReviewTab.TESTINFO -> {
           MyReviewLazyColumn(
             itemList = myTestReviewList,
+            onClickEditButton = onClickTestReviewEditButton,
           )
         }
       }
@@ -100,6 +137,7 @@ fun MyReviewScreen(
 fun MyReviewLazyColumn(
   modifier: Modifier = Modifier,
   itemList: PersistentList<String>,
+  onClickEditButton: () -> Unit = {},
 ) {
   LazyColumn(
     modifier = modifier.fillMaxSize(),
@@ -108,6 +146,7 @@ fun MyReviewLazyColumn(
       SuwikiReviewEditContainer(
         semesterText = "학기",
         classNameText = it,
+        onClickEditButton = onClickEditButton,
       )
     }
   }
