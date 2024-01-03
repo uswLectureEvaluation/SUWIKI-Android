@@ -2,10 +2,13 @@ package com.suwiki.feature.myinfo.myreview.classreview
 
 data class MyClassReviewEditState(
   val isLoading: Boolean = false,
-  val semester: String = "",
+  val selectedSemester: String = "",
   val honeyRating: Float = 5f,
   val learningRating: Float = 0f,
   val satisfactionRating: Float = 0f,
+  val difficulty: Int = 0,
+  val homework: Int = 0,
+  val team: Int = 0,
   val gradeGenerousChecked: Boolean = false,
   val gradeNormalChecked: Boolean = false,
   val gradePickyChecked: Boolean = false,

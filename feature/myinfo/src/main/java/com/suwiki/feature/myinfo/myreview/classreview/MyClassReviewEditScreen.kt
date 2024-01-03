@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetButton
@@ -43,6 +44,8 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 enum class GradeLabelItem {
   GENEROUS,
@@ -64,21 +67,42 @@ enum class TeamLabelItem {
 @Composable
 fun MyClassReviewEditRoute(
   padding: PaddingValues,
+  viewModel: MyClassReviewEditViewModel = hiltViewModel(),
+  popBackStack: () -> Unit = {},
 ) {
   val scrollState = rememberScrollState()
-  var honeyRating by rememberSaveable { mutableFloatStateOf(5f) }
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      MyClassReviewEditSideEffect.PopBackStack -> popBackStack()
+    }
+  }
   var isSemesterBottomSheetExpanded by remember {
     mutableStateOf(false)
   }
-//  MyClassReviewEditScreen(
-//    padding = padding,
-//    honeyRating = honeyRating,
-//    uiState = MyClassReviewEditState(),
-//    isSemesterBottomSheetExpanded = isSemesterBottomSheetExpanded,
-//    onClickSemesterButton = { isSemesterBottomSheetExpanded = true },
-//    onSemesterBottomSheetDismissRequest = { isSemesterBottomSheetExpanded = false },
-//    scrollState = scrollState
-//  ) { honeyRating = if (it < 0.5) 0.5F else it }
+
+  MyClassReviewEditScreen(
+    padding = padding,
+    uiState = uiState,
+    scrollState = scrollState,
+    onClickSemesterItem = viewModel::getSemester,
+    onClickSemesterButton = { isSemesterBottomSheetExpanded = true },
+    onSemesterBottomSheetDismissRequest = { isSemesterBottomSheetExpanded = false },
+    onHoneyRatingValueChange = viewModel::updateHoneyRating,
+    onLearningRatingValueChange = viewModel::updateLearningRating,
+    onSatisfactionRatingValueChange = viewModel::updateSatisfactionRating,
+    onClassReviewValueChange = viewModel::updateMyClassReviewValue,
+    onClickClassReviewDeleteButton = viewModel::showMyClassReviewDeleteDialog,
+    onDismissClassReviewDelete = viewModel::hideMyClassReviewDeleteDialog,
+    onClickGradeGenerous = viewModel::setDifficultyGenerous,
+    onClickGradeNormal = viewModel::setDifficultyNormal,
+    onClickGradePicky = viewModel::setDifficultyPicky,
+    onClickHomeworkNone = viewModel::setHomeworkNone,
+    onClickHomeworkNormal = viewModel::setHomeworkNormal,
+    onClickHomeworkMuch = viewModel::setHomeworkMuch,
+    onClickTeamNone = viewModel::setTeamNone,
+    onClickTeamExist = viewModel::setTeamExist,
+  )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -88,6 +112,7 @@ fun MyClassReviewEditScreen(
   uiState: MyClassReviewEditState,
   scrollState: ScrollState,
   onClickSemesterButton: () -> Unit = {},
+  onClickSemesterItem: (String) -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onHoneyRatingValueChange: (Float) -> Unit = {},
   onLearningRatingValueChange: (Float) -> Unit = {},
@@ -226,19 +251,19 @@ fun MyClassReviewEditScreen(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         SuwikiContainedChip(
-          isChecked = uiState.gradeGenerousChecked,
+          isChecked = uiState.difficulty == 2,
           color = ChipColor.BLUE,
           text = stringResource(R.string.my_class_review_generous),
           onClick = onClickGradeGenerous,
         )
         SuwikiContainedChip(
-          isChecked = uiState.gradeNormalChecked,
+          isChecked = uiState.difficulty == 1,
           color = ChipColor.BLUE,
           text = stringResource(R.string.my_class_review_normal),
           onClick = onClickGradeNormal,
         )
         SuwikiContainedChip(
-          isChecked = uiState.gradePickyChecked,
+          isChecked = uiState.difficulty == 0,
           color = ChipColor.BLUE,
           text = stringResource(R.string.my_class_review_picky),
           onClick = onClickGradePicky,
@@ -265,19 +290,19 @@ fun MyClassReviewEditScreen(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         SuwikiContainedChip(
-          isChecked = uiState.homeworkNoneChecked,
+          isChecked = uiState.homework == 0,
           color = ChipColor.GREEN,
           text = stringResource(R.string.my_class_review_none),
           onClick = onClickHomeworkNone,
         )
         SuwikiContainedChip(
-          isChecked = uiState.homeworkNormalChecked,
+          isChecked = uiState.homework == 1,
           color = ChipColor.GREEN,
           text = stringResource(R.string.my_class_review_normal),
           onClick = onClickHomeworkNormal,
         )
         SuwikiContainedChip(
-          isChecked = uiState.homeworkMuchChecked,
+          isChecked = uiState.homework == 2,
           color = ChipColor.GREEN,
           text = stringResource(R.string.my_class_review_much),
           onClick = onClickHomeworkMuch,
@@ -304,13 +329,13 @@ fun MyClassReviewEditScreen(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         SuwikiContainedChip(
-          isChecked = uiState.teamNoneChecked,
+          isChecked = uiState.homework == 0,
           color = ChipColor.ORANGE,
           text = stringResource(R.string.my_class_review_none),
           onClick = onClickTeamNone,
         )
         SuwikiContainedChip(
-          isChecked = uiState.teamExistChecked,
+          isChecked = uiState.homework == 1,
           color = ChipColor.ORANGE,
           text = stringResource(R.string.my_class_review_exist),
           onClick = onClickTeamExist,
