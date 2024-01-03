@@ -1,5 +1,6 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -85,6 +86,7 @@ fun LectureEvaluationRoute(
     onClickAlignBottomSelectedItem = {
       viewModel.updateAlignItem(it)
     },
+    selectedItem = uiState.selectedFilter
   )
 }
 
@@ -104,6 +106,7 @@ fun LectureEvaluationScreen(
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {},
+  selectedItem:String
 ) {
   Column(
     modifier = Modifier
@@ -141,11 +144,12 @@ fun LectureEvaluationScreen(
     onClickLoginButton = onClickLoginButton,
     onClickSignupButton = onClickSignupButton,
   )
+
   SuwikiAlignBottomSheet(
     isSheetOpen = uiState.showAlignBottomSheet,
     hideAlignBottomSheet = hideAlignBottomSheet,
     onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
-    itemList = persistentListOf(
+    itemList =   persistentListOf(
       "최근 올라온 강의",
       "꿀 강의",
       "만족도 높은 강의",
@@ -153,7 +157,7 @@ fun LectureEvaluationScreen(
       "BEST 강의",
     ),
     bottomSheetTitle = stringResource(R.string.word_sort),
-    selectedItem = -1,
+    selectedItem = selectedItem
   )
 }
 
@@ -198,6 +202,7 @@ fun LectureEvaluationScreenPreview() {
     LectureEvaluationScreen(
       padding = PaddingValues(0.dp),
       uiState = LectureEvaluationState(),
+      selectedItem = ""
     )
   }
 }
