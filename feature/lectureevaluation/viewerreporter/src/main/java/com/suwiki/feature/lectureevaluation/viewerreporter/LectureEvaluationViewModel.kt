@@ -33,11 +33,10 @@ class LectureEvaluationViewModel @Inject constructor(
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
   private val lectureEvaluationInfoList = mutableListOf<LectureEvaluationAverage?>()
-  private val _loadMoreCounter = mutableIntStateOf(1)
-  private val loadMoreCounter: Int by _loadMoreCounter
+  private var loadMoreCounter: Int = 1
 
   private fun incrementLoadMoreCounter() {
-    _loadMoreCounter.intValue++
+    loadMoreCounter++
   }
 
   @OptIn(OrbitExperimental::class)
@@ -59,7 +58,7 @@ class LectureEvaluationViewModel @Inject constructor(
   }
 
   private fun setFilterLectureEvaluationList() {
-    if (loadMoreCounter > 1) _loadMoreCounter.intValue = 1
+    if (loadMoreCounter > 1) loadMoreCounter = 1
     lectureEvaluationInfoList.clear()
     reduceLectureEvaluationInfoList()
   }

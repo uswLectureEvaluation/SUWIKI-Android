@@ -19,7 +19,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuwikiAlignBottomSheet(
-  showFilterSelectionBottomSheet: Boolean,
+  isSheetOpen: Boolean,
   hideAlignBottomSheet: () -> Unit,
   onClickAlignBottomSheetItem: (String) -> Unit,
   itemList: List<String>,
@@ -30,7 +30,7 @@ fun SuwikiAlignBottomSheet(
     sheetState = rememberModalBottomSheetState(
       skipPartiallyExpanded = true,
     ),
-    isSheetOpen = showFilterSelectionBottomSheet,
+    isSheetOpen = isSheetOpen,
     onDismissRequest = hideAlignBottomSheet,
   ) {
     SuwikiAlignBottomSheetContent(

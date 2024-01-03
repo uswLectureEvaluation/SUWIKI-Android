@@ -142,7 +142,7 @@ fun LectureEvaluationScreen(
     onClickSignupButton = onClickSignupButton,
   )
   SuwikiAlignBottomSheet(
-    showFilterSelectionBottomSheet = uiState.showAlignBottomSheet,
+    isSheetOpen = uiState.showAlignBottomSheet,
     hideAlignBottomSheet = hideAlignBottomSheet,
     onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
     itemList = persistentListOf(
