@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="my_info_test_nickname">suwikikiki</string>
-  <string name="my_info_test_point">180</string>
   <string name="my_info_point">내 포인트</string>
   <string name="my_info_ban_history">이용제한 내역</string>
   <string name="my_info_send_feedback">피드백 전송</string>

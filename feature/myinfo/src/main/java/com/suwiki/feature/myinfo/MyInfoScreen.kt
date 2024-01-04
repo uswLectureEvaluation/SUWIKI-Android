@@ -100,12 +100,16 @@ fun MyInfoScreen(
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        if (uiState.showMyInfoCard) {
-          LoginMyInfoCard(
-            onClickMyReview = onClickMyReviewButton,
-          )
-        } else {
-          LogoutMyInfoCard()
+        with(uiState) {
+          if (showMyInfoCard) {
+            LoginMyInfoCard(
+              userId = loginId,
+              point = point,
+              onClickMyReview = onClickMyReviewButton,
+            )
+          } else {
+            LogoutMyInfoCard()
+          }
         }
         Row(
           horizontalArrangement = Arrangement.SpaceBetween,
@@ -206,6 +210,8 @@ fun LogoutMyInfoCard(
 
 @Composable
 fun LoginMyInfoCard(
+  userId: String,
+  point: Int,
   onClickMyReview: () -> Unit = {},
 ) {
   Row(
@@ -222,7 +228,7 @@ fun LoginMyInfoCard(
     Column {
       Text(
         modifier = Modifier.padding(top = 19.dp, start = 16.dp),
-        text = stringResource(R.string.my_info_test_nickname),
+        text = userId,
         style = SuwikiTheme.typography.header2,
         color = Black,
       )
@@ -237,7 +243,7 @@ fun LoginMyInfoCard(
           contentDescription = "",
         )
         Text(
-          text = stringResource(R.string.my_info_test_point),
+          text = point.toString(),
           style = SuwikiTheme.typography.body4,
           color = Black,
         )

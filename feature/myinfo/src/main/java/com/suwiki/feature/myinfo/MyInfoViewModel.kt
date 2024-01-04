@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
@@ -26,7 +27,10 @@ class MyInfoViewModel @Inject constructor(
   suspend fun checkLoggedIn() {
     viewModelScope.launch {
       showLoadingScreen()
-      isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
+      getUserInfoUseCase().catch {}.collect { user ->
+        isLoggedIn = user.isLoggedIn == true
+        intent { reduce { state.copy(loginId = user.userId, point = user.point) } }
+      }
 
       if (isLoggedIn) {
         showMyService()
