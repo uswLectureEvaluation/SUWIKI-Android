@@ -19,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.align.SuwikiAlignButton
@@ -40,7 +42,7 @@ fun SuwikiSearchBarWithFilter(
   onClickFilterButton: () -> Unit = {},
   onClickSearchButton: () -> Unit = {},
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-  keyboardActions: KeyboardActions = KeyboardActions.Default,
+  keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
   Row(
@@ -63,7 +65,12 @@ fun SuwikiSearchBarWithFilter(
       interactionSource = interactionSource,
       placeholder = placeHolder,
       keyboardOptions = keyboardOptions,
-      keyboardActions = keyboardActions,
+      keyboardActions = KeyboardActions(
+        onDone = {
+          onClickSearchButton()
+          keyboardController?.hide()
+        },
+      ),
       placeholderColor = GrayCB,
       onClickClearButton = onClickClearButton,
       onClickSearchButton = onClickSearchButton,
