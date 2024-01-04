@@ -95,7 +95,6 @@ fun LectureEvaluationRoute(
       viewModel.getLectureEvaluationList()
       viewModel.updateAlignItem(it)
     },
-    selectedItem = uiState.selectedFilter,
   )
 }
 
@@ -115,15 +114,14 @@ fun LectureEvaluationScreen(
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {},
-  selectedItem: String,
 ) {
   val textState = remember {
     mutableStateOf(uiState.searchValue)
   }
   Column(
     modifier = Modifier
-        .fillMaxSize()
-        .padding(padding),
+      .fillMaxSize()
+      .padding(padding),
   ) {
     SuwikiEvaluationAppBar(
       title = stringResource(R.string.word_lecture_evaluation),
@@ -179,7 +177,7 @@ fun LectureEvaluationScreen(
       "BEST 강의",
     ),
     bottomSheetTitle = stringResource(R.string.word_sort),
-    selectedItem = selectedItem,
+    selectedItem = uiState.selectedFilter,
   )
 }
 
@@ -191,8 +189,8 @@ private fun LectureEvaluationLazyColumn(
 ) {
   LazyColumn(
     modifier = Modifier
-        .fillMaxSize()
-        .padding(start = 24.dp, end = 24.dp, top = 15.dp),
+      .fillMaxSize()
+      .padding(start = 24.dp, end = 24.dp, top = 15.dp),
     state = listState,
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
@@ -222,8 +220,8 @@ private fun EmptyText(
 ) {
   Text(
     modifier = Modifier
-        .padding(52.dp)
-        .fillMaxSize(),
+      .padding(52.dp)
+      .fillMaxSize(),
     textAlign = TextAlign.Center,
     text = text,
     style = SuwikiTheme.typography.header4,
@@ -239,7 +237,6 @@ fun LectureEvaluationScreenPreview() {
     LectureEvaluationScreen(
       padding = PaddingValues(0.dp),
       uiState = LectureEvaluationState(),
-      selectedItem = "",
     )
   }
 }
