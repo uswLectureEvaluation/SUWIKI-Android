@@ -59,7 +59,7 @@ fun SuwikiSearchBar(
       keyboardOptions = keyboardOptions,
       keyboardActions = keyboardActions,
       onClickClearButton = onClickClearButton,
-      onClickSearchButton = onClickSearchButton
+      onClickSearchButton = onClickSearchButton,
     )
   }
 }

@@ -15,6 +15,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -86,7 +88,6 @@ fun LectureEvaluationRoute(
     onClickAlignBottomSelectedItem = {
       viewModel.updateAlignItem(it)
     },
-    onClickSearchButton = { viewModel.updateSearchValue(uiState.searchValue) },
     selectedItem = uiState.selectedFilter,
   )
 }
@@ -106,14 +107,16 @@ fun LectureEvaluationScreen(
   onClickAlignBottomSelectedItem: (String) -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
-  onClickSearchButton: () -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {},
   selectedItem: String,
 ) {
+  val textState = remember {
+    mutableStateOf(uiState.searchValue)
+  }
   Column(
     modifier = Modifier
-        .fillMaxSize()
-        .padding(padding),
+      .fillMaxSize()
+      .padding(padding),
   ) {
     SuwikiEvaluationAppBar(
       title = stringResource(R.string.word_lecture_evaluation),
@@ -122,11 +125,14 @@ fun LectureEvaluationScreen(
     )
     SuwikiSearchBarWithFilter(
       placeHolder = stringResource(R.string.word_search_placeholder),
-      value = uiState.searchValue,
-      onValueChange = onValueChangeSearchBar,
-      onClickClearButton = onClickSearchBarClearButton,
+      value = textState.value,
+      onValueChange = { textState.value = it },
+      onClickClearButton = {
+        onClickSearchBarClearButton()
+        textState.value = ""
+      },
       onClickFilterButton = showAlignBottomSheet,
-      onClickSearchButton = onClickSearchButton,
+      onClickSearchButton = { onValueChangeSearchBar(textState.value) },
     )
     Text(
       modifier = Modifier
@@ -135,9 +141,9 @@ fun LectureEvaluationScreen(
       style = SuwikiTheme.typography.body2,
       color = Gray95,
     )
-    if (uiState.showLectureEvaluationSearchEmptyResultScreen)
+    if (uiState.showLectureEvaluationSearchEmptyResultScreen) {
       EmptyText(stringResource(R.string.word_empty_search_result))
-    else {
+    } else {
       LectureEvaluationLazyColumn(
         listState = allLectureEvaluationListState,
         openLectureEvaluationInfoList = uiState.lectureEvaluationList,
@@ -176,8 +182,8 @@ private fun LectureEvaluationLazyColumn(
 ) {
   LazyColumn(
     modifier = Modifier
-        .fillMaxSize()
-        .padding(start = 24.dp, end = 24.dp, top = 15.dp),
+      .fillMaxSize()
+      .padding(start = 24.dp, end = 24.dp, top = 15.dp),
     state = listState,
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
@@ -207,8 +213,8 @@ private fun EmptyText(
 ) {
   Text(
     modifier = Modifier
-        .padding(52.dp)
-        .fillMaxSize(),
+      .padding(52.dp)
+      .fillMaxSize(),
     textAlign = TextAlign.Center,
     text = text,
     style = SuwikiTheme.typography.header4,
