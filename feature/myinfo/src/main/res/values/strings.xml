@@ -48,4 +48,6 @@
   <string name="my_test_review_apply">응용</string>
   <string name="my_test_review_practice">실습</string>
   <string name="my_test_review_input_box_hint">시험정보를 입력해주세요.</string>
+  <string name="my_review_lecture_evaluation_tab">강의평가(%d)</string>
+  <string name="my_review_test_evaluation_tab">시험정보(%d)</string>
 </resources>

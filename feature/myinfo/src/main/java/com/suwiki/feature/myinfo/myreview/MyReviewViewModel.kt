@@ -52,6 +52,8 @@ class MyReviewViewModel @Inject constructor(
     hideLoadingScreen()
   }
 
+  fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentPage = currentPage) } }
+
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 

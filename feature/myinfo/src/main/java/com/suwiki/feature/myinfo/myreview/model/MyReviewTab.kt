@@ -9,10 +9,10 @@ enum class MyReviewTab(
 ) {
   LECTUREEVALUATION(
     position = 0,
-    title = R.string.my_class_review_lecture_evaluation,
+    title = R.string.my_review_lecture_evaluation_tab,
   ),
   TESTINFO(
     position = 1,
-    title = R.string.my_test_review_info,
+    title = R.string.my_review_test_evaluation_tab,
   ),
 }

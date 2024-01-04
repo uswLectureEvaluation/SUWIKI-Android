@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +30,9 @@ import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
 import com.suwiki.core.designsystem.component.tabbar.TabTitle
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.feature.myinfo.R
 import com.suwiki.feature.myinfo.myreview.model.MyReviewTab
 import kotlinx.collections.immutable.PersistentList
@@ -61,10 +65,19 @@ fun MyReviewRoute(
     viewModel.loadInitList()
   }
 
+  LaunchedEffect(key1 = uiState.currentPage) {
+    pagerState.animateScrollToPage(uiState.currentPage)
+  }
+
+  snapshotFlow { pagerState.currentPage }.collectWithLifecycle {
+    viewModel.syncPager(it)
+  }
+
   MyReviewScreen(
     padding = padding,
     uiState = uiState,
     pagerState = pagerState,
+    onClickTab = viewModel::syncPager,
     onClickBack = viewModel::popBackStack,
     onClickClassReviewEditButton = viewModel::navigateMyClassReview,
     onClickTestReviewEditButton = viewModel::navigateMyTestReview,
@@ -104,10 +117,13 @@ fun MyReviewScreen(
       MyReviewTab.entries.forEach { tab ->
         with(tab) {
           TabTitle(
-            title = stringResource(title),
+            title = stringResource(title,
+              if (tab == MyReviewTab.LECTUREEVALUATION) uiState.myLectureEvaluationList.size
+              else uiState.myExamEvaluationList.size
+            ),
             position = position,
             selected = pagerState.currentPage == position,
-            onClick = { onClickTab(uiState.currentPage) },
+            onClick = { onClickTab(position) },
           )
         }
       }
@@ -119,7 +135,7 @@ fun MyReviewScreen(
       when (MyReviewTab.entries[page]) {
         MyReviewTab.LECTUREEVALUATION -> {
           MyReviewLazyColumn(
-            itemList = myLectureReviewList,
+            itemList = uiState.myLectureEvaluationList,
             onClickEditButton = onClickClassReviewEditButton,
           )
         }
@@ -137,18 +153,31 @@ fun MyReviewScreen(
 @Composable
 fun MyReviewLazyColumn(
   modifier: Modifier = Modifier,
-  itemList: PersistentList<String>,
+  itemList: PersistentList<*>,
   onClickEditButton: () -> Unit = {},
 ) {
   LazyColumn(
     modifier = modifier.fillMaxSize(),
   ) {
-    items(items = itemList) {
-      SuwikiReviewEditContainer(
-        semesterText = "학기",
-        classNameText = it,
-        onClickEditButton = onClickEditButton,
-      )
+    items(items = itemList) { item ->
+      when (item) {
+        is MyLectureEvaluation -> {
+          SuwikiReviewEditContainer(
+            semesterText = item.selectedSemester,
+            classNameText = item.content,
+            onClickEditButton = onClickEditButton,
+          )
+        }
+        is MyExamEvaluation -> {
+          item.selectedSemester?.let {
+            SuwikiReviewEditContainer(
+              semesterText = it,
+              classNameText = item.content,
+              onClickEditButton = onClickEditButton,
+            )
+          }
+        }
+      }
     }
   }
 }
