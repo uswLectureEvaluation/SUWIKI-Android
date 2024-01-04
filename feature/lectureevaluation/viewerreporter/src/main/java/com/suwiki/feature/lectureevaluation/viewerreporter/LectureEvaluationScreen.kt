@@ -175,7 +175,7 @@ private fun LectureEvaluationLazyColumn(
   ) {
     items(
       items = openLectureEvaluationInfoList,
-      key = { it?.id ?:1 },
+      key = { it!!.id },
     ) { lectureEvaluation ->
       with(lectureEvaluation) {
         SuwikiClassReviewCard(
