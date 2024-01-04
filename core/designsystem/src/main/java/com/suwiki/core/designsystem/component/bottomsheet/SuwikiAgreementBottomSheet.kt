@@ -44,7 +44,8 @@ fun SuwikiAgreementBottomSheet(
   isCheckedPersonalPolicy: Boolean,
   onClickPersonalCheckIcon: () -> Unit,
   onClickPersonalArrowIcon: () -> Unit,
-  onDismissRequest: () -> Unit = {},
+  onClickAgreementButton: () -> Unit,
+  onDismissRequest: () -> Unit,
 ) {
   SuwikiBottomSheet(
     isSheetOpen = isSheetOpen,
@@ -81,6 +82,7 @@ fun SuwikiAgreementBottomSheet(
         text = stringResource(R.string.bottom_sheet_agreement_button),
         enabled = buttonEnabled,
         clickable = buttonEnabled,
+        onClick = onClickAgreementButton,
       )
     }
   }
@@ -138,6 +140,7 @@ fun SuwikiAgreementBottomSheetPreview() {
       onClickPersonalCheckIcon = {},
       onClickPersonalArrowIcon = {},
       onDismissRequest = {},
+      onClickAgreementButton = {},
     )
   }
 }
