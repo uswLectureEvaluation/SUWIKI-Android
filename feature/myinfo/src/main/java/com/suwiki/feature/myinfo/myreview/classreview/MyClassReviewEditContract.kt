@@ -2,6 +2,7 @@ package com.suwiki.feature.myinfo.myreview.classreview
 
 data class MyClassReviewEditState(
   val isLoading: Boolean = false,
+  val point: Int = 0,
   val selectedSemester: String = "",
   val honeyRating: Float = 5f,
   val learningRating: Float = 0f,

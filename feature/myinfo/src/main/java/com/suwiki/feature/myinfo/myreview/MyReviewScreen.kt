@@ -48,15 +48,15 @@ fun MyReviewRoute(
   padding: PaddingValues,
   viewModel: MyReviewViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
-  navigateMyClassReview: () -> Unit = {},
-  navigateMyTestReview: () -> Unit = {},
+  navigateMyClassReview: (Int) -> Unit = {},
+  navigateMyTestReview: (Int) -> Unit = {},
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyReviewSideEffect.PopBackStack -> popBackStack()
-      MyReviewSideEffect.NavigateMyClassReview -> navigateMyClassReview()
-      MyReviewSideEffect.NavigateMyTestReview -> navigateMyTestReview()
+      is MyReviewSideEffect.NavigateMyClassReview -> navigateMyClassReview(sideEffect.point)
+      is MyReviewSideEffect.NavigateMyTestReview -> navigateMyTestReview(sideEffect.point)
     }
   }
   val pagerState = rememberPagerState(pageCount = { MY_REVIEW_PAGE_COUNT })
@@ -93,8 +93,8 @@ fun MyReviewScreen(
   pagerState: PagerState = rememberPagerState(pageCount = { MY_REVIEW_PAGE_COUNT }),
   onClickTab: (Int) -> Unit = {},
   onClickBack: () -> Unit = {},
-  onClickClassReviewEditButton: () -> Unit = {},
-  onClickTestReviewEditButton: () -> Unit = {},
+  onClickClassReviewEditButton: (Int) -> Unit = {},
+  onClickTestReviewEditButton: (Int) -> Unit = {},
 ) {
   // TODO(REMOVE)
   val myLectureReviewList: PersistentList<String> = persistentListOf("머신러닝", "머신러닝", "과목명", "과목명")
@@ -135,14 +135,16 @@ fun MyReviewScreen(
       when (MyReviewTab.entries[page]) {
         MyReviewTab.LECTUREEVALUATION -> {
           MyReviewLazyColumn(
-            itemList = uiState.myLectureEvaluationList,
-            onClickEditButton = onClickClassReviewEditButton,
+//            itemList = uiState.myLectureEvaluationList,
+            itemList = myLectureReviewList,
+            onClickEditButton = { onClickClassReviewEditButton(uiState.point) },
           )
         }
         MyReviewTab.TESTINFO -> {
           MyReviewLazyColumn(
+//            itemList = uiState.myExamEvaluationList,
             itemList = myTestReviewList,
-            onClickEditButton = onClickTestReviewEditButton,
+            onClickEditButton = { onClickTestReviewEditButton(uiState.point) },
           )
         }
       }
@@ -176,6 +178,14 @@ fun MyReviewLazyColumn(
               onClickEditButton = onClickEditButton,
             )
           }
+        }
+        // TODO(REMOVE)
+        is String -> {
+          SuwikiReviewEditContainer(
+            semesterText = "학기",
+            classNameText = item,
+            onClickEditButton = onClickEditButton,
+          )
         }
       }
     }

@@ -2,6 +2,7 @@ package com.suwiki.feature.myinfo.myreview.testreview
 
 data class MyTestReviewEditState(
   val isLoading: Boolean = false,
+  val point: Int = 0,
   val selectedSemester: String = "",
   val selectedTestType: String = "",
   val testReview: String = "",

@@ -47,14 +47,14 @@ fun MyInfoRoute(
   padding: PaddingValues,
   viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
-  navigateMyReview: () -> Unit,
+  navigateMyReview: (Int) -> Unit,
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyInfoSideEffect.NavigateNotice -> navigateNotice()
-      MyInfoSideEffect.NavigateMyReview -> navigateMyReview()
+      is MyInfoSideEffect.NavigateMyReview -> navigateMyReview(sideEffect.point)
     }
   }
 
@@ -77,7 +77,7 @@ fun MyInfoScreen(
   uiState: MyInfoState,
   scrollState: ScrollState,
   onClickNoticeButton: () -> Unit,
-  onClickMyReviewButton: () -> Unit,
+  onClickMyReviewButton: (Int) -> Unit,
 ) {
   val myList = immutableListOf(
     R.string.my_info_point,
@@ -105,7 +105,7 @@ fun MyInfoScreen(
             LoginMyInfoCard(
               userId = loginId,
               point = point,
-              onClickMyReview = onClickMyReviewButton,
+              onClickMyReview = { onClickMyReviewButton(uiState.point) },
             )
           } else {
             LogoutMyInfoCard()

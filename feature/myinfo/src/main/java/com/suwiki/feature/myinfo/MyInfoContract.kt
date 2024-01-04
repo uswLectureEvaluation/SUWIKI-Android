@@ -9,5 +9,5 @@ data class MyInfoState(
 
 sealed interface MyInfoSideEffect {
   data object NavigateNotice : MyInfoSideEffect
-  data object NavigateMyReview : MyInfoSideEffect
+  data class NavigateMyReview(val point: Int) : MyInfoSideEffect
 }

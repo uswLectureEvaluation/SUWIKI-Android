@@ -62,16 +62,16 @@ internal class MainNavigator(
     navController.navigateNoticeDetail(noticeId)
   }
 
-  fun navigateMyReview() {
-    navController.navigateMyReview()
+  fun navigateMyReview(point: Int) {
+    navController.navigateMyReview(point)
   }
 
-  fun navigateMyClassReviewEdit() {
-    navController.navigateMyClassReview()
+  fun navigateMyClassReviewEdit(point: Int) {
+    navController.navigateMyClassReview(point)
   }
 
-  fun navigateMyTestReviewEdit() {
-    navController.navigateMyTestReview()
+  fun navigateMyTestReviewEdit(point: Int) {
+    navController.navigateMyTestReview(point)
   }
 
   fun navigateOpenMajor(selectedOpenMajor: String) {

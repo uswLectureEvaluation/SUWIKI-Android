@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -47,5 +45,5 @@ class MyInfoViewModel @Inject constructor(
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
   fun navigateNotice() = intent { postSideEffect(MyInfoSideEffect.NavigateNotice) }
-  fun navigateMyReview() = intent { postSideEffect(MyInfoSideEffect.NavigateMyReview) }
+  fun navigateMyReview(point: Int) = intent { postSideEffect(MyInfoSideEffect.NavigateMyReview(point)) }
 }

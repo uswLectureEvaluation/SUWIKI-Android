@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -79,6 +80,10 @@ fun MyClassReviewEditRoute(
   }
   var isSemesterBottomSheetExpanded by remember {
     mutableStateOf(false)
+  }
+
+  LaunchedEffect(key1 = Unit) {
+    viewModel.setPoint()
   }
 
   MyClassReviewEditScreen(
@@ -376,7 +381,7 @@ fun MyClassReviewEditScreen(
     if (uiState.showDeleteClassReviewDialog) {
       SuwikiDialog(
         headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-        bodyText = stringResource(R.string.my_class_review_delete_dialog_body),
+        bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissClassReviewDelete,

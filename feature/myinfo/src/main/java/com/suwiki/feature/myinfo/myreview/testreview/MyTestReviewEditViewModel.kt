@@ -1,6 +1,8 @@
 package com.suwiki.feature.myinfo.myreview.testreview
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -11,12 +13,17 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class MyTestReviewEditViewModel @Inject constructor() : ContainerHost<MyTestReviewEditState, MyTestReviewEditSideEffect>, ViewModel() {
+class MyTestReviewEditViewModel @Inject constructor(
+  savedStateHandle: SavedStateHandle,
+) : ContainerHost<MyTestReviewEditState, MyTestReviewEditSideEffect>, ViewModel() {
   override val container: Container<MyTestReviewEditState, MyTestReviewEditSideEffect> = container(MyTestReviewEditState())
+
+  private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
 
   fun getSemester(semester: String) = intent { reduce { state.copy(selectedSemester = semester) } }
   fun getTestType(testType: String) = intent { reduce { state.copy(selectedTestType = testType) } }
 
+  fun setPoint() = intent { reduce { state.copy(point = point) } }
   fun setExamDifficultyEasy() = intent { reduce { state.copy(examDifficulty = "easy") } }
   fun setExamDifficultyNormal() = intent { reduce { state.copy(examDifficulty = "normal") } }
   fun setExamDifficultyHard() = intent { reduce { state.copy(examDifficulty = "hard") } }

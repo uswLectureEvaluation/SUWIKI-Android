@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,6 +72,10 @@ fun MyTestReviewEditRoute(
     when (sideEffect) {
       MyTestReviewEditSideEffect.PopBackStack -> popBackStack()
     }
+  }
+
+  LaunchedEffect(key1 = Unit) {
+    viewModel.setPoint()
   }
 
   MyTestReviewEditScreen(
@@ -301,7 +306,7 @@ fun MyTestReviewEditScreen(
     if (uiState.showDeleteTestReviewDialog) {
       SuwikiDialog(
         headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-        bodyText = stringResource(R.string.my_class_review_delete_dialog_body),
+        bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissTestReviewDelete,

@@ -1,6 +1,8 @@
 package com.suwiki.feature.myinfo.myreview.classreview
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -11,8 +13,12 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class MyClassReviewEditViewModel @Inject constructor() : ContainerHost<MyClassReviewEditState, MyClassReviewEditSideEffect>, ViewModel() {
+class MyClassReviewEditViewModel @Inject constructor(
+  savedStateHandle: SavedStateHandle,
+) : ContainerHost<MyClassReviewEditState, MyClassReviewEditSideEffect>, ViewModel() {
   override val container: Container<MyClassReviewEditState, MyClassReviewEditSideEffect> = container(MyClassReviewEditState())
+
+  private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
 
   fun getSemester(semester: String) = intent {
     reduce { state.copy(selectedSemester = semester) }
@@ -33,6 +39,8 @@ class MyClassReviewEditViewModel @Inject constructor() : ContainerHost<MyClassRe
   fun updateMyClassReviewValue(classReviewValue: String) = intent {
     reduce { state.copy(classReview = classReviewValue) }
   }
+
+  fun setPoint() = intent { reduce { state.copy(point = point) } }
   fun setDifficultyGenerous() = intent { reduce { state.copy(difficulty = 2) } }
   fun setDifficultyNormal() = intent { reduce { state.copy(difficulty = 1) } }
   fun setDifficultyPicky() = intent { reduce { state.copy(difficulty = 0) } }
