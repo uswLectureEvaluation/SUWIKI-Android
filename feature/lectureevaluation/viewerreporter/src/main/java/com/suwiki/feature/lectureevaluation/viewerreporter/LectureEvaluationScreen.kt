@@ -28,13 +28,14 @@ fun LectureEvaluationRoute(
   viewModel: LectureEvaluationViewModel = hiltViewModel(),
   selectedOpenMajor: String,
   navigateLogin: () -> Unit,
+  navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       LectureEvaluationSideEffect.NavigateLogin -> navigateLogin()
-      LectureEvaluationSideEffect.NavigateSignUp -> TODO()
+      LectureEvaluationSideEffect.NavigateSignUp -> navigateSignUp()
     }
   }
 
@@ -56,6 +57,10 @@ fun LectureEvaluationRoute(
     onClickLoginButton = {
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateLogin()
+    },
+    onClickSignupButton = {
+      viewModel.hideOnboardingBottomSheet()
+      viewModel.navigateSignup()
     },
     onClickTempText = navigateOpenMajor,
   )

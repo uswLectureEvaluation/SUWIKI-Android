@@ -15,6 +15,7 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
   padding: PaddingValues,
   argumentName: String,
   navigateLogin: () -> Unit,
+  navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
   composable(route = LectureEvaluationRoute.route) { navBackStackEntry ->
@@ -23,6 +24,7 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
       padding = padding,
       selectedOpenMajor = selectedOpenMajor,
       navigateLogin = navigateLogin,
+      navigateSignUp = navigateSignUp,
       navigateOpenMajor = navigateOpenMajor,
     )
   }

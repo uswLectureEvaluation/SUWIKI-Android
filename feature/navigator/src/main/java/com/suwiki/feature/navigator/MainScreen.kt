@@ -45,6 +45,7 @@ import com.suwiki.feature.notice.navigation.noticeNavGraph
 import com.suwiki.feature.openmajor.OpenMajorRoute
 import com.suwiki.feature.openmajor.navigation.OpenMajorRoute
 import com.suwiki.feature.openmajor.navigation.openMajorNavGraph
+import com.suwiki.feature.signup.navigation.signupNavGraph
 import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -69,8 +70,14 @@ internal fun MainScreen(
           popBackStack = navigator::popBackStackIfNotHome,
           navigateFindId = { /* TODO */ },
           navigateFindPassword = { /* TODO */ },
-          navigateSignup = { /* TODO */ },
+          navigateSignup = navigator::navigateSignup,
           handleException = viewModel::handleException,
+        )
+
+        signupNavGraph(
+          popBackStack = navigator::popBackStackIfNotHome,
+          handleException = viewModel::handleException,
+          navigateLogin = navigator::navigateLogin,
         )
 
         openMajorNavGraph(
@@ -94,6 +101,7 @@ internal fun MainScreen(
           padding = innerPadding,
           argumentName = OpenMajorRoute.ARGUMENT_NAME,
           navigateLogin = navigator::navigateLogin,
+          navigateSignUp = navigator::navigateSignup,
           navigateOpenMajor = navigator::navigateOpenMajor,
         )
 

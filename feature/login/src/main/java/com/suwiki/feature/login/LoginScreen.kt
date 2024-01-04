@@ -61,7 +61,7 @@ fun LoginRoute(
     onClickPasswordEyeIcon = viewModel::toggleShowPassword,
     onClickFindIdText = { /* TODO */ },
     onClickFindPasswordText = { /* TODO */ },
-    onClickSignupText = { /* TODO */ },
+    onClickSignupText = viewModel::navigateSignup,
     onClickLoginButton = viewModel::login,
     onClickLoginFailDialogButton = viewModel::hideLoginFailDialog,
     onClickEmailNotAuthDialogButton = viewModel::hideEmailNotAuthDialog,

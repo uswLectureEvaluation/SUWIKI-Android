@@ -25,24 +25,24 @@ class LoginViewModel @Inject constructor(
   override val container: Container<LoginState, LoginSideEffect> = container(LoginState())
 
   fun login() = intent {
-    viewModelScope.launch {
-      reduce { state.copy(isLoading = true) }
-      loginUseCase(loginId = state.id, password = state.password)
-        .onSuccess {
-          postSideEffect(LoginSideEffect.PopBackStack)
+    reduce { state.copy(isLoading = true) }
+    loginUseCase(loginId = state.id, password = state.password)
+      .onSuccess {
+        postSideEffect(LoginSideEffect.PopBackStack)
+      }
+      .onFailure {
+        when (it) {
+          is LoginFailedException -> reduce { state.copy(showLoginFailDialog = true) }
+          is PasswordErrorException -> reduce { state.copy(showLoginFailDialog = true) }
+          is EmailNotAuthedException -> reduce { state.copy(showEmailNotAuthDialog = true) }
+          else -> postSideEffect(LoginSideEffect.HandleException(it))
         }
-        .onFailure {
-          when (it) {
-            is LoginFailedException -> reduce { state.copy(showLoginFailDialog = true) }
-            is PasswordErrorException -> reduce { state.copy(showLoginFailDialog = true) }
-            is EmailNotAuthedException -> reduce { state.copy(showEmailNotAuthDialog = true) }
-            else -> postSideEffect(LoginSideEffect.HandleException(it))
-          }
-        }
+      }
 
-      reduce { state.copy(isLoading = false) }
-    }
+    reduce { state.copy(isLoading = false) }
   }
+
+  fun navigateSignup() = intent { postSideEffect(LoginSideEffect.NavigateSignUp) }
 
   fun toggleShowPassword() = intent { reduce { state.copy(showPassword = !state.showPassword) } }
 
