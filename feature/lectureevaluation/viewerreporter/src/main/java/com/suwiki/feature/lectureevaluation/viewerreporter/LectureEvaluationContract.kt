@@ -14,6 +14,9 @@ data class LectureEvaluationState(
   val searchValue: String = "",
   val isLoading: Boolean = false,
 ) {
+  val showLectureEvaluationSearchEmptyResultScreen: Boolean = searchValue.isNotEmpty() &&
+    selectedFilter.isNotEmpty() && selectedOpenMajor.isNotEmpty() && lectureEvaluationList.isEmpty()
+
   fun selectedFilterValue(): String {
     return when (selectedFilter) {
       "꿀 강의" -> "lectureSatisfactionAvg"

@@ -16,4 +16,7 @@
   <string name="word_high_satisfaction_lectures">만족도 높은 강의</string>
   <string name="word_knowledgeable_lectures">배울 게 많은 강의</string>
   <string name="word_best_lectures">BEST 강의</string>
+
+  <string name="word_empty_search_result">검색 결과가 없습니다.\n검색어가 정확한지 확인하세요.</string>
+
 </resources>
