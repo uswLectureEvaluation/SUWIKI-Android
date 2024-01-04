@@ -55,4 +55,13 @@ class LoginViewModel @Inject constructor(
 
   @OptIn(OrbitExperimental::class)
   fun updatePassword(password: String) = blockingIntent { reduce { state.copy(password = password) } }
+
+  fun showAgreementBottomSheet() = intent { reduce { state.copy(showAgreementBottomSheet = true) } }
+  fun hideAgreementBottomSheet() = intent { reduce { state.copy(showAgreementBottomSheet = false) } }
+
+  fun toggleTermChecked() = intent { reduce { state.copy(isCheckedTerm = !state.isCheckedTerm) } }
+  fun togglePersonalPolicyChecked() = intent { reduce { state.copy(isCheckedPersonalPolicy = !state.isCheckedPersonalPolicy) } }
+
+  fun openTermWebSite() = intent { postSideEffect(LoginSideEffect.OpenTermWebSite) }
+  fun openPersonalPolicyWebSite() = intent { postSideEffect(LoginSideEffect.OpenPersonalPolicyWebSite) }
 }
