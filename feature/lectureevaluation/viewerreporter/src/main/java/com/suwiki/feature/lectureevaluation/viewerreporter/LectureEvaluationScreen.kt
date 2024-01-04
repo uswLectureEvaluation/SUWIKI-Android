@@ -58,14 +58,16 @@ fun LectureEvaluationRoute(
   val pagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT })
   val allLectureEvaluationListState = rememberLazyListState()
   if (uiState.selectedFilter.isEmpty()) viewModel.updateAlignItem("최근 올라온 강의")
+
   LaunchedEffect(key1 = viewModel) {
     viewModel.checkLoggedInShowBottomSheetIfNeed()
   }
-
-  LaunchedEffect(key1 = selectedOpenMajor) {
+  LaunchedEffect(key1 = uiState.searchValue) {
+    viewModel.getLectureEvaluationList()
+  }
+  LaunchedEffect(selectedOpenMajor) {
     viewModel.updateSelectedOpenMajor(selectedOpenMajor)
   }
-
   allLectureEvaluationListState.OnBottomReached {
     viewModel.getLectureEvaluationList()
   }
@@ -83,9 +85,14 @@ fun LectureEvaluationRoute(
       viewModel.navigateLogin()
     },
     onClickSelectedOpenMajor = navigateOpenMajor,
-    onValueChangeSearchBar = viewModel::updateSearchValue,
-    onClickSearchBarClearButton = { viewModel.updateSearchValue("") },
+    onValueChangeSearchBar = {
+      viewModel.updateSearchValue(it)
+    },
+    onClickSearchBarClearButton = {
+      viewModel.updateSearchValue("")
+    },
     onClickAlignBottomSelectedItem = {
+      viewModel.getLectureEvaluationList()
       viewModel.updateAlignItem(it)
     },
     selectedItem = uiState.selectedFilter,
@@ -115,8 +122,8 @@ fun LectureEvaluationScreen(
   }
   Column(
     modifier = Modifier
-      .fillMaxSize()
-      .padding(padding),
+        .fillMaxSize()
+        .padding(padding),
   ) {
     SuwikiEvaluationAppBar(
       title = stringResource(R.string.word_lecture_evaluation),
@@ -132,7 +139,9 @@ fun LectureEvaluationScreen(
         textState.value = ""
       },
       onClickFilterButton = showAlignBottomSheet,
-      onClickSearchButton = { onValueChangeSearchBar(textState.value) },
+      onClickSearchButton = {
+        onValueChangeSearchBar(textState.value)
+      },
     )
     Text(
       modifier = Modifier
@@ -182,8 +191,8 @@ private fun LectureEvaluationLazyColumn(
 ) {
   LazyColumn(
     modifier = Modifier
-      .fillMaxSize()
-      .padding(start = 24.dp, end = 24.dp, top = 15.dp),
+        .fillMaxSize()
+        .padding(start = 24.dp, end = 24.dp, top = 15.dp),
     state = listState,
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
@@ -213,8 +222,8 @@ private fun EmptyText(
 ) {
   Text(
     modifier = Modifier
-      .padding(52.dp)
-      .fillMaxSize(),
+        .padding(52.dp)
+        .fillMaxSize(),
     textAlign = TextAlign.Center,
     text = text,
     style = SuwikiTheme.typography.header4,
