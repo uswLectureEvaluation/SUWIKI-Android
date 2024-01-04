@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
@@ -22,6 +24,7 @@ import com.suwiki.core.designsystem.component.button.TextFieldClearButton
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun BasicSearchBar(
@@ -36,6 +39,7 @@ fun BasicSearchBar(
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   keyboardActions: KeyboardActions = KeyboardActions.Default,
   onClickClearButton: () -> Unit,
+  onClickSearchButton: () -> Unit,
 ) {
   BasicTextField(
     value = value,
@@ -53,7 +57,12 @@ fun BasicSearchBar(
       Row(
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Image(painter = painterResource(id = R.drawable.ic_search), contentDescription = "")
+        Image(
+          modifier = Modifier
+            .suwikiClickable(onClick = onClickSearchButton),
+          painter = painterResource(id = R.drawable.ic_search),
+          contentDescription = ""
+        )
 
         Spacer(modifier = Modifier.size(5.dp))
 

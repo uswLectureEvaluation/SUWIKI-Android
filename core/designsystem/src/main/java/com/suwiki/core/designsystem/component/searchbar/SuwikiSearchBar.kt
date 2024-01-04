@@ -33,6 +33,7 @@ fun SuwikiSearchBar(
   minLines: Int = 1,
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
+  onClickSearchButton: () -> Unit = {},
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   keyboardActions: KeyboardActions = KeyboardActions.Default,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -58,6 +59,7 @@ fun SuwikiSearchBar(
       keyboardOptions = keyboardOptions,
       keyboardActions = keyboardActions,
       onClickClearButton = onClickClearButton,
+      onClickSearchButton = onClickSearchButton
     )
   }
 }

@@ -85,6 +85,7 @@ fun LectureEvaluationRoute(
     onClickAlignBottomSelectedItem = {
       viewModel.updateAlignItem(it)
     },
+    onClickSearchButton = { viewModel.updateSearchValue(uiState.searchValue) },
     selectedItem = uiState.selectedFilter,
   )
 }
@@ -104,6 +105,7 @@ fun LectureEvaluationScreen(
   onClickAlignBottomSelectedItem: (String) -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
+  onClickSearchButton: () -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {},
   selectedItem: String,
 ) {
@@ -123,6 +125,7 @@ fun LectureEvaluationScreen(
       onValueChange = onValueChangeSearchBar,
       onClickClearButton = onClickSearchBarClearButton,
       onClickFilterButton = showAlignBottomSheet,
+      onClickSearchButton = onClickSearchButton
     )
     Text(
       modifier = Modifier

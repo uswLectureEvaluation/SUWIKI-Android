@@ -38,6 +38,7 @@ fun SuwikiSearchBarWithFilter(
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
   onClickFilterButton: () -> Unit = {},
+  onClickSearchButton: () -> Unit = {},
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   keyboardActions: KeyboardActions = KeyboardActions.Default,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -65,6 +66,7 @@ fun SuwikiSearchBarWithFilter(
       keyboardActions = keyboardActions,
       placeholderColor = GrayCB,
       onClickClearButton = onClickClearButton,
+      onClickSearchButton = onClickSearchButton,
     )
 
     Spacer(modifier = Modifier.size(4.dp))
