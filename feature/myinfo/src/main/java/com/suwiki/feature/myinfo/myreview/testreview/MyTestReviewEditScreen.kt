@@ -77,6 +77,7 @@ fun MyTestReviewEditRoute(
     padding = padding,
     scrollState = scrollState,
     uiState = uiState,
+    popBackStack = viewModel::popBackStack,
     onClickSemesterButton = viewModel::showSemesterBottomSheet,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onClickTestTypeButton = viewModel::showTestTypeBottomSheet,
@@ -103,6 +104,7 @@ fun MyTestReviewEditScreen(
   padding: PaddingValues,
   scrollState: ScrollState,
   uiState: MyTestReviewEditState,
+  popBackStack: () -> Unit = {},
   onClickSemesterButton: () -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onClickTestTypeButton: () -> Unit = {},
@@ -117,7 +119,6 @@ fun MyTestReviewEditScreen(
   onClickTestStudyTypeApply: () -> Unit = {},
   onClickTestTypePractice: () -> Unit = {},
   onClickTestTypeHomework: () -> Unit = {},
-  onClickTestReviewReviseButton: () -> Unit = {},
   onClickTestReviewDeleteButton: () -> Unit = {},
   onTestReviewValueChange: (String) -> Unit = { _ -> },
   onDismissTestReviewDelete: () -> Unit = {},
@@ -133,6 +134,7 @@ fun MyTestReviewEditScreen(
       title = stringResource(R.string.my_test_review_info),
       showBackIcon = false,
       showCloseIcon = true,
+      onClickClose = popBackStack,
     )
     Spacer(modifier = Modifier.height(44.dp))
     SuwikiBottomSheetButton(
@@ -293,7 +295,7 @@ fun MyTestReviewEditScreen(
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = onClickTestReviewReviseButton,
+        onClick = popBackStack,
       )
     }
     if (uiState.showDeleteTestReviewDialog) {
@@ -303,7 +305,7 @@ fun MyTestReviewEditScreen(
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissTestReviewDelete,
-        onClickConfirm = {},
+        onClickConfirm = popBackStack,
         onClickDismiss = onDismissTestReviewDelete,
       )
     }
@@ -408,7 +410,6 @@ fun MyTestReviewEditScreenPreview() {
       onClickTestTypePractice = { clickTestTypeItem(TestTypeLabelItem.PRACTICE) },
       onClickTestTypeHomework = { clickTestTypeItem(TestTypeLabelItem.HOMEWORK) },
       onTestReviewValueChange = { testReview = it },
-      onClickTestReviewReviseButton = { TODO("PopBackStack") },
       onClickTestReviewDeleteButton = { isShowDeleteTestReviewDialog = true },
       onDismissTestReviewDelete = { isShowDeleteTestReviewDialog = false },
     )

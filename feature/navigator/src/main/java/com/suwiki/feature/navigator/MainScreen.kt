@@ -99,7 +99,11 @@ internal fun MainScreen(
 
         myInfoNavGraph(
           padding = innerPadding,
+          popBackStack = navigator::popBackStackIfNotHome,
           navigateNotice = navigator::navigateNotice,
+          navigateMyReview = navigator::navigateMyReview,
+          navigateMyClassReviewEdit = navigator::navigateMyClassReviewEdit,
+          navigateMyTestReviewEdit = navigator::navigateMyTestReviewEdit,
         )
 
         noticeNavGraph(

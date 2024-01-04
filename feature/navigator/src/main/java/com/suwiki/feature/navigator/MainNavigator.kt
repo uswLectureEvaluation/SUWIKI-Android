@@ -10,7 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
 import com.suwiki.feature.login.navigation.navigateLogin
+import com.suwiki.feature.myinfo.navigation.navigateMyClassReview
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
+import com.suwiki.feature.myinfo.navigation.navigateMyReview
+import com.suwiki.feature.myinfo.navigation.navigateMyTestReview
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
@@ -57,6 +60,18 @@ internal class MainNavigator(
 
   fun navigateNoticeDetail(noticeId: Long) {
     navController.navigateNoticeDetail(noticeId)
+  }
+
+  fun navigateMyReview() {
+    navController.navigateMyReview()
+  }
+
+  fun navigateMyClassReviewEdit() {
+    navController.navigateMyClassReview()
+  }
+
+  fun navigateMyTestReviewEdit() {
+    navController.navigateMyTestReview()
   }
 
   fun navigateOpenMajor(selectedOpenMajor: String) {

@@ -85,6 +85,7 @@ fun MyClassReviewEditRoute(
     padding = padding,
     uiState = uiState,
     scrollState = scrollState,
+    popBackStack = viewModel::popBackStack,
     onClickSemesterItem = viewModel::getSemester,
     onClickSemesterButton = { isSemesterBottomSheetExpanded = true },
     onSemesterBottomSheetDismissRequest = { isSemesterBottomSheetExpanded = false },
@@ -111,6 +112,7 @@ fun MyClassReviewEditScreen(
   padding: PaddingValues,
   uiState: MyClassReviewEditState,
   scrollState: ScrollState,
+  popBackStack: () -> Unit,
   onClickSemesterButton: () -> Unit = {},
   onClickSemesterItem: (String) -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
@@ -126,7 +128,6 @@ fun MyClassReviewEditScreen(
   onClickTeamNone: () -> Unit = {},
   onClickTeamExist: () -> Unit = {},
   onClassReviewValueChange: (String) -> Unit = { _ -> },
-  onClickClassReviewReviseButton: () -> Unit = {},
   onClickClassReviewDeleteButton: () -> Unit = {},
   onDismissClassReviewDelete: () -> Unit = {},
 ) {
@@ -141,6 +142,7 @@ fun MyClassReviewEditScreen(
       title = stringResource(R.string.my_class_review_lecture_evaluation),
       showBackIcon = false,
       showCloseIcon = true,
+      onClickClose = popBackStack,
     )
     Spacer(modifier = Modifier.height(44.dp))
     Row(
@@ -368,7 +370,7 @@ fun MyClassReviewEditScreen(
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = onClickClassReviewReviseButton,
+        onClick = popBackStack,
       )
     }
     if (uiState.showDeleteClassReviewDialog) {
@@ -378,7 +380,7 @@ fun MyClassReviewEditScreen(
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissClassReviewDelete,
-        onClickConfirm = {},
+        onClickConfirm = popBackStack,
         onClickDismiss = onDismissClassReviewDelete,
       )
     }
@@ -464,6 +466,7 @@ fun MyClassReviewEditPreview() {
         showDeleteClassReviewDialog = isShowDeleteClassReviewDialog,
       ),
       scrollState = scrollState,
+      popBackStack = {},
       onClickSemesterButton = { isSemesterBottomSheetExpanded = true },
       onSemesterBottomSheetDismissRequest = { isSemesterBottomSheetExpanded = false },
       onHoneyRatingValueChange = { honeyRating = if (it < 0.5) 0.5F else it },
@@ -478,7 +481,6 @@ fun MyClassReviewEditPreview() {
       onClickTeamNone = { clickTeamItem(TeamLabelItem.NONE) },
       onClickTeamExist = { clickTeamItem(TeamLabelItem.EXIST) },
       onClassReviewValueChange = { classReview = it },
-      onClickClassReviewReviseButton = { /*TODO("PopBackStack")*/ },
       onClickClassReviewDeleteButton = { isShowDeleteClassReviewDialog = true },
       onDismissClassReviewDelete = { isShowDeleteClassReviewDialog = false },
     )
