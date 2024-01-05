@@ -7,9 +7,10 @@ data class SignupState(
   val isLoading: Boolean = false,
 ) {
   val titleResId = when {
-    idState.showIdTextField -> R.string.signup_screen_title_id
-    passwordState.showPasswordTextField -> R.string.signup_screen_title_password
+    emailState.showEmailTextField -> R.string.signup_screen_title_email
     passwordState.showPasswordConfirmTextField -> R.string.signup_screen_title_password_confirm
+    passwordState.showPasswordTextField -> R.string.signup_screen_title_password
+    idState.showIdTextField -> R.string.signup_screen_title_id
     else -> R.string.signup_screen_title_email
   }
 }
@@ -18,8 +19,8 @@ data class IdState(
   val showIdTextField: Boolean = true,
   val showIdCheckButton: Boolean = false,
   val id: String = "",
-  private val showIdInvalidHelperText: Boolean = false,
   private val showIdOverlapHelperText: Boolean = false,
+  private val showIdInvalidHelperText: Boolean = false,
 ) {
   val idHelperTextResId = when {
     showIdInvalidHelperText -> R.string.signup_screen_id_textfield_invalid_helper_text
@@ -34,7 +35,9 @@ data class PasswordState(
   val showPasswordTextField: Boolean = false,
   val showPasswordConfirmTextField: Boolean = false,
   val password: String = "",
+  val showPasswordValue: Boolean = false,
   val passwordConfirm: String = "",
+  val showPasswordConfirmValue: Boolean = false,
   private val showPasswordInvalidHelperText: Boolean = false,
   private val showPasswordConfirmInvalidHelperText: Boolean = false,
   private val showPasswordConfirmNotSameHelperText: Boolean = false,
@@ -76,4 +79,7 @@ sealed interface SignupSideEffect {
   data class HandleException(val throwable: Throwable) : SignupSideEffect
   data object PopBackStack : SignupSideEffect
   data object NavigateLogin : SignupSideEffect
+  data object FocusPassword : SignupSideEffect
+  data object FocusPasswordConfirm : SignupSideEffect
+  data object FocusEmail : SignupSideEffect
 }

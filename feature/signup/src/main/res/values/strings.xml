@@ -9,8 +9,8 @@
   <string name="word_empty" />
   <string name="signup_screen_password_textfield_invalid_helper_text">8~20자 영문,숫자,특수문자를 조합하세요.</string>
   <string name="signup_screen_password_textfield_not_same_helper_text">비밀번호가 일치하지 않습니다.</string>
-  <string name="signup_screen_email_textfield_notice_text">웹메일이 휴면 상태인지 확인해주세요\n웹메일 계정은 포털 계정과 다릅니다</string>
-  <string name="signup_screen_email_textfield_invalid_text">올바른 형식이 아닙니다</string>
+  <string name="signup_screen_email_textfield_notice_text">웹메일이 휴면 상태인지 확인해주세요\n웹메일 계정은 포털 계정과 다릅니다\n</string>
+  <string name="signup_screen_email_textfield_invalid_text">\@suwon.ac.kr 형식이 아닙니다</string>
   <string name="signup_screen_email_textfield_placeholder">\@suwon.ac.kr</string>
   <string name="textfield_password_placeholder">8~20자 영문, 숫자, 특수문자 조합</string>
   <string name="signup_screen_id_textfield_placeholder">6~20자 영문/숫자</string>
