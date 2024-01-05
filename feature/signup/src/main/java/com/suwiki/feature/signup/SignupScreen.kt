@@ -61,7 +61,76 @@ fun SignupScreen(
     modifier = Modifier
       .fillMaxSize(),
   ) {
-    Text(text = "signup")
+    Column(
+      modifier = Modifier.padding(top = 63.dp, start = 24.dp, end = 24.dp, bottom = 20.dp),
+    ) {
+      Text(
+        text = stringResource(id = uiState.titleResId),
+        style = SuwikiTheme.typography.header1,
+      )
+
+      Spacer(modifier = Modifier.size(26.dp))
+
+      Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+      ) {
+        with(uiState.emailState) {
+          if (showEmailTextField) {
+            SuwikiRegularTextField(
+              label = stringResource(R.string.word_email),
+              placeholder = stringResource(R.string.signup_screen_email_textfield_placeholder),
+              value = email,
+              helperText = stringResource(id = emailHelperTextResId),
+              isError = isErrorEmailTextField,
+            )
+          }
+        }
+
+        with(uiState.passwordState) {
+          if (showPasswordConfirmTextField) {
+            SuwikiRegularTextField(
+              label = stringResource(R.string.word_password_confirm),
+              placeholder = stringResource(R.string.textfield_password_placeholder),
+              value = password,
+              helperText = stringResource(id = passwordConfirmHelperTextResId),
+              isError = isErrorPasswordConfirmTextField,
+              showEyeIcon = true,
+            )
+          }
+
+          if (showPasswordTextField) {
+            SuwikiRegularTextField(
+              label = stringResource(R.string.word_password),
+              placeholder = stringResource(R.string.textfield_password_placeholder),
+              value = password,
+              helperText = stringResource(id = passwordHelperTextResId),
+              isError = isErrorPasswordTextField,
+              showEyeIcon = true,
+            )
+          }
+        }
+
+        with(uiState.idState) {
+          if (showIdTextField) {
+            SuwikiRegularTextField(
+              label = stringResource(R.string.word_id),
+              placeholder = stringResource(R.string.signup_screen_id_textfield_placeholder),
+              value = id,
+              helperText = stringResource(id = idHelperTextResId),
+              isError = isErrorIdTextField,
+            )
+          }
+        }
+      }
+    }
+
+    if (uiState.emailState.showSendAuthEmailButton) {
+      SuwikiContainedLargeButton(text = stringResource(R.string.signup_screen_receive_auth_email))
+    }
+
+    if (uiState.idState.showIdCheckButton) {
+      SuwikiContainedLargeButton(text = stringResource(R.string.signup_screen_id_overlap))
+    }
 
 
     if (uiState.isLoading) {
