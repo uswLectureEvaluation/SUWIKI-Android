@@ -4,13 +4,19 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import timber.log.Timber
 import javax.inject.Inject
+
+const val SHOW_TOAST_LENGTH = 2000L
 
 @HiltViewModel
 class MyClassReviewEditViewModel @Inject constructor(
@@ -19,6 +25,7 @@ class MyClassReviewEditViewModel @Inject constructor(
   override val container: Container<MyClassReviewEditState, MyClassReviewEditSideEffect> = container(MyClassReviewEditState())
 
   private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
+  private val mutex = Mutex()
 
   fun getSemester(semester: String) = intent {
     reduce { state.copy(selectedSemester = semester) }
@@ -52,6 +59,15 @@ class MyClassReviewEditViewModel @Inject constructor(
 
   fun showMyClassReviewDeleteDialog() = intent { reduce { state.copy(showDeleteClassReviewDialog = true) } }
   fun hideMyClassReviewDeleteDialog() = intent { reduce { state.copy(showDeleteClassReviewDialog = false) } }
+  fun showMyClassReviewToast(msg: String) = intent {
+    hideMyClassReviewDeleteDialog()
+    mutex.withLock {
+      reduce { state.copy(showDeleteClassReviewToastMessage = msg, showDeleteClassReviewToastVisible = true) }
+      delay(SHOW_TOAST_LENGTH)
+      reduce { state.copy(showDeleteClassReviewToastVisible = false) }
+      popBackStack()
+    }
+  }
 
   fun popBackStack() = intent { postSideEffect(MyClassReviewEditSideEffect.PopBackStack) }
 }

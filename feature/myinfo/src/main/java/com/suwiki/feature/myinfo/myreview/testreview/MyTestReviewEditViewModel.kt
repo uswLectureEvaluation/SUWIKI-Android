@@ -2,8 +2,12 @@ package com.suwiki.feature.myinfo.myreview.testreview
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.feature.myinfo.myreview.classreview.SHOW_TOAST_LENGTH
 import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -19,6 +23,7 @@ class MyTestReviewEditViewModel @Inject constructor(
   override val container: Container<MyTestReviewEditState, MyTestReviewEditSideEffect> = container(MyTestReviewEditState())
 
   private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
+  private val mutex = Mutex()
 
   fun getSemester(semester: String) = intent { reduce { state.copy(selectedSemester = semester) } }
   fun getTestType(testType: String) = intent { reduce { state.copy(selectedTestType = testType) } }
@@ -45,5 +50,14 @@ class MyTestReviewEditViewModel @Inject constructor(
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
   fun showTestTypeBottomSheet() = intent { reduce { state.copy(showTestTypeBottomSheet = true) } }
   fun hideTestTypeBottomSheet() = intent { reduce { state.copy(showTestTypeBottomSheet = false) } }
+  fun showMyTestReviewToast(msg: String) = intent {
+    hideMyTestReviewDeleteDialog()
+    mutex.withLock {
+      reduce { state.copy(showDeleteTestReviewToastMessage = msg, showDeleteTestReviewToastVisible = true) }
+      delay(SHOW_TOAST_LENGTH)
+      reduce { state.copy(showDeleteTestReviewToastVisible = false) }
+      popBackStack()
+    }
+  }
   fun popBackStack() = intent { postSideEffect(MyTestReviewEditSideEffect.PopBackStack) }
 }

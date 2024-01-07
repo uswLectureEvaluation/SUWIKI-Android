@@ -103,7 +103,7 @@ fun MyReviewScreen(
     modifier = Modifier
       .padding(padding)
       .background(White)
-      .fillMaxSize()
+      .fillMaxSize(),
   ) {
     SuwikiAppBarWithTitle(
       title = stringResource(R.string.my_info_my_post),
@@ -117,9 +117,13 @@ fun MyReviewScreen(
       MyReviewTab.entries.forEach { tab ->
         with(tab) {
           TabTitle(
-            title = stringResource(title,
-              if (tab == MyReviewTab.LECTUREEVALUATION) uiState.myLectureEvaluationList.size
-              else uiState.myExamEvaluationList.size
+            title = stringResource(
+              title,
+              if (tab == MyReviewTab.LECTUREEVALUATION) {
+                uiState.myLectureEvaluationList.size
+              } else {
+                uiState.myExamEvaluationList.size
+              },
             ),
             position = position,
             selected = pagerState.currentPage == position,

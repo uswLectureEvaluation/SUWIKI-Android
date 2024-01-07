@@ -35,6 +35,7 @@ import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.SuwikiOutlinedChip
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
+import com.suwiki.core.designsystem.component.toast.SuwikiToast
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
@@ -100,6 +101,7 @@ fun MyTestReviewEditRoute(
     onTestReviewValueChange = viewModel::updateMyClassReviewValue,
     onClickTestReviewDeleteButton = viewModel::showMyTestReviewDeleteDialog,
     onDismissTestReviewDelete = viewModel::hideMyTestReviewDeleteDialog,
+    showMyTestReviewToast = viewModel::showMyTestReviewToast
   )
 }
 
@@ -127,6 +129,7 @@ fun MyTestReviewEditScreen(
   onClickTestReviewDeleteButton: () -> Unit = {},
   onTestReviewValueChange: (String) -> Unit = { _ -> },
   onDismissTestReviewDelete: () -> Unit = {},
+  showMyTestReviewToast: (String) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -300,7 +303,7 @@ fun MyTestReviewEditScreen(
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = popBackStack,
+        onClick = { showMyTestReviewToast("시험정보가 수정되었습니다.") },
       )
     }
     if (uiState.showDeleteTestReviewDialog) {
@@ -310,11 +313,15 @@ fun MyTestReviewEditScreen(
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissTestReviewDelete,
-        onClickConfirm = popBackStack,
+        onClickConfirm = { showMyTestReviewToast("시험정보가 삭제되었습니다.") },
         onClickDismiss = onDismissTestReviewDelete,
       )
     }
   }
+  SuwikiToast(
+    visible = uiState.showDeleteTestReviewToastVisible,
+    message = uiState.showDeleteTestReviewToastMessage,
+  )
 }
 
 @Preview

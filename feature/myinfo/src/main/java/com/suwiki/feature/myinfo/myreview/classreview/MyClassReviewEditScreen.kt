@@ -41,6 +41,7 @@ import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.component.slider.SuwikiSlider
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
+import com.suwiki.core.designsystem.component.toast.SuwikiToast
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
@@ -108,6 +109,7 @@ fun MyClassReviewEditRoute(
     onClickHomeworkMuch = viewModel::setHomeworkMuch,
     onClickTeamNone = viewModel::setTeamNone,
     onClickTeamExist = viewModel::setTeamExist,
+    showMyClassReviewToast = viewModel::showMyClassReviewToast,
   )
 }
 
@@ -135,6 +137,7 @@ fun MyClassReviewEditScreen(
   onClassReviewValueChange: (String) -> Unit = { _ -> },
   onClickClassReviewDeleteButton: () -> Unit = {},
   onDismissClassReviewDelete: () -> Unit = {},
+  showMyClassReviewToast: (String) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -375,7 +378,7 @@ fun MyClassReviewEditScreen(
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = popBackStack,
+        onClick = { showMyClassReviewToast("강의평가가 수정되었습니다.") },
       )
     }
     if (uiState.showDeleteClassReviewDialog) {
@@ -385,11 +388,15 @@ fun MyClassReviewEditScreen(
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissClassReviewDelete,
-        onClickConfirm = popBackStack,
+        onClickConfirm = { showMyClassReviewToast("강의평가가 삭제되었습니다.") },
         onClickDismiss = onDismissClassReviewDelete,
       )
     }
   }
+  SuwikiToast(
+    visible = uiState.showDeleteClassReviewToastVisible,
+    message = uiState.showDeleteClassReviewToastMessage,
+  )
 }
 
 @Preview

@@ -21,6 +21,8 @@ data class MyClassReviewEditState(
   val classReview: String = "",
   val showSemesterBottomSheet: Boolean = false,
   val showDeleteClassReviewDialog: Boolean = false,
+  val showDeleteClassReviewToastMessage: String = "",
+  val showDeleteClassReviewToastVisible: Boolean = false,
 )
 
 sealed interface MyClassReviewEditSideEffect {

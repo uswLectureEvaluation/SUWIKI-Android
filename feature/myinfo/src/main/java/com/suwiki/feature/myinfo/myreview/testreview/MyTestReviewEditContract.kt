@@ -22,6 +22,8 @@ data class MyTestReviewEditState(
   val showSemesterBottomSheet: Boolean = false,
   val showTestTypeBottomSheet: Boolean = false,
   val showDeleteTestReviewDialog: Boolean = false,
+  val showDeleteTestReviewToastMessage: String = "",
+  val showDeleteTestReviewToastVisible: Boolean = false,
 )
 
 sealed interface MyTestReviewEditSideEffect {
