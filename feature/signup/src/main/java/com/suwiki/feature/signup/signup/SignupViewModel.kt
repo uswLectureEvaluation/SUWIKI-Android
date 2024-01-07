@@ -1,8 +1,9 @@
-package com.suwiki.feature.signup
+package com.suwiki.feature.signup.signup
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.ui.util.REGEX
 import com.suwiki.domain.signup.usecase.CheckIdOverlapUseCase
+import com.suwiki.domain.signup.usecase.SignupUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignupViewModel @Inject constructor(
   private val checkIdOverlapUseCase: CheckIdOverlapUseCase,
+  private val signupUseCase: SignupUseCase,
 ) : ContainerHost<SignupState, SignupSideEffect>, ViewModel() {
   override val container: Container<SignupState, SignupSideEffect> = container(SignupState())
 
@@ -38,6 +40,24 @@ class SignupViewModel @Inject constructor(
   private var passwordFocused = false
   private var passwordConfirmFocused = false
   private var emailFocused = false
+
+  fun signup() = intent {
+    reduce { state.copy(isLoading = true) }
+    signupUseCase(
+      SignupUseCase.Param(
+        id = idState.id,
+        password = passwordState.passwordConfirm,
+        email = emailState.email,
+      ),
+    )
+      .onSuccess {
+        postSideEffect(SignupSideEffect.NavigateSignupComplete)
+      }
+      .onFailure {
+        postSideEffect(SignupSideEffect.HandleException(it))
+      }
+    reduce { state.copy(isLoading = false) }
+  }
 
   @OptIn(OrbitExperimental::class)
   fun updateEmail(email: String) = blockingIntent {

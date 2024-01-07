@@ -77,6 +77,7 @@ internal fun MainScreen(
         signupNavGraph(
           popBackStack = navigator::popBackStackIfNotHome,
           handleException = viewModel::handleException,
+          navigateSignupComplete = navigator::navigateSignupComplete,
           navigateLogin = navigator::navigateLogin,
         )
 

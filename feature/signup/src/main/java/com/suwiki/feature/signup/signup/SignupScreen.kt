@@ -1,6 +1,5 @@
-package com.suwiki.feature.signup
+package com.suwiki.feature.signup.signup
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +28,7 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.textfield.SuwikiRegularTextField
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.util.LaunchedEffectWithLifecycle
+import com.suwiki.feature.signup.R
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.flow.debounce
@@ -44,7 +44,7 @@ const val TEXT_FIELD_DEBOUNCE = 800L
 fun SignupRoute(
   viewModel: SignupViewModel = hiltViewModel(),
   popBackStack: () -> Unit,
-  navigateLogin: () -> Unit,
+  navigateSignupComplete: () -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
@@ -56,16 +56,18 @@ fun SignupRoute(
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is SignupSideEffect.HandleException -> handleException(sideEffect.throwable)
-      SignupSideEffect.NavigateLogin -> navigateLogin()
+      SignupSideEffect.NavigateSignupComplete -> navigateSignupComplete()
       SignupSideEffect.PopBackStack -> popBackStack()
       SignupSideEffect.FocusEmail -> {
         awaitFrame()
         emailFocusRequester.requestFocus()
       }
+
       SignupSideEffect.FocusPassword -> {
         awaitFrame()
         passwordFocusRequester.requestFocus()
       }
+
       SignupSideEffect.FocusPasswordConfirm -> {
         awaitFrame()
         passwordConfirmFocusRequester.requestFocus()
@@ -86,7 +88,7 @@ fun SignupRoute(
       .onEach {
         viewModel.checkPasswordInvalid(it.password)
         viewModel.checkPasswordConfirmInvalid(
-          password = it.password, passwordConfirm = it.passwordConfirm
+          password = it.password, passwordConfirm = it.passwordConfirm,
         )
       }
       .launchIn(this)
@@ -116,6 +118,7 @@ fun SignupRoute(
     onClickPasswordConfirmEyeIcon = viewModel::toggleShowPasswordConfirmValue,
     onValueChangeEmail = viewModel::updateEmail,
     onClickEmailTextFieldClearButton = { viewModel.updateEmail("") },
+    onClickSendEmailAuthButton = viewModel::signup,
   )
 }
 
@@ -136,6 +139,7 @@ fun SignupScreen(
   onClickPasswordConfirmEyeIcon: () -> Unit = {},
   onValueChangeEmail: (String) -> Unit = {},
   onClickEmailTextFieldClearButton: () -> Unit = {},
+  onClickSendEmailAuthButton: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier
@@ -225,6 +229,7 @@ fun SignupScreen(
           .align(Alignment.BottomCenter)
           .imePadding(),
         text = stringResource(R.string.signup_screen_receive_auth_email),
+        onClick = onClickSendEmailAuthButton,
       )
     }
 
@@ -247,7 +252,7 @@ fun SignupScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun LectureEvaluationScreenPreview() {
+fun SignupScreenPreview() {
   SuwikiTheme {
     SignupScreen()
   }

@@ -1,10 +1,12 @@
-package com.suwiki.feature.signup
+package com.suwiki.feature.signup.signup
+
+import com.suwiki.feature.signup.R
 
 data class SignupState(
-  val idState: IdState = IdState(),
-  val passwordState: PasswordState = PasswordState(),
-  val emailState: EmailState = EmailState(),
-  val isLoading: Boolean = false,
+    val idState: IdState = IdState(),
+    val passwordState: PasswordState = PasswordState(),
+    val emailState: EmailState = EmailState(),
+    val isLoading: Boolean = false,
 ) {
   val titleResId = when {
     emailState.showEmailTextField -> R.string.signup_screen_title_email
@@ -78,7 +80,7 @@ data class EmailState(
 sealed interface SignupSideEffect {
   data class HandleException(val throwable: Throwable) : SignupSideEffect
   data object PopBackStack : SignupSideEffect
-  data object NavigateLogin : SignupSideEffect
+  data object NavigateSignupComplete : SignupSideEffect
   data object FocusPassword : SignupSideEffect
   data object FocusPasswordConfirm : SignupSideEffect
   data object FocusEmail : SignupSideEffect

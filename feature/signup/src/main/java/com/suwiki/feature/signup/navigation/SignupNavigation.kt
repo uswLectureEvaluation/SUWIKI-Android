@@ -3,26 +3,49 @@ package com.suwiki.feature.signup.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.suwiki.feature.signup.SignupRoute
+import androidx.navigation.navOptions
+import com.suwiki.feature.SignupComplete.complete.SignupCompleteRoute
+import com.suwiki.feature.signup.signup.SignupRoute
 
 fun NavController.navigateSignup() {
   navigate(SignupRoute.route)
 }
 
+fun NavController.navigateSignupComplete() {
+  val navOptions = navOptions {
+    popUpTo(SignupRoute.route) {
+      inclusive = true
+    }
+  }
+
+  navigate(
+    route = SignupRoute.completeRoute,
+    navOptions = navOptions,
+  )
+}
+
 fun NavGraphBuilder.signupNavGraph(
   popBackStack: () -> Unit,
+  navigateSignupComplete: () -> Unit,
   navigateLogin: () -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
   composable(route = SignupRoute.route) {
     SignupRoute(
       popBackStack = popBackStack,
-      navigateLogin = navigateLogin,
+      navigateSignupComplete = navigateSignupComplete,
       handleException = handleException,
+    )
+  }
+
+  composable(route = SignupRoute.completeRoute) {
+    SignupCompleteRoute(
+      navigateLogin = navigateLogin,
     )
   }
 }
 
 object SignupRoute {
   const val route = "signup"
+  const val completeRoute = "signup-complete"
 }

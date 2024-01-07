@@ -229,7 +229,7 @@ fun LoginScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun LectureEvaluationScreenPreview() {
+fun LoginScreenPreview() {
   SuwikiTheme {
     LoginScreen()
   }
