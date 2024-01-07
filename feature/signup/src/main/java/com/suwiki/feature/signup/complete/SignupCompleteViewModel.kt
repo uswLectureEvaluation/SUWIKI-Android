@@ -13,7 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignupCompleteViewModel @Inject constructor() : ContainerHost<SignupCompleteState, SignupCompleteSideEffect>, ViewModel() {
-  override val container: Container<SignupCompleteState, SignupCompleteSideEffect> = container(SignupCompleteState.Default)
+
+  override val container: Container<SignupCompleteState, SignupCompleteSideEffect> = container(
+    SignupCompleteState.Default,
+  )
 
   fun navigateLogin() = intent { postSideEffect(SignupCompleteSideEffect.NavigateLogin) }
   fun openSchoolWebsite() = intent { postSideEffect(SignupCompleteSideEffect.OpenSchoolWebSite) }
