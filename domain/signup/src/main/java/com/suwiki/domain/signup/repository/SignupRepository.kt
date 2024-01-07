@@ -1,6 +1,6 @@
 package com.suwiki.domain.signup.repository
 
-interface SignUpRepository {
+interface SignupRepository {
   suspend fun signUp(
     id: String,
     password: String,

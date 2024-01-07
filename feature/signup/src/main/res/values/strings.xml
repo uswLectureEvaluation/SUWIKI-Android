@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="signup_screen_title_id">아이디를 입력하세요</string>
+  <string name="signup_screen_title_password">비밀번호를 입력하세요</string>
+  <string name="signup_screen_title_password_confirm">비밀번호를 확인하세요</string>
+  <string name="signup_screen_title_email">학교 이메일을 입력하세요</string>
+  <string name="signup_screen_id_textfield_invalid_helper_text">6~20자 영문/숫자를 입력하세요</string>
+  <string name="signup_screen_id_textfield_overlap_helper_text">이미 사용중인 아이디입니다</string>
+  <string name="word_empty" />
+  <string name="signup_screen_password_textfield_invalid_helper_text">8~20자 영문,숫자,특수문자를 조합하세요.</string>
+  <string name="signup_screen_password_textfield_not_same_helper_text">비밀번호가 일치하지 않습니다.</string>
+  <string name="signup_screen_email_textfield_notice_text">웹메일이 휴면 상태인지 확인해주세요\n웹메일 계정은 포털 계정과 다릅니다\n</string>
+  <string name="signup_screen_email_textfield_invalid_text">\@suwon.ac.kr 형식이 아닙니다</string>
+  <string name="signup_screen_email_textfield_placeholder">\@suwon.ac.kr</string>
+  <string name="textfield_password_placeholder">8~20자 영문, 숫자, 특수문자 조합</string>
+  <string name="signup_screen_id_textfield_placeholder">6~20자 영문/숫자</string>
+  <string name="signup_screen_receive_auth_email">인증메일 받기</string>
+  <string name="signup_screen_id_overlap">아이디 중복확인</string>
+</resources>
