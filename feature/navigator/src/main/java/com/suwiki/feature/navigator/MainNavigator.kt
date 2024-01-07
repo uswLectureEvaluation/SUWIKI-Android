@@ -14,6 +14,8 @@ import com.suwiki.feature.myinfo.navigation.navigateMyInfo
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
+import com.suwiki.feature.signup.navigation.navigateSignup
+import com.suwiki.feature.signup.navigation.navigateSignupComplete
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
@@ -49,6 +51,14 @@ internal class MainNavigator(
 
   fun navigateLogin() {
     navController.navigateLogin()
+  }
+
+  fun navigateSignup() {
+    navController.navigateSignup()
+  }
+
+  fun navigateSignupComplete() {
+    navController.navigateSignupComplete()
   }
 
   fun navigateNotice() {

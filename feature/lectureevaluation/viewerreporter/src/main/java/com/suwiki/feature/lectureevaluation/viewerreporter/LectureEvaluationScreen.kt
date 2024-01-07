@@ -7,15 +7,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAgreementBottomSheet
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
+import com.suwiki.core.ui.util.TERMS_SITE
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
 import org.orbitmvi.orbit.compose.collectAsState
@@ -28,13 +33,17 @@ fun LectureEvaluationRoute(
   viewModel: LectureEvaluationViewModel = hiltViewModel(),
   selectedOpenMajor: String,
   navigateLogin: () -> Unit,
+  navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+  val uriHandler = LocalUriHandler.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       LectureEvaluationSideEffect.NavigateLogin -> navigateLogin()
-      LectureEvaluationSideEffect.NavigateSignUp -> TODO()
+      LectureEvaluationSideEffect.NavigateSignUp -> navigateSignUp()
+      LectureEvaluationSideEffect.OpenPersonalPolicyWebSite -> uriHandler.openUri(PRIVACY_POLICY_SITE)
+      LectureEvaluationSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
     }
   }
 
@@ -53,26 +62,47 @@ fun LectureEvaluationRoute(
     uiState = uiState,
     pagerState = pagerState,
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
+    hideAgreementBottomSheet = viewModel::hideAgreementBottomSheet,
     onClickLoginButton = {
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateLogin()
     },
+    onClickSignupButton = viewModel::showAgreementBottomSheet,
     onClickTempText = navigateOpenMajor,
+    onClickTermCheckIcon = viewModel::toggleTermChecked,
+    onClickTermArrowIcon = viewModel::openTermWebSite,
+    onClickPersonalCheckIcon = viewModel::togglePersonalPolicyChecked,
+    onClickPersonalArrowIcon = viewModel::openPersonalPolicyWebSite,
+    onClickAgreementButton = {
+      viewModel.hideAgreementBottomSheet()
+      viewModel.hideOnboardingBottomSheet()
+      viewModel.navigateSignup()
+    },
   )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LectureEvaluationScreen(
   padding: PaddingValues,
   uiState: LectureEvaluationState,
   pagerState: PagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT }),
   hideOnboardingBottomSheet: () -> Unit = {},
+  hideAgreementBottomSheet: () -> Unit = {},
   onClickLoginButton: () -> Unit = {},
   onClickSignupButton: () -> Unit = {},
+  onClickTermCheckIcon: () -> Unit = {},
+  onClickTermArrowIcon: () -> Unit = {},
+  onClickPersonalCheckIcon: () -> Unit = {},
+  onClickPersonalArrowIcon: () -> Unit = {},
+  onClickAgreementButton: () -> Unit = {},
   onClickTempText: (String) -> Unit = {}, // TODO 개설학과 선택 페이지로 임시로 넘어가기 위한 람다입니다. 마음대로 삭제 가능.
 ) {
-  Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+  Box(
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(padding),
+  ) {
     Text(
       modifier = Modifier.suwikiClickable(
         onClick = { onClickTempText(uiState.selectedOpenMajor) },
@@ -86,6 +116,19 @@ fun LectureEvaluationScreen(
       pagerState = pagerState,
       onClickLoginButton = onClickLoginButton,
       onClickSignupButton = onClickSignupButton,
+    )
+
+    SuwikiAgreementBottomSheet(
+      isSheetOpen = uiState.showAgreementBottomSheet,
+      buttonEnabled = uiState.isEnabledAgreementButton,
+      isCheckedTerm = uiState.isCheckedTerm,
+      onClickTermCheckIcon = onClickTermCheckIcon,
+      onClickTermArrowIcon = onClickTermArrowIcon,
+      isCheckedPersonalPolicy = uiState.isCheckedPersonalPolicy,
+      onClickPersonalCheckIcon = onClickPersonalCheckIcon,
+      onClickPersonalArrowIcon = onClickPersonalArrowIcon,
+      onClickAgreementButton = onClickAgreementButton,
+      onDismissRequest = hideAgreementBottomSheet,
     )
   }
 }

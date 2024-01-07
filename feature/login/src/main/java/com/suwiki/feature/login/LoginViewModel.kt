@@ -1,13 +1,11 @@
 package com.suwiki.feature.login
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.exception.EmailNotAuthedException
 import com.suwiki.core.model.exception.LoginFailedException
 import com.suwiki.core.model.exception.PasswordErrorException
 import com.suwiki.domain.login.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -25,24 +23,24 @@ class LoginViewModel @Inject constructor(
   override val container: Container<LoginState, LoginSideEffect> = container(LoginState())
 
   fun login() = intent {
-    viewModelScope.launch {
-      reduce { state.copy(isLoading = true) }
-      loginUseCase(loginId = state.id, password = state.password)
-        .onSuccess {
-          postSideEffect(LoginSideEffect.PopBackStack)
+    reduce { state.copy(isLoading = true) }
+    loginUseCase(loginId = state.id, password = state.password)
+      .onSuccess {
+        postSideEffect(LoginSideEffect.PopBackStack)
+      }
+      .onFailure {
+        when (it) {
+          is LoginFailedException -> reduce { state.copy(showLoginFailDialog = true) }
+          is PasswordErrorException -> reduce { state.copy(showLoginFailDialog = true) }
+          is EmailNotAuthedException -> reduce { state.copy(showEmailNotAuthDialog = true) }
+          else -> postSideEffect(LoginSideEffect.HandleException(it))
         }
-        .onFailure {
-          when (it) {
-            is LoginFailedException -> reduce { state.copy(showLoginFailDialog = true) }
-            is PasswordErrorException -> reduce { state.copy(showLoginFailDialog = true) }
-            is EmailNotAuthedException -> reduce { state.copy(showEmailNotAuthDialog = true) }
-            else -> postSideEffect(LoginSideEffect.HandleException(it))
-          }
-        }
+      }
 
-      reduce { state.copy(isLoading = false) }
-    }
+    reduce { state.copy(isLoading = false) }
   }
+
+  fun navigateSignup() = intent { postSideEffect(LoginSideEffect.NavigateSignUp) }
 
   fun toggleShowPassword() = intent { reduce { state.copy(showPassword = !state.showPassword) } }
 
@@ -55,4 +53,13 @@ class LoginViewModel @Inject constructor(
 
   @OptIn(OrbitExperimental::class)
   fun updatePassword(password: String) = blockingIntent { reduce { state.copy(password = password) } }
+
+  fun showAgreementBottomSheet() = intent { reduce { state.copy(showAgreementBottomSheet = true) } }
+  fun hideAgreementBottomSheet() = intent { reduce { state.copy(showAgreementBottomSheet = false) } }
+
+  fun toggleTermChecked() = intent { reduce { state.copy(isCheckedTerm = !state.isCheckedTerm) } }
+  fun togglePersonalPolicyChecked() = intent { reduce { state.copy(isCheckedPersonalPolicy = !state.isCheckedPersonalPolicy) } }
+
+  fun openTermWebSite() = intent { postSideEffect(LoginSideEffect.OpenTermWebSite) }
+  fun openPersonalPolicyWebSite() = intent { postSideEffect(LoginSideEffect.OpenPersonalPolicyWebSite) }
 }

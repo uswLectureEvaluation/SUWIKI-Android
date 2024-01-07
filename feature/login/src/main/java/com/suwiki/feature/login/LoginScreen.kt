@@ -11,15 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAgreementBottomSheet
 import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
@@ -29,6 +32,8 @@ import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
+import com.suwiki.core.ui.util.TERMS_SITE
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -42,6 +47,7 @@ fun LoginRoute(
   handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+  val uriHandler = LocalUriHandler.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is LoginSideEffect.HandleException -> handleException(sideEffect.throwable)
@@ -49,6 +55,8 @@ fun LoginRoute(
       LoginSideEffect.NavigateFindPassword -> navigateFindPassword()
       LoginSideEffect.NavigateSignUp -> navigateSignup()
       LoginSideEffect.PopBackStack -> popBackStack()
+      LoginSideEffect.OpenPersonalPolicyWebSite -> uriHandler.openUri(PRIVACY_POLICY_SITE)
+      LoginSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
     }
   }
 
@@ -61,13 +69,23 @@ fun LoginRoute(
     onClickPasswordEyeIcon = viewModel::toggleShowPassword,
     onClickFindIdText = { /* TODO */ },
     onClickFindPasswordText = { /* TODO */ },
-    onClickSignupText = { /* TODO */ },
+    onClickSignupText = viewModel::showAgreementBottomSheet,
     onClickLoginButton = viewModel::login,
     onClickLoginFailDialogButton = viewModel::hideLoginFailDialog,
     onClickEmailNotAuthDialogButton = viewModel::hideEmailNotAuthDialog,
+    onClickTermCheckIcon = viewModel::toggleTermChecked,
+    onClickTermArrowIcon = viewModel::openTermWebSite,
+    onClickPersonalCheckIcon = viewModel::togglePersonalPolicyChecked,
+    onClickPersonalArrowIcon = viewModel::openPersonalPolicyWebSite,
+    onClickAgreementButton = {
+      viewModel.hideAgreementBottomSheet()
+      viewModel.navigateSignup()
+    },
+    hideAgreementBottomSheet = viewModel::hideAgreementBottomSheet,
   )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
   uiState: LoginState = LoginState(),
@@ -82,6 +100,12 @@ fun LoginScreen(
   onClickLoginButton: () -> Unit = {},
   onClickLoginFailDialogButton: () -> Unit = {},
   onClickEmailNotAuthDialogButton: () -> Unit = {},
+  hideAgreementBottomSheet: () -> Unit = {},
+  onClickTermCheckIcon: () -> Unit = {},
+  onClickTermArrowIcon: () -> Unit = {},
+  onClickPersonalCheckIcon: () -> Unit = {},
+  onClickPersonalArrowIcon: () -> Unit = {},
+  onClickAgreementButton: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier
@@ -187,12 +211,25 @@ fun LoginScreen(
     if (uiState.isLoading) {
       LoadingScreen()
     }
+
+    SuwikiAgreementBottomSheet(
+      isSheetOpen = uiState.showAgreementBottomSheet,
+      buttonEnabled = uiState.isEnabledAgreementButton,
+      isCheckedTerm = uiState.isCheckedTerm,
+      onClickTermCheckIcon = onClickTermCheckIcon,
+      onClickTermArrowIcon = onClickTermArrowIcon,
+      isCheckedPersonalPolicy = uiState.isCheckedPersonalPolicy,
+      onClickPersonalCheckIcon = onClickPersonalCheckIcon,
+      onClickPersonalArrowIcon = onClickPersonalArrowIcon,
+      onClickAgreementButton = onClickAgreementButton,
+      onDismissRequest = hideAgreementBottomSheet,
+    )
   }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LectureEvaluationScreenPreview() {
+fun LoginScreenPreview() {
   SuwikiTheme {
     LoginScreen()
   }
