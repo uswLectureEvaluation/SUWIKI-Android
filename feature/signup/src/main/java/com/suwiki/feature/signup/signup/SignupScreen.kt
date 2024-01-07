@@ -88,7 +88,8 @@ fun SignupRoute(
       .onEach {
         viewModel.checkPasswordInvalid(it.password)
         viewModel.checkPasswordConfirmInvalid(
-          password = it.password, passwordConfirm = it.passwordConfirm,
+          password = it.password,
+          passwordConfirm = it.passwordConfirm,
         )
       }
       .launchIn(this)
@@ -100,7 +101,6 @@ fun SignupRoute(
       .onEach(viewModel::checkEmailInvalid)
       .launchIn(this)
   }
-
 
   SignupScreen(
     uiState = uiState,
@@ -242,7 +242,6 @@ fun SignupScreen(
         onClick = onClickIdOverlapButton,
       )
     }
-
 
     if (uiState.isLoading) {
       LoadingScreen()

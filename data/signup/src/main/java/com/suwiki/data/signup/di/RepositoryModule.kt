@@ -15,6 +15,6 @@ abstract class RepositoryModule {
   @Singleton
   @Binds
   abstract fun bindSignUpRepository(
-      signUpRepositoryImpl: SignupRepositoryImpl,
+    signUpRepositoryImpl: SignupRepositoryImpl,
   ): SignupRepository
 }

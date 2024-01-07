@@ -15,9 +15,9 @@ fun LaunchedEffectWithLifecycle(
   minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
   action: suspend CoroutineScope.() -> Unit = {},
 ) {
-    LaunchedEffect(key1 = key1) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(minActiveState) {
-            action()
-        }
+  LaunchedEffect(key1 = key1) {
+    lifecycleOwner.lifecycle.repeatOnLifecycle(minActiveState) {
+      action()
     }
+  }
 }

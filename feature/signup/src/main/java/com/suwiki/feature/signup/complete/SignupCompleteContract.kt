@@ -1,6 +1,5 @@
 package com.suwiki.feature.signup.complete
 
-
 sealed interface SignupCompleteState {
   data object Default : SignupCompleteState
 }

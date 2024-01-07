@@ -38,7 +38,6 @@ fun SignupCompleteRoute(
     }
   }
 
-
   SignupCompleteScreen(
     onClickConfirmEmailButton = viewModel::openSchoolWebsite,
     onClickLoginButton = viewModel::navigateLogin,
@@ -96,7 +95,6 @@ fun SignupCompleteScreen(
 
     SuwikiOutlinedButton(text = "로그인", onClick = onClickLoginButton)
   }
-
 }
 
 @Preview(showBackground = true)

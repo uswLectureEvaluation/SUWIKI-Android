@@ -3,10 +3,10 @@ package com.suwiki.feature.signup.signup
 import com.suwiki.feature.signup.R
 
 data class SignupState(
-    val idState: IdState = IdState(),
-    val passwordState: PasswordState = PasswordState(),
-    val emailState: EmailState = EmailState(),
-    val isLoading: Boolean = false,
+  val idState: IdState = IdState(),
+  val passwordState: PasswordState = PasswordState(),
+  val emailState: EmailState = EmailState(),
+  val isLoading: Boolean = false,
 ) {
   val titleResId = when {
     emailState.showEmailTextField -> R.string.signup_screen_title_email
@@ -50,7 +50,6 @@ data class PasswordState(
   }
 
   val isErrorPasswordTextField = showPasswordInvalidHelperText
-
 
   val passwordConfirmHelperTextResId = when {
     showPasswordConfirmInvalidHelperText -> R.string.signup_screen_password_textfield_invalid_helper_text

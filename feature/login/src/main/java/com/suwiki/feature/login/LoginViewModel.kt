@@ -1,13 +1,11 @@
 package com.suwiki.feature.login
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.exception.EmailNotAuthedException
 import com.suwiki.core.model.exception.LoginFailedException
 import com.suwiki.core.model.exception.PasswordErrorException
 import com.suwiki.domain.login.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
