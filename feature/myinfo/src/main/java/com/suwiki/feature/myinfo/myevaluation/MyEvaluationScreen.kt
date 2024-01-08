@@ -117,14 +117,7 @@ fun MyEvaluationScreen(
       MyEvaluationTab.entries.forEach { tab ->
         with(tab) {
           TabTitle(
-            title = stringResource(
-              title,
-              if (tab == MyEvaluationTab.LECTURE_EVALUATION) {
-                uiState.myLectureEvaluationList.size
-              } else {
-                uiState.myExamEvaluationList.size
-              },
-            ),
+            title = stringResource(title),
             position = position,
             selected = pagerState.currentPage == position,
             onClick = { onClickTab(position) },
