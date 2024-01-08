@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,12 +50,20 @@ fun MyLectureEvaluationEditRoute(
   padding: PaddingValues,
   viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
+  onShowToast: (String) -> Unit = {},
 ) {
+  val context = LocalContext.current
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyLectureEvaluationEditSideEffect.PopBackStack -> popBackStack()
+      MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast -> {
+        onShowToast(context.getString(R.string.my_lecture_evaluation_delete_toast_msg))
+      }
+      MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationReviseToast -> {
+        onShowToast(context.getString(R.string.my_lecture_evaluation_revise_toast_msg))
+      }
     }
   }
 
@@ -83,7 +92,8 @@ fun MyLectureEvaluationEditRoute(
     onClickHomeworkMuch = viewModel::setHomeworkMuch,
     onClickTeamNone = viewModel::setTeamNone,
     onClickTeamExist = viewModel::setTeamExist,
-    showMyLectureEvaluationToast = viewModel::showMyLectureEvaluationToast,
+    onClickLectureEvaluationDeleteConfirm = viewModel::clickDeleteButton,
+    onClickLectureEvaluationReviseButton = viewModel::clickReviseButton
   )
 }
 
@@ -109,8 +119,9 @@ fun MyLectureEvaluationEditScreen(
   onClickTeamExist: () -> Unit = {},
   onLectureEvaluationValueChange: (String) -> Unit = { _ -> },
   onClickLectureEvaluationDeleteButton: () -> Unit = {},
+  onClickLectureEvaluationDeleteConfirm: () -> Unit = {},
   onDismissLectureEvaluationDelete: () -> Unit = {},
-  showMyLectureEvaluationToast: (String) -> Unit = {},
+  onClickLectureEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -284,7 +295,7 @@ fun MyLectureEvaluationEditScreen(
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = { showMyLectureEvaluationToast("강의평가가 수정되었습니다.") },
+        onClick = onClickLectureEvaluationReviseButton,
       )
     }
     if (uiState.showDeleteLectureEvaluationDialog) {
@@ -294,7 +305,7 @@ fun MyLectureEvaluationEditScreen(
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissLectureEvaluationDelete,
-        onClickConfirm = { showMyLectureEvaluationToast("강의평가가 삭제되었습니다.") },
+        onClickConfirm = onClickLectureEvaluationDeleteConfirm,
         onClickDismiss = onDismissLectureEvaluationDelete,
       )
     }

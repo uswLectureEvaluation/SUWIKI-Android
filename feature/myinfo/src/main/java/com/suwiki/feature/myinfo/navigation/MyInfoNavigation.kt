@@ -33,6 +33,7 @@ fun NavGraphBuilder.myInfoNavGraph(
   navigateMyEvaluation: () -> Unit = {},
   navigateMyLectureEvaluationEdit: () -> Unit = {},
   navigateMyExamEvaluationEdit: () -> Unit = {},
+  onShowToast: (String) -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
     MyInfoRoute(
@@ -53,12 +54,14 @@ fun NavGraphBuilder.myInfoNavGraph(
     MyLectureEvaluationEditRoute(
       padding = padding,
       popBackStack = popBackStack,
+      onShowToast = onShowToast,
     )
   }
   composable(route = MyInfoRoute.myExamEvaluationEditRoute) {
     MyExamEvalutionEditRoute(
       padding = padding,
       popBackStack = popBackStack,
+      onShowToast = onShowToast,
     )
   }
 }

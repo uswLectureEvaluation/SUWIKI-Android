@@ -16,6 +16,8 @@ data class MyExamEvaluationEditState(
   val showDeleteExamEvalutionToastVisible: Boolean = false,
 )
 
-sealed interface MyExamEvalutionEditSideEffect {
-  data object PopBackStack : MyExamEvalutionEditSideEffect
+sealed interface MyExamEvaluationEditSideEffect {
+  data object PopBackStack : MyExamEvaluationEditSideEffect
+  data object ShowMyExamEvaluationDeleteToast : MyExamEvaluationEditSideEffect
+  data object ShowMyExamEvaluationReviseToast : MyExamEvaluationEditSideEffect
 }

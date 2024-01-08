@@ -19,4 +19,6 @@ data class MyLectureEvaluationEditState(
 
 sealed interface MyLectureEvaluationEditSideEffect {
   data object PopBackStack : MyLectureEvaluationEditSideEffect
+  data object ShowMyLectureEvaluationDeleteToast : MyLectureEvaluationEditSideEffect
+  data object ShowMyLectureEvaluationReviseToast : MyLectureEvaluationEditSideEffect
 }

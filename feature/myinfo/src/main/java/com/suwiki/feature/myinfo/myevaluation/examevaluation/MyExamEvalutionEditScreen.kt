@@ -17,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,7 +31,6 @@ import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
-import com.suwiki.core.designsystem.component.toast.SuwikiToast
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
@@ -43,12 +43,20 @@ fun MyExamEvalutionEditRoute(
   padding: PaddingValues,
   viewModel: MyExamEvalutionEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
+  onShowToast: (String) -> Unit = {},
 ) {
+  val context = LocalContext.current
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyExamEvalutionEditSideEffect.PopBackStack -> popBackStack()
+      MyExamEvaluationEditSideEffect.PopBackStack -> popBackStack()
+      MyExamEvaluationEditSideEffect.ShowMyExamEvaluationDeleteToast -> {
+        onShowToast(context.getString(R.string.my_exam_evaluation_delete_toast_msg))
+      }
+      MyExamEvaluationEditSideEffect.ShowMyExamEvaluationReviseToast -> {
+        onShowToast(context.getString(R.string.my_exam_evaluation_revise_toast_msg))
+      }
     }
   }
 
@@ -78,7 +86,8 @@ fun MyExamEvalutionEditRoute(
     onExamEvalutionValueChange = viewModel::updateMyExamEvalutionValue,
     onClickExamEvalutionDeleteButton = viewModel::showMyExamEvalutionDeleteDialog,
     onDismissExamEvalutionDelete = viewModel::hideMyExamEvalutionDeleteDialog,
-    showMyExamEvalutionToast = viewModel::showMyExamEvalutionToast,
+    onClickExamEvaluationDeleteConfirm = viewModel::clickDeleteButton,
+    onClickExamEvaluationReviseButton = viewModel::clickReviseButton
   )
 }
 
@@ -104,9 +113,10 @@ fun MyExamEvalutionEditScreen(
   onClickExamTypePractice: () -> Unit = {},
   onClickExamTypeHomework: () -> Unit = {},
   onClickExamEvalutionDeleteButton: () -> Unit = {},
+  onClickExamEvaluationDeleteConfirm: () -> Unit = {},
   onExamEvalutionValueChange: (String) -> Unit = { _ -> },
   onDismissExamEvalutionDelete: () -> Unit = {},
-  showMyExamEvalutionToast: (String) -> Unit = {},
+  onClickExamEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -268,7 +278,7 @@ fun MyExamEvalutionEditScreen(
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = { showMyExamEvalutionToast("시험정보가 수정되었습니다.") },
+        onClick = onClickExamEvaluationReviseButton,
       )
     }
     if (uiState.showDeleteExamEvalutionDialog) {
@@ -278,15 +288,11 @@ fun MyExamEvalutionEditScreen(
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
         onDismissRequest = onDismissExamEvalutionDelete,
-        onClickConfirm = { showMyExamEvalutionToast("시험정보가 삭제되었습니다.") },
+        onClickConfirm = onClickExamEvaluationDeleteConfirm,
         onClickDismiss = onDismissExamEvalutionDelete,
       )
     }
   }
-  SuwikiToast(
-    visible = uiState.showDeleteExamEvalutionToastVisible,
-    message = uiState.showDeleteExamEvalutionToastMessage,
-  )
   if (uiState.isLoading) {
     LoadingScreen()
   }

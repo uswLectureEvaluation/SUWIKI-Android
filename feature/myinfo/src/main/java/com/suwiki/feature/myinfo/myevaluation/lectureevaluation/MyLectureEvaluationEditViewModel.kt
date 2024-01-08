@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -31,6 +29,18 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     /* TODO 에러 처리 */
     getUserInfoUseCase().collect(::setPoint)
     hideLoadingScreen()
+  }
+
+  fun clickReviseButton() {
+    showReviseToast()
+    // TODO("내 강의평가 수정 API 호출")
+    popBackStack()
+  }
+
+  fun clickDeleteButton() {
+    showDeleteToast()
+    // TODO("내 강의평가 수정 API 호출")
+    popBackStack()
   }
 
   fun getSemester(semester: String) = intent {
@@ -69,15 +79,8 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   fun hideMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
-  fun showMyLectureEvaluationToast(msg: String) = intent {
-    hideMyLectureEvaluationDeleteDialog()
-    mutex.withLock {
-      reduce { state.copy(showDeleteLectureEvaluationToastMessage = msg, showDeleteLectureEvaluationToastVisible = true) }
-      delay(SHOW_TOAST_LENGTH)
-      reduce { state.copy(showDeleteLectureEvaluationToastVisible = false) }
-      popBackStack()
-    }
-  }
 
   fun popBackStack() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.PopBackStack) }
+  private fun showDeleteToast() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast) }
+  private fun showReviseToast() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationReviseToast) }
 }
