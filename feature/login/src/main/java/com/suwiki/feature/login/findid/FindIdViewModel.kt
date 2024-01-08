@@ -3,8 +3,6 @@ package com.suwiki.feature.login.findid
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.ui.util.REGEX
 import com.suwiki.domain.login.usecase.FindIdUseCase
-import com.suwiki.feature.login.findid.FindIdSideEffect
-import com.suwiki.feature.login.findid.FindIdState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -37,12 +35,12 @@ class FindIdViewModel @Inject constructor(
   fun checkEmailInvalid(email: String) {
     when {
       email.isEmpty() -> Unit
-      email.matches(REGEX.EMAIL) -> showSendAuthEmailButton()
+      email.matches(REGEX.EMAIL) -> showFindIdButton()
       else -> showEmailInvalidHelperText()
     }
   }
 
-  private fun showSendAuthEmailButton() = intent {
+  private fun showFindIdButton() = intent {
     reduce {
       state.copy(
         showFindIdButton = true,
