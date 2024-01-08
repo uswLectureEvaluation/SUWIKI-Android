@@ -1,5 +1,8 @@
 package com.suwiki.core.model.lectureevaluation.lecture
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class MyLectureEvaluation(
   val id: Long = 0,
   val lectureInfo: LectureInfo = LectureInfo(),

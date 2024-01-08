@@ -1,5 +1,8 @@
 package com.suwiki.core.model.lectureevaluation.exam
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class MyExamEvaluation(
   val id: Long? = null,
   val lectureName: String? = null, // 과목 이름
