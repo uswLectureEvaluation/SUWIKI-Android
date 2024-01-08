@@ -12,7 +12,7 @@ import androidx.compose.runtime.snapshotFlow
 fun LazyListState.OnBottomReached(
   // tells how many items before we reach the bottom of the list
   // to call onLoadMore function
-  buffer: Int = 0,
+  buffer: Int = 3,
   onLoadMore: () -> Unit,
 ) {
   // Buffer must be positive.
