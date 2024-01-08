@@ -1,8 +1,8 @@
-package com.suwiki.feature.myinfo.myreview.testreview
+package com.suwiki.feature.myinfo.myevaluation.examevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.suwiki.feature.myinfo.myreview.classreview.SHOW_TOAST_LENGTH
+import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.SHOW_TOAST_LENGTH
 import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -17,17 +17,17 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class MyTestReviewEditViewModel @Inject constructor(
+class MyExamEvalutionEditViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
-) : ContainerHost<MyTestReviewEditState, MyTestReviewEditSideEffect>, ViewModel() {
-  override val container: Container<MyTestReviewEditState, MyTestReviewEditSideEffect> =
-    container(MyTestReviewEditState())
+) : ContainerHost<MyExamEvaluationEditState, MyExamEvalutionEditSideEffect>, ViewModel() {
+  override val container: Container<MyExamEvaluationEditState, MyExamEvalutionEditSideEffect> =
+    container(MyExamEvaluationEditState())
 
   private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
   private val mutex = Mutex()
 
   fun getSemester(semester: String) = intent { reduce { state.copy(selectedSemester = semester) } }
-  fun getTestType(testType: String) = intent { reduce { state.copy(selectedTestType = testType) } }
+  fun getExamType(testType: String) = intent { reduce { state.copy(selectedExamType = testType) } }
 
   fun setPoint() = intent { reduce { state.copy(point = point) } }
   fun setExamDifficultyEasy() = intent { reduce { state.copy(examDifficulty = "easy") } }
@@ -41,24 +41,24 @@ class MyTestReviewEditViewModel @Inject constructor(
   fun setExamTypePractice() = intent { reduce { state.copy(examType = "practice") } }
   fun setExamTypeHomework() = intent { reduce { state.copy(examType = "homework") } }
 
-  fun updateMyClassReviewValue(testReviewValue: String) = intent {
-    reduce { state.copy(testReview = testReviewValue) }
+  fun updateMyExamEvalutionValue(examEvalutionValue: String) = intent {
+    reduce { state.copy(examEvalution = examEvalutionValue) }
   }
 
-  fun showMyTestReviewDeleteDialog() = intent { reduce { state.copy(showDeleteTestReviewDialog = true) } }
-  fun hideMyTestReviewDeleteDialog() = intent { reduce { state.copy(showDeleteTestReviewDialog = false) } }
+  fun showMyExamEvalutionDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvalutionDialog = true) } }
+  fun hideMyExamEvalutionDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvalutionDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
-  fun showTestTypeBottomSheet() = intent { reduce { state.copy(showTestTypeBottomSheet = true) } }
-  fun hideTestTypeBottomSheet() = intent { reduce { state.copy(showTestTypeBottomSheet = false) } }
-  fun showMyTestReviewToast(msg: String) = intent {
-    hideMyTestReviewDeleteDialog()
+  fun showExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = true) } }
+  fun hideExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = false) } }
+  fun showMyExamEvalutionToast(msg: String) = intent {
+    hideMyExamEvalutionDeleteDialog()
     mutex.withLock {
-      reduce { state.copy(showDeleteTestReviewToastMessage = msg, showDeleteTestReviewToastVisible = true) }
+      reduce { state.copy(showDeleteExamEvalutionToastMessage = msg, showDeleteExamEvalutionToastVisible = true) }
       delay(SHOW_TOAST_LENGTH)
-      reduce { state.copy(showDeleteTestReviewToastVisible = false) }
+      reduce { state.copy(showDeleteExamEvalutionToastVisible = false) }
       popBackStack()
     }
   }
-  fun popBackStack() = intent { postSideEffect(MyTestReviewEditSideEffect.PopBackStack) }
+  fun popBackStack() = intent { postSideEffect(MyExamEvalutionEditSideEffect.PopBackStack) }
 }

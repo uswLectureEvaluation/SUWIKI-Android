@@ -47,14 +47,14 @@ fun MyInfoRoute(
   padding: PaddingValues,
   viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
-  navigateMyReview: (Int) -> Unit,
+  navigateMyEvaluation: (Int) -> Unit,
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyInfoSideEffect.NavigateNotice -> navigateNotice()
-      is MyInfoSideEffect.NavigateMyReview -> navigateMyReview(sideEffect.point)
+      is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation(sideEffect.point)
     }
   }
 
@@ -67,7 +67,7 @@ fun MyInfoRoute(
     uiState = uiState,
     scrollState = scrollState,
     onClickNoticeButton = viewModel::navigateNotice,
-    onClickMyReviewButton = viewModel::navigateMyReview,
+    onClickMyEvaluationButton = viewModel::navigateMyEvaluation,
   )
 }
 
@@ -77,7 +77,7 @@ fun MyInfoScreen(
   uiState: MyInfoState,
   scrollState: ScrollState,
   onClickNoticeButton: () -> Unit,
-  onClickMyReviewButton: (Int) -> Unit,
+  onClickMyEvaluationButton: (Int) -> Unit,
 ) {
   val myList = immutableListOf(
     R.string.my_info_point,
@@ -105,7 +105,7 @@ fun MyInfoScreen(
             LoginMyInfoCard(
               userId = loginId,
               point = point,
-              onClickMyReview = { onClickMyReviewButton(uiState.point) },
+              onClickMyEvaluation = { onClickMyEvaluationButton(uiState.point) },
             )
           } else {
             LogoutMyInfoCard()
@@ -212,7 +212,7 @@ fun LogoutMyInfoCard(
 fun LoginMyInfoCard(
   userId: String,
   point: Int,
-  onClickMyReview: () -> Unit = {},
+  onClickMyEvaluation: () -> Unit = {},
 ) {
   Row(
     horizontalArrangement = Arrangement.SpaceBetween,
@@ -253,7 +253,7 @@ fun LoginMyInfoCard(
       verticalAlignment = Alignment.CenterVertically,
       modifier = Modifier
         .padding(top = 31.dp, end = 6.dp)
-        .suwikiClickable(onClick = onClickMyReview),
+        .suwikiClickable(onClick = onClickMyEvaluation),
     ) {
       Text(
         text = stringResource(R.string.my_info_my_post),
@@ -326,7 +326,7 @@ fun MyInfoScreenScreenPreview() {
       uiState = MyInfoState(true),
       scrollState = scrollState,
       onClickNoticeButton = {},
-      onClickMyReviewButton = {},
+      onClickMyEvaluationButton = {},
     )
   }
 }

@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myreview.classreview
+package com.suwiki.feature.myinfo.myevaluation.lectureevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -18,11 +18,11 @@ import javax.inject.Inject
 const val SHOW_TOAST_LENGTH = 2000L
 
 @HiltViewModel
-class MyClassReviewEditViewModel @Inject constructor(
+class MyLectureEvaluationEditViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
-) : ContainerHost<MyClassReviewEditState, MyClassReviewEditSideEffect>, ViewModel() {
-  override val container: Container<MyClassReviewEditState, MyClassReviewEditSideEffect> =
-    container(MyClassReviewEditState())
+) : ContainerHost<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect>, ViewModel() {
+  override val container: Container<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect> =
+    container(MyLectureEvaluationEditState())
 
   private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
   private val mutex = Mutex()
@@ -43,8 +43,8 @@ class MyClassReviewEditViewModel @Inject constructor(
     reduce { state.copy(satisfactionRating = if (satisfactionRating < 0.5) 0.5F else satisfactionRating) }
   }
 
-  fun updateMyClassReviewValue(classReviewValue: String) = intent {
-    reduce { state.copy(classReview = classReviewValue) }
+  fun updateMyLectureEvaluationValue(lectureEvaluationValue: String) = intent {
+    reduce { state.copy(lectureEvaluation = lectureEvaluationValue) }
   }
 
   fun setPoint() = intent { reduce { state.copy(point = point) } }
@@ -57,19 +57,19 @@ class MyClassReviewEditViewModel @Inject constructor(
   fun setTeamNone() = intent { reduce { state.copy(team = 0) } }
   fun setTeamExist() = intent { reduce { state.copy(team = 1) } }
 
-  fun showMyClassReviewDeleteDialog() = intent { reduce { state.copy(showDeleteClassReviewDialog = true) } }
-  fun hideMyClassReviewDeleteDialog() = intent { reduce { state.copy(showDeleteClassReviewDialog = false) } }
+  fun showMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
+  fun hideMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
-  fun showMyClassReviewToast(msg: String) = intent {
-    hideMyClassReviewDeleteDialog()
+  fun showMyLectureEvaluationToast(msg: String) = intent {
+    hideMyLectureEvaluationDeleteDialog()
     mutex.withLock {
-      reduce { state.copy(showDeleteClassReviewToastMessage = msg, showDeleteClassReviewToastVisible = true) }
+      reduce { state.copy(showDeleteLectureEvaluationToastMessage = msg, showDeleteLectureEvaluationToastVisible = true) }
       delay(SHOW_TOAST_LENGTH)
-      reduce { state.copy(showDeleteClassReviewToastVisible = false) }
+      reduce { state.copy(showDeleteLectureEvaluationToastVisible = false) }
       popBackStack()
     }
   }
 
-  fun popBackStack() = intent { postSideEffect(MyClassReviewEditSideEffect.PopBackStack) }
+  fun popBackStack() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.PopBackStack) }
 }

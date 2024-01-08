@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myreview
+package com.suwiki.feature.myinfo.myevaluation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -34,32 +34,32 @@ import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.feature.myinfo.R
-import com.suwiki.feature.myinfo.myreview.model.MyReviewTab
+import com.suwiki.feature.myinfo.myevaluation.model.MyEvaluationTab
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-private val MY_REVIEW_PAGE_COUNT = MyReviewTab.entries.size
+private val MY_EVALUATION_PAGE_COUNT = MyEvaluationTab.entries.size
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MyReviewRoute(
+fun MyEvaluationRoute(
   padding: PaddingValues,
-  viewModel: MyReviewViewModel = hiltViewModel(),
+  viewModel: MyEvaluationViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
-  navigateMyClassReview: (Int) -> Unit = {},
-  navigateMyTestReview: (Int) -> Unit = {},
+  navigateMyLectureEvaluation: (Int) -> Unit = {},
+  navigateMyExamEvaluation: (Int) -> Unit = {},
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyReviewSideEffect.PopBackStack -> popBackStack()
-      is MyReviewSideEffect.NavigateMyClassReview -> navigateMyClassReview(sideEffect.point)
-      is MyReviewSideEffect.NavigateMyTestReview -> navigateMyTestReview(sideEffect.point)
+      MyEvaluationSideEffect.PopBackStack -> popBackStack()
+      is MyEvaluationSideEffect.NavigateMyLectureEvaluation -> navigateMyLectureEvaluation(sideEffect.point)
+      is MyEvaluationSideEffect.NavigateMyExamEvaluation -> navigateMyExamEvaluation(sideEffect.point)
     }
   }
-  val pagerState = rememberPagerState(pageCount = { MY_REVIEW_PAGE_COUNT })
+  val pagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT })
 
   LaunchedEffect(key1 = Unit) {
     viewModel.loadInitList()
@@ -73,28 +73,28 @@ fun MyReviewRoute(
     viewModel.syncPager(it)
   }
 
-  MyReviewScreen(
+  MyEvaluationScreen(
     padding = padding,
     uiState = uiState,
     pagerState = pagerState,
     onClickTab = viewModel::syncPager,
     onClickBack = viewModel::popBackStack,
-    onClickClassReviewEditButton = viewModel::navigateMyClassReview,
-    onClickTestReviewEditButton = viewModel::navigateMyTestReview,
+    onClickLectureEvaluationEditButton = viewModel::navigateMyLectureEvaluation,
+    onClickExamEvaluationEditButton = viewModel::navigateMyExamEvaluation,
   )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyReviewScreen(
+fun MyEvaluationScreen(
   padding: PaddingValues,
-  uiState: MyReviewState,
-  pagerState: PagerState = rememberPagerState(pageCount = { MY_REVIEW_PAGE_COUNT }),
+  uiState: MyEvaluationState,
+  pagerState: PagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT }),
   onClickTab: (Int) -> Unit = {},
   onClickBack: () -> Unit = {},
-  onClickClassReviewEditButton: (Int) -> Unit = {},
-  onClickTestReviewEditButton: (Int) -> Unit = {},
+  onClickLectureEvaluationEditButton: (Int) -> Unit = {},
+  onClickExamEvaluationEditButton: (Int) -> Unit = {},
 ) {
   // TODO(REMOVE)
   val myLectureReviewList: PersistentList<String> = persistentListOf("머신러닝", "머신러닝", "과목명", "과목명")
@@ -114,12 +114,12 @@ fun MyReviewScreen(
     SuwikiTabBar(
       selectedTabPosition = pagerState.currentPage,
     ) {
-      MyReviewTab.entries.forEach { tab ->
+      MyEvaluationTab.entries.forEach { tab ->
         with(tab) {
           TabTitle(
             title = stringResource(
               title,
-              if (tab == MyReviewTab.LECTUREEVALUATION) {
+              if (tab == MyEvaluationTab.LECTURE_EVALUATION) {
                 uiState.myLectureEvaluationList.size
               } else {
                 uiState.myExamEvaluationList.size
@@ -136,19 +136,19 @@ fun MyReviewScreen(
       modifier = Modifier.weight(1f),
       state = pagerState,
     ) { page ->
-      when (MyReviewTab.entries[page]) {
-        MyReviewTab.LECTUREEVALUATION -> {
-          MyReviewLazyColumn(
+      when (MyEvaluationTab.entries[page]) {
+        MyEvaluationTab.LECTURE_EVALUATION -> {
+          MyEvaluationLazyColumn(
 //            itemList = uiState.myLectureEvaluationList,
             itemList = myLectureReviewList,
-            onClickEditButton = { onClickClassReviewEditButton(uiState.point) },
+            onClickEditButton = { onClickLectureEvaluationEditButton(uiState.point) },
           )
         }
-        MyReviewTab.TESTINFO -> {
-          MyReviewLazyColumn(
+        MyEvaluationTab.TEST_INFO -> {
+          MyEvaluationLazyColumn(
 //            itemList = uiState.myExamEvaluationList,
             itemList = myTestReviewList,
-            onClickEditButton = { onClickTestReviewEditButton(uiState.point) },
+            onClickEditButton = { onClickExamEvaluationEditButton(uiState.point) },
           )
         }
       }
@@ -157,7 +157,7 @@ fun MyReviewScreen(
 }
 
 @Composable
-fun MyReviewLazyColumn(
+fun MyEvaluationLazyColumn(
   modifier: Modifier = Modifier,
   itemList: PersistentList<*>,
   onClickEditButton: () -> Unit = {},
@@ -199,12 +199,12 @@ fun MyReviewLazyColumn(
 @OptIn(ExperimentalFoundationApi::class)
 @Preview(showSystemUi = true)
 @Composable
-fun MyReviewPreview() {
+fun MyEvaluationPreview() {
   var currentPage by remember { mutableIntStateOf(0) }
   SuwikiTheme {
-    MyReviewScreen(
+    MyEvaluationScreen(
       padding = PaddingValues(0.dp),
-      uiState = MyReviewState(
+      uiState = MyEvaluationState(
         currentPage = currentPage,
       ),
       onClickTab = { currentPage = it },

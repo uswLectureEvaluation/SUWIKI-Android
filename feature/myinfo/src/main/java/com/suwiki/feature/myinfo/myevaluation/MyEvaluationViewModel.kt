@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myreview
+package com.suwiki.feature.myinfo.myevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -18,12 +18,12 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MyReviewViewModel @Inject constructor(
+class MyEvaluationViewModel @Inject constructor(
   private val getMyLectureEvaluationListUseCase: GetMyLectureEvaluationListUseCase,
   private val getMyExamEvaluationListUseCase: GetMyExamEvaluationListUseCase,
   savedStateHandle: SavedStateHandle,
-) : ContainerHost<MyReviewState, MyReviewSideEffect>, ViewModel() {
-  override val container: Container<MyReviewState, MyReviewSideEffect> = container(MyReviewState())
+) : ContainerHost<MyEvaluationState, MyEvaluationSideEffect>, ViewModel() {
+  override val container: Container<MyEvaluationState, MyEvaluationSideEffect> = container(MyEvaluationState())
 
   private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
 
@@ -65,7 +65,7 @@ class MyReviewViewModel @Inject constructor(
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
-  fun popBackStack() = intent { postSideEffect(MyReviewSideEffect.PopBackStack) }
-  fun navigateMyClassReview(point: Int) = intent { postSideEffect(MyReviewSideEffect.NavigateMyClassReview(point)) }
-  fun navigateMyTestReview(point: Int) = intent { postSideEffect(MyReviewSideEffect.NavigateMyTestReview(point)) }
+  fun popBackStack() = intent { postSideEffect(MyEvaluationSideEffect.PopBackStack) }
+  fun navigateMyLectureEvaluation(point: Int) = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation(point)) }
+  fun navigateMyExamEvaluation(point: Int) = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation(point)) }
 }

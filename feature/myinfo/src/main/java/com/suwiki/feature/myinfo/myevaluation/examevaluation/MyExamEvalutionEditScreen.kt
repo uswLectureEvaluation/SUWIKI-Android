@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myreview.testreview
+package com.suwiki.feature.myinfo.myevaluation.examevaluation
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -33,21 +33,21 @@ import com.suwiki.core.designsystem.component.toast.SuwikiToast
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
-import com.suwiki.feature.myinfo.myreview.classreview.SuwikiItemsWithText
+import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.SuwikiItemsWithText
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun MyTestReviewEditRoute(
+fun MyExamEvalutionEditRoute(
   padding: PaddingValues,
-  viewModel: MyTestReviewEditViewModel = hiltViewModel(),
+  viewModel: MyExamEvalutionEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyTestReviewEditSideEffect.PopBackStack -> popBackStack()
+      MyExamEvalutionEditSideEffect.PopBackStack -> popBackStack()
     }
   }
 
@@ -55,57 +55,57 @@ fun MyTestReviewEditRoute(
     viewModel.setPoint()
   }
 
-  MyTestReviewEditScreen(
+  MyExamEvalutionEditScreen(
     padding = padding,
     scrollState = scrollState,
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
     onClickSemesterButton = viewModel::showSemesterBottomSheet,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
-    onClickTestTypeButton = viewModel::showTestTypeBottomSheet,
-    onTestTypeBottomSheetDismissRequest = viewModel::hideTestTypeBottomSheet,
+    onClickExamTypeButton = viewModel::showExamTypeBottomSheet,
+    onExamTypeBottomSheetDismissRequest = viewModel::hideExamTypeBottomSheet,
     onClickDifficultyEasy = viewModel::setExamDifficultyEasy,
     onClickDifficultyNormal = viewModel::setExamDifficultyNormal,
     onClickDifficultyHard = viewModel::setExamDifficultyHard,
-    onClickTestStudyTypeExamGuides = viewModel::setExamInfoExamGuides,
-    onClickTestStudyTypeBook = viewModel::setExamInfoBook,
-    onClickTestStudyTypeNotes = viewModel::setExamInfoNotes,
-    onClickTestStudyTypePPT = viewModel::setExamInfoPPT,
-    onClickTestStudyTypeApply = viewModel::setExamInfoApply,
-    onClickTestTypePractice = viewModel::setExamTypePractice,
-    onClickTestTypeHomework = viewModel::setExamTypeHomework,
-    onTestReviewValueChange = viewModel::updateMyClassReviewValue,
-    onClickTestReviewDeleteButton = viewModel::showMyTestReviewDeleteDialog,
-    onDismissTestReviewDelete = viewModel::hideMyTestReviewDeleteDialog,
-    showMyTestReviewToast = viewModel::showMyTestReviewToast,
+    onClickExamInfoGuides = viewModel::setExamInfoExamGuides,
+    onClickExamInfoBook = viewModel::setExamInfoBook,
+    onClickExamInfoNotes = viewModel::setExamInfoNotes,
+    onClickExamInfoPPT = viewModel::setExamInfoPPT,
+    onClickExamInfoApply = viewModel::setExamInfoApply,
+    onClickExamTypePractice = viewModel::setExamTypePractice,
+    onClickExamTypeHomework = viewModel::setExamTypeHomework,
+    onExamEvalutionValueChange = viewModel::updateMyExamEvalutionValue,
+    onClickExamEvalutionDeleteButton = viewModel::showMyExamEvalutionDeleteDialog,
+    onDismissExamEvalutionDelete = viewModel::hideMyExamEvalutionDeleteDialog,
+    showMyExamEvalutionToast = viewModel::showMyExamEvalutionToast,
   )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTestReviewEditScreen(
+fun MyExamEvalutionEditScreen(
   padding: PaddingValues,
   scrollState: ScrollState,
-  uiState: MyTestReviewEditState,
+  uiState: MyExamEvaluationEditState,
   popBackStack: () -> Unit = {},
   onClickSemesterButton: () -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
-  onClickTestTypeButton: () -> Unit = {},
-  onTestTypeBottomSheetDismissRequest: () -> Unit = {},
+  onClickExamTypeButton: () -> Unit = {},
+  onExamTypeBottomSheetDismissRequest: () -> Unit = {},
   onClickDifficultyEasy: () -> Unit = {},
   onClickDifficultyNormal: () -> Unit = {},
   onClickDifficultyHard: () -> Unit = {},
-  onClickTestStudyTypeExamGuides: () -> Unit = {},
-  onClickTestStudyTypeBook: () -> Unit = {},
-  onClickTestStudyTypeNotes: () -> Unit = {},
-  onClickTestStudyTypePPT: () -> Unit = {},
-  onClickTestStudyTypeApply: () -> Unit = {},
-  onClickTestTypePractice: () -> Unit = {},
-  onClickTestTypeHomework: () -> Unit = {},
-  onClickTestReviewDeleteButton: () -> Unit = {},
-  onTestReviewValueChange: (String) -> Unit = { _ -> },
-  onDismissTestReviewDelete: () -> Unit = {},
-  showMyTestReviewToast: (String) -> Unit = {},
+  onClickExamInfoGuides: () -> Unit = {},
+  onClickExamInfoBook: () -> Unit = {},
+  onClickExamInfoNotes: () -> Unit = {},
+  onClickExamInfoPPT: () -> Unit = {},
+  onClickExamInfoApply: () -> Unit = {},
+  onClickExamTypePractice: () -> Unit = {},
+  onClickExamTypeHomework: () -> Unit = {},
+  onClickExamEvalutionDeleteButton: () -> Unit = {},
+  onExamEvalutionValueChange: (String) -> Unit = { _ -> },
+  onDismissExamEvalutionDelete: () -> Unit = {},
+  showMyExamEvalutionToast: (String) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -140,11 +140,11 @@ fun MyTestReviewEditScreen(
     SuwikiSelectionContainer(
       modifier = Modifier.padding(start = 24.dp),
       title = stringResource(R.string.my_test_review_choose_test_type),
-      onClick = onClickTestTypeButton,
+      onClick = onClickExamTypeButton,
     )
     SuwikiBottomSheet(
-      isSheetOpen = uiState.showTestTypeBottomSheet,
-      onDismissRequest = onTestTypeBottomSheetDismissRequest,
+      isSheetOpen = uiState.showExamTypeBottomSheet,
+      onDismissRequest = onExamTypeBottomSheetDismissRequest,
       content = {
         SuwikiMenuItem(title = "")
         SuwikiMenuItem(title = "머신러닝")
@@ -188,35 +188,35 @@ fun MyTestReviewEditScreen(
         SuwikiOutlinedChip(
           isChecked = uiState.examInfo == "exam_guides",
           text = stringResource(R.string.my_test_review_exam_guides),
-          onClick = onClickTestStudyTypeExamGuides,
+          onClick = onClickExamInfoGuides,
         )
       },
       {
         SuwikiOutlinedChip(
           isChecked = uiState.examInfo == "book",
           text = stringResource(R.string.my_test_review_book),
-          onClick = onClickTestStudyTypeBook,
+          onClick = onClickExamInfoBook,
         )
       },
       {
         SuwikiOutlinedChip(
           isChecked = uiState.examInfo == "notes",
           text = stringResource(R.string.my_test_review_notes),
-          onClick = onClickTestStudyTypeNotes,
+          onClick = onClickExamInfoNotes,
         )
       },
       {
         SuwikiOutlinedChip(
           isChecked = uiState.examInfo == "ppt",
           text = stringResource(R.string.my_test_review_ppt),
-          onClick = onClickTestStudyTypePPT,
+          onClick = onClickExamInfoPPT,
         )
       },
       {
         SuwikiOutlinedChip(
           isChecked = uiState.examInfo == "apply",
           text = stringResource(R.string.my_test_review_apply),
-          onClick = onClickTestStudyTypeApply,
+          onClick = onClickExamInfoApply,
         )
       },
     )
@@ -229,23 +229,23 @@ fun MyTestReviewEditScreen(
         SuwikiOutlinedChip(
           isChecked = uiState.examType == "practice",
           text = stringResource(R.string.my_test_review_practice),
-          onClick = onClickTestTypePractice,
+          onClick = onClickExamTypePractice,
         )
       },
       {
         SuwikiOutlinedChip(
           isChecked = uiState.examType == "homework",
           text = stringResource(R.string.my_class_review_homework),
-          onClick = onClickTestTypeHomework,
+          onClick = onClickExamTypeHomework,
         )
       },
     )
     SuwikiReviewInputBox(
       modifier = Modifier
         .padding(24.dp),
-      value = uiState.testReview,
+      value = uiState.examEvalution,
       hint = stringResource(R.string.my_test_review_input_box_hint),
-      onValueChange = onTestReviewValueChange,
+      onValueChange = onExamEvalutionValueChange,
     )
     Spacer(modifier = Modifier.weight(1f))
     Row(
@@ -260,44 +260,44 @@ fun MyTestReviewEditScreen(
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_delete),
         enabled = false,
-        onClick = onClickTestReviewDeleteButton,
+        onClick = onClickExamEvalutionDeleteButton,
       )
       SuwikiContainedMediumButton(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = { showMyTestReviewToast("시험정보가 수정되었습니다.") },
+        onClick = { showMyExamEvalutionToast("시험정보가 수정되었습니다.") },
       )
     }
-    if (uiState.showDeleteTestReviewDialog) {
+    if (uiState.showDeleteExamEvalutionDialog) {
       SuwikiDialog(
         headerText = stringResource(R.string.my_class_review_delete_dialog_header),
         bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
-        onDismissRequest = onDismissTestReviewDelete,
-        onClickConfirm = { showMyTestReviewToast("시험정보가 삭제되었습니다.") },
-        onClickDismiss = onDismissTestReviewDelete,
+        onDismissRequest = onDismissExamEvalutionDelete,
+        onClickConfirm = { showMyExamEvalutionToast("시험정보가 삭제되었습니다.") },
+        onClickDismiss = onDismissExamEvalutionDelete,
       )
     }
   }
   SuwikiToast(
-    visible = uiState.showDeleteTestReviewToastVisible,
-    message = uiState.showDeleteTestReviewToastMessage,
+    visible = uiState.showDeleteExamEvalutionToastVisible,
+    message = uiState.showDeleteExamEvalutionToastMessage,
   )
 }
 
 @Preview
 @Composable
-fun MyTestReviewEditScreenPreview() {
+fun MyExamEvalutionEditScreenPreview() {
   val scrollState = rememberScrollState()
 
   SuwikiTheme {
-    MyTestReviewEditScreen(
+    MyExamEvalutionEditScreen(
       padding = PaddingValues(0.dp),
       scrollState = scrollState,
-      uiState = MyTestReviewEditState(),
+      uiState = MyExamEvaluationEditState(),
     )
   }
 }

@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myreview.classreview
+package com.suwiki.feature.myinfo.myevaluation.lectureevaluation
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -44,16 +44,16 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun MyClassReviewEditRoute(
+fun MyLectureEvaluationEditRoute(
   padding: PaddingValues,
-  viewModel: MyClassReviewEditViewModel = hiltViewModel(),
+  viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyClassReviewEditSideEffect.PopBackStack -> popBackStack()
+      MyLectureEvaluationEditSideEffect.PopBackStack -> popBackStack()
     }
   }
 
@@ -61,7 +61,7 @@ fun MyClassReviewEditRoute(
     viewModel.setPoint()
   }
 
-  MyClassReviewEditScreen(
+  MyLectureEvaluationEditScreen(
     padding = padding,
     uiState = uiState,
     scrollState = scrollState,
@@ -71,9 +71,9 @@ fun MyClassReviewEditRoute(
     onHoneyRatingValueChange = viewModel::updateHoneyRating,
     onLearningRatingValueChange = viewModel::updateLearningRating,
     onSatisfactionRatingValueChange = viewModel::updateSatisfactionRating,
-    onClassReviewValueChange = viewModel::updateMyClassReviewValue,
-    onClickClassReviewDeleteButton = viewModel::showMyClassReviewDeleteDialog,
-    onDismissClassReviewDelete = viewModel::hideMyClassReviewDeleteDialog,
+    onLectureEvaluationValueChange = viewModel::updateMyLectureEvaluationValue,
+    onClickLectureEvaluationDeleteButton = viewModel::showMyLectureEvaluationDeleteDialog,
+    onDismissLectureEvaluationDelete = viewModel::hideMyLectureEvaluationDeleteDialog,
     onClickGradeGenerous = viewModel::setDifficultyGenerous,
     onClickGradeNormal = viewModel::setDifficultyNormal,
     onClickGradePicky = viewModel::setDifficultyPicky,
@@ -82,15 +82,15 @@ fun MyClassReviewEditRoute(
     onClickHomeworkMuch = viewModel::setHomeworkMuch,
     onClickTeamNone = viewModel::setTeamNone,
     onClickTeamExist = viewModel::setTeamExist,
-    showMyClassReviewToast = viewModel::showMyClassReviewToast,
+    showMyLectureEvaluationToast = viewModel::showMyLectureEvaluationToast,
   )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyClassReviewEditScreen(
+fun MyLectureEvaluationEditScreen(
   padding: PaddingValues,
-  uiState: MyClassReviewEditState,
+  uiState: MyLectureEvaluationEditState,
   scrollState: ScrollState,
   popBackStack: () -> Unit,
   onClickSemesterButton: () -> Unit = {},
@@ -106,10 +106,10 @@ fun MyClassReviewEditScreen(
   onClickHomeworkMuch: () -> Unit = {},
   onClickTeamNone: () -> Unit = {},
   onClickTeamExist: () -> Unit = {},
-  onClassReviewValueChange: (String) -> Unit = { _ -> },
-  onClickClassReviewDeleteButton: () -> Unit = {},
-  onDismissClassReviewDelete: () -> Unit = {},
-  showMyClassReviewToast: (String) -> Unit = {},
+  onLectureEvaluationValueChange: (String) -> Unit = { _ -> },
+  onClickLectureEvaluationDeleteButton: () -> Unit = {},
+  onDismissLectureEvaluationDelete: () -> Unit = {},
+  showMyLectureEvaluationToast: (String) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -258,10 +258,10 @@ fun MyClassReviewEditScreen(
       },
     )
     SuwikiReviewInputBox(
-      value = uiState.classReview,
+      value = uiState.lectureEvaluation,
       modifier = Modifier.padding(24.dp),
       hint = stringResource(R.string.my_class_review_input_box_hint),
-      onValueChange = onClassReviewValueChange,
+      onValueChange = onLectureEvaluationValueChange,
     )
     Spacer(modifier = Modifier.weight(1f))
     Row(
@@ -276,31 +276,31 @@ fun MyClassReviewEditScreen(
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_delete),
         enabled = false,
-        onClick = onClickClassReviewDeleteButton,
+        onClick = onClickLectureEvaluationDeleteButton,
       )
       SuwikiContainedMediumButton(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = { showMyClassReviewToast("강의평가가 수정되었습니다.") },
+        onClick = { showMyLectureEvaluationToast("강의평가가 수정되었습니다.") },
       )
     }
-    if (uiState.showDeleteClassReviewDialog) {
+    if (uiState.showDeleteLectureEvaluationDialog) {
       SuwikiDialog(
         headerText = stringResource(R.string.my_class_review_delete_dialog_header),
         bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
-        onDismissRequest = onDismissClassReviewDelete,
-        onClickConfirm = { showMyClassReviewToast("강의평가가 삭제되었습니다.") },
-        onClickDismiss = onDismissClassReviewDelete,
+        onDismissRequest = onDismissLectureEvaluationDelete,
+        onClickConfirm = { showMyLectureEvaluationToast("강의평가가 삭제되었습니다.") },
+        onClickDismiss = onDismissLectureEvaluationDelete,
       )
     }
   }
   SuwikiToast(
-    visible = uiState.showDeleteClassReviewToastVisible,
-    message = uiState.showDeleteClassReviewToastMessage,
+    visible = uiState.showDeleteLectureEvaluationToastVisible,
+    message = uiState.showDeleteLectureEvaluationToastMessage,
   )
 }
 
@@ -362,13 +362,13 @@ fun SuwikiItemsWithText(
 
 @Preview
 @Composable
-fun MyClassReviewEditPreview() {
+fun MyLectureEvaluationEditPreview() {
   SuwikiTheme {
     val scrollState = rememberScrollState()
 
-    MyClassReviewEditScreen(
+    MyLectureEvaluationEditScreen(
       padding = PaddingValues(0.dp),
-      uiState = MyClassReviewEditState(),
+      uiState = MyLectureEvaluationEditState(),
       scrollState = scrollState,
       popBackStack = {},
     )

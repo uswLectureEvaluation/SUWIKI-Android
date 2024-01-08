@@ -1,12 +1,9 @@
 package com.suwiki.feature.myinfo
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -42,5 +39,5 @@ class MyInfoViewModel @Inject constructor(
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
   fun navigateNotice() = intent { postSideEffect(MyInfoSideEffect.NavigateNotice) }
-  fun navigateMyReview(point: Int) = intent { postSideEffect(MyInfoSideEffect.NavigateMyReview(point)) }
+  fun navigateMyEvaluation(point: Int) = intent { postSideEffect(MyInfoSideEffect.NavigateMyEvaluation(point)) }
 }

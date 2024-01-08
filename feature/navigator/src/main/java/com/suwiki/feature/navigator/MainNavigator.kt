@@ -10,10 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
 import com.suwiki.feature.login.navigation.navigateLogin
-import com.suwiki.feature.myinfo.navigation.navigateMyClassReview
+import com.suwiki.feature.myinfo.navigation.navigateMyLectureEvaluation
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
-import com.suwiki.feature.myinfo.navigation.navigateMyReview
-import com.suwiki.feature.myinfo.navigation.navigateMyTestReview
+import com.suwiki.feature.myinfo.navigation.navigateMyEvaluation
+import com.suwiki.feature.myinfo.navigation.navigateMyExamEvaluation
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
@@ -72,16 +72,16 @@ internal class MainNavigator(
     navController.navigateNoticeDetail(noticeId)
   }
 
-  fun navigateMyReview(point: Int) {
-    navController.navigateMyReview(point)
+  fun navigateMyEvaluation(point: Int) {
+    navController.navigateMyEvaluation(point)
   }
 
-  fun navigateMyClassReviewEdit(point: Int) {
-    navController.navigateMyClassReview(point)
+  fun navigateMyLectureEvaluationEdit(point: Int) {
+    navController.navigateMyLectureEvaluation(point)
   }
 
-  fun navigateMyTestReviewEdit(point: Int) {
-    navController.navigateMyTestReview(point)
+  fun navigateMyExamEvaluationEdit(point: Int) {
+    navController.navigateMyExamEvaluation(point)
   }
 
   fun navigateOpenMajor(selectedOpenMajor: String) {
