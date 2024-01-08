@@ -2,7 +2,6 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,7 +37,6 @@ import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.lectureAlignList
 import com.suwiki.core.ui.extension.toText
-import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
 import com.suwiki.core.ui.util.TERMS_SITE
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
@@ -97,7 +95,6 @@ fun LectureEvaluationRoute(
       viewModel.navigateLogin()
     },
     onClickSignupButton = viewModel::showAgreementBottomSheet,
-    onClickTempText = navigateOpenMajor,
     onClickTermCheckIcon = viewModel::toggleTermChecked,
     onClickTermArrowIcon = viewModel::openTermWebSite,
     onClickPersonalCheckIcon = viewModel::togglePersonalPolicyChecked,
@@ -118,7 +115,7 @@ fun LectureEvaluationRoute(
   )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LectureEvaluationScreen(
   padding: PaddingValues,
@@ -140,7 +137,6 @@ fun LectureEvaluationScreen(
   onClickPersonalCheckIcon: () -> Unit = {},
   onClickPersonalArrowIcon: () -> Unit = {},
   onClickAgreementButton: () -> Unit = {},
-  onClickTempText: (String) -> Unit = {}, // TODO 개설학과 선택 페이지로 임시로 넘어가기 위한 람다입니다. 마음대로 삭제 가능.
 ) {
   val textState = remember {
     mutableStateOf(uiState.searchValue)
@@ -186,30 +182,31 @@ fun LectureEvaluationScreen(
     }
   }
 
-  if(uiState.isLoading) {
+  if (uiState.isLoading) {
     LoadingScreen()
   }
 
-    OnboardingBottomSheet(
-      uiState = uiState,
-      hideOnboardingBottomSheet = hideOnboardingBottomSheet,
-      pagerState = pagerState,
-      onClickLoginButton = onClickLoginButton,
-      onClickSignupButton = onClickSignupButton,
-    )
+  OnboardingBottomSheet(
+    uiState = uiState,
+    hideOnboardingBottomSheet = hideOnboardingBottomSheet,
+    pagerState = pagerState,
+    onClickLoginButton = onClickLoginButton,
+    onClickSignupButton = onClickSignupButton,
+  )
 
-    SuwikiAgreementBottomSheet(
-      isSheetOpen = uiState.showAgreementBottomSheet,
-      buttonEnabled = uiState.isEnabledAgreementButton,
-      isCheckedTerm = uiState.isCheckedTerm,
-      onClickTermCheckIcon = onClickTermCheckIcon,
-      onClickTermArrowIcon = onClickTermArrowIcon,
-      isCheckedPersonalPolicy = uiState.isCheckedPersonalPolicy,
-      onClickPersonalCheckIcon = onClickPersonalCheckIcon,
-      onClickPersonalArrowIcon = onClickPersonalArrowIcon,
-      onClickAgreementButton = onClickAgreementButton,
-      onDismissRequest = hideAgreementBottomSheet,
-    )
+  SuwikiAgreementBottomSheet(
+    isSheetOpen = uiState.showAgreementBottomSheet,
+    buttonEnabled = uiState.isEnabledAgreementButton,
+    isCheckedTerm = uiState.isCheckedTerm,
+    onClickTermCheckIcon = onClickTermCheckIcon,
+    onClickTermArrowIcon = onClickTermArrowIcon,
+    isCheckedPersonalPolicy = uiState.isCheckedPersonalPolicy,
+    onClickPersonalCheckIcon = onClickPersonalCheckIcon,
+    onClickPersonalArrowIcon = onClickPersonalArrowIcon,
+    onClickAgreementButton = onClickAgreementButton,
+    onDismissRequest = hideAgreementBottomSheet,
+  )
+
   OnboardingBottomSheet(
     uiState = uiState,
     hideOnboardingBottomSheet = hideOnboardingBottomSheet,
