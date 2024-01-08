@@ -1,7 +1,6 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions

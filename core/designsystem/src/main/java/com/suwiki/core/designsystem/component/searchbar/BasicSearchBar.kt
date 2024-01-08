@@ -22,7 +22,6 @@ import com.suwiki.core.designsystem.component.button.TextFieldClearButton
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun BasicSearchBar(

@@ -7,7 +7,7 @@ import com.suwiki.core.ui.R
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
-fun LectureAlign.toText() = when(this) {
+fun LectureAlign.toText() = when (this) {
   LectureAlign.RECENT -> stringResource(id = R.string.lecture_align_recent)
   LectureAlign.HONEY -> stringResource(id = R.string.lecture_align_honey)
   LectureAlign.SATISFACTION -> stringResource(id = R.string.lecture_align_satisfaction)

@@ -1,7 +1,6 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.enums.LectureAlign
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
@@ -11,8 +10,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -21,7 +18,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -129,7 +125,6 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
-
   private fun clearLectureEvaluationList() = intent {
     reduce {
       page = 1
@@ -139,7 +134,6 @@ class LectureEvaluationViewModel @Inject constructor(
       )
     }
   }
-
 
   private suspend fun checkLoggedIn() {
     isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
