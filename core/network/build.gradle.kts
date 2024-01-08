@@ -12,7 +12,8 @@ android {
 
   buildTypes {
     getByName("debug") {
-      buildConfigField("String", "BASE_URL", "\"http://54.180.72.97:8080\"")
+//      buildConfigField("String", "BASE_URL", "\"http://54.180.72.97:8080\"")
+      buildConfigField("String", "BASE_URL", "\"https://api.suwiki.kr\"")
     }
 
     getByName("release") {

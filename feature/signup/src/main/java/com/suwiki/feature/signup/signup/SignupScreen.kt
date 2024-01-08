@@ -28,6 +28,7 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.textfield.SuwikiRegularTextField
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.util.LaunchedEffectWithLifecycle
+import com.suwiki.core.ui.util.TEXT_FIELD_DEBOUNCE
 import com.suwiki.feature.signup.R
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.android.awaitFrame
@@ -36,8 +37,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-
-const val TEXT_FIELD_DEBOUNCE = 800L
 
 @OptIn(FlowPreview::class)
 @Composable
@@ -163,7 +162,7 @@ fun SignupScreen(
             SuwikiRegularTextField(
               modifier = Modifier.focusRequester(emailFocusRequester),
               label = stringResource(R.string.word_email),
-              placeholder = stringResource(R.string.signup_screen_email_textfield_placeholder),
+              placeholder = stringResource(R.string.textfield_email_placeholder),
               value = email,
               onValueChange = onValueChangeEmail,
               onClickClearButton = onClickEmailTextFieldClearButton,
@@ -211,7 +210,7 @@ fun SignupScreen(
           AnimatedVisibility(visible = showIdTextField) {
             SuwikiRegularTextField(
               label = stringResource(R.string.word_id),
-              placeholder = stringResource(R.string.signup_screen_id_textfield_placeholder),
+              placeholder = stringResource(R.string.textfield_id_placeholder),
               value = id,
               onValueChange = onValueChangeId,
               onClickClearButton = onClickIdTextFieldClearButton,
