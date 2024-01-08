@@ -47,14 +47,14 @@ fun MyInfoRoute(
   padding: PaddingValues,
   viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
-  navigateMyEvaluation: (Int) -> Unit,
+  navigateMyEvaluation: () -> Unit,
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyInfoSideEffect.NavigateNotice -> navigateNotice()
-      is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation(sideEffect.point)
+      is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation()
     }
   }
 

@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyExamEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyLectureEvaluationListUseCase
-import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.joinAll
@@ -14,7 +13,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,11 +23,8 @@ class MyEvaluationViewModel @Inject constructor(
 ) : ContainerHost<MyEvaluationState, MyEvaluationSideEffect>, ViewModel() {
   override val container: Container<MyEvaluationState, MyEvaluationSideEffect> = container(MyEvaluationState())
 
-  private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
-
   // TODO("인자에 페이지 추가")
   fun loadMyLectureEvaluations() = intent {
-    Timber.d("$point")
     showLoadingScreen()
     getMyLectureEvaluationListUseCase(1)
       .onSuccess {
@@ -55,7 +50,6 @@ class MyEvaluationViewModel @Inject constructor(
   // TODO("인자에 페이지 추가")
   fun loadInitList() = intent {
     showLoadingScreen()
-    reduce { state.copy(point = point) }
     joinAll(loadMyLectureEvaluations(), loadMyExamEvaluations())
     hideLoadingScreen()
   }
@@ -66,6 +60,6 @@ class MyEvaluationViewModel @Inject constructor(
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
   fun popBackStack() = intent { postSideEffect(MyEvaluationSideEffect.PopBackStack) }
-  fun navigateMyLectureEvaluation(point: Int) = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation(point)) }
-  fun navigateMyExamEvaluation(point: Int) = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation(point)) }
+  fun navigateMyLectureEvaluation() = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation) }
+  fun navigateMyExamEvaluation() = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation) }
 }

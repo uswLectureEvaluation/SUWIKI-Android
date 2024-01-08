@@ -8,13 +8,12 @@ import kotlinx.collections.immutable.persistentListOf
 data class MyEvaluationState(
   val isLoading: Boolean = false,
   val currentPage: Int = 0,
-  val point: Int = 0,
   val myLectureEvaluationList: PersistentList<MyLectureEvaluation> = persistentListOf(MyLectureEvaluation()),
   val myExamEvaluationList: PersistentList<MyExamEvaluation> = persistentListOf(MyExamEvaluation()),
 )
 
 sealed interface MyEvaluationSideEffect {
   data object PopBackStack : MyEvaluationSideEffect
-  data class NavigateMyLectureEvaluation(val point: Int) : MyEvaluationSideEffect
-  data class NavigateMyExamEvaluation(val point: Int) : MyEvaluationSideEffect
+  data object NavigateMyLectureEvaluation : MyEvaluationSideEffect
+  data object NavigateMyExamEvaluation : MyEvaluationSideEffect
 }

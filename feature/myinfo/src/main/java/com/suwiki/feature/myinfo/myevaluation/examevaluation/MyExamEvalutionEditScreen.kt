@@ -28,6 +28,7 @@ import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.SuwikiOutlinedChip
 import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
+import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
 import com.suwiki.core.designsystem.component.toast.SuwikiToast
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -52,7 +53,7 @@ fun MyExamEvalutionEditRoute(
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.setPoint()
+    viewModel.loadMyPoint()
   }
 
   MyExamEvalutionEditScreen(
@@ -286,6 +287,9 @@ fun MyExamEvalutionEditScreen(
     visible = uiState.showDeleteExamEvalutionToastVisible,
     message = uiState.showDeleteExamEvalutionToastMessage,
   )
+  if (uiState.isLoading) {
+    LoadingScreen()
+  }
 }
 
 @Preview

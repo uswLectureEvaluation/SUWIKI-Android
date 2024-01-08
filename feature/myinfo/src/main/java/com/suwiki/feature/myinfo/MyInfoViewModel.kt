@@ -39,5 +39,5 @@ class MyInfoViewModel @Inject constructor(
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
   fun navigateNotice() = intent { postSideEffect(MyInfoSideEffect.NavigateNotice) }
-  fun navigateMyEvaluation(point: Int) = intent { postSideEffect(MyInfoSideEffect.NavigateMyEvaluation(point)) }
+  fun navigateMyEvaluation(point: Int) = intent { postSideEffect(MyInfoSideEffect.NavigateMyEvaluation) }
 }

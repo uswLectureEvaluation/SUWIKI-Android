@@ -48,15 +48,15 @@ fun MyEvaluationRoute(
   padding: PaddingValues,
   viewModel: MyEvaluationViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
-  navigateMyLectureEvaluation: (Int) -> Unit = {},
-  navigateMyExamEvaluation: (Int) -> Unit = {},
+  navigateMyLectureEvaluation: () -> Unit = {},
+  navigateMyExamEvaluation: () -> Unit = {},
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyEvaluationSideEffect.PopBackStack -> popBackStack()
-      is MyEvaluationSideEffect.NavigateMyLectureEvaluation -> navigateMyLectureEvaluation(sideEffect.point)
-      is MyEvaluationSideEffect.NavigateMyExamEvaluation -> navigateMyExamEvaluation(sideEffect.point)
+      is MyEvaluationSideEffect.NavigateMyLectureEvaluation -> navigateMyLectureEvaluation()
+      is MyEvaluationSideEffect.NavigateMyExamEvaluation -> navigateMyExamEvaluation()
     }
   }
   val pagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT })
@@ -93,8 +93,8 @@ fun MyEvaluationScreen(
   pagerState: PagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT }),
   onClickTab: (Int) -> Unit = {},
   onClickBack: () -> Unit = {},
-  onClickLectureEvaluationEditButton: (Int) -> Unit = {},
-  onClickExamEvaluationEditButton: (Int) -> Unit = {},
+  onClickLectureEvaluationEditButton: () -> Unit = {},
+  onClickExamEvaluationEditButton: () -> Unit = {},
 ) {
   // TODO(REMOVE)
   val myLectureReviewList: PersistentList<String> = persistentListOf("머신러닝", "머신러닝", "과목명", "과목명")
@@ -141,14 +141,14 @@ fun MyEvaluationScreen(
           MyEvaluationLazyColumn(
 //            itemList = uiState.myLectureEvaluationList,
             itemList = myLectureReviewList,
-            onClickEditButton = { onClickLectureEvaluationEditButton(uiState.point) },
+            onClickEditButton = { onClickLectureEvaluationEditButton() },
           )
         }
         MyEvaluationTab.TEST_INFO -> {
           MyEvaluationLazyColumn(
 //            itemList = uiState.myExamEvaluationList,
             itemList = myTestReviewList,
-            onClickEditButton = { onClickExamEvaluationEditButton(uiState.point) },
+            onClickEditButton = { onClickExamEvaluationEditButton() },
           )
         }
       }
