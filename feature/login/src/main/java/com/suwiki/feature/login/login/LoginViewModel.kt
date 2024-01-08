@@ -1,4 +1,4 @@
-package com.suwiki.feature.login
+package com.suwiki.feature.login.login
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.exception.EmailNotAuthedException

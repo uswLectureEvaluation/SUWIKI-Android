@@ -1,4 +1,4 @@
-package com.suwiki.feature.login
+package com.suwiki.feature.login.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,17 +34,18 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
 import com.suwiki.core.ui.util.TERMS_SITE
+import com.suwiki.feature.login.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun LoginRoute(
-  viewModel: LoginViewModel = hiltViewModel(),
-  popBackStack: () -> Unit,
-  navigateFindId: () -> Unit,
-  navigateFindPassword: () -> Unit,
-  navigateSignup: () -> Unit,
-  handleException: (Throwable) -> Unit,
+    viewModel: LoginViewModel = hiltViewModel(),
+    popBackStack: () -> Unit,
+    navigateFindId: () -> Unit,
+    navigateFindPassword: () -> Unit,
+    navigateSignup: () -> Unit,
+    handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   val uriHandler = LocalUriHandler.current
@@ -88,24 +89,24 @@ fun LoginRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-  uiState: LoginState = LoginState(),
-  onValueChangeIdTextField: (String) -> Unit = {},
-  onValueChangePasswordTextField: (String) -> Unit = {},
-  onClickIdClearButton: () -> Unit = {},
-  onClickPasswordClearButton: () -> Unit = {},
-  onClickPasswordEyeIcon: () -> Unit = {},
-  onClickFindIdText: () -> Unit = {},
-  onClickFindPasswordText: () -> Unit = {},
-  onClickSignupText: () -> Unit = {},
-  onClickLoginButton: () -> Unit = {},
-  onClickLoginFailDialogButton: () -> Unit = {},
-  onClickEmailNotAuthDialogButton: () -> Unit = {},
-  hideAgreementBottomSheet: () -> Unit = {},
-  onClickTermCheckIcon: () -> Unit = {},
-  onClickTermArrowIcon: () -> Unit = {},
-  onClickPersonalCheckIcon: () -> Unit = {},
-  onClickPersonalArrowIcon: () -> Unit = {},
-  onClickAgreementButton: () -> Unit = {},
+    uiState: LoginState = LoginState(),
+    onValueChangeIdTextField: (String) -> Unit = {},
+    onValueChangePasswordTextField: (String) -> Unit = {},
+    onClickIdClearButton: () -> Unit = {},
+    onClickPasswordClearButton: () -> Unit = {},
+    onClickPasswordEyeIcon: () -> Unit = {},
+    onClickFindIdText: () -> Unit = {},
+    onClickFindPasswordText: () -> Unit = {},
+    onClickSignupText: () -> Unit = {},
+    onClickLoginButton: () -> Unit = {},
+    onClickLoginFailDialogButton: () -> Unit = {},
+    onClickEmailNotAuthDialogButton: () -> Unit = {},
+    hideAgreementBottomSheet: () -> Unit = {},
+    onClickTermCheckIcon: () -> Unit = {},
+    onClickTermArrowIcon: () -> Unit = {},
+    onClickPersonalCheckIcon: () -> Unit = {},
+    onClickPersonalArrowIcon: () -> Unit = {},
+    onClickAgreementButton: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier

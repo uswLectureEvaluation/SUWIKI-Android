@@ -3,7 +3,7 @@ package com.suwiki.feature.login.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.suwiki.feature.login.LoginRoute
+import com.suwiki.feature.login.login.LoginRoute
 
 fun NavController.navigateLogin() {
   navigate(LoginRoute.route)
