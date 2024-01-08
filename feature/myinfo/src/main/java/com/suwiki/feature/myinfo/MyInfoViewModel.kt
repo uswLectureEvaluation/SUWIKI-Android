@@ -2,6 +2,7 @@ package com.suwiki.feature.myinfo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -20,27 +21,23 @@ class MyInfoViewModel @Inject constructor(
 ) : ContainerHost<MyInfoState, MyInfoSideEffect>, ViewModel() {
   override val container: Container<MyInfoState, MyInfoSideEffect> = container(MyInfoState())
 
-  private var isLoggedIn: Boolean = false
-
   suspend fun checkLoggedIn() {
-    viewModelScope.launch {
-      showLoadingScreen()
-      getUserInfoUseCase().catch {}.collect { user ->
-        isLoggedIn = user.isLoggedIn == true
-        intent { reduce { state.copy(loginId = user.userId, point = user.point) } }
-      }
+    showLoadingScreen()
+    /* TODO 에러 처리 */
+    getUserInfoUseCase().collect(::reduceUser)
+    hideLoadingScreen()
+  }
 
-      if (isLoggedIn) {
-        showMyService()
-      } else {
-        hideMyService()
-      }
-      hideLoadingScreen()
+  private fun reduceUser(user: User) = intent {
+    reduce {
+      state.copy(
+        showMyInfoCard = user.isLoggedIn,
+        loginId = user.userId,
+        point = user.point,
+      )
     }
   }
 
-  private fun showMyService() = intent { reduce { state.copy(showMyInfoCard = true) } }
-  private fun hideMyService() = intent { reduce { state.copy(showMyInfoCard = false) } }
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
