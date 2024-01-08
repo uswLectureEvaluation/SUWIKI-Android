@@ -68,8 +68,8 @@ internal fun MainScreen(
       ) {
         loginNavGraph(
           popBackStack = navigator::popBackStackIfNotHome,
-          navigateFindId = { /* TODO */ },
-          navigateFindPassword = { /* TODO */ },
+          navigateFindId = navigator::navigateFindId,
+          navigateFindPassword = navigator::navigateFindPassword,
           navigateSignup = navigator::navigateSignup,
           handleException = viewModel::handleException,
         )
