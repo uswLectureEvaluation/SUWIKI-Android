@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetButton
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
 import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.SuwikiOutlinedChip
+import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
 import com.suwiki.core.designsystem.component.toast.SuwikiToast
@@ -121,7 +121,7 @@ fun MyTestReviewEditScreen(
       onClickClose = popBackStack,
     )
     Spacer(modifier = Modifier.height(44.dp))
-    SuwikiBottomSheetButton(
+    SuwikiSelectionContainer(
       modifier = Modifier.padding(start = 24.dp),
       title = stringResource(R.string.my_test_review_choose_semester),
       onClick = onClickSemesterButton,
@@ -137,7 +137,7 @@ fun MyTestReviewEditScreen(
       },
     )
     Spacer(modifier = Modifier.height(14.dp))
-    SuwikiBottomSheetButton(
+    SuwikiSelectionContainer(
       modifier = Modifier.padding(start = 24.dp),
       title = stringResource(R.string.my_test_review_choose_test_type),
       onClick = onClickTestTypeButton,

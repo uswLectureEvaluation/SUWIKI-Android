@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheetButton
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
 import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.ChipColor
 import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
+import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.component.slider.SuwikiSlider
@@ -132,7 +132,7 @@ fun MyClassReviewEditScreen(
         .fillMaxWidth()
         .padding(horizontal = 24.dp),
     ) {
-      SuwikiBottomSheetButton(
+      SuwikiSelectionContainer(
         title = "2023-2",
         onClick = onClickSemesterButton,
       )

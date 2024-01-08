@@ -1,10 +1,7 @@
 package com.suwiki.core.designsystem.component.bottomsheet
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,15 +16,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.theme.Gray95
-import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 
@@ -66,35 +58,6 @@ fun SuwikiMenuItem(
       .background(White)
       .padding(vertical = 14.dp, horizontal = 24.dp),
   )
-}
-
-@Composable
-fun SuwikiBottomSheetButton(
-  modifier: Modifier = Modifier,
-  title: String = "",
-  onClick: () -> Unit = {},
-) {
-  Row(
-    modifier = modifier
-      .clip(RoundedCornerShape(10.dp))
-      .clickable(onClick = onClick)
-      .background(GrayF6)
-      .padding(
-        horizontal = 9.dp,
-        vertical = 6.dp,
-      ),
-    verticalAlignment = Alignment.CenterVertically,
-  ) {
-    Text(
-      text = title,
-      color = Gray95,
-      style = SuwikiTheme.typography.body6,
-    )
-    Image(
-      painter = painterResource(id = R.drawable.ic_dropdown_arrow_down),
-      contentDescription = "",
-    )
-  }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
