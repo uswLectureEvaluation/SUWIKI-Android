@@ -123,9 +123,18 @@ class LectureEvaluationViewModel @Inject constructor(
   }
 
   fun navigateLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLogin) }
-
+  fun navigateSignup() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateSignUp) }
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }
+
+  fun showAgreementBottomSheet() = intent { reduce { state.copy(showAgreementBottomSheet = true) } }
+  fun hideAgreementBottomSheet() = intent { reduce { state.copy(showAgreementBottomSheet = false) } }
+
+  fun toggleTermChecked() = intent { reduce { state.copy(isCheckedTerm = !state.isCheckedTerm) } }
+  fun togglePersonalPolicyChecked() = intent { reduce { state.copy(isCheckedPersonalPolicy = !state.isCheckedPersonalPolicy) } }
+
+  fun openTermWebSite() = intent { postSideEffect(LectureEvaluationSideEffect.OpenTermWebSite) }
+  fun openPersonalPolicyWebSite() = intent { postSideEffect(LectureEvaluationSideEffect.OpenPersonalPolicyWebSite) }
 
   fun showAlignBottomSheet() = intent { reduce { state.copy(showAlignBottomSheet = true) } }
   fun hideAlignBottomSheet() = intent { reduce { state.copy(showAlignBottomSheet = false) } }

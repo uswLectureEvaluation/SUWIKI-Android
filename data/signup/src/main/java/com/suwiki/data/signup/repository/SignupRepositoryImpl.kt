@@ -1,12 +1,12 @@
 package com.suwiki.data.signup.repository
 
 import com.suwiki.data.signup.datasource.RemoteSignUpDataSource
-import com.suwiki.domain.signup.repository.SignUpRepository
+import com.suwiki.domain.signup.repository.SignupRepository
 import javax.inject.Inject
 
-class SignUpRepositoryImpl @Inject constructor(
+class SignupRepositoryImpl @Inject constructor(
   private val remoteSignUpDataSource: RemoteSignUpDataSource,
-) : SignUpRepository {
+) : SignupRepository {
   override suspend fun signUp(id: String, password: String, email: String) {
     remoteSignUpDataSource.signUp(id = id, password = password, email = email)
   }

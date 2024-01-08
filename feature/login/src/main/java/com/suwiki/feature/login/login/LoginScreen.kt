@@ -1,4 +1,4 @@
-package com.suwiki.feature.login
+package com.suwiki.feature.login.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,15 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAgreementBottomSheet
 import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
@@ -29,6 +32,9 @@ import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
+import com.suwiki.core.ui.util.TERMS_SITE
+import com.suwiki.feature.login.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -42,6 +48,7 @@ fun LoginRoute(
   handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+  val uriHandler = LocalUriHandler.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is LoginSideEffect.HandleException -> handleException(sideEffect.throwable)
@@ -49,6 +56,8 @@ fun LoginRoute(
       LoginSideEffect.NavigateFindPassword -> navigateFindPassword()
       LoginSideEffect.NavigateSignUp -> navigateSignup()
       LoginSideEffect.PopBackStack -> popBackStack()
+      LoginSideEffect.OpenPersonalPolicyWebSite -> uriHandler.openUri(PRIVACY_POLICY_SITE)
+      LoginSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
     }
   }
 
@@ -59,15 +68,25 @@ fun LoginRoute(
     onClickIdClearButton = { viewModel.updateId("") },
     onClickPasswordClearButton = { viewModel.updatePassword("") },
     onClickPasswordEyeIcon = viewModel::toggleShowPassword,
-    onClickFindIdText = { /* TODO */ },
-    onClickFindPasswordText = { /* TODO */ },
-    onClickSignupText = { /* TODO */ },
+    onClickFindIdText = viewModel::navigateFindId,
+    onClickFindPasswordText = viewModel::navigateFindPassword,
+    onClickSignupText = viewModel::showAgreementBottomSheet,
     onClickLoginButton = viewModel::login,
     onClickLoginFailDialogButton = viewModel::hideLoginFailDialog,
     onClickEmailNotAuthDialogButton = viewModel::hideEmailNotAuthDialog,
+    onClickTermCheckIcon = viewModel::toggleTermChecked,
+    onClickTermArrowIcon = viewModel::openTermWebSite,
+    onClickPersonalCheckIcon = viewModel::togglePersonalPolicyChecked,
+    onClickPersonalArrowIcon = viewModel::openPersonalPolicyWebSite,
+    onClickAgreementButton = {
+      viewModel.hideAgreementBottomSheet()
+      viewModel.navigateSignup()
+    },
+    hideAgreementBottomSheet = viewModel::hideAgreementBottomSheet,
   )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
   uiState: LoginState = LoginState(),
@@ -82,6 +101,12 @@ fun LoginScreen(
   onClickLoginButton: () -> Unit = {},
   onClickLoginFailDialogButton: () -> Unit = {},
   onClickEmailNotAuthDialogButton: () -> Unit = {},
+  hideAgreementBottomSheet: () -> Unit = {},
+  onClickTermCheckIcon: () -> Unit = {},
+  onClickTermArrowIcon: () -> Unit = {},
+  onClickPersonalCheckIcon: () -> Unit = {},
+  onClickPersonalArrowIcon: () -> Unit = {},
+  onClickAgreementButton: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier
@@ -91,7 +116,7 @@ fun LoginScreen(
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      Text(text = stringResource(R.string.word_login), style = SuwikiTheme.typography.header1)
+      Text(text = stringResource(com.suwiki.core.ui.R.string.word_login), style = SuwikiTheme.typography.header1)
 
       Spacer(modifier = Modifier.size(26.dp))
 
@@ -99,7 +124,7 @@ fun LoginScreen(
         value = uiState.id,
         onValueChange = onValueChangeIdTextField,
         onClickClearButton = onClickIdClearButton,
-        label = stringResource(R.string.word_id),
+        label = stringResource(com.suwiki.core.ui.R.string.word_id),
         placeholder = stringResource(R.string.login_screen_id_textfield_placeholder),
       )
 
@@ -112,7 +137,7 @@ fun LoginScreen(
         showEyeIcon = true,
         showValue = uiState.showPassword,
         onClickEyeIcon = onClickPasswordEyeIcon,
-        label = stringResource(R.string.word_password),
+        label = stringResource(com.suwiki.core.ui.R.string.word_password),
         placeholder = stringResource(R.string.login_screen_password_textfield_placeholder),
       )
 
@@ -125,7 +150,7 @@ fun LoginScreen(
       ) {
         Text(
           modifier = Modifier.suwikiClickable(onClick = onClickFindIdText),
-          text = stringResource(R.string.login_screen_find_id),
+          text = stringResource(com.suwiki.core.ui.R.string.word_find_id),
           style = SuwikiTheme.typography.body5,
           color = Gray6A,
         )
@@ -136,7 +161,7 @@ fun LoginScreen(
         )
         Text(
           modifier = Modifier.suwikiClickable(onClick = onClickFindPasswordText),
-          text = stringResource(R.string.login_screen_find_password),
+          text = stringResource(com.suwiki.core.ui.R.string.word_find_password),
           style = SuwikiTheme.typography.body5,
           color = Gray6A,
         )
@@ -147,7 +172,7 @@ fun LoginScreen(
         )
         Text(
           modifier = Modifier.suwikiClickable(onClick = onClickSignupText),
-          text = stringResource(R.string.word_signup),
+          text = stringResource(com.suwiki.core.ui.R.string.word_signup),
           style = SuwikiTheme.typography.body4,
           color = Primary,
         )
@@ -159,7 +184,7 @@ fun LoginScreen(
         modifier = Modifier.imePadding(),
         clickable = uiState.loginButtonEnable,
         enabled = uiState.loginButtonEnable,
-        text = stringResource(R.string.word_login),
+        text = stringResource(com.suwiki.core.ui.R.string.word_login),
         onClick = onClickLoginButton,
       )
     }
@@ -168,7 +193,7 @@ fun LoginScreen(
       SuwikiDialog(
         headerText = stringResource(R.string.login_screen_dialog_login_fail_title),
         bodyText = stringResource(R.string.login_screen_dialog_login_fail_body),
-        confirmButtonText = stringResource(R.string.word_confirm),
+        confirmButtonText = stringResource(com.suwiki.core.ui.R.string.word_confirm),
         onDismissRequest = onClickLoginFailDialogButton,
         onClickConfirm = onClickLoginFailDialogButton,
       )
@@ -178,7 +203,7 @@ fun LoginScreen(
       SuwikiDialog(
         headerText = stringResource(R.string.login_screen_dialog_email_not_auth_title),
         bodyText = stringResource(R.string.login_screen_dialog_email_not_auth_body),
-        confirmButtonText = stringResource(R.string.word_confirm),
+        confirmButtonText = stringResource(com.suwiki.core.ui.R.string.word_confirm),
         onDismissRequest = onClickEmailNotAuthDialogButton,
         onClickConfirm = onClickEmailNotAuthDialogButton,
       )
@@ -187,12 +212,25 @@ fun LoginScreen(
     if (uiState.isLoading) {
       LoadingScreen()
     }
+
+    SuwikiAgreementBottomSheet(
+      isSheetOpen = uiState.showAgreementBottomSheet,
+      buttonEnabled = uiState.isEnabledAgreementButton,
+      isCheckedTerm = uiState.isCheckedTerm,
+      onClickTermCheckIcon = onClickTermCheckIcon,
+      onClickTermArrowIcon = onClickTermArrowIcon,
+      isCheckedPersonalPolicy = uiState.isCheckedPersonalPolicy,
+      onClickPersonalCheckIcon = onClickPersonalCheckIcon,
+      onClickPersonalArrowIcon = onClickPersonalArrowIcon,
+      onClickAgreementButton = onClickAgreementButton,
+      onDismissRequest = hideAgreementBottomSheet,
+    )
   }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LectureEvaluationScreenPreview() {
+fun LoginScreenPreview() {
   SuwikiTheme {
     LoginScreen()
   }

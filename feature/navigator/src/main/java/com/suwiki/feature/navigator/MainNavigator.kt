@@ -9,11 +9,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
+import com.suwiki.feature.login.navigation.navigateFindId
+import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
+import com.suwiki.feature.signup.navigation.navigateSignup
+import com.suwiki.feature.signup.navigation.navigateSignupComplete
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
@@ -49,6 +53,22 @@ internal class MainNavigator(
 
   fun navigateLogin() {
     navController.navigateLogin()
+  }
+
+  fun navigateFindId() {
+    navController.navigateFindId()
+  }
+
+  fun navigateFindPassword() {
+    navController.navigateFindPassword()
+  }
+
+  fun navigateSignup() {
+    navController.navigateSignup()
+  }
+
+  fun navigateSignupComplete() {
+    navController.navigateSignupComplete()
   }
 
   fun navigateNotice() {
