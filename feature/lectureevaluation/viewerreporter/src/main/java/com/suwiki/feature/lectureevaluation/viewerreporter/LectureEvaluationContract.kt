@@ -1,5 +1,6 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
+import com.suwiki.core.model.enums.LectureAlign
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -8,24 +9,17 @@ data class LectureEvaluationState(
   val lectureEvaluationList: PersistentList<LectureEvaluationAverage?> = persistentListOf(),
   val showOnboardingBottomSheet: Boolean = false,
   val showAlignBottomSheet: Boolean = false,
-  val selectedOpenMajor: String = "",
-  val selectedFilter: String = "",
-  val currentPage: Int = 0,
+  val selectedOpenMajor: String = "전체",
+  val selectedAlignPosition: Int = 0,
   val searchValue: String = "",
   val isLoading: Boolean = false,
 ) {
-  val showLectureEvaluationSearchEmptyResultScreen: Boolean = searchValue.isNotEmpty() &&
-    selectedFilter.isNotEmpty() && selectedOpenMajor.isNotEmpty() && lectureEvaluationList.isEmpty()
+  val alignValue = LectureAlign.entries[selectedAlignPosition]
 
-  fun selectedFilterValue(): String {
-    return when (selectedFilter) {
-      "꿀 강의" -> "lectureSatisfactionAvg"
-      "만족도 높은 강의" -> "lectureHoneyAvg"
-      "배울게 많은 강의" -> "lectureLearningAvg"
-      "BEST 강의" -> "lectureTotalAvg"
-      else -> "modifiedDate"
-    }
-  }
+  val showSearchEmptyResultScreen: Boolean =
+    searchValue.isNotEmpty() &&
+      selectedOpenMajor.isNotEmpty() &&
+      lectureEvaluationList.isEmpty()
 }
 
 sealed interface LectureEvaluationSideEffect {

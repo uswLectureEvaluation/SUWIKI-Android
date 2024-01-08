@@ -2,6 +2,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suwiki.core.model.enums.LectureAlign
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,6 +10,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -18,6 +20,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,60 +33,89 @@ class LectureEvaluationViewModel @Inject constructor(
 
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
-  private var loadMoreCounter: Int = 1
-
-  private fun incrementLoadMoreCounter() {
-    loadMoreCounter++
-  }
+  private var page: Int = 1
 
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
     reduce { state.copy(searchValue = searchValue) }
-    setFilterLectureEvaluationList()
   }
 
-  @OptIn(OrbitExperimental::class)
-  fun updateSelectedOpenMajor(openMajor: String) = blockingIntent {
-    reduce { state.copy(selectedOpenMajor = openMajor) }
-    setFilterLectureEvaluationList()
+  fun updateSelectedOpenMajor(openMajor: String) = intent {
+    if (openMajor == state.selectedOpenMajor) return@intent
+    getLectureEvaluationList(
+      majorType = openMajor,
+      needClear = true,
+    )
   }
 
-  @OptIn(OrbitExperimental::class)
-  fun updateAlignItem(selectedFilter: String) = blockingIntent {
-    reduce { state.copy(selectedFilter = selectedFilter) }
-    setFilterLectureEvaluationList()
+  fun updateAlignItem(position: Int) {
+    getLectureEvaluationList(
+      alignPosition = position,
+      needClear = true,
+    )
   }
 
-  private fun setFilterLectureEvaluationList() = intent {
-    if (loadMoreCounter > 1) loadMoreCounter = 1
-    reduce { state.copy(lectureEvaluationList = persistentListOf()) }
-  }
-
-  fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
+  fun initData()  = intent {
     checkLoggedIn()
     if (isLoggedIn.not() && isFirstVisit) {
-      isFirstVisit = false
       showOnboardingBottomSheet()
     }
+
+    if(isFirstVisit) {
+      reduce { state.copy(isLoading = true) }
+      getLectureEvaluationList(needClear = false).join()
+      reduce { state.copy(isLoading = false) }
+    }
+
+    isFirstVisit = false
   }
 
-  fun getLectureEvaluationList() = intent {
+  fun getLectureEvaluationList(
+    search: String? = null,
+    alignPosition: Int? = null,
+    majorType: String? = null,
+    needClear: Boolean,
+  ) = intent {
+    if (needClear) {
+      reduce {
+        page = 1
+        state.copy(
+          isLoading = true,
+          lectureEvaluationList = persistentListOf()
+        )
+      }
+    }
+
+    val alignValue = alignPosition?.let {
+      LectureAlign.entries[it]
+    }
+
     getLectureEvaluationListUseCase(
       RetrieveLectureEvaluationAverageListUseCase.Param(
-        container.stateFlow.value.searchValue,
-        container.stateFlow.value.selectedFilterValue(),
-        loadMoreCounter,
-        container.stateFlow.value.selectedOpenMajor,
+        search = search ?: state.searchValue,
+        option = alignValue?.query ?: state.alignValue.query,
+        page = page,
+        majorType = majorType ?: state.selectedOpenMajor,
       ),
     )
       .onSuccess {
         reduce {
-          state.copy(lectureEvaluationList = (container.stateFlow.value.lectureEvaluationList + it).distinctBy { it?.id }.toPersistentList())
+          page++
+          state.copy(
+            searchValue = search ?: state.searchValue,
+            selectedAlignPosition = alignPosition ?: state.selectedAlignPosition,
+            selectedOpenMajor = majorType ?: state.selectedOpenMajor,
+            lectureEvaluationList = state.lectureEvaluationList
+              .plus(it)
+              .distinctBy { it?.id }
+              .toPersistentList(),
+          )
         }
-        incrementLoadMoreCounter()
       }
       .onFailure {
       }
+
+    reduce { state.copy(isLoading = false) }
   }
 
   private suspend fun checkLoggedIn() {

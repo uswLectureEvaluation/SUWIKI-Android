@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="lecture_align_recent">최근 올라온 강의</string>
+  <string name="lecture_align_honey">꿀 강의</string>
+  <string name="lecture_align_satisfaction">만족도 높은 강의</string>
+  <string name="lecture_align_learning">배울게 많은 강의</string>
+  <string name="lecture_align_best">BEST 강의</string>
+</resources>

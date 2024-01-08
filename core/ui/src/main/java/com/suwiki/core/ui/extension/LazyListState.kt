@@ -21,7 +21,7 @@ fun LazyListState.OnBottomReached(
 
   val shouldLoadMore = remember {
     derivedStateOf {
-      val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+      val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf false
 
       lastVisibleItem.index >= layoutInfo.totalItemsCount - 1 - buffer
     }

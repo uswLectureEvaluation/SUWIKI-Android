@@ -11,16 +11,17 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.align.SuwikiAlignContainer
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import kotlinx.collections.immutable.PersistentList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuwikiAlignBottomSheet(
   isSheetOpen: Boolean,
   hideAlignBottomSheet: () -> Unit,
-  onClickAlignBottomSheetItem: (String) -> Unit,
-  itemList: List<String>,
+  onClickAlignBottomSheetItem: (Int) -> Unit,
+  itemList: PersistentList<String>,
   bottomSheetTitle: String,
-  selectedItem: String,
+  selectedPosition: Int,
 ) {
   SuwikiBottomSheet(
     sheetState = rememberModalBottomSheetState(
@@ -33,15 +34,15 @@ fun SuwikiAlignBottomSheet(
       onClickAlignBottomSheetItem = onClickAlignBottomSheetItem,
       bottomSheetTitle = bottomSheetTitle,
       itemList = itemList,
-      selectedItem = selectedItem,
+      selectedPosition = selectedPosition,
     )
   }
 }
 
 @Composable
 fun SuwikiAlignBottomSheetContent(
-  selectedItem: String,
-  onClickAlignBottomSheetItem: (String) -> Unit = {},
+  selectedPosition: Int,
+  onClickAlignBottomSheetItem: (Int) -> Unit = {},
   bottomSheetTitle: String,
   itemList: List<String>,
 ) {
@@ -57,13 +58,13 @@ fun SuwikiAlignBottomSheetContent(
     )
 
     itemList.forEachIndexed { index, item ->
-      val isChecked = selectedItem == itemList[index]
+      val isChecked = index == selectedPosition
       SuwikiAlignContainer(
         text = item,
         isChecked = isChecked,
         onClick = {
           if (!isChecked) {
-            onClickAlignBottomSheetItem(item)
+            onClickAlignBottomSheetItem(index)
           }
         },
       )

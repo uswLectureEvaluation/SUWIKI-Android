@@ -2,6 +2,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,15 +27,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiEvaluationAppBar
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAlignBottomSheet
 import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
+import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.core.ui.extension.OnBottomReached
+import com.suwiki.core.ui.extension.lectureAlignList
+import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -56,26 +59,24 @@ fun LectureEvaluationRoute(
   }
 
   val pagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT })
-  val allLectureEvaluationListState = rememberLazyListState()
-  if (uiState.selectedFilter.isEmpty()) viewModel.updateAlignItem("최근 올라온 강의")
+  val listState = rememberLazyListState()
 
   LaunchedEffect(key1 = viewModel) {
-    viewModel.checkLoggedInShowBottomSheetIfNeed()
+    viewModel.initData()
   }
-  LaunchedEffect(key1 = uiState.searchValue) {
-    viewModel.getLectureEvaluationList()
-  }
+
   LaunchedEffect(selectedOpenMajor) {
     viewModel.updateSelectedOpenMajor(selectedOpenMajor)
   }
-  allLectureEvaluationListState.OnBottomReached {
-    viewModel.getLectureEvaluationList()
+
+  listState.OnBottomReached {
+    viewModel.getLectureEvaluationList(needClear = false)
   }
 
   LectureEvaluationScreen(
     padding = padding,
     uiState = uiState,
-    allLectureEvaluationListState = allLectureEvaluationListState,
+    listState = listState,
     pagerState = pagerState,
     hideOnboardingBottomSheet = viewModel::hideOnboardingBottomSheet,
     hideAlignBottomSheet = viewModel::hideAlignBottomSheet,
@@ -91,10 +92,7 @@ fun LectureEvaluationRoute(
     onClickSearchBarClearButton = {
       viewModel.updateSearchValue("")
     },
-    onClickAlignBottomSelectedItem = {
-      viewModel.getLectureEvaluationList()
-      viewModel.updateAlignItem(it)
-    },
+    onClickAlignBottomSelectedItem = viewModel::updateAlignItem,
   )
 }
 
@@ -103,14 +101,14 @@ fun LectureEvaluationRoute(
 fun LectureEvaluationScreen(
   padding: PaddingValues,
   uiState: LectureEvaluationState,
-  allLectureEvaluationListState: LazyListState = rememberLazyListState(),
+  listState: LazyListState = rememberLazyListState(),
   pagerState: PagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT }),
   hideOnboardingBottomSheet: () -> Unit = {},
   hideAlignBottomSheet: () -> Unit = {},
   showAlignBottomSheet: () -> Unit = {},
   onClickLoginButton: () -> Unit = {},
   onClickSignupButton: () -> Unit = {},
-  onClickAlignBottomSelectedItem: (String) -> Unit = {},
+  onClickAlignBottomSelectedItem: (Int) -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {},
@@ -118,6 +116,7 @@ fun LectureEvaluationScreen(
   val textState = remember {
     mutableStateOf(uiState.searchValue)
   }
+
   Column(
     modifier = Modifier
       .fillMaxSize()
@@ -144,19 +143,24 @@ fun LectureEvaluationScreen(
     Text(
       modifier = Modifier
         .padding(start = 24.dp, top = 10.dp),
-      text = uiState.selectedFilter,
+      text = uiState.alignValue.toText(),
       style = SuwikiTheme.typography.body2,
       color = Gray95,
     )
-    if (uiState.showLectureEvaluationSearchEmptyResultScreen) {
+    if (uiState.showSearchEmptyResultScreen) {
       EmptyText(stringResource(R.string.word_empty_search_result))
     } else {
       LectureEvaluationLazyColumn(
-        listState = allLectureEvaluationListState,
+        listState = listState,
         openLectureEvaluationInfoList = uiState.lectureEvaluationList,
       )
     }
   }
+
+  if(uiState.isLoading) {
+    LoadingScreen()
+  }
+
   OnboardingBottomSheet(
     uiState = uiState,
     hideOnboardingBottomSheet = hideOnboardingBottomSheet,
@@ -169,15 +173,9 @@ fun LectureEvaluationScreen(
     isSheetOpen = uiState.showAlignBottomSheet,
     hideAlignBottomSheet = hideAlignBottomSheet,
     onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
-    itemList = persistentListOf(
-      "최근 올라온 강의",
-      "꿀 강의",
-      "만족도 높은 강의",
-      "배울게 많은 강의",
-      "BEST 강의",
-    ),
+    itemList = lectureAlignList,
     bottomSheetTitle = stringResource(R.string.word_sort),
-    selectedItem = uiState.selectedFilter,
+    selectedPosition = uiState.selectedAlignPosition,
   )
 }
 
@@ -205,7 +203,6 @@ private fun LectureEvaluationLazyColumn(
           openMajor = lectureInfo.majorType,
           professor = lectureInfo.professor,
           rating = lectureTotalAvg,
-          reviewCount = null,
           classType = lectureInfo.lectureType ?: "",
           onClick = { onClickOpenLectureEvaluationDetail(id.toString()) },
         )
