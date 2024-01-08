@@ -6,4 +6,17 @@
   <string name="onboarding_title">수원대 학생이라면\n수위키로 한 번에 해결!</string>
   <string name="onboarding1_description">재학생들의 솔직한 강의평가 확인하기</string>
   <string name="onboarding2_description">나만의 시간표로 손쉬운 일정관리</string>
+
+  <string name="word_sort">정렬</string>
+  <string name="word_lecture_evaluation">강의평가</string>>
+  <string name="word_search_placeholder">강의명 혹은 교수명을 검색하세요</string>
+
+  <string name="word_recent_lectures">최근 올라온 강의</string>
+  <string name="word_great_lectures">꿀 강의</string>
+  <string name="word_high_satisfaction_lectures">만족도 높은 강의</string>
+  <string name="word_knowledgeable_lectures">배울 게 많은 강의</string>
+  <string name="word_best_lectures">BEST 강의</string>
+
+  <string name="word_empty_search_result">검색 결과가 없습니다.\n검색어가 정확한지 확인하세요.</string>
+
 </resources>

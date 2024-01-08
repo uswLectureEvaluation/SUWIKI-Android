@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
@@ -37,6 +39,7 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
+import java.util.Locale
 
 @Composable
 fun SuwikiClassReviewCard(
@@ -45,7 +48,7 @@ fun SuwikiClassReviewCard(
   openMajor: String,
   professor: String,
   rating: Float,
-  reviewCount: Int,
+  reviewCount: Int? = null,
   classType: String,
   onClick: () -> Unit,
 ) {
@@ -59,8 +62,14 @@ fun SuwikiClassReviewCard(
       .padding(horizontal = 16.dp, vertical = 13.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
   ) {
-    Column {
+    Column(
+      modifier = Modifier.weight(1f),
+    ) {
       Text(
+        modifier = Modifier
+          .wrapContentHeight(),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
         text = className,
         style = SuwikiTheme.typography.header3,
         color = Black,
@@ -100,15 +109,17 @@ fun SuwikiClassReviewCard(
           contentDescription = null,
         )
         Text(
-          text = "$rating",
+          text = "%.1f".format(Locale.US, rating),
           style = SuwikiTheme.typography.body1,
           color = Primary,
         )
-        Text(
-          text = "($reviewCount)",
-          style = SuwikiTheme.typography.body3,
-          color = Gray95,
-        )
+        if (reviewCount != null) {
+          Text(
+            text = "($reviewCount)",
+            style = SuwikiTheme.typography.body3,
+            color = Gray95,
+          )
+        }
       }
     }
 
@@ -126,7 +137,7 @@ fun CardPreview() {
     Box(modifier = Modifier.padding(10.dp)) {
       SuwikiClassReviewCard(
         modifier = Modifier,
-        className = "강의명",
+        className = "강의명강의명강의명강의명강의명강의명",
         openMajor = "개설학과",
         professor = "교수명",
         rating = 4.0f,

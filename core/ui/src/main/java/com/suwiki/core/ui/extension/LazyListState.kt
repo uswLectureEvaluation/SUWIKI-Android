@@ -12,7 +12,7 @@ import androidx.compose.runtime.snapshotFlow
 fun LazyListState.OnBottomReached(
   // tells how many items before we reach the bottom of the list
   // to call onLoadMore function
-  buffer: Int = 0,
+  buffer: Int = 3,
   onLoadMore: () -> Unit,
 ) {
   // Buffer must be positive.
@@ -21,17 +21,18 @@ fun LazyListState.OnBottomReached(
 
   val shouldLoadMore = remember {
     derivedStateOf {
-      val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
-        ?: return@derivedStateOf true
+      val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf false
 
-      // subtract buffer from the total items
       lastVisibleItem.index >= layoutInfo.totalItemsCount - 1 - buffer
     }
   }
-
-  LaunchedEffect(shouldLoadMore) {
+  LaunchedEffect(shouldLoadMore.value) {
     snapshotFlow { shouldLoadMore.value }
-      .collect { if (it) onLoadMore() }
+      .collect {
+        if (it) {
+          onLoadMore()
+        }
+      }
   }
 }
 

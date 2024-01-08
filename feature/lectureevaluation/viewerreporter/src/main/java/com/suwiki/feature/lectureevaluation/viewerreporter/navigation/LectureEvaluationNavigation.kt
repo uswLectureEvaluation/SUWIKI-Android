@@ -17,6 +17,7 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
   navigateLogin: () -> Unit,
   navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
+  handleException: (Throwable) -> Unit,
 ) {
   composable(route = LectureEvaluationRoute.route) { navBackStackEntry ->
     val selectedOpenMajor = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "전체"
@@ -26,6 +27,7 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
       navigateLogin = navigateLogin,
       navigateSignUp = navigateSignUp,
       navigateOpenMajor = navigateOpenMajor,
+      handleException = handleException,
     )
   }
 }
