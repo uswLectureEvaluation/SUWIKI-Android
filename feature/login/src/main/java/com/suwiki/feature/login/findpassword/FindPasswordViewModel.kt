@@ -1,6 +1,5 @@
 package com.suwiki.feature.login.findpassword
 
-import androidx.compose.ui.window.isPopupLayout
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.ui.util.REGEX
 import com.suwiki.domain.login.usecase.FindPasswordUseCase
@@ -13,7 +12,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

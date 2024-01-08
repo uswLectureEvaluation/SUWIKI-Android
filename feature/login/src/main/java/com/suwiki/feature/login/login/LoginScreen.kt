@@ -40,12 +40,12 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun LoginRoute(
-    viewModel: LoginViewModel = hiltViewModel(),
-    popBackStack: () -> Unit,
-    navigateFindId: () -> Unit,
-    navigateFindPassword: () -> Unit,
-    navigateSignup: () -> Unit,
-    handleException: (Throwable) -> Unit,
+  viewModel: LoginViewModel = hiltViewModel(),
+  popBackStack: () -> Unit,
+  navigateFindId: () -> Unit,
+  navigateFindPassword: () -> Unit,
+  navigateSignup: () -> Unit,
+  handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   val uriHandler = LocalUriHandler.current
@@ -89,24 +89,24 @@ fun LoginRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    uiState: LoginState = LoginState(),
-    onValueChangeIdTextField: (String) -> Unit = {},
-    onValueChangePasswordTextField: (String) -> Unit = {},
-    onClickIdClearButton: () -> Unit = {},
-    onClickPasswordClearButton: () -> Unit = {},
-    onClickPasswordEyeIcon: () -> Unit = {},
-    onClickFindIdText: () -> Unit = {},
-    onClickFindPasswordText: () -> Unit = {},
-    onClickSignupText: () -> Unit = {},
-    onClickLoginButton: () -> Unit = {},
-    onClickLoginFailDialogButton: () -> Unit = {},
-    onClickEmailNotAuthDialogButton: () -> Unit = {},
-    hideAgreementBottomSheet: () -> Unit = {},
-    onClickTermCheckIcon: () -> Unit = {},
-    onClickTermArrowIcon: () -> Unit = {},
-    onClickPersonalCheckIcon: () -> Unit = {},
-    onClickPersonalArrowIcon: () -> Unit = {},
-    onClickAgreementButton: () -> Unit = {},
+  uiState: LoginState = LoginState(),
+  onValueChangeIdTextField: (String) -> Unit = {},
+  onValueChangePasswordTextField: (String) -> Unit = {},
+  onClickIdClearButton: () -> Unit = {},
+  onClickPasswordClearButton: () -> Unit = {},
+  onClickPasswordEyeIcon: () -> Unit = {},
+  onClickFindIdText: () -> Unit = {},
+  onClickFindPasswordText: () -> Unit = {},
+  onClickSignupText: () -> Unit = {},
+  onClickLoginButton: () -> Unit = {},
+  onClickLoginFailDialogButton: () -> Unit = {},
+  onClickEmailNotAuthDialogButton: () -> Unit = {},
+  hideAgreementBottomSheet: () -> Unit = {},
+  onClickTermCheckIcon: () -> Unit = {},
+  onClickTermArrowIcon: () -> Unit = {},
+  onClickPersonalCheckIcon: () -> Unit = {},
+  onClickPersonalArrowIcon: () -> Unit = {},
+  onClickAgreementButton: () -> Unit = {},
 ) {
   Box(
     modifier = Modifier
