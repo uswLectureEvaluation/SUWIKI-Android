@@ -14,14 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,27 +33,9 @@ import com.suwiki.core.designsystem.component.toast.SuwikiToast
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
+import com.suwiki.feature.myinfo.myreview.classreview.SuwikiItemsWithText
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-
-enum class DifficultyLabelItem {
-  EASY,
-  NORMAL,
-  HARD,
-}
-
-enum class TestStudyTypeLabelItem {
-  EXAMGUIDES,
-  BOOK,
-  NOTES,
-  PPT,
-  APPLY,
-}
-
-enum class TestTypeLabelItem {
-  PRACTICE,
-  HOMEWORK,
-}
 
 @Composable
 fun MyTestReviewEditRoute(
@@ -101,7 +77,7 @@ fun MyTestReviewEditRoute(
     onTestReviewValueChange = viewModel::updateMyClassReviewValue,
     onClickTestReviewDeleteButton = viewModel::showMyTestReviewDeleteDialog,
     onDismissTestReviewDelete = viewModel::hideMyTestReviewDeleteDialog,
-    showMyTestReviewToast = viewModel::showMyTestReviewToast
+    showMyTestReviewToast = viewModel::showMyTestReviewToast,
   )
 }
 
@@ -177,105 +153,93 @@ fun MyTestReviewEditScreen(
       },
     )
     Spacer(modifier = Modifier.height(16.dp))
-    Row(
-      modifier = Modifier
-        .padding(horizontal = 24.dp)
-        .fillMaxWidth(),
-    ) {
-      Text(
-        modifier = Modifier
-          .weight(0.16f),
-        text = stringResource(R.string.my_test_review_difficulty),
-        style = SuwikiTheme.typography.body4,
-      )
-      Row(
-        modifier = Modifier
-          .fillMaxWidth()
-          .weight(0.83f)
-          .padding(start = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-      ) {
+    SuwikiItemsWithText(
+      text = stringResource(R.string.my_test_review_difficulty),
+      textWeight = 0.16f,
+      itemsWeight = 0.83f,
+      {
         SuwikiOutlinedChip(
           isChecked = uiState.examDifficulty == "easy",
           text = stringResource(R.string.my_test_review_easy),
           onClick = onClickDifficultyEasy,
         )
+      },
+      {
         SuwikiOutlinedChip(
           isChecked = uiState.examDifficulty == "normal",
           text = stringResource(R.string.my_class_review_normal),
           onClick = onClickDifficultyNormal,
         )
+      },
+      {
         SuwikiOutlinedChip(
           isChecked = uiState.examDifficulty == "hard",
           text = stringResource(R.string.my_test_review_hard),
           onClick = onClickDifficultyHard,
         )
-      }
-    }
+      },
+    )
     Spacer(modifier = Modifier.height(20.dp))
-    Row(
-      modifier = Modifier
-        .padding(horizontal = 24.dp)
-        .fillMaxWidth(),
-    ) {
-      Text(
-        modifier = Modifier
-          .weight(0.16f),
-        text = stringResource(R.string.my_test_review_test_type),
-        style = SuwikiTheme.typography.body4,
-      )
-      Column(
-        modifier = Modifier
-          .fillMaxWidth()
-          .weight(0.83f)
-          .padding(start = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-      ) {
-        Row(
-          horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-          SuwikiOutlinedChip(
-            isChecked = uiState.examInfo == "exam_guides",
-            text = stringResource(R.string.my_test_review_exam_guides),
-            onClick = onClickTestStudyTypeExamGuides,
-          )
-          SuwikiOutlinedChip(
-            isChecked = uiState.examInfo == "book",
-            text = stringResource(R.string.my_test_review_book),
-            onClick = onClickTestStudyTypeBook,
-          )
-          SuwikiOutlinedChip(
-            isChecked = uiState.examInfo == "notes",
-            text = stringResource(R.string.my_test_review_notes),
-            onClick = onClickTestStudyTypeNotes,
-          )
-          SuwikiOutlinedChip(
-            isChecked = uiState.examInfo == "ppt",
-            text = stringResource(R.string.my_test_review_ppt),
-            onClick = onClickTestStudyTypePPT,
-          )
-          SuwikiOutlinedChip(
-            isChecked = uiState.examInfo == "apply",
-            text = stringResource(R.string.my_test_review_apply),
-            onClick = onClickTestStudyTypeApply,
-          )
-        }
-        Row(
-          horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-          SuwikiOutlinedChip(
-            isChecked = uiState.examType == "practice",
-            text = stringResource(R.string.my_test_review_practice),
-            onClick = onClickTestTypePractice,
-          )
-          SuwikiOutlinedChip(
-            isChecked = uiState.examType == "homework",
-            text = stringResource(R.string.my_class_review_homework),
-            onClick = onClickTestTypeHomework,
-          )
-        }
-      }
-    }
+    SuwikiItemsWithText(
+      text = stringResource(R.string.my_test_review_test_type),
+      textWeight = 0.16f,
+      itemsWeight = 0.83f,
+      {
+        SuwikiOutlinedChip(
+          isChecked = uiState.examInfo == "exam_guides",
+          text = stringResource(R.string.my_test_review_exam_guides),
+          onClick = onClickTestStudyTypeExamGuides,
+        )
+      },
+      {
+        SuwikiOutlinedChip(
+          isChecked = uiState.examInfo == "book",
+          text = stringResource(R.string.my_test_review_book),
+          onClick = onClickTestStudyTypeBook,
+        )
+      },
+      {
+        SuwikiOutlinedChip(
+          isChecked = uiState.examInfo == "notes",
+          text = stringResource(R.string.my_test_review_notes),
+          onClick = onClickTestStudyTypeNotes,
+        )
+      },
+      {
+        SuwikiOutlinedChip(
+          isChecked = uiState.examInfo == "ppt",
+          text = stringResource(R.string.my_test_review_ppt),
+          onClick = onClickTestStudyTypePPT,
+        )
+      },
+      {
+        SuwikiOutlinedChip(
+          isChecked = uiState.examInfo == "apply",
+          text = stringResource(R.string.my_test_review_apply),
+          onClick = onClickTestStudyTypeApply,
+        )
+      },
+    )
+    Spacer(modifier = Modifier.height(6.dp))
+    SuwikiItemsWithText(
+      text = "",
+      textWeight = 0.16f,
+      itemsWeight = 0.83f,
+      {
+        SuwikiOutlinedChip(
+          isChecked = uiState.examType == "practice",
+          text = stringResource(R.string.my_test_review_practice),
+          onClick = onClickTestTypePractice,
+        )
+      },
+      {
+        SuwikiOutlinedChip(
+          isChecked = uiState.examType == "homework",
+          text = stringResource(R.string.my_class_review_homework),
+          onClick = onClickTestTypeHomework,
+        )
+      },
+    )
     SuwikiReviewInputBox(
       modifier = Modifier
         .padding(24.dp),
@@ -328,102 +292,12 @@ fun MyTestReviewEditScreen(
 @Composable
 fun MyTestReviewEditScreenPreview() {
   val scrollState = rememberScrollState()
-  var testReview by rememberSaveable { mutableStateOf("") }
-  var isSemesterBottomSheetExpanded by remember { mutableStateOf(false) }
-  var isTestTypeBottomSheetExpanded by remember { mutableStateOf(false) }
-  var difficultyEasyChecked by rememberSaveable { mutableStateOf(false) }
-  var difficultyNormalChecked by rememberSaveable { mutableStateOf(false) }
-  var difficultyHardChecked by rememberSaveable { mutableStateOf(true) }
-  var testTypeExamGuidesChecked by rememberSaveable { mutableStateOf(false) }
-  var testTypeBookChecked by rememberSaveable { mutableStateOf(false) }
-  var testTypeNotesChecked by rememberSaveable { mutableStateOf(true) }
-  var testTypePPTChecked by rememberSaveable { mutableStateOf(false) }
-  var testTypeApplyChecked by rememberSaveable { mutableStateOf(false) }
-  var testTypePracticeChecked by rememberSaveable { mutableStateOf(true) }
-  var testTypeHomeworkChecked by rememberSaveable { mutableStateOf(false) }
-  var isShowDeleteTestReviewDialog by remember { mutableStateOf(false) }
-
-  fun clickDifficultyItem(
-    clickItemType: DifficultyLabelItem,
-  ) {
-    difficultyEasyChecked = false
-    difficultyNormalChecked = false
-    difficultyHardChecked = false
-
-    when (clickItemType) {
-      DifficultyLabelItem.EASY -> { difficultyEasyChecked = true }
-      DifficultyLabelItem.NORMAL -> { difficultyNormalChecked = true }
-      DifficultyLabelItem.HARD -> { difficultyHardChecked = true }
-    }
-  }
-
-  fun clickTestStudyTypeItem(
-    clickItemType: TestStudyTypeLabelItem,
-  ) {
-    testTypeExamGuidesChecked = false
-    testTypeBookChecked = false
-    testTypeNotesChecked = false
-    testTypePPTChecked = false
-    testTypeApplyChecked = false
-
-    when (clickItemType) {
-      TestStudyTypeLabelItem.EXAMGUIDES -> { testTypeExamGuidesChecked = true }
-      TestStudyTypeLabelItem.BOOK -> { testTypeBookChecked = true }
-      TestStudyTypeLabelItem.NOTES -> { testTypeNotesChecked = true }
-      TestStudyTypeLabelItem.PPT -> { testTypePPTChecked = true }
-      TestStudyTypeLabelItem.APPLY -> { testTypeApplyChecked = true }
-    }
-  }
-
-  fun clickTestTypeItem(
-    clickItemType: TestTypeLabelItem,
-  ) {
-    testTypePracticeChecked = false
-    testTypeHomeworkChecked = false
-
-    when (clickItemType) {
-      TestTypeLabelItem.PRACTICE -> { testTypePracticeChecked = true }
-      TestTypeLabelItem.HOMEWORK -> { testTypeHomeworkChecked = true }
-    }
-  }
 
   SuwikiTheme {
     MyTestReviewEditScreen(
       padding = PaddingValues(0.dp),
       scrollState = scrollState,
-      uiState = MyTestReviewEditState(
-        testReview = testReview,
-        difficultyEasyChecked = difficultyEasyChecked,
-        difficultyNormalChecked = difficultyNormalChecked,
-        difficultyHardChecked = difficultyHardChecked,
-        testTypeExamGuidesChecked = testTypeExamGuidesChecked,
-        testTypeBookChecked = testTypeBookChecked,
-        testTypeNotesChecked = testTypeNotesChecked,
-        testTypePPTChecked = testTypePPTChecked,
-        testTypeApplyChecked = testTypeApplyChecked,
-        testTypePracticeChecked = testTypePracticeChecked,
-        testTypeHomeworkChecked = testTypeHomeworkChecked,
-        showDeleteTestReviewDialog = isShowDeleteTestReviewDialog,
-        showSemesterBottomSheet = isSemesterBottomSheetExpanded,
-        showTestTypeBottomSheet = isTestTypeBottomSheetExpanded,
-      ),
-      onClickSemesterButton = { isSemesterBottomSheetExpanded = true },
-      onSemesterBottomSheetDismissRequest = { isSemesterBottomSheetExpanded = false },
-      onClickTestTypeButton = { isTestTypeBottomSheetExpanded = true },
-      onTestTypeBottomSheetDismissRequest = { isTestTypeBottomSheetExpanded = false },
-      onClickDifficultyEasy = { clickDifficultyItem(DifficultyLabelItem.EASY) },
-      onClickDifficultyNormal = { clickDifficultyItem(DifficultyLabelItem.NORMAL) },
-      onClickDifficultyHard = { clickDifficultyItem(DifficultyLabelItem.HARD) },
-      onClickTestStudyTypeExamGuides = { clickTestStudyTypeItem(TestStudyTypeLabelItem.EXAMGUIDES) },
-      onClickTestStudyTypeBook = { clickTestStudyTypeItem(TestStudyTypeLabelItem.BOOK) },
-      onClickTestStudyTypeNotes = { clickTestStudyTypeItem(TestStudyTypeLabelItem.NOTES) },
-      onClickTestStudyTypePPT = { clickTestStudyTypeItem(TestStudyTypeLabelItem.PPT) },
-      onClickTestStudyTypeApply = { clickTestStudyTypeItem(TestStudyTypeLabelItem.APPLY) },
-      onClickTestTypePractice = { clickTestTypeItem(TestTypeLabelItem.PRACTICE) },
-      onClickTestTypeHomework = { clickTestTypeItem(TestTypeLabelItem.HOMEWORK) },
-      onTestReviewValueChange = { testReview = it },
-      onClickTestReviewDeleteButton = { isShowDeleteTestReviewDialog = true },
-      onDismissTestReviewDelete = { isShowDeleteTestReviewDialog = false },
+      uiState = MyTestReviewEditState(),
     )
   }
 }

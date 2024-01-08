@@ -13,7 +13,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 const val SHOW_TOAST_LENGTH = 2000L
@@ -22,7 +21,8 @@ const val SHOW_TOAST_LENGTH = 2000L
 class MyClassReviewEditViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ContainerHost<MyClassReviewEditState, MyClassReviewEditSideEffect>, ViewModel() {
-  override val container: Container<MyClassReviewEditState, MyClassReviewEditSideEffect> = container(MyClassReviewEditState())
+  override val container: Container<MyClassReviewEditState, MyClassReviewEditSideEffect> =
+    container(MyClassReviewEditState())
 
   private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
   private val mutex = Mutex()
@@ -59,6 +59,8 @@ class MyClassReviewEditViewModel @Inject constructor(
 
   fun showMyClassReviewDeleteDialog() = intent { reduce { state.copy(showDeleteClassReviewDialog = true) } }
   fun hideMyClassReviewDeleteDialog() = intent { reduce { state.copy(showDeleteClassReviewDialog = false) } }
+  fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
+  fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun showMyClassReviewToast(msg: String) = intent {
     hideMyClassReviewDeleteDialog()
     mutex.withLock {

@@ -20,7 +20,8 @@ import javax.inject.Inject
 class MyTestReviewEditViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ContainerHost<MyTestReviewEditState, MyTestReviewEditSideEffect>, ViewModel() {
-  override val container: Container<MyTestReviewEditState, MyTestReviewEditSideEffect> = container(MyTestReviewEditState())
+  override val container: Container<MyTestReviewEditState, MyTestReviewEditSideEffect> =
+    container(MyTestReviewEditState())
 
   private val point: Int = savedStateHandle.get<String>(MyInfoRoute.myPoint)!!.toInt()
   private val mutex = Mutex()
