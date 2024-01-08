@@ -1,5 +1,6 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -42,6 +44,7 @@ import com.suwiki.core.ui.util.TERMS_SITE
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -54,20 +57,30 @@ fun LectureEvaluationRoute(
   navigateLogin: () -> Unit,
   navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
+  handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+
   val uriHandler = LocalUriHandler.current
+
+  val listState = rememberLazyListState()
+  val scope = rememberCoroutineScope()
+
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       LectureEvaluationSideEffect.NavigateLogin -> navigateLogin()
       LectureEvaluationSideEffect.NavigateSignUp -> navigateSignUp()
       LectureEvaluationSideEffect.OpenPersonalPolicyWebSite -> uriHandler.openUri(PRIVACY_POLICY_SITE)
       LectureEvaluationSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
+      LectureEvaluationSideEffect.ScrollToTop -> scope.launch {
+        listState.scrollToItem(0)
+      }
+
+      is LectureEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
 
   val pagerState = rememberPagerState(pageCount = { ONBOARDING_PAGE_COUNT })
-  val listState = rememberLazyListState()
 
   LaunchedEffect(key1 = viewModel) {
     viewModel.initData()
@@ -105,9 +118,8 @@ fun LectureEvaluationRoute(
       viewModel.navigateSignup()
     },
     onClickSelectedOpenMajor = navigateOpenMajor,
-    onValueChangeSearchBar = {
-      viewModel.updateSearchValue(it)
-    },
+    onValueChangeSearchBar = viewModel::updateSearchValue,
+    onClickSearchButton = viewModel::searchLectureEvaluation,
     onClickSearchBarClearButton = {
       viewModel.updateSearchValue("")
     },
@@ -130,6 +142,7 @@ fun LectureEvaluationScreen(
   onClickSignupButton: () -> Unit = {},
   onClickAlignBottomSelectedItem: (Int) -> Unit = {},
   onValueChangeSearchBar: (String) -> Unit = {},
+  onClickSearchButton: (String) -> Unit = {},
   onClickSearchBarClearButton: () -> Unit = {},
   onClickSelectedOpenMajor: (String) -> Unit = {},
   onClickTermCheckIcon: () -> Unit = {},
@@ -138,10 +151,6 @@ fun LectureEvaluationScreen(
   onClickPersonalArrowIcon: () -> Unit = {},
   onClickAgreementButton: () -> Unit = {},
 ) {
-  val textState = remember {
-    mutableStateOf(uiState.searchValue)
-  }
-
   Column(
     modifier = Modifier
       .fillMaxSize()
@@ -154,16 +163,11 @@ fun LectureEvaluationScreen(
     )
     SuwikiSearchBarWithFilter(
       placeHolder = stringResource(R.string.word_search_placeholder),
-      value = textState.value,
-      onValueChange = { textState.value = it },
-      onClickClearButton = {
-        onClickSearchBarClearButton()
-        textState.value = ""
-      },
+      value = uiState.searchValue,
+      onValueChange = onValueChangeSearchBar,
+      onClickClearButton = onClickSearchBarClearButton,
       onClickFilterButton = showAlignBottomSheet,
-      onClickSearchButton = {
-        onValueChangeSearchBar(textState.value)
-      },
+      onClickSearchButton = onClickSearchButton,
     )
     Text(
       modifier = Modifier
@@ -172,27 +176,20 @@ fun LectureEvaluationScreen(
       style = SuwikiTheme.typography.body2,
       color = Gray95,
     )
+
     if (uiState.showSearchEmptyResultScreen) {
       EmptyText(stringResource(R.string.word_empty_search_result))
-    } else {
-      LectureEvaluationLazyColumn(
-        listState = listState,
-        openLectureEvaluationInfoList = uiState.lectureEvaluationList,
-      )
     }
+
+    LectureEvaluationLazyColumn(
+      listState = listState,
+      openLectureEvaluationInfoList = uiState.lectureEvaluationList,
+    )
   }
 
   if (uiState.isLoading) {
     LoadingScreen()
   }
-
-  OnboardingBottomSheet(
-    uiState = uiState,
-    hideOnboardingBottomSheet = hideOnboardingBottomSheet,
-    pagerState = pagerState,
-    onClickLoginButton = onClickLoginButton,
-    onClickSignupButton = onClickSignupButton,
-  )
 
   SuwikiAgreementBottomSheet(
     isSheetOpen = uiState.showAgreementBottomSheet,
@@ -234,7 +231,8 @@ private fun LectureEvaluationLazyColumn(
   LazyColumn(
     modifier = Modifier
       .fillMaxSize()
-      .padding(start = 24.dp, end = 24.dp, top = 15.dp),
+      .padding(start = 24.dp, end = 24.dp),
+    contentPadding = PaddingValues(top = 15.dp, bottom = 24.dp),
     state = listState,
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {

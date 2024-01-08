@@ -103,6 +103,7 @@ internal fun MainScreen(
           argumentName = OpenMajorRoute.ARGUMENT_NAME,
           navigateLogin = navigator::navigateLogin,
           navigateSignUp = navigator::navigateSignup,
+          handleException = viewModel::handleException,
           navigateOpenMajor = navigator::navigateOpenMajor,
         )
 

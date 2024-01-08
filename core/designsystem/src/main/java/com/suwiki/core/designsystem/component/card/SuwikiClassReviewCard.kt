@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
@@ -60,8 +62,14 @@ fun SuwikiClassReviewCard(
       .padding(horizontal = 16.dp, vertical = 13.dp),
     horizontalArrangement = Arrangement.SpaceBetween,
   ) {
-    Column {
+    Column(
+      modifier = Modifier.weight(1f),
+    ) {
       Text(
+        modifier = Modifier
+          .wrapContentHeight(),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
         text = className,
         style = SuwikiTheme.typography.header3,
         color = Black,
@@ -129,7 +137,7 @@ fun CardPreview() {
     Box(modifier = Modifier.padding(10.dp)) {
       SuwikiClassReviewCard(
         modifier = Modifier,
-        className = "강의명",
+        className = "강의명강의명강의명강의명강의명강의명",
         openMajor = "개설학과",
         professor = "교수명",
         rating = 4.0f,

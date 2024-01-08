@@ -37,7 +37,6 @@ fun BasicSearchBar(
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   keyboardActions: KeyboardActions = KeyboardActions.Default,
   onClickClearButton: () -> Unit,
-  onClickSearchButton: () -> Unit,
 ) {
   BasicTextField(
     value = value,
@@ -56,8 +55,6 @@ fun BasicSearchBar(
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Image(
-          modifier = Modifier
-            .suwikiClickable(onClick = onClickSearchButton),
           painter = painterResource(id = R.drawable.ic_search),
           contentDescription = "",
         )

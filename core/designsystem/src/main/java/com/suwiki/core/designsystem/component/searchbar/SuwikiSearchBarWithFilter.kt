@@ -19,6 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,9 +44,11 @@ fun SuwikiSearchBarWithFilter(
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
   onClickFilterButton: () -> Unit = {},
-  onClickSearchButton: () -> Unit = {},
+  onClickSearchButton: (String) -> Unit = {},
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
+  focusRequester: FocusRequester = remember { FocusRequester() },
+  focusManager: FocusManager = LocalFocusManager.current,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
   Row(
@@ -53,6 +59,7 @@ fun SuwikiSearchBarWithFilter(
   ) {
     BasicSearchBar(
       modifier = Modifier
+        .focusRequester(focusRequester)
         .weight(1f)
         .cardShadow()
         .background(White, shape = RoundedCornerShape(10.dp))
@@ -67,13 +74,13 @@ fun SuwikiSearchBarWithFilter(
       keyboardOptions = keyboardOptions,
       keyboardActions = KeyboardActions(
         onDone = {
-          onClickSearchButton()
+          onClickSearchButton(value)
           keyboardController?.hide()
+          focusManager.clearFocus()
         },
       ),
       placeholderColor = GrayCB,
       onClickClearButton = onClickClearButton,
-      onClickSearchButton = onClickSearchButton,
     )
 
     Spacer(modifier = Modifier.size(4.dp))

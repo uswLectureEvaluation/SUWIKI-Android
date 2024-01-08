@@ -22,7 +22,8 @@ data class LectureEvaluationState(
   val showSearchEmptyResultScreen: Boolean =
     searchValue.isNotEmpty() &&
       selectedOpenMajor.isNotEmpty() &&
-      lectureEvaluationList.isEmpty()
+      lectureEvaluationList.isEmpty() &&
+      isLoading.not()
 
   val isEnabledAgreementButton: Boolean = isCheckedTerm && isCheckedPersonalPolicy
 }
@@ -32,4 +33,6 @@ sealed interface LectureEvaluationSideEffect {
   data object NavigateSignUp : LectureEvaluationSideEffect
   data object OpenTermWebSite : LectureEvaluationSideEffect
   data object OpenPersonalPolicyWebSite : LectureEvaluationSideEffect
+  data object ScrollToTop : LectureEvaluationSideEffect
+  data class HandleException(val throwable: Throwable) : LectureEvaluationSideEffect
 }

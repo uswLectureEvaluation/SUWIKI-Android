@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.enums.LectureAlign
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,9 +32,18 @@ class LectureEvaluationViewModel @Inject constructor(
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
     container(LectureEvaluationState())
 
+  private val currentState
+    get() = container.stateFlow.value
+
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
   private var page: Int = 1
+  private var searchQuery: String = ""
+
+  fun searchLectureEvaluation(search: String) {
+    searchQuery = search
+    getLectureEvaluationList(search = search, needClear = true)
+  }
 
   @OptIn(OrbitExperimental::class)
   fun updateSearchValue(searchValue: String) = blockingIntent {
@@ -55,13 +65,13 @@ class LectureEvaluationViewModel @Inject constructor(
     )
   }
 
-  fun initData()  = intent {
+  fun initData() = intent {
     checkLoggedIn()
     if (isLoggedIn.not() && isFirstVisit) {
       showOnboardingBottomSheet()
     }
 
-    if(isFirstVisit) {
+    if (isFirstVisit) {
       reduce { state.copy(isLoading = true) }
       getLectureEvaluationList(needClear = false).join()
       reduce { state.copy(isLoading = false) }
@@ -71,52 +81,65 @@ class LectureEvaluationViewModel @Inject constructor(
   }
 
   fun getLectureEvaluationList(
-    search: String? = null,
-    alignPosition: Int? = null,
-    majorType: String? = null,
+    search: String = searchQuery,
+    alignPosition: Int = currentState.selectedAlignPosition,
+    majorType: String = currentState.selectedOpenMajor,
     needClear: Boolean,
   ) = intent {
     if (needClear) {
-      reduce {
-        page = 1
-        state.copy(
-          isLoading = true,
-          lectureEvaluationList = persistentListOf()
-        )
-      }
-    }
-
-    val alignValue = alignPosition?.let {
-      LectureAlign.entries[it]
+      postSideEffect(LectureEvaluationSideEffect.ScrollToTop)
+      clearLectureEvaluationList().join()
     }
 
     getLectureEvaluationListUseCase(
       RetrieveLectureEvaluationAverageListUseCase.Param(
-        search = search ?: state.searchValue,
-        option = alignValue?.query ?: state.alignValue.query,
+        search = search,
+        option = LectureAlign.entries[alignPosition].query,
         page = page,
-        majorType = majorType ?: state.selectedOpenMajor,
+        majorType = majorType,
       ),
-    )
-      .onSuccess {
-        reduce {
-          page++
-          state.copy(
-            searchValue = search ?: state.searchValue,
-            selectedAlignPosition = alignPosition ?: state.selectedAlignPosition,
-            selectedOpenMajor = majorType ?: state.selectedOpenMajor,
-            lectureEvaluationList = state.lectureEvaluationList
-              .plus(it)
-              .distinctBy { it?.id }
-              .toPersistentList(),
-          )
-        }
-      }
-      .onFailure {
-      }
+    ).onSuccess { list ->
+      handleGetLectureEvaluationListSuccess(
+        alignPosition = alignPosition,
+        majorType = majorType,
+        list = list,
+      )
+    }.onFailure {
+      postSideEffect(LectureEvaluationSideEffect.HandleException(it))
+    }
 
     reduce { state.copy(isLoading = false) }
   }
+
+  private fun handleGetLectureEvaluationListSuccess(
+    alignPosition: Int,
+    majorType: String,
+    list: List<LectureEvaluationAverage?>,
+  ) = intent {
+    reduce {
+      page++
+      state.copy(
+        selectedAlignPosition = alignPosition,
+        selectedOpenMajor = majorType,
+        lectureEvaluationList = state.lectureEvaluationList
+          .plus(list)
+          .distinctBy { it?.id }
+          .toPersistentList(),
+      )
+    }
+  }
+
+
+  private fun clearLectureEvaluationList() = intent {
+    reduce {
+      page = 1
+      state.copy(
+        isLoading = true,
+        lectureEvaluationList = persistentListOf(),
+      )
+    }
+  }
+
 
   private suspend fun checkLoggedIn() {
     isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
