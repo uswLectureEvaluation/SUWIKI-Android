@@ -41,7 +41,7 @@ object DatabaseModule {
       OpenLectureDatabase::class.java,
       DatabaseName.OPEN_LECTURE,
     )
-      .fallbackToDestructiveMigration()
+      // .fallbackToDestructiveMigration()
       .build()
   }
 
@@ -56,7 +56,7 @@ object DatabaseModule {
         TimetableDatabase::class.java,
         DatabaseName.TIMETABLE,
       )
-      .fallbackToDestructiveMigration()
+      // .fallbackToDestructiveMigration()
       .build()
   }
 }
