@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.suwiki.feature.myinfo.MyInfoRoute
 import com.suwiki.feature.myinfo.myevaluation.MyEvaluationRoute
-import com.suwiki.feature.myinfo.myevaluation.examevaluation.MyExamEvalutionEditRoute
+import com.suwiki.feature.myinfo.myevaluation.examevaluation.MyExamEvaluationEditRoute
 import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MyLectureEvaluationEditRoute
 
 fun NavController.navigateMyInfo(navOptions: NavOptions) {
@@ -58,7 +58,7 @@ fun NavGraphBuilder.myInfoNavGraph(
     )
   }
   composable(route = MyInfoRoute.myExamEvaluationEditRoute) {
-    MyExamEvalutionEditRoute(
+    MyExamEvaluationEditRoute(
       padding = padding,
       popBackStack = popBackStack,
       onShowToast = onShowToast,

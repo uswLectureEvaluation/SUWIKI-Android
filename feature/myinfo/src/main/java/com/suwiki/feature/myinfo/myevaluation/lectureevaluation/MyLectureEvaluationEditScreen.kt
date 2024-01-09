@@ -77,6 +77,7 @@ fun MyLectureEvaluationEditRoute(
     scrollState = scrollState,
     popBackStack = viewModel::popBackStack,
     onClickSemesterButton = viewModel::showSemesterBottomSheet,
+    onClickSemesterItem = viewModel::clickSemesterItem,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onHoneyRatingValueChange = viewModel::updateHoneyRating,
     onLearningRatingValueChange = viewModel::updateLearningRating,
@@ -105,6 +106,7 @@ fun MyLectureEvaluationEditScreen(
   scrollState: ScrollState,
   popBackStack: () -> Unit,
   onClickSemesterButton: () -> Unit = {},
+  onClickSemesterItem: (String) -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onHoneyRatingValueChange: (Float) -> Unit = {},
   onLearningRatingValueChange: (Float) -> Unit = {},
@@ -145,17 +147,27 @@ fun MyLectureEvaluationEditScreen(
         .padding(horizontal = 24.dp),
     ) {
       SuwikiSelectionContainer(
-        title = "2023-2",
+        title = uiState.selectedSemester,
         onClick = onClickSemesterButton,
       )
       SuwikiBottomSheet(
         isSheetOpen = uiState.showSemesterBottomSheet,
         onDismissRequest = onSemesterBottomSheetDismissRequest,
         content = {
+          // TODO(REMOVE)
           SuwikiMenuItem(title = "")
-          SuwikiMenuItem(title = "2023-1")
-          SuwikiMenuItem(title = "2022-2")
-          SuwikiMenuItem(title = "2022-1")
+          SuwikiMenuItem(
+            title = "2023-1",
+            onClick = { onClickSemesterItem("2023-1") },
+          )
+          SuwikiMenuItem(
+            title = "2022-2",
+            onClick = { onClickSemesterItem("2022-2") },
+          )
+          SuwikiMenuItem(
+            title = "2022-1",
+            onClick = { onClickSemesterItem("2022-1") },
+          )
         },
       )
       Row(

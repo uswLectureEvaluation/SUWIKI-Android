@@ -12,8 +12,6 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-const val SHOW_TOAST_LENGTH = 2000L
-
 @HiltViewModel
 class MyLectureEvaluationEditViewModel @Inject constructor(
   val getUserInfoUseCase: GetUserInfoUseCase,
@@ -40,8 +38,9 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     popBackStack()
   }
 
-  fun getSemester(semester: String) = intent {
-    reduce { state.copy(selectedSemester = semester) }
+  fun clickSemesterItem(semester: String) {
+    intent { reduce { state.copy(selectedSemester = semester) } }
+    hideSemesterBottomSheet()
   }
 
   fun updateHoneyRating(honeyRating: Float) = intent {
@@ -75,7 +74,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   fun showMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
   fun hideMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
-  fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
+  fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
 
   fun popBackStack() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.PopBackStack) }
   private fun showDeleteToast() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast) }

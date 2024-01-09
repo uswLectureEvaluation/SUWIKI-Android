@@ -39,9 +39,9 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun MyExamEvalutionEditRoute(
+fun MyExamEvaluationEditRoute(
   padding: PaddingValues,
-  viewModel: MyExamEvalutionEditViewModel = hiltViewModel(),
+  viewModel: MyExamEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
 ) {
@@ -64,14 +64,16 @@ fun MyExamEvalutionEditRoute(
     viewModel.loadMyPoint()
   }
 
-  MyExamEvalutionEditScreen(
+  MyExamEvaluationEditScreen(
     padding = padding,
     scrollState = scrollState,
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
     onClickSemesterButton = viewModel::showSemesterBottomSheet,
+    onClickSemesterItem = viewModel::clickSemesterItem,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onClickExamTypeButton = viewModel::showExamTypeBottomSheet,
+    onClickExamTypeItem = viewModel::clickExamTypeItem,
     onExamTypeBottomSheetDismissRequest = viewModel::hideExamTypeBottomSheet,
     onClickDifficultyEasy = viewModel::setExamDifficultyEasy,
     onClickDifficultyNormal = viewModel::setExamDifficultyNormal,
@@ -83,9 +85,9 @@ fun MyExamEvalutionEditRoute(
     onClickExamInfoApply = viewModel::setExamInfoApply,
     onClickExamTypePractice = viewModel::setExamTypePractice,
     onClickExamTypeHomework = viewModel::setExamTypeHomework,
-    onExamEvalutionValueChange = viewModel::updateMyExamEvalutionValue,
-    onClickExamEvalutionDeleteButton = viewModel::showMyExamEvalutionDeleteDialog,
-    onDismissExamEvalutionDelete = viewModel::hideMyExamEvalutionDeleteDialog,
+    onExamEvalutionValueChange = viewModel::updateMyExamEvaluationValue,
+    onClickExamEvalutionDeleteButton = viewModel::showMyExamEvaluationDeleteDialog,
+    onDismissExamEvalutionDelete = viewModel::hideMyExamEvaluationDeleteDialog,
     onClickExamEvaluationDeleteConfirm = viewModel::clickDeleteButton,
     onClickExamEvaluationReviseButton = viewModel::clickReviseButton,
   )
@@ -93,14 +95,16 @@ fun MyExamEvalutionEditRoute(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyExamEvalutionEditScreen(
+fun MyExamEvaluationEditScreen(
   padding: PaddingValues,
   scrollState: ScrollState,
   uiState: MyExamEvaluationEditState,
   popBackStack: () -> Unit = {},
   onClickSemesterButton: () -> Unit = {},
+  onClickSemesterItem: (String) -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onClickExamTypeButton: () -> Unit = {},
+  onClickExamTypeItem: (String) -> Unit = {},
   onExamTypeBottomSheetDismissRequest: () -> Unit = {},
   onClickDifficultyEasy: () -> Unit = {},
   onClickDifficultyNormal: () -> Unit = {},
@@ -134,33 +138,53 @@ fun MyExamEvalutionEditScreen(
     Spacer(modifier = Modifier.height(44.dp))
     SuwikiSelectionContainer(
       modifier = Modifier.padding(start = 24.dp),
-      title = stringResource(R.string.my_test_review_choose_semester),
+      title = if(uiState.selectedSemester == "") stringResource(R.string.my_test_review_choose_semester) else uiState.selectedSemester,
       onClick = onClickSemesterButton,
     )
     SuwikiBottomSheet(
       isSheetOpen = uiState.showSemesterBottomSheet,
       onDismissRequest = onSemesterBottomSheetDismissRequest,
       content = {
+        // TODO(REMOVE)
         SuwikiMenuItem(title = "")
-        SuwikiMenuItem(title = "2023-1")
-        SuwikiMenuItem(title = "2022-2")
-        SuwikiMenuItem(title = "2022-1")
+        SuwikiMenuItem(
+          title = "2023-1",
+          onClick = { onClickSemesterItem("2023-1") },
+        )
+        SuwikiMenuItem(
+          title = "2022-2",
+          onClick = { onClickSemesterItem("2022-2") },
+        )
+        SuwikiMenuItem(
+          title = "2022-1",
+          onClick = { onClickSemesterItem("2022-1") },
+        )
       },
     )
     Spacer(modifier = Modifier.height(14.dp))
     SuwikiSelectionContainer(
       modifier = Modifier.padding(start = 24.dp),
-      title = stringResource(R.string.my_test_review_choose_test_type),
+      title = if(uiState.selectedExamType == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamType,
       onClick = onClickExamTypeButton,
     )
     SuwikiBottomSheet(
       isSheetOpen = uiState.showExamTypeBottomSheet,
       onDismissRequest = onExamTypeBottomSheetDismissRequest,
       content = {
+        // TODO(REMOVE)
         SuwikiMenuItem(title = "")
-        SuwikiMenuItem(title = "머신러닝")
-        SuwikiMenuItem(title = "머신러닝")
-        SuwikiMenuItem(title = "과목명")
+        SuwikiMenuItem(
+          title = "머신러닝",
+          onClick = { onClickExamTypeItem("머신러닝") },
+        )
+        SuwikiMenuItem(
+          title = "머신러닝",
+          onClick = { onClickExamTypeItem("머신러닝") },
+        )
+        SuwikiMenuItem(
+          title = "과목명",
+          onClick = { onClickExamTypeItem("과목명") },
+        )
       },
     )
     Spacer(modifier = Modifier.height(16.dp))
@@ -254,7 +278,7 @@ fun MyExamEvalutionEditScreen(
     SuwikiReviewInputBox(
       modifier = Modifier
         .padding(24.dp),
-      value = uiState.examEvalution,
+      value = uiState.examEvaluation,
       hint = stringResource(R.string.my_test_review_input_box_hint),
       onValueChange = onExamEvalutionValueChange,
     )
@@ -281,7 +305,7 @@ fun MyExamEvalutionEditScreen(
         onClick = onClickExamEvaluationReviseButton,
       )
     }
-    if (uiState.showDeleteExamEvalutionDialog) {
+    if (uiState.showDeleteExamEvaluationDialog) {
       SuwikiDialog(
         headerText = stringResource(R.string.my_class_review_delete_dialog_header),
         bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
@@ -304,7 +328,7 @@ fun MyExamEvalutionEditScreenPreview() {
   val scrollState = rememberScrollState()
 
   SuwikiTheme {
-    MyExamEvalutionEditScreen(
+    MyExamEvaluationEditScreen(
       padding = PaddingValues(0.dp),
       scrollState = scrollState,
       uiState = MyExamEvaluationEditState(),
