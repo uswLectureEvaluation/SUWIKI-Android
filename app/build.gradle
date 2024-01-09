@@ -55,7 +55,7 @@ dependencies {
 
     implementation 'com.google.android.play:core:1.10.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
-    implementation 'androidx.room:room-runtime:2.3.0'
+    implementation 'androidx.room:room-runtime:2.4.1'
     implementation 'com.google.android.material:material:1.6.0'
     implementation('com.google.firebase:firebase-auth:21.0.6'){
         exclude module: "play-services-safetynet"
@@ -74,7 +74,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
-    kapt 'androidx.room:room-compiler:2.3.0'
+    kapt 'androidx.room:room-compiler:2.4.1'
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
