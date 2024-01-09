@@ -93,7 +93,7 @@ fun MyLectureEvaluationEditRoute(
     onClickTeamNone = viewModel::setTeamNone,
     onClickTeamExist = viewModel::setTeamExist,
     onClickLectureEvaluationDeleteConfirm = viewModel::clickDeleteButton,
-    onClickLectureEvaluationReviseButton = viewModel::clickReviseButton
+    onClickLectureEvaluationReviseButton = viewModel::clickReviseButton,
   )
 }
 

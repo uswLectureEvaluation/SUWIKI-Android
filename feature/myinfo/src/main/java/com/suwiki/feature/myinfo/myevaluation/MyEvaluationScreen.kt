@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.container.SuwikiReviewEditContainer
+import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
 import com.suwiki.core.designsystem.component.tabbar.TabTitle
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -147,6 +148,9 @@ fun MyEvaluationScreen(
         }
       }
     }
+  }
+  if (uiState.isLoading) {
+    LoadingScreen()
   }
 }
 

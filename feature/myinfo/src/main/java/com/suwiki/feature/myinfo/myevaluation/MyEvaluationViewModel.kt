@@ -1,6 +1,5 @@
 package com.suwiki.feature.myinfo.myevaluation
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyExamEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyLectureEvaluationListUseCase
@@ -19,7 +18,6 @@ import javax.inject.Inject
 class MyEvaluationViewModel @Inject constructor(
   private val getMyLectureEvaluationListUseCase: GetMyLectureEvaluationListUseCase,
   private val getMyExamEvaluationListUseCase: GetMyExamEvaluationListUseCase,
-  savedStateHandle: SavedStateHandle,
 ) : ContainerHost<MyEvaluationState, MyEvaluationSideEffect>, ViewModel() {
   override val container: Container<MyEvaluationState, MyEvaluationSideEffect> = container(MyEvaluationState())
 

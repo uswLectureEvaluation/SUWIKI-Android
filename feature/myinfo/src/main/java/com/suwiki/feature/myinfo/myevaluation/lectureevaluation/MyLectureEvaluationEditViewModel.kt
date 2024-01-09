@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.sync.Mutex
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -21,8 +20,6 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
 ) : ContainerHost<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect>, ViewModel() {
   override val container: Container<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect> =
     container(MyLectureEvaluationEditState())
-
-  private val mutex = Mutex()
 
   suspend fun loadMyPoint() {
     showLoadingScreen()

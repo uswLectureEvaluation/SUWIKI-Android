@@ -77,7 +77,7 @@ fun MyInfoScreen(
   uiState: MyInfoState,
   scrollState: ScrollState,
   onClickNoticeButton: () -> Unit,
-  onClickMyEvaluationButton: (Int) -> Unit,
+  onClickMyEvaluationButton: () -> Unit,
 ) {
   val myList = immutableListOf(
     R.string.my_info_point,
@@ -105,7 +105,7 @@ fun MyInfoScreen(
             LoginMyInfoCard(
               userId = loginId,
               point = point,
-              onClickMyEvaluation = { onClickMyEvaluationButton(uiState.point) },
+              onClickMyEvaluation = onClickMyEvaluationButton,
             )
           } else {
             LogoutMyInfoCard()

@@ -7,8 +7,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.suwiki.feature.myinfo.MyInfoRoute
 import com.suwiki.feature.myinfo.myevaluation.MyEvaluationRoute
-import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MyLectureEvaluationEditRoute
 import com.suwiki.feature.myinfo.myevaluation.examevaluation.MyExamEvalutionEditRoute
+import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MyLectureEvaluationEditRoute
 
 fun NavController.navigateMyInfo(navOptions: NavOptions) {
   navigate(MyInfoRoute.route, navOptions)

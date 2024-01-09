@@ -87,7 +87,7 @@ fun MyExamEvalutionEditRoute(
     onClickExamEvalutionDeleteButton = viewModel::showMyExamEvalutionDeleteDialog,
     onDismissExamEvalutionDelete = viewModel::hideMyExamEvalutionDeleteDialog,
     onClickExamEvaluationDeleteConfirm = viewModel::clickDeleteButton,
-    onClickExamEvaluationReviseButton = viewModel::clickReviseButton
+    onClickExamEvaluationReviseButton = viewModel::clickReviseButton,
   )
 }
 

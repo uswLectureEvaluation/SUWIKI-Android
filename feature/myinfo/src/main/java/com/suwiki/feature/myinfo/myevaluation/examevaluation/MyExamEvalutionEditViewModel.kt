@@ -3,7 +3,6 @@ package com.suwiki.feature.myinfo.myevaluation.examevaluation
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
-import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MyLectureEvaluationEditSideEffect
 import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.SHOW_TOAST_LENGTH
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
