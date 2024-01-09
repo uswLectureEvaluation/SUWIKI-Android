@@ -11,7 +11,7 @@ import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.feature.myinfo.MyInfoRoute
 import com.suwiki.feature.myinfo.myevaluation.MyEvaluationRoute
-import com.suwiki.feature.myinfo.myevaluation.examevaluation.MyExamEvalutionEditRoute
+import com.suwiki.feature.myinfo.myevaluation.examevaluation.MyExamEvaluationEditRoute
 import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MyLectureEvaluationEditRoute
 
 fun NavController.navigateMyInfo(navOptions: NavOptions) {

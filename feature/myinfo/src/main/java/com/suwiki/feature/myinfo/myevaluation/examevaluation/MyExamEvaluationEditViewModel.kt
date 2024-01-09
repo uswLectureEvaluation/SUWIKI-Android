@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
-import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -16,7 +15,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MyExamEvalutionEditViewModel @Inject constructor(
+class MyExamEvaluationEditViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
   val getUserInfoUseCase: GetUserInfoUseCase,
 ) : ContainerHost<MyExamEvaluationEditState, MyExamEvaluationEditSideEffect>, ViewModel() {
@@ -45,8 +44,15 @@ class MyExamEvalutionEditViewModel @Inject constructor(
     popBackStack()
   }
 
-  fun getSemester(semester: String) = intent { reduce { state.copy(selectedSemester = semester) } }
-  fun getExamType(testType: String) = intent { reduce { state.copy(selectedExamType = testType) } }
+  fun clickSemesterItem(semester: String) {
+    intent { reduce { state.copy(selectedSemester = semester) } }
+    hideSemesterBottomSheet()
+  }
+
+  fun clickExamTypeItem(examType: String) {
+    intent { reduce { state.copy(selectedExamType = examType) } }
+    hideExamTypeBottomSheet()
+  }
 
   private fun setPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
   fun setExamDifficultyEasy() = intent { reduce { state.copy(examDifficulty = "easy") } }
@@ -60,14 +66,14 @@ class MyExamEvalutionEditViewModel @Inject constructor(
   fun setExamTypePractice() = intent { reduce { state.copy(examType = "practice") } }
   fun setExamTypeHomework() = intent { reduce { state.copy(examType = "homework") } }
 
-  fun updateMyExamEvalutionValue(examEvalutionValue: String) = intent {
-    reduce { state.copy(examEvalution = examEvalutionValue) }
+  fun updateMyExamEvaluationValue(examEvaluationValue: String) = intent {
+    reduce { state.copy(examEvaluation = examEvaluationValue) }
   }
 
   fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
-  fun showMyExamEvalutionDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvalutionDialog = true) } }
-  fun hideMyExamEvalutionDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvalutionDialog = false) } }
+  fun showMyExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = true) } }
+  fun hideMyExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
   fun showExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = true) } }

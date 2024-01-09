@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,6 +49,7 @@ fun SuwikiBottomSheet(
 fun SuwikiMenuItem(
   modifier: Modifier = Modifier,
   title: String,
+  onClick: () -> Unit = {},
 ) {
   Text(
     text = title,
@@ -56,6 +58,7 @@ fun SuwikiMenuItem(
     modifier = modifier
       .fillMaxWidth()
       .background(White)
+      .suwikiClickable(onClick = onClick)
       .padding(vertical = 14.dp, horizontal = 24.dp),
   )
 }

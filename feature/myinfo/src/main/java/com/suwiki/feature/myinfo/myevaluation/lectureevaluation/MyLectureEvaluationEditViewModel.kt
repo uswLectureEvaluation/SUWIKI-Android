@@ -45,8 +45,9 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     popBackStack()
   }
 
-  fun getSemester(semester: String) = intent {
-    reduce { state.copy(selectedSemester = semester) }
+  fun clickSemesterItem(semester: String) {
+    intent { reduce { state.copy(selectedSemester = semester) } }
+    hideSemesterBottomSheet()
   }
 
   fun updateHoneyRating(honeyRating: Float) = intent {
@@ -80,7 +81,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   fun showMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
   fun hideMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
-  fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
+  fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
 
   fun popBackStack() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.PopBackStack) }
   private fun showDeleteToast() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast) }

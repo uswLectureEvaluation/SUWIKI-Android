@@ -5,15 +5,15 @@ data class MyExamEvaluationEditState(
   val point: Int = 0,
   val selectedSemester: String = "",
   val selectedExamType: String = "",
-  val examEvalution: String = "",
+  val examEvaluation: String = "",
   val examDifficulty: String = "",
   val examInfo: String = "",
   val examType: String? = null,
   val showSemesterBottomSheet: Boolean = false,
   val showExamTypeBottomSheet: Boolean = false,
-  val showDeleteExamEvalutionDialog: Boolean = false,
-  val showDeleteExamEvalutionToastMessage: String = "",
-  val showDeleteExamEvalutionToastVisible: Boolean = false,
+  val showDeleteExamEvaluationDialog: Boolean = false,
+  val showDeleteExamEvaluationToastMessage: String = "",
+  val showDeleteExamEvaluationToastVisible: Boolean = false,
 )
 
 sealed interface MyExamEvaluationEditSideEffect {
