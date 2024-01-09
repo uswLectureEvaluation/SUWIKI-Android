@@ -99,6 +99,7 @@ fun MyEvaluationScreen(
   // TODO(REMOVE)
   val myLectureReviewList: PersistentList<String> = persistentListOf("머신러닝", "머신러닝", "과목명", "과목명")
   val myTestReviewList: PersistentList<String> = persistentListOf("머신러닝", "과목명", "과목명")
+
   Column(
     modifier = Modifier
       .padding(padding)
@@ -137,7 +138,7 @@ fun MyEvaluationScreen(
             onClickEditButton = { onClickLectureEvaluationEditButton() },
           )
         }
-        MyEvaluationTab.TEST_INFO -> {
+        MyEvaluationTab.EXAM_INFO -> {
           MyEvaluationLazyColumn(
 //            itemList = uiState.myExamEvaluationList,
             itemList = myTestReviewList,
@@ -152,7 +153,7 @@ fun MyEvaluationScreen(
 @Composable
 fun MyEvaluationLazyColumn(
   modifier: Modifier = Modifier,
-  itemList: PersistentList<*>,
+  itemList: PersistentList<Any>,
   onClickEditButton: () -> Unit = {},
 ) {
   LazyColumn(

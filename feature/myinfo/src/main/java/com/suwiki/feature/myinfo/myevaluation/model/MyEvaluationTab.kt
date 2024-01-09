@@ -11,7 +11,7 @@ enum class MyEvaluationTab(
     position = 0,
     title = R.string.my_review_lecture_evaluation_tab,
   ),
-  TEST_INFO(
+  EXAM_INFO(
     position = 1,
     title = R.string.my_review_test_evaluation_tab,
   ),
