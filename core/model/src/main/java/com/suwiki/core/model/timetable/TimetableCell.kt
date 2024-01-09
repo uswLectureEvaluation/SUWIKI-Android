@@ -1,8 +1,10 @@
 package com.suwiki.core.model.timetable
 
 import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
 
 @Stable
+@Serializable
 data class TimetableCell(
   val name: String = "",
   val professor: String = "",

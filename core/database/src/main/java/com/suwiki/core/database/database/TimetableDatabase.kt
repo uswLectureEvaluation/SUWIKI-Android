@@ -20,6 +20,18 @@ import com.suwiki.core.database.model.TimetableEntity
 abstract class TimetableDatabase : RoomDatabase() {
   abstract fun timetableDao(): TimeTableDao
 
+  @RenameColumn.Entries(
+    RenameColumn(
+      tableName = "TimeTableList",
+      fromColumnName = "timeTableName",
+      toColumnName = "timetableName",
+    ),
+    RenameColumn(
+      tableName = "TimeTableList",
+      fromColumnName = "timeTableJsonData",
+      toColumnName = "timetableJsonData",
+    ),
+  )
   @RenameTable(fromTableName = "TimeTableList", toTableName = "TimetableEntity")
   class RenameTableAutoMigration : AutoMigrationSpec
 }
