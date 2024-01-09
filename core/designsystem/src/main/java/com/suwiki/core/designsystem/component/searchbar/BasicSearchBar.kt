@@ -53,7 +53,10 @@ fun BasicSearchBar(
       Row(
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        Image(painter = painterResource(id = R.drawable.ic_search), contentDescription = "")
+        Image(
+          painter = painterResource(id = R.drawable.ic_search),
+          contentDescription = "",
+        )
 
         Spacer(modifier = Modifier.size(5.dp))
 

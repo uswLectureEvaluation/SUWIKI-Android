@@ -1,14 +1,19 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.suwiki.core.model.enums.LectureAlign
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -18,20 +23,115 @@ import javax.inject.Inject
 @HiltViewModel
 class LectureEvaluationViewModel @Inject constructor(
   private val getUserInfoUseCase: GetUserInfoUseCase,
+  private val getLectureEvaluationListUseCase: RetrieveLectureEvaluationAverageListUseCase,
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
     container(LectureEvaluationState())
 
+  private val currentState
+    get() = container.stateFlow.value
+
   private var isLoggedIn: Boolean = false
   private var isFirstVisit: Boolean = true
+  private var page: Int = 1
+  private var searchQuery: String = ""
 
-  fun updateSelectedOpenMajor(openMajor: String) = intent { reduce { state.copy(selectedOpenMajor = openMajor) } }
+  fun searchLectureEvaluation(search: String) {
+    searchQuery = search
+    getLectureEvaluationList(search = search, needClear = true)
+  }
 
-  fun checkLoggedInShowBottomSheetIfNeed() = viewModelScope.launch {
+  @OptIn(OrbitExperimental::class)
+  fun updateSearchValue(searchValue: String) = blockingIntent {
+    reduce { state.copy(searchValue = searchValue) }
+  }
+
+  fun updateSelectedOpenMajor(openMajor: String) = intent {
+    if (openMajor == state.selectedOpenMajor) return@intent
+    getLectureEvaluationList(
+      majorType = openMajor,
+      needClear = true,
+    )
+  }
+
+  fun updateAlignItem(position: Int) {
+    getLectureEvaluationList(
+      alignPosition = position,
+      needClear = true,
+    )
+  }
+
+  fun initData() = intent {
     checkLoggedIn()
     if (isLoggedIn.not() && isFirstVisit) {
-      isFirstVisit = false
       showOnboardingBottomSheet()
+    }
+
+    if (isFirstVisit) {
+      reduce { state.copy(isLoading = true) }
+      getLectureEvaluationList(needClear = false).join()
+      reduce { state.copy(isLoading = false) }
+    }
+
+    isFirstVisit = false
+  }
+
+  fun getLectureEvaluationList(
+    search: String = searchQuery,
+    alignPosition: Int = currentState.selectedAlignPosition,
+    majorType: String = currentState.selectedOpenMajor,
+    needClear: Boolean,
+  ) = intent {
+    if (needClear) {
+      postSideEffect(LectureEvaluationSideEffect.ScrollToTop)
+      clearLectureEvaluationList().join()
+    }
+
+    getLectureEvaluationListUseCase(
+      RetrieveLectureEvaluationAverageListUseCase.Param(
+        search = search,
+        option = LectureAlign.entries[alignPosition].query,
+        page = page,
+        majorType = majorType,
+      ),
+    ).onSuccess { list ->
+      handleGetLectureEvaluationListSuccess(
+        alignPosition = alignPosition,
+        majorType = majorType,
+        list = list,
+      )
+    }.onFailure {
+      postSideEffect(LectureEvaluationSideEffect.HandleException(it))
+    }
+
+    reduce { state.copy(isLoading = false) }
+  }
+
+  private fun handleGetLectureEvaluationListSuccess(
+    alignPosition: Int,
+    majorType: String,
+    list: List<LectureEvaluationAverage?>,
+  ) = intent {
+    reduce {
+      page++
+      state.copy(
+        selectedAlignPosition = alignPosition,
+        selectedOpenMajor = majorType,
+        lectureEvaluationList = state.lectureEvaluationList
+          .plus(list)
+          .distinctBy { it?.id }
+          .toPersistentList(),
+      )
+    }
+  }
+
+  private fun clearLectureEvaluationList() = intent {
+    reduce {
+      page = 1
+      state.copy(
+        isLoading = true,
+        lectureEvaluationList = persistentListOf(),
+      )
     }
   }
 
@@ -52,4 +152,7 @@ class LectureEvaluationViewModel @Inject constructor(
 
   fun openTermWebSite() = intent { postSideEffect(LectureEvaluationSideEffect.OpenTermWebSite) }
   fun openPersonalPolicyWebSite() = intent { postSideEffect(LectureEvaluationSideEffect.OpenPersonalPolicyWebSite) }
+
+  fun showAlignBottomSheet() = intent { reduce { state.copy(showAlignBottomSheet = true) } }
+  fun hideAlignBottomSheet() = intent { reduce { state.copy(showAlignBottomSheet = false) } }
 }

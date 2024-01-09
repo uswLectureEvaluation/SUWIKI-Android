@@ -11,6 +11,8 @@ import androidx.navigation.navOptions
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
+import com.suwiki.feature.login.navigation.navigateFindId
+import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.navigateMyEvaluation
 import com.suwiki.feature.myinfo.navigation.navigateMyExamEvaluation
@@ -56,6 +58,14 @@ internal class MainNavigator(
 
   fun navigateLogin() {
     navController.navigateLogin()
+  }
+
+  fun navigateFindId() {
+    navController.navigateFindId()
+  }
+
+  fun navigateFindPassword() {
+    navController.navigateFindPassword()
   }
 
   fun navigateSignup() {

@@ -63,8 +63,8 @@ internal fun MainScreen(
       ) {
         loginNavGraph(
           popBackStack = navigator::popBackStackIfNotHome,
-          navigateFindId = { /* TODO */ },
-          navigateFindPassword = { /* TODO */ },
+          navigateFindId = navigator::navigateFindId,
+          navigateFindPassword = navigator::navigateFindPassword,
           navigateSignup = navigator::navigateSignup,
           handleException = viewModel::handleException,
         )
@@ -98,6 +98,7 @@ internal fun MainScreen(
           argumentName = OpenMajorRoute.ARGUMENT_NAME,
           navigateLogin = navigator::navigateLogin,
           navigateSignUp = navigator::navigateSignup,
+          handleException = viewModel::handleException,
           navigateOpenMajor = navigator::navigateOpenMajor,
         )
 
