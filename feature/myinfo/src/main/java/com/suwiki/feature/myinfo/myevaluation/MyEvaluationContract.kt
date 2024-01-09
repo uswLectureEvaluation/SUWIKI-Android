@@ -14,6 +14,6 @@ data class MyEvaluationState(
 
 sealed interface MyEvaluationSideEffect {
   data object PopBackStack : MyEvaluationSideEffect
-  data object NavigateMyLectureEvaluation : MyEvaluationSideEffect
-  data object NavigateMyExamEvaluation : MyEvaluationSideEffect
+  data class NavigateMyLectureEvaluation(val lectureEvaluation: MyLectureEvaluation) : MyEvaluationSideEffect
+  data class NavigateMyExamEvaluation(val examEvaluation: MyExamEvaluation) : MyEvaluationSideEffect
 }

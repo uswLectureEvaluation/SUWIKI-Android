@@ -1,6 +1,8 @@
 package com.suwiki.feature.myinfo.myevaluation
 
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyExamEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyLectureEvaluationListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,6 +60,10 @@ class MyEvaluationViewModel @Inject constructor(
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
   fun popBackStack() = intent { postSideEffect(MyEvaluationSideEffect.PopBackStack) }
-  fun navigateMyLectureEvaluation() = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation) }
-  fun navigateMyExamEvaluation() = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation) }
+  fun navigateMyLectureEvaluation(lectureEvaluation: MyLectureEvaluation) = intent {
+    postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation(lectureEvaluation))
+  }
+  fun navigateMyExamEvaluation(examEvaluation: MyExamEvaluation) = intent {
+    postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation(examEvaluation))
+  }
 }

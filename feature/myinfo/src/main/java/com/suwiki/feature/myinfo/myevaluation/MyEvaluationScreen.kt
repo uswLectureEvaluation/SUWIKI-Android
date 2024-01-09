@@ -36,8 +36,9 @@ import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.feature.myinfo.R
 import com.suwiki.feature.myinfo.myevaluation.model.MyEvaluationTab
+import com.suwiki.feature.myinfo.myevaluation.model.MyExamEvaluationsSample
+import com.suwiki.feature.myinfo.myevaluation.model.MyLectureEvaluationsSample
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -49,15 +50,15 @@ fun MyEvaluationRoute(
   padding: PaddingValues,
   viewModel: MyEvaluationViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
-  navigateMyLectureEvaluation: () -> Unit = {},
-  navigateMyExamEvaluation: () -> Unit = {},
+  navigateMyLectureEvaluation: (MyLectureEvaluation) -> Unit = {},
+  navigateMyExamEvaluation: (MyExamEvaluation) -> Unit = {},
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyEvaluationSideEffect.PopBackStack -> popBackStack()
-      is MyEvaluationSideEffect.NavigateMyLectureEvaluation -> navigateMyLectureEvaluation()
-      is MyEvaluationSideEffect.NavigateMyExamEvaluation -> navigateMyExamEvaluation()
+      is MyEvaluationSideEffect.NavigateMyLectureEvaluation -> navigateMyLectureEvaluation(sideEffect.lectureEvaluation)
+      is MyEvaluationSideEffect.NavigateMyExamEvaluation -> navigateMyExamEvaluation(sideEffect.examEvaluation)
     }
   }
   val pagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT })
@@ -94,13 +95,9 @@ fun MyEvaluationScreen(
   pagerState: PagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT }),
   onClickTab: (Int) -> Unit = {},
   onClickBack: () -> Unit = {},
-  onClickLectureEvaluationEditButton: () -> Unit = {},
-  onClickExamEvaluationEditButton: () -> Unit = {},
+  onClickLectureEvaluationEditButton: (MyLectureEvaluation) -> Unit = {},
+  onClickExamEvaluationEditButton: (MyExamEvaluation) -> Unit = {},
 ) {
-  // TODO(REMOVE)
-  val myLectureReviewList: PersistentList<String> = persistentListOf("머신러닝", "머신러닝", "과목명", "과목명")
-  val myTestReviewList: PersistentList<String> = persistentListOf("머신러닝", "과목명", "과목명")
-
   Column(
     modifier = Modifier
       .padding(padding)
@@ -135,15 +132,17 @@ fun MyEvaluationScreen(
         MyEvaluationTab.LECTURE_EVALUATION -> {
           MyEvaluationLazyColumn(
 //            itemList = uiState.myLectureEvaluationList,
-            itemList = myLectureReviewList,
-            onClickEditButton = { onClickLectureEvaluationEditButton() },
+            itemList = MyLectureEvaluationsSample,
+            onClickLectureEditButton = onClickLectureEvaluationEditButton,
+//            onClickEditButton = onClickLectureEvaluationEditButton,
           )
         }
         MyEvaluationTab.EXAM_INFO -> {
           MyEvaluationLazyColumn(
 //            itemList = uiState.myExamEvaluationList,
-            itemList = myTestReviewList,
-            onClickEditButton = { onClickExamEvaluationEditButton() },
+            itemList = MyExamEvaluationsSample,
+            onClickExamEditButton = onClickExamEvaluationEditButton,
+//            onClickEditButton = onClickExamEvaluationEditButton,
           )
         }
       }
@@ -158,6 +157,8 @@ fun MyEvaluationScreen(
 fun MyEvaluationLazyColumn(
   modifier: Modifier = Modifier,
   itemList: PersistentList<Any>,
+  onClickLectureEditButton: (MyLectureEvaluation) -> Unit = {},
+  onClickExamEditButton: (MyExamEvaluation) -> Unit = {},
   onClickEditButton: () -> Unit = {},
 ) {
   LazyColumn(
@@ -168,18 +169,18 @@ fun MyEvaluationLazyColumn(
         is MyLectureEvaluation -> {
           SuwikiReviewEditContainer(
             semesterText = item.selectedSemester,
-            classNameText = item.content,
-            onClickEditButton = onClickEditButton,
+            classNameText = item.lectureInfo.lectureName,
+            onClickEditButton = { onClickLectureEditButton(item) },
           )
         }
         is MyExamEvaluation -> {
-          item.selectedSemester?.let {
-            SuwikiReviewEditContainer(
-              semesterText = it,
-              classNameText = item.content,
-              onClickEditButton = onClickEditButton,
-            )
-          }
+          val (examSemester, examName) = item.selectedSemester to item.lectureName
+
+          SuwikiReviewEditContainer(
+            semesterText = examSemester ?: "학기",
+            classNameText = examName ?: "과목명",
+            onClickEditButton = { onClickExamEditButton(item) },
+          )
         }
         // TODO(REMOVE)
         is String -> {

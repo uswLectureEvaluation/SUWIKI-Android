@@ -4,7 +4,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.feature.myinfo.MyInfoRoute
 import com.suwiki.feature.myinfo.myevaluation.MyEvaluationRoute
 import com.suwiki.feature.myinfo.myevaluation.examevaluation.MyExamEvalutionEditRoute
@@ -18,12 +22,12 @@ fun NavController.navigateMyEvaluation() {
   navigate(MyInfoRoute.myEvaluationRoute)
 }
 
-fun NavController.navigateMyLectureEvaluation() {
-  navigate(MyInfoRoute.myLectureEvaluationEditRoute)
+fun NavController.navigateMyLectureEvaluation(lectureEvaluation: MyLectureEvaluation) {
+  navigate(MyInfoRoute.myLectureEvaluationEditRoute(lectureEvaluation.toString()))
 }
 
-fun NavController.navigateMyExamEvaluation() {
-  navigate(MyInfoRoute.myExamEvaluationEditRoute)
+fun NavController.navigateMyExamEvaluation(examEvaluation: MyExamEvaluation) {
+  navigate(MyInfoRoute.myExamEvaluationEditRoute(examEvaluation.toString()))
 }
 
 fun NavGraphBuilder.myInfoNavGraph(
@@ -31,8 +35,8 @@ fun NavGraphBuilder.myInfoNavGraph(
   popBackStack: () -> Unit = {},
   navigateNotice: () -> Unit = {},
   navigateMyEvaluation: () -> Unit = {},
-  navigateMyLectureEvaluationEdit: () -> Unit = {},
-  navigateMyExamEvaluationEdit: () -> Unit = {},
+  navigateMyLectureEvaluationEdit: (MyLectureEvaluation) -> Unit = {},
+  navigateMyExamEvaluationEdit: (MyExamEvaluation) -> Unit = {},
   onShowToast: (String) -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
@@ -50,14 +54,28 @@ fun NavGraphBuilder.myInfoNavGraph(
       navigateMyExamEvaluation = navigateMyExamEvaluationEdit,
     )
   }
-  composable(route = MyInfoRoute.myLectureEvaluationEditRoute) {
+  composable(
+    route = MyInfoRoute.myLectureEvaluationEditRoute("{${MyInfoRoute.myLectureEvaluation}}"),
+    arguments = listOf(
+      navArgument(MyInfoRoute.myLectureEvaluation) {
+        type = NavType.StringType
+      },
+    ),
+  ) {
     MyLectureEvaluationEditRoute(
       padding = padding,
       popBackStack = popBackStack,
       onShowToast = onShowToast,
     )
   }
-  composable(route = MyInfoRoute.myExamEvaluationEditRoute) {
+  composable(
+    route = MyInfoRoute.myExamEvaluationEditRoute("{${MyInfoRoute.myExamEvaluation}}"),
+    arguments = listOf(
+      navArgument(MyInfoRoute.myExamEvaluation) {
+        type = NavType.StringType
+      },
+    ),
+  ) {
     MyExamEvalutionEditRoute(
       padding = padding,
       popBackStack = popBackStack,
@@ -69,6 +87,8 @@ fun NavGraphBuilder.myInfoNavGraph(
 object MyInfoRoute {
   const val route = "my-info"
   const val myEvaluationRoute = "my-evaluation"
-  const val myLectureEvaluationEditRoute = "my-lecture-evaluation-edit"
-  const val myExamEvaluationEditRoute = "my-exam-evaluation-edit"
+  const val myLectureEvaluation = "lecture-evaluation"
+  const val myExamEvaluation = "exam-evaluation"
+  fun myLectureEvaluationEditRoute(lectureEvaluation: String) = "my-lecture-evaluation-edit/$lectureEvaluation"
+  fun myExamEvaluationEditRoute(examEvaluation: String) = "my-exam-evaluation-edit/$examEvaluation"
 }

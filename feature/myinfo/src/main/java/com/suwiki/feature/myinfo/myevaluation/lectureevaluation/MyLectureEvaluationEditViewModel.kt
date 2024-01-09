@@ -1,8 +1,10 @@
 package com.suwiki.feature.myinfo.myevaluation.lectureevaluation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
+import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -10,20 +12,23 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import timber.log.Timber
 import javax.inject.Inject
-
-const val SHOW_TOAST_LENGTH = 2000L
 
 @HiltViewModel
 class MyLectureEvaluationEditViewModel @Inject constructor(
+  savedStateHandle: SavedStateHandle,
   val getUserInfoUseCase: GetUserInfoUseCase,
 ) : ContainerHost<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect>, ViewModel() {
   override val container: Container<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect> =
     container(MyLectureEvaluationEditState())
 
+  private val myLectureEvaluation = savedStateHandle.get<String>(MyInfoRoute.myLectureEvaluation)!!
+
   suspend fun loadMyPoint() {
     showLoadingScreen()
     /* TODO 에러 처리 */
+    Timber.d(myLectureEvaluation)
     getUserInfoUseCase().collect(::setPoint)
     hideLoadingScreen()
   }
@@ -36,7 +41,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
 
   fun clickDeleteButton() {
     showDeleteToast()
-    // TODO("내 강의평가 수정 API 호출")
+    // TODO("내 강의평가 삭제 API 호출")
     popBackStack()
   }
 
