@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "552b8faa986f84c9bdb997b466a221e7",
+    "identityHash": "80628cd5c243f45d44b3c48b16fc2277",
     "entities": [
       {
-        "tableName": "TimetableEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`createTime` INTEGER NOT NULL, `year` TEXT NOT NULL, `semester` TEXT NOT NULL, `timetableName` TEXT NOT NULL, `timetableJsonData` TEXT NOT NULL, PRIMARY KEY(`createTime`))",
+        "tableName": "TimeTableList",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`createTime` INTEGER NOT NULL, `year` TEXT NOT NULL, `semester` TEXT NOT NULL, `timeTableName` TEXT NOT NULL, `timeTableJsonData` TEXT NOT NULL, PRIMARY KEY(`createTime`))",
         "fields": [
           {
             "fieldPath": "createTime",
@@ -27,23 +27,23 @@
             "notNull": true
           },
           {
-            "fieldPath": "timetableName",
-            "columnName": "timetableName",
+            "fieldPath": "timeTableName",
+            "columnName": "timeTableName",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "timetableJsonData",
-            "columnName": "timetableJsonData",
+            "fieldPath": "timeTableJsonData",
+            "columnName": "timeTableJsonData",
             "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
           "columnNames": [
             "createTime"
-          ]
+          ],
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -52,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '552b8faa986f84c9bdb997b466a221e7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '80628cd5c243f45d44b3c48b16fc2277')"
     ]
   }
 }
