@@ -1,4 +1,4 @@
-package com.suwiki.feature.login
+package com.suwiki.feature.login.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +34,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
 import com.suwiki.core.ui.util.TERMS_SITE
+import com.suwiki.feature.login.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -67,8 +68,8 @@ fun LoginRoute(
     onClickIdClearButton = { viewModel.updateId("") },
     onClickPasswordClearButton = { viewModel.updatePassword("") },
     onClickPasswordEyeIcon = viewModel::toggleShowPassword,
-    onClickFindIdText = { /* TODO */ },
-    onClickFindPasswordText = { /* TODO */ },
+    onClickFindIdText = viewModel::navigateFindId,
+    onClickFindPasswordText = viewModel::navigateFindPassword,
     onClickSignupText = viewModel::showAgreementBottomSheet,
     onClickLoginButton = viewModel::login,
     onClickLoginFailDialogButton = viewModel::hideLoginFailDialog,
@@ -115,7 +116,7 @@ fun LoginScreen(
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      Text(text = stringResource(R.string.word_login), style = SuwikiTheme.typography.header1)
+      Text(text = stringResource(com.suwiki.core.ui.R.string.word_login), style = SuwikiTheme.typography.header1)
 
       Spacer(modifier = Modifier.size(26.dp))
 
@@ -123,7 +124,7 @@ fun LoginScreen(
         value = uiState.id,
         onValueChange = onValueChangeIdTextField,
         onClickClearButton = onClickIdClearButton,
-        label = stringResource(R.string.word_id),
+        label = stringResource(com.suwiki.core.ui.R.string.word_id),
         placeholder = stringResource(R.string.login_screen_id_textfield_placeholder),
       )
 
@@ -136,7 +137,7 @@ fun LoginScreen(
         showEyeIcon = true,
         showValue = uiState.showPassword,
         onClickEyeIcon = onClickPasswordEyeIcon,
-        label = stringResource(R.string.word_password),
+        label = stringResource(com.suwiki.core.ui.R.string.word_password),
         placeholder = stringResource(R.string.login_screen_password_textfield_placeholder),
       )
 
@@ -149,7 +150,7 @@ fun LoginScreen(
       ) {
         Text(
           modifier = Modifier.suwikiClickable(onClick = onClickFindIdText),
-          text = stringResource(R.string.login_screen_find_id),
+          text = stringResource(com.suwiki.core.ui.R.string.word_find_id),
           style = SuwikiTheme.typography.body5,
           color = Gray6A,
         )
@@ -160,7 +161,7 @@ fun LoginScreen(
         )
         Text(
           modifier = Modifier.suwikiClickable(onClick = onClickFindPasswordText),
-          text = stringResource(R.string.login_screen_find_password),
+          text = stringResource(com.suwiki.core.ui.R.string.word_find_password),
           style = SuwikiTheme.typography.body5,
           color = Gray6A,
         )
@@ -171,7 +172,7 @@ fun LoginScreen(
         )
         Text(
           modifier = Modifier.suwikiClickable(onClick = onClickSignupText),
-          text = stringResource(R.string.word_signup),
+          text = stringResource(com.suwiki.core.ui.R.string.word_signup),
           style = SuwikiTheme.typography.body4,
           color = Primary,
         )
@@ -183,7 +184,7 @@ fun LoginScreen(
         modifier = Modifier.imePadding(),
         clickable = uiState.loginButtonEnable,
         enabled = uiState.loginButtonEnable,
-        text = stringResource(R.string.word_login),
+        text = stringResource(com.suwiki.core.ui.R.string.word_login),
         onClick = onClickLoginButton,
       )
     }
@@ -192,7 +193,7 @@ fun LoginScreen(
       SuwikiDialog(
         headerText = stringResource(R.string.login_screen_dialog_login_fail_title),
         bodyText = stringResource(R.string.login_screen_dialog_login_fail_body),
-        confirmButtonText = stringResource(R.string.word_confirm),
+        confirmButtonText = stringResource(com.suwiki.core.ui.R.string.word_confirm),
         onDismissRequest = onClickLoginFailDialogButton,
         onClickConfirm = onClickLoginFailDialogButton,
       )
@@ -202,7 +203,7 @@ fun LoginScreen(
       SuwikiDialog(
         headerText = stringResource(R.string.login_screen_dialog_email_not_auth_title),
         bodyText = stringResource(R.string.login_screen_dialog_email_not_auth_body),
-        confirmButtonText = stringResource(R.string.word_confirm),
+        confirmButtonText = stringResource(com.suwiki.core.ui.R.string.word_confirm),
         onDismissRequest = onClickEmailNotAuthDialogButton,
         onClickConfirm = onClickEmailNotAuthDialogButton,
       )

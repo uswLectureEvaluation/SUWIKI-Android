@@ -1,4 +1,4 @@
-package com.suwiki.feature.login
+package com.suwiki.feature.login.login
 
 data class LoginState(
   val showEmailNotAuthDialog: Boolean = false,

@@ -25,8 +25,8 @@ data class IdState(
   private val showIdInvalidHelperText: Boolean = false,
 ) {
   val idHelperTextResId = when {
-    showIdInvalidHelperText -> R.string.signup_screen_id_textfield_invalid_helper_text
-    showIdOverlapHelperText -> R.string.signup_screen_id_textfield_overlap_helper_text
+    showIdInvalidHelperText -> R.string.textfield_id_invalid_helper_text
+    showIdOverlapHelperText -> R.string.textfield_id_overlap_helper_text
     else -> R.string.word_empty
   }
 
@@ -45,15 +45,15 @@ data class PasswordState(
   private val showPasswordConfirmNotSameHelperText: Boolean = false,
 ) {
   val passwordHelperTextResId = when {
-    showPasswordInvalidHelperText -> R.string.signup_screen_password_textfield_invalid_helper_text
+    showPasswordInvalidHelperText -> R.string.textfield_password_invalid_helper_text
     else -> R.string.word_empty
   }
 
   val isErrorPasswordTextField = showPasswordInvalidHelperText
 
   val passwordConfirmHelperTextResId = when {
-    showPasswordConfirmInvalidHelperText -> R.string.signup_screen_password_textfield_invalid_helper_text
-    showPasswordConfirmNotSameHelperText -> R.string.signup_screen_password_textfield_not_same_helper_text
+    showPasswordConfirmInvalidHelperText -> R.string.textfield_password_invalid_helper_text
+    showPasswordConfirmNotSameHelperText -> R.string.textfield_password_not_same_helper_text
     else -> R.string.word_empty
   }
 
@@ -68,8 +68,8 @@ data class EmailState(
   private val showEmailInvalidHelperText: Boolean = false,
 ) {
   val emailHelperTextResId = when {
-    showEmailNoticeHelperText -> R.string.signup_screen_email_textfield_notice_text
-    showEmailInvalidHelperText -> R.string.signup_screen_email_textfield_invalid_text
+    showEmailNoticeHelperText -> R.string.textfield_email_notice_text
+    showEmailInvalidHelperText -> R.string.textfield_email_invalid_text
     else -> R.string.word_empty
   }
 

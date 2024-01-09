@@ -11,3 +11,5 @@ object REGEX {
   val PASSWORD = """^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$""".toRegex()
   val EMAIL = """^[A-Za-z0-9._%+-]+@suwon\.ac\.kr$""".toRegex()
 }
+
+const val TEXT_FIELD_DEBOUNCE = 800L

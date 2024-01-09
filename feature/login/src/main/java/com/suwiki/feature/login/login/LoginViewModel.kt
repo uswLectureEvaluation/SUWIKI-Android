@@ -1,4 +1,4 @@
-package com.suwiki.feature.login
+package com.suwiki.feature.login.login
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.exception.EmailNotAuthedException
@@ -40,6 +40,8 @@ class LoginViewModel @Inject constructor(
     reduce { state.copy(isLoading = false) }
   }
 
+  fun navigateFindId() = intent { postSideEffect(LoginSideEffect.NavigateFindId) }
+  fun navigateFindPassword() = intent { postSideEffect(LoginSideEffect.NavigateFindPassword) }
   fun navigateSignup() = intent { postSideEffect(LoginSideEffect.NavigateSignUp) }
 
   fun toggleShowPassword() = intent { reduce { state.copy(showPassword = !state.showPassword) } }

@@ -17,6 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.theme.Gray95
@@ -33,8 +35,9 @@ fun SuwikiSearchBar(
   minLines: Int = 1,
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
+  onClickSearchButton: (String) -> Unit = {},
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-  keyboardActions: KeyboardActions = KeyboardActions.Default,
+  keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
   Box(
@@ -56,7 +59,12 @@ fun SuwikiSearchBar(
       placeholder = placeholder,
       placeholderColor = Gray95,
       keyboardOptions = keyboardOptions,
-      keyboardActions = keyboardActions,
+      keyboardActions = KeyboardActions(
+        onDone = {
+          onClickSearchButton(value)
+          keyboardController?.hide()
+        },
+      ),
       onClickClearButton = onClickClearButton,
     )
   }

@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="lecture_align_recent">최근 올라온 강의</string>
+  <string name="lecture_align_honey">꿀 강의</string>
+  <string name="lecture_align_satisfaction">만족도 높은 강의</string>
+  <string name="lecture_align_learning">배울게 많은 강의</string>
+  <string name="lecture_align_best">BEST 강의</string>
   <string name="word_email">이메일</string>
   <string name="word_password_confirm">비밀번호 확인</string>
   <string name="word_password">비밀번호</string>
   <string name="word_id">아이디</string>
+  <string name="word_find_id">아이디 찾기</string>
+  <string name="word_find_password">비밀번호 찾기</string>
+  <string name="word_confirm">확인</string>
+  <string name="word_signup">회원가입</string>
+  <string name="word_login">로그인</string>
+  <string name="word_empty" />
+
+  <!-- TextField Id -->
+  <string name="textfield_id_placeholder">6~20자 영문/숫자</string>
+  <string name="textfield_id_invalid_helper_text">6~20자 영문/숫자를 입력하세요</string>
+  <string name="textfield_id_overlap_helper_text">이미 사용중인 아이디입니다</string>
+
+  <!-- TextField Password -->
+  <string name="textfield_password_placeholder">8~20자 영문, 숫자, 특수문자 조합</string>
+  <string name="textfield_password_invalid_helper_text">8~20자 영문,숫자,특수문자를 조합하세요.</string>
+  <string name="textfield_password_not_same_helper_text">비밀번호가 일치하지 않습니다.</string>
+
+  <!-- TextField Email -->
+  <string name="textfield_email_notice_text">웹메일이 휴면 상태인지 확인해주세요\n웹메일 계정은 포털 계정과 다릅니다\n</string>
+  <string name="textfield_email_invalid_text">\@suwon.ac.kr 형식이 아닙니다</string>
+  <string name="textfield_email_placeholder">\@suwon.ac.kr</string>
 </resources>
