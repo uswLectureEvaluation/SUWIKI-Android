@@ -20,6 +20,13 @@ android {
         versionName "2.2.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] =
+                        "$projectDir/schemas".toString()
+            }
+        }
     }
 
     buildTypes {
