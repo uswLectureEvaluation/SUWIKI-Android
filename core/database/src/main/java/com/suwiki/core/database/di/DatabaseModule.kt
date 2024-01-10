@@ -110,7 +110,7 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
         database.execSQL(
           """
             UPDATE TimeTableList
-            SET timeTableJsonData = $cellList
+            SET timeTableJsonData = '$cellList'
             WHERE createTime = $createTime
           """.trimIndent()
         )
@@ -143,7 +143,7 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
         SELECT createTime, year, semester, timeTableName, timeTableJsonData FROM TimeTableList
       """.trimIndent(),
     )
-    database.execSQL("DROP TABLE TimeTableList")
+    // database.execSQL("DROP TABLE TimeTableList")
   }
 }
 
