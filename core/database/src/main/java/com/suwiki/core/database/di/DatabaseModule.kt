@@ -91,18 +91,6 @@ object DatabaseModule {
 private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
   override fun migrate(database: SupportSQLiteDatabase) {
     Log.d("테스트","마이그레이션 시작")
-    database.execSQL(
-      """
-      CREATE TABLE IF NOT EXISTS TimetableEntity (
-      `createTime` INTEGER NOT NULL,
-      `year` TEXT NOT NULL,
-      `semester` TEXT NOT NULL,
-      `name` TEXT NOT NULL,
-      `cellList` TEXT NOT NULL,
-      PRIMARY KEY(`createTime`)
-      )
-      """.trimIndent(),
-    )
 
     val cursor = database.query("SELECT createTime, timetableJsonData FROM TimetableList")
 
@@ -119,14 +107,25 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
 
         database.update(
           table = "TimeTableList",
-          conflictAlgorithm = SQLiteDatabase.CONFLICT_IGNORE,
+          conflictAlgorithm = SQLiteDatabase.CONFLICT_REPLACE,
           values = contentValues,
           whereClause = "createTime = ?",
           whereArgs = arrayOf(createTime.toString()),
         )
       } while (cursor.moveToNext())
     }
-
+    database.execSQL(
+      """
+      CREATE TABLE IF NOT EXISTS TimetableEntity (
+      `createTime` INTEGER NOT NULL,
+      `year` TEXT NOT NULL,
+      `semester` TEXT NOT NULL,
+      `name` TEXT NOT NULL,
+      `cellList` TEXT NOT NULL,
+      PRIMARY KEY(`createTime`)
+      )
+      """.trimIndent(),
+    )
 
     database.execSQL(
       """
