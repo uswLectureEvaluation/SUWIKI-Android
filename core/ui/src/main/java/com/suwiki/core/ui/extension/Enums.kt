@@ -25,34 +25,34 @@ val lectureAlignList
   get() = LectureAlign.entries.map { it.toText() }.toPersistentList()
 
 @Composable
-fun GradeLevel.toText() = when(this) {
+fun GradeLevel.toText() = when (this) {
   GradeLevel.EASY -> stringResource(R.string.word_grade_easy)
   GradeLevel.NORMAL -> stringResource(R.string.word_grade_normal)
   GradeLevel.DIFFICULT -> stringResource(R.string.word_grade_difficulty)
 }
 
 @Composable
-fun HomeworkLevel.toText() = when(this) {
+fun HomeworkLevel.toText() = when (this) {
   HomeworkLevel.NONE -> stringResource(R.string.word_homework_not_exist)
   HomeworkLevel.NORMAL -> stringResource(R.string.word_homework_normal)
   HomeworkLevel.MANY -> stringResource(R.string.word_homework_many)
 }
 
 @Composable
-fun TeamLevel.toText() = when(this) {
+fun TeamLevel.toText() = when (this) {
   TeamLevel.NOT_EXIST -> stringResource(R.string.word_team_not_exist)
   TeamLevel.EXIST -> stringResource(R.string.word_team_exist)
 }
 
 @Composable
-fun ExamLevel.toText() = when(this) {
+fun ExamLevel.toText() = when (this) {
   ExamLevel.EASY -> stringResource(R.string.word_exam_level_easy)
   ExamLevel.NORMAL -> stringResource(R.string.word_exam_level_normal)
   ExamLevel.DIFFICULT -> stringResource(R.string.word_exam_level_difficult)
 }
 
 @Composable
-fun ExamType.toText() = when(this) {
+fun ExamType.toText() = when (this) {
   ExamType.FAMILY_TREE -> stringResource(R.string.word_exam_type_family_tree)
   ExamType.TEXTBOOK -> stringResource(R.string.word_exam_type_textbook)
   ExamType.PPT -> stringResource(R.string.word_exam_type_ppt)
