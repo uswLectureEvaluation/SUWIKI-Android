@@ -3,6 +3,8 @@ package com.suwiki.feature.myinfo.myevaluation.examevaluation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.core.model.enums.ExamLevel
+import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.myinfo.navigation.MyInfoRoute
@@ -58,23 +60,15 @@ class MyExamEvaluationEditViewModel @Inject constructor(
   }
 
   private fun setPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
-  fun setExamDifficultyEasy() = intent { reduce { state.copy(examDifficulty = "easy") } }
-  fun setExamDifficultyNormal() = intent { reduce { state.copy(examDifficulty = "normal") } }
-  fun setExamDifficultyHard() = intent { reduce { state.copy(examDifficulty = "hard") } }
-  fun setExamInfoExamGuides() = intent { reduce { state.copy(examInfo = "exam_guides") } }
-  fun setExamInfoBook() = intent { reduce { state.copy(examInfo = "book") } }
-  fun setExamInfoNotes() = intent { reduce { state.copy(examInfo = "notes") } }
-  fun setExamInfoPPT() = intent { reduce { state.copy(examInfo = "ppt") } }
-  fun setExamInfoApply() = intent { reduce { state.copy(examInfo = "apply") } }
-  fun setExamTypePractice() = intent { reduce { state.copy(examType = "practice") } }
-  fun setExamTypeHomework() = intent { reduce { state.copy(examType = "homework") } }
+  fun updateExamLevel(examLevel: ExamLevel) = intent { reduce { state.copy(examLevel = examLevel) } }
+  fun updateExamType(examType: ExamType) = intent { reduce { state.copy(examType = examType) } }
 
   fun updateMyExamEvaluationValue(examEvaluationValue: String) = intent {
     reduce { state.copy(examEvaluation = examEvaluationValue) }
   }
 
-  fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
-  fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
+  private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
+  private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
   fun showMyExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = true) } }
   fun hideMyExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }

@@ -48,7 +48,7 @@ fun SuwikiReviewInputBox(
     cursorBrush = SolidColor(Primary),
     decorationBox = { innerText ->
       Box(
-        modifier = Modifier
+        modifier = modifier
           .heightIn(min = 198.dp)
           .background(GrayF6, shape = RoundedCornerShape(10.dp))
           .border(

@@ -61,7 +61,6 @@ fun NavGraphBuilder.myInfoNavGraph(
     ),
   ) {
     MyLectureEvaluationEditRoute(
-      padding = padding,
       popBackStack = popBackStack,
       onShowToast = onShowToast,
     )
@@ -75,7 +74,6 @@ fun NavGraphBuilder.myInfoNavGraph(
     ),
   ) {
     MyExamEvaluationEditRoute(
-      padding = padding,
       popBackStack = popBackStack,
       onShowToast = onShowToast,
     )

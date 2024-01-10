@@ -1,14 +1,17 @@
 package com.suwiki.feature.myinfo.myevaluation.examevaluation
 
+import com.suwiki.core.model.enums.ExamLevel
+import com.suwiki.core.model.enums.ExamType
+
 data class MyExamEvaluationEditState(
   val isLoading: Boolean = false,
   val point: Int = 0,
   val selectedSemester: String = "",
   val selectedExamType: String = "",
   val examEvaluation: String = "",
-  val examDifficulty: String = "",
+  val examLevel: ExamLevel? = null,
   val examInfo: String = "",
-  val examType: String? = null,
+  val examType: ExamType? = null,
   val showSemesterBottomSheet: Boolean = false,
   val showExamTypeBottomSheet: Boolean = false,
   val showDeleteExamEvaluationDialog: Boolean = false,
