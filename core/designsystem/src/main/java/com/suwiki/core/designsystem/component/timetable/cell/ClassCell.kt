@@ -33,7 +33,7 @@ enum class TimetableCellType {
 
 private val colorHexMap = mapOf(
   TimetableCellColor.BROWN to 0xFFC28F62,
-  TimetableCellColor.LIGHT_BROWN to 0xFFD4AC89,
+  TimetableCellColor.BROWN_LIGHT to 0xFFD4AC89,
   TimetableCellColor.ORANGE to 0xFFFFC152,
   TimetableCellColor.APRICOT to 0xFFFFC152,
   TimetableCellColor.PURPLE to 0xFF7E3348,

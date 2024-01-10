@@ -8,6 +8,6 @@ fun TimetableEntity.toModel() = Timetable(
   createTime = createTime,
   year = year,
   semester = semester,
-  name = timetableName,
-  cellList = Json.decodeFromString(timetableJsonData),
+  name = name,
+  cellList = Json.decodeFromString(cellList),
 )

@@ -8,6 +8,6 @@ data class TimetableEntity(
   @PrimaryKey val createTime: Long,
   var year: String,
   var semester: String,
-  var timetableName: String,
-  var timetableJsonData: String = "",
+  var name: String,
+  var cellList: String = "",
 )
