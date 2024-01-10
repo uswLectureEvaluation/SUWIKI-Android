@@ -101,13 +101,15 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
 
         val cellList = timeTableJsonDataToCellList(timeTableJsonData)
 
+        Log.d("테스트","변환된 값 : $cellList")
+
         val contentValues = ContentValues().apply {
           put("timeTableJsonData", cellList)
         }
 
         database.update(
           table = "TimeTableList",
-          conflictAlgorithm = SQLiteDatabase.CONFLICT_REPLACE,
+          conflictAlgorithm = SQLiteDatabase.CONFLICT_FAIL,
           values = contentValues,
           whereClause = "createTime = ?",
           whereArgs = arrayOf(createTime.toString()),
