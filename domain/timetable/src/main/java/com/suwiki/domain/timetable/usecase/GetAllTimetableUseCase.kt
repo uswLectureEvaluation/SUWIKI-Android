@@ -8,7 +8,6 @@ import javax.inject.Inject
 class GetAllTimetableUseCase @Inject constructor(
   private val timetableRepository: TimetableRepository,
 ) {
-  suspend operator fun invoke(): Result<List<Timetable>> = runCatchingIgnoreCancelled {
+  suspend operator fun invoke(): List<Timetable> =
     timetableRepository.getAllTimetable()
-  }
 }

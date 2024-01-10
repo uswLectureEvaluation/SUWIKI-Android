@@ -9,5 +9,5 @@ fun TimetableEntity.toModel() = Timetable(
   year = year,
   semester = semester,
   name = name,
-  cellList = Json.decodeFromString(cellList),
+  cellList = cellList,
 )

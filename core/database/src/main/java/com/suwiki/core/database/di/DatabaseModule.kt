@@ -3,6 +3,7 @@ package com.suwiki.core.database.di
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 import androidx.room.ProvidedTypeConverter
 import androidx.room.Room
 import androidx.room.TypeConverter
@@ -19,12 +20,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.sql.Time
 import javax.inject.Singleton
 
-@ProvidedTypeConverter
 class TimetableCellListConverter {
   @TypeConverter
   fun cellListToJson(value: List<TimetableCell>): String {
@@ -81,7 +82,6 @@ object DatabaseModule {
         TimetableDatabase::class.java,
         DatabaseName.TIMETABLE,
       )
-      .addTypeConverter(TimetableCellListConverter())
       .addMigrations(TIMETABLE_MIGRATION_1_2)
       // .fallbackToDestructiveMigration()
       .build()
@@ -90,6 +90,7 @@ object DatabaseModule {
 
 private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
   override fun migrate(database: SupportSQLiteDatabase) {
+    Log.d("테스트","마이그레이션 시작")
     database.execSQL(
       """
       CREATE TABLE IF NOT EXISTS TimetableEntity (
@@ -103,7 +104,7 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
       """.trimIndent(),
     )
 
-    val cursor = database.query("TimeTableList", arrayOf("createTime", "timeTableJsonData"))
+    val cursor = database.query("SELECT createTime, timetableJsonData FROM TimetableList")
 
     if (cursor.moveToFirst()) {
       do {
@@ -117,7 +118,7 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
         }
 
         database.update(
-          table = "TimetableEntity",
+          table = "TimeTableList",
           conflictAlgorithm = SQLiteDatabase.CONFLICT_IGNORE,
           values = contentValues,
           whereClause = "createTime = ?",
@@ -130,24 +131,25 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
     database.execSQL(
       """
         INSERT INTO TimetableEntity (createTime, year, semester, name, cellList)
-        SELECT createTime, year, semester, timeTableName, timeTableJsonData  FROM TimeTableList
+        SELECT createTime, year, semester, timeTableName, timeTableJsonData FROM TimeTableList
       """.trimIndent(),
     )
     database.execSQL("DROP TABLE TimeTableList")
   }
 }
 
-private data class LegacyTimeTableCell(
-  var name: String = "",
-  var professor: String = "",
-  var location: String = "",
-  var day: String = "",
-  var startTime: String = "",
-  var endTime: String = "",
-  var color: Int = -1,
-  var credit: String = "",
-) {
-  fun toTimetableCell(): TimetableCell {
+@Serializable
+data class LegacyTimeTableCell(
+  val name: String = "",
+  val professor: String = "",
+  val location: String = "",
+  val day: String = "",
+  val startTime: String = "",
+  val endTime: String = "",
+  val color: Int,
+  val credit: String = "",
+)
+fun LegacyTimeTableCell.toTimetableCell(): TimetableCell {
     val color = when (this.color) {
       -96120 -> TimetableCellColor.PINK
       -16046 -> TimetableCellColor.ORANGE
@@ -183,12 +185,13 @@ private data class LegacyTimeTableCell(
       startPeriod = startTime.toIntOrNull() ?: 0,
       endPeriod = endTime.toIntOrNull() ?: 0,
       color = color,
-      credit = credit,
     )
   }
-}
+
 
 fun timeTableJsonDataToCellList(timeTableJsonData: String): String {
+  Log.d("테스트","json $timeTableJsonData")
+  if (timeTableJsonData.isBlank()) return ""
   val legacy = Json.decodeFromString<List<LegacyTimeTableCell>>(timeTableJsonData)
   val cellList = legacy.map { it.toTimetableCell() }
   return Json.encodeToString(cellList)

@@ -10,5 +10,5 @@ fun Timetable.toEntity() = TimetableEntity(
   year = year,
   semester = semester,
   name = name,
-  cellList = Json.encodeToString(cellList),
+  cellList = cellList,
 )

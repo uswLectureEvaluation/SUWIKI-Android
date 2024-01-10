@@ -17,24 +17,7 @@ class TimetableViewModel @Inject constructor(
 
   init {
       viewModelScope.launch {
-        getAllTimetableUseCase()
-          .onSuccess { list ->
-            Timber.tag("테스트").d("시간표 목록 가져오기 성공! $list")
-            list.forEach { time ->
-              getTimetableUseCase(time.createTime)
-                .onSuccess {
-                  Timber.tag("테스트").d("개별 시간표 성공 $it")
-                }
-                .onFailure {
-                  Timber.tag("테스트").d("개별 시간표 실패 $it")
-                }
-            }
-
-          }
-          .onFailure {
-            Timber.tag("테스트").d("시간표 목록 가져오기 실패! $it")
-
-          }
+        Timber.tag("테스트").d("시간표 목록 가져오기! ${getAllTimetableUseCase()}")
       }
   }
 
