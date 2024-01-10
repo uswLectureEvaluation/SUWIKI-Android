@@ -50,6 +50,7 @@ import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.myinfo.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.util.Locale
 
 @Composable
 fun MyLectureEvaluationEditRoute(
@@ -75,6 +76,14 @@ fun MyLectureEvaluationEditRoute(
 
   LaunchedEffect(key1 = Unit) {
     viewModel.setInitData()
+  }
+
+  LaunchedEffect(
+    key1 = uiState.honeyRating,
+    key2 = uiState.learningRating,
+    key3 = uiState.satisfactionRating,
+  ) {
+    viewModel.updateTotalAvg()
   }
 
   MyLectureEvaluationEditScreen(
@@ -154,10 +163,10 @@ fun MyLectureEvaluationEditScreen(
           verticalAlignment = Alignment.CenterVertically,
         ) {
           SuwikiRatingBar(
-            rating = 3.4f,
+            rating = uiState.totalAvg,
           )
           Text(
-            text = "3.4",
+            text = "%.1f".format(Locale.US, uiState.totalAvg),
             style = SuwikiTheme.typography.body4,
             color = Primary,
           )

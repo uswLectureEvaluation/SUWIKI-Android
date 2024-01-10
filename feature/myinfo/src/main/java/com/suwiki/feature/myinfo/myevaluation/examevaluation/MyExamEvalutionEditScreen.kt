@@ -137,7 +137,7 @@ fun MyExamEvaluationEditScreen(
       Spacer(modifier = Modifier.height(14.dp))
 
       SuwikiSelectionContainer(
-        title = if (uiState.selectedExamType == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamType,
+        title = if (uiState.selectedExamInfo == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamInfo,
         onClick = onClickExamTypeButton,
       )
 
@@ -226,7 +226,7 @@ fun MyExamEvaluationEditScreen(
   }
 
   SuwikiBottomSheet(
-    isSheetOpen = uiState.showExamTypeBottomSheet,
+    isSheetOpen = uiState.showExamInfoBottomSheet,
     onDismissRequest = onExamTypeBottomSheetDismissRequest,
     content = {
       // TODO(REMOVE)

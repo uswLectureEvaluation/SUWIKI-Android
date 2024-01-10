@@ -34,6 +34,34 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     showLoadingScreen()
     /* TODO 에러 처리 */
     intent { reduce { state.copy(selectedSemester = myLectureEvaluationItem.selectedSemester) } }
+    updateHoneyRating(myLectureEvaluationItem.honey)
+    updateLearningRating(myLectureEvaluationItem.learning)
+    updateSatisfactionRating(myLectureEvaluationItem.satisfaction)
+    updateTotalAvg()
+    updateGradeLevel(
+      when (myLectureEvaluationItem.difficulty) {
+        2 -> GradeLevel.EASY
+        1 -> GradeLevel.NORMAL
+        0 -> GradeLevel.DIFFICULT
+        else -> GradeLevel.EASY
+      },
+    )
+    updateHomeworkLevel(
+      when (myLectureEvaluationItem.homework) {
+        2 -> HomeworkLevel.MANY
+        1 -> HomeworkLevel.NORMAL
+        0 -> HomeworkLevel.NONE
+        else -> HomeworkLevel.MANY
+      },
+    )
+    updateTeamLevel(
+      if (myLectureEvaluationItem.team == 0) {
+        TeamLevel.NOT_EXIST
+      } else {
+        TeamLevel.EXIST
+      },
+    )
+    updateMyLectureEvaluationValue(myLectureEvaluationItem.content)
     getUserInfoUseCase().collect(::setPoint)
     hideLoadingScreen()
   }
@@ -72,6 +100,9 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   }
 
   private fun setPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
+  fun updateTotalAvg() = intent {
+    reduce { state.copy(totalAvg = (state.honeyRating + state.learningRating + state.satisfactionRating) / 3) }
+  }
   fun updateGradeLevel(gradeLevel: GradeLevel) = intent { reduce { state.copy(gradeLevel = gradeLevel) } }
   fun updateHomeworkLevel(homeworkLevel: HomeworkLevel) = intent { reduce { state.copy(homeworkLevel = homeworkLevel) } }
   fun updateTeamLevel(teamLevel: TeamLevel) = intent { reduce { state.copy(teamLevel = teamLevel) } }

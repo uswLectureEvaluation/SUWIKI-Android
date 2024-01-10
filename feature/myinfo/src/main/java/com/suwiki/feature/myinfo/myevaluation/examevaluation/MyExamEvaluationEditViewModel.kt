@@ -2,9 +2,9 @@ package com.suwiki.feature.myinfo.myevaluation.examevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.myinfo.navigation.MyInfoRoute
@@ -33,6 +33,28 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     showLoadingScreen()
     /* TODO 에러 처리 */
     intent { reduce { state.copy(selectedSemester = myExamEvaluationItem.selectedSemester!!) } }
+    intent { reduce { state.copy(selectedExamInfo = myExamEvaluationItem.examInfo) } }
+    updateExamLevel(
+      when (myExamEvaluationItem.examDifficulty) {
+        "쉬움" -> ExamLevel.EASY
+        "보통" -> ExamLevel.NORMAL
+        "어려움" -> ExamLevel.DIFFICULT
+        else -> ExamLevel.EASY
+      },
+    )
+    updateExamType(
+      when (myExamEvaluationItem.examType) {
+        "족보" -> ExamType.FAMILY_TREE
+        "교재" -> ExamType.TEXTBOOK
+        "PPT" -> ExamType.PPT
+        "필기" -> ExamType.WRITING
+        "응용" -> ExamType.APPLY
+        "실습" -> ExamType.PRACTICE
+        "과제" -> ExamType.HOMEWORK
+        else -> ExamType.FAMILY_TREE
+      },
+    )
+    updateMyExamEvaluationValue(myExamEvaluationItem.content)
     getUserInfoUseCase().collect(::setPoint)
     hideLoadingScreen()
   }
@@ -55,7 +77,7 @@ class MyExamEvaluationEditViewModel @Inject constructor(
   }
 
   fun clickExamTypeItem(examType: String) {
-    intent { reduce { state.copy(selectedExamType = examType) } }
+    intent { reduce { state.copy(selectedExamInfo = examType) } }
     hideExamTypeBottomSheet()
   }
 
@@ -73,8 +95,8 @@ class MyExamEvaluationEditViewModel @Inject constructor(
   fun hideMyExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
-  fun showExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = true) } }
-  fun hideExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = false) } }
+  fun showExamTypeBottomSheet() = intent { reduce { state.copy(showExamInfoBottomSheet = true) } }
+  fun hideExamTypeBottomSheet() = intent { reduce { state.copy(showExamInfoBottomSheet = false) } }
 
   fun popBackStack() = intent { postSideEffect(MyExamEvaluationEditSideEffect.PopBackStack) }
   private fun showDeleteToast() = intent { postSideEffect(MyExamEvaluationEditSideEffect.ShowMyExamEvaluationDeleteToast) }
