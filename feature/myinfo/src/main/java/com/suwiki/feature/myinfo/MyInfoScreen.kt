@@ -47,12 +47,14 @@ fun MyInfoRoute(
   padding: PaddingValues,
   viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
+  navigateMyEvaluation: () -> Unit,
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyInfoSideEffect.NavigateNotice -> navigateNotice()
+      is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation()
     }
   }
 
@@ -65,6 +67,7 @@ fun MyInfoRoute(
     uiState = uiState,
     scrollState = scrollState,
     onClickNoticeButton = viewModel::navigateNotice,
+    onClickMyEvaluationButton = viewModel::navigateMyEvaluation,
   )
 }
 
@@ -74,6 +77,7 @@ fun MyInfoScreen(
   uiState: MyInfoState,
   scrollState: ScrollState,
   onClickNoticeButton: () -> Unit,
+  onClickMyEvaluationButton: () -> Unit,
 ) {
   val myList = immutableListOf(
     R.string.my_info_point,
@@ -96,10 +100,16 @@ fun MyInfoScreen(
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        if (uiState.showMyInfoCard) {
-          LoginMyInfoCard()
-        } else {
-          LogoutMyInfoCard()
+        with(uiState) {
+          if (showMyInfoCard) {
+            LoginMyInfoCard(
+              userId = loginId,
+              point = point,
+              onClickMyEvaluation = onClickMyEvaluationButton,
+            )
+          } else {
+            LogoutMyInfoCard()
+          }
         }
         Row(
           horizontalArrangement = Arrangement.SpaceBetween,
@@ -200,7 +210,9 @@ fun LogoutMyInfoCard(
 
 @Composable
 fun LoginMyInfoCard(
-  onClickMyPost: () -> Unit = {},
+  userId: String,
+  point: Int,
+  onClickMyEvaluation: () -> Unit = {},
 ) {
   Row(
     horizontalArrangement = Arrangement.SpaceBetween,
@@ -216,7 +228,7 @@ fun LoginMyInfoCard(
     Column {
       Text(
         modifier = Modifier.padding(top = 19.dp, start = 16.dp),
-        text = stringResource(R.string.my_info_test_nickname),
+        text = userId,
         style = SuwikiTheme.typography.header2,
         color = Black,
       )
@@ -231,7 +243,7 @@ fun LoginMyInfoCard(
           contentDescription = "",
         )
         Text(
-          text = stringResource(R.string.my_info_test_point),
+          text = point.toString(),
           style = SuwikiTheme.typography.body4,
           color = Black,
         )
@@ -241,7 +253,7 @@ fun LoginMyInfoCard(
       verticalAlignment = Alignment.CenterVertically,
       modifier = Modifier
         .padding(top = 31.dp, end = 6.dp)
-        .suwikiClickable(onClick = onClickMyPost),
+        .suwikiClickable(onClick = onClickMyEvaluation),
     ) {
       Text(
         text = stringResource(R.string.my_info_my_post),
@@ -314,6 +326,7 @@ fun MyInfoScreenScreenPreview() {
       uiState = MyInfoState(true),
       scrollState = scrollState,
       onClickNoticeButton = {},
+      onClickMyEvaluationButton = {},
     )
   }
 }

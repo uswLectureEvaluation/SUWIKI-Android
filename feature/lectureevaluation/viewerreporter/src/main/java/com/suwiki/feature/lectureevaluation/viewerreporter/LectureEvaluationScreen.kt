@@ -120,7 +120,10 @@ fun LectureEvaluationRoute(
     onClickSearchBarClearButton = {
       viewModel.updateSearchValue("")
     },
-    onClickAlignBottomSelectedItem = viewModel::updateAlignItem,
+    onClickAlignBottomSelectedItem = {
+      viewModel.hideAlignBottomSheet()
+      viewModel.updateAlignItem(it)
+    },
   )
 }
 
@@ -239,7 +242,6 @@ private fun LectureEvaluationLazyColumn(
     ) { lectureEvaluation ->
       with(lectureEvaluation) {
         SuwikiClassReviewCard(
-          modifier = Modifier,
           className = this!!.lectureInfo.lectureName,
           openMajor = lectureInfo.majorType,
           professor = lectureInfo.professor,

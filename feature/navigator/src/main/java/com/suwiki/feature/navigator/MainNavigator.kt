@@ -12,7 +12,10 @@ import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLe
 import com.suwiki.feature.login.navigation.navigateFindId
 import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
+import com.suwiki.feature.myinfo.navigation.navigateMyEvaluation
+import com.suwiki.feature.myinfo.navigation.navigateMyExamEvaluation
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
+import com.suwiki.feature.myinfo.navigation.navigateMyLectureEvaluation
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
@@ -77,6 +80,18 @@ internal class MainNavigator(
 
   fun navigateNoticeDetail(noticeId: Long) {
     navController.navigateNoticeDetail(noticeId)
+  }
+
+  fun navigateMyEvaluation() {
+    navController.navigateMyEvaluation()
+  }
+
+  fun navigateMyLectureEvaluationEdit() {
+    navController.navigateMyLectureEvaluation()
+  }
+
+  fun navigateMyExamEvaluationEdit() {
+    navController.navigateMyExamEvaluation()
   }
 
   fun navigateOpenMajor(selectedOpenMajor: String) {

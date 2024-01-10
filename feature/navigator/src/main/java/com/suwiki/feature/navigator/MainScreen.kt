@@ -18,9 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -39,10 +36,8 @@ import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
 import com.suwiki.feature.login.R
 import com.suwiki.feature.login.navigation.loginNavGraph
-import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
 import com.suwiki.feature.notice.navigation.noticeNavGraph
-import com.suwiki.feature.openmajor.OpenMajorRoute
 import com.suwiki.feature.openmajor.navigation.OpenMajorRoute
 import com.suwiki.feature.openmajor.navigation.openMajorNavGraph
 import com.suwiki.feature.signup.navigation.signupNavGraph
@@ -109,7 +104,12 @@ internal fun MainScreen(
 
         myInfoNavGraph(
           padding = innerPadding,
+          popBackStack = navigator::popBackStackIfNotHome,
           navigateNotice = navigator::navigateNotice,
+          navigateMyEvaluation = navigator::navigateMyEvaluation,
+          navigateMyLectureEvaluationEdit = navigator::navigateMyLectureEvaluationEdit,
+          navigateMyExamEvaluationEdit = navigator::navigateMyExamEvaluationEdit,
+          onShowToast = viewModel::onShowToast,
         )
 
         noticeNavGraph(
