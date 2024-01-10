@@ -30,4 +30,12 @@
   <string name="textfield_email_notice_text">웹메일이 휴면 상태인지 확인해주세요\n웹메일 계정은 포털 계정과 다릅니다\n</string>
   <string name="textfield_email_invalid_text">\@suwon.ac.kr 형식이 아닙니다</string>
   <string name="textfield_email_placeholder">\@suwon.ac.kr</string>
+    <string name="word_grade_easy">너그러움</string>
+  <string name="word_grade_normal">보통</string>
+  <string name="word_grade_difficulty">까다로움</string>
+  <string name="word_homework_not_exist">없음</string>
+  <string name="word_homework_normal">보통</string>
+  <string name="word_homework_many">많음</string>
+  <string name="word_team_not_exist">없음</string>
+  <string name="word_team_exist">있음</string>
 </resources>

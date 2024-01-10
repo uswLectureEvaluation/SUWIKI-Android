@@ -202,7 +202,7 @@ fun MyExamEvaluationEditScreen(
       {
         SuwikiOutlinedChip(
           isChecked = uiState.examDifficulty == "normal",
-          text = stringResource(R.string.my_class_review_normal),
+          text = "보통",
           onClick = onClickDifficultyNormal,
         )
       },

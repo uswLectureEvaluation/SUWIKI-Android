@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -42,10 +41,13 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.component.slider.SuwikiSlider
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
-import com.suwiki.core.designsystem.component.toast.SuwikiToast
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.enums.GradeLevel
+import com.suwiki.core.model.enums.HomeworkLevel
+import com.suwiki.core.model.enums.TeamLevel
+import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.myinfo.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -89,14 +91,9 @@ fun MyLectureEvaluationEditRoute(
     onLectureEvaluationValueChange = viewModel::updateMyLectureEvaluationValue,
     onClickLectureEvaluationDeleteButton = viewModel::showMyLectureEvaluationDeleteDialog,
     onDismissLectureEvaluationDelete = viewModel::hideMyLectureEvaluationDeleteDialog,
-    onClickGradeGenerous = viewModel::setDifficultyGenerous,
-    onClickGradeNormal = viewModel::setDifficultyNormal,
-    onClickGradePicky = viewModel::setDifficultyPicky,
-    onClickHomeworkNone = viewModel::setHomeworkNone,
-    onClickHomeworkNormal = viewModel::setHomeworkNormal,
-    onClickHomeworkMuch = viewModel::setHomeworkMuch,
-    onClickTeamNone = viewModel::setTeamNone,
-    onClickTeamExist = viewModel::setTeamExist,
+    onClickGradeChip = viewModel::updateGradeLevel,
+    onClickHomeworkChip = viewModel::updateHomeworkLevel,
+    onClickTeamChip = viewModel::updateTeamLevel,
     onClickLectureEvaluationDeleteConfirm = viewModel::clickDeleteButton,
     onClickLectureEvaluationReviseButton = viewModel::clickReviseButton,
   )
@@ -114,260 +111,231 @@ fun MyLectureEvaluationEditScreen(
   onHoneyRatingValueChange: (Float) -> Unit = {},
   onLearningRatingValueChange: (Float) -> Unit = {},
   onSatisfactionRatingValueChange: (Float) -> Unit = {},
-  onClickGradeGenerous: () -> Unit = {},
-  onClickGradeNormal: () -> Unit = {},
-  onClickGradePicky: () -> Unit = {},
-  onClickHomeworkNone: () -> Unit = {},
-  onClickHomeworkNormal: () -> Unit = {},
-  onClickHomeworkMuch: () -> Unit = {},
-  onClickTeamNone: () -> Unit = {},
-  onClickTeamExist: () -> Unit = {},
+  onClickGradeChip: (GradeLevel) -> Unit = {},
+  onClickHomeworkChip: (HomeworkLevel) -> Unit = {},
+  onClickTeamChip: (TeamLevel) -> Unit = {},
   onLectureEvaluationValueChange: (String) -> Unit = { _ -> },
   onClickLectureEvaluationDeleteButton: () -> Unit = {},
   onClickLectureEvaluationDeleteConfirm: () -> Unit = {},
   onDismissLectureEvaluationDelete: () -> Unit = {},
   onClickLectureEvaluationReviseButton: () -> Unit = {},
 ) {
-  Column(
+  Box(
     modifier = Modifier
-      .background(White),
+      .background(White)
+      .fillMaxSize(),
   ) {
-    SuwikiAppBarWithTitle(
-      title = stringResource(R.string.my_class_review_lecture_evaluation),
-      showBackIcon = false,
-      showCloseIcon = true,
-      onClickClose = popBackStack,
-    )
-    Spacer(modifier = Modifier.height(20.dp))
-
     Column(
       modifier = Modifier
-        .weight(1f)
-        .padding(24.dp)
-        .verticalScroll(scrollState),
+        .background(White),
     ) {
-      Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-          .fillMaxWidth(),
-      ) {
-        SuwikiSelectionContainer(
-          title = uiState.selectedSemester,
-          onClick = onClickSemesterButton,
-        )
-
-        Row(
-          modifier = Modifier.wrapContentHeight(),
-          verticalAlignment = Alignment.CenterVertically,
-        ) {
-          SuwikiRatingBar(
-            rating = 3.4f,
-          )
-          Text(
-            text = "3.4",
-            style = SuwikiTheme.typography.body4,
-            color = Primary,
-          )
-        }
-      }
-
-      LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_honey_rating),
-        verticalAlignment = Alignment.Bottom,
-        content = {
-          SuwikiSlider(
-            modifier = Modifier.weight(1f),
-            value = uiState.honeyRating,
-            onValueChange = onHoneyRatingValueChange,
-          )
-        },
+      SuwikiAppBarWithTitle(
+        title = stringResource(R.string.my_class_review_lecture_evaluation),
+        showBackIcon = false,
+        showCloseIcon = true,
+        onClickClose = popBackStack,
       )
-      LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_learning_rating),
-        verticalAlignment = Alignment.Bottom,
-        content = {
-          SuwikiSlider(
-            modifier = Modifier.weight(1f),
-            value = uiState.learningRating,
-            onValueChange = onLearningRatingValueChange,
-          )
-        },
-      )
-      LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_satisfaction_rating),
-        verticalAlignment = Alignment.Bottom,
-        content = {
-          SuwikiSlider(
-            modifier = Modifier.weight(1f),
-            value = uiState.satisfactionRating,
-            onValueChange = onSatisfactionRatingValueChange,
-          )
-        },
-      )
-
       Spacer(modifier = Modifier.height(20.dp))
 
       Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier = Modifier
+          .weight(1f)
+          .padding(24.dp)
+          .verticalScroll(scrollState),
       ) {
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.SpaceBetween,
+          modifier = Modifier
+            .fillMaxWidth(),
+        ) {
+          SuwikiSelectionContainer(
+            title = uiState.selectedSemester,
+            onClick = onClickSemesterButton,
+          )
+
+          Row(
+            modifier = Modifier.wrapContentHeight(),
+            verticalAlignment = Alignment.CenterVertically,
+          ) {
+            SuwikiRatingBar(
+              rating = 3.4f,
+            )
+            Text(
+              text = "3.4",
+              style = SuwikiTheme.typography.body4,
+              color = Primary,
+            )
+          }
+        }
+
         LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_grade),
+          text = stringResource(R.string.my_class_review_honey_rating),
           verticalAlignment = Alignment.Bottom,
           content = {
-            Row(
-              horizontalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-              SuwikiContainedChip(
-                isChecked = uiState.difficulty == 2,
-                color = ChipColor.GREEN,
-                text = stringResource(R.string.my_class_review_generous),
-                onClick = onClickGradeGenerous,
-              )
-
-              SuwikiContainedChip(
-                isChecked = uiState.difficulty == 1,
-                color = ChipColor.BLUE,
-                text = stringResource(R.string.my_class_review_normal),
-                onClick = onClickGradeNormal,
-              )
-
-              SuwikiContainedChip(
-                isChecked = uiState.difficulty == 0,
-                color = ChipColor.ORANGE,
-                text = stringResource(R.string.my_class_review_picky),
-                onClick = onClickGradePicky,
-              )
-            }
+            SuwikiSlider(
+              modifier = Modifier.weight(1f),
+              value = uiState.honeyRating,
+              onValueChange = onHoneyRatingValueChange,
+            )
+          },
+        )
+        LectureEvaluationEditContainer(
+          text = stringResource(R.string.my_class_review_learning_rating),
+          verticalAlignment = Alignment.Bottom,
+          content = {
+            SuwikiSlider(
+              modifier = Modifier.weight(1f),
+              value = uiState.learningRating,
+              onValueChange = onLearningRatingValueChange,
+            )
+          },
+        )
+        LectureEvaluationEditContainer(
+          text = stringResource(R.string.my_class_review_satisfaction_rating),
+          verticalAlignment = Alignment.Bottom,
+          content = {
+            SuwikiSlider(
+              modifier = Modifier.weight(1f),
+              value = uiState.satisfactionRating,
+              onValueChange = onSatisfactionRatingValueChange,
+            )
           },
         )
 
-        LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_homework),
-          verticalAlignment = Alignment.Bottom,
-          content = {
-            Row(
-              horizontalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-              SuwikiContainedChip(
-                isChecked = uiState.homework == 0,
-                color = ChipColor.GREEN,
-                text = stringResource(R.string.my_class_review_none),
-                onClick = onClickHomeworkNone,
-              )
+        Spacer(modifier = Modifier.height(20.dp))
 
-              SuwikiContainedChip(
-                isChecked = uiState.homework == 1,
-                color = ChipColor.BLUE,
-                text = stringResource(R.string.my_class_review_normal),
-                onClick = onClickHomeworkNormal,
-              )
+        Column(
+          verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+          LectureEvaluationEditContainer(
+            text = stringResource(R.string.my_class_review_grade),
+            verticalAlignment = Alignment.Bottom,
+            content = {
+              Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+              ) {
+                GradeLevel.entries.zip(ChipColor.entries).forEach { (gradeLevel, color) ->
+                  SuwikiContainedChip(
+                    isChecked = uiState.gradeLevel == gradeLevel,
+                    color = color,
+                    text = gradeLevel.toText(),
+                    onClick = { onClickGradeChip(gradeLevel) },
+                  )
+                }
+              }
+            },
+          )
 
-              SuwikiContainedChip(
-                isChecked = uiState.homework == 2,
-                color = ChipColor.ORANGE,
-                text = stringResource(R.string.my_class_review_much),
-                onClick = onClickHomeworkMuch,
-              )
-            }
-          },
-        )
+          LectureEvaluationEditContainer(
+            text = stringResource(R.string.my_class_review_homework),
+            verticalAlignment = Alignment.Bottom,
+            content = {
+              Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+              ) {
+                HomeworkLevel.entries.zip(ChipColor.entries).forEach { (homeworkLevel, color) ->
+                  SuwikiContainedChip(
+                    isChecked = uiState.homeworkLevel == homeworkLevel,
+                    color = color,
+                    text = homeworkLevel.toText(),
+                    onClick = { onClickHomeworkChip(homeworkLevel) },
+                  )
+                }
+              }
+            },
+          )
 
-        LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_team),
-          verticalAlignment = Alignment.Bottom,
-          content = {
-            Row(
-              horizontalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-              SuwikiContainedChip(
-                isChecked = uiState.team == 0,
-                color = ChipColor.GREEN,
-                text = stringResource(R.string.my_class_review_none),
-                onClick = onClickTeamNone,
-              )
+          LectureEvaluationEditContainer(
+            text = stringResource(R.string.my_class_review_team),
+            verticalAlignment = Alignment.Bottom,
+            content = {
+              Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+              ) {
+                TeamLevel.entries.zip(ChipColor.entries.minus(ChipColor.BLUE)).forEach { (teamLevel, color) ->
+                  SuwikiContainedChip(
+                    isChecked = uiState.teamLevel == teamLevel,
+                    color = color,
+                    text = teamLevel.toText(),
+                    onClick = { onClickTeamChip(teamLevel) },
+                  )
+                }
+              }
+            },
+          )
+        }
 
-              SuwikiContainedChip(
-                isChecked = uiState.team == 1,
-                color = ChipColor.ORANGE,
-                text = stringResource(R.string.my_class_review_exist),
-                onClick = onClickTeamExist,
-              )
-            }
-          },
+        Spacer(modifier = Modifier.size(24.dp))
+
+        SuwikiReviewInputBox(
+          value = uiState.lectureEvaluation,
+          hint = stringResource(R.string.my_class_review_input_box_hint),
+          onValueChange = onLectureEvaluationValueChange,
         )
       }
 
-      Spacer(modifier = Modifier.size(24.dp))
+      Row(
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
+          .imePadding(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+      ) {
+        SuwikiContainedMediumButton(
+          modifier = Modifier
+            .weight(1f)
+            .height(50.dp),
+          text = stringResource(R.string.my_class_review_input_box_delete),
+          enabled = false,
+          onClick = onClickLectureEvaluationDeleteButton,
+        )
+        SuwikiContainedMediumButton(
+          modifier = Modifier
+            .weight(1f)
+            .height(50.dp),
+          text = stringResource(R.string.my_class_review_input_box_revise),
+          onClick = onClickLectureEvaluationReviseButton,
+        )
+      }
+    }
 
-      SuwikiReviewInputBox(
-        value = uiState.lectureEvaluation,
-        hint = stringResource(R.string.my_class_review_input_box_hint),
-        onValueChange = onLectureEvaluationValueChange,
+    if (uiState.showDeleteLectureEvaluationDialog) {
+      SuwikiDialog(
+        headerText = stringResource(R.string.my_class_review_delete_dialog_header),
+        bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
+        confirmButtonText = stringResource(R.string.my_class_review_delete),
+        dismissButtonText = stringResource(R.string.my_class_review_cancel),
+        onDismissRequest = onDismissLectureEvaluationDelete,
+        onClickConfirm = onClickLectureEvaluationDeleteConfirm,
+        onClickDismiss = onDismissLectureEvaluationDelete,
       )
     }
 
-    Row(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
-        .imePadding(),
-      horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-      SuwikiContainedMediumButton(
-        modifier = Modifier
-          .weight(1f)
-          .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_delete),
-        enabled = false,
-        onClick = onClickLectureEvaluationDeleteButton,
-      )
-      SuwikiContainedMediumButton(
-        modifier = Modifier
-          .weight(1f)
-          .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_revise),
-        onClick = onClickLectureEvaluationReviseButton,
-      )
-    }
-  }
-
-
-  if (uiState.showDeleteLectureEvaluationDialog) {
-    SuwikiDialog(
-      headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-      bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
-      confirmButtonText = stringResource(R.string.my_class_review_delete),
-      dismissButtonText = stringResource(R.string.my_class_review_cancel),
-      onDismissRequest = onDismissLectureEvaluationDelete,
-      onClickConfirm = onClickLectureEvaluationDeleteConfirm,
-      onClickDismiss = onDismissLectureEvaluationDelete,
+    SuwikiBottomSheet(
+      isSheetOpen = uiState.showSemesterBottomSheet,
+      onDismissRequest = onSemesterBottomSheetDismissRequest,
+      content = {
+        // TODO(REMOVE)
+        SuwikiMenuItem(title = "")
+        SuwikiMenuItem(
+          title = "2023-1",
+          onClick = { onClickSemesterItem("2023-1") },
+        )
+        SuwikiMenuItem(
+          title = "2022-2",
+          onClick = { onClickSemesterItem("2022-2") },
+        )
+        SuwikiMenuItem(
+          title = "2022-1",
+          onClick = { onClickSemesterItem("2022-1") },
+        )
+      },
     )
-  }
 
-  SuwikiBottomSheet(
-    isSheetOpen = uiState.showSemesterBottomSheet,
-    onDismissRequest = onSemesterBottomSheetDismissRequest,
-    content = {
-      // TODO(REMOVE)
-      SuwikiMenuItem(title = "")
-      SuwikiMenuItem(
-        title = "2023-1",
-        onClick = { onClickSemesterItem("2023-1") },
-      )
-      SuwikiMenuItem(
-        title = "2022-2",
-        onClick = { onClickSemesterItem("2022-2") },
-      )
-      SuwikiMenuItem(
-        title = "2022-1",
-        onClick = { onClickSemesterItem("2022-1") },
-      )
-    },
-  )
-
-  if (uiState.isLoading) {
-    LoadingScreen()
+    if (uiState.isLoading) {
+      LoadingScreen()
+    }
   }
 }
 

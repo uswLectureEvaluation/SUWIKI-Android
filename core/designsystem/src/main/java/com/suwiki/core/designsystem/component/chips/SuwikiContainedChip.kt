@@ -31,17 +31,17 @@ enum class ChipColor(
   val backgroundColor: Color,
   val contentColor: Color,
 ) {
-  ORANGE(
-    backgroundColor = Orange10,
-    contentColor = Orange100,
+  GREEN(
+    backgroundColor = Green10,
+    contentColor = Green100,
   ),
   BLUE(
     backgroundColor = Blue10,
     contentColor = Blue100,
   ),
-  GREEN(
-    backgroundColor = Green10,
-    contentColor = Green100,
+  ORANGE(
+    backgroundColor = Orange10,
+    contentColor = Orange100,
   ),
 }
 

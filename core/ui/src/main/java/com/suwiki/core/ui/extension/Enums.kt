@@ -2,7 +2,10 @@ package com.suwiki.core.ui.extension
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.suwiki.core.model.enums.GradeLevel
+import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.LectureAlign
+import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.ui.R
 import kotlinx.collections.immutable.toPersistentList
 
@@ -18,3 +21,23 @@ fun LectureAlign.toText() = when (this) {
 val lectureAlignList
   @Composable
   get() = LectureAlign.entries.map { it.toText() }.toPersistentList()
+
+@Composable
+fun GradeLevel.toText() = when(this) {
+  GradeLevel.EASY -> stringResource(R.string.word_grade_easy)
+  GradeLevel.NORMAL -> stringResource(R.string.word_grade_normal)
+  GradeLevel.DIFFICULT -> stringResource(R.string.word_grade_difficulty)
+}
+
+@Composable
+fun HomeworkLevel.toText() = when(this) {
+  HomeworkLevel.NONE -> stringResource(R.string.word_homework_not_exist)
+  HomeworkLevel.NORMAL -> stringResource(R.string.word_homework_normal)
+  HomeworkLevel.MANY -> stringResource(R.string.word_homework_many)
+}
+
+@Composable
+fun TeamLevel.toText() = when(this) {
+  TeamLevel.NOT_EXIST -> stringResource(R.string.word_team_not_exist)
+  TeamLevel.EXIST -> stringResource(R.string.word_team_exist)
+}

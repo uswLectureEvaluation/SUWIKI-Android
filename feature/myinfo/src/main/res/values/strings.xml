@@ -19,14 +19,8 @@
   <string name="my_class_review_learning_rating">배움지수</string>
   <string name="my_class_review_satisfaction_rating">만족도</string>
   <string name="my_class_review_grade">학점</string>
-  <string name="my_class_review_generous">너그러움</string>
-  <string name="my_class_review_normal">보통</string>
-  <string name="my_class_review_picky">까다로움</string>
   <string name="my_class_review_homework">과제</string>
-  <string name="my_class_review_none">없음</string>
-  <string name="my_class_review_much">많음</string>
   <string name="my_class_review_team">조모임</string>
-  <string name="my_class_review_exist">있음</string>
   <string name="my_class_review_input_box_hint">강의평가를 입력해주세요.</string>
   <string name="my_class_review_input_box_delete">삭제하기</string>
   <string name="my_class_review_input_box_revise">수정하기</string>
