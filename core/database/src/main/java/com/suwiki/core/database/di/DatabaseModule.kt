@@ -107,13 +107,21 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
           put("timeTableJsonData", cellList)
         }
 
-        database.update(
-          table = "TimeTableList",
-          conflictAlgorithm = SQLiteDatabase.CONFLICT_FAIL,
-          values = contentValues,
-          whereClause = "createTime = ?",
-          whereArgs = arrayOf(createTime.toString()),
+        database.execSQL(
+          """
+            UPDATE TimeTableList
+            SET timeTableJsonData = $cellList
+            WHERE createTime = $createTime
+          """.trimIndent()
         )
+
+//        database.update(
+//          table = "TimeTableList",
+//          conflictAlgorithm = SQLiteDatabase.CONFLICT_FAIL,
+//          values = contentValues,
+//          whereClause = "createTime = ?",
+//          whereArgs = arrayOf(createTime.toString()),
+//        )
       } while (cursor.moveToNext())
     }
     database.execSQL(
