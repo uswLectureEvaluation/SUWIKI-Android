@@ -4,18 +4,25 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -33,14 +40,15 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.enums.ExamLevel
+import com.suwiki.core.model.enums.ExamType
+import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.myinfo.R
-import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.SuwikiItemsWithText
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyExamEvaluationEditRoute(
-  padding: PaddingValues,
   viewModel: MyExamEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
@@ -54,6 +62,7 @@ fun MyExamEvaluationEditRoute(
       MyExamEvaluationEditSideEffect.ShowMyExamEvaluationDeleteToast -> {
         onShowToast(context.getString(R.string.my_exam_evaluation_delete_toast_msg))
       }
+
       MyExamEvaluationEditSideEffect.ShowMyExamEvaluationReviseToast -> {
         onShowToast(context.getString(R.string.my_exam_evaluation_revise_toast_msg))
       }
@@ -65,7 +74,6 @@ fun MyExamEvaluationEditRoute(
   }
 
   MyExamEvaluationEditScreen(
-    padding = padding,
     scrollState = scrollState,
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
@@ -75,28 +83,19 @@ fun MyExamEvaluationEditRoute(
     onClickExamTypeButton = viewModel::showExamTypeBottomSheet,
     onClickExamTypeItem = viewModel::clickExamTypeItem,
     onExamTypeBottomSheetDismissRequest = viewModel::hideExamTypeBottomSheet,
-    onClickDifficultyEasy = viewModel::setExamDifficultyEasy,
-    onClickDifficultyNormal = viewModel::setExamDifficultyNormal,
-    onClickDifficultyHard = viewModel::setExamDifficultyHard,
-    onClickExamInfoGuides = viewModel::setExamInfoExamGuides,
-    onClickExamInfoBook = viewModel::setExamInfoBook,
-    onClickExamInfoNotes = viewModel::setExamInfoNotes,
-    onClickExamInfoPPT = viewModel::setExamInfoPPT,
-    onClickExamInfoApply = viewModel::setExamInfoApply,
-    onClickExamTypePractice = viewModel::setExamTypePractice,
-    onClickExamTypeHomework = viewModel::setExamTypeHomework,
-    onExamEvalutionValueChange = viewModel::updateMyExamEvaluationValue,
-    onClickExamEvalutionDeleteButton = viewModel::showMyExamEvaluationDeleteDialog,
-    onDismissExamEvalutionDelete = viewModel::hideMyExamEvaluationDeleteDialog,
+    onClickExamLevelChip = viewModel::updateExamLevel,
+    onClickExamTypeChip = viewModel::updateExamType,
+    onExamEvaluationValueChange = viewModel::updateMyExamEvaluationValue,
+    onClickExamEvaluationDeleteButton = viewModel::showMyExamEvaluationDeleteDialog,
+    onDismissExamEvaluationDelete = viewModel::hideMyExamEvaluationDeleteDialog,
     onClickExamEvaluationDeleteConfirm = viewModel::clickDeleteButton,
     onClickExamEvaluationReviseButton = viewModel::clickReviseButton,
   )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun MyExamEvaluationEditScreen(
-  padding: PaddingValues,
   scrollState: ScrollState,
   uiState: MyExamEvaluationEditState,
   popBackStack: () -> Unit = {},
@@ -106,28 +105,18 @@ fun MyExamEvaluationEditScreen(
   onClickExamTypeButton: () -> Unit = {},
   onClickExamTypeItem: (String) -> Unit = {},
   onExamTypeBottomSheetDismissRequest: () -> Unit = {},
-  onClickDifficultyEasy: () -> Unit = {},
-  onClickDifficultyNormal: () -> Unit = {},
-  onClickDifficultyHard: () -> Unit = {},
-  onClickExamInfoGuides: () -> Unit = {},
-  onClickExamInfoBook: () -> Unit = {},
-  onClickExamInfoNotes: () -> Unit = {},
-  onClickExamInfoPPT: () -> Unit = {},
-  onClickExamInfoApply: () -> Unit = {},
-  onClickExamTypePractice: () -> Unit = {},
-  onClickExamTypeHomework: () -> Unit = {},
-  onClickExamEvalutionDeleteButton: () -> Unit = {},
+  onClickExamLevelChip: (ExamLevel) -> Unit = {},
+  onClickExamTypeChip: (ExamType) -> Unit = {},
+  onClickExamEvaluationDeleteButton: () -> Unit = {},
   onClickExamEvaluationDeleteConfirm: () -> Unit = {},
-  onExamEvalutionValueChange: (String) -> Unit = { _ -> },
-  onDismissExamEvalutionDelete: () -> Unit = {},
+  onExamEvaluationValueChange: (String) -> Unit = { _ -> },
+  onDismissExamEvaluationDelete: () -> Unit = {},
   onClickExamEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
-      .padding(padding)
       .background(White)
-      .fillMaxSize()
-      .verticalScroll(scrollState),
+      .fillMaxSize(),
   ) {
     SuwikiAppBarWithTitle(
       title = stringResource(R.string.my_test_review_info),
@@ -135,159 +124,78 @@ fun MyExamEvaluationEditScreen(
       showCloseIcon = true,
       onClickClose = popBackStack,
     )
-    Spacer(modifier = Modifier.height(44.dp))
-    SuwikiSelectionContainer(
-      modifier = Modifier.padding(start = 24.dp),
-      title = if(uiState.selectedSemester == "") stringResource(R.string.my_test_review_choose_semester) else uiState.selectedSemester,
-      onClick = onClickSemesterButton,
-    )
-    SuwikiBottomSheet(
-      isSheetOpen = uiState.showSemesterBottomSheet,
-      onDismissRequest = onSemesterBottomSheetDismissRequest,
-      content = {
-        // TODO(REMOVE)
-        SuwikiMenuItem(title = "")
-        SuwikiMenuItem(
-          title = "2023-1",
-          onClick = { onClickSemesterItem("2023-1") },
-        )
-        SuwikiMenuItem(
-          title = "2022-2",
-          onClick = { onClickSemesterItem("2022-2") },
-        )
-        SuwikiMenuItem(
-          title = "2022-1",
-          onClick = { onClickSemesterItem("2022-1") },
-        )
-      },
-    )
-    Spacer(modifier = Modifier.height(14.dp))
-    SuwikiSelectionContainer(
-      modifier = Modifier.padding(start = 24.dp),
-      title = if(uiState.selectedExamType == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamType,
-      onClick = onClickExamTypeButton,
-    )
-    SuwikiBottomSheet(
-      isSheetOpen = uiState.showExamTypeBottomSheet,
-      onDismissRequest = onExamTypeBottomSheetDismissRequest,
-      content = {
-        // TODO(REMOVE)
-        SuwikiMenuItem(title = "")
-        SuwikiMenuItem(
-          title = "머신러닝",
-          onClick = { onClickExamTypeItem("머신러닝") },
-        )
-        SuwikiMenuItem(
-          title = "머신러닝",
-          onClick = { onClickExamTypeItem("머신러닝") },
-        )
-        SuwikiMenuItem(
-          title = "과목명",
-          onClick = { onClickExamTypeItem("과목명") },
-        )
-      },
-    )
-    Spacer(modifier = Modifier.height(16.dp))
-    SuwikiItemsWithText(
-      text = stringResource(R.string.my_test_review_difficulty),
-      textWeight = 0.16f,
-      itemsWeight = 0.83f,
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examDifficulty == "easy",
-          text = stringResource(R.string.my_test_review_easy),
-          onClick = onClickDifficultyEasy,
-        )
-      },
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examDifficulty == "normal",
-          text = "보통",
-          onClick = onClickDifficultyNormal,
-        )
-      },
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examDifficulty == "hard",
-          text = stringResource(R.string.my_test_review_hard),
-          onClick = onClickDifficultyHard,
-        )
-      },
-    )
-    Spacer(modifier = Modifier.height(20.dp))
-    SuwikiItemsWithText(
-      text = stringResource(R.string.my_test_review_test_type),
-      textWeight = 0.16f,
-      itemsWeight = 0.83f,
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examInfo == "exam_guides",
-          text = stringResource(R.string.my_test_review_exam_guides),
-          onClick = onClickExamInfoGuides,
-        )
-      },
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examInfo == "book",
-          text = stringResource(R.string.my_test_review_book),
-          onClick = onClickExamInfoBook,
-        )
-      },
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examInfo == "notes",
-          text = stringResource(R.string.my_test_review_notes),
-          onClick = onClickExamInfoNotes,
-        )
-      },
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examInfo == "ppt",
-          text = stringResource(R.string.my_test_review_ppt),
-          onClick = onClickExamInfoPPT,
-        )
-      },
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examInfo == "apply",
-          text = stringResource(R.string.my_test_review_apply),
-          onClick = onClickExamInfoApply,
-        )
-      },
-    )
-    Spacer(modifier = Modifier.height(6.dp))
-    SuwikiItemsWithText(
-      text = "",
-      textWeight = 0.16f,
-      itemsWeight = 0.83f,
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examType == "practice",
-          text = stringResource(R.string.my_test_review_practice),
-          onClick = onClickExamTypePractice,
-        )
-      },
-      {
-        SuwikiOutlinedChip(
-          isChecked = uiState.examType == "homework",
-          text = stringResource(R.string.my_class_review_homework),
-          onClick = onClickExamTypeHomework,
-        )
-      },
-    )
-    SuwikiReviewInputBox(
+    Column(
       modifier = Modifier
-        .padding(24.dp),
-      value = uiState.examEvaluation,
-      hint = stringResource(R.string.my_test_review_input_box_hint),
-      onValueChange = onExamEvalutionValueChange,
-    )
-    Spacer(modifier = Modifier.weight(1f))
+        .weight(1f)
+        .padding(24.dp)
+        .verticalScroll(scrollState),
+    ) {
+      Spacer(modifier = Modifier.height(20.dp))
+      SuwikiSelectionContainer(
+        title = if (uiState.selectedSemester == "") stringResource(R.string.my_test_review_choose_semester) else uiState.selectedSemester,
+        onClick = onClickSemesterButton,
+      )
+      Spacer(modifier = Modifier.height(14.dp))
+
+      SuwikiSelectionContainer(
+        title = if (uiState.selectedExamType == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamType,
+        onClick = onClickExamTypeButton,
+      )
+
+      Spacer(modifier = Modifier.height(16.dp))
+
+      LectureExamEditContainer(
+        text = stringResource(R.string.my_test_review_difficulty),
+        verticalAlignment = Alignment.Top,
+        content = {
+          Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+          ) {
+            ExamLevel.entries.forEach { examLevel ->
+              SuwikiOutlinedChip(
+                isChecked = uiState.examLevel == examLevel,
+                text = examLevel.toText(),
+                onClick = { onClickExamLevelChip(examLevel) },
+              )
+            }
+          }
+        },
+      )
+
+      Spacer(modifier = Modifier.height(16.dp))
+
+      LectureExamEditContainer(
+        text = stringResource(R.string.my_test_review_test_type),
+        verticalAlignment = Alignment.Top,
+        content = {
+          FlowRow(
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+          ) {
+            ExamType.entries.forEach { examType ->
+              SuwikiOutlinedChip(
+                isChecked = uiState.examType == examType,
+                text = examType.toText(),
+                onClick = { onClickExamTypeChip(examType) },
+              )
+            }
+          }
+        },
+      )
+      Spacer(modifier = Modifier.height(20.dp))
+      SuwikiReviewInputBox(
+        modifier = Modifier,
+        value = uiState.examEvaluation,
+        hint = stringResource(R.string.my_test_review_input_box_hint),
+        onValueChange = onExamEvaluationValueChange,
+      )
+    }
     Row(
       horizontalArrangement = Arrangement.spacedBy(16.dp),
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 24.dp, vertical = 22.dp),
+        .padding(24.dp)
+        .imePadding(),
     ) {
       SuwikiContainedMediumButton(
         modifier = Modifier
@@ -295,7 +203,7 @@ fun MyExamEvaluationEditScreen(
           .height(50.dp),
         text = stringResource(R.string.my_class_review_input_box_delete),
         enabled = false,
-        onClick = onClickExamEvalutionDeleteButton,
+        onClick = onClickExamEvaluationDeleteButton,
       )
       SuwikiContainedMediumButton(
         modifier = Modifier
@@ -311,14 +219,78 @@ fun MyExamEvaluationEditScreen(
         bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
         confirmButtonText = stringResource(R.string.my_class_review_delete),
         dismissButtonText = stringResource(R.string.my_class_review_cancel),
-        onDismissRequest = onDismissExamEvalutionDelete,
+        onDismissRequest = onDismissExamEvaluationDelete,
         onClickConfirm = onClickExamEvaluationDeleteConfirm,
-        onClickDismiss = onDismissExamEvalutionDelete,
+        onClickDismiss = onDismissExamEvaluationDelete,
       )
     }
   }
+
+  SuwikiBottomSheet(
+    isSheetOpen = uiState.showExamTypeBottomSheet,
+    onDismissRequest = onExamTypeBottomSheetDismissRequest,
+    content = {
+      // TODO(REMOVE)
+      SuwikiMenuItem(title = "")
+      SuwikiMenuItem(
+        title = "머신러닝",
+        onClick = { onClickExamTypeItem("머신러닝") },
+      )
+      SuwikiMenuItem(
+        title = "머신러닝",
+        onClick = { onClickExamTypeItem("머신러닝") },
+      )
+      SuwikiMenuItem(
+        title = "과목명",
+        onClick = { onClickExamTypeItem("과목명") },
+      )
+    },
+  )
+
+  SuwikiBottomSheet(
+    isSheetOpen = uiState.showSemesterBottomSheet,
+    onDismissRequest = onSemesterBottomSheetDismissRequest,
+    content = {
+      // TODO(REMOVE)
+      SuwikiMenuItem(title = "")
+      SuwikiMenuItem(
+        title = "2023-1",
+        onClick = { onClickSemesterItem("2023-1") },
+      )
+      SuwikiMenuItem(
+        title = "2022-2",
+        onClick = { onClickSemesterItem("2022-2") },
+      )
+      SuwikiMenuItem(
+        title = "2022-1",
+        onClick = { onClickSemesterItem("2022-1") },
+      )
+    },
+  )
+
+
   if (uiState.isLoading) {
     LoadingScreen()
+  }
+}
+
+@Composable
+fun LectureExamEditContainer(
+  text: String,
+  verticalAlignment: Alignment.Vertical,
+  content: @Composable RowScope.() -> Unit,
+) {
+  Row(
+    verticalAlignment = verticalAlignment,
+    horizontalArrangement = Arrangement.spacedBy(12.dp),
+    modifier = Modifier.fillMaxWidth(),
+  ) {
+    Text(
+      modifier = Modifier.width(52.dp),
+      text = text,
+      style = SuwikiTheme.typography.body4,
+    )
+    content()
   }
 }
 
@@ -329,7 +301,6 @@ fun MyExamEvalutionEditScreenPreview() {
 
   SuwikiTheme {
     MyExamEvaluationEditScreen(
-      padding = PaddingValues(0.dp),
       scrollState = scrollState,
       uiState = MyExamEvaluationEditState(),
     )

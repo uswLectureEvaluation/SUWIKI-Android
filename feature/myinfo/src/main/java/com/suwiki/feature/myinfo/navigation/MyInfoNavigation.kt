@@ -58,7 +58,6 @@ fun NavGraphBuilder.myInfoNavGraph(
   }
   composable(route = MyInfoRoute.myExamEvaluationEditRoute) {
     MyExamEvaluationEditRoute(
-      padding = padding,
       popBackStack = popBackStack,
       onShowToast = onShowToast,
     )
