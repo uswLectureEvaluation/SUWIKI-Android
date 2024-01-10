@@ -68,7 +68,7 @@ fun MyLectureEvaluationEditRoute(
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.loadMyPoint()
+    viewModel.setInitData()
   }
 
   MyLectureEvaluationEditScreen(

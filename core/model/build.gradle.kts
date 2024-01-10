@@ -2,8 +2,10 @@
 
 plugins {
   alias(libs.plugins.suwiki.java.library)
+  alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
   compileOnly(libs.compose.stable.marker)
+  implementation(libs.kotlinx.serialization.json)
 }

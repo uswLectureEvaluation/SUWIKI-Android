@@ -2,16 +2,18 @@ package com.suwiki.feature.myinfo.myevaluation.examevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
+import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,11 +25,12 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     container(MyExamEvaluationEditState())
 
   private val myExamEvaluation = savedStateHandle.get<String>(MyInfoRoute.myExamEvaluation)!!
+  private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromString(myExamEvaluation)
 
-  suspend fun loadMyPoint() {
+  suspend fun setInitData() {
     showLoadingScreen()
     /* TODO 에러 처리 */
-    Timber.d(myExamEvaluation)
+    intent { reduce { state.copy(selectedSemester = myExamEvaluationItem.selectedSemester!!) } }
     getUserInfoUseCase().collect(::setPoint)
     hideLoadingScreen()
   }

@@ -2,17 +2,18 @@ package com.suwiki.feature.myinfo.myevaluation.lectureevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.myinfo.navigation.MyInfoRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,11 +25,12 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     container(MyLectureEvaluationEditState())
 
   private val myLectureEvaluation = savedStateHandle.get<String>(MyInfoRoute.myLectureEvaluation)!!
+  private val myLectureEvaluationItem: MyLectureEvaluation = Json.decodeFromString(myLectureEvaluation)
 
-  suspend fun loadMyPoint() {
+  suspend fun setInitData() {
     showLoadingScreen()
     /* TODO 에러 처리 */
-    Timber.d(myLectureEvaluation)
+    intent { reduce { state.copy(selectedSemester = myLectureEvaluationItem.selectedSemester) } }
     getUserInfoUseCase().collect(::setPoint)
     hideLoadingScreen()
   }

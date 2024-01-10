@@ -39,6 +39,8 @@ import com.suwiki.feature.myinfo.myevaluation.model.MyEvaluationTab
 import com.suwiki.feature.myinfo.myevaluation.model.MyExamEvaluationsSample
 import com.suwiki.feature.myinfo.myevaluation.model.MyLectureEvaluationsSample
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -50,8 +52,8 @@ fun MyEvaluationRoute(
   padding: PaddingValues,
   viewModel: MyEvaluationViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
-  navigateMyLectureEvaluation: (MyLectureEvaluation) -> Unit = {},
-  navigateMyExamEvaluation: (MyExamEvaluation) -> Unit = {},
+  navigateMyLectureEvaluation: (String) -> Unit = {},
+  navigateMyExamEvaluation: (String) -> Unit = {},
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
@@ -95,8 +97,8 @@ fun MyEvaluationScreen(
   pagerState: PagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT }),
   onClickTab: (Int) -> Unit = {},
   onClickBack: () -> Unit = {},
-  onClickLectureEvaluationEditButton: (MyLectureEvaluation) -> Unit = {},
-  onClickExamEvaluationEditButton: (MyExamEvaluation) -> Unit = {},
+  onClickLectureEvaluationEditButton: (String) -> Unit = {},
+  onClickExamEvaluationEditButton: (String) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -157,8 +159,8 @@ fun MyEvaluationScreen(
 fun MyEvaluationLazyColumn(
   modifier: Modifier = Modifier,
   itemList: PersistentList<Any>,
-  onClickLectureEditButton: (MyLectureEvaluation) -> Unit = {},
-  onClickExamEditButton: (MyExamEvaluation) -> Unit = {},
+  onClickLectureEditButton: (String) -> Unit = {},
+  onClickExamEditButton: (String) -> Unit = {},
   onClickEditButton: () -> Unit = {},
 ) {
   LazyColumn(
@@ -170,7 +172,7 @@ fun MyEvaluationLazyColumn(
           SuwikiReviewEditContainer(
             semesterText = item.selectedSemester,
             classNameText = item.lectureInfo.lectureName,
-            onClickEditButton = { onClickLectureEditButton(item) },
+            onClickEditButton = { onClickLectureEditButton(Json.encodeToString(item)) },
           )
         }
         is MyExamEvaluation -> {
@@ -179,7 +181,7 @@ fun MyEvaluationLazyColumn(
           SuwikiReviewEditContainer(
             semesterText = examSemester ?: "학기",
             classNameText = examName ?: "과목명",
-            onClickEditButton = { onClickExamEditButton(item) },
+            onClickEditButton = { onClickExamEditButton(Json.encodeToString(item)) },
           )
         }
         // TODO(REMOVE)

@@ -7,8 +7,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.feature.myinfo.MyInfoRoute
 import com.suwiki.feature.myinfo.myevaluation.MyEvaluationRoute
 import com.suwiki.feature.myinfo.myevaluation.examevaluation.MyExamEvaluationEditRoute
@@ -22,12 +20,12 @@ fun NavController.navigateMyEvaluation() {
   navigate(MyInfoRoute.myEvaluationRoute)
 }
 
-fun NavController.navigateMyLectureEvaluation(lectureEvaluation: MyLectureEvaluation) {
-  navigate(MyInfoRoute.myLectureEvaluationEditRoute(lectureEvaluation.toString()))
+fun NavController.navigateMyLectureEvaluation(lectureEvaluation: String) {
+  navigate(MyInfoRoute.myLectureEvaluationEditRoute(lectureEvaluation))
 }
 
-fun NavController.navigateMyExamEvaluation(examEvaluation: MyExamEvaluation) {
-  navigate(MyInfoRoute.myExamEvaluationEditRoute(examEvaluation.toString()))
+fun NavController.navigateMyExamEvaluation(examEvaluation: String) {
+  navigate(MyInfoRoute.myExamEvaluationEditRoute(examEvaluation))
 }
 
 fun NavGraphBuilder.myInfoNavGraph(
@@ -35,8 +33,8 @@ fun NavGraphBuilder.myInfoNavGraph(
   popBackStack: () -> Unit = {},
   navigateNotice: () -> Unit = {},
   navigateMyEvaluation: () -> Unit = {},
-  navigateMyLectureEvaluationEdit: (MyLectureEvaluation) -> Unit = {},
-  navigateMyExamEvaluationEdit: (MyExamEvaluation) -> Unit = {},
+  navigateMyLectureEvaluationEdit: (String) -> Unit = {},
+  navigateMyExamEvaluationEdit: (String) -> Unit = {},
   onShowToast: (String) -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
@@ -76,7 +74,7 @@ fun NavGraphBuilder.myInfoNavGraph(
       },
     ),
   ) {
-    MyExamEvalutionEditRoute(
+    MyExamEvaluationEditRoute(
       padding = padding,
       popBackStack = popBackStack,
       onShowToast = onShowToast,

@@ -61,7 +61,7 @@ fun MyExamEvaluationEditRoute(
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.loadMyPoint()
+    viewModel.setInitData()
   }
 
   MyExamEvaluationEditScreen(
@@ -138,7 +138,7 @@ fun MyExamEvaluationEditScreen(
     Spacer(modifier = Modifier.height(44.dp))
     SuwikiSelectionContainer(
       modifier = Modifier.padding(start = 24.dp),
-      title = if(uiState.selectedSemester == "") stringResource(R.string.my_test_review_choose_semester) else uiState.selectedSemester,
+      title = if (uiState.selectedSemester == "") stringResource(R.string.my_test_review_choose_semester) else uiState.selectedSemester,
       onClick = onClickSemesterButton,
     )
     SuwikiBottomSheet(
@@ -164,7 +164,7 @@ fun MyExamEvaluationEditScreen(
     Spacer(modifier = Modifier.height(14.dp))
     SuwikiSelectionContainer(
       modifier = Modifier.padding(start = 24.dp),
-      title = if(uiState.selectedExamType == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamType,
+      title = if (uiState.selectedExamType == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamType,
       onClick = onClickExamTypeButton,
     )
     SuwikiBottomSheet(

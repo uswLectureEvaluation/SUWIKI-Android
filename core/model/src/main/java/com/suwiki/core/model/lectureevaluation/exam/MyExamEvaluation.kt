@@ -1,7 +1,9 @@
 package com.suwiki.core.model.lectureevaluation.exam
 
 import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Stable
 data class MyExamEvaluation(
   val id: Long? = null,
@@ -14,4 +16,4 @@ data class MyExamEvaluation(
   val examType: String? = null,
   val examDifficulty: String = "", // 시험 난이도
   val content: String = "",
-)
+) : java.io.Serializable

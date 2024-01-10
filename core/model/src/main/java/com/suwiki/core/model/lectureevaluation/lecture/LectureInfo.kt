@@ -1,7 +1,9 @@
 package com.suwiki.core.model.lectureevaluation.lecture
 
 import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Stable
 data class LectureInfo(
   val semesterList: List<String> = listOf(""),
@@ -9,4 +11,4 @@ data class LectureInfo(
   val majorType: String = "",
   val lectureType: String? = null,
   val lectureName: String = "",
-)
+) : java.io.Serializable

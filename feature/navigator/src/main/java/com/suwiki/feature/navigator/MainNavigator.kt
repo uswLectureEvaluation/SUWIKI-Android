@@ -8,8 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
 import com.suwiki.feature.login.navigation.navigateFindId
 import com.suwiki.feature.login.navigation.navigateFindPassword
@@ -88,11 +86,11 @@ internal class MainNavigator(
     navController.navigateMyEvaluation()
   }
 
-  fun navigateMyLectureEvaluationEdit(lectureEvaluation: MyLectureEvaluation) {
+  fun navigateMyLectureEvaluationEdit(lectureEvaluation: String) {
     navController.navigateMyLectureEvaluation(lectureEvaluation)
   }
 
-  fun navigateMyExamEvaluationEdit(examEvaluation: MyExamEvaluation) {
+  fun navigateMyExamEvaluationEdit(examEvaluation: String) {
     navController.navigateMyExamEvaluation(examEvaluation)
   }
 
