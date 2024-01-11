@@ -13,6 +13,7 @@ class TimetableCellListConverter {
 
   @TypeConverter
   fun jsonToCellList(value: String): List<TimetableCell> {
-    return Json.decodeFromString(value)
+    return if (value.isBlank()) emptyList()
+    else Json.decodeFromString(value)
   }
 }
