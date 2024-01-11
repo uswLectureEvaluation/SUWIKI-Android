@@ -4,6 +4,7 @@ plugins {
   alias(libs.plugins.suwiki.android.hilt)
   alias(libs.plugins.ksp)
   alias(libs.plugins.protobuf)
+  alias(libs.plugins.kotlin.serialization)
 }
 
 ksp {
@@ -30,6 +31,8 @@ protobuf {
 }
 
 dependencies {
+  implementation(projects.core.model)
+
   ksp(libs.room.compiler)
   implementation(libs.room.runtime)
   implementation(libs.room.ktx)
@@ -38,4 +41,6 @@ dependencies {
   implementation(libs.androidx.datastore.core)
   implementation(libs.androidx.datastore.preferences)
   implementation(libs.protobuf.kotlin.lite)
+
+  implementation(libs.kotlinx.serialization.json)
 }

@@ -2,7 +2,7 @@ package com.suwiki.core.model.timetable
 
 enum class TimetableCellColor {
   BROWN,
-  LIGHT_BROWN,
+  BROWN_LIGHT,
   ORANGE,
   APRICOT, // 살구
   PURPLE,

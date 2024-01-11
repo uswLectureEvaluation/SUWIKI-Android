@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.suwiki.core.database.database.OpenLectureDatabase
 import com.suwiki.core.database.database.OpenMajorDatabase
 import com.suwiki.core.database.database.TimetableDatabase
+import com.suwiki.core.database.database.migration.TIMETABLE_MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,11 +37,12 @@ object DatabaseModule {
   fun provideOpenLectureDatabase(
     @ApplicationContext context: Context,
   ): OpenLectureDatabase {
-    return Room.databaseBuilder(
-      context,
-      OpenLectureDatabase::class.java,
-      DatabaseName.OPEN_LECTURE,
-    )
+    return Room
+      .databaseBuilder(
+        context,
+        OpenLectureDatabase::class.java,
+        DatabaseName.OPEN_LECTURE,
+      )
       .fallbackToDestructiveMigration()
       .build()
   }
@@ -56,6 +58,7 @@ object DatabaseModule {
         TimetableDatabase::class.java,
         DatabaseName.TIMETABLE,
       )
+      .addMigrations(TIMETABLE_MIGRATION_1_2)
       .fallbackToDestructiveMigration()
       .build()
   }
