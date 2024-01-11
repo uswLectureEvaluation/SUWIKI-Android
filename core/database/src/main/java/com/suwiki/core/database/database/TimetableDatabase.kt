@@ -8,8 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
 import com.suwiki.core.database.dao.TimeTableDao
-import com.suwiki.core.database.di.DatabaseName
-import com.suwiki.core.database.di.TimetableCellListConverter
+import com.suwiki.core.database.database.converter.TimetableCellListConverter
 import com.suwiki.core.database.model.TimetableEntity
 
 @Database(
@@ -17,7 +16,7 @@ import com.suwiki.core.database.model.TimetableEntity
   version = 2,
 )
 @TypeConverters(
-  value = [TimetableCellListConverter::class]
+  value = [TimetableCellListConverter::class],
 )
 abstract class TimetableDatabase : RoomDatabase() {
   abstract fun timetableDao(): TimeTableDao
