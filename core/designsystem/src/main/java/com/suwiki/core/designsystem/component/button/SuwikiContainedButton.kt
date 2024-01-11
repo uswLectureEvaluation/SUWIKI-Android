@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Blue100
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayF6
@@ -33,7 +34,7 @@ fun SuwikiContainedLargeButton(
     shape = shape,
     onClick = onClick,
     backgroundColor = if (enabled) Primary else GrayF6,
-    rippleColor = Blue100,
+    rippleColor = Black,
     textColor = if (enabled) White else Gray95,
     textStyle = SuwikiTheme.typography.header5,
     clickable = clickable,
@@ -56,7 +57,7 @@ fun SuwikiContainedMediumButton(
     shape = shape,
     onClick = onClick,
     backgroundColor = if (enabled) Primary else GrayF6,
-    rippleColor = Blue100,
+    rippleColor = Black,
     textColor = if (enabled) White else Gray95,
     textStyle = SuwikiTheme.typography.body2,
     clickable = clickable,
@@ -77,7 +78,7 @@ fun SuwikiContainedSmallButton(
     shape = shape,
     onClick = onClick,
     backgroundColor = GrayF6,
-    rippleColor = Blue100,
+    rippleColor = Black,
     textColor = Gray95,
     textStyle = SuwikiTheme.typography.caption6,
     padding = PaddingValues(horizontal = 6.dp, vertical = 2.5.dp),

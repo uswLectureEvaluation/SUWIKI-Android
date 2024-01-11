@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface TimetableRepository {
   suspend fun getAllTimetable(): List<Timetable>
 
-  suspend fun getTimetable(createTime: Long): Timetable
+  suspend fun getTimetable(createTime: Long): Timetable?
 
   suspend fun setMainTimetableCreateTime(createTime: Long)
 

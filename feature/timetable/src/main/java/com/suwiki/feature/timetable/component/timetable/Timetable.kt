@@ -1,41 +1,28 @@
-package com.suwiki.core.designsystem.component.timetable
+package com.suwiki.feature.timetable.component.timetable
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.timetable.cell.ELearningCell
 import com.suwiki.core.designsystem.component.timetable.cell.TimetableCellType
 import com.suwiki.core.designsystem.component.timetable.column.ClassColumn
 import com.suwiki.core.designsystem.component.timetable.column.TimeColumn
-import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.component.timetable.timetableBorderWidth
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
-import com.suwiki.core.ui.extension.suwikiClickable
 import kotlin.math.max
 
 private const val MIN_MAX_PERIOD = 8
@@ -49,9 +36,6 @@ fun Timetable(
   modifier: Modifier = Modifier,
   type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
   timetable: Timetable,
-  onClickAdd: () -> Unit = {},
-  onClickHamburger: () -> Unit = {},
-  onClickSetting: () -> Unit = {},
   onClickClassCell: (TimetableCell) -> Unit = { _ -> },
 ) {
   val scrollState = rememberScrollState()
@@ -64,83 +48,6 @@ fun Timetable(
   // TODO 리컴포지션 최적화 필요
   val cellGroupedByDay = timetable.cellList.groupBy { it.day }
 
-  Column(
-    modifier = modifier.fillMaxSize(),
-    verticalArrangement = Arrangement.spacedBy(12.dp),
-  ) {
-    Header(
-      name = timetable.name,
-      onClickAdd = onClickAdd,
-      onClickHamburger = onClickHamburger,
-      onClickSetting = onClickSetting,
-    )
-
-    Body(
-      scrollState = scrollState,
-      type = type,
-      maxPeriod = maxPeriod,
-      cellGroupedByDay = cellGroupedByDay,
-      onClickClassCell = onClickClassCell,
-    )
-  }
-}
-
-@Composable
-private fun Header(
-  modifier: Modifier = Modifier,
-  name: String,
-  onClickAdd: () -> Unit = {},
-  onClickHamburger: () -> Unit = {},
-  onClickSetting: () -> Unit = {},
-) {
-  Row(
-    modifier = modifier
-      .fillMaxWidth()
-      .padding(start = 24.dp, end = 20.dp),
-    verticalAlignment = Alignment.Bottom,
-    horizontalArrangement = Arrangement.spacedBy(18.dp),
-  ) {
-    Text(
-      modifier = Modifier.weight(1f),
-      overflow = TextOverflow.Ellipsis,
-      text = name,
-      style = SuwikiTheme.typography.header1,
-      color = Black,
-      maxLines = 1,
-    )
-
-    Icon(
-      modifier = Modifier.suwikiClickable(onClick = onClickHamburger),
-      painter = painterResource(id = R.drawable.ic_timetable_add),
-      contentDescription = "",
-      tint = Gray95,
-    )
-
-    Icon(
-      modifier = Modifier.suwikiClickable(onClick = onClickAdd),
-      painter = painterResource(id = R.drawable.ic_timetable_hamburger),
-      contentDescription = "",
-      tint = Gray95,
-    )
-
-    Icon(
-      modifier = Modifier.suwikiClickable(onClick = onClickSetting),
-      painter = painterResource(id = R.drawable.ic_timetable_setting),
-      contentDescription = "",
-      tint = Gray95,
-    )
-  }
-}
-
-@Composable
-private fun Body(
-  modifier: Modifier = Modifier,
-  type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
-  scrollState: ScrollState,
-  maxPeriod: Int,
-  cellGroupedByDay: Map<TimetableDay, List<TimetableCell>>,
-  onClickClassCell: (TimetableCell) -> Unit,
-) {
   Column(
     modifier = modifier
       .fillMaxWidth()

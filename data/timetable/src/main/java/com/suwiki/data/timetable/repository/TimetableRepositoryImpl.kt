@@ -13,7 +13,7 @@ class TimetableRepositoryImpl @Inject constructor(
     return localTimetableDataSource.getAllTimetable()
   }
 
-  override suspend fun getTimetable(createTime: Long): Timetable {
+  override suspend fun getTimetable(createTime: Long): Timetable? {
     return localTimetableDataSource.getTimetable(createTime)
   }
 

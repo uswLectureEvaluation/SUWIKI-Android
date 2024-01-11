@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.suwiki.feature.timetable.TimetableScreen
+import com.suwiki.feature.timetable.TimetableRoute
 
 fun NavController.navigateTimetable(navOptions: NavOptions) {
   navigate(TimetableRoute.route, navOptions)
@@ -15,7 +15,7 @@ fun NavGraphBuilder.timetableNavGraph(
   padding: PaddingValues,
 ) {
   composable(route = TimetableRoute.route) {
-    TimetableScreen(padding)
+    TimetableRoute(padding)
   }
 }
 
