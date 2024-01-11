@@ -110,6 +110,7 @@ internal fun MainScreen(
           navigateMyLectureEvaluationEdit = navigator::navigateMyLectureEvaluationEdit,
           navigateMyExamEvaluationEdit = navigator::navigateMyExamEvaluationEdit,
           onShowToast = viewModel::onShowToast,
+          handleException = viewModel::handleException,
         )
 
         noticeNavGraph(

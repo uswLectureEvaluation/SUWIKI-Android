@@ -7,6 +7,7 @@ import com.suwiki.core.model.enums.TeamLevel
 data class MyLectureEvaluationEditState(
   val isLoading: Boolean = false,
   val point: Int = 0,
+  val semesterList: List<String> = listOf(""),
   val selectedSemester: String = "",
   val totalAvg: Float = 0f,
   val honeyRating: Float = 0f,
@@ -26,4 +27,5 @@ sealed interface MyLectureEvaluationEditSideEffect {
   data object PopBackStack : MyLectureEvaluationEditSideEffect
   data object ShowMyLectureEvaluationDeleteToast : MyLectureEvaluationEditSideEffect
   data object ShowMyLectureEvaluationReviseToast : MyLectureEvaluationEditSideEffect
+  data class HandleException(val throwable: Throwable) : MyLectureEvaluationEditSideEffect
 }

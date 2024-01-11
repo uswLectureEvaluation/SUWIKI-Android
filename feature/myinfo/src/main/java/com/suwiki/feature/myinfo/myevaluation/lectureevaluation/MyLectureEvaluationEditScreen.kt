@@ -52,11 +52,14 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.Locale
 
+const val MINIMUM_DELETE_POINT = 30
+
 @Composable
 fun MyLectureEvaluationEditRoute(
   viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
+  handleException: (Throwable) -> Unit
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()
@@ -71,6 +74,7 @@ fun MyLectureEvaluationEditRoute(
       MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationReviseToast -> {
         onShowToast(context.getString(R.string.my_lecture_evaluation_revise_toast_msg))
       }
+      is MyLectureEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
 
@@ -305,35 +309,37 @@ fun MyLectureEvaluationEditScreen(
   }
 
   if (uiState.showDeleteLectureEvaluationDialog) {
-    SuwikiDialog(
-      headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-      bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
-      confirmButtonText = stringResource(R.string.my_class_review_delete),
-      dismissButtonText = stringResource(R.string.my_class_review_cancel),
-      onDismissRequest = onDismissLectureEvaluationDelete,
-      onClickConfirm = onClickLectureEvaluationDeleteConfirm,
-      onClickDismiss = onDismissLectureEvaluationDelete,
-    )
+    if (uiState.point > MINIMUM_DELETE_POINT) {
+      SuwikiDialog(
+        headerText = stringResource(R.string.my_class_review_delete_dialog_header),
+        bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
+        confirmButtonText = stringResource(R.string.my_class_review_delete),
+        dismissButtonText = stringResource(R.string.my_class_review_cancel),
+        onDismissRequest = onDismissLectureEvaluationDelete,
+        onClickConfirm = onClickLectureEvaluationDeleteConfirm,
+        onClickDismiss = onDismissLectureEvaluationDelete,
+      )
+    } else {
+      SuwikiDialog(
+        headerText = stringResource(R.string.lack_point_dialog_header),
+        bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
+        confirmButtonText = stringResource(R.string.confirm),
+        onDismissRequest = onDismissLectureEvaluationDelete,
+        onClickConfirm = onDismissLectureEvaluationDelete,
+      )
+    }
   }
 
   SuwikiBottomSheet(
     isSheetOpen = uiState.showSemesterBottomSheet,
     onDismissRequest = onSemesterBottomSheetDismissRequest,
     content = {
-      // TODO(REMOVE)
-      SuwikiMenuItem(title = "")
-      SuwikiMenuItem(
-        title = "2023-1",
-        onClick = { onClickSemesterItem("2023-1") },
-      )
-      SuwikiMenuItem(
-        title = "2022-2",
-        onClick = { onClickSemesterItem("2022-2") },
-      )
-      SuwikiMenuItem(
-        title = "2022-1",
-        onClick = { onClickSemesterItem("2022-1") },
-      )
+      uiState.semesterList.forEach { semester ->
+        SuwikiMenuItem(
+          title = semester,
+          onClick = { onClickSemesterItem(semester) }
+        )
+      }
     },
   )
 

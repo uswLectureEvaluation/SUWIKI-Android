@@ -6,6 +6,7 @@ import com.suwiki.core.model.enums.ExamType
 data class MyExamEvaluationEditState(
   val isLoading: Boolean = false,
   val point: Int = 0,
+  val semesterList: List<String> = listOf(""),
   val selectedSemester: String = "",
   val selectedExamInfo: String = "",
   val examEvaluation: String = "",
@@ -23,4 +24,5 @@ sealed interface MyExamEvaluationEditSideEffect {
   data object PopBackStack : MyExamEvaluationEditSideEffect
   data object ShowMyExamEvaluationDeleteToast : MyExamEvaluationEditSideEffect
   data object ShowMyExamEvaluationReviseToast : MyExamEvaluationEditSideEffect
+  data class HandleException(val throwable: Throwable) : MyExamEvaluationEditSideEffect
 }

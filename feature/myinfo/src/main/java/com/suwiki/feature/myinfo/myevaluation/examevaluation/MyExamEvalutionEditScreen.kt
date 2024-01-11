@@ -43,6 +43,7 @@ import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.myinfo.R
+import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MINIMUM_DELETE_POINT
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -51,6 +52,7 @@ fun MyExamEvaluationEditRoute(
   viewModel: MyExamEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
+  handleException: (Throwable) -> Unit,
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()
@@ -65,6 +67,7 @@ fun MyExamEvaluationEditRoute(
       MyExamEvaluationEditSideEffect.ShowMyExamEvaluationReviseToast -> {
         onShowToast(context.getString(R.string.my_exam_evaluation_revise_toast_msg))
       }
+      is MyExamEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
 
@@ -80,7 +83,7 @@ fun MyExamEvaluationEditRoute(
     onClickSemesterItem = viewModel::clickSemesterItem,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onClickExamTypeButton = viewModel::showExamTypeBottomSheet,
-    onClickExamTypeItem = viewModel::clickExamTypeItem,
+    onClickExamTypeItem = viewModel::clickExamInfoItem,
     onExamTypeBottomSheetDismissRequest = viewModel::hideExamTypeBottomSheet,
     onClickExamLevelChip = viewModel::updateExamLevel,
     onClickExamTypeChip = viewModel::updateExamType,
@@ -213,15 +216,25 @@ fun MyExamEvaluationEditScreen(
       )
     }
     if (uiState.showDeleteExamEvaluationDialog) {
-      SuwikiDialog(
-        headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-        bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
-        confirmButtonText = stringResource(R.string.my_class_review_delete),
-        dismissButtonText = stringResource(R.string.my_class_review_cancel),
-        onDismissRequest = onDismissExamEvaluationDelete,
-        onClickConfirm = onClickExamEvaluationDeleteConfirm,
-        onClickDismiss = onDismissExamEvaluationDelete,
-      )
+      if (uiState.point > MINIMUM_DELETE_POINT) {
+        SuwikiDialog(
+          headerText = stringResource(R.string.my_class_review_delete_dialog_header),
+          bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
+          confirmButtonText = stringResource(R.string.my_class_review_delete),
+          dismissButtonText = stringResource(R.string.my_class_review_cancel),
+          onDismissRequest = onDismissExamEvaluationDelete,
+          onClickConfirm = onClickExamEvaluationDeleteConfirm,
+          onClickDismiss = onDismissExamEvaluationDelete,
+        )
+      } else {
+        SuwikiDialog(
+          headerText = stringResource(R.string.lack_point_dialog_header),
+          bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
+          confirmButtonText = stringResource(R.string.confirm),
+          onDismissRequest = onDismissExamEvaluationDelete,
+          onClickConfirm = onDismissExamEvaluationDelete,
+        )
+      }
     }
   }
 
@@ -232,16 +245,12 @@ fun MyExamEvaluationEditScreen(
       // TODO(REMOVE)
       SuwikiMenuItem(title = "")
       SuwikiMenuItem(
-        title = "머신러닝",
-        onClick = { onClickExamTypeItem("머신러닝") },
+        title = "대면",
+        onClick = { onClickExamTypeItem("대면") },
       )
       SuwikiMenuItem(
-        title = "머신러닝",
-        onClick = { onClickExamTypeItem("머신러닝") },
-      )
-      SuwikiMenuItem(
-        title = "과목명",
-        onClick = { onClickExamTypeItem("과목명") },
+        title = "비대면",
+        onClick = { onClickExamTypeItem("비대면") },
       )
     },
   )
@@ -250,20 +259,12 @@ fun MyExamEvaluationEditScreen(
     isSheetOpen = uiState.showSemesterBottomSheet,
     onDismissRequest = onSemesterBottomSheetDismissRequest,
     content = {
-      // TODO(REMOVE)
-      SuwikiMenuItem(title = "")
-      SuwikiMenuItem(
-        title = "2023-1",
-        onClick = { onClickSemesterItem("2023-1") },
-      )
-      SuwikiMenuItem(
-        title = "2022-2",
-        onClick = { onClickSemesterItem("2022-2") },
-      )
-      SuwikiMenuItem(
-        title = "2022-1",
-        onClick = { onClickSemesterItem("2022-1") },
-      )
+      uiState.semesterList.forEach { semester ->
+        SuwikiMenuItem(
+          title = semester,
+          onClick = { onClickSemesterItem(semester) }
+        )
+      }
     },
   )
 

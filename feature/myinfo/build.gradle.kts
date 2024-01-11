@@ -10,5 +10,6 @@ android {
 dependencies {
   implementation(projects.domain.user)
   implementation(projects.domain.lectureevaluation.my)
+  implementation(projects.domain.lectureevaluation.editor) // TODO("모듈 분리시 이동")
   implementation(libs.kotlinx.serialization.json)
 }
