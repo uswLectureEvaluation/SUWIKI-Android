@@ -62,11 +62,12 @@ object DatabaseModule {
   fun provideOpenLectureDatabase(
     @ApplicationContext context: Context,
   ): OpenLectureDatabase {
-    return Room.databaseBuilder(
-      context,
-      OpenLectureDatabase::class.java,
-      DatabaseName.OPEN_LECTURE,
-    )
+    return Room
+      .databaseBuilder(
+        context,
+        OpenLectureDatabase::class.java,
+        DatabaseName.OPEN_LECTURE,
+      )
       .fallbackToDestructiveMigration()
       .build()
   }
@@ -83,47 +84,13 @@ object DatabaseModule {
         DatabaseName.TIMETABLE,
       )
       .addMigrations(TIMETABLE_MIGRATION_1_2)
-      // .fallbackToDestructiveMigration()
+      .fallbackToDestructiveMigration()
       .build()
   }
 }
 
 private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
   override fun migrate(database: SupportSQLiteDatabase) {
-    Log.d("테스트","마이그레이션 시작")
-
-    val cursor = database.query("SELECT createTime, timetableJsonData FROM TimetableList")
-
-    if (cursor.moveToFirst()) {
-      do {
-        val createTime = cursor.getInt(cursor.getColumnIndexOrThrow("createTime"))
-        val timeTableJsonData = cursor.getString(cursor.getColumnIndexOrThrow("timeTableJsonData"))
-
-        val cellList = timeTableJsonDataToCellList(timeTableJsonData)
-
-        Log.d("테스트","변환된 값 : $cellList")
-
-        val contentValues = ContentValues().apply {
-          put("timeTableJsonData", cellList)
-        }
-
-        database.execSQL(
-          """
-            UPDATE TimeTableList
-            SET timeTableJsonData = '$cellList'
-            WHERE createTime = $createTime
-          """.trimIndent()
-        )
-
-//        database.update(
-//          table = "TimeTableList",
-//          conflictAlgorithm = SQLiteDatabase.CONFLICT_FAIL,
-//          values = contentValues,
-//          whereClause = "createTime = ?",
-//          whereArgs = arrayOf(createTime.toString()),
-//        )
-      } while (cursor.moveToNext())
-    }
     database.execSQL(
       """
       CREATE TABLE IF NOT EXISTS TimetableEntity (
@@ -137,13 +104,29 @@ private val TIMETABLE_MIGRATION_1_2 = object : Migration(1, 2) {
       """.trimIndent(),
     )
 
-    database.execSQL(
-      """
-        INSERT INTO TimetableEntity (createTime, year, semester, name, cellList)
-        SELECT createTime, year, semester, timeTableName, timeTableJsonData FROM TimeTableList
-      """.trimIndent(),
-    )
-    // database.execSQL("DROP TABLE TimeTableList")
+    val cursor = database.query("SELECT * FROM TimetableList")
+
+    if (cursor.moveToFirst()) {
+      do {
+        val createTime = cursor.getLong(cursor.getColumnIndexOrThrow("createTime"))
+        val year = cursor.getString(cursor.getColumnIndexOrThrow("year"))
+        val semester = cursor.getString(cursor.getColumnIndexOrThrow("semester"))
+        val timeTableName = cursor.getString(cursor.getColumnIndexOrThrow("timeTableName"))
+        val timeTableJsonData = cursor.getString(cursor.getColumnIndexOrThrow("timeTableJsonData"))
+
+        val cellList = timeTableJsonDataToCellList(timeTableJsonData)
+
+        database.execSQL(
+          """
+          INSERT INTO TimetableEntity (createTime, year, semester, name, cellList)
+          VALUES ($createTime, '$year', '$semester', '$timeTableName', '$cellList')
+          """.trimIndent(),
+        )
+      } while (cursor.moveToNext())
+    }
+
+    cursor.close()
+    database.execSQL("DROP TABLE TimeTableList")
   }
 }
 
@@ -158,48 +141,48 @@ data class LegacyTimeTableCell(
   val color: Int,
   val credit: String = "",
 )
+
 fun LegacyTimeTableCell.toTimetableCell(): TimetableCell {
-    val color = when (this.color) {
-      -96120 -> TimetableCellColor.PINK
-      -16046 -> TimetableCellColor.ORANGE
-      -3368205 -> TimetableCellColor.VIOLET
-      -7747330 -> TimetableCellColor.SKY
-      -5907327 -> TimetableCellColor.GREEN
-      -4026526 -> TimetableCellColor.BROWN
-      -4013635 -> TimetableCellColor.GRAY
-      -12363882 -> TimetableCellColor.NAVY
-      -9728172 -> TimetableCellColor.GREEN_DARK
-      -17536 -> TimetableCellColor.BROWN_LIGHT
-      -6194752 -> TimetableCellColor.PURPLE
-      -7369077 -> TimetableCellColor.GRAY_DARK
-      else -> TimetableCellColor.entries.shuffled()[0]
-    }
-
-    val day = when (this.day) {
-      "월" -> TimetableDay.MON
-      "화" -> TimetableDay.TUE
-      "수" -> TimetableDay.WED
-      "목" -> TimetableDay.THU
-      "금" -> TimetableDay.FRI
-      "토" -> TimetableDay.SAT
-      "이러닝" -> TimetableDay.E_LEARNING
-      else -> TimetableDay.E_LEARNING
-    }
-
-    return TimetableCell(
-      name = name,
-      professor = professor,
-      location = location,
-      day = day,
-      startPeriod = startTime.toIntOrNull() ?: 0,
-      endPeriod = endTime.toIntOrNull() ?: 0,
-      color = color,
-    )
+  val color = when (this.color) {
+    -96120 -> TimetableCellColor.PINK
+    -16046 -> TimetableCellColor.ORANGE
+    -3368205 -> TimetableCellColor.VIOLET
+    -7747330 -> TimetableCellColor.SKY
+    -5907327 -> TimetableCellColor.GREEN
+    -4026526 -> TimetableCellColor.BROWN
+    -4013635 -> TimetableCellColor.GRAY
+    -12363882 -> TimetableCellColor.NAVY
+    -9728172 -> TimetableCellColor.GREEN_DARK
+    -17536 -> TimetableCellColor.BROWN_LIGHT
+    -6194752 -> TimetableCellColor.PURPLE
+    -7369077 -> TimetableCellColor.GRAY_DARK
+    else -> TimetableCellColor.entries.shuffled()[0]
   }
+
+  val day = when (this.day) {
+    "월" -> TimetableDay.MON
+    "화" -> TimetableDay.TUE
+    "수" -> TimetableDay.WED
+    "목" -> TimetableDay.THU
+    "금" -> TimetableDay.FRI
+    "토" -> TimetableDay.SAT
+    "이러닝" -> TimetableDay.E_LEARNING
+    else -> TimetableDay.E_LEARNING
+  }
+
+  return TimetableCell(
+    name = name,
+    professor = professor,
+    location = location,
+    day = day,
+    startPeriod = startTime.toIntOrNull() ?: 0,
+    endPeriod = endTime.toIntOrNull() ?: 0,
+    color = color,
+  )
+}
 
 
 fun timeTableJsonDataToCellList(timeTableJsonData: String): String {
-  Log.d("테스트","json $timeTableJsonData")
   if (timeTableJsonData.isBlank()) return ""
   val legacy = Json.decodeFromString<List<LegacyTimeTableCell>>(timeTableJsonData)
   val cellList = legacy.map { it.toTimetableCell() }

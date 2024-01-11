@@ -17,6 +17,9 @@ class TimetableViewModel @Inject constructor(
 
   init {
       viewModelScope.launch {
+//        runCatching {
+//          Timber.tag("테스트").d("시간표 목록 가져오기! ${getAllTimetableUseCase()}")
+//        }
         Timber.tag("테스트").d("시간표 목록 가져오기! ${getAllTimetableUseCase()}")
       }
   }
