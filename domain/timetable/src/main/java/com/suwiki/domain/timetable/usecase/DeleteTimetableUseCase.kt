@@ -9,6 +9,10 @@ class DeleteTimetableUseCase @Inject constructor(
   private val timetableRepository: TimetableRepository,
 ) {
   suspend operator fun invoke(timetable: Timetable): Result<Unit> = runCatchingIgnoreCancelled {
-    timetableRepository.deleteTimetable(timetable)
+    with(timetableRepository) {
+      deleteTimetable(timetable)
+      val firstTimetableCreateTime = timetableRepository.getAllTimetable().firstOrNull()?.createTime ?: 0L
+      timetableRepository.setMainTimetableCreateTime(firstTimetableCreateTime)
+    }
   }
 }

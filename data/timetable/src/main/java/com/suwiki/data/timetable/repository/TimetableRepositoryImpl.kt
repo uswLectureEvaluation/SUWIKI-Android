@@ -3,6 +3,7 @@ package com.suwiki.data.timetable.repository
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.domain.timetable.repository.TimetableRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TimetableRepositoryImpl @Inject constructor(
@@ -18,6 +19,10 @@ class TimetableRepositoryImpl @Inject constructor(
 
   override suspend fun setMainTimetableCreateTime(createTime: Long) {
     localTimetableDataSource.setMainTimetableCreateTime(createTime)
+  }
+
+  override suspend fun getMainTimetableCreateTime(): Flow<Long> {
+    return localTimetableDataSource.getMainTimetableCreateTime()
   }
 
   override suspend fun deleteTimetable(data: Timetable) {
