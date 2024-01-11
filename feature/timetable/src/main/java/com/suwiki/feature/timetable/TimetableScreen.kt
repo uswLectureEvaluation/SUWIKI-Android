@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -60,7 +61,7 @@ fun TimetableScreen(
         Spacer(modifier = Modifier.padding(top = 130.dp))
 
         Text(
-          text = "시간표를 만들어\n일정을 관리해보세요",
+          text = stringResource(R.string.timetable_screen_create_timetable),
           color = Gray95,
           style = SuwikiTheme.typography.header4,
           textAlign = TextAlign.Center,
@@ -68,7 +69,7 @@ fun TimetableScreen(
 
         Spacer(modifier = Modifier.size(28.dp))
 
-        SuwikiContainedMediumButton(text = "시간표 만들기")
+        SuwikiContainedMediumButton(text = stringResource(R.string.timetable_screen_create_timetable_button))
       }
     }
   }

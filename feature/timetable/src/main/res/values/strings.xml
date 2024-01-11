@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="timetable_screen_create_timetable">시간표를 만들어\n일정을 관리해보세요</string>
+  <string name="timetable_screen_create_timetable_button">시간표 만들기</string>
+</resources>
