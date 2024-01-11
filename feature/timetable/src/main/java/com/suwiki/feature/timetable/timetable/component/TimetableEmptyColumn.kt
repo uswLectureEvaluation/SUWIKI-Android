@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.component
+package com.suwiki.feature.timetable.timetable.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -24,6 +24,7 @@ import com.suwiki.feature.timetable.R
 @Composable
 fun TimetableEmptyColumn(
   modifier: Modifier,
+  onClickAdd: () -> Unit = {},
 ) {
   Column(
     modifier = modifier,
@@ -40,7 +41,10 @@ fun TimetableEmptyColumn(
 
     Spacer(modifier = Modifier.size(28.dp))
 
-    SuwikiContainedMediumButton(text = stringResource(R.string.timetable_screen_create_timetable_button))
+    SuwikiContainedMediumButton(
+      text = stringResource(R.string.timetable_screen_create_timetable_button),
+      onClick = onClickAdd,
+    )
   }
 }
 

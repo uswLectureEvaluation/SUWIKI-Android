@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.component.timetable
+package com.suwiki.feature.timetable.timetable.component.timetable
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column

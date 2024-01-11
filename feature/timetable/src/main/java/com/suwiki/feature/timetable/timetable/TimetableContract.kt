@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable
+package com.suwiki.feature.timetable.timetable
 
 import com.suwiki.core.model.timetable.Timetable
 

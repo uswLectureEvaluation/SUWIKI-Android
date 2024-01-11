@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.component
+package com.suwiki.feature.timetable.timetable.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,7 +25,7 @@ import com.suwiki.feature.timetable.R
 @Composable
 fun TimetableAppbar(
   modifier: Modifier = Modifier,
-  name: String = stringResource(R.string.word_timetable),
+  name: String? = null,
   onClickAdd: () -> Unit = {},
   onClickHamburger: () -> Unit = {},
   onClickSetting: () -> Unit = {},
@@ -40,7 +40,7 @@ fun TimetableAppbar(
     Text(
       modifier = Modifier.weight(1f),
       overflow = TextOverflow.Ellipsis,
-      text = name,
+      text = name ?: stringResource(R.string.word_timetable),
       style = SuwikiTheme.typography.header1,
       color = Black,
       maxLines = 1,
