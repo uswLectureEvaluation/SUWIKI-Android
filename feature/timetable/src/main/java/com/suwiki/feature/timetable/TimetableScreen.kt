@@ -2,6 +2,7 @@ package com.suwiki.feature.timetable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,7 @@ import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.timetable.component.TimetableAppbar
+import com.suwiki.feature.timetable.component.TimetableEmptyColumn
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -51,30 +53,18 @@ fun TimetableScreen(
     TimetableAppbar()
 
     if (uiState.showTimetableEmptyColumn) {
-      Column(
+      TimetableEmptyColumn(
         modifier = Modifier
           .fillMaxWidth()
           .weight(1f)
           .background(White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-      ) {
-        Spacer(modifier = Modifier.padding(top = 130.dp))
-
-        Text(
-          text = stringResource(R.string.timetable_screen_create_timetable),
-          color = Gray95,
-          style = SuwikiTheme.typography.header4,
-          textAlign = TextAlign.Center,
-        )
-
-        Spacer(modifier = Modifier.size(28.dp))
-
-        SuwikiContainedMediumButton(text = stringResource(R.string.timetable_screen_create_timetable_button))
-      }
+      )
     }
   }
 
 }
+
+
 
 @Preview
 @Composable
