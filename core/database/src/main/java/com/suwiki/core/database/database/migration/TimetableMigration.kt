@@ -62,22 +62,28 @@ data class LegacyTimeTableCell(
   val credit: String = "",
 )
 
+private val legacyColorMap: Map<Int, TimetableCellColor> by lazy {
+  mapOf(
+    -96120 to TimetableCellColor.PINK,
+    -16046 to TimetableCellColor.ORANGE,
+    -3368205 to TimetableCellColor.VIOLET,
+    -7747330 to TimetableCellColor.SKY,
+    -5907327 to TimetableCellColor.GREEN,
+    -4026526 to TimetableCellColor.BROWN,
+    -4013635 to TimetableCellColor.GRAY,
+    -12363882 to TimetableCellColor.NAVY,
+    -9728172 to TimetableCellColor.GREEN_DARK,
+    -17536 to TimetableCellColor.BROWN_LIGHT,
+    -6194752 to TimetableCellColor.PURPLE,
+    -7369077 to TimetableCellColor.GRAY_DARK,
+  )
+}
+
 fun LegacyTimeTableCell.toTimetableCell(): TimetableCell {
-  val color = when (this.color) {
-    -96120 -> TimetableCellColor.PINK
-    -16046 -> TimetableCellColor.ORANGE
-    -3368205 -> TimetableCellColor.VIOLET
-    -7747330 -> TimetableCellColor.SKY
-    -5907327 -> TimetableCellColor.GREEN
-    -4026526 -> TimetableCellColor.BROWN
-    -4013635 -> TimetableCellColor.GRAY
-    -12363882 -> TimetableCellColor.NAVY
-    -9728172 -> TimetableCellColor.GREEN_DARK
-    -17536 -> TimetableCellColor.BROWN_LIGHT
-    -6194752 -> TimetableCellColor.PURPLE
-    -7369077 -> TimetableCellColor.GRAY_DARK
-    else -> TimetableCellColor.entries.shuffled()[0]
-  }
+  val color = legacyColorMap.getOrDefault(
+    this.color,
+    TimetableCellColor.entries.shuffled().first(),
+  )
 
   val day = when (this.day) {
     "월" -> TimetableDay.MON
@@ -100,7 +106,6 @@ fun LegacyTimeTableCell.toTimetableCell(): TimetableCell {
     color = color,
   )
 }
-
 
 fun timeTableJsonDataToCellList(timeTableJsonData: String): String {
   if (timeTableJsonData.isBlank()) return ""

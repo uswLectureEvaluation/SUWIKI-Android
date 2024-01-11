@@ -1,30 +1,16 @@
 package com.suwiki.core.database.di
 
-import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.util.Log
-import androidx.room.ProvidedTypeConverter
 import androidx.room.Room
-import androidx.room.TypeConverter
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.suwiki.core.database.database.OpenLectureDatabase
 import com.suwiki.core.database.database.OpenMajorDatabase
 import com.suwiki.core.database.database.TimetableDatabase
 import com.suwiki.core.database.database.migration.TIMETABLE_MIGRATION_1_2
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.core.model.timetable.TimetableDay
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import java.sql.Time
 import javax.inject.Singleton
 
 @Module
@@ -77,8 +63,6 @@ object DatabaseModule {
       .build()
   }
 }
-
-
 
 /**
  * 상수 이름과 실제 값이 일치하지 않는 이유는 이전 버전과의 호환을 위해 레거시 데이터베이스의 이름을 변경할 수 없었기 때문입니다.

@@ -7,13 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 
 @Composable
 fun TimetableScreen(
   padding: PaddingValues,
-  viewModel: TimetableViewModel = hiltViewModel(),
 ) {
   Text(
     modifier = Modifier.padding(padding),
