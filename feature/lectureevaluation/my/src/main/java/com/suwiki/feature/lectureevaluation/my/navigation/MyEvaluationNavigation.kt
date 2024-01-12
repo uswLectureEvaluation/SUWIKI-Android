@@ -23,6 +23,7 @@ fun NavGraphBuilder.myEvaluationNavGraph(
       popBackStack = popBackStack,
       navigateMyLectureEvaluation = navigateMyLectureEvaluationEdit,
       navigateMyExamEvaluation = navigateMyExamEvaluationEdit,
+      handleException = handleException,
     )
   }
 }

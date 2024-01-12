@@ -21,11 +21,15 @@ class MyEvaluationViewModel @Inject constructor(
 ) : ContainerHost<MyEvaluationState, MyEvaluationSideEffect>, ViewModel() {
   override val container: Container<MyEvaluationState, MyEvaluationSideEffect> = container(MyEvaluationState())
 
-  fun loadMyLectureEvaluations(page: Int) = intent {
+  private var currentLectureEvaluationPage = 1
+  private var currentExamEvaluationPage = 1
+
+  fun loadMyLectureEvaluations() = intent {
     showLoadingScreen()
-    getMyLectureEvaluationListUseCase(page)
+    getMyLectureEvaluationListUseCase(currentLectureEvaluationPage)
       .onSuccess {
-        reduce { state.copy(myLectureEvaluationList = it.toPersistentList()) }
+        reduce { state.copy(myLectureEvaluationList = state.myLectureEvaluationList.addAll(it.toPersistentList())) }
+        currentLectureEvaluationPage++
       }
       .onFailure {
         postSideEffect(MyEvaluationSideEffect.HandleException(it))
@@ -33,11 +37,12 @@ class MyEvaluationViewModel @Inject constructor(
     hideLoadingScreen()
   }
 
-  fun loadMyExamEvaluations(page: Int) = intent {
+  fun loadMyExamEvaluations() = intent {
     showLoadingScreen()
-    getMyExamEvaluationListUseCase(page)
+    getMyExamEvaluationListUseCase(currentExamEvaluationPage)
       .onSuccess {
-        reduce { state.copy(myExamEvaluationList = it.toPersistentList()) }
+        reduce { state.copy(myExamEvaluationList = state.myExamEvaluationList.addAll(it.toPersistentList())) }
+        currentExamEvaluationPage++
       }
       .onFailure {
         postSideEffect(MyEvaluationSideEffect.HandleException(it))
@@ -47,11 +52,11 @@ class MyEvaluationViewModel @Inject constructor(
 
   fun loadInitList() = intent {
     showLoadingScreen()
-    joinAll(loadMyLectureEvaluations(1), loadMyExamEvaluations(1))
+    joinAll(loadMyLectureEvaluations(), loadMyExamEvaluations())
     hideLoadingScreen()
   }
 
-  fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentPage = currentPage) } }
+  fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentTabPage = currentPage) } }
 
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }

@@ -15,7 +15,6 @@ fun NavGraphBuilder.myInfoNavGraph(
   padding: PaddingValues,
   navigateNotice: () -> Unit = {},
   navigateMyEvaluation: () -> Unit = {},
-  handleException: (Throwable) -> Unit,
 ) {
   composable(route = MyInfoRoute.route) {
     MyInfoRoute(

@@ -107,7 +107,7 @@ internal fun MainScreen(
           handleException = viewModel::handleException,
           navigateOpenMajor = navigator::navigateOpenMajor,
         )
-        
+
         myEvaluationNavGraph(
           padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
@@ -117,7 +117,6 @@ internal fun MainScreen(
         )
 
         myEvaluationEditNavGraph(
-          padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
           onShowToast = viewModel::onShowToast,
           handleException = viewModel::handleException,
@@ -127,7 +126,6 @@ internal fun MainScreen(
           padding = innerPadding,
           navigateNotice = navigator::navigateNotice,
           navigateMyEvaluation = navigator::navigateMyEvaluation,
-          handleException = viewModel::handleException,
         )
 
         noticeNavGraph(

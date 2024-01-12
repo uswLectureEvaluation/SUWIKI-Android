@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -33,6 +34,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.feature.lectureevaluation.my.model.MyEvaluationTab
 import com.suwiki.feature.lectureevaluation.my.model.MyExamEvaluationsSample
@@ -56,6 +58,9 @@ fun MyEvaluationRoute(
   handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+  val lectureEvaluationListState = rememberLazyListState()
+  val examEvaluationListState = rememberLazyListState()
+
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyEvaluationSideEffect.PopBackStack -> popBackStack()
@@ -66,12 +71,20 @@ fun MyEvaluationRoute(
   }
   val pagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT })
 
+  lectureEvaluationListState.OnBottomReached {
+    viewModel.loadMyLectureEvaluations()
+  }
+
+  examEvaluationListState.OnBottomReached {
+    viewModel.loadMyExamEvaluations()
+  }
+
   LaunchedEffect(key1 = Unit) {
     viewModel.loadInitList()
   }
 
-  LaunchedEffect(key1 = uiState.currentPage) {
-    pagerState.animateScrollToPage(uiState.currentPage)
+  LaunchedEffect(key1 = uiState.currentTabPage) {
+    pagerState.animateScrollToPage(uiState.currentTabPage)
   }
 
   snapshotFlow { pagerState.currentPage }.collectWithLifecycle {
@@ -196,7 +209,7 @@ fun MyEvaluationPreview() {
     MyEvaluationScreen(
       padding = PaddingValues(0.dp),
       uiState = MyEvaluationState(
-        currentPage = currentPage,
+        currentTabPage = currentPage,
       ),
       onClickTab = { currentPage = it },
     )

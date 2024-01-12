@@ -1,6 +1,5 @@
 package com.suwiki.feature.lectureevaluation.editor.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -18,7 +17,6 @@ fun NavController.navigateMyExamEvaluation(examEvaluation: String) {
 }
 
 fun NavGraphBuilder.myEvaluationEditNavGraph(
-  padding: PaddingValues,
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
