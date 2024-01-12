@@ -55,7 +55,7 @@ fun CreateTimetableRoute(
       viewModel.hideSemesterBottomSheet()
       viewModel.updateSemesterPosition(position)
     },
-    onClickTextFieldClearButton = { viewModel.updateName("") }
+    onClickTextFieldClearButton = { viewModel.updateName("") },
   )
 }
 
