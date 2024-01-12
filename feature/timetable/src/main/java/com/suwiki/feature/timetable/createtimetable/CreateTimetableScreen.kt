@@ -55,6 +55,7 @@ fun CreateTimetableRoute(
       viewModel.hideSemesterBottomSheet()
       viewModel.updateSemesterPosition(position)
     },
+    onClickTextFieldClearButton = { viewModel.updateName("") }
   )
 }
 
@@ -62,6 +63,7 @@ fun CreateTimetableRoute(
 fun CreateTimetableScreen(
   uiState: CreateTimetableState = CreateTimetableState(),
   onValueChangeTimetableName: (String) -> Unit = {},
+  onClickTextFieldClearButton: () -> Unit = {},
   onClickBack: () -> Unit = {},
   onClickCompleteButton: () -> Unit = {},
   onClickSelectionContainer: () -> Unit = {},
@@ -95,6 +97,7 @@ fun CreateTimetableScreen(
       SuwikiRegularTextField(
         value = uiState.name,
         onValueChange = onValueChangeTimetableName,
+        onClickClearButton = onClickTextFieldClearButton,
         placeholder = stringResource(R.string.create_timetable_screen_placeholder),
       )
 
