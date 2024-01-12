@@ -66,8 +66,7 @@ fun TimetableScreen(
     ) {
       TimetableEmptyColumn(
         modifier = Modifier
-          .fillMaxWidth()
-          .weight(1f)
+          .fillMaxSize()
           .background(White),
         onClickAdd = onClickAddTimetable,
       )
