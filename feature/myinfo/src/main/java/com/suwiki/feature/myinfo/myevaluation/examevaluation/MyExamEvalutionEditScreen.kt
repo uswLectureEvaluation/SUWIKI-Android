@@ -29,8 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.SuwikiOutlinedChip
 import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
@@ -45,6 +44,7 @@ import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.myinfo.R
 import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MINIMUM_DELETE_POINT
+import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -103,10 +103,10 @@ fun MyExamEvaluationEditScreen(
   uiState: MyExamEvaluationEditState,
   popBackStack: () -> Unit = {},
   onClickSemesterButton: () -> Unit = {},
-  onClickSemesterItem: (String) -> Unit = {},
+  onClickSemesterItem: (Int) -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onClickExamTypeButton: () -> Unit = {},
-  onClickExamTypeItem: (String) -> Unit = {},
+  onClickExamTypeItem: (Int) -> Unit = {},
   onExamTypeBottomSheetDismissRequest: () -> Unit = {},
   onClickExamLevelChip: (String) -> Unit = {},
   onClickExamInfoChip: (String) -> Unit = {},
@@ -239,30 +239,22 @@ fun MyExamEvaluationEditScreen(
     }
   }
 
-  SuwikiBottomSheet(
+  SuwikiSelectBottomSheet(
     isSheetOpen = uiState.showExamTypeBottomSheet,
     onDismissRequest = onExamTypeBottomSheetDismissRequest,
-    content = {
-      ExamType.entries.forEach { examType ->
-        SuwikiMenuItem(
-          title = examType.value,
-          onClick = { onClickExamTypeItem(examType.value) },
-        )
-      }
-    },
+    onClickItem = { onClickExamTypeItem(it) },
+    itemList = ExamType.values().map { it.value }.toPersistentList(),
+    title = stringResource(R.string.my_test_review_choose_test_type),
+    selectedPosition = uiState.selectedExamTypePosition,
   )
 
-  SuwikiBottomSheet(
+  SuwikiSelectBottomSheet(
     isSheetOpen = uiState.showSemesterBottomSheet,
     onDismissRequest = onSemesterBottomSheetDismissRequest,
-    content = {
-      uiState.semesterList.forEach { semester ->
-        SuwikiMenuItem(
-          title = semester,
-          onClick = { onClickSemesterItem(semester) },
-        )
-      }
-    },
+    onClickItem = { onClickSemesterItem(it) },
+    itemList = uiState.semesterList,
+    title = stringResource(R.string.my_test_review_choose_semester),
+    selectedPosition = uiState.selectedSemesterPosition,
   )
 
   if (uiState.isLoading) {

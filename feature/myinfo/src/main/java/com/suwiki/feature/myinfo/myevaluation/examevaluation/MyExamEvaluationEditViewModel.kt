@@ -3,8 +3,10 @@ package com.suwiki.feature.myinfo.myevaluation.examevaluation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.user.User
+import com.suwiki.core.ui.extension.toInt
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.DeleteExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
@@ -40,7 +42,7 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     with(myExamEvaluationItem) {
       showLoadingScreen()
       getUserInfoUseCase().collect(::setPoint)
-      reduce { state.copy(semesterList = semesterList!!.split(", ")) }
+      reduce { state.copy(semesterList = semesterList!!.split(", ").toPersistentList()) }
       reduce { state.copy(selectedSemester = selectedSemester) }
       reduce { state.copy(selectedExamType = examType) }
       updateExamLevel(examDifficulty)
@@ -60,7 +62,7 @@ class MyExamEvaluationEditViewModel @Inject constructor(
           selectedSemester = state.selectedSemester,
           examInfo = state.examInfo.filter { it.isNotBlank() }.joinToString(", "),
           examType = state.selectedExamType,
-          examDifficulty = state.examLevel!!,
+          examDifficulty = state.examLevel,
           content = state.examEvaluation,
         ),
       )
@@ -87,13 +89,17 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     }
   }
 
-  fun clickSemesterItem(semester: String) = intent {
-    reduce { state.copy(selectedSemester = semester) }
+  fun clickSemesterItem(selectedPosition: Int) = intent {
+    reduce { state.copy(selectedSemester = state.semesterList[selectedPosition]) }
     hideSemesterBottomSheet()
   }
 
-  fun clickExamTypeItem(type: String) = intent {
-    reduce { state.copy(selectedExamType = type) }
+  fun clickExamTypeItem(selectedPosition: Int) = intent {
+    ExamType.entries.forEach { examType ->
+      if (examType.toInt() == selectedPosition) {
+        reduce { state.copy(selectedExamType = examType.value) }
+      }
+    }
     hideExamTypeBottomSheet()
   }
 

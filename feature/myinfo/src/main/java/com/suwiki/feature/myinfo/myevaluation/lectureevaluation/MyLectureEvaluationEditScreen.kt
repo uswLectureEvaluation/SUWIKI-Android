@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,8 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.ChipColor
 import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
@@ -111,21 +109,20 @@ fun MyLectureEvaluationEditRoute(
   )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyLectureEvaluationEditScreen(
   uiState: MyLectureEvaluationEditState,
   scrollState: ScrollState,
   popBackStack: () -> Unit,
   onClickSemesterButton: () -> Unit = {},
-  onClickSemesterItem: (String) -> Unit = {},
+  onClickSemesterItem: (Int) -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onHoneyRatingValueChange: (Float) -> Unit = {},
   onLearningRatingValueChange: (Float) -> Unit = {},
   onSatisfactionRatingValueChange: (Float) -> Unit = {},
-  onClickGradeChip: (GradeLevel) -> Unit = {},
-  onClickHomeworkChip: (HomeworkLevel) -> Unit = {},
-  onClickTeamChip: (TeamLevel) -> Unit = {},
+  onClickGradeChip: (Int) -> Unit = {},
+  onClickHomeworkChip: (Int) -> Unit = {},
+  onClickTeamChip: (Int) -> Unit = {},
   onLectureEvaluationValueChange: (String) -> Unit = { _ -> },
   onClickLectureEvaluationDeleteButton: () -> Unit = {},
   onClickLectureEvaluationDeleteConfirm: () -> Unit = {},
@@ -225,10 +222,10 @@ fun MyLectureEvaluationEditScreen(
             ) {
               GradeLevel.entries.zip(ChipColor.entries).forEach { (gradeLevel, color) ->
                 SuwikiContainedChip(
-                  isChecked = uiState.gradeLevel == gradeLevel,
+                  isChecked = uiState.gradeLevel == gradeLevel.value,
                   color = color,
                   text = gradeLevel.toText(),
-                  onClick = { onClickGradeChip(gradeLevel) },
+                  onClick = { onClickGradeChip(gradeLevel.value) },
                 )
               }
             }
@@ -244,10 +241,10 @@ fun MyLectureEvaluationEditScreen(
             ) {
               HomeworkLevel.entries.zip(ChipColor.entries).forEach { (homeworkLevel, color) ->
                 SuwikiContainedChip(
-                  isChecked = uiState.homeworkLevel == homeworkLevel,
+                  isChecked = uiState.homeworkLevel == homeworkLevel.value,
                   color = color,
                   text = homeworkLevel.toText(),
-                  onClick = { onClickHomeworkChip(homeworkLevel) },
+                  onClick = { onClickHomeworkChip(homeworkLevel.value) },
                 )
               }
             }
@@ -263,10 +260,10 @@ fun MyLectureEvaluationEditScreen(
             ) {
               TeamLevel.entries.zip(ChipColor.entries.minus(ChipColor.BLUE)).forEach { (teamLevel, color) ->
                 SuwikiContainedChip(
-                  isChecked = uiState.teamLevel == teamLevel,
+                  isChecked = uiState.teamLevel == teamLevel.value,
                   color = color,
                   text = teamLevel.toText(),
-                  onClick = { onClickTeamChip(teamLevel) },
+                  onClick = { onClickTeamChip(teamLevel.value) },
                 )
               }
             }
@@ -330,17 +327,13 @@ fun MyLectureEvaluationEditScreen(
     }
   }
 
-  SuwikiBottomSheet(
+  SuwikiSelectBottomSheet(
     isSheetOpen = uiState.showSemesterBottomSheet,
     onDismissRequest = onSemesterBottomSheetDismissRequest,
-    content = {
-      uiState.semesterList.forEach { semester ->
-        SuwikiMenuItem(
-          title = semester,
-          onClick = { onClickSemesterItem(semester) },
-        )
-      }
-    },
+    onClickItem = { onClickSemesterItem(it) },
+    itemList = uiState.semesterList,
+    title = stringResource(R.string.word_select_semester),
+    selectedPosition = uiState.selectedSemesterPosition,
   )
 
   if (uiState.isLoading) {
