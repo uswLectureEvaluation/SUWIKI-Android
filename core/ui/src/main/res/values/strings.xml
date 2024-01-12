@@ -41,6 +41,9 @@
     <string name="word_exam_level_easy">쉬움</string>
   <string name="word_exam_level_normal">보통</string>
   <string name="word_exam_level_difficult">어려움</string>
+  <string name="word_timetable">시간표</string>
+  <string name="word_select_semester">수강학기 선택</string>
+  <string name="word_complete">완료</string>
   <string name="word_exam_info_family_tree">족보</string>
   <string name="word_exam_info_textbook">교재</string>
   <string name="word_exam_info_ppt">PPT</string>

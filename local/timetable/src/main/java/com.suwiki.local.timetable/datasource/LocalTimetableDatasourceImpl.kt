@@ -35,8 +35,8 @@ class LocalTimetableDatasourceImpl @Inject constructor(
     timetableDatabase.timetableDao().getAll().map { it.toModel() }
   }
 
-  override suspend fun getTimetable(createTime: Long): Timetable = withContext(ioDispatcher) {
-    timetableDatabase.timetableDao().get(createTime).toModel()
+  override suspend fun getTimetable(createTime: Long): Timetable? = withContext(ioDispatcher) {
+    timetableDatabase.timetableDao().get(createTime)?.toModel()
   }
 
   override suspend fun deleteAllTimetable() = withContext(ioDispatcher) {
@@ -49,6 +49,10 @@ class LocalTimetableDatasourceImpl @Inject constructor(
 
   override suspend fun updateTimetable(data: Timetable) = withContext(ioDispatcher) {
     timetableDatabase.timetableDao().update(data.toEntity())
+  }
+
+  override suspend fun insertTimetable(data: Timetable) {
+    timetableDatabase.timetableDao().insert(data.toEntity())
   }
 
   override suspend fun setMainTimetableCreateTime(createTime: Long) {

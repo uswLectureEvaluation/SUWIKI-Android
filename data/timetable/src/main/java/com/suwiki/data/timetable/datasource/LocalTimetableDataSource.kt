@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface LocalTimetableDataSource {
   suspend fun getAllTimetable(): List<Timetable>
 
-  suspend fun getTimetable(createTime: Long): Timetable
+  suspend fun getTimetable(createTime: Long): Timetable?
 
   suspend fun setMainTimetableCreateTime(createTime: Long)
 
@@ -17,4 +17,5 @@ interface LocalTimetableDataSource {
   suspend fun deleteTimetable(data: Timetable)
 
   suspend fun updateTimetable(data: Timetable)
+  suspend fun insertTimetable(data: Timetable)
 }

@@ -6,7 +6,6 @@ import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
@@ -82,9 +81,12 @@ class LectureEvaluationViewModel @Inject constructor(
     majorType: String = currentState.selectedOpenMajor,
     needClear: Boolean,
   ) = intent {
-    if (needClear) {
-      postSideEffect(LectureEvaluationSideEffect.ScrollToTop)
-      clearLectureEvaluationList().join()
+    val currentList = if (needClear) {
+      page = 1
+      reduce { state.copy(isLoading = true) }
+      emptyList()
+    } else {
+      state.lectureEvaluationList
     }
 
     getLectureEvaluationListUseCase(
@@ -94,43 +96,38 @@ class LectureEvaluationViewModel @Inject constructor(
         page = page,
         majorType = majorType,
       ),
-    ).onSuccess { list ->
+    ).onSuccess { newList ->
       handleGetLectureEvaluationListSuccess(
         alignPosition = alignPosition,
         majorType = majorType,
-        list = list,
+        currentList = currentList,
+        newList = newList,
       )
     }.onFailure {
       postSideEffect(LectureEvaluationSideEffect.HandleException(it))
     }
 
-    reduce { state.copy(isLoading = false) }
+    if (needClear) {
+      postSideEffect(LectureEvaluationSideEffect.ScrollToTop)
+      reduce { state.copy(isLoading = false) }
+    }
   }
 
   private fun handleGetLectureEvaluationListSuccess(
     alignPosition: Int,
     majorType: String,
-    list: List<LectureEvaluationAverage?>,
+    currentList: List<LectureEvaluationAverage?>,
+    newList: List<LectureEvaluationAverage?>,
   ) = intent {
     reduce {
       page++
       state.copy(
         selectedAlignPosition = alignPosition,
         selectedOpenMajor = majorType,
-        lectureEvaluationList = state.lectureEvaluationList
-          .plus(list)
+        lectureEvaluationList = currentList
+          .plus(newList)
           .distinctBy { it?.id }
           .toPersistentList(),
-      )
-    }
-  }
-
-  private fun clearLectureEvaluationList() = intent {
-    reduce {
-      page = 1
-      state.copy(
-        isLoading = true,
-        lectureEvaluationList = persistentListOf(),
       )
     }
   }

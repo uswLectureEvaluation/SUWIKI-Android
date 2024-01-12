@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiEvaluationAppBar
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAgreementBottomSheet
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAlignBottomSheet
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
@@ -41,6 +41,7 @@ import com.suwiki.core.ui.util.TERMS_SITE
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.ONBOARDING_PAGE_COUNT
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingBottomSheet
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -70,6 +71,7 @@ fun LectureEvaluationRoute(
       LectureEvaluationSideEffect.OpenPersonalPolicyWebSite -> uriHandler.openUri(PRIVACY_POLICY_SITE)
       LectureEvaluationSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
       LectureEvaluationSideEffect.ScrollToTop -> scope.launch {
+        awaitFrame()
         listState.scrollToItem(0)
       }
 
@@ -212,12 +214,12 @@ fun LectureEvaluationScreen(
     onClickSignupButton = onClickSignupButton,
   )
 
-  SuwikiAlignBottomSheet(
+  SuwikiSelectBottomSheet(
     isSheetOpen = uiState.showAlignBottomSheet,
-    hideAlignBottomSheet = hideAlignBottomSheet,
-    onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
+    onDismissRequest = hideAlignBottomSheet,
+    onClickItem = onClickAlignBottomSelectedItem,
     itemList = lectureAlignList,
-    bottomSheetTitle = stringResource(R.string.word_sort),
+    title = stringResource(R.string.word_sort),
     selectedPosition = uiState.selectedAlignPosition,
   )
 }
