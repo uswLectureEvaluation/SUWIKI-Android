@@ -20,7 +20,12 @@ class TimetableViewModel @Inject constructor(
   fun getMainTimetable() = intent {
     getMainTimetableUseCase()
       .onSuccess { timetable ->
-        reduce { state.copy(timetable = timetable) }
+        reduce {
+          state.copy(
+            timetable = timetable,
+            showTimetableEmptyColumn = timetable == null,
+          )
+        }
       }
       .onFailure {
         postSideEffect(TimetableSideEffect.HandleException(it))

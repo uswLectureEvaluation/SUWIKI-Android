@@ -1,15 +1,6 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -36,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiEvaluationAppBar
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAgreementBottomSheet
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAlignBottomSheet
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
@@ -224,12 +214,12 @@ fun LectureEvaluationScreen(
     onClickSignupButton = onClickSignupButton,
   )
 
-  SuwikiAlignBottomSheet(
+  SuwikiSelectBottomSheet(
     isSheetOpen = uiState.showAlignBottomSheet,
-    hideAlignBottomSheet = hideAlignBottomSheet,
-    onClickAlignBottomSheetItem = onClickAlignBottomSelectedItem,
+    onDismissRequest = hideAlignBottomSheet,
+    onClickItem = onClickAlignBottomSelectedItem,
     itemList = lectureAlignList,
-    bottomSheetTitle = stringResource(R.string.word_sort),
+    title = stringResource(R.string.word_sort),
     selectedPosition = uiState.selectedAlignPosition,
   )
 }

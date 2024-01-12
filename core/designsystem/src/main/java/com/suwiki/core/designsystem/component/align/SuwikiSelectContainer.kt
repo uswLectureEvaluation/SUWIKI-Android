@@ -28,7 +28,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
-fun SuwikiAlignContainer(
+fun SuwikiSelectContainer(
   modifier: Modifier = Modifier,
   text: String,
   isChecked: Boolean = false,
@@ -77,7 +77,7 @@ fun SuwikiAlignContainerPreview() {
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      SuwikiAlignContainer(
+      SuwikiSelectContainer(
         text = "메뉴",
         isChecked = isChecked,
         onClick = { isChecked = !isChecked },

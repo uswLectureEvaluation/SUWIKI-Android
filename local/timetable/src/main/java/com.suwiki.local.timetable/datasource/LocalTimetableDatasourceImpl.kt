@@ -51,6 +51,10 @@ class LocalTimetableDatasourceImpl @Inject constructor(
     timetableDatabase.timetableDao().update(data.toEntity())
   }
 
+  override suspend fun insertTimetable(data: Timetable) {
+    timetableDatabase.timetableDao().insert(data.toEntity())
+  }
+
   override suspend fun setMainTimetableCreateTime(createTime: Long) {
     dataStore.edit { it[MAIN_TIMETABLE_CREATE_TIME] = createTime }
   }

@@ -1,5 +1,8 @@
 package com.suwiki.feature.timetable.timetable
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,13 +19,14 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
+import com.suwiki.feature.timetable.timetable.component.timetable.Timetable
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun TimetableRoute(
-    padding: PaddingValues,
-    viewModel: TimetableViewModel = hiltViewModel(),
-    navigateCreateTimetable: () -> Unit,
+  padding: PaddingValues,
+  viewModel: TimetableViewModel = hiltViewModel(),
+  navigateCreateTimetable: () -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
 
@@ -33,7 +37,7 @@ fun TimetableRoute(
   TimetableScreen(
     padding = padding,
     uiState = uiState,
-    onClickAddTimetable = navigateCreateTimetable
+    onClickAddTimetable = navigateCreateTimetable,
   )
 }
 
@@ -55,7 +59,11 @@ fun TimetableScreen(
       onClickSetting = {},
     )
 
-    if (uiState.showTimetableEmptyColumn) {
+    AnimatedVisibility(
+      visible = uiState.showTimetableEmptyColumn == true,
+      enter = fadeIn(),
+      exit = fadeOut(),
+    ) {
       TimetableEmptyColumn(
         modifier = Modifier
           .fillMaxWidth()
@@ -64,10 +72,17 @@ fun TimetableScreen(
         onClickAdd = onClickAddTimetable,
       )
     }
+
+    AnimatedVisibility(
+      visible = uiState.showTimetableEmptyColumn == false,
+      enter = fadeIn(),
+      exit = fadeOut(),
+    ) {
+      Timetable(timetable = uiState.timetable!!)
+    }
   }
 
 }
-
 
 
 @Preview

@@ -93,6 +93,8 @@ internal fun MainScreen(
           padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
           navigateCreateTimetable = navigator::navigateCreateTimetable,
+          handleException = viewModel::handleException,
+          onShowToast = viewModel::onShowToast,
         )
 
         lectureEvaluationNavGraph(

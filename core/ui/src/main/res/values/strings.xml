@@ -49,4 +49,6 @@
   <string name="word_exam_type_practice">실습</string>
   <string name="word_exam_type_homework">과제</string>
     <string name="word_timetable">시간표</string>
+    <string name="word_select_semester">수강학기 선택</string>
+  <string name="word_complete">완료</string>
 </resources>

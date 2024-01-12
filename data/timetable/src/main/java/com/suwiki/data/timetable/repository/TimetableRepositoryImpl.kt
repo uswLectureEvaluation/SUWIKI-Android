@@ -32,4 +32,8 @@ class TimetableRepositoryImpl @Inject constructor(
   override suspend fun updateTimetable(data: Timetable) {
     localTimetableDataSource.updateTimetable(data)
   }
+
+  override suspend fun insertTimetable(data: Timetable) {
+    localTimetableDataSource.insertTimetable(data)
+  }
 }

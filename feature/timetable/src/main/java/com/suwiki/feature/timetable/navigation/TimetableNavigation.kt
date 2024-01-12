@@ -22,6 +22,8 @@ fun NavGraphBuilder.timetableNavGraph(
   padding: PaddingValues,
   popBackStack: () -> Unit,
   navigateCreateTimetable: () -> Unit,
+  handleException: (Throwable) -> Unit,
+  onShowToast: (String) -> Unit,
 ) {
   composable(route = TimetableRoute.route) {
     TimetableRoute(
@@ -33,6 +35,8 @@ fun NavGraphBuilder.timetableNavGraph(
   composable(route = TimetableRoute.createRoute) {
     CreateTimetableRoute(
       popBackStack = popBackStack,
+      handleException = handleException,
+      onShowToast = onShowToast,
     )
   }
 }

@@ -17,4 +17,5 @@ interface LocalTimetableDataSource {
   suspend fun deleteTimetable(data: Timetable)
 
   suspend fun updateTimetable(data: Timetable)
+  suspend fun insertTimetable(data: Timetable)
 }
