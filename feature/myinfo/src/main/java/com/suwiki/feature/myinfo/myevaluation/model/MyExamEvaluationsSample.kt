@@ -10,8 +10,8 @@ val MyExamEvaluationsSample = persistentListOf(
     selectedSemester = "2023-2",
     semesterList = "2023-2, 2023-1, 2022-2",
     examDifficulty = "어려움",
-    examInfo = "대면",
-    examType = "과제",
+    examInfo = listOf("족보"),
+    examType = "중간고사",
     content = "샘플 데이터",
   ),
   MyExamEvaluation(
@@ -20,8 +20,8 @@ val MyExamEvaluationsSample = persistentListOf(
     selectedSemester = "2023-1",
     semesterList = "2023-1, 2022-2, 2022-1",
     examDifficulty = "보통",
-    examInfo = "대면",
-    examType = "PPT",
+    examInfo = listOf("PPT"),
+    examType = "기말고사",
     content = "샘플 데이터",
   ),
   MyExamEvaluation(
@@ -30,8 +30,8 @@ val MyExamEvaluationsSample = persistentListOf(
     selectedSemester = "2020-1",
     semesterList = "2020-2, 2020-1, 2019-2",
     examDifficulty = "쉬움",
-    examInfo = "비대면",
-    examType = "필기",
+    examInfo = listOf("필기"),
+    examType = "쪽지",
     content = "샘플 데이터",
   ),
 )

@@ -2,6 +2,7 @@ package com.suwiki.core.ui.extension
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.suwiki.core.model.enums.ExamInfo
 import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.enums.GradeLevel
@@ -52,12 +53,20 @@ fun ExamLevel.toText() = when (this) {
 }
 
 @Composable
+fun ExamInfo.toText() = when (this) {
+  ExamInfo.FAMILY_TREE -> stringResource(R.string.word_exam_info_family_tree)
+  ExamInfo.TEXTBOOK -> stringResource(R.string.word_exam_info_textbook)
+  ExamInfo.PPT -> stringResource(R.string.word_exam_info_ppt)
+  ExamInfo.WRITING -> stringResource(R.string.word_exam_info_writing)
+  ExamInfo.APPLY -> stringResource(R.string.word_exam_info_apply)
+  ExamInfo.PRACTICE -> stringResource(R.string.word_exam_info_practice)
+  ExamInfo.HOMEWORK -> stringResource(R.string.word_exam_info_homework)
+}
+
+@Composable
 fun ExamType.toText() = when (this) {
-  ExamType.FAMILY_TREE -> stringResource(R.string.word_exam_type_family_tree)
-  ExamType.TEXTBOOK -> stringResource(R.string.word_exam_type_textbook)
-  ExamType.PPT -> stringResource(R.string.word_exam_type_ppt)
-  ExamType.WRITING -> stringResource(R.string.word_exam_type_writing)
-  ExamType.APPLY -> stringResource(R.string.word_exam_type_apply)
-  ExamType.PRACTICE -> stringResource(R.string.word_exam_type_practice)
-  ExamType.HOMEWORK -> stringResource(R.string.word_exam_type_homework)
+  ExamType.MID_EXAM -> stringResource(R.string.word_exam_type_mid_exam)
+  ExamType.FINAL_EXAM -> stringResource(R.string.word_exam_type_final_exam)
+  ExamType.NOTE_EXAM -> stringResource(R.string.word_exam_type_note_exam)
+  ExamType.ETC_EXAM -> stringResource(R.string.word_exam_type_etc_exam)
 }

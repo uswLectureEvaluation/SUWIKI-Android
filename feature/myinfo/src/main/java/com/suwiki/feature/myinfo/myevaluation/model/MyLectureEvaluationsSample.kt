@@ -8,7 +8,7 @@ val MyLectureEvaluationsSample = persistentListOf(
   MyLectureEvaluation(
     lectureInfo = LectureInfo(
       lectureName = "회로이론",
-      semesterList = listOf("2023-2", "2023-1", "2022-2")
+      semesterList = listOf("2023-2", "2023-1", "2022-2"),
     ),
     selectedSemester = "2023-2",
     totalAvg = 2.5f,
@@ -23,7 +23,7 @@ val MyLectureEvaluationsSample = persistentListOf(
   MyLectureEvaluation(
     lectureInfo = LectureInfo(
       lectureName = "신호 및 시스템",
-      semesterList = listOf("2022-2", "2022-1", "2021-2")
+      semesterList = listOf("2022-2", "2022-1", "2021-2"),
     ),
     selectedSemester = "2022-1",
     totalAvg = 2.5f,
@@ -38,7 +38,7 @@ val MyLectureEvaluationsSample = persistentListOf(
   MyLectureEvaluation(
     lectureInfo = LectureInfo(
       lectureName = "C언어",
-      semesterList = listOf("2021-2", "2021-1", "2020-2")
+      semesterList = listOf("2021-2", "2021-1", "2020-2"),
     ),
     selectedSemester = "2021-1",
     totalAvg = 2.5f,

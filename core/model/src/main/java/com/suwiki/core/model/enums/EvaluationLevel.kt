@@ -32,7 +32,7 @@ enum class ExamLevel(val value: String) {
 
 // TODO api v2 리팩토링 필요
 @Stable
-enum class ExamType(val value: String) {
+enum class ExamInfo(val value: String) {
   FAMILY_TREE("족보"),
   TEXTBOOK("교재"),
   PPT("PPT"),
@@ -40,4 +40,12 @@ enum class ExamType(val value: String) {
   APPLY("응용"),
   PRACTICE("실습"),
   HOMEWORK("과제"),
+}
+
+@Stable
+enum class ExamType(val value: String) {
+  MID_EXAM("중간고사"),
+  FINAL_EXAM("기말고사"),
+  NOTE_EXAM("쪽지"),
+  ETC_EXAM("기타"),
 }

@@ -39,6 +39,7 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.enums.ExamInfo
 import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.ui.extension.toText
@@ -83,10 +84,10 @@ fun MyExamEvaluationEditRoute(
     onClickSemesterItem = viewModel::clickSemesterItem,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onClickExamTypeButton = viewModel::showExamTypeBottomSheet,
-    onClickExamTypeItem = viewModel::clickExamInfoItem,
+    onClickExamTypeItem = viewModel::clickExamTypeItem,
     onExamTypeBottomSheetDismissRequest = viewModel::hideExamTypeBottomSheet,
     onClickExamLevelChip = viewModel::updateExamLevel,
-    onClickExamTypeChip = viewModel::updateExamType,
+    onClickExamInfoChip = viewModel::updateExamInfo,
     onExamEvaluationValueChange = viewModel::updateMyExamEvaluationValue,
     onClickExamEvaluationDeleteButton = viewModel::showMyExamEvaluationDeleteDialog,
     onDismissExamEvaluationDelete = viewModel::hideMyExamEvaluationDeleteDialog,
@@ -107,8 +108,8 @@ fun MyExamEvaluationEditScreen(
   onClickExamTypeButton: () -> Unit = {},
   onClickExamTypeItem: (String) -> Unit = {},
   onExamTypeBottomSheetDismissRequest: () -> Unit = {},
-  onClickExamLevelChip: (ExamLevel) -> Unit = {},
-  onClickExamTypeChip: (ExamType) -> Unit = {},
+  onClickExamLevelChip: (String) -> Unit = {},
+  onClickExamInfoChip: (String) -> Unit = {},
   onClickExamEvaluationDeleteButton: () -> Unit = {},
   onClickExamEvaluationDeleteConfirm: () -> Unit = {},
   onExamEvaluationValueChange: (String) -> Unit = { _ -> },
@@ -134,13 +135,13 @@ fun MyExamEvaluationEditScreen(
     ) {
       Spacer(modifier = Modifier.height(20.dp))
       SuwikiSelectionContainer(
-        title = if (uiState.selectedSemester == "") stringResource(R.string.my_test_review_choose_semester) else uiState.selectedSemester,
+        title = uiState.selectedSemester ?: stringResource(R.string.my_test_review_choose_semester),
         onClick = onClickSemesterButton,
       )
       Spacer(modifier = Modifier.height(14.dp))
 
       SuwikiSelectionContainer(
-        title = if (uiState.selectedExamInfo == "") stringResource(R.string.my_test_review_choose_test_type) else uiState.selectedExamInfo,
+        title = uiState.selectedExamType ?: stringResource(R.string.my_test_review_choose_test_type),
         onClick = onClickExamTypeButton,
       )
 
@@ -155,9 +156,9 @@ fun MyExamEvaluationEditScreen(
           ) {
             ExamLevel.entries.forEach { examLevel ->
               SuwikiOutlinedChip(
-                isChecked = uiState.examLevel == examLevel,
+                isChecked = uiState.examLevel == examLevel.value,
                 text = examLevel.toText(),
-                onClick = { onClickExamLevelChip(examLevel) },
+                onClick = { onClickExamLevelChip(examLevel.value) },
               )
             }
           }
@@ -174,11 +175,11 @@ fun MyExamEvaluationEditScreen(
             verticalArrangement = Arrangement.spacedBy(6.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
           ) {
-            ExamType.entries.forEach { examType ->
+            ExamInfo.entries.forEach { examInfo ->
               SuwikiOutlinedChip(
-                isChecked = uiState.examType == examType,
-                text = examType.toText(),
-                onClick = { onClickExamTypeChip(examType) },
+                isChecked = examInfo.value in uiState.examInfo,
+                text = examInfo.toText(),
+                onClick = { onClickExamInfoChip(examInfo.value) },
               )
             }
           }
@@ -239,19 +240,15 @@ fun MyExamEvaluationEditScreen(
   }
 
   SuwikiBottomSheet(
-    isSheetOpen = uiState.showExamInfoBottomSheet,
+    isSheetOpen = uiState.showExamTypeBottomSheet,
     onDismissRequest = onExamTypeBottomSheetDismissRequest,
     content = {
-      // TODO(REMOVE)
-      SuwikiMenuItem(title = "")
-      SuwikiMenuItem(
-        title = "대면",
-        onClick = { onClickExamTypeItem("대면") },
-      )
-      SuwikiMenuItem(
-        title = "비대면",
-        onClick = { onClickExamTypeItem("비대면") },
-      )
+      ExamType.entries.forEach { examType ->
+        SuwikiMenuItem(
+          title = examType.value,
+          onClick = { onClickExamTypeItem(examType.value) },
+        )
+      }
     },
   )
 
@@ -262,7 +259,7 @@ fun MyExamEvaluationEditScreen(
       uiState.semesterList.forEach { semester ->
         SuwikiMenuItem(
           title = semester,
-          onClick = { onClickSemesterItem(semester) }
+          onClick = { onClickSemesterItem(semester) },
         )
       }
     },

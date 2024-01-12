@@ -100,7 +100,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
           difficulty = difficulty,
           homework = homework,
           content = content,
-        )
+        ),
       )
         .onSuccess {
           showReviseToast()

@@ -59,7 +59,7 @@ fun MyLectureEvaluationEditRoute(
   viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
-  handleException: (Throwable) -> Unit
+  handleException: (Throwable) -> Unit,
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()
@@ -337,7 +337,7 @@ fun MyLectureEvaluationEditScreen(
       uiState.semesterList.forEach { semester ->
         SuwikiMenuItem(
           title = semester,
-          onClick = { onClickSemesterItem(semester) }
+          onClick = { onClickSemesterItem(semester) },
         )
       }
     },
