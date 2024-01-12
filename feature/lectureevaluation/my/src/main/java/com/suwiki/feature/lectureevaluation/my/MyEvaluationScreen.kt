@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation
+package com.suwiki.feature.lectureevaluation.my
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -34,10 +34,9 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.collectWithLifecycle
-import com.suwiki.feature.myinfo.R
-import com.suwiki.feature.myinfo.myevaluation.model.MyEvaluationTab
-import com.suwiki.feature.myinfo.myevaluation.model.MyExamEvaluationsSample
-import com.suwiki.feature.myinfo.myevaluation.model.MyLectureEvaluationsSample
+import com.suwiki.feature.lectureevaluation.my.model.MyEvaluationTab
+import com.suwiki.feature.lectureevaluation.my.model.MyExamEvaluationsSample
+import com.suwiki.feature.lectureevaluation.my.model.MyLectureEvaluationsSample
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -54,6 +53,7 @@ fun MyEvaluationRoute(
   popBackStack: () -> Unit = {},
   navigateMyLectureEvaluation: (String) -> Unit = {},
   navigateMyExamEvaluation: (String) -> Unit = {},
+  handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
@@ -61,6 +61,7 @@ fun MyEvaluationRoute(
       MyEvaluationSideEffect.PopBackStack -> popBackStack()
       is MyEvaluationSideEffect.NavigateMyLectureEvaluation -> navigateMyLectureEvaluation(sideEffect.lectureEvaluation)
       is MyEvaluationSideEffect.NavigateMyExamEvaluation -> navigateMyExamEvaluation(sideEffect.examEvaluation)
+      is MyEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
   val pagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT })
@@ -107,7 +108,7 @@ fun MyEvaluationScreen(
       .fillMaxSize(),
   ) {
     SuwikiAppBarWithTitle(
-      title = stringResource(R.string.my_info_my_post),
+      title = stringResource(R.string.word_manage_my_evaluation),
       showCloseIcon = false,
       showBackIcon = true,
       onClickBack = onClickBack,
@@ -136,7 +137,6 @@ fun MyEvaluationScreen(
 //            itemList = uiState.myLectureEvaluationList,
             itemList = MyLectureEvaluationsSample,
             onClickLectureEditButton = onClickLectureEvaluationEditButton,
-//            onClickEditButton = onClickLectureEvaluationEditButton,
           )
         }
         MyEvaluationTab.EXAM_INFO -> {
@@ -144,7 +144,6 @@ fun MyEvaluationScreen(
 //            itemList = uiState.myExamEvaluationList,
             itemList = MyExamEvaluationsSample,
             onClickExamEditButton = onClickExamEvaluationEditButton,
-//            onClickEditButton = onClickExamEvaluationEditButton,
           )
         }
       }
@@ -161,7 +160,6 @@ fun MyEvaluationLazyColumn(
   itemList: PersistentList<Any>,
   onClickLectureEditButton: (String) -> Unit = {},
   onClickExamEditButton: (String) -> Unit = {},
-  onClickEditButton: () -> Unit = {},
 ) {
   LazyColumn(
     modifier = modifier.fillMaxSize(),
@@ -179,17 +177,9 @@ fun MyEvaluationLazyColumn(
           val (examSemester, examName) = item.selectedSemester to item.lectureName
 
           SuwikiReviewEditContainer(
-            semesterText = examSemester ?: "학기",
-            classNameText = examName ?: "과목명",
+            semesterText = examSemester ?: stringResource(R.string.word_semester),
+            classNameText = examName ?: stringResource(R.string.word_lecture_name),
             onClickEditButton = { onClickExamEditButton(Json.encodeToString(item)) },
-          )
-        }
-        // TODO(REMOVE)
-        is String -> {
-          SuwikiReviewEditContainer(
-            semesterText = "학기",
-            classNameText = item,
-            onClickEditButton = onClickEditButton,
           )
         }
       }

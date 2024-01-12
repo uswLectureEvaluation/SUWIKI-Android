@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation.lectureevaluation
+package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -45,7 +45,7 @@ import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.ui.extension.toText
-import com.suwiki.feature.myinfo.R
+import com.suwiki.feature.lectureevaluation.editor.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.Locale
@@ -66,11 +66,11 @@ fun MyLectureEvaluationEditRoute(
     when (sideEffect) {
       MyLectureEvaluationEditSideEffect.PopBackStack -> popBackStack()
       MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast -> {
-        onShowToast(context.getString(R.string.my_lecture_evaluation_delete_toast_msg))
+        onShowToast(context.getString(R.string.lecture_evaluation_delete_toast_msg))
       }
 
       MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationReviseToast -> {
-        onShowToast(context.getString(R.string.my_lecture_evaluation_revise_toast_msg))
+        onShowToast(context.getString(R.string.lecture_evaluation_revise_toast_msg))
       }
       is MyLectureEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
@@ -135,7 +135,7 @@ fun MyLectureEvaluationEditScreen(
       .fillMaxSize(),
   ) {
     SuwikiAppBarWithTitle(
-      title = stringResource(R.string.my_class_review_lecture_evaluation),
+      title = stringResource(R.string.word_lecture_evaluation),
       showBackIcon = false,
       showCloseIcon = true,
       onClickClose = popBackStack,
@@ -175,7 +175,7 @@ fun MyLectureEvaluationEditScreen(
       }
 
       LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_honey_rating),
+        text = stringResource(R.string.word_honey_rating),
         verticalAlignment = Alignment.Bottom,
         content = {
           SuwikiSlider(
@@ -186,7 +186,7 @@ fun MyLectureEvaluationEditScreen(
         },
       )
       LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_learning_rating),
+        text = stringResource(R.string.word_learning_rating),
         verticalAlignment = Alignment.Bottom,
         content = {
           SuwikiSlider(
@@ -197,7 +197,7 @@ fun MyLectureEvaluationEditScreen(
         },
       )
       LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_satisfaction_rating),
+        text = stringResource(R.string.word_satisfaction_rating),
         verticalAlignment = Alignment.Bottom,
         content = {
           SuwikiSlider(
@@ -214,7 +214,7 @@ fun MyLectureEvaluationEditScreen(
         verticalArrangement = Arrangement.spacedBy(20.dp),
       ) {
         LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_grade),
+          text = stringResource(R.string.word_grade),
           verticalAlignment = Alignment.Bottom,
           content = {
             Row(
@@ -233,7 +233,7 @@ fun MyLectureEvaluationEditScreen(
         )
 
         LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_homework),
+          text = stringResource(R.string.word_homework),
           verticalAlignment = Alignment.Bottom,
           content = {
             Row(
@@ -252,7 +252,7 @@ fun MyLectureEvaluationEditScreen(
         )
 
         LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_team),
+          text = stringResource(R.string.word_team),
           verticalAlignment = Alignment.Bottom,
           content = {
             Row(
@@ -275,7 +275,7 @@ fun MyLectureEvaluationEditScreen(
 
       SuwikiReviewInputBox(
         value = uiState.lectureEvaluation,
-        hint = stringResource(R.string.my_class_review_input_box_hint),
+        hint = stringResource(R.string.lecture_evaluation_input_box_hint),
         onValueChange = onLectureEvaluationValueChange,
       )
     }
@@ -291,7 +291,7 @@ fun MyLectureEvaluationEditScreen(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_delete),
+        text = stringResource(R.string.text_delete),
         enabled = false,
         onClick = onClickLectureEvaluationDeleteButton,
       )
@@ -299,7 +299,7 @@ fun MyLectureEvaluationEditScreen(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_revise),
+        text = stringResource(R.string.text_revise),
         onClick = onClickLectureEvaluationReviseButton,
       )
     }
@@ -308,10 +308,10 @@ fun MyLectureEvaluationEditScreen(
   if (uiState.showDeleteLectureEvaluationDialog) {
     if (uiState.point > MINIMUM_DELETE_POINT) {
       SuwikiDialog(
-        headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-        bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
-        confirmButtonText = stringResource(R.string.my_class_review_delete),
-        dismissButtonText = stringResource(R.string.my_class_review_cancel),
+        headerText = stringResource(R.string.delete_dialog_header),
+        bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
+        confirmButtonText = stringResource(R.string.word_delete),
+        dismissButtonText = stringResource(R.string.word_cancel),
         onDismissRequest = onDismissLectureEvaluationDelete,
         onClickConfirm = onClickLectureEvaluationDeleteConfirm,
         onClickDismiss = onDismissLectureEvaluationDelete,
@@ -320,7 +320,7 @@ fun MyLectureEvaluationEditScreen(
       SuwikiDialog(
         headerText = stringResource(R.string.lack_point_dialog_header),
         bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
-        confirmButtonText = stringResource(R.string.confirm),
+        confirmButtonText = stringResource(R.string.word_confirm),
         onDismissRequest = onDismissLectureEvaluationDelete,
         onClickConfirm = onDismissLectureEvaluationDelete,
       )

@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation.model
+package com.suwiki.feature.lectureevaluation.my.model
 
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import kotlinx.collections.immutable.persistentListOf

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="word_lecture_evaluation">강의평가</string>
+  <string name="word_exam_info">시험정보</string>
+  <string name="word_honey_rating">꿀강지수</string>
+  <string name="word_learning_rating">배움지수</string>
+  <string name="word_satisfaction_rating">만족도</string>
+  <string name="word_grade">학점</string>
+  <string name="word_homework">과제</string>
+  <string name="word_team">조모임</string>
+  <string name="lecture_evaluation_input_box_hint">강의평가를 입력해주세요.</string>
+  <string name="text_delete">삭제하기</string>
+  <string name="text_revise">수정하기</string>
+  <string name="delete_dialog_header">30포인트가 차감됩니다.</string>
+  <string name="delete_dialog_body">강의평가를 정말로 삭제하시겠습니까?\n현재 보유 포인트 : %dp</string>
+  <string name="lack_point_dialog_header">포인트가 부족합니다.</string>
+  <string name="lack_point_dialog_body">현재 보유 포인트 : %dp</string>
+  <string name="word_confirm">확인</string>
+  <string name="word_delete">삭제</string>
+  <string name="word_cancel">취소</string>
+  <string name="lecture_evaluation_revise_toast_msg">강의평가가 수정되었습니다.</string>
+  <string name="lecture_evaluation_delete_toast_msg">강의평가가 삭제되었습니다.</string>
+  <string name="word_choose_semester">수강학기 선택</string>
+  <string name="word_choose_test_type">시험종류 선택</string>
+  <string name="word_difficulty">난이도</string>
+  <string name="word_test_info">시험유형</string>
+  <string name="exam_evaluation_input_box_hint">시험정보를 입력해주세요.</string>
+  <string name="exam_evaluation_revise_toast_msg">시험정보가 수정되었습니다.</string>
+  <string name="exam_evaluation_delete_toast_msg">시험정보가 삭제되었습니다.</string>
+</resources>

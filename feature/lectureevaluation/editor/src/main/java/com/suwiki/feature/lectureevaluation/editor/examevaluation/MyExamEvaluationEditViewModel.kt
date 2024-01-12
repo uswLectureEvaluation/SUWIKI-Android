@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation.examevaluation
+package com.suwiki.feature.lectureevaluation.editor.examevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import com.suwiki.core.ui.extension.toInt
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.DeleteExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
-import com.suwiki.feature.myinfo.navigation.MyInfoRoute
+import com.suwiki.feature.lectureevaluation.editor.navigation.MyEvaluationEditRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
@@ -33,7 +33,7 @@ class MyExamEvaluationEditViewModel @Inject constructor(
   override val container: Container<MyExamEvaluationEditState, MyExamEvaluationEditSideEffect> =
     container(MyExamEvaluationEditState())
 
-  private val myExamEvaluation = savedStateHandle.get<String>(MyInfoRoute.myExamEvaluation)!!
+  private val myExamEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myExamEvaluation)!!
   private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromString(myExamEvaluation)
 
   private var selectedExamInfo: MutableList<String> = mutableListOf("")

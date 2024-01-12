@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation.examevaluation
+package com.suwiki.feature.lectureevaluation.editor.examevaluation
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -42,8 +42,8 @@ import com.suwiki.core.model.enums.ExamInfo
 import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.ui.extension.toText
-import com.suwiki.feature.myinfo.R
-import com.suwiki.feature.myinfo.myevaluation.lectureevaluation.MINIMUM_DELETE_POINT
+import com.suwiki.feature.lectureevaluation.editor.R
+import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.MINIMUM_DELETE_POINT
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -62,11 +62,11 @@ fun MyExamEvaluationEditRoute(
     when (sideEffect) {
       MyExamEvaluationEditSideEffect.PopBackStack -> popBackStack()
       MyExamEvaluationEditSideEffect.ShowMyExamEvaluationDeleteToast -> {
-        onShowToast(context.getString(R.string.my_exam_evaluation_delete_toast_msg))
+        onShowToast(context.getString(R.string.exam_evaluation_delete_toast_msg))
       }
 
       MyExamEvaluationEditSideEffect.ShowMyExamEvaluationReviseToast -> {
-        onShowToast(context.getString(R.string.my_exam_evaluation_revise_toast_msg))
+        onShowToast(context.getString(R.string.exam_evaluation_revise_toast_msg))
       }
       is MyExamEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
@@ -122,7 +122,7 @@ fun MyExamEvaluationEditScreen(
       .fillMaxSize(),
   ) {
     SuwikiAppBarWithTitle(
-      title = stringResource(R.string.my_test_review_info),
+      title = stringResource(R.string.word_exam_info),
       showBackIcon = false,
       showCloseIcon = true,
       onClickClose = popBackStack,
@@ -135,20 +135,20 @@ fun MyExamEvaluationEditScreen(
     ) {
       Spacer(modifier = Modifier.height(20.dp))
       SuwikiSelectionContainer(
-        title = uiState.selectedSemester ?: stringResource(R.string.my_test_review_choose_semester),
+        title = uiState.selectedSemester ?: stringResource(R.string.word_choose_semester),
         onClick = onClickSemesterButton,
       )
       Spacer(modifier = Modifier.height(14.dp))
 
       SuwikiSelectionContainer(
-        title = uiState.selectedExamType ?: stringResource(R.string.my_test_review_choose_test_type),
+        title = uiState.selectedExamType ?: stringResource(R.string.word_choose_test_type),
         onClick = onClickExamTypeButton,
       )
 
       Spacer(modifier = Modifier.height(16.dp))
 
       LectureExamEditContainer(
-        text = stringResource(R.string.my_test_review_difficulty),
+        text = stringResource(R.string.word_difficulty),
         verticalAlignment = Alignment.Top,
         content = {
           Row(
@@ -168,7 +168,7 @@ fun MyExamEvaluationEditScreen(
       Spacer(modifier = Modifier.height(16.dp))
 
       LectureExamEditContainer(
-        text = stringResource(R.string.my_test_review_test_type),
+        text = stringResource(R.string.word_test_info),
         verticalAlignment = Alignment.Top,
         content = {
           FlowRow(
@@ -189,7 +189,7 @@ fun MyExamEvaluationEditScreen(
       SuwikiReviewInputBox(
         modifier = Modifier,
         value = uiState.examEvaluation,
-        hint = stringResource(R.string.my_test_review_input_box_hint),
+        hint = stringResource(R.string.exam_evaluation_input_box_hint),
         onValueChange = onExamEvaluationValueChange,
       )
     }
@@ -204,7 +204,7 @@ fun MyExamEvaluationEditScreen(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_delete),
+        text = stringResource(R.string.text_delete),
         enabled = false,
         onClick = onClickExamEvaluationDeleteButton,
       )
@@ -212,17 +212,17 @@ fun MyExamEvaluationEditScreen(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_revise),
+        text = stringResource(R.string.text_revise),
         onClick = onClickExamEvaluationReviseButton,
       )
     }
     if (uiState.showDeleteExamEvaluationDialog) {
       if (uiState.point > MINIMUM_DELETE_POINT) {
         SuwikiDialog(
-          headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-          bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
-          confirmButtonText = stringResource(R.string.my_class_review_delete),
-          dismissButtonText = stringResource(R.string.my_class_review_cancel),
+          headerText = stringResource(R.string.delete_dialog_header),
+          bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
+          confirmButtonText = stringResource(R.string.word_delete),
+          dismissButtonText = stringResource(R.string.word_cancel),
           onDismissRequest = onDismissExamEvaluationDelete,
           onClickConfirm = onClickExamEvaluationDeleteConfirm,
           onClickDismiss = onDismissExamEvaluationDelete,
@@ -231,7 +231,7 @@ fun MyExamEvaluationEditScreen(
         SuwikiDialog(
           headerText = stringResource(R.string.lack_point_dialog_header),
           bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
-          confirmButtonText = stringResource(R.string.confirm),
+          confirmButtonText = stringResource(R.string.word_confirm),
           onDismissRequest = onDismissExamEvaluationDelete,
           onClickConfirm = onDismissExamEvaluationDelete,
         )
@@ -244,7 +244,7 @@ fun MyExamEvaluationEditScreen(
     onDismissRequest = onExamTypeBottomSheetDismissRequest,
     onClickItem = { onClickExamTypeItem(it) },
     itemList = ExamType.values().map { it.value }.toPersistentList(),
-    title = stringResource(R.string.my_test_review_choose_test_type),
+    title = stringResource(R.string.word_choose_semester),
     selectedPosition = uiState.selectedExamTypePosition,
   )
 
@@ -253,7 +253,7 @@ fun MyExamEvaluationEditScreen(
     onDismissRequest = onSemesterBottomSheetDismissRequest,
     onClickItem = { onClickSemesterItem(it) },
     itemList = uiState.semesterList,
-    title = stringResource(R.string.my_test_review_choose_semester),
+    title = stringResource(R.string.word_choose_test_type),
     selectedPosition = uiState.selectedSemesterPosition,
   )
 

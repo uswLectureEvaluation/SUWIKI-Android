@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation
+package com.suwiki.feature.lectureevaluation.my
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyExamEvaluationListUseCase
@@ -21,34 +21,33 @@ class MyEvaluationViewModel @Inject constructor(
 ) : ContainerHost<MyEvaluationState, MyEvaluationSideEffect>, ViewModel() {
   override val container: Container<MyEvaluationState, MyEvaluationSideEffect> = container(MyEvaluationState())
 
-  // TODO("인자에 페이지 추가")
-  fun loadMyLectureEvaluations() = intent {
+  fun loadMyLectureEvaluations(page: Int) = intent {
     showLoadingScreen()
-    getMyLectureEvaluationListUseCase(1)
+    getMyLectureEvaluationListUseCase(page)
       .onSuccess {
         reduce { state.copy(myLectureEvaluationList = it.toPersistentList()) }
       }
       .onFailure {
+        postSideEffect(MyEvaluationSideEffect.HandleException(it))
       }
     hideLoadingScreen()
   }
 
-  // TODO("인자에 페이지 추가")
-  fun loadMyExamEvaluations() = intent {
+  fun loadMyExamEvaluations(page: Int) = intent {
     showLoadingScreen()
-    getMyExamEvaluationListUseCase(1)
+    getMyExamEvaluationListUseCase(page)
       .onSuccess {
         reduce { state.copy(myExamEvaluationList = it.toPersistentList()) }
       }
       .onFailure {
+        postSideEffect(MyEvaluationSideEffect.HandleException(it))
       }
     hideLoadingScreen()
   }
 
-  // TODO("인자에 페이지 추가")
   fun loadInitList() = intent {
     showLoadingScreen()
-    joinAll(loadMyLectureEvaluations(), loadMyExamEvaluations())
+    joinAll(loadMyLectureEvaluations(1), loadMyExamEvaluations(1))
     hideLoadingScreen()
   }
 

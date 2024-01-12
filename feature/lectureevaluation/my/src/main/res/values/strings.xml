@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="word_manage_my_evaluation">내 글 관리</string>
+  <string name="word_semester">학기</string>
+  <string name="word_lecture_name">과목명</string>
+  <string name="word_lecture_evaluation">강의평가</string>
+  <string name="word_exam_info">시험정보</string>
+</resources>

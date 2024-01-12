@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation.lectureevaluation
+package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import com.suwiki.core.model.user.User
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.DeleteLectureEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.UpdateLectureEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
-import com.suwiki.feature.myinfo.navigation.MyInfoRoute
+import com.suwiki.feature.lectureevaluation.editor.navigation.MyEvaluationEditRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   override val container: Container<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect> =
     container(MyLectureEvaluationEditState())
 
-  private val myLectureEvaluation = savedStateHandle.get<String>(MyInfoRoute.myLectureEvaluation)!!
+  private val myLectureEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myLectureEvaluation)!!
   private val myLectureEvaluationItem: MyLectureEvaluation = Json.decodeFromString(myLectureEvaluation)
 
   suspend fun setInitData() = intent {
