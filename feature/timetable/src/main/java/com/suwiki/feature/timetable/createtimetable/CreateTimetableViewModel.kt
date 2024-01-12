@@ -1,8 +1,6 @@
 package com.suwiki.feature.timetable.createtimetable
 
 import androidx.lifecycle.ViewModel
-import androidx.viewpager.widget.PagerTitleStrip
-import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
 import com.suwiki.domain.timetable.usecase.InsertTimetableUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container

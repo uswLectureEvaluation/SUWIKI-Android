@@ -120,7 +120,6 @@ fun CreateTimetableScreen(
   )
 }
 
-
 @Preview
 @Composable
 fun CreateTimetableScreenPreview() {

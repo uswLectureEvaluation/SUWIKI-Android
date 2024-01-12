@@ -81,9 +81,7 @@ fun TimetableScreen(
       Timetable(timetable = uiState.timetable!!)
     }
   }
-
 }
-
 
 @Preview
 @Composable
