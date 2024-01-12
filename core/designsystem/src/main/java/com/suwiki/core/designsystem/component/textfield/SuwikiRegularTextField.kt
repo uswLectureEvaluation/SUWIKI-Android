@@ -48,12 +48,12 @@ import com.suwiki.core.ui.extension.suwikiClickable
 @Composable
 fun SuwikiRegularTextField(
   modifier: Modifier = Modifier,
-  label: String? = "",
+  label: String? = null,
   placeholder: String = "",
   value: String = "",
   onValueChange: (String) -> Unit = { _ -> },
   onClickClearButton: () -> Unit = {},
-  helperText: String? = "",
+  helperText: String? = null,
   isError: Boolean = false,
   maxLines: Int = 1,
   minLines: Int = 1,

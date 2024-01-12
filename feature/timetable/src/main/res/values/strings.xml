@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="timetable_screen_create_timetable">시간표를 만들어\n일정을 관리해보세요</string>
+  <string name="timetable_screen_create_timetable_button">시간표 만들기</string>
+    <string name="create_timetable_screen_semester">%s년 %s학기</string>
+  <string name="create_timetable_need_select_semester">수강학기를 선택해주세요!</string>
+  <string name="create_timetable_screen_placeholder">시간표 이름</string>
+</resources>

@@ -8,31 +8,31 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.align.SuwikiAlignContainer
+import com.suwiki.core.designsystem.component.align.SuwikiSelectContainer
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import kotlinx.collections.immutable.PersistentList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuwikiAlignBottomSheet(
+fun SuwikiSelectBottomSheet(
   isSheetOpen: Boolean,
-  hideAlignBottomSheet: () -> Unit,
-  onClickAlignBottomSheetItem: (Int) -> Unit,
+  onDismissRequest: () -> Unit,
+  onClickItem: (Int) -> Unit,
   itemList: PersistentList<String>,
-  bottomSheetTitle: String,
-  selectedPosition: Int,
+  title: String,
+  selectedPosition: Int?,
 ) {
   SuwikiBottomSheet(
     sheetState = rememberModalBottomSheetState(
       skipPartiallyExpanded = true,
     ),
     isSheetOpen = isSheetOpen,
-    onDismissRequest = hideAlignBottomSheet,
+    onDismissRequest = onDismissRequest,
   ) {
-    SuwikiAlignBottomSheetContent(
-      onClickAlignBottomSheetItem = onClickAlignBottomSheetItem,
-      bottomSheetTitle = bottomSheetTitle,
+    SuwikiSelectBottomSheetContent(
+      onClickAlignBottomSheetItem = onClickItem,
+      bottomSheetTitle = title,
       itemList = itemList,
       selectedPosition = selectedPosition,
     )
@@ -40,8 +40,8 @@ fun SuwikiAlignBottomSheet(
 }
 
 @Composable
-fun SuwikiAlignBottomSheetContent(
-  selectedPosition: Int,
+fun SuwikiSelectBottomSheetContent(
+  selectedPosition: Int?,
   onClickAlignBottomSheetItem: (Int) -> Unit = {},
   bottomSheetTitle: String,
   itemList: List<String>,
@@ -59,7 +59,7 @@ fun SuwikiAlignBottomSheetContent(
 
     itemList.forEachIndexed { index, item ->
       val isChecked = index == selectedPosition
-      SuwikiAlignContainer(
+      SuwikiSelectContainer(
         text = item,
         isChecked = isChecked,
         onClick = {
