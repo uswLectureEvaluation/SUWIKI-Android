@@ -2,18 +2,15 @@ package com.suwiki.feature.lectureevaluation.editor.examevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.user.User
-import com.suwiki.core.ui.extension.toInt
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.DeleteExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.lectureevaluation.editor.navigation.MyEvaluationEditRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -36,84 +33,89 @@ class MyExamEvaluationEditViewModel @Inject constructor(
   private val myExamEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myExamEvaluation)!!
   private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromString(myExamEvaluation)
 
-  private var selectedExamInfo: MutableList<String> = mutableListOf("")
-
-  suspend fun setInitData() = intent {
+  suspend fun initData() = intent {
     with(myExamEvaluationItem) {
       showLoadingScreen()
-      getUserInfoUseCase().collect(::setPoint)
-      reduce { state.copy(semesterList = semesterList!!.split(", ").toPersistentList()) }
-      reduce { state.copy(selectedSemester = selectedSemester) }
-      reduce { state.copy(selectedExamType = examType) }
-      updateExamLevel(examDifficulty)
-      examInfo.forEach { info ->
-        updateExamInfo(info)
+      try {
+        getUserInfoUseCase().collect(::getPoint)
+        reduce {
+          state.copy(
+            semesterList = semesterList!!.split(", ").toPersistentList(),
+            selectedSemester = selectedSemester,
+            selectedExamType = examType,
+          )
+        }
+        updateExamLevel(examDifficulty)
+        examInfo.forEach { info ->
+          updateExamInfo(info)
+        }
+        updateMyExamEvaluationValue(content)
+      } catch (e: Throwable) {
+        postSideEffect(MyExamEvaluationEditSideEffect.HandleException(e))
+      } finally {
+        hideLoadingScreen()
       }
-      updateMyExamEvaluationValue(content)
-      hideLoadingScreen()
     }
   }
 
-  fun clickReviseButton() = intent {
-    viewModelScope.launch {
-      updateExamEvaluationUseCase(
-        UpdateExamEvaluationUseCase.Param(
-          lectureId = myExamEvaluationItem.id!!,
-          selectedSemester = state.selectedSemester,
-          examInfo = state.examInfo.filter { it.isNotBlank() }.joinToString(", "),
-          examType = state.selectedExamType,
-          examDifficulty = state.examLevel,
-          content = state.examEvaluation,
-        ),
-      )
-        .onSuccess {
-          showReviseToast()
-          popBackStack()
-        }
-        .onFailure {
-          postSideEffect(MyExamEvaluationEditSideEffect.HandleException(it))
-        }
-    }
+  private fun getPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
+
+  fun updateExamEvaluation() = intent {
+    updateExamEvaluationUseCase(
+      UpdateExamEvaluationUseCase.Param(
+        lectureId = myExamEvaluationItem.id!!,
+        selectedSemester = state.selectedSemester,
+        examInfo = state.examInfo.filter { it.isNotBlank() }.joinToString(", "),
+        examType = state.selectedExamType,
+        examDifficulty = state.examLevel,
+        content = state.examEvaluation,
+      ),
+    )
+      .onSuccess {
+        showReviseToast()
+        popBackStack()
+      }
+      .onFailure {
+        postSideEffect(MyExamEvaluationEditSideEffect.HandleException(it))
+      }
   }
 
-  fun clickDeleteButton() = intent {
-    viewModelScope.launch {
-      deleteExamEvaluationUseCase(myExamEvaluationItem.id!!)
-        .onSuccess {
-          showDeleteToast()
-          popBackStack()
-        }
-        .onFailure {
-          postSideEffect(MyExamEvaluationEditSideEffect.HandleException(it))
-        }
-    }
+  fun deleteExamEvaluation() = intent {
+    deleteExamEvaluationUseCase(myExamEvaluationItem.id!!)
+      .onSuccess {
+        showDeleteToast()
+        popBackStack()
+      }
+      .onFailure {
+        postSideEffect(MyExamEvaluationEditSideEffect.HandleException(it))
+      }
   }
 
-  fun clickSemesterItem(selectedPosition: Int) = intent {
+  fun updateSemester(selectedPosition: Int) = intent {
     reduce { state.copy(selectedSemester = state.semesterList[selectedPosition]) }
     hideSemesterBottomSheet()
   }
 
-  fun clickExamTypeItem(selectedPosition: Int) = intent {
+  fun updateExamType(selectedPosition: Int) = intent {
     ExamType.entries.forEach { examType ->
-      if (examType.toInt() == selectedPosition) {
+      if (examType.ordinal == selectedPosition) {
         reduce { state.copy(selectedExamType = examType.value) }
       }
     }
     hideExamTypeBottomSheet()
   }
-
-  private fun setPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
   fun updateExamLevel(examLevel: String) = intent {
     reduce { state.copy(examLevel = examLevel) }
   }
   fun updateExamInfo(info: String) = intent {
-    if (info in selectedExamInfo) {
-      selectedExamInfo.remove(info)
+    val examInfoList = state.examInfo.toMutableList()
+
+    if (info in state.examInfo) {
+      examInfoList.remove(info)
     } else {
-      selectedExamInfo.add(info)
+      examInfoList.add(info)
     }
-    reduce { state.copy(examInfo = selectedExamInfo.toPersistentList()) }
+    reduce { state.copy(examInfo = examInfoList.toPersistentList()) }
   }
 
   fun updateMyExamEvaluationValue(examEvaluationValue: String) = intent {
@@ -122,8 +124,8 @@ class MyExamEvaluationEditViewModel @Inject constructor(
 
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
-  fun showMyExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = true) } }
-  fun hideMyExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = false) } }
+  fun showExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = true) } }
+  fun hideExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
   fun showExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = true) } }

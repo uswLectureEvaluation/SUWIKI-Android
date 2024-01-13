@@ -2,7 +2,6 @@ package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.DeleteLectureEvaluationUseCase
@@ -11,7 +10,6 @@ import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.lectureevaluation.editor.navigation.MyEvaluationEditRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -34,66 +32,71 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   private val myLectureEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myLectureEvaluation)!!
   private val myLectureEvaluationItem: MyLectureEvaluation = Json.decodeFromString(myLectureEvaluation)
 
-  suspend fun setInitData() = intent {
+  suspend fun initData() = intent {
     showLoadingScreen()
     with(myLectureEvaluationItem) {
-      getUserInfoUseCase().collect(::setPoint)
-
-      reduce { state.copy(selectedSemester = selectedSemester) }
-      reduce { state.copy(semesterList = lectureInfo.semesterList.toPersistentList()) }
-
-      updateHoneyRating(honey)
-      updateLearningRating(learning)
-      updateSatisfactionRating(satisfaction)
-      updateTotalAvg()
-      updateGradeLevel(difficulty)
-      updateHomeworkLevel(homework)
-      updateTeamLevel(team)
-      updateMyLectureEvaluationValue(content)
-      hideLoadingScreen()
+      try {
+        getUserInfoUseCase().collect(::getPoint)
+        reduce {
+          state.copy(
+            selectedSemester = selectedSemester,
+            semesterList = lectureInfo.semesterList.toPersistentList()
+          )
+        }
+        updateHoneyRating(honey)
+        updateLearningRating(learning)
+        updateSatisfactionRating(satisfaction)
+        updateTotalAvg()
+        updateGradeLevel(difficulty)
+        updateHomeworkLevel(homework)
+        updateTeamLevel(team)
+        updateMyLectureEvaluationValue(content)
+      } catch (e: Throwable) {
+        postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(e))
+      } finally {
+        hideLoadingScreen()
+      }
     }
   }
 
-  fun clickReviseButton() = intent {
-    viewModelScope.launch {
-      updateLectureEvaluationUseCase(
-        UpdateLectureEvaluationUseCase.Param(
-          lectureId = myLectureEvaluationItem.id,
-          professor = myLectureEvaluationItem.lectureInfo.professor,
-          selectedSemester = state.selectedSemester,
-          satisfaction = "%.1f".format(state.satisfactionRating).toFloat(),
-          learning = "%.1f".format(state.learningRating).toFloat(),
-          honey = "%.1f".format(state.honeyRating).toFloat(),
-          team = state.teamLevel,
-          difficulty = state.gradeLevel,
-          homework = state.homeworkLevel,
-          content = state.lectureEvaluation,
-        ),
-      )
-        .onSuccess {
-          showReviseToast()
-          popBackStack()
-        }
-        .onFailure {
-          postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
-        }
-    }
+  private fun getPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
+
+  fun updateLectureEvaluation() = intent {
+    updateLectureEvaluationUseCase(
+      UpdateLectureEvaluationUseCase.Param(
+        lectureId = myLectureEvaluationItem.id,
+        professor = myLectureEvaluationItem.lectureInfo.professor,
+        selectedSemester = state.selectedSemester,
+        satisfaction = "%.1f".format(state.satisfactionRating).toFloat(),
+        learning = "%.1f".format(state.learningRating).toFloat(),
+        honey = "%.1f".format(state.honeyRating).toFloat(),
+        team = state.teamLevel,
+        difficulty = state.gradeLevel,
+        homework = state.homeworkLevel,
+        content = state.lectureEvaluation,
+      ),
+    )
+      .onSuccess {
+        showReviseToast()
+        popBackStack()
+      }
+      .onFailure {
+        postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
+      }
   }
 
-  fun clickDeleteButton() = intent {
-    viewModelScope.launch {
-      deleteLectureEvaluationUseCase(myLectureEvaluationItem.id)
-        .onSuccess {
-          showDeleteToast()
-          popBackStack()
-        }
-        .onFailure {
-          postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
-        }
-    }
+  fun deleteLectureEvaluation() = intent {
+    deleteLectureEvaluationUseCase(myLectureEvaluationItem.id)
+      .onSuccess {
+        showDeleteToast()
+        popBackStack()
+      }
+      .onFailure {
+        postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
+      }
   }
 
-  fun clickSemesterItem(selectedPosition: Int) = intent {
+  fun updateSemester(selectedPosition: Int) = intent {
     reduce { state.copy(selectedSemester = state.semesterList[selectedPosition]) }
     hideSemesterBottomSheet()
   }
@@ -114,7 +117,6 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     reduce { state.copy(lectureEvaluation = lectureEvaluationValue) }
   }
 
-  private fun setPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
   fun updateTotalAvg() = intent {
     reduce { state.copy(totalAvg = (state.honeyRating + state.learningRating + state.satisfactionRating) / 3) }
   }
@@ -130,8 +132,8 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
 
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
-  fun showMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
-  fun hideMyLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
+  fun showLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
+  fun hideLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
 

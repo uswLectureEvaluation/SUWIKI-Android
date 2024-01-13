@@ -77,7 +77,7 @@ fun MyLectureEvaluationEditRoute(
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.setInitData()
+    viewModel.initData()
   }
 
   LaunchedEffect(
@@ -93,19 +93,19 @@ fun MyLectureEvaluationEditRoute(
     scrollState = scrollState,
     popBackStack = viewModel::popBackStack,
     onClickSemesterButton = viewModel::showSemesterBottomSheet,
-    onClickSemesterItem = viewModel::clickSemesterItem,
+    onClickSemesterItem = viewModel::updateSemester,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onHoneyRatingValueChange = viewModel::updateHoneyRating,
     onLearningRatingValueChange = viewModel::updateLearningRating,
     onSatisfactionRatingValueChange = viewModel::updateSatisfactionRating,
     onLectureEvaluationValueChange = viewModel::updateMyLectureEvaluationValue,
-    onClickLectureEvaluationDeleteButton = viewModel::showMyLectureEvaluationDeleteDialog,
-    onDismissLectureEvaluationDelete = viewModel::hideMyLectureEvaluationDeleteDialog,
+    onClickLectureEvaluationDeleteButton = viewModel::showLectureEvaluationDeleteDialog,
+    onDismissLectureEvaluationDelete = viewModel::hideLectureEvaluationDeleteDialog,
     onClickGradeChip = viewModel::updateGradeLevel,
     onClickHomeworkChip = viewModel::updateHomeworkLevel,
     onClickTeamChip = viewModel::updateTeamLevel,
-    onClickLectureEvaluationDeleteConfirm = viewModel::clickDeleteButton,
-    onClickLectureEvaluationReviseButton = viewModel::clickReviseButton,
+    onClickLectureEvaluationDeleteConfirm = viewModel::deleteLectureEvaluation,
+    onClickLectureEvaluationReviseButton = viewModel::updateLectureEvaluation,
   )
 }
 

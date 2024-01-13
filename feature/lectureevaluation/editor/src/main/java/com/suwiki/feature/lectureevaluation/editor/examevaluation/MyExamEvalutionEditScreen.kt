@@ -73,7 +73,7 @@ fun MyExamEvaluationEditRoute(
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.setInitData()
+    viewModel.initData()
   }
 
   MyExamEvaluationEditScreen(
@@ -81,18 +81,18 @@ fun MyExamEvaluationEditRoute(
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
     onClickSemesterButton = viewModel::showSemesterBottomSheet,
-    onClickSemesterItem = viewModel::clickSemesterItem,
+    onClickSemesterItem = viewModel::updateSemester,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onClickExamTypeButton = viewModel::showExamTypeBottomSheet,
-    onClickExamTypeItem = viewModel::clickExamTypeItem,
+    onClickExamTypeItem = viewModel::updateExamType,
     onExamTypeBottomSheetDismissRequest = viewModel::hideExamTypeBottomSheet,
     onClickExamLevelChip = viewModel::updateExamLevel,
     onClickExamInfoChip = viewModel::updateExamInfo,
     onExamEvaluationValueChange = viewModel::updateMyExamEvaluationValue,
-    onClickExamEvaluationDeleteButton = viewModel::showMyExamEvaluationDeleteDialog,
-    onDismissExamEvaluationDelete = viewModel::hideMyExamEvaluationDeleteDialog,
-    onClickExamEvaluationDeleteConfirm = viewModel::clickDeleteButton,
-    onClickExamEvaluationReviseButton = viewModel::clickReviseButton,
+    onClickExamEvaluationDeleteButton = viewModel::showExamEvaluationDeleteDialog,
+    onDismissExamEvaluationDelete = viewModel::hideExamEvaluationDeleteDialog,
+    onClickExamEvaluationDeleteConfirm = viewModel::deleteExamEvaluation,
+    onClickExamEvaluationReviseButton = viewModel::updateExamEvaluation,
   )
 }
 

@@ -13,7 +13,7 @@ data class MyExamEvaluationEditState(
   val selectedExamTypePosition: Int? = null,
   val examEvaluation: String = "",
   val examLevel: String = "",
-  val examInfo: PersistentList<String> = persistentListOf(""),
+  val examInfo: PersistentList<String> = persistentListOf(),
   val showSemesterBottomSheet: Boolean = false,
   val showExamTypeBottomSheet: Boolean = false,
   val showDeleteExamEvaluationDialog: Boolean = false,

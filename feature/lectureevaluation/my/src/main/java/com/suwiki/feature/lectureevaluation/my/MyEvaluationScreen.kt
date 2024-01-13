@@ -72,15 +72,15 @@ fun MyEvaluationRoute(
   val pagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT })
 
   lectureEvaluationListState.OnBottomReached {
-    viewModel.loadMyLectureEvaluations()
+    viewModel.getMyLectureEvaluations()
   }
 
   examEvaluationListState.OnBottomReached {
-    viewModel.loadMyExamEvaluations()
+    viewModel.getMyExamEvaluations()
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.loadInitList()
+    viewModel.initData()
   }
 
   LaunchedEffect(key1 = uiState.currentTabPage) {

@@ -24,7 +24,7 @@ class MyEvaluationViewModel @Inject constructor(
   private var currentLectureEvaluationPage = 1
   private var currentExamEvaluationPage = 1
 
-  fun loadMyLectureEvaluations() = intent {
+  fun getMyLectureEvaluations() = intent {
     showLoadingScreen()
     getMyLectureEvaluationListUseCase(currentLectureEvaluationPage)
       .onSuccess {
@@ -37,7 +37,7 @@ class MyEvaluationViewModel @Inject constructor(
     hideLoadingScreen()
   }
 
-  fun loadMyExamEvaluations() = intent {
+  fun getMyExamEvaluations() = intent {
     showLoadingScreen()
     getMyExamEvaluationListUseCase(currentExamEvaluationPage)
       .onSuccess {
@@ -50,9 +50,9 @@ class MyEvaluationViewModel @Inject constructor(
     hideLoadingScreen()
   }
 
-  fun loadInitList() = intent {
+  fun initData() = intent {
     showLoadingScreen()
-    joinAll(loadMyLectureEvaluations(), loadMyExamEvaluations())
+    joinAll(getMyLectureEvaluations(), getMyExamEvaluations())
     hideLoadingScreen()
   }
 

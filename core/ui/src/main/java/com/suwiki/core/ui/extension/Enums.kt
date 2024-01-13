@@ -70,10 +70,3 @@ fun ExamType.toText() = when (this) {
   ExamType.NOTE_EXAM -> stringResource(R.string.word_exam_type_note_exam)
   ExamType.ETC_EXAM -> stringResource(R.string.word_exam_type_etc_exam)
 }
-
-fun ExamType.toInt() = when (this) {
-  ExamType.MID_EXAM -> 0
-  ExamType.FINAL_EXAM -> 1
-  ExamType.NOTE_EXAM -> 2
-  ExamType.ETC_EXAM -> 3
-}
