@@ -20,7 +20,7 @@ data class AddTimetableCellState(
 
 fun List<Cell>.toText(context: Context): String {
   return if (isEmpty()) {
-    TimetableDay.E_LEARNING.toText(context)
+    context.getString(R.string.word_none)
   } else {
     joinToString(", ") { cell ->
       val periods = (cell.startPeriod..cell.endPeriod).joinToString(",") { it.toString() }
