@@ -15,6 +15,9 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,6 +26,7 @@ import com.suwiki.core.designsystem.component.button.SuwikiContainedSmallButton
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayDA
+import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
@@ -45,10 +49,19 @@ fun SuwikiClassInformationCard(
     modifier = modifier
       .fillMaxWidth()
       .background(White)
-      .padding(horizontal = 24.dp, vertical = 16.dp)
+      .drawBehind {
+        val strokeWidth = 1.dp.toPx()
+        drawLine(
+          color = GrayF6,
+          start = Offset(0f, size.height - strokeWidth),
+          end = Offset(size.width, size.height - strokeWidth),
+          strokeWidth = strokeWidth
+        )
+      }
       .suwikiClickable(
         onClick = onClick,
-      ),
+      )
+      .padding(horizontal = 24.dp, vertical = 16.dp),
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.SpaceBetween,
   ) {
