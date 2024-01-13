@@ -43,7 +43,6 @@ import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.lectureevaluation.editor.R
-import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.MINIMUM_DELETE_POINT
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -89,8 +88,9 @@ fun MyExamEvaluationEditRoute(
     onClickExamLevelChip = viewModel::updateExamLevel,
     onClickExamInfoChip = viewModel::updateExamInfo,
     onExamEvaluationValueChange = viewModel::updateMyExamEvaluationValue,
-    onClickExamEvaluationDeleteButton = viewModel::showExamEvaluationDeleteDialog,
+    onClickExamEvaluationDeleteButton = viewModel::showDeleteOrLackPointDialog,
     onDismissExamEvaluationDelete = viewModel::hideExamEvaluationDeleteDialog,
+    onDismissLackPoint = viewModel::hideLackPointDialog,
     onClickExamEvaluationDeleteConfirm = viewModel::deleteExamEvaluation,
     onClickExamEvaluationReviseButton = viewModel::updateExamEvaluation,
   )
@@ -114,6 +114,7 @@ fun MyExamEvaluationEditScreen(
   onClickExamEvaluationDeleteConfirm: () -> Unit = {},
   onExamEvaluationValueChange: (String) -> Unit = { _ -> },
   onDismissExamEvaluationDelete: () -> Unit = {},
+  onDismissLackPoint: () -> Unit = {},
   onClickExamEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
@@ -216,27 +217,28 @@ fun MyExamEvaluationEditScreen(
         onClick = onClickExamEvaluationReviseButton,
       )
     }
-    if (uiState.showDeleteExamEvaluationDialog) {
-      if (uiState.point > MINIMUM_DELETE_POINT) {
-        SuwikiDialog(
-          headerText = stringResource(R.string.delete_dialog_header),
-          bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
-          confirmButtonText = stringResource(R.string.word_delete),
-          dismissButtonText = stringResource(R.string.word_cancel),
-          onDismissRequest = onDismissExamEvaluationDelete,
-          onClickConfirm = onClickExamEvaluationDeleteConfirm,
-          onClickDismiss = onDismissExamEvaluationDelete,
-        )
-      } else {
-        SuwikiDialog(
-          headerText = stringResource(R.string.lack_point_dialog_header),
-          bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
-          confirmButtonText = stringResource(R.string.word_confirm),
-          onDismissRequest = onDismissExamEvaluationDelete,
-          onClickConfirm = onDismissExamEvaluationDelete,
-        )
-      }
-    }
+  }
+
+  if (uiState.showDeleteExamEvaluationDialog) {
+    SuwikiDialog(
+      headerText = stringResource(R.string.delete_dialog_header),
+      bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
+      confirmButtonText = stringResource(R.string.word_delete),
+      dismissButtonText = stringResource(R.string.word_cancel),
+      onDismissRequest = onDismissExamEvaluationDelete,
+      onClickConfirm = onClickExamEvaluationDeleteConfirm,
+      onClickDismiss = onDismissExamEvaluationDelete,
+    )
+  }
+
+  if (uiState.showLackPointDialog) {
+    SuwikiDialog(
+      headerText = stringResource(R.string.lack_point_dialog_header),
+      bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
+      confirmButtonText = stringResource(R.string.word_confirm),
+      onDismissRequest = onDismissLackPoint,
+      onClickConfirm = onDismissLackPoint,
+    )
   }
 
   SuwikiSelectBottomSheet(

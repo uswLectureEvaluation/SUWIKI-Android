@@ -50,8 +50,6 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.Locale
 
-const val MINIMUM_DELETE_POINT = 30
-
 @Composable
 fun MyLectureEvaluationEditRoute(
   viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
@@ -99,8 +97,9 @@ fun MyLectureEvaluationEditRoute(
     onLearningRatingValueChange = viewModel::updateLearningRating,
     onSatisfactionRatingValueChange = viewModel::updateSatisfactionRating,
     onLectureEvaluationValueChange = viewModel::updateMyLectureEvaluationValue,
-    onClickLectureEvaluationDeleteButton = viewModel::showLectureEvaluationDeleteDialog,
+    onClickLectureEvaluationDeleteButton = viewModel::showDeleteOrLackPointDialog,
     onDismissLectureEvaluationDelete = viewModel::hideLectureEvaluationDeleteDialog,
+    onDismissLackPoint = viewModel::hideLackPointDialog,
     onClickGradeChip = viewModel::updateGradeLevel,
     onClickHomeworkChip = viewModel::updateHomeworkLevel,
     onClickTeamChip = viewModel::updateTeamLevel,
@@ -127,6 +126,7 @@ fun MyLectureEvaluationEditScreen(
   onClickLectureEvaluationDeleteButton: () -> Unit = {},
   onClickLectureEvaluationDeleteConfirm: () -> Unit = {},
   onDismissLectureEvaluationDelete: () -> Unit = {},
+  onDismissLackPoint: () -> Unit = {},
   onClickLectureEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
@@ -306,25 +306,25 @@ fun MyLectureEvaluationEditScreen(
   }
 
   if (uiState.showDeleteLectureEvaluationDialog) {
-    if (uiState.point > MINIMUM_DELETE_POINT) {
-      SuwikiDialog(
-        headerText = stringResource(R.string.delete_dialog_header),
-        bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
-        confirmButtonText = stringResource(R.string.word_delete),
-        dismissButtonText = stringResource(R.string.word_cancel),
-        onDismissRequest = onDismissLectureEvaluationDelete,
-        onClickConfirm = onClickLectureEvaluationDeleteConfirm,
-        onClickDismiss = onDismissLectureEvaluationDelete,
-      )
-    } else {
-      SuwikiDialog(
-        headerText = stringResource(R.string.lack_point_dialog_header),
-        bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
-        confirmButtonText = stringResource(R.string.word_confirm),
-        onDismissRequest = onDismissLectureEvaluationDelete,
-        onClickConfirm = onDismissLectureEvaluationDelete,
-      )
-    }
+    SuwikiDialog(
+      headerText = stringResource(R.string.delete_dialog_header),
+      bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
+      confirmButtonText = stringResource(R.string.word_delete),
+      dismissButtonText = stringResource(R.string.word_cancel),
+      onDismissRequest = onDismissLectureEvaluationDelete,
+      onClickConfirm = onClickLectureEvaluationDeleteConfirm,
+      onClickDismiss = onDismissLectureEvaluationDelete,
+    )
+  }
+
+  if (uiState.showLackPointDialog) {
+    SuwikiDialog(
+      headerText = stringResource(R.string.lack_point_dialog_header),
+      bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
+      confirmButtonText = stringResource(R.string.word_confirm),
+      onDismissRequest = onDismissLackPoint,
+      onClickConfirm = onDismissLackPoint,
+    )
   }
 
   SuwikiSelectBottomSheet(

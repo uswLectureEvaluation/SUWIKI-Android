@@ -19,6 +19,7 @@ data class MyLectureEvaluationEditState(
   val lectureEvaluation: String = "",
   val showSemesterBottomSheet: Boolean = false,
   val showDeleteLectureEvaluationDialog: Boolean = false,
+  val showLackPointDialog: Boolean = false,
 )
 
 sealed interface MyLectureEvaluationEditSideEffect {

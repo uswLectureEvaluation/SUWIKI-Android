@@ -8,6 +8,7 @@ import com.suwiki.core.model.user.User
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.DeleteExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
+import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.MINIMUM_DELETE_POINT
 import com.suwiki.feature.lectureevaluation.editor.navigation.MyEvaluationEditRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -122,10 +123,20 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     reduce { state.copy(examEvaluation = examEvaluationValue) }
   }
 
+  fun showDeleteOrLackPointDialog() = intent {
+    if (state.point > MINIMUM_DELETE_POINT) {
+      showExamEvaluationDeleteDialog()
+    } else {
+      showLackPointDialog()
+    }
+  }
+
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
-  fun showExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = true) } }
+  private fun showExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = true) } }
   fun hideExamEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteExamEvaluationDialog = false) } }
+  private fun showLackPointDialog() = intent { reduce { state.copy(showLackPointDialog = true) } }
+  fun hideLackPointDialog() = intent { reduce { state.copy(showLackPointDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
   fun showExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = true) } }

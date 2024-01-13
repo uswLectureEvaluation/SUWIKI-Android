@@ -17,6 +17,7 @@ data class MyExamEvaluationEditState(
   val showSemesterBottomSheet: Boolean = false,
   val showExamTypeBottomSheet: Boolean = false,
   val showDeleteExamEvaluationDialog: Boolean = false,
+  val showLackPointDialog: Boolean = false,
 )
 
 sealed interface MyExamEvaluationEditSideEffect {

@@ -19,6 +19,8 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
+const val MINIMUM_DELETE_POINT = 30
+
 @HiltViewModel
 class MyLectureEvaluationEditViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
@@ -40,7 +42,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
         reduce {
           state.copy(
             selectedSemester = selectedSemester,
-            semesterList = lectureInfo.semesterList.toPersistentList()
+            semesterList = lectureInfo.semesterList.toPersistentList(),
           )
         }
         updateHoneyRating(honey)
@@ -130,10 +132,20 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     reduce { state.copy(teamLevel = teamLevel) }
   }
 
+  fun showDeleteOrLackPointDialog() = intent {
+    if (state.point > MINIMUM_DELETE_POINT) {
+      showLectureEvaluationDeleteDialog()
+    } else {
+      showLackPointDialog()
+    }
+  }
+
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
-  fun showLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
+  private fun showLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
   fun hideLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
+  private fun showLackPointDialog() = intent { reduce { state.copy(showLackPointDialog = true) } }
+  fun hideLackPointDialog() = intent { reduce { state.copy(showLackPointDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
 
