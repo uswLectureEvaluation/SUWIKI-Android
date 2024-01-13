@@ -37,28 +37,26 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   suspend fun initData() = intent {
     showLoadingScreen()
     with(myLectureEvaluationItem) {
-      try {
-        getUserInfoUseCase().collect(::getPoint)
-        reduce {
-          state.copy(
-            selectedSemester = selectedSemester,
-            semesterList = lectureInfo.semesterList.toPersistentList(),
-          )
+      getUserInfoUseCase().collect(::getPoint).runCatching {}
+        .onFailure {
+          postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
         }
-        updateHoneyRating(honey)
-        updateLearningRating(learning)
-        updateSatisfactionRating(satisfaction)
-        updateTotalAvg()
-        updateGradeLevel(difficulty)
-        updateHomeworkLevel(homework)
-        updateTeamLevel(team)
-        updateMyLectureEvaluationValue(content)
-      } catch (e: Throwable) {
-        postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(e))
-      } finally {
-        hideLoadingScreen()
+      reduce {
+        state.copy(
+          selectedSemester = selectedSemester,
+          semesterList = lectureInfo.semesterList.toPersistentList(),
+        )
       }
+      updateHoneyRating(honey)
+      updateLearningRating(learning)
+      updateSatisfactionRating(satisfaction)
+      updateTotalAvg()
+      updateGradeLevel(difficulty)
+      updateHomeworkLevel(homework)
+      updateTeamLevel(team)
+      updateMyLectureEvaluationValue(content)
     }
+    hideLoadingScreen()
   }
 
   private fun getPoint(user: User) = intent { reduce { state.copy(point = user.point) } }

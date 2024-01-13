@@ -35,28 +35,26 @@ class MyExamEvaluationEditViewModel @Inject constructor(
   private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromString(myExamEvaluation)
 
   suspend fun initData() = intent {
+    showLoadingScreen()
     with(myExamEvaluationItem) {
-      showLoadingScreen()
-      try {
-        getUserInfoUseCase().collect(::getPoint)
-        reduce {
-          state.copy(
-            semesterList = semesterList!!.split(", ").toPersistentList(),
-            selectedSemester = selectedSemester,
-            selectedExamType = examType,
-          )
+      getUserInfoUseCase().collect(::getPoint).runCatching {}
+        .onFailure {
+          postSideEffect(MyExamEvaluationEditSideEffect.HandleException(it))
         }
-        updateExamLevel(examDifficulty)
-        examInfo.forEach { info ->
-          updateExamInfo(info)
-        }
-        updateMyExamEvaluationValue(content)
-      } catch (e: Throwable) {
-        postSideEffect(MyExamEvaluationEditSideEffect.HandleException(e))
-      } finally {
-        hideLoadingScreen()
+      reduce {
+        state.copy(
+          semesterList = semesterList!!.split(", ").toPersistentList(),
+          selectedSemester = selectedSemester,
+          selectedExamType = examType,
+        )
       }
+      examInfo.forEach { info ->
+        updateExamInfo(info)
+      }
+      updateExamLevel(examDifficulty)
+      updateMyExamEvaluationValue(content)
     }
+    hideLoadingScreen()
   }
 
   private fun getPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
