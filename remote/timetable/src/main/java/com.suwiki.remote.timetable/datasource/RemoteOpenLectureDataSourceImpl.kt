@@ -1,6 +1,5 @@
 package com.suwiki.remote.timetable.datasource
 
-import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.data.timetable.datasource.RemoteOpenLectureDataSource
 import com.suwiki.remote.timetable.api.OpenLectureApi
 import com.suwiki.remote.timetable.response.toModel

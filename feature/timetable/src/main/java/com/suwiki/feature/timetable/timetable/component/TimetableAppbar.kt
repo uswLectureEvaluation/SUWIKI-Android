@@ -41,7 +41,7 @@ fun TimetableAppbar(
     Crossfade(
       modifier = Modifier.weight(1f),
       targetState = name,
-      label = "name"
+      label = "name",
     ) { name ->
       Text(
         modifier = Modifier.weight(1f),

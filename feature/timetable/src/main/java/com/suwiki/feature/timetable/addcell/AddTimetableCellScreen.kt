@@ -50,7 +50,6 @@ import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import timber.log.Timber
 
 @Composable
 fun AddTimetableCellRoute(
@@ -58,6 +57,7 @@ fun AddTimetableCellRoute(
   selectedOpenMajor: String,
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
+  @Suppress("detekt:UnusedParameter")
   onShowToast: (String) -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
@@ -87,11 +87,9 @@ fun AddTimetableCellRoute(
     viewModel.initData()
   }
 
-
   listState.OnBottomReached {
     viewModel.getOpenLectureList(needClear = false)
   }
-
 
   AddTimetableCellScreen(
     uiState = uiState,

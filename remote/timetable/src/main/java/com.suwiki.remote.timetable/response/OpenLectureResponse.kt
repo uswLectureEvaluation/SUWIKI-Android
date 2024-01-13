@@ -61,7 +61,7 @@ internal fun OpenLectureResponse.toModel(): com.suwiki.core.model.timetable.Open
 
 internal fun Cell.toModel() = com.suwiki.core.model.timetable.Cell(
   location = location,
-  day = when(day) {
+  day = when (day) {
     TimetableDay.MON -> com.suwiki.core.model.timetable.TimetableDay.MON
     TimetableDay.TUE -> com.suwiki.core.model.timetable.TimetableDay.TUE
     TimetableDay.WED -> com.suwiki.core.model.timetable.TimetableDay.WED

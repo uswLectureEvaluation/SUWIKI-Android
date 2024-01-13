@@ -35,7 +35,10 @@ class TimetableViewModel @Inject constructor(
   fun navigateCreateTimetable() = intent { postSideEffect(TimetableSideEffect.NavigateCreateTimetable) }
 
   fun navigateAddTimetableCell() = intent {
-    if (state.timetable == null) postSideEffect(TimetableSideEffect.ShowNeedCreateTimetableToast)
-    else postSideEffect(TimetableSideEffect.NavigateAddTimetableCell)
+    if (state.timetable == null) {
+      postSideEffect(TimetableSideEffect.ShowNeedCreateTimetableToast)
+    } else {
+      postSideEffect(TimetableSideEffect.NavigateAddTimetableCell)
+    }
   }
 }

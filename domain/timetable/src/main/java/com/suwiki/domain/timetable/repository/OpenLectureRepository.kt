@@ -1,8 +1,6 @@
 package com.suwiki.domain.timetable.repository
 
-import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.OpenLectureData
-import kotlinx.coroutines.flow.Flow
 
 interface OpenLectureRepository {
   suspend fun getOpenLectureList(

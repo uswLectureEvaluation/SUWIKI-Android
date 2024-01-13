@@ -1,8 +1,6 @@
 package com.suwiki.feature.timetable.addcell
 
 import android.content.Context
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.TimetableDay
@@ -42,7 +40,7 @@ fun TimetableDay.toText(context: Context) = when (this) {
 }
 
 sealed interface AddTimetableCellSideEffect {
-  data object ScrollToTop: AddTimetableCellSideEffect
+  data object ScrollToTop : AddTimetableCellSideEffect
   data object PopBackStack : AddTimetableCellSideEffect
   data class NavigateOpenMajor(val selectedOpenMajor: String) : AddTimetableCellSideEffect
   data object NavigateAddCustomTimetableCell : AddTimetableCellSideEffect

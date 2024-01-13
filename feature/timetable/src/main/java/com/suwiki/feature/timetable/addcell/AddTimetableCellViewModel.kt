@@ -21,7 +21,10 @@ import javax.inject.Inject
 class AddTimetableCellViewModel @Inject constructor(
   private val getOpenLectureListUseCase: GetOpenLectureListUseCase,
 ) : ViewModel(), ContainerHost<AddTimetableCellState, AddTimetableCellSideEffect> {
-  override val container: Container<AddTimetableCellState, AddTimetableCellSideEffect> = container(AddTimetableCellState())
+
+  override val container: Container<AddTimetableCellState, AddTimetableCellSideEffect> = container(
+    AddTimetableCellState(),
+  )
 
   private val currentState
     get() = container.stateFlow.value
