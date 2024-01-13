@@ -234,7 +234,7 @@ private fun LectureEvaluationLazyColumn(
   LazyColumn(
     modifier = Modifier
       .fillMaxSize()
-      .padding(start = 24.dp, end = 24.dp),
+      .padding(horizontal = 24.dp),
     contentPadding = PaddingValues(top = 15.dp, bottom = 24.dp),
     state = listState,
     verticalArrangement = Arrangement.spacedBy(12.dp),

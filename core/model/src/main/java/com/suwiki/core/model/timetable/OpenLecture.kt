@@ -1,5 +1,15 @@
 package com.suwiki.core.model.timetable
 
+import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
+
+@Stable
+data class OpenLectureData(
+  val isLast: Boolean,
+  val content: List<OpenLecture>,
+)
+
+@Stable
 data class OpenLecture(
   val id: Long,
   val name: String,
@@ -10,9 +20,10 @@ data class OpenLecture(
   val originalCellList: List<Cell>
 )
 
+@Stable
 data class Cell(
   val location: String,
-  val day: String,
+  val day: TimetableDay,
   val startPeriod: Int,
   val endPeriod: Int
 )

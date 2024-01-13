@@ -16,7 +16,7 @@ class RemoteOpenLectureDataSourceImpl @Inject constructor(
     keyword: String?,
     major: String?,
     grade: Int?,
-  ): List<OpenLecture> = openLectureApi.getOpenLectureList(
+  ) = openLectureApi.getOpenLectureList(
     cursorId = cursorId,
     size = size,
     keyword = keyword,

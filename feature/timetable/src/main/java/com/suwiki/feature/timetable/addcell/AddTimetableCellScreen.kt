@@ -4,51 +4,94 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTextButton
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.card.SuwikiClassInformationCard
+import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
+import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBar
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.timetable.R
-import timber.log.Timber
+import com.suwiki.feature.timetable.addcell.model.GradeType
+import kotlinx.collections.immutable.toPersistentList
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun AddTimetableCellRoute(
+  viewModel: AddTimetableCellViewModel = hiltViewModel(),
   selectedOpenMajor: String,
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      is AddTimetableCellSideEffect.HandleException -> TODO()
+      AddTimetableCellSideEffect.NavigateAddCustomTimetableCell -> TODO()
+      is AddTimetableCellSideEffect.NavigateOpenMajor -> TODO()
+      AddTimetableCellSideEffect.PopBackStack -> TODO()
+      AddTimetableCellSideEffect.ScrollToTop -> TODO()
+    }
+  }
+
+  LaunchedEffect(key1 = viewModel) {
+    viewModel.initData()
+  }
+
+  val listState = rememberLazyListState()
+
+  listState.OnBottomReached {
+    viewModel.getOpenLectureList(needClear = false)
+  }
+
+
   AddTimetableCellScreen(
+    uiState = uiState,
+    listState = listState,
     onClickOpenMajorFilterContainer = navigateOpenMajor,
   )
 }
 
 @Composable
 fun AddTimetableCellScreen(
+  uiState: AddTimetableCellState = AddTimetableCellState(),
+  listState: LazyListState = rememberLazyListState(),
   onClickOpenMajorFilterContainer: (String) -> Unit = {},
 ) {
+  val context = LocalContext.current
 
   Column(
     modifier = Modifier
@@ -64,7 +107,7 @@ fun AddTimetableCellScreen(
 
     Row(
       modifier = Modifier.padding(horizontal = 24.dp),
-      horizontalArrangement = Arrangement.spacedBy(4.dp)
+      horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
       FilterContainer(
         filterName = stringResource(R.string.word_open_major),
@@ -73,31 +116,55 @@ fun AddTimetableCellScreen(
       )
 
       FilterContainer(
-        filterName = stringResource(R.string.word_grade),
+        filterName = stringResource(R.string.word_school_level),
         value = "전체",
         onClick = {},
       )
     }
 
     SuwikiSearchBar(
+      modifier = Modifier.padding(top = 10.dp),
       placeholder = stringResource(R.string.add_timetable_cell_search_bar_placeholder),
     )
 
-    repeat(10) {
-      SuwikiClassInformationCard(
-        className = "과학적글쓰기와고전읽기2",
-        professor = "김지수",
-        day = "목",
-        classPeriod = "6,7교시",
-        location = "(미래 211)",
-        grade = "2학년",
-        classType = "기교",
-        openMajor = "건설에너지공학과학부",
-        onClick = { /*TODO*/ },
-        onClickAdd = {}
-      )
+    LazyColumn(
+      modifier = Modifier
+        .fillMaxSize(),
+      contentPadding = PaddingValues(top = 15.dp, bottom = 24.dp),
+      state = listState,
+    ) {
+      items(
+        items = uiState.openLectureList,
+        key = { it.id },
+      ) { lectureEvaluation ->
+        with(lectureEvaluation) {
+          SuwikiClassInformationCard(
+            className = name,
+            professor = professorName,
+            cellInfo = originalCellList.toText(context),
+            grade = stringResource(id = R.string.word_num_school_level, grade),
+            classType = type,
+            openMajor = major,
+            onClick = { /*TODO*/ },
+            onClickAdd = {},
+          )
+        }
+      }
     }
   }
+
+  if (uiState.isLoading) {
+    LoadingScreen()
+  }
+
+  SuwikiSelectBottomSheet(
+    isSheetOpen = false,
+    onDismissRequest = { /*TODO*/ },
+    onClickItem = {},
+    itemList = GradeType.entries.map { stringResource(id = it.stringResId) }.toPersistentList(),
+    title = stringResource(R.string.word_school_level),
+    selectedPosition = 0,
+  )
 }
 
 @Composable

@@ -154,6 +154,7 @@ fun OpenMajorScreen(
       )
 
       SuwikiSearchBar(
+        modifier = Modifier.padding(vertical = 10.dp),
         placeholder = stringResource(R.string.open_major_screen_search_bar_placeholder),
         value = uiState.searchValue,
         onClickClearButton = onClickSearchBarClearButton,

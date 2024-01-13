@@ -1,6 +1,7 @@
 package com.suwiki.domain.timetable.repository
 
 import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.OpenLectureData
 import kotlinx.coroutines.flow.Flow
 
 interface OpenLectureRepository {
@@ -10,5 +11,5 @@ interface OpenLectureRepository {
     keyword: String?,
     major: String?,
     grade: Int?,
-  ): List<OpenLecture>
+  ): OpenLectureData
 }

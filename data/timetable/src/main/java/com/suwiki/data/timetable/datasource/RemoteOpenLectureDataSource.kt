@@ -1,6 +1,7 @@
 package com.suwiki.data.timetable.datasource
 
 import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.OpenLectureData
 
 interface RemoteOpenLectureDataSource {
   suspend fun getOpenLectureList(
@@ -9,5 +10,5 @@ interface RemoteOpenLectureDataSource {
     keyword: String?,
     major: String?,
     grade: Int?,
-  ): List<OpenLecture>
+  ): OpenLectureData
 }

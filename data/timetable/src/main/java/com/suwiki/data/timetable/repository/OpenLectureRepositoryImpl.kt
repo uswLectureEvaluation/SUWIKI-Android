@@ -1,6 +1,7 @@
 package com.suwiki.data.timetable.repository
 
 import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.OpenLectureData
 import com.suwiki.data.timetable.datasource.RemoteOpenLectureDataSource
 import com.suwiki.domain.timetable.repository.OpenLectureRepository
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class OpenLectureRepositoryImpl @Inject constructor(
     keyword: String?,
     major: String?,
     grade: Int?,
-  ): List<OpenLecture> = remoteOpenLectureDataSource.getOpenLectureList(
+  ): OpenLectureData = remoteOpenLectureDataSource.getOpenLectureList(
     cursorId = cursorId,
     size = size,
     keyword = keyword,

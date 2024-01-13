@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -36,9 +37,7 @@ fun SuwikiClassInformationCard(
   modifier: Modifier = Modifier,
   className: String,
   professor: String,
-  day: String,
-  classPeriod: String,
-  location: String,
+  cellInfo: String,
   grade: String,
   classType: String,
   openMajor: String,
@@ -66,6 +65,7 @@ fun SuwikiClassInformationCard(
     horizontalArrangement = Arrangement.SpaceBetween,
   ) {
     Column(
+      modifier = Modifier.weight(1f),
       verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
       Row(
@@ -75,6 +75,8 @@ fun SuwikiClassInformationCard(
         horizontalArrangement = Arrangement.spacedBy(6.dp),
       ) {
         Text(
+          modifier = Modifier.weight(1f, fill = false),
+          maxLines = 1,
           text = className,
           style = SuwikiTheme.typography.body6,
           color = Black,
@@ -87,32 +89,18 @@ fun SuwikiClassInformationCard(
             .padding(vertical = 3.dp),
         )
         Text(
+          maxLines = 1,
           text = professor,
           style = SuwikiTheme.typography.body6,
           color = Black,
         )
       }
 
-      Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
-      ) {
-        Text(
-          text = day,
-          style = SuwikiTheme.typography.caption4,
-          color = Gray6A,
-        )
-        Text(
-          text = classPeriod,
-          style = SuwikiTheme.typography.caption4,
-          color = Gray6A,
-        )
-        Text(
-          text = location,
-          style = SuwikiTheme.typography.caption4,
-          color = Gray6A,
-        )
-      }
+      Text(
+        text = cellInfo,
+        style = SuwikiTheme.typography.caption4,
+        color = Gray6A,
+      )
 
       Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -129,6 +117,7 @@ fun SuwikiClassInformationCard(
           color = Gray6A,
         )
         Text(
+          maxLines = 1,
           text = openMajor,
           style = SuwikiTheme.typography.caption4,
           color = Gray6A,
@@ -147,14 +136,12 @@ fun ClassInformationPreview() {
     Column {
       SuwikiClassInformationCard(
         modifier = Modifier,
-        className = "강의명",
-        professor = "교수명",
-        day = "요일",
-        classPeriod = "교시",
-        location = "강의실",
+        className = "강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명",
+        professor = "교수명 교수명 교수명 교수명 교수명",
+        cellInfo = "목 6,7교시 (미래211) 목 6,7교시 (미래211) 목 6,7교시 (미래211) 목 6,7교시 (미래211)",
         grade = "학년",
         classType = "강의유형",
-        openMajor = "개설학과",
+        openMajor = "개설학과 개설학과 개설학과 개설학과 개설학과 개설학과",
         onClick = {},
         onClickAdd = {},
       )
