@@ -25,6 +25,7 @@ fun NavGraphBuilder.timetableNavGraph(
   padding: PaddingValues,
   argumentName: String,
   popBackStack: () -> Unit,
+  navigateOpenMajor: (String) -> Unit,
   navigateCreateTimetable: () -> Unit,
   navigateAddTimetableCell: () -> Unit,
   handleException: (Throwable) -> Unit,
@@ -56,6 +57,7 @@ fun NavGraphBuilder.timetableNavGraph(
       popBackStack = popBackStack,
       handleException = handleException,
       onShowToast = onShowToast,
+      navigateOpenMajor = navigateOpenMajor,
     )
   }
 }

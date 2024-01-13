@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTextButton
@@ -29,6 +30,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.timetable.R
+import timber.log.Timber
 
 @Composable
 fun AddTimetableCellRoute(
@@ -36,13 +38,16 @@ fun AddTimetableCellRoute(
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
+  navigateOpenMajor: (String) -> Unit,
 ) {
   AddTimetableCellScreen(
+    onClickOpenMajorFilterContainer = navigateOpenMajor,
   )
 }
 
 @Composable
 fun AddTimetableCellScreen(
+  onClickOpenMajorFilterContainer: (String) -> Unit = {},
 ) {
 
   Column(
@@ -51,7 +56,7 @@ fun AddTimetableCellScreen(
       .background(White),
   ) {
     SuwikiAppBarWithTextButton(
-      buttonText = "강의 직접추가",
+      buttonText = stringResource(R.string.add_timetable_screen_add_lecture),
       onClickBack = {},
     )
 
@@ -62,20 +67,20 @@ fun AddTimetableCellScreen(
       horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
       FilterContainer(
-        filterName = "개설학과",
+        filterName = stringResource(R.string.word_open_major),
         value = "전체",
-        onClick = {},
+        onClick = { onClickOpenMajorFilterContainer("전체") },
       )
 
       FilterContainer(
-        filterName = "학년",
+        filterName = stringResource(R.string.word_grade),
         value = "전체",
         onClick = {},
       )
     }
 
     SuwikiSearchBar(
-      placeholder = "강의명 또는 교수명을 검색하세요"
+      placeholder = stringResource(R.string.add_timetable_cell_search_bar_placeholder),
     )
 
     repeat(10) {

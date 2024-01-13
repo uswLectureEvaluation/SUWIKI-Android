@@ -97,6 +97,7 @@ internal fun MainScreen(
           navigateAddTimetableCell = navigator::navigateAddTimetableCell,
           handleException = viewModel::handleException,
           onShowToast = viewModel::onShowToast,
+          navigateOpenMajor = navigator::navigateOpenMajor,
         )
 
         lectureEvaluationNavGraph(

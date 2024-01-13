@@ -51,4 +51,6 @@
     <string name="word_timetable">시간표</string>
     <string name="word_select_semester">수강학기 선택</string>
   <string name="word_complete">완료</string>
+    <string name="word_open_major">개설학과</string>
+  <string name="word_grade">학년</string>
 </resources>
