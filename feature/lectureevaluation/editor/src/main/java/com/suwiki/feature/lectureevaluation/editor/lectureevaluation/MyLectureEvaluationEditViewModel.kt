@@ -2,6 +2,9 @@ package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.enums.GradeLevel
+import com.suwiki.core.model.enums.HomeworkLevel
+import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.DeleteLectureEvaluationUseCase
@@ -51,10 +54,22 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
       updateLearningRating(learning)
       updateSatisfactionRating(satisfaction)
       updateTotalAvg()
-      updateGradeLevel(difficulty)
-      updateHomeworkLevel(homework)
-      updateTeamLevel(team)
       updateMyLectureEvaluationValue(content)
+      GradeLevel.entries.forEach {
+        if (it.value == difficulty) {
+          updateGradeLevel(it)
+        }
+      }
+      HomeworkLevel.entries.forEach {
+        if (it.value == homework) {
+          updateHomeworkLevel(it)
+        }
+      }
+      TeamLevel.entries.forEach {
+        if (it.value == team) {
+          updateTeamLevel(it)
+        }
+      }
     }
     hideLoadingScreen()
   }
@@ -70,9 +85,9 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
         satisfaction = "%.1f".format(state.satisfactionRating).toFloat(),
         learning = "%.1f".format(state.learningRating).toFloat(),
         honey = "%.1f".format(state.honeyRating).toFloat(),
-        team = state.teamLevel,
-        difficulty = state.gradeLevel,
-        homework = state.homeworkLevel,
+        team = state.teamLevel!!.value,
+        difficulty = state.gradeLevel!!.value,
+        homework = state.homeworkLevel!!.value,
         content = state.lectureEvaluation,
       ),
     )
@@ -120,13 +135,13 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   fun updateTotalAvg() = intent {
     reduce { state.copy(totalAvg = (state.honeyRating + state.learningRating + state.satisfactionRating) / 3) }
   }
-  fun updateGradeLevel(gradeLevel: Int) = intent {
+  fun updateGradeLevel(gradeLevel: GradeLevel) = intent {
     reduce { state.copy(gradeLevel = gradeLevel) }
   }
-  fun updateHomeworkLevel(homeworkLevel: Int) = intent {
+  fun updateHomeworkLevel(homeworkLevel: HomeworkLevel) = intent {
     reduce { state.copy(homeworkLevel = homeworkLevel) }
   }
-  fun updateTeamLevel(teamLevel: Int) = intent {
+  fun updateTeamLevel(teamLevel: TeamLevel) = intent {
     reduce { state.copy(teamLevel = teamLevel) }
   }
 

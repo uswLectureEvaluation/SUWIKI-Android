@@ -1,5 +1,6 @@
 package com.suwiki.feature.lectureevaluation.editor.examevaluation
 
+import com.suwiki.core.model.enums.ExamLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -12,7 +13,7 @@ data class MyExamEvaluationEditState(
   val selectedSemesterPosition: Int? = null,
   val selectedExamTypePosition: Int? = null,
   val examEvaluation: String = "",
-  val examLevel: String = "",
+  val examLevel: ExamLevel? = null,
   val examInfo: PersistentList<String> = persistentListOf(),
   val showSemesterBottomSheet: Boolean = false,
   val showExamTypeBottomSheet: Boolean = false,

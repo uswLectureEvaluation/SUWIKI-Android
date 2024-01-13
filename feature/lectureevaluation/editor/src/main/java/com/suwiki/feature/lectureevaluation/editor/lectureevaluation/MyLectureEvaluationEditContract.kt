@@ -1,5 +1,8 @@
 package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 
+import com.suwiki.core.model.enums.GradeLevel
+import com.suwiki.core.model.enums.HomeworkLevel
+import com.suwiki.core.model.enums.TeamLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -13,9 +16,9 @@ data class MyLectureEvaluationEditState(
   val honeyRating: Float = 0f,
   val learningRating: Float = 0f,
   val satisfactionRating: Float = 0f,
-  val gradeLevel: Int = 0,
-  val homeworkLevel: Int = 0,
-  val teamLevel: Int = 0,
+  val gradeLevel: GradeLevel? = null,
+  val homeworkLevel: HomeworkLevel? = null,
+  val teamLevel: TeamLevel? = null,
   val lectureEvaluation: String = "",
   val showSemesterBottomSheet: Boolean = false,
   val showDeleteLectureEvaluationDialog: Boolean = false,

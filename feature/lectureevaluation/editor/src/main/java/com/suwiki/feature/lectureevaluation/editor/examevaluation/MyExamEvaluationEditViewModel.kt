@@ -2,6 +2,8 @@ package com.suwiki.feature.lectureevaluation.editor.examevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.enums.ExamInfo
+import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.user.User
@@ -49,9 +51,17 @@ class MyExamEvaluationEditViewModel @Inject constructor(
         )
       }
       examInfo.forEach { info ->
-        updateExamInfo(info)
+        ExamInfo.entries.forEach {
+          if (it.value == info) {
+            updateExamInfo(it)
+          }
+        }
       }
-      updateExamLevel(examDifficulty)
+      ExamLevel.entries.forEach {
+        if (it.value == examDifficulty) {
+          updateExamLevel(it)
+        }
+      }
       updateMyExamEvaluationValue(content)
     }
     hideLoadingScreen()
@@ -66,7 +76,7 @@ class MyExamEvaluationEditViewModel @Inject constructor(
         selectedSemester = state.selectedSemester,
         examInfo = state.examInfo.filter { it.isNotBlank() }.joinToString(", "),
         examType = state.selectedExamType,
-        examDifficulty = state.examLevel,
+        examDifficulty = state.examLevel!!.value,
         content = state.examEvaluation,
       ),
     )
@@ -103,16 +113,16 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     }
     hideExamTypeBottomSheet()
   }
-  fun updateExamLevel(examLevel: String) = intent {
+  fun updateExamLevel(examLevel: ExamLevel) = intent {
     reduce { state.copy(examLevel = examLevel) }
   }
-  fun updateExamInfo(info: String) = intent {
+  fun updateExamInfo(info: ExamInfo) = intent {
     val examInfoList = state.examInfo.toMutableList()
 
-    if (info in state.examInfo) {
-      examInfoList.remove(info)
+    if (info.value in state.examInfo) {
+      examInfoList.remove(info.value)
     } else {
-      examInfoList.add(info)
+      examInfoList.add(info.value)
     }
     reduce { state.copy(examInfo = examInfoList.toPersistentList()) }
   }

@@ -108,8 +108,8 @@ fun MyExamEvaluationEditScreen(
   onClickExamTypeButton: () -> Unit = {},
   onClickExamTypeItem: (Int) -> Unit = {},
   onExamTypeBottomSheetDismissRequest: () -> Unit = {},
-  onClickExamLevelChip: (String) -> Unit = {},
-  onClickExamInfoChip: (String) -> Unit = {},
+  onClickExamLevelChip: (ExamLevel) -> Unit = {},
+  onClickExamInfoChip: (ExamInfo) -> Unit = {},
   onClickExamEvaluationDeleteButton: () -> Unit = {},
   onClickExamEvaluationDeleteConfirm: () -> Unit = {},
   onExamEvaluationValueChange: (String) -> Unit = { _ -> },
@@ -157,9 +157,9 @@ fun MyExamEvaluationEditScreen(
           ) {
             ExamLevel.entries.forEach { examLevel ->
               SuwikiOutlinedChip(
-                isChecked = uiState.examLevel == examLevel.value,
+                isChecked = uiState.examLevel == examLevel,
                 text = examLevel.toText(),
-                onClick = { onClickExamLevelChip(examLevel.value) },
+                onClick = { onClickExamLevelChip(examLevel) },
               )
             }
           }
@@ -180,7 +180,7 @@ fun MyExamEvaluationEditScreen(
               SuwikiOutlinedChip(
                 isChecked = examInfo.value in uiState.examInfo,
                 text = examInfo.toText(),
-                onClick = { onClickExamInfoChip(examInfo.value) },
+                onClick = { onClickExamInfoChip(examInfo) },
               )
             }
           }

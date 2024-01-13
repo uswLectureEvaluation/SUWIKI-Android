@@ -119,9 +119,9 @@ fun MyLectureEvaluationEditScreen(
   onHoneyRatingValueChange: (Float) -> Unit = {},
   onLearningRatingValueChange: (Float) -> Unit = {},
   onSatisfactionRatingValueChange: (Float) -> Unit = {},
-  onClickGradeChip: (Int) -> Unit = {},
-  onClickHomeworkChip: (Int) -> Unit = {},
-  onClickTeamChip: (Int) -> Unit = {},
+  onClickGradeChip: (GradeLevel) -> Unit = {},
+  onClickHomeworkChip: (HomeworkLevel) -> Unit = {},
+  onClickTeamChip: (TeamLevel) -> Unit = {},
   onLectureEvaluationValueChange: (String) -> Unit = { _ -> },
   onClickLectureEvaluationDeleteButton: () -> Unit = {},
   onClickLectureEvaluationDeleteConfirm: () -> Unit = {},
@@ -222,10 +222,10 @@ fun MyLectureEvaluationEditScreen(
             ) {
               GradeLevel.entries.zip(ChipColor.entries).forEach { (gradeLevel, color) ->
                 SuwikiContainedChip(
-                  isChecked = uiState.gradeLevel == gradeLevel.value,
+                  isChecked = uiState.gradeLevel == gradeLevel,
                   color = color,
                   text = gradeLevel.toText(),
-                  onClick = { onClickGradeChip(gradeLevel.value) },
+                  onClick = { onClickGradeChip(gradeLevel) },
                 )
               }
             }
@@ -241,10 +241,10 @@ fun MyLectureEvaluationEditScreen(
             ) {
               HomeworkLevel.entries.zip(ChipColor.entries).forEach { (homeworkLevel, color) ->
                 SuwikiContainedChip(
-                  isChecked = uiState.homeworkLevel == homeworkLevel.value,
+                  isChecked = uiState.homeworkLevel == homeworkLevel,
                   color = color,
                   text = homeworkLevel.toText(),
-                  onClick = { onClickHomeworkChip(homeworkLevel.value) },
+                  onClick = { onClickHomeworkChip(homeworkLevel) },
                 )
               }
             }
@@ -260,10 +260,10 @@ fun MyLectureEvaluationEditScreen(
             ) {
               TeamLevel.entries.zip(ChipColor.entries.minus(ChipColor.BLUE)).forEach { (teamLevel, color) ->
                 SuwikiContainedChip(
-                  isChecked = uiState.teamLevel == teamLevel.value,
+                  isChecked = uiState.teamLevel == teamLevel,
                   color = color,
                   text = teamLevel.toText(),
-                  onClick = { onClickTeamChip(teamLevel.value) },
+                  onClick = { onClickTeamChip(teamLevel) },
                 )
               }
             }
