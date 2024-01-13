@@ -29,6 +29,7 @@ data class LectureEvaluationState(
 }
 
 sealed interface LectureEvaluationSideEffect {
+  data class NavigateOpenMajor(val selectedOpenMajor: String) : LectureEvaluationSideEffect
   data object NavigateLogin : LectureEvaluationSideEffect
   data object NavigateSignUp : LectureEvaluationSideEffect
   data object OpenTermWebSite : LectureEvaluationSideEffect

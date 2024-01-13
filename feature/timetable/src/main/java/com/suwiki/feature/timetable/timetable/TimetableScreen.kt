@@ -11,23 +11,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
 import com.suwiki.feature.timetable.timetable.component.timetable.Timetable
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun TimetableRoute(
   padding: PaddingValues,
   viewModel: TimetableViewModel = hiltViewModel(),
   navigateCreateTimetable: () -> Unit,
+  navigateAddTimetableCell: () -> Unit,
+  handleException: (Throwable) -> Unit,
+  onShowToast: (String) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+  val context = LocalContext.current
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      is TimetableSideEffect.HandleException -> handleException(sideEffect.throwable)
+      TimetableSideEffect.NavigateAddTimetableCell -> navigateAddTimetableCell()
+      TimetableSideEffect.ShowNeedCreateTimetableToast -> onShowToast(context.getString(R.string.timetable_screen_need_create_timetable))
+      TimetableSideEffect.NavigateCreateTimetable -> navigateCreateTimetable()
+    }
+  }
 
   LaunchedEffect(key1 = Unit) {
     viewModel.getMainTimetable()
@@ -36,7 +52,8 @@ fun TimetableRoute(
   TimetableScreen(
     padding = padding,
     uiState = uiState,
-    onClickAddTimetable = navigateCreateTimetable,
+    onClickAddTimetable = viewModel::navigateCreateTimetable,
+    onClickAppbarAdd = viewModel::navigateAddTimetableCell,
   )
 }
 
@@ -45,6 +62,7 @@ fun TimetableScreen(
   padding: PaddingValues,
   uiState: TimetableState = TimetableState(),
   onClickAddTimetable: () -> Unit = {},
+  onClickAppbarAdd: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -53,7 +71,7 @@ fun TimetableScreen(
   ) {
     TimetableAppbar(
       name = uiState.timetable?.name,
-      onClickAdd = {},
+      onClickAdd = onClickAppbarAdd,
       onClickHamburger = {},
       onClickSetting = {},
     )

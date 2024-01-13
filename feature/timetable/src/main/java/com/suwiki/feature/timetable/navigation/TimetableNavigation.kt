@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.suwiki.feature.timetable.addcell.AddTimetableCellRoute
 import com.suwiki.feature.timetable.createtimetable.CreateTimetableRoute
 import com.suwiki.feature.timetable.timetable.TimetableRoute
 
@@ -16,10 +17,16 @@ fun NavController.navigateCreateTimetable() {
   navigate(TimetableRoute.createRoute)
 }
 
+fun NavController.navigateAddTimetableCell() {
+  navigate(TimetableRoute.addCellRoute)
+}
+
 fun NavGraphBuilder.timetableNavGraph(
   padding: PaddingValues,
+  argumentName: String,
   popBackStack: () -> Unit,
   navigateCreateTimetable: () -> Unit,
+  navigateAddTimetableCell: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
 ) {
@@ -27,6 +34,9 @@ fun NavGraphBuilder.timetableNavGraph(
     TimetableRoute(
       padding = padding,
       navigateCreateTimetable = navigateCreateTimetable,
+      handleException = handleException,
+      onShowToast = onShowToast,
+      navigateAddTimetableCell = navigateAddTimetableCell,
     )
   }
 
@@ -37,9 +47,21 @@ fun NavGraphBuilder.timetableNavGraph(
       onShowToast = onShowToast,
     )
   }
+
+  composable(route = TimetableRoute.addCellRoute) { navBackStackEntry ->
+    val selectedOpenMajor = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "전체"
+
+    AddTimetableCellRoute(
+      selectedOpenMajor = selectedOpenMajor,
+      popBackStack = popBackStack,
+      handleException = handleException,
+      onShowToast = onShowToast,
+    )
+  }
 }
 
 object TimetableRoute {
   const val route = "timetable"
   const val createRoute = "$route/create"
+  const val addCellRoute = "$route/add-cell"
 }

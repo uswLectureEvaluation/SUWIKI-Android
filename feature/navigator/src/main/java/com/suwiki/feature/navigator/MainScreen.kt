@@ -91,8 +91,10 @@ internal fun MainScreen(
 
         timetableNavGraph(
           padding = innerPadding,
+          argumentName = OpenMajorRoute.ARGUMENT_NAME,
           popBackStack = navigator::popBackStackIfNotHome,
           navigateCreateTimetable = navigator::navigateCreateTimetable,
+          navigateAddTimetableCell = navigator::navigateAddTimetableCell,
           handleException = viewModel::handleException,
           onShowToast = viewModel::onShowToast,
         )

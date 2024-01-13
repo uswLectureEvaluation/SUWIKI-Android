@@ -49,7 +49,7 @@ fun TimetableAppbar(
     Icon(
       modifier = Modifier
         .clip(CircleShape)
-        .suwikiClickable(onClick = onClickHamburger),
+        .suwikiClickable(onClick = onClickAdd),
       painter = painterResource(id = R.drawable.ic_timetable_add),
       contentDescription = "",
       tint = Gray95,
@@ -58,7 +58,7 @@ fun TimetableAppbar(
     Icon(
       modifier = Modifier
         .clip(CircleShape)
-        .suwikiClickable(onClick = onClickAdd),
+        .suwikiClickable(onClick = onClickHamburger),
       painter = painterResource(id = R.drawable.ic_timetable_hamburger),
       contentDescription = "",
       tint = Gray95,

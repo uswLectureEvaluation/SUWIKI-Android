@@ -76,6 +76,7 @@ fun LectureEvaluationRoute(
       }
 
       is LectureEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)
+      is LectureEvaluationSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
     }
   }
 
@@ -116,7 +117,7 @@ fun LectureEvaluationRoute(
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateSignup()
     },
-    onClickSelectedOpenMajor = navigateOpenMajor,
+    onClickSelectedOpenMajor = viewModel::navigateOpenMajor,
     onValueChangeSearchBar = viewModel::updateSearchValue,
     onClickSearchButton = viewModel::searchLectureEvaluation,
     onClickSearchBarClearButton = {
