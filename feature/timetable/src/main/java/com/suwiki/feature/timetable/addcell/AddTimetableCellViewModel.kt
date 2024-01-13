@@ -4,10 +4,13 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.OpenLectureData
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
+import com.suwiki.feature.timetable.addcell.model.SchoolLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -29,35 +32,66 @@ class AddTimetableCellViewModel @Inject constructor(
   private var isFirstVisit: Boolean = true
 
   fun initData() = intent {
-    if (isFirstVisit) getOpenLectureList(needClear = false)
+    if (isFirstVisit) {
+      getOpenLectureList(needClear = false)
+      isFirstVisit = false
+    }
+  }
+
+  fun searchOpenLecture(search: String) {
+    searchQuery = search
+    getOpenLectureList(search = search, needClear = true)
+  }
+
+  @OptIn(OrbitExperimental::class)
+  fun updateSearchValue(searchValue: String) = blockingIntent {
+    reduce { state.copy(searchValue = searchValue) }
+  }
+
+  fun updateSchoolLevelPosition(schoolLevel: SchoolLevel) = intent {
+    getOpenLectureList(
+      schoolLevel = schoolLevel,
+      needClear = true,
+    )
+  }
+
+  fun updateSelectedOpenMajor(openMajor: String) = intent {
+    if (openMajor == state.selectedOpenMajor) return@intent
+    getOpenLectureList(
+      majorType = openMajor,
+      needClear = true,
+    )
   }
 
   fun getOpenLectureList(
     search: String = searchQuery,
-    // alignPosition: Int = currentState.selectedAlignPosition,
-    // majorType: String = currentState.selectedOpenMajor,
+    schoolLevel: SchoolLevel = currentState.schoolLevel,
+    majorType: String = currentState.selectedOpenMajor,
     needClear: Boolean,
   ) = intent {
-    val currentList = if (needClear) {
-      reduce { state.copy(isLoading = true) }
-      cursorId = 0
-      isLast = false
-      emptyList()
-    } else {
-      state.openLectureList
+    val currentList = when {
+      needClear -> {
+        reduce { state.copy(isLoading = true) }
+        cursorId = 0
+        isLast = false
+        emptyList()
+      }
+
+      isLast -> return@intent
+      else -> state.openLectureList
     }
 
     getOpenLectureListUseCase(
       GetOpenLectureListUseCase.Param(
         cursorId = cursorId,
         keyword = search,
-        major = null,
-        grade = null,
+        major = if (majorType == "전체") null else majorType,
+        grade = schoolLevel.query,
       ),
     ).onSuccess { newData ->
       handleGetOpenLectureListSuccess(
-        // alignPosition = alignPosition,
-        // majorType = majorType,
+        schoolLevel = schoolLevel,
+        majorType = majorType,
         currentList = currentList,
         newData = newData,
       )
@@ -72,8 +106,8 @@ class AddTimetableCellViewModel @Inject constructor(
   }
 
   private fun handleGetOpenLectureListSuccess(
-    // alignPosition: Int,
-    // majorType: String,
+    schoolLevel: SchoolLevel,
+    majorType: String,
     currentList: List<OpenLecture>,
     newData: OpenLectureData,
   ) = intent {
@@ -81,6 +115,8 @@ class AddTimetableCellViewModel @Inject constructor(
       isLast = newData.isLast
       cursorId = newData.content.lastOrNull()?.id ?: 0L
       state.copy(
+        schoolLevel = schoolLevel,
+        selectedOpenMajor = majorType,
         openLectureList = currentList
           .plus(newData.content)
           .distinctBy { it.id }
@@ -88,4 +124,8 @@ class AddTimetableCellViewModel @Inject constructor(
       )
     }
   }
+
+  fun showGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = true) } }
+  fun hideGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = false) } }
+  fun popBackStack() = intent { postSideEffect(AddTimetableCellSideEffect.PopBackStack) }
 }

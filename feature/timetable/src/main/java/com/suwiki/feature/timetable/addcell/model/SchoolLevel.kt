@@ -3,7 +3,7 @@ package com.suwiki.feature.timetable.addcell.model
 import androidx.annotation.StringRes
 import com.suwiki.feature.timetable.R
 
-enum class GradeType(
+enum class SchoolLevel(
   val query: Int?,
   @StringRes val stringResId: Int,
 ) {

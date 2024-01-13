@@ -72,7 +72,7 @@ fun LectureEvaluationRoute(
       LectureEvaluationSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
       LectureEvaluationSideEffect.ScrollToTop -> scope.launch {
         awaitFrame()
-        listState.scrollToItem(0)
+        listState.animateScrollToItem(0)
       }
 
       is LectureEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)

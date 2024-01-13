@@ -1,16 +1,22 @@
 package com.suwiki.feature.timetable.addcell
 
 import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.R
+import com.suwiki.feature.timetable.addcell.model.SchoolLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 data class AddTimetableCellState(
   val searchValue: String = "",
   val openLectureList: PersistentList<OpenLecture> = persistentListOf(),
+  val selectedOpenMajor: String = "전체",
+  val showSchoolLevelBottomSheet: Boolean = false,
+  val schoolLevel: SchoolLevel = SchoolLevel.ALL,
   val isLoading: Boolean = false,
 )
 
