@@ -9,4 +9,5 @@ android {
 
 dependencies {
   implementation(projects.domain.lectureevaluation.my)
+  implementation(libs.kotlinx.serialization.json)
 }

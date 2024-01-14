@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation
+package com.suwiki.feature.lectureevaluation.my
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.domain.lectureevaluation.my.usecase.GetMyExamEvaluationListUseCase
@@ -21,43 +21,51 @@ class MyEvaluationViewModel @Inject constructor(
 ) : ContainerHost<MyEvaluationState, MyEvaluationSideEffect>, ViewModel() {
   override val container: Container<MyEvaluationState, MyEvaluationSideEffect> = container(MyEvaluationState())
 
-  // TODO("인자에 페이지 추가")
-  fun loadMyLectureEvaluations() = intent {
+  private var currentLectureEvaluationPage = 1
+  private var currentExamEvaluationPage = 1
+
+  fun getMyLectureEvaluations() = intent {
     showLoadingScreen()
-    getMyLectureEvaluationListUseCase(1)
+    getMyLectureEvaluationListUseCase(currentLectureEvaluationPage)
       .onSuccess {
-        reduce { state.copy(myLectureEvaluationList = it.toPersistentList()) }
+        reduce { state.copy(myLectureEvaluationList = state.myLectureEvaluationList.addAll(it.toPersistentList())) }
+        currentLectureEvaluationPage++
       }
       .onFailure {
+        postSideEffect(MyEvaluationSideEffect.HandleException(it))
       }
     hideLoadingScreen()
   }
 
-  // TODO("인자에 페이지 추가")
-  fun loadMyExamEvaluations() = intent {
+  fun getMyExamEvaluations() = intent {
     showLoadingScreen()
-    getMyExamEvaluationListUseCase(1)
+    getMyExamEvaluationListUseCase(currentExamEvaluationPage)
       .onSuccess {
-        reduce { state.copy(myExamEvaluationList = it.toPersistentList()) }
+        reduce { state.copy(myExamEvaluationList = state.myExamEvaluationList.addAll(it.toPersistentList())) }
+        currentExamEvaluationPage++
       }
       .onFailure {
+        postSideEffect(MyEvaluationSideEffect.HandleException(it))
       }
     hideLoadingScreen()
   }
 
-  // TODO("인자에 페이지 추가")
-  fun loadInitList() = intent {
+  fun initData() = intent {
     showLoadingScreen()
-    joinAll(loadMyLectureEvaluations(), loadMyExamEvaluations())
+    joinAll(getMyLectureEvaluations(), getMyExamEvaluations())
     hideLoadingScreen()
   }
 
-  fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentPage = currentPage) } }
+  fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentTabPage = currentPage) } }
 
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
 
   fun popBackStack() = intent { postSideEffect(MyEvaluationSideEffect.PopBackStack) }
-  fun navigateMyLectureEvaluation() = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation) }
-  fun navigateMyExamEvaluation() = intent { postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation) }
+  fun navigateMyLectureEvaluation(lectureEvaluation: String) = intent {
+    postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation(lectureEvaluation))
+  }
+  fun navigateMyExamEvaluation(examEvaluation: String) = intent {
+    postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation(examEvaluation))
+  }
 }

@@ -1,4 +1,4 @@
-package com.suwiki.feature.myinfo.myevaluation.lectureevaluation
+package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,8 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.ChipColor
 import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
@@ -47,15 +45,17 @@ import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.ui.extension.toText
-import com.suwiki.feature.myinfo.R
+import com.suwiki.feature.lectureevaluation.editor.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.util.Locale
 
 @Composable
 fun MyLectureEvaluationEditRoute(
   viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
+  handleException: (Throwable) -> Unit,
 ) {
   val context = LocalContext.current
   val scrollState = rememberScrollState()
@@ -64,17 +64,26 @@ fun MyLectureEvaluationEditRoute(
     when (sideEffect) {
       MyLectureEvaluationEditSideEffect.PopBackStack -> popBackStack()
       MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast -> {
-        onShowToast(context.getString(R.string.my_lecture_evaluation_delete_toast_msg))
+        onShowToast(context.getString(R.string.lecture_evaluation_delete_toast_msg))
       }
 
       MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationReviseToast -> {
-        onShowToast(context.getString(R.string.my_lecture_evaluation_revise_toast_msg))
+        onShowToast(context.getString(R.string.lecture_evaluation_revise_toast_msg))
       }
+      is MyLectureEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.loadMyPoint()
+    viewModel.initData()
+  }
+
+  LaunchedEffect(
+    key1 = uiState.honeyRating,
+    key2 = uiState.learningRating,
+    key3 = uiState.satisfactionRating,
+  ) {
+    viewModel.updateTotalAvg()
   }
 
   MyLectureEvaluationEditScreen(
@@ -82,30 +91,30 @@ fun MyLectureEvaluationEditRoute(
     scrollState = scrollState,
     popBackStack = viewModel::popBackStack,
     onClickSemesterButton = viewModel::showSemesterBottomSheet,
-    onClickSemesterItem = viewModel::clickSemesterItem,
+    onClickSemesterItem = viewModel::updateSemester,
     onSemesterBottomSheetDismissRequest = viewModel::hideSemesterBottomSheet,
     onHoneyRatingValueChange = viewModel::updateHoneyRating,
     onLearningRatingValueChange = viewModel::updateLearningRating,
     onSatisfactionRatingValueChange = viewModel::updateSatisfactionRating,
     onLectureEvaluationValueChange = viewModel::updateMyLectureEvaluationValue,
-    onClickLectureEvaluationDeleteButton = viewModel::showMyLectureEvaluationDeleteDialog,
-    onDismissLectureEvaluationDelete = viewModel::hideMyLectureEvaluationDeleteDialog,
+    onClickLectureEvaluationDeleteButton = viewModel::showDeleteOrLackPointDialog,
+    onDismissLectureEvaluationDelete = viewModel::hideLectureEvaluationDeleteDialog,
+    onDismissLackPoint = viewModel::hideLackPointDialog,
     onClickGradeChip = viewModel::updateGradeLevel,
     onClickHomeworkChip = viewModel::updateHomeworkLevel,
     onClickTeamChip = viewModel::updateTeamLevel,
-    onClickLectureEvaluationDeleteConfirm = viewModel::clickDeleteButton,
-    onClickLectureEvaluationReviseButton = viewModel::clickReviseButton,
+    onClickLectureEvaluationDeleteConfirm = viewModel::deleteLectureEvaluation,
+    onClickLectureEvaluationReviseButton = viewModel::updateLectureEvaluation,
   )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyLectureEvaluationEditScreen(
   uiState: MyLectureEvaluationEditState,
   scrollState: ScrollState,
   popBackStack: () -> Unit,
   onClickSemesterButton: () -> Unit = {},
-  onClickSemesterItem: (String) -> Unit = {},
+  onClickSemesterItem: (Int) -> Unit = {},
   onSemesterBottomSheetDismissRequest: () -> Unit = {},
   onHoneyRatingValueChange: (Float) -> Unit = {},
   onLearningRatingValueChange: (Float) -> Unit = {},
@@ -117,6 +126,7 @@ fun MyLectureEvaluationEditScreen(
   onClickLectureEvaluationDeleteButton: () -> Unit = {},
   onClickLectureEvaluationDeleteConfirm: () -> Unit = {},
   onDismissLectureEvaluationDelete: () -> Unit = {},
+  onDismissLackPoint: () -> Unit = {},
   onClickLectureEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
@@ -125,7 +135,7 @@ fun MyLectureEvaluationEditScreen(
       .fillMaxSize(),
   ) {
     SuwikiAppBarWithTitle(
-      title = stringResource(R.string.my_class_review_lecture_evaluation),
+      title = stringResource(R.string.word_lecture_evaluation),
       showBackIcon = false,
       showCloseIcon = true,
       onClickClose = popBackStack,
@@ -154,10 +164,10 @@ fun MyLectureEvaluationEditScreen(
           verticalAlignment = Alignment.CenterVertically,
         ) {
           SuwikiRatingBar(
-            rating = 3.4f,
+            rating = uiState.totalAvg,
           )
           Text(
-            text = "3.4",
+            text = "%.1f".format(Locale.US, uiState.totalAvg),
             style = SuwikiTheme.typography.body4,
             color = Primary,
           )
@@ -165,7 +175,7 @@ fun MyLectureEvaluationEditScreen(
       }
 
       LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_honey_rating),
+        text = stringResource(R.string.word_honey_rating),
         verticalAlignment = Alignment.Bottom,
         content = {
           SuwikiSlider(
@@ -176,7 +186,7 @@ fun MyLectureEvaluationEditScreen(
         },
       )
       LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_learning_rating),
+        text = stringResource(R.string.word_learning_rating),
         verticalAlignment = Alignment.Bottom,
         content = {
           SuwikiSlider(
@@ -187,7 +197,7 @@ fun MyLectureEvaluationEditScreen(
         },
       )
       LectureEvaluationEditContainer(
-        text = stringResource(R.string.my_class_review_satisfaction_rating),
+        text = stringResource(R.string.word_satisfaction_rating),
         verticalAlignment = Alignment.Bottom,
         content = {
           SuwikiSlider(
@@ -204,7 +214,7 @@ fun MyLectureEvaluationEditScreen(
         verticalArrangement = Arrangement.spacedBy(20.dp),
       ) {
         LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_grade),
+          text = stringResource(R.string.word_grade),
           verticalAlignment = Alignment.Bottom,
           content = {
             Row(
@@ -223,7 +233,7 @@ fun MyLectureEvaluationEditScreen(
         )
 
         LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_homework),
+          text = stringResource(R.string.word_homework),
           verticalAlignment = Alignment.Bottom,
           content = {
             Row(
@@ -242,7 +252,7 @@ fun MyLectureEvaluationEditScreen(
         )
 
         LectureEvaluationEditContainer(
-          text = stringResource(R.string.my_class_review_team),
+          text = stringResource(R.string.word_team),
           verticalAlignment = Alignment.Bottom,
           content = {
             Row(
@@ -265,7 +275,7 @@ fun MyLectureEvaluationEditScreen(
 
       SuwikiReviewInputBox(
         value = uiState.lectureEvaluation,
-        hint = stringResource(R.string.my_class_review_input_box_hint),
+        hint = stringResource(R.string.lecture_evaluation_input_box_hint),
         onValueChange = onLectureEvaluationValueChange,
       )
     }
@@ -281,7 +291,7 @@ fun MyLectureEvaluationEditScreen(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_delete),
+        text = stringResource(R.string.text_delete),
         enabled = false,
         onClick = onClickLectureEvaluationDeleteButton,
       )
@@ -289,7 +299,7 @@ fun MyLectureEvaluationEditScreen(
         modifier = Modifier
           .weight(1f)
           .height(50.dp),
-        text = stringResource(R.string.my_class_review_input_box_revise),
+        text = stringResource(R.string.text_revise),
         onClick = onClickLectureEvaluationReviseButton,
       )
     }
@@ -297,35 +307,33 @@ fun MyLectureEvaluationEditScreen(
 
   if (uiState.showDeleteLectureEvaluationDialog) {
     SuwikiDialog(
-      headerText = stringResource(R.string.my_class_review_delete_dialog_header),
-      bodyText = stringResource(R.string.my_class_review_delete_dialog_body, uiState.point),
-      confirmButtonText = stringResource(R.string.my_class_review_delete),
-      dismissButtonText = stringResource(R.string.my_class_review_cancel),
+      headerText = stringResource(R.string.delete_dialog_header),
+      bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
+      confirmButtonText = stringResource(R.string.word_delete),
+      dismissButtonText = stringResource(R.string.word_cancel),
       onDismissRequest = onDismissLectureEvaluationDelete,
       onClickConfirm = onClickLectureEvaluationDeleteConfirm,
       onClickDismiss = onDismissLectureEvaluationDelete,
     )
   }
 
-  SuwikiBottomSheet(
+  if (uiState.showLackPointDialog) {
+    SuwikiDialog(
+      headerText = stringResource(R.string.lack_point_dialog_header),
+      bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
+      confirmButtonText = stringResource(R.string.word_confirm),
+      onDismissRequest = onDismissLackPoint,
+      onClickConfirm = onDismissLackPoint,
+    )
+  }
+
+  SuwikiSelectBottomSheet(
     isSheetOpen = uiState.showSemesterBottomSheet,
     onDismissRequest = onSemesterBottomSheetDismissRequest,
-    content = {
-      // TODO(REMOVE)
-      SuwikiMenuItem(title = "")
-      SuwikiMenuItem(
-        title = "2023-1",
-        onClick = { onClickSemesterItem("2023-1") },
-      )
-      SuwikiMenuItem(
-        title = "2022-2",
-        onClick = { onClickSemesterItem("2022-2") },
-      )
-      SuwikiMenuItem(
-        title = "2022-1",
-        onClick = { onClickSemesterItem("2022-1") },
-      )
-    },
+    onClickItem = { onClickSemesterItem(it) },
+    itemList = uiState.semesterList,
+    title = stringResource(R.string.word_select_semester),
+    selectedPosition = uiState.selectedSemesterPosition,
   )
 
   if (uiState.isLoading) {

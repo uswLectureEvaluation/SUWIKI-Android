@@ -8,14 +8,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyExamEvaluation
+import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyLectureEvaluation
+import com.suwiki.feature.lectureevaluation.my.navigation.navigateMyEvaluation
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
 import com.suwiki.feature.login.navigation.navigateFindId
 import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
-import com.suwiki.feature.myinfo.navigation.navigateMyEvaluation
-import com.suwiki.feature.myinfo.navigation.navigateMyExamEvaluation
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
-import com.suwiki.feature.myinfo.navigation.navigateMyLectureEvaluation
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
@@ -88,12 +88,12 @@ internal class MainNavigator(
     navController.navigateMyEvaluation()
   }
 
-  fun navigateMyLectureEvaluationEdit() {
-    navController.navigateMyLectureEvaluation()
+  fun navigateMyLectureEvaluationEdit(lectureEvaluation: String) {
+    navController.navigateMyLectureEvaluation(lectureEvaluation)
   }
 
-  fun navigateMyExamEvaluationEdit() {
-    navController.navigateMyExamEvaluation()
+  fun navigateMyExamEvaluationEdit(examEvaluation: String) {
+    navController.navigateMyExamEvaluation(examEvaluation)
   }
 
   fun navigateOpenMajor(selectedOpenMajor: String) {

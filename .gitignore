@@ -481,3 +481,5 @@ lint/tmp/
 # Android Profiling
 *.hprof
 
+/report
+

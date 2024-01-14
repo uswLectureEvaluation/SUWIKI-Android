@@ -33,6 +33,8 @@ import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.lectureevaluation.editor.navigation.myEvaluationEditNavGraph
+import com.suwiki.feature.lectureevaluation.my.navigation.myEvaluationNavGraph
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
 import com.suwiki.feature.login.R
 import com.suwiki.feature.login.navigation.loginNavGraph
@@ -109,14 +111,24 @@ internal fun MainScreen(
           navigateOpenMajor = navigator::navigateOpenMajor,
         )
 
-        myInfoNavGraph(
+        myEvaluationNavGraph(
           padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
-          navigateNotice = navigator::navigateNotice,
-          navigateMyEvaluation = navigator::navigateMyEvaluation,
           navigateMyLectureEvaluationEdit = navigator::navigateMyLectureEvaluationEdit,
           navigateMyExamEvaluationEdit = navigator::navigateMyExamEvaluationEdit,
+          handleException = viewModel::handleException,
+        )
+
+        myEvaluationEditNavGraph(
+          popBackStack = navigator::popBackStackIfNotHome,
           onShowToast = viewModel::onShowToast,
+          handleException = viewModel::handleException,
+        )
+
+        myInfoNavGraph(
+          padding = innerPadding,
+          navigateNotice = navigator::navigateNotice,
+          navigateMyEvaluation = navigator::navigateMyEvaluation,
         )
 
         noticeNavGraph(
