@@ -8,5 +8,8 @@ data class TimetableState(
 )
 
 sealed interface TimetableSideEffect {
+  data object ShowNeedCreateTimetableToast : TimetableSideEffect
+  data object NavigateAddTimetableCell : TimetableSideEffect
+  data object NavigateCreateTimetable : TimetableSideEffect
   data class HandleException(val throwable: Throwable) : TimetableSideEffect
 }

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="word_mon">월</string>
-  <string name="word_tue">화</string>
-  <string name="word_wed">수</string>
-  <string name="word_thu">목</string>
-  <string name="word_fri">금</string>
-  <string name="word_sat">토</string>
-  <string name="word_elearning">이러닝</string>
   <string name="honey_quality">꿀강지수</string>
   <string name="learning_quality">배움지수</string>
   <string name="satisfaction_quality">만족지수</string>
@@ -17,11 +10,11 @@
   <string name="word_report">신고</string>
   <string name="word_type_exam">시험유형</string>
   <string name="word_difficulcy">난이도</string>
-    <string name="word_add">추가</string>
-    <string name="word_grade">학점</string>
+  <string name="word_add">추가</string>
+  <string name="word_grade">학점</string>
   <string name="word_homework">과제</string>
   <string name="word_team">팀플</string>
-    <string name="bottom_sheet_agreement_title">서비스 이용을 위해\n약관에 동의해주세요.</string>
+  <string name="bottom_sheet_agreement_title">서비스 이용을 위해\n약관에 동의해주세요.</string>
   <string name="agreement_container_term">(필수) SUWIKI 이용약관</string>
   <string name="agreement_container_personal_policy">(필수) 개인정보처리방침</string>
   <string name="bottom_sheet_agreement_button">동의하고 시작하기</string>
