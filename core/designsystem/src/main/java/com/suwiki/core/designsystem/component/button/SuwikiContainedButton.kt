@@ -79,7 +79,7 @@ fun SuwikiContainedSmallButton(
     backgroundColor = GrayF6,
     rippleColor = Black,
     textColor = Gray95,
-    textStyle = SuwikiTheme.typography.caption6,
+    textStyle = SuwikiTheme.typography.caption2,
     padding = PaddingValues(horizontal = 6.dp, vertical = 2.5.dp),
   )
 }

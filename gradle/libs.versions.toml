@@ -164,7 +164,6 @@ encrypted-datastore-preference-security = { group = "tech.thdev", name = "useful
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-database = { group = "com.google.firebase", name = "firebase-database-ktx" }
 
 ted-permission = { group = "io.github.ParkSangGwon", name = "tedpermission-normal", version.ref = "ted-permission" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
@@ -185,7 +184,7 @@ protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 
 [bundles]
-firebase = ["firebase-analytics", "firebase-database"]
+firebase = ["firebase-analytics"]
 androidx-lifecycle = ["androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-ktx"]
 androidx-navigation = ["navigation-fragment-ktx", "navigation-ui-ktx"]
 coroutine = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]

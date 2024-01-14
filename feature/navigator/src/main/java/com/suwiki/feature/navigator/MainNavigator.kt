@@ -22,6 +22,7 @@ import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
 import com.suwiki.feature.signup.navigation.navigateSignup
 import com.suwiki.feature.signup.navigation.navigateSignupComplete
 import com.suwiki.feature.timetable.navigation.TimetableRoute
+import com.suwiki.feature.timetable.navigation.navigateAddTimetableCell
 import com.suwiki.feature.timetable.navigation.navigateCreateTimetable
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
@@ -101,6 +102,10 @@ internal class MainNavigator(
 
   fun navigateCreateTimetable() {
     navController.navigateCreateTimetable()
+  }
+
+  fun navigateAddTimetableCell() {
+    navController.navigateAddTimetableCell()
   }
 
   fun popBackStackIfNotHome() {

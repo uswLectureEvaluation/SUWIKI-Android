@@ -32,9 +32,5 @@ dependencies {
   implementation(libs.okhttp.logging)
   androidTestImplementation(libs.junit4)
 
-  val bom = libs.firebase.bom
-  add("implementation", platform(bom))
-  implementation(libs.bundles.firebase)
-
   implementation(libs.timber)
 }
