@@ -22,8 +22,8 @@ fun NavGraphBuilder.myInfoNavGraph(
   navigateNotice: () -> Unit = {},
   navigateMyEvaluation: () -> Unit = {},
   navigateMyAccount: () -> Unit = {},
-  navigateChangePassword: () -> Unit = {},
-  navigateWithdrawal: () -> Unit = {},
+  navigateResetPassword: () -> Unit = {},
+  navigateQuit: () -> Unit = {},
   handleException: (Throwable) -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
@@ -37,8 +37,8 @@ fun NavGraphBuilder.myInfoNavGraph(
   composable(route = MyInfoRoute.myAccount) {
     MyAccountRoute(
       popBackStack = popBackStack,
-      navigateChangePassword = navigateChangePassword,
-      navigateWithdrawal = navigateWithdrawal,
+      navigateResetPassword = navigateResetPassword,
+      navigateQuit = navigateQuit,
       handleException = handleException,
     )
   }

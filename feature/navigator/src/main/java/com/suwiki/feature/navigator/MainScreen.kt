@@ -131,8 +131,8 @@ internal fun MainScreen(
           navigateNotice = navigator::navigateNotice,
           navigateMyEvaluation = navigator::navigateMyEvaluation,
           navigateMyAccount = navigator::navigateMyAccount,
-          navigateChangePassword = { /*TODO*/ },
-          navigateWithdrawal = { /*TODO*/ },
+          navigateResetPassword = { /*TODO*/ },
+          navigateQuit = { /*TODO*/ },
           handleException = viewModel::handleException,
         )
 

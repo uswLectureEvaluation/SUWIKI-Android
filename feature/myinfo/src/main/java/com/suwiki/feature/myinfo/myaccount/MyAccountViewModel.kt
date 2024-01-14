@@ -35,6 +35,6 @@ class MyAccountViewModel @Inject constructor(
   }
 
   fun popBackStack() = intent { postSideEffect(MyAccountSideEffect.PopBackStack) }
-  fun navigateChangePassword() = intent { postSideEffect(MyAccountSideEffect.NavigateChangePassword) }
-  fun navigateWithdrawal() = intent { postSideEffect(MyAccountSideEffect.NavigateWithdrawal) }
+  fun navigateResetPassword() = intent { postSideEffect(MyAccountSideEffect.NavigateResetPassword) }
+  fun navigateQuit() = intent { postSideEffect(MyAccountSideEffect.NavigateQuit) }
 }

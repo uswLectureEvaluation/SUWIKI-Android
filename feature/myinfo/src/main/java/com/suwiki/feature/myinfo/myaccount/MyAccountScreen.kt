@@ -33,16 +33,16 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun MyAccountRoute(
   viewModel: MyAccountViewModel = hiltViewModel(),
   popBackStack: () -> Unit,
-  navigateChangePassword: () -> Unit = {},
-  navigateWithdrawal: () -> Unit = {},
+  navigateResetPassword: () -> Unit = {},
+  navigateQuit: () -> Unit = {},
   handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyAccountSideEffect.PopBackStack -> popBackStack()
-      is MyAccountSideEffect.NavigateChangePassword -> navigateChangePassword()
-      is MyAccountSideEffect.NavigateWithdrawal -> navigateWithdrawal()
+      is MyAccountSideEffect.NavigateResetPassword -> navigateResetPassword()
+      is MyAccountSideEffect.NavigateQuit -> navigateQuit()
       is MyAccountSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
@@ -54,9 +54,9 @@ fun MyAccountRoute(
   MyAccountScreen(
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
-    onClickChangePassword = viewModel::navigateChangePassword,
+    onClickResetPassword = viewModel::navigateResetPassword,
     onClickLogout = { /*TODO(LOGOUT)*/ },
-    onClickWithdrawal = viewModel::navigateWithdrawal,
+    onClickQuit = viewModel::navigateQuit,
   )
 }
 
@@ -64,9 +64,9 @@ fun MyAccountRoute(
 fun MyAccountScreen(
   uiState: MyAccountState = MyAccountState(),
   popBackStack: () -> Unit = {},
-  onClickChangePassword: () -> Unit = {},
+  onClickResetPassword: () -> Unit = {},
   onClickLogout: () -> Unit = {},
-  onClickWithdrawal: () -> Unit = {},
+  onClickQuit: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -95,16 +95,16 @@ fun MyAccountScreen(
     )
     Spacer(modifier = Modifier.height(24.dp))
     AlignContainer(
-      title = stringResource(R.string.word_change_password),
-      onClick = onClickChangePassword,
+      title = stringResource(R.string.word_reset_password),
+      onClick = onClickResetPassword,
     )
     AlignContainer(
       title = stringResource(R.string.word_logout),
       onClick = onClickLogout,
     )
     AlignContainer(
-      title = stringResource(R.string.word_withdrawal),
-      onClick = onClickWithdrawal,
+      title = stringResource(R.string.word_quit),
+      onClick = onClickQuit,
     )
   }
 }

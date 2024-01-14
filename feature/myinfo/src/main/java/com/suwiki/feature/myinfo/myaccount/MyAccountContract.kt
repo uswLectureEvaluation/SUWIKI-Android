@@ -8,7 +8,7 @@ data class MyAccountState(
 
 sealed interface MyAccountSideEffect {
   data object PopBackStack : MyAccountSideEffect
-  data object NavigateChangePassword : MyAccountSideEffect
-  data object NavigateWithdrawal : MyAccountSideEffect
+  data object NavigateResetPassword : MyAccountSideEffect
+  data object NavigateQuit : MyAccountSideEffect
   data class HandleException(val throwable: Throwable) : MyAccountSideEffect
 }
