@@ -22,7 +22,7 @@ import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
 import com.suwiki.feature.signup.navigation.navigateSignup
 import com.suwiki.feature.signup.navigation.navigateSignupComplete
 import com.suwiki.feature.timetable.navigation.TimetableRoute
-import com.suwiki.feature.timetable.navigation.navigateAddTimetableCell
+import com.suwiki.feature.timetable.navigation.navigateOpenLecture
 import com.suwiki.feature.timetable.navigation.navigateCreateTimetable
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
@@ -105,7 +105,7 @@ internal class MainNavigator(
   }
 
   fun navigateAddTimetableCell() {
-    navController.navigateAddTimetableCell()
+    navController.navigateOpenLecture()
   }
 
   fun popBackStackIfNotHome() {

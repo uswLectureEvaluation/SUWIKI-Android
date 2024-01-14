@@ -1,10 +1,10 @@
-package com.suwiki.feature.timetable.addcell
+package com.suwiki.feature.timetable.openlecture
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.OpenLectureData
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
-import com.suwiki.feature.timetable.addcell.model.SchoolLevel
+import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.Container
@@ -18,12 +18,12 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class AddTimetableCellViewModel @Inject constructor(
+class OpenLectureViewModel @Inject constructor(
   private val getOpenLectureListUseCase: GetOpenLectureListUseCase,
-) : ViewModel(), ContainerHost<AddTimetableCellState, AddTimetableCellSideEffect> {
+) : ViewModel(), ContainerHost<OpenLectureState, OpenLectureSideEffect> {
 
-  override val container: Container<AddTimetableCellState, AddTimetableCellSideEffect> = container(
-    AddTimetableCellState(),
+  override val container: Container<OpenLectureState, OpenLectureSideEffect> = container(
+    OpenLectureState(),
   )
 
   private val currentState
@@ -99,11 +99,11 @@ class AddTimetableCellViewModel @Inject constructor(
         newData = newData,
       )
     }.onFailure {
-      postSideEffect(AddTimetableCellSideEffect.HandleException(it))
+      postSideEffect(OpenLectureSideEffect.HandleException(it))
     }
 
     if (needClear) {
-      postSideEffect(AddTimetableCellSideEffect.ScrollToTop)
+      postSideEffect(OpenLectureSideEffect.ScrollToTop)
       reduce { state.copy(isLoading = false) }
     }
   }
@@ -130,5 +130,5 @@ class AddTimetableCellViewModel @Inject constructor(
 
   fun showGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = true) } }
   fun hideGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = false) } }
-  fun popBackStack() = intent { postSideEffect(AddTimetableCellSideEffect.PopBackStack) }
+  fun popBackStack() = intent { postSideEffect(OpenLectureSideEffect.PopBackStack) }
 }

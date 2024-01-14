@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.addcell
+package com.suwiki.feature.timetable.openlecture
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,7 +44,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.timetable.R
-import com.suwiki.feature.timetable.addcell.model.SchoolLevel
+import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
@@ -52,8 +52,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun AddTimetableCellRoute(
-  viewModel: AddTimetableCellViewModel = hiltViewModel(),
+fun OpenLectureRoute(
+  viewModel: OpenLectureViewModel = hiltViewModel(),
   selectedOpenMajor: String,
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
@@ -68,11 +68,11 @@ fun AddTimetableCellRoute(
 
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      is AddTimetableCellSideEffect.HandleException -> handleException(sideEffect.throwable)
-      AddTimetableCellSideEffect.NavigateAddCustomTimetableCell -> TODO()
-      is AddTimetableCellSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
-      AddTimetableCellSideEffect.PopBackStack -> popBackStack()
-      AddTimetableCellSideEffect.ScrollToTop -> scope.launch {
+      is OpenLectureSideEffect.HandleException -> handleException(sideEffect.throwable)
+      OpenLectureSideEffect.NavigateAddCustomTimetableCell -> TODO()
+      is OpenLectureSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
+      OpenLectureSideEffect.PopBackStack -> popBackStack()
+      OpenLectureSideEffect.ScrollToTop -> scope.launch {
         awaitFrame()
         listState.animateScrollToItem(0)
       }
@@ -91,7 +91,7 @@ fun AddTimetableCellRoute(
     viewModel.getOpenLectureList(needClear = false)
   }
 
-  AddTimetableCellScreen(
+  OpenLectureScreen(
     uiState = uiState,
     listState = listState,
     onClickOpenMajorFilterContainer = navigateOpenMajor,
@@ -109,8 +109,8 @@ fun AddTimetableCellRoute(
 }
 
 @Composable
-fun AddTimetableCellScreen(
-  uiState: AddTimetableCellState = AddTimetableCellState(),
+fun OpenLectureScreen(
+  uiState: OpenLectureState = OpenLectureState(),
   listState: LazyListState = rememberLazyListState(),
   onClickOpenMajorFilterContainer: (String) -> Unit = {},
   onDismissSchoolLevelBottomSheet: () -> Unit = {},
@@ -249,8 +249,8 @@ private fun EmptyText(
 
 @Preview
 @Composable
-fun AddTimetableCellScreenPreview() {
+fun OpenLectureScreenPreview() {
   SuwikiTheme {
-    AddTimetableCellScreen()
+    OpenLectureScreen()
   }
 }
