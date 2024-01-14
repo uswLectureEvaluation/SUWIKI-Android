@@ -3,6 +3,7 @@ package com.suwiki.feature.timetable.openlecture
 import android.content.Context
 import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
@@ -15,6 +16,8 @@ data class OpenLectureState(
   val selectedOpenMajor: String = "전체",
   val showSchoolLevelBottomSheet: Boolean = false,
   val schoolLevel: SchoolLevel = SchoolLevel.ALL,
+  val showSelectCellColorBottomSheet: Boolean = false,
+  val selectedTimetableCellColor: TimetableCellColor = TimetableCellColor.BROWN,
   val isLoading: Boolean = false,
 )
 
@@ -45,4 +48,6 @@ sealed interface OpenLectureSideEffect {
   data class NavigateOpenMajor(val selectedOpenMajor: String) : OpenLectureSideEffect
   data object NavigateAddCustomTimetableCell : OpenLectureSideEffect
   data class HandleException(val throwable: Throwable) : OpenLectureSideEffect
+  data class ShowOverlapCellToast(val msg: String) : OpenLectureSideEffect
+  data object ShowSuccessAddCellToast : OpenLectureSideEffect
 }

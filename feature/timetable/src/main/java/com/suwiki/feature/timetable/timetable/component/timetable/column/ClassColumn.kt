@@ -8,14 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.suwiki.core.designsystem.component.timetable.MINUTE10
 import com.suwiki.core.designsystem.component.timetable.MINUTE60
-import com.suwiki.core.designsystem.component.timetable.cell.ClassCell
 import com.suwiki.core.designsystem.component.timetable.cell.EmptyCell
-import com.suwiki.core.designsystem.component.timetable.cell.TimetableCellType
+import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.core.designsystem.component.timetable.toText
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.feature.timetable.timetable.component.timetable.cell.ClassCell
 
 internal fun TimetableCell.getStartAndEndMinute(): Pair<Int, Int> {
   val startMinute = (this.startPeriod + 8) * MINUTE60 + 3 * MINUTE10
@@ -33,12 +33,12 @@ internal fun Int.isNotOnTime(): Boolean {
 
 @Composable
 internal fun ClassColumn(
-  modifier: Modifier = Modifier,
-  day: TimetableDay,
-  type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
-  cellList: List<TimetableCell>,
-  lastPeriod: Int,
-  onClickClassCell: (TimetableCell) -> Unit = { _ -> },
+    modifier: Modifier = Modifier,
+    day: TimetableDay,
+    type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
+    cellList: List<TimetableCell>,
+    lastPeriod: Int,
+    onClickClassCell: (TimetableCell) -> Unit = { _ -> },
 ) {
   val sortedCellList = cellList.sortedBy { it.startPeriod }
   Column(

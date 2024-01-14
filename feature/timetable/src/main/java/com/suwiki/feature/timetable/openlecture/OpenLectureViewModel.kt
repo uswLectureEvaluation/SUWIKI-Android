@@ -1,9 +1,14 @@
 package com.suwiki.feature.timetable.openlecture
 
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.exception.TimetableCellOverlapException
+import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.OpenLectureData
+import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
+import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -20,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OpenLectureViewModel @Inject constructor(
   private val getOpenLectureListUseCase: GetOpenLectureListUseCase,
+  private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
 ) : ViewModel(), ContainerHost<OpenLectureState, OpenLectureSideEffect> {
 
   override val container: Container<OpenLectureState, OpenLectureSideEffect> = container(
@@ -33,6 +39,45 @@ class OpenLectureViewModel @Inject constructor(
   private var isLast: Boolean = false
   private var searchQuery: String = ""
   private var isFirstVisit: Boolean = true
+
+  private var selectedOpenLecture: OpenLecture? = null
+
+  fun insertTimetable() = intent {
+    val timetableCellList = selectedOpenLecture?.originalCellList?.map { cell ->
+      TimetableCell(
+        name = selectedOpenLecture!!.name,
+        professor = selectedOpenLecture!!.professorName,
+        location = cell.location,
+        day = cell.day,
+        startPeriod = cell.startPeriod,
+        endPeriod = cell.endPeriod,
+        color = state.selectedTimetableCellColor,
+      )
+    } ?: return@intent
+
+    insertTimetableCellUseCase(timetableCellList)
+      .onSuccess {
+        postSideEffect(OpenLectureSideEffect.ShowSuccessAddCellToast)
+      }
+      .onFailure {
+        if (it is TimetableCellOverlapException) postSideEffect(OpenLectureSideEffect.ShowOverlapCellToast(it.message))
+        else postSideEffect(OpenLectureSideEffect.HandleException(it))
+      }
+  }
+
+  fun updateSelectedCellColor(color: TimetableCellColor) = intent { reduce { state.copy(selectedTimetableCellColor = color) } }
+
+  fun showSelectColorBottomSheet(openLecture: OpenLecture) = intent {
+    reduce {
+      selectedOpenLecture = openLecture
+      state.copy(
+        selectedTimetableCellColor = TimetableCellColor.entries.shuffled().first(),
+        showSelectCellColorBottomSheet = true,
+      )
+    }
+  }
+
+  fun hideSelectColorBottomSheet() = intent { reduce { state.copy(showSelectCellColorBottomSheet = false) } }
 
   fun initData() = intent {
     if (isFirstVisit) {

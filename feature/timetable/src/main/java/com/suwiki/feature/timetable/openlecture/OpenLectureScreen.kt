@@ -3,18 +3,28 @@ package com.suwiki.feature.timetable.openlecture
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,7 +42,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTextButton
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
+import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
 import com.suwiki.core.designsystem.component.card.SuwikiClassInformationCard
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBar
@@ -41,8 +54,12 @@ import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.timetable.Cell
+import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.util.timetableCellColorHexMap
 import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.toPersistentList
@@ -57,7 +74,6 @@ fun OpenLectureRoute(
   selectedOpenMajor: String,
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
-  @Suppress("detekt:UnusedParameter")
   onShowToast: (String) -> Unit,
   navigateOpenMajor: (String) -> Unit,
 ) {
@@ -65,6 +81,8 @@ fun OpenLectureRoute(
 
   val listState = rememberLazyListState()
   val scope = rememberCoroutineScope()
+
+  val context = LocalContext.current
 
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
@@ -76,6 +94,9 @@ fun OpenLectureRoute(
         awaitFrame()
         listState.animateScrollToItem(0)
       }
+
+      is OpenLectureSideEffect.ShowOverlapCellToast -> onShowToast(sideEffect.msg)
+      OpenLectureSideEffect.ShowSuccessAddCellToast -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
     }
   }
 
@@ -105,7 +126,14 @@ fun OpenLectureRoute(
     onClickSearchButton = viewModel::searchOpenLecture,
     onClickClearButton = { viewModel.updateSearchValue("") },
     onValueChangeSearch = viewModel::updateSearchValue,
-  )
+    onClickCellAdd = viewModel::showSelectColorBottomSheet,
+    onClickApply = {
+      viewModel.hideSelectColorBottomSheet()
+      viewModel.insertTimetable()
+    },
+    onClickColorChip = viewModel::updateSelectedCellColor,
+    onDismissColorSelectBottomSheet = viewModel::hideSelectColorBottomSheet,
+    )
 }
 
 @Composable
@@ -120,6 +148,10 @@ fun OpenLectureScreen(
   onClickSearchButton: (String) -> Unit = {},
   onClickClearButton: () -> Unit = {},
   onValueChangeSearch: (String) -> Unit = {},
+  onClickCellAdd: (OpenLecture) -> Unit = {},
+  onClickApply: () -> Unit = {},
+  onDismissColorSelectBottomSheet: () -> Unit = {},
+  onClickColorChip: (TimetableCellColor) -> Unit = {},
 ) {
   val context = LocalContext.current
 
@@ -186,12 +218,21 @@ fun OpenLectureScreen(
             classType = type,
             openMajor = major,
             onClick = { /*TODO*/ },
-            onClickAdd = {},
+            onClickAdd = { onClickCellAdd(this) },
           )
         }
       }
     }
   }
+
+  ColorSelectBottomSheet(
+    isSheetOpen = uiState.showSelectCellColorBottomSheet,
+    selectedTimetableCellColor = uiState.selectedTimetableCellColor,
+    onClickApply = onClickApply,
+    onClickColorChip = onClickColorChip,
+    onDismissColorSelectBottomSheet = onDismissColorSelectBottomSheet,
+  )
+
 
   if (uiState.isLoading) {
     LoadingScreen()
@@ -205,6 +246,59 @@ fun OpenLectureScreen(
     title = stringResource(R.string.word_school_level),
     selectedPosition = uiState.schoolLevel.ordinal,
   )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ColorSelectBottomSheet(
+  isSheetOpen: Boolean,
+  onDismissColorSelectBottomSheet: () -> Unit,
+  selectedTimetableCellColor: TimetableCellColor,
+  onClickColorChip: (TimetableCellColor) -> Unit,
+  onClickApply: () -> Unit,
+) {
+  SuwikiBottomSheet(
+    isSheetOpen = isSheetOpen,
+    onDismissRequest = onDismissColorSelectBottomSheet,
+  ) {
+    Column(
+      modifier = Modifier.padding(horizontal = 24.dp, vertical = 32.dp),
+      verticalArrangement = Arrangement.spacedBy(32.dp),
+    ) {
+      LazyVerticalGrid(
+        columns = GridCells.Fixed(5),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+      ) {
+        items(items = TimetableCellColor.entries) {
+          Box(
+            modifier = Modifier
+              .aspectRatio(1f)
+              .clip(CircleShape)
+              .background(Color(timetableCellColorHexMap[it]!!))
+              .suwikiClickable(
+                rippleEnabled = false,
+                onClick = { onClickColorChip(it) }
+              ),
+            contentAlignment = Alignment.Center,
+          ) {
+            if (selectedTimetableCellColor == it) {
+              Icon(
+                painter = painterResource(id = R.drawable.ic_align_checked),
+                contentDescription = null,
+                tint = White,
+              )
+            }
+          }
+        }
+      }
+
+      SuwikiContainedLargeButton(
+        text = stringResource(R.string.word_apply),
+        onClick = onClickApply,
+      )
+    }
+  }
 }
 
 @Composable

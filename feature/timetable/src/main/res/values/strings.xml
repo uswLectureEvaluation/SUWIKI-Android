@@ -13,4 +13,5 @@
   <string name="all_timetable_cell_screen_grade_3">3학년</string>
   <string name="all_timetable_cell_screen_grade_4">4학년</string>
   <string name="all_timetable_cell_screen_cell_info">%1$s %2$s교시 (%3$s)</string>
+    <string name="open_lecture_success_add_cell_toast">시간표에 강의를 추가했어요</string>
 </resources>
