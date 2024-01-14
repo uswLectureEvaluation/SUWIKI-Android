@@ -1,7 +1,6 @@
 package com.suwiki.feature.lectureevaluation.my
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -42,7 +41,6 @@ import com.suwiki.feature.lectureevaluation.my.model.MyEvaluationTab
 import com.suwiki.feature.lectureevaluation.my.model.MyExamEvaluationsSample
 import com.suwiki.feature.lectureevaluation.my.model.MyLectureEvaluationsSample
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
