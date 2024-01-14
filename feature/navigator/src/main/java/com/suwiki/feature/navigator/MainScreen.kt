@@ -124,8 +124,13 @@ internal fun MainScreen(
 
         myInfoNavGraph(
           padding = innerPadding,
+          popBackStack = navigator::popBackStackIfNotHome,
           navigateNotice = navigator::navigateNotice,
           navigateMyEvaluation = navigator::navigateMyEvaluation,
+          navigateMyAccount = navigator::navigateMyAccount,
+          navigateChangePassword = { /*TODO*/ },
+          navigateWithdrawal = { /*TODO*/ },
+          handleException = viewModel::handleException,
         )
 
         noticeNavGraph(

@@ -48,13 +48,15 @@ fun MyInfoRoute(
   viewModel: MyInfoViewModel = hiltViewModel(),
   navigateNotice: () -> Unit,
   navigateMyEvaluation: () -> Unit,
+  navigateMyAccount: () -> Unit,
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyInfoSideEffect.NavigateNotice -> navigateNotice()
+      is MyInfoSideEffect.NavigateNotice -> navigateNotice()
       is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation()
+      is MyInfoSideEffect.NavigateMyAccount -> navigateMyAccount()
     }
   }
 
@@ -68,6 +70,7 @@ fun MyInfoRoute(
     scrollState = scrollState,
     onClickNoticeButton = viewModel::navigateNotice,
     onClickMyEvaluationButton = viewModel::navigateMyEvaluation,
+    onClickMyAccountButton = viewModel::navigateMyAccount
   )
 }
 
@@ -78,6 +81,7 @@ fun MyInfoScreen(
   scrollState: ScrollState,
   onClickNoticeButton: () -> Unit,
   onClickMyEvaluationButton: () -> Unit,
+  onClickMyAccountButton: () -> Unit,
 ) {
   val myList = immutableListOf(
     R.string.my_info_point,
@@ -142,6 +146,7 @@ fun MyInfoScreen(
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_account_manage),
             iconId = R.drawable.ic_my_info_setting,
+            onClickItem = onClickMyAccountButton,
           )
         }
       }
@@ -327,6 +332,7 @@ fun MyInfoScreenScreenPreview() {
       scrollState = scrollState,
       onClickNoticeButton = {},
       onClickMyEvaluationButton = {},
+      onClickMyAccountButton = {},
     )
   }
 }

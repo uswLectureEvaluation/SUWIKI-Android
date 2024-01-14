@@ -14,4 +14,10 @@
   <string name="my_info_login">로그인하세요</string>
   <string name="my_info_check_mine">내 글과 포인트, 구매 내역을 확인해 보세요.</string>
   <string name="my_info_my_post">내 글 관리</string>
+  <string name="word_my_account">내 계정</string>
+  <string name="word_login_id">로그인 아이디</string>
+  <string name="word__authentication_email">학교 인증 메일</string>
+  <string name="word_change_password">비밀번호 변경</string>
+  <string name="word_logout">로그아웃</string>
+  <string name="word_withdrawal">회원 탈퇴</string>
 </resources>

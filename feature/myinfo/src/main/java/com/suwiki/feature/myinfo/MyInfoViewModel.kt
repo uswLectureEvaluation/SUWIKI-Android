@@ -40,4 +40,5 @@ class MyInfoViewModel @Inject constructor(
 
   fun navigateNotice() = intent { postSideEffect(MyInfoSideEffect.NavigateNotice) }
   fun navigateMyEvaluation() = intent { postSideEffect(MyInfoSideEffect.NavigateMyEvaluation) }
+  fun navigateMyAccount() = intent { postSideEffect(MyInfoSideEffect.NavigateMyAccount) }
 }
