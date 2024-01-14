@@ -6,16 +6,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.suwiki.core.designsystem.component.timetable.MINUTE10
-import com.suwiki.core.designsystem.component.timetable.MINUTE60
+import com.suwiki.feature.timetable.timetable.component.timetable.MINUTE10
+import com.suwiki.feature.timetable.timetable.component.timetable.MINUTE60
 import com.suwiki.core.designsystem.component.timetable.cell.EmptyCell
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
-import com.suwiki.core.designsystem.component.timetable.toText
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.ClassCell
+import com.suwiki.feature.timetable.timetable.component.timetable.toText
 
 internal fun TimetableCell.getStartAndEndMinute(): Pair<Int, Int> {
   val startMinute = (this.startPeriod + 8) * MINUTE60 + 3 * MINUTE10

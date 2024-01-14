@@ -7,6 +7,7 @@ import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.OpenLectureData
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
+import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
@@ -42,18 +43,37 @@ class OpenLectureViewModel @Inject constructor(
 
   private var selectedOpenLecture: OpenLecture? = null
 
+  fun navigateAddCell(openLecture: OpenLecture = OpenLecture()) = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCell(openLecture)) }
+  fun navigateAddCustomCell() = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCustomTimetableCell) }
+
   fun insertTimetable() = intent {
-    val timetableCellList = selectedOpenLecture?.originalCellList?.map { cell ->
-      TimetableCell(
-        name = selectedOpenLecture!!.name,
-        professor = selectedOpenLecture!!.professorName,
-        location = cell.location,
-        day = cell.day,
-        startPeriod = cell.startPeriod,
-        endPeriod = cell.endPeriod,
-        color = state.selectedTimetableCellColor,
+    if (selectedOpenLecture == null) return@intent
+
+    val timetableCellList = if (selectedOpenLecture!!.originalCellList.isEmpty()) {
+      listOf(
+        TimetableCell(
+          name = selectedOpenLecture!!.name,
+          professor = selectedOpenLecture!!.professorName,
+          location = "",
+          day = TimetableDay.E_LEARNING,
+          startPeriod = 0,
+          endPeriod = 0,
+          color = state.selectedTimetableCellColor,
+        ),
       )
-    } ?: return@intent
+    } else {
+      selectedOpenLecture!!.originalCellList.map { cell ->
+        TimetableCell(
+          name = selectedOpenLecture!!.name,
+          professor = selectedOpenLecture!!.professorName,
+          location = cell.location,
+          day = cell.day,
+          startPeriod = cell.startPeriod,
+          endPeriod = cell.endPeriod,
+          color = state.selectedTimetableCellColor,
+        )
+      }
+    }
 
     insertTimetableCellUseCase(timetableCellList)
       .onSuccess {

@@ -76,6 +76,7 @@ fun OpenLectureRoute(
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
   navigateOpenMajor: (String) -> Unit,
+  navigateAddCell: (OpenLecture) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
 
@@ -87,7 +88,7 @@ fun OpenLectureRoute(
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is OpenLectureSideEffect.HandleException -> handleException(sideEffect.throwable)
-      OpenLectureSideEffect.NavigateAddCustomTimetableCell -> TODO()
+      OpenLectureSideEffect.NavigateAddCustomTimetableCell -> navigateAddCell(OpenLecture())
       is OpenLectureSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
       OpenLectureSideEffect.PopBackStack -> popBackStack()
       OpenLectureSideEffect.ScrollToTop -> scope.launch {
@@ -97,6 +98,7 @@ fun OpenLectureRoute(
 
       is OpenLectureSideEffect.ShowOverlapCellToast -> onShowToast(sideEffect.msg)
       OpenLectureSideEffect.ShowSuccessAddCellToast -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
+      is OpenLectureSideEffect.NavigateAddCell -> navigateAddCell(sideEffect.openLecture)
     }
   }
 
@@ -133,7 +135,9 @@ fun OpenLectureRoute(
     },
     onClickColorChip = viewModel::updateSelectedCellColor,
     onDismissColorSelectBottomSheet = viewModel::hideSelectColorBottomSheet,
-    )
+    onClickClassInfoCard = viewModel::navigateAddCell,
+    onClickCustomAdd = viewModel::navigateAddCustomCell,
+  )
 }
 
 @Composable
@@ -152,6 +156,8 @@ fun OpenLectureScreen(
   onClickApply: () -> Unit = {},
   onDismissColorSelectBottomSheet: () -> Unit = {},
   onClickColorChip: (TimetableCellColor) -> Unit = {},
+  onClickClassInfoCard: (OpenLecture) -> Unit = {},
+  onClickCustomAdd: () -> Unit = {},
 ) {
   val context = LocalContext.current
 
@@ -163,6 +169,7 @@ fun OpenLectureScreen(
     SuwikiAppBarWithTextButton(
       buttonText = stringResource(R.string.add_timetable_screen_add_lecture),
       onClickBack = onClickBack,
+      onClickTextButton = onClickCustomAdd,
     )
 
     Spacer(modifier = Modifier.size(12.dp))
@@ -217,7 +224,7 @@ fun OpenLectureScreen(
             grade = stringResource(id = R.string.word_num_school_level, grade),
             classType = type,
             openMajor = major,
-            onClick = { /*TODO*/ },
+            onClick = { onClickClassInfoCard(this) },
             onClickAdd = { onClickCellAdd(this) },
           )
         }
@@ -278,7 +285,7 @@ private fun ColorSelectBottomSheet(
               .background(Color(timetableCellColorHexMap[it]!!))
               .suwikiClickable(
                 rippleEnabled = false,
-                onClick = { onClickColorChip(it) }
+                onClick = { onClickColorChip(it) },
               ),
             contentAlignment = Alignment.Center,
           ) {

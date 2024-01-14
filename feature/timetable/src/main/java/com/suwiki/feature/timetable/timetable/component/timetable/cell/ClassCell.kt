@@ -15,8 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
-import com.suwiki.core.designsystem.component.timetable.timetableBorderWidth
-import com.suwiki.core.designsystem.component.timetable.timetableHeightPerHour
+import com.suwiki.feature.timetable.timetable.component.timetable.timetableBorderWidth
+import com.suwiki.feature.timetable.timetable.component.timetable.timetableHeightPerHour
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White

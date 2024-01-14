@@ -29,7 +29,7 @@ fun TimetableRoute(
   padding: PaddingValues,
   viewModel: TimetableViewModel = hiltViewModel(),
   navigateCreateTimetable: () -> Unit,
-  navigateAddTimetableCell: () -> Unit,
+  navigateOpenLecture: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
 ) {
@@ -38,7 +38,7 @@ fun TimetableRoute(
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is TimetableSideEffect.HandleException -> handleException(sideEffect.throwable)
-      TimetableSideEffect.NavigateAddTimetableCell -> navigateAddTimetableCell()
+      TimetableSideEffect.NavigateAddTimetableCell -> navigateOpenLecture()
       TimetableSideEffect.ShowNeedCreateTimetableToast -> onShowToast(context.getString(R.string.timetable_screen_need_create_timetable))
       TimetableSideEffect.NavigateCreateTimetable -> navigateCreateTimetable()
     }

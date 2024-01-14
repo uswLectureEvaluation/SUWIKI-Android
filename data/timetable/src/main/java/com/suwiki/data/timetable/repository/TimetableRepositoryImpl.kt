@@ -58,8 +58,8 @@ class TimetableRepositoryImpl @Inject constructor(
     checkCellOverlap(cellList, timetable.cellList)
     localTimetableDataSource.updateTimetable(
       timetable.copy(
-        cellList = timetable.cellList.plus(cellList)
-      )
+        cellList = timetable.cellList.plus(cellList),
+      ),
     )
   }
 
@@ -67,8 +67,8 @@ class TimetableRepositoryImpl @Inject constructor(
     val timetable = getMainTimetable()!!
     localTimetableDataSource.updateTimetable(
       timetable.copy(
-        cellList = timetable.cellList.minus(cell)
-      )
+        cellList = timetable.cellList.minus(cell),
+      ),
     )
   }
 
@@ -79,8 +79,8 @@ class TimetableRepositoryImpl @Inject constructor(
     checkCellOverlap(listOf(cell), tempCellList)
     localTimetableDataSource.updateTimetable(
       timetable.copy(
-        cellList = tempCellList.plus(cell)
-      )
+        cellList = tempCellList.plus(cell),
+      ),
     )
   }
 
@@ -98,7 +98,9 @@ class TimetableRepositoryImpl @Inject constructor(
         .filter { it.day == toInsertCell.day }
         .forEach { sameDayCell ->
           val isOverlap = toInsertCell.startPeriod in sameDayCell.startPeriod..sameDayCell.endPeriod ||
-            toInsertCell.endPeriod in sameDayCell.startPeriod..sameDayCell.endPeriod
+            toInsertCell.endPeriod in sameDayCell.startPeriod..sameDayCell.endPeriod ||
+            sameDayCell.startPeriod in toInsertCell.startPeriod..toInsertCell.endPeriod ||
+            sameDayCell.endPeriod in toInsertCell.startPeriod..toInsertCell.endPeriod
 
           if (isOverlap) {
             throw TimetableCellOverlapException(
