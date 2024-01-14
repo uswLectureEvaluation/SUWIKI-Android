@@ -7,6 +7,7 @@ import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.user.User
+import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.DeleteExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
@@ -34,7 +35,7 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     container(MyExamEvaluationEditState())
 
   private val myExamEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myExamEvaluation)!!
-  private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromString(myExamEvaluation)
+  private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromUri(myExamEvaluation)
 
   suspend fun initData() = intent {
     showLoadingScreen()

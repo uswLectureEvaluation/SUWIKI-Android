@@ -7,6 +7,7 @@ import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.model.user.User
+import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.DeleteLectureEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.UpdateLectureEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
@@ -35,7 +36,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     container(MyLectureEvaluationEditState())
 
   private val myLectureEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myLectureEvaluation)!!
-  private val myLectureEvaluationItem: MyLectureEvaluation = Json.decodeFromString(myLectureEvaluation)
+  private val myLectureEvaluationItem: MyLectureEvaluation = Json.decodeFromUri(myLectureEvaluation)
 
   suspend fun initData() = intent {
     showLoadingScreen()

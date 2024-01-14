@@ -1,6 +1,7 @@
 package com.suwiki.feature.lectureevaluation.my
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
+import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.feature.lectureevaluation.my.model.MyEvaluationTab
 import com.suwiki.feature.lectureevaluation.my.model.MyExamEvaluationsSample
 import com.suwiki.feature.lectureevaluation.my.model.MyLectureEvaluationsSample
@@ -183,7 +185,7 @@ fun MyEvaluationLazyColumn(
           SuwikiReviewEditContainer(
             semesterText = item.selectedSemester,
             classNameText = item.lectureInfo.lectureName,
-            onClickEditButton = { onClickLectureEditButton(Json.encodeToString(item)) },
+            onClickEditButton = { onClickLectureEditButton(Json.encodeToUri(item)) },
           )
         }
         is MyExamEvaluation -> {
@@ -192,7 +194,7 @@ fun MyEvaluationLazyColumn(
           SuwikiReviewEditContainer(
             semesterText = examSemester ?: stringResource(R.string.word_semester),
             classNameText = examName ?: stringResource(R.string.word_lecture_name),
-            onClickEditButton = { onClickExamEditButton(Json.encodeToString(item)) },
+            onClickEditButton = { onClickExamEditButton(Json.encodeToUri(item)) },
           )
         }
       }
