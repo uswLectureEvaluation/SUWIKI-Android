@@ -2,10 +2,12 @@ package com.suwiki.core.model.timetable
 
 import androidx.compose.runtime.Stable
 import kotlinx.serialization.Serializable
+import java.util.UUID
 
 @Stable
 @Serializable
 data class TimetableCell(
+  val id: String = UUID.randomUUID().toString(),
   val name: String = "",
   val professor: String = "",
   val location: String = "",
