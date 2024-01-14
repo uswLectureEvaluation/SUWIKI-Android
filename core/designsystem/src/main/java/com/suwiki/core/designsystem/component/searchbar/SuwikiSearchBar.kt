@@ -43,7 +43,7 @@ fun SuwikiSearchBar(
   Box(
     modifier
       .background(White)
-      .padding(vertical = 10.dp, horizontal = 24.dp)
+      .padding(horizontal = 24.dp)
       .height(40.dp),
     contentAlignment = Alignment.Center,
   ) {

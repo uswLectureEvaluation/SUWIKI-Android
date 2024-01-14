@@ -1,5 +1,6 @@
 package com.suwiki.feature.timetable.timetable.component
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,19 +38,25 @@ fun TimetableAppbar(
     verticalAlignment = Alignment.Bottom,
     horizontalArrangement = Arrangement.spacedBy(18.dp),
   ) {
-    Text(
+    Crossfade(
       modifier = Modifier.weight(1f),
-      overflow = TextOverflow.Ellipsis,
-      text = name ?: stringResource(R.string.word_timetable),
-      style = SuwikiTheme.typography.header1,
-      color = Black,
-      maxLines = 1,
-    )
+      targetState = name,
+      label = "name",
+    ) { name ->
+      Text(
+        modifier = Modifier.weight(1f),
+        overflow = TextOverflow.Ellipsis,
+        text = name ?: stringResource(R.string.word_timetable),
+        style = SuwikiTheme.typography.header1,
+        color = Black,
+        maxLines = 1,
+      )
+    }
 
     Icon(
       modifier = Modifier
         .clip(CircleShape)
-        .suwikiClickable(onClick = onClickHamburger),
+        .suwikiClickable(onClick = onClickAdd),
       painter = painterResource(id = R.drawable.ic_timetable_add),
       contentDescription = "",
       tint = Gray95,
@@ -58,7 +65,7 @@ fun TimetableAppbar(
     Icon(
       modifier = Modifier
         .clip(CircleShape)
-        .suwikiClickable(onClick = onClickAdd),
+        .suwikiClickable(onClick = onClickHamburger),
       painter = painterResource(id = R.drawable.ic_timetable_hamburger),
       contentDescription = "",
       tint = Gray95,

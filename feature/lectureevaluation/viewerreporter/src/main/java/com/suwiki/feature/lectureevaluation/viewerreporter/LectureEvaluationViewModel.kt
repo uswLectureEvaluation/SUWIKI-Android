@@ -136,6 +136,7 @@ class LectureEvaluationViewModel @Inject constructor(
     isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true
   }
 
+  fun navigateOpenMajor(selectedOpenMajor: String) = intent { postSideEffect(LectureEvaluationSideEffect.NavigateOpenMajor(selectedOpenMajor)) }
   fun navigateLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLogin) }
   fun navigateSignup() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateSignUp) }
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }

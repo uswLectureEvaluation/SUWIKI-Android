@@ -72,10 +72,11 @@ fun LectureEvaluationRoute(
       LectureEvaluationSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
       LectureEvaluationSideEffect.ScrollToTop -> scope.launch {
         awaitFrame()
-        listState.scrollToItem(0)
+        listState.animateScrollToItem(0)
       }
 
       is LectureEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)
+      is LectureEvaluationSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
     }
   }
 
@@ -116,7 +117,7 @@ fun LectureEvaluationRoute(
       viewModel.hideOnboardingBottomSheet()
       viewModel.navigateSignup()
     },
-    onClickSelectedOpenMajor = navigateOpenMajor,
+    onClickSelectedOpenMajor = viewModel::navigateOpenMajor,
     onValueChangeSearchBar = viewModel::updateSearchValue,
     onClickSearchButton = viewModel::searchLectureEvaluation,
     onClickSearchBarClearButton = {
@@ -233,7 +234,7 @@ private fun LectureEvaluationLazyColumn(
   LazyColumn(
     modifier = Modifier
       .fillMaxSize()
-      .padding(start = 24.dp, end = 24.dp),
+      .padding(horizontal = 24.dp),
     contentPadding = PaddingValues(top = 15.dp, bottom = 24.dp),
     state = listState,
     verticalArrangement = Arrangement.spacedBy(12.dp),

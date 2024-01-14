@@ -30,7 +30,7 @@
   <string name="textfield_email_notice_text">웹메일이 휴면 상태인지 확인해주세요\n웹메일 계정은 포털 계정과 다릅니다\n</string>
   <string name="textfield_email_invalid_text">\@suwon.ac.kr 형식이 아닙니다</string>
   <string name="textfield_email_placeholder">\@suwon.ac.kr</string>
-    <string name="word_grade_easy">너그러움</string>
+  <string name="word_grade_easy">너그러움</string>
   <string name="word_grade_normal">보통</string>
   <string name="word_grade_difficulty">까다로움</string>
   <string name="word_homework_not_exist">없음</string>
@@ -38,7 +38,7 @@
   <string name="word_homework_many">많음</string>
   <string name="word_team_not_exist">없음</string>
   <string name="word_team_exist">있음</string>
-    <string name="word_exam_level_easy">쉬움</string>
+  <string name="word_exam_level_easy">쉬움</string>
   <string name="word_exam_level_normal">보통</string>
   <string name="word_exam_level_difficult">어려움</string>
   <string name="word_exam_type_family_tree">족보</string>
@@ -48,7 +48,21 @@
   <string name="word_exam_type_apply">응용</string>
   <string name="word_exam_type_practice">실습</string>
   <string name="word_exam_type_homework">과제</string>
-    <string name="word_timetable">시간표</string>
-    <string name="word_select_semester">수강학기 선택</string>
+  <string name="word_timetable">시간표</string>
+  <string name="word_select_semester">수강학기 선택</string>
   <string name="word_complete">완료</string>
+  <string name="word_open_major">개설학과</string>
+  <string name="word_school_level">학년</string>
+  <string name="word_num_school_level">%d학년</string>
+  <string name="word_all">전체</string>
+
+  <string name="word_mon">월</string>
+  <string name="word_tue">화</string>
+  <string name="word_wed">수</string>
+  <string name="word_thu">목</string>
+  <string name="word_fri">금</string>
+  <string name="word_sat">토</string>
+  <string name="word_elearning">이러닝</string>
+  <string name="word_empty_result">검색 결과가 없습니다.\n검색어가 정확한지 확인하세요.</string>
+  <string name="word_none">없음</string>
 </resources>
