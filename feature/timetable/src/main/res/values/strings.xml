@@ -13,4 +13,18 @@
   <string name="all_timetable_cell_screen_grade_3">3학년</string>
   <string name="all_timetable_cell_screen_grade_4">4학년</string>
   <string name="all_timetable_cell_screen_cell_info">%1$s %2$s교시 (%3$s)</string>
+    <string name="open_lecture_success_add_cell_toast">시간표에 강의를 추가했어요</string>
+  <string name="add_cell_screen_title">강의 추가</string>
+    <string name="add_cell_screen_lecture_name">강의명</string>
+  <string name="add_cell_screen_input_lecture_name">강의명 입력</string>
+  <string name="add_cell_screen_professor_name">교수명</string>
+  <string name="add_cell_screen_input_professor_name">교수명 입력</string>
+  <string name="add_cell_screen_time_location">시간 및 장소</string>
+  <string name="add_cell_screen_period">교시</string>
+  <string name="add_cell_screen_day_of_week">요일</string>
+  <string name="add_cell_screen_input_location">강의실 입력</string>
+  <string name="add_cell_screen_color">색상</string>
+  <string name="add_cell_screen_need_lecture_name">강의명을 입력해주세요</string>
+  <string name="add_cell_screen_need_location">장소를 입력해주세요</string>
+  <string name="add_cell_screen_need_professor_name">교수명을 입력해주세요</string>
 </resources>

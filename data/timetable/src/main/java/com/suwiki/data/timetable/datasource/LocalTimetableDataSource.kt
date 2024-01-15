@@ -10,7 +10,7 @@ interface LocalTimetableDataSource {
 
   suspend fun setMainTimetableCreateTime(createTime: Long)
 
-  suspend fun getMainTimetableCreateTime(): Flow<Long>
+  suspend fun getMainTimetableCreateTime(): Flow<Long?>
 
   suspend fun deleteAllTimetable()
 

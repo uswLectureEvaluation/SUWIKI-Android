@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.addcell.model
+package com.suwiki.feature.timetable.openlecture.model
 
 import androidx.annotation.StringRes
 import com.suwiki.feature.timetable.R

@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.timetable.cell
+package com.suwiki.feature.timetable.timetable.component.timetable.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,14 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
-import com.suwiki.core.designsystem.component.timetable.timetableBorderWidth
-import com.suwiki.core.designsystem.component.timetable.timetableHeightPerHour
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.util.timetableCellColorHexMap
+import com.suwiki.feature.timetable.timetable.component.timetable.timetableBorderWidth
+import com.suwiki.feature.timetable.timetable.component.timetable.timetableHeightPerHour
 
 enum class TimetableCellType {
   CLASSNAME,
@@ -31,30 +32,7 @@ enum class TimetableCellType {
   CLASSNAME_PROFESSOR_LOCATION,
 }
 
-private val colorHexMap = mapOf(
-  TimetableCellColor.BROWN to 0xFFC28F62,
-  TimetableCellColor.BROWN_LIGHT to 0xFFD4AC89,
-  TimetableCellColor.ORANGE to 0xFFFFC152,
-  TimetableCellColor.APRICOT to 0xFFFFC152,
-  TimetableCellColor.PURPLE to 0xFF7E3348,
-  TimetableCellColor.PURPLE_LIGHT to 0xFFC97189,
-  TimetableCellColor.RED_LIGHT to 0xFFFE8888,
-  TimetableCellColor.PINK to 0xFFFDA1E4,
-  TimetableCellColor.BROWN_DARK to 0xFF614730,
-  TimetableCellColor.GREEN_DARK to 0xFF96B277,
-  TimetableCellColor.GREEN to 0xFFA5DC81,
-  TimetableCellColor.GREEN_LIGHT to 0xFF99ECA5,
-  TimetableCellColor.NAVY_DARK to 0xFF435796,
-  TimetableCellColor.NAVY to 0xFF5772C1,
-  TimetableCellColor.NAVY_LIGHT to 0xFF899DFE,
-  TimetableCellColor.VIOLET to 0xFFCC9AF3,
-  TimetableCellColor.GRAY_DARK to 0xFF525252,
-  TimetableCellColor.GRAY to 0xFFC2C1BD,
-  TimetableCellColor.SKY to 0xFF89C8FE,
-  TimetableCellColor.VIOLET_LIGHT to 0xFFC0C6E0,
-)
-
-private fun TimetableCellColor.toHex(): Long = colorHexMap[this]!!
+private fun TimetableCellColor.toHex(): Long = timetableCellColorHexMap[this]!!
 
 @Composable
 internal fun ClassCell(

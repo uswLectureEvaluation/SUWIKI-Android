@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.timetable
+package com.suwiki.feature.timetable.timetable.component.timetable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -22,6 +22,6 @@ internal fun TimetableDay.toText(): String {
     TimetableDay.THU -> stringResource(R.string.word_thu)
     TimetableDay.FRI -> stringResource(R.string.word_fri)
     TimetableDay.SAT -> stringResource(R.string.word_sat)
-    TimetableDay.E_LEARNING -> stringResource(R.string.word_elearning)
+    TimetableDay.E_LEARNING -> stringResource(R.string.word_none)
   }
 }

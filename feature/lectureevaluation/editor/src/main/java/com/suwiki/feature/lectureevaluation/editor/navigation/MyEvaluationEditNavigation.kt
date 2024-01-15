@@ -8,10 +8,12 @@ import androidx.navigation.navArgument
 import com.suwiki.feature.lectureevaluation.editor.examevaluation.MyExamEvaluationEditRoute
 import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.MyLectureEvaluationEditRoute
 
+// TODO 리팩토링
 fun NavController.navigateMyLectureEvaluation(lectureEvaluation: String) {
   navigate(MyEvaluationEditRoute.myLectureEvaluationEditRoute(lectureEvaluation))
 }
 
+// TODO 리팩토링
 fun NavController.navigateMyExamEvaluation(examEvaluation: String) {
   navigate(MyEvaluationEditRoute.myExamEvaluationEditRoute(examEvaluation))
 }

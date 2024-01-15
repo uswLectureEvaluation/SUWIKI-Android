@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyExamEvaluation
 import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyLectureEvaluation
 import com.suwiki.feature.lectureevaluation.my.navigation.navigateMyEvaluation
@@ -22,8 +23,9 @@ import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
 import com.suwiki.feature.signup.navigation.navigateSignup
 import com.suwiki.feature.signup.navigation.navigateSignupComplete
 import com.suwiki.feature.timetable.navigation.TimetableRoute
-import com.suwiki.feature.timetable.navigation.navigateAddTimetableCell
+import com.suwiki.feature.timetable.navigation.navigateAddCell
 import com.suwiki.feature.timetable.navigation.navigateCreateTimetable
+import com.suwiki.feature.timetable.navigation.navigateOpenLecture
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
 internal class MainNavigator(
@@ -100,12 +102,16 @@ internal class MainNavigator(
     navController.navigateOpenMajor(selectedOpenMajor)
   }
 
+  fun navigateAddCell(openLecture: OpenLecture) {
+    navController.navigateAddCell(openLecture)
+  }
+
   fun navigateCreateTimetable() {
     navController.navigateCreateTimetable()
   }
 
   fun navigateAddTimetableCell() {
-    navController.navigateAddTimetableCell()
+    navController.navigateOpenLecture()
   }
 
   fun popBackStackIfNotHome() {
