@@ -9,4 +9,5 @@ android {
 
 dependencies {
   implementation(projects.domain.login)
+  implementation(projects.domain.user)
 }

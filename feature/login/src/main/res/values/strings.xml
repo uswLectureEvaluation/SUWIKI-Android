@@ -10,4 +10,14 @@
   <string name="find_id_screen_dialog_success_body">이메일 수신함을 확인해주세요</string>
   <string name="find_password_screen_dialog_success_title">임시 비밀번호가 발송되었습니다</string>
   <string name="find_password_screen_dialog_success_body">이메일 수신함을 확인해주세요</string>
+  <string name="word_reset_password">비밀번호 변경</string>
+  <string name="word_current_password">현재 비밀번호</string>
+  <string name="reset_password_screen_current_password_textfield_placeholder">현재 비밀번호를 입력하세요</string>
+  <string name="word_new_password">새로운 비밀번호</string>
+  <string name="word_new_password_check">새로운 비밀번호 확인</string>
+  <string name="reset_password_screen_check_new_password_textfield_placeholder">새로운 비밀번호를 입력하세요</string>
+  <string name="word_change">변경하기</string>
+  <string name="reset_password_screen_dialog_header">비밀번호가 변경되었습니다.</string>
+  <string name="reset_password_screen_dialog_body">새로운 비밀번호로 로그인 하시겠습니까?</string>
+  <string name="word_cancel">취소</string>
 </resources>

@@ -13,7 +13,7 @@ fun NavController.navigateMyInfo(navOptions: NavOptions) {
 }
 
 fun NavController.navigateMyAccount() {
-  navigate(MyInfoRoute.myAccount)
+  navigate(MyInfoRoute.myAccountRoute)
 }
 
 fun NavGraphBuilder.myInfoNavGraph(
@@ -34,7 +34,7 @@ fun NavGraphBuilder.myInfoNavGraph(
       navigateMyAccount = navigateMyAccount,
     )
   }
-  composable(route = MyInfoRoute.myAccount) {
+  composable(route = MyInfoRoute.myAccountRoute) {
     MyAccountRoute(
       popBackStack = popBackStack,
       navigateResetPassword = navigateResetPassword,
@@ -46,5 +46,5 @@ fun NavGraphBuilder.myInfoNavGraph(
 
 object MyInfoRoute {
   const val route = "my-info"
-  const val myAccount = "my-account"
+  const val myAccountRoute = "my-account"
 }

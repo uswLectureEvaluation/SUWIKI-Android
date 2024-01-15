@@ -68,6 +68,7 @@ internal fun MainScreen(
           navigateFindId = navigator::navigateFindId,
           navigateFindPassword = navigator::navigateFindPassword,
           navigateSignup = navigator::navigateSignup,
+          navigateLogin = navigator::navigateLogin,
           handleException = viewModel::handleException,
         )
 
@@ -131,7 +132,7 @@ internal fun MainScreen(
           navigateNotice = navigator::navigateNotice,
           navigateMyEvaluation = navigator::navigateMyEvaluation,
           navigateMyAccount = navigator::navigateMyAccount,
-          navigateResetPassword = { /*TODO*/ },
+          navigateResetPassword = navigator::navigateResetPassword,
           navigateQuit = { /*TODO*/ },
           handleException = viewModel::handleException,
         )
