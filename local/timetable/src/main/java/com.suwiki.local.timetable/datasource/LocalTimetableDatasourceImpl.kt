@@ -59,7 +59,7 @@ class LocalTimetableDatasourceImpl @Inject constructor(
     dataStore.edit { it[MAIN_TIMETABLE_CREATE_TIME] = createTime }
   }
 
-  override suspend fun getMainTimetableCreateTime(): Flow<Long> {
-    return data.map { it[MAIN_TIMETABLE_CREATE_TIME] ?: 0L }
+  override suspend fun getMainTimetableCreateTime(): Flow<Long?> {
+    return data.map { it[MAIN_TIMETABLE_CREATE_TIME] }
   }
 }

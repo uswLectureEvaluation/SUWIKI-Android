@@ -11,7 +11,7 @@ class GetMainTimetableUseCase @Inject constructor(
 ) {
   suspend operator fun invoke(): Result<Timetable?> = runCatchingIgnoreCancelled {
     with(timetableRepository) {
-      val createTime = getMainTimetableCreateTime().firstOrNull() ?: return@with null
+      val createTime = getMainTimetableCreateTime() ?: return@with null
       getTimetable(createTime)
     }
   }

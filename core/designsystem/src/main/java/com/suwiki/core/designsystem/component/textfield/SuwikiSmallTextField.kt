@@ -46,6 +46,7 @@ fun SuwikiSmallTextField(
   placeholder: String = "",
   value: String = "",
   onValueChange: (String) -> Unit = { _ -> },
+  showClearButton: Boolean = true,
   onClickClearButton: () -> Unit = {},
   maxLines: Int = 1,
   minLines: Int = 1,
@@ -103,7 +104,7 @@ fun SuwikiSmallTextField(
             }
           }
 
-          if (value.isNotEmpty()) {
+          if (value.isNotEmpty() && showClearButton) {
             TextFieldClearButton(
               modifier = Modifier
                 .size(21.dp),

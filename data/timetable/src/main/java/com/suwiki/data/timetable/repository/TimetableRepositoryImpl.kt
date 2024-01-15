@@ -1,12 +1,14 @@
 package com.suwiki.data.timetable.repository
 
 import com.suwiki.core.model.exception.TimetableCellOverlapException
+import com.suwiki.core.model.exception.TimetableCellPeriodInvalidException
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.domain.timetable.repository.TimetableRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class TimetableRepositoryImpl @Inject constructor(
@@ -24,8 +26,16 @@ class TimetableRepositoryImpl @Inject constructor(
     localTimetableDataSource.setMainTimetableCreateTime(createTime)
   }
 
-  override suspend fun getMainTimetableCreateTime(): Flow<Long> {
-    return localTimetableDataSource.getMainTimetableCreateTime()
+  override suspend fun getMainTimetableCreateTime(): Long? {
+    return localTimetableDataSource
+      .getMainTimetableCreateTime()
+      .firstOrNull()
+      ?: getAllTimetable()
+        .firstOrNull()
+        ?.createTime
+        ?.apply {
+          setMainTimetableCreateTime(this)
+        }
   }
 
   override suspend fun deleteTimetable(data: Timetable) {
@@ -55,6 +65,7 @@ class TimetableRepositoryImpl @Inject constructor(
 
   override suspend fun insertTimetableCell(cellList: List<TimetableCell>) {
     val timetable = getMainTimetable()!!
+    checkPeriodInvalid(cellList)
     checkCellOverlap(cellList, timetable.cellList)
     localTimetableDataSource.updateTimetable(
       timetable.copy(
@@ -76,7 +87,9 @@ class TimetableRepositoryImpl @Inject constructor(
     val timetable = getMainTimetable()!!
     val oldCell = timetable.cellList.find { it.id == cell.id }!!
     val tempCellList = timetable.cellList.minus(oldCell)
-    checkCellOverlap(listOf(cell), tempCellList)
+    val toInsertCell = listOf(cell)
+    checkPeriodInvalid(toInsertCell)
+    checkCellOverlap(toInsertCell, tempCellList)
     localTimetableDataSource.updateTimetable(
       timetable.copy(
         cellList = tempCellList.plus(cell),
@@ -85,8 +98,24 @@ class TimetableRepositoryImpl @Inject constructor(
   }
 
   private suspend fun getMainTimetable() = with(localTimetableDataSource) {
-    val createTime = getMainTimetableCreateTime().first()
+    val createTime = getMainTimetableCreateTime().firstOrNull() ?: return@with null
     getTimetable(createTime)
+  }
+
+  private fun checkPeriodInvalid(
+    cellList: List<TimetableCell>,
+  ) {
+    cellList.forEach { cell ->
+      val isNotValid = cell.startPeriod > cell.endPeriod ||
+        cell.startPeriod !in 1..15 ||
+        cell.endPeriod !in 1..15
+      if (isNotValid) {
+        throw TimetableCellPeriodInvalidException(
+          startPeriod = cell.startPeriod,
+          endPeriod = cell.endPeriod,
+        )
+      }
+    }
   }
 
   private fun checkCellOverlap(

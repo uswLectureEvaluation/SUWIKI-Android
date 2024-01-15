@@ -12,7 +12,7 @@ interface TimetableRepository {
 
   suspend fun setMainTimetableCreateTime(createTime: Long)
 
-  suspend fun getMainTimetableCreateTime(): Flow<Long>
+  suspend fun getMainTimetableCreateTime(): Long?
 
   suspend fun deleteTimetable(data: Timetable)
 

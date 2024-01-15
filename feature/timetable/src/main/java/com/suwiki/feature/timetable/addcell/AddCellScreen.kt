@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -30,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,10 +68,24 @@ fun AddCellRoute(
       AddCellSideEffect.PopBackStack -> popBackStack()
       is AddCellSideEffect.ShowOverlapCellToast -> onShowToast(sideEffect.msg)
       AddCellSideEffect.ShowSuccessAddCellToast -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
+      AddCellSideEffect.ShowNeedLectureNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_lecture_name))
+      AddCellSideEffect.ShowNeedLocationToast -> onShowToast(context.getString(R.string.add_cell_screen_need_location))
+      AddCellSideEffect.ShowNeedProfessorNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_professor_name))
     }
   }
   AddCellScreen(
     uiState = uiState,
+    onClickClose = viewModel::popBackStack,
+    onValueChangeLectureName = viewModel::updateLectureName,
+    onValueChangeProfessorName = viewModel::updateProfessorName,
+    onClickDayChip = viewModel::updateCellDay,
+    onValueChangeStartPeriod = viewModel::updateCellStartPeriod,
+    onValueChangeEndPeriod = viewModel::updateCellEndPeriod,
+    onValueChangeLocation = viewModel::updateCellLocation,
+    onClickAddButton = viewModel::addCell,
+    onClickDeleteButton = viewModel::deleteCell,
+    onClickColorChip = viewModel::updateCellColor,
+    onClickCompleteButton = viewModel::insertTimetable,
   )
 }
 
@@ -77,6 +93,17 @@ fun AddCellRoute(
 @Composable
 fun AddCellScreen(
   uiState: AddCellState = AddCellState(),
+  onClickClose: () -> Unit = {},
+  onValueChangeLectureName: (String) -> Unit = {},
+  onValueChangeProfessorName: (String) -> Unit = {},
+  onClickDayChip: (Int, TimetableDay) -> Unit = { _, _ -> },
+  onValueChangeStartPeriod: (Int, String) -> Unit = { _, _ -> },
+  onValueChangeEndPeriod: (Int, String) -> Unit = { _, _ -> },
+  onValueChangeLocation: (Int, String) -> Unit = { _, _ -> },
+  onClickAddButton: () -> Unit = {},
+  onClickDeleteButton: (Int) -> Unit = {},
+  onClickColorChip: (TimetableCellColor) -> Unit = {},
+  onClickCompleteButton: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -86,7 +113,7 @@ fun AddCellScreen(
     SuwikiAppBarWithTitle(
       showBackIcon = false,
       title = stringResource(R.string.add_cell_screen_title),
-      onClickBack = {},
+      onClickClose = onClickClose,
     )
 
     Column(
@@ -101,6 +128,9 @@ fun AddCellScreen(
         verticalAlignment = Alignment.CenterVertically,
         content = {
           SuwikiSmallTextField(
+            showClearButton = false,
+            value = uiState.lectureName,
+            onValueChange = onValueChangeLectureName,
             placeholder = stringResource(R.string.add_cell_screen_input_lecture_name),
           )
         },
@@ -111,6 +141,9 @@ fun AddCellScreen(
         verticalAlignment = Alignment.CenterVertically,
         content = {
           SuwikiSmallTextField(
+            showClearButton = false,
+            value = uiState.professorName,
+            onValueChange = onValueChangeProfessorName,
             placeholder = stringResource(R.string.add_cell_screen_input_professor_name),
           )
         },
@@ -121,65 +154,93 @@ fun AddCellScreen(
         verticalAlignment = Alignment.CenterVertically,
         content = {
           Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-            SuwikiContainedSmallButton(text = stringResource(R.string.word_add))
+            SuwikiContainedSmallButton(
+              text = stringResource(R.string.word_add),
+              onClick = onClickAddButton,
+            )
           }
         },
       )
 
-      AddScreenRow(
-        name = stringResource(R.string.add_cell_screen_day_of_week),
-        verticalAlignment = Alignment.CenterVertically,
-        content = {
-          Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-          ) {
-            FlowRow(
-              modifier = Modifier.weight(1f, false),
-              verticalArrangement = Arrangement.spacedBy(6.dp),
-              horizontalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
-              TimetableDay.entries.forEach {
-                SuwikiOutlinedChip(text = it.toText(), isChecked = false)
+      uiState.cellStateList.forEachIndexed { index, cell ->
+        Column {
+          AddScreenRow(
+            name = stringResource(R.string.add_cell_screen_day_of_week),
+            verticalAlignment = Alignment.Top,
+            content = {
+              Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+              ) {
+                FlowRow(
+                  modifier = Modifier.weight(1f, false),
+                  verticalArrangement = Arrangement.spacedBy(6.dp),
+                  horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                  TimetableDay.entries.filter { it != TimetableDay.E_LEARNING }.forEach { day ->
+                    SuwikiOutlinedChip(
+                      text = day.toText(),
+                      isChecked = cell.day == day,
+                      onClick = { onClickDayChip(index, day) },
+                    )
+                  }
+                }
+                Spacer(modifier = Modifier.size(10.dp))
+                SuwikiContainedSmallButton(
+                  text = stringResource(R.string.word_delete),
+                  onClick = { onClickDeleteButton(index) }
+                )
               }
+            },
+          )
+
+          Row(
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+          ) {
+            Row(
+              verticalAlignment = Alignment.CenterVertically,
+              horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+              SuwikiSmallTextField(
+                value = cell.startPeriod,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                onValueChange = { onValueChangeStartPeriod(index, it) },
+                showClearButton = false,
+                textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
+                modifier = Modifier.width(27.dp),
+                placeholder = stringResource(R.string.add_cell_screen_period),
+              )
+
+              HorizontalDivider(
+                modifier = Modifier.width(14.dp),
+              )
+
+              SuwikiSmallTextField(
+                value = cell.endPeriod,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                onValueChange = { onValueChangeEndPeriod(index, it) },
+                showClearButton = false,
+                textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
+                modifier = Modifier.width(27.dp),
+                placeholder = stringResource(R.string.add_cell_screen_period),
+              )
             }
-            Spacer(modifier = Modifier.size(10.dp))
-            SuwikiContainedSmallButton(text = stringResource(R.string.word_delete))
+
+            SuwikiSmallTextField(
+              showClearButton = false,
+              value = cell.location,
+              onValueChange = { onValueChangeLocation(index, it) },
+              placeholder = stringResource(R.string.add_cell_screen_input_location),
+            )
           }
-        },
-      )
-
-      Row(
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(20.dp),
-      ) {
-        Row(
-          verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-          SuwikiSmallTextField(
-            textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
-            modifier = Modifier.width(27.dp),
-            placeholder = stringResource(R.string.add_cell_screen_period),
-          )
-
-          HorizontalDivider(
-            modifier = Modifier.width(14.dp),
-          )
-
-          SuwikiSmallTextField(
-            textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
-            modifier = Modifier.width(27.dp),
-            placeholder = stringResource(R.string.add_cell_screen_period),
-          )
         }
-
-        SuwikiSmallTextField(
-          placeholder = stringResource(R.string.add_cell_screen_input_location),
-        )
       }
+
+
+
 
 
       Spacer(modifier = Modifier.size(20.dp))
@@ -207,11 +268,11 @@ fun AddCellScreen(
                     .background(Color(timetableCellColorHexMap[it]!!))
                     .suwikiClickable(
                       rippleEnabled = false,
-                      onClick = { },
+                      onClick = { onClickColorChip(it) },
                     ),
                   contentAlignment = Alignment.Center,
                 ) {
-                  if (true) {
+                  if (it == uiState.selectedTimetableCellColor) {
                     Icon(
                       modifier = Modifier.size(16.dp),
                       painter = painterResource(id = R.drawable.ic_align_checked),
@@ -232,6 +293,7 @@ fun AddCellScreen(
         .padding(horizontal = 24.dp)
         .imePadding(),
       text = stringResource(id = R.string.word_complete),
+      onClick = onClickCompleteButton,
     )
     Spacer(modifier = Modifier.size(20.dp))
   }
