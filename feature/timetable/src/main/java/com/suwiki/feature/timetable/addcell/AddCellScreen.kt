@@ -189,7 +189,7 @@ fun AddCellScreen(
                 Spacer(modifier = Modifier.size(10.dp))
                 SuwikiContainedSmallButton(
                   text = stringResource(R.string.word_delete),
-                  onClick = { onClickDeleteButton(index) }
+                  onClick = { onClickDeleteButton(index) },
                 )
               }
             },
@@ -238,10 +238,6 @@ fun AddCellScreen(
           }
         }
       }
-
-
-
-
 
       Spacer(modifier = Modifier.size(20.dp))
 

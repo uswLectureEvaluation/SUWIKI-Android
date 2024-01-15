@@ -6,8 +6,6 @@ import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.domain.timetable.repository.TimetableRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
@@ -61,7 +59,6 @@ class TimetableRepositoryImpl @Inject constructor(
       ),
     )
   }
-
 
   override suspend fun insertTimetableCell(cellList: List<TimetableCell>) {
     val timetable = getMainTimetable()!!

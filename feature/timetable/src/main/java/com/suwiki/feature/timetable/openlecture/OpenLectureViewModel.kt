@@ -2,7 +2,6 @@ package com.suwiki.feature.timetable.openlecture
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.exception.TimetableCellOverlapException
-import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.OpenLectureData
 import com.suwiki.core.model.timetable.TimetableCell
@@ -80,8 +79,11 @@ class OpenLectureViewModel @Inject constructor(
         postSideEffect(OpenLectureSideEffect.ShowSuccessAddCellToast)
       }
       .onFailure {
-        if (it is TimetableCellOverlapException) postSideEffect(OpenLectureSideEffect.ShowOverlapCellToast(it.message))
-        else postSideEffect(OpenLectureSideEffect.HandleException(it))
+        if (it is TimetableCellOverlapException) {
+          postSideEffect(OpenLectureSideEffect.ShowOverlapCellToast(it.message))
+        } else {
+          postSideEffect(OpenLectureSideEffect.HandleException(it))
+        }
       }
   }
 

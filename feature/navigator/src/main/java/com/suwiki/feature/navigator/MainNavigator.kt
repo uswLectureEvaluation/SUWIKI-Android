@@ -24,8 +24,8 @@ import com.suwiki.feature.signup.navigation.navigateSignup
 import com.suwiki.feature.signup.navigation.navigateSignupComplete
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import com.suwiki.feature.timetable.navigation.navigateAddCell
-import com.suwiki.feature.timetable.navigation.navigateOpenLecture
 import com.suwiki.feature.timetable.navigation.navigateCreateTimetable
+import com.suwiki.feature.timetable.navigation.navigateOpenLecture
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 
 internal class MainNavigator(

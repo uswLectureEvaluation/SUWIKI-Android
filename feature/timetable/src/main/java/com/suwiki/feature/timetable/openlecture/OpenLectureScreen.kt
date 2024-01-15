@@ -10,11 +10,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -54,7 +51,6 @@ import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.ui.extension.OnBottomReached
@@ -239,7 +235,6 @@ fun OpenLectureScreen(
     onClickColorChip = onClickColorChip,
     onDismissColorSelectBottomSheet = onDismissColorSelectBottomSheet,
   )
-
 
   if (uiState.isLoading) {
     LoadingScreen()

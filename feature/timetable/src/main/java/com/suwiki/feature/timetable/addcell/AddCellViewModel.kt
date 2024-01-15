@@ -9,9 +9,7 @@ import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
-import com.suwiki.domain.timetable.usecase.InsertTimetableUseCase
 import com.suwiki.feature.timetable.navigation.TimetableRoute
-import com.suwiki.feature.timetable.openlecture.OpenLectureSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.json.Json
@@ -24,7 +22,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,7 +47,7 @@ class AddCellViewModel @Inject constructor(
   fun addCell() = intent {
     reduce {
       state.copy(
-        cellStateList = state.cellStateList.add(CellState())
+        cellStateList = state.cellStateList.add(CellState()),
       )
     }
   }
@@ -58,7 +55,7 @@ class AddCellViewModel @Inject constructor(
   fun deleteCell(index: Int) = intent {
     reduce {
       state.copy(
-        cellStateList = state.cellStateList.removeAt(index)
+        cellStateList = state.cellStateList.removeAt(index),
       )
     }
   }
@@ -167,8 +164,11 @@ class AddCellViewModel @Inject constructor(
         popBackStack()
       }
       .onFailure {
-        if (it is TimetableCellOverlapException) postSideEffect(AddCellSideEffect.ShowOverlapCellToast(it.message))
-        else postSideEffect(AddCellSideEffect.HandleException(it))
+        if (it is TimetableCellOverlapException) {
+          postSideEffect(AddCellSideEffect.ShowOverlapCellToast(it.message))
+        } else {
+          postSideEffect(AddCellSideEffect.HandleException(it))
+        }
       }
   }
 

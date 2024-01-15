@@ -3,10 +3,8 @@ package com.suwiki.feature.timetable.addcell
 import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
-import com.suwiki.feature.timetable.openlecture.OpenLectureSideEffect
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
-import java.util.UUID
 
 data class AddCellState(
   val lectureName: String = "",
@@ -34,7 +32,7 @@ sealed interface AddCellSideEffect {
   data class HandleException(val throwable: Throwable) : AddCellSideEffect
   data class ShowOverlapCellToast(val msg: String) : AddCellSideEffect
   data object ShowSuccessAddCellToast : AddCellSideEffect
-  data object ShowNeedLectureNameToast: AddCellSideEffect
-  data object ShowNeedProfessorNameToast: AddCellSideEffect
-  data object ShowNeedLocationToast: AddCellSideEffect
+  data object ShowNeedLectureNameToast : AddCellSideEffect
+  data object ShowNeedProfessorNameToast : AddCellSideEffect
+  data object ShowNeedLocationToast : AddCellSideEffect
 }

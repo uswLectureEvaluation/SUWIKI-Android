@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.timetable.cell.ELearningCell
-import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.core.designsystem.component.timetable.column.ClassColumn
 import com.suwiki.core.designsystem.component.timetable.column.TimeColumn
 import com.suwiki.core.designsystem.theme.GrayF6
@@ -22,6 +21,7 @@ import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import kotlin.math.max
 
 private const val MIN_MAX_PERIOD = 8
@@ -32,10 +32,10 @@ internal fun List<TimetableCell>.maxPeriod(): Int {
 
 @Composable
 fun Timetable(
-    modifier: Modifier = Modifier,
-    type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
-    timetable: Timetable,
-    onClickClassCell: (TimetableCell) -> Unit = { _ -> },
+  modifier: Modifier = Modifier,
+  type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
+  timetable: Timetable,
+  onClickClassCell: (TimetableCell) -> Unit = { _ -> },
 ) {
   val scrollState = rememberScrollState()
 

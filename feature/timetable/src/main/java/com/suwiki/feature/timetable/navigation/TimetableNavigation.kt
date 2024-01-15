@@ -12,10 +12,8 @@ import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.feature.timetable.addcell.AddCellRoute
 import com.suwiki.feature.timetable.createtimetable.CreateTimetableRoute
 import com.suwiki.feature.timetable.openlecture.OpenLectureRoute
-import com.suwiki.feature.timetable.openlecture.OpenLectureSideEffect
 import com.suwiki.feature.timetable.timetable.TimetableRoute
 import kotlinx.serialization.json.Json
-
 
 fun NavController.navigateTimetable(navOptions: NavOptions) {
   navigate(TimetableRoute.route, navOptions)
