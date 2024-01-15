@@ -26,7 +26,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.button.TextFieldClearButton
@@ -47,6 +49,7 @@ fun SuwikiSmallTextField(
   onClickClearButton: () -> Unit = {},
   maxLines: Int = 1,
   minLines: Int = 1,
+  textStyle: TextStyle = SuwikiTheme.typography.body5,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   keyboardActions: KeyboardActions = KeyboardActions.Default,
   visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -65,7 +68,7 @@ fun SuwikiSmallTextField(
     onValueChange = onValueChange,
     modifier = modifier.fillMaxWidth(),
     singleLine = maxLines == 1,
-    textStyle = SuwikiTheme.typography.body5.copy(Black),
+    textStyle = textStyle,
     maxLines = if (minLines > maxLines) minLines else maxLines,
     minLines = minLines,
     interactionSource = interactionSource,
@@ -91,6 +94,8 @@ fun SuwikiSmallTextField(
             innerText()
             if (value.isEmpty()) {
               Text(
+                overflow = TextOverflow.Clip,
+                maxLines = 1,
                 text = placeholder,
                 color = GrayCB,
                 style = SuwikiTheme.typography.body5,
