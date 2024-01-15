@@ -18,6 +18,7 @@ import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
 import com.suwiki.feature.myinfo.navigation.navigateMyAccount
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
+import com.suwiki.feature.myinfo.navigation.navigateQuit
 import com.suwiki.feature.myinfo.navigation.navigateResetPassword
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
@@ -86,6 +87,10 @@ internal class MainNavigator(
 
   fun navigateResetPassword() {
     navController.navigateResetPassword()
+  }
+
+  fun navigateQuit() {
+    navController.navigateQuit()
   }
 
   fun navigateNotice() {

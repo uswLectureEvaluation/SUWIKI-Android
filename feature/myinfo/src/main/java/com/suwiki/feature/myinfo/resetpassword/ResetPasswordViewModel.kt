@@ -12,7 +12,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,8 +31,6 @@ class ResetPasswordViewModel @Inject constructor(
   }
 
   fun checkShowResetPasswordButton() = intent {
-    Timber.d("state.showPasswordInvalidErrorText: ${state.showPasswordInvalidErrorText}")
-    Timber.d("state.showPasswordNotMatchErrorText: ${state.showPasswordNotMatchErrorText}")
     reduce {
       state.copy(
         showResetPasswordButton =

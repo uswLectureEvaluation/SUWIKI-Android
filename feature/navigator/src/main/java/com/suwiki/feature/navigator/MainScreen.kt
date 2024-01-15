@@ -133,7 +133,7 @@ internal fun MainScreen(
           navigateMyEvaluation = navigator::navigateMyEvaluation,
           navigateMyAccount = navigator::navigateMyAccount,
           navigateResetPassword = navigator::navigateResetPassword,
-          navigateQuit = { /*TODO*/ },
+          navigateQuit = navigator::navigateQuit,
           navigateFindPassword = navigator::navigateFindPassword,
           navigateLogin = navigator::navigateLogin,
           handleException = viewModel::handleException,
