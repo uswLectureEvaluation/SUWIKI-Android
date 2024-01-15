@@ -1,6 +1,6 @@
-package com.suwiki.feature.login.resetpassword
+package com.suwiki.feature.myinfo.resetpassword
 
-import com.suwiki.feature.login.R
+import com.suwiki.feature.myinfo.R
 
 data class ResetPasswordState(
   val isLoading: Boolean = false,

@@ -1,4 +1,4 @@
-package com.suwiki.feature.login.resetpassword
+package com.suwiki.feature.myinfo.resetpassword
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -26,7 +26,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.LaunchedEffectWithLifecycle
-import com.suwiki.feature.login.R
+import com.suwiki.feature.myinfo.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

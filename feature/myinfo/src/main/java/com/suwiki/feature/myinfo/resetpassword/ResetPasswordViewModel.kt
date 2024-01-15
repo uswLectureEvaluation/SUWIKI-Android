@@ -1,4 +1,4 @@
-package com.suwiki.feature.login.resetpassword
+package com.suwiki.feature.myinfo.resetpassword
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.ui.util.REGEX
@@ -19,7 +19,9 @@ import javax.inject.Inject
 class ResetPasswordViewModel @Inject constructor(
   val resetPasswordUseCase: ResetPasswordUseCase,
 ) : ContainerHost<ResetPasswordState, ResetPasswordSideEffect>, ViewModel() {
-  override val container: Container<ResetPasswordState, ResetPasswordSideEffect> = container(ResetPasswordState())
+  override val container: Container<ResetPasswordState, ResetPasswordSideEffect> = container(
+    ResetPasswordState()
+  )
 
   fun checkNewPasswordInvalid(password: String) = intent {
     reduce { state.copy(showPasswordInvalidErrorText = !(password == "" || password.matches(REGEX.PASSWORD))) }
