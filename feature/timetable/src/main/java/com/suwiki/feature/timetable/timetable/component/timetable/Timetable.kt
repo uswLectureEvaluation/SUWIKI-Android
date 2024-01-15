@@ -3,26 +3,25 @@ package com.suwiki.feature.timetable.timetable.component.timetable
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.timetable.cell.ELearningCell
-import com.suwiki.core.designsystem.component.timetable.cell.TimetableCellType
 import com.suwiki.core.designsystem.component.timetable.column.ClassColumn
 import com.suwiki.core.designsystem.component.timetable.column.TimeColumn
-import com.suwiki.core.designsystem.component.timetable.timetableBorderWidth
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import kotlin.math.max
 
 private const val MIN_MAX_PERIOD = 8
@@ -40,10 +39,7 @@ fun Timetable(
 ) {
   val scrollState = rememberScrollState()
 
-  // TODO 테스트 필요
-  val maxPeriod by remember {
-    derivedStateOf { timetable.cellList.maxPeriod() }
-  }
+  val maxPeriod = timetable.cellList.maxPeriod()
 
   // TODO 리컴포지션 최적화 필요
   val cellGroupedByDay = timetable.cellList.groupBy { it.day }
@@ -84,6 +80,8 @@ fun Timetable(
           cell = cell,
         )
       }
+
+    Spacer(modifier = Modifier.size(100.dp))
   }
 }
 

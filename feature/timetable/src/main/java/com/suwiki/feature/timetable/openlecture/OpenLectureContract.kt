@@ -1,20 +1,23 @@
-package com.suwiki.feature.timetable.addcell
+package com.suwiki.feature.timetable.openlecture
 
 import android.content.Context
 import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.R
-import com.suwiki.feature.timetable.addcell.model.SchoolLevel
+import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
-data class AddTimetableCellState(
+data class OpenLectureState(
   val searchValue: String = "",
   val openLectureList: PersistentList<OpenLecture> = persistentListOf(),
   val selectedOpenMajor: String = "전체",
   val showSchoolLevelBottomSheet: Boolean = false,
   val schoolLevel: SchoolLevel = SchoolLevel.ALL,
+  val showSelectCellColorBottomSheet: Boolean = false,
+  val selectedTimetableCellColor: TimetableCellColor = TimetableCellColor.BROWN,
   val isLoading: Boolean = false,
 )
 
@@ -39,10 +42,13 @@ fun TimetableDay.toText(context: Context) = when (this) {
   TimetableDay.E_LEARNING -> context.getString(R.string.word_elearning)
 }
 
-sealed interface AddTimetableCellSideEffect {
-  data object ScrollToTop : AddTimetableCellSideEffect
-  data object PopBackStack : AddTimetableCellSideEffect
-  data class NavigateOpenMajor(val selectedOpenMajor: String) : AddTimetableCellSideEffect
-  data object NavigateAddCustomTimetableCell : AddTimetableCellSideEffect
-  data class HandleException(val throwable: Throwable) : AddTimetableCellSideEffect
+sealed interface OpenLectureSideEffect {
+  data object ScrollToTop : OpenLectureSideEffect
+  data object PopBackStack : OpenLectureSideEffect
+  data class NavigateOpenMajor(val selectedOpenMajor: String) : OpenLectureSideEffect
+  data class NavigateAddCell(val openLecture: OpenLecture) : OpenLectureSideEffect
+  data object NavigateAddCustomTimetableCell : OpenLectureSideEffect
+  data class HandleException(val throwable: Throwable) : OpenLectureSideEffect
+  data class ShowOverlapCellToast(val msg: String) : OpenLectureSideEffect
+  data object ShowSuccessAddCellToast : OpenLectureSideEffect
 }

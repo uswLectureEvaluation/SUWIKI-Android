@@ -69,4 +69,7 @@
   <string name="word_elearning">이러닝</string>
   <string name="word_empty_result">검색 결과가 없습니다.\n검색어가 정확한지 확인하세요.</string>
   <string name="word_none">없음</string>
+  <string name="word_apply">적용</string>
+  <string name="word_add">추가</string>
+  <string name="word_delete">삭제</string>
 </resources>

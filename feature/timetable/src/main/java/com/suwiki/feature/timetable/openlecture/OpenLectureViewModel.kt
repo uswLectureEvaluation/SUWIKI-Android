@@ -1,10 +1,15 @@
-package com.suwiki.feature.timetable.addcell
+package com.suwiki.feature.timetable.openlecture
 
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.exception.TimetableCellOverlapException
 import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.OpenLectureData
+import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.core.model.timetable.TimetableCellColor
+import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
-import com.suwiki.feature.timetable.addcell.model.SchoolLevel
+import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
+import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.Container
@@ -18,12 +23,13 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class AddTimetableCellViewModel @Inject constructor(
+class OpenLectureViewModel @Inject constructor(
   private val getOpenLectureListUseCase: GetOpenLectureListUseCase,
-) : ViewModel(), ContainerHost<AddTimetableCellState, AddTimetableCellSideEffect> {
+  private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
+) : ViewModel(), ContainerHost<OpenLectureState, OpenLectureSideEffect> {
 
-  override val container: Container<AddTimetableCellState, AddTimetableCellSideEffect> = container(
-    AddTimetableCellState(),
+  override val container: Container<OpenLectureState, OpenLectureSideEffect> = container(
+    OpenLectureState(),
   )
 
   private val currentState
@@ -33,6 +39,67 @@ class AddTimetableCellViewModel @Inject constructor(
   private var isLast: Boolean = false
   private var searchQuery: String = ""
   private var isFirstVisit: Boolean = true
+
+  private var selectedOpenLecture: OpenLecture? = null
+
+  fun navigateAddCell(openLecture: OpenLecture = OpenLecture()) = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCell(openLecture)) }
+  fun navigateAddCustomCell() = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCustomTimetableCell) }
+
+  fun insertTimetable() = intent {
+    if (selectedOpenLecture == null) return@intent
+
+    val timetableCellList = if (selectedOpenLecture!!.originalCellList.isEmpty()) {
+      listOf(
+        TimetableCell(
+          name = selectedOpenLecture!!.name,
+          professor = selectedOpenLecture!!.professorName,
+          location = "",
+          day = TimetableDay.E_LEARNING,
+          startPeriod = 0,
+          endPeriod = 0,
+          color = state.selectedTimetableCellColor,
+        ),
+      )
+    } else {
+      selectedOpenLecture!!.originalCellList.map { cell ->
+        TimetableCell(
+          name = selectedOpenLecture!!.name,
+          professor = selectedOpenLecture!!.professorName,
+          location = cell.location,
+          day = cell.day,
+          startPeriod = cell.startPeriod,
+          endPeriod = cell.endPeriod,
+          color = state.selectedTimetableCellColor,
+        )
+      }
+    }
+
+    insertTimetableCellUseCase(timetableCellList)
+      .onSuccess {
+        postSideEffect(OpenLectureSideEffect.ShowSuccessAddCellToast)
+      }
+      .onFailure {
+        if (it is TimetableCellOverlapException) {
+          postSideEffect(OpenLectureSideEffect.ShowOverlapCellToast(it.message))
+        } else {
+          postSideEffect(OpenLectureSideEffect.HandleException(it))
+        }
+      }
+  }
+
+  fun updateSelectedCellColor(color: TimetableCellColor) = intent { reduce { state.copy(selectedTimetableCellColor = color) } }
+
+  fun showSelectColorBottomSheet(openLecture: OpenLecture) = intent {
+    reduce {
+      selectedOpenLecture = openLecture
+      state.copy(
+        selectedTimetableCellColor = TimetableCellColor.entries.shuffled().first(),
+        showSelectCellColorBottomSheet = true,
+      )
+    }
+  }
+
+  fun hideSelectColorBottomSheet() = intent { reduce { state.copy(showSelectCellColorBottomSheet = false) } }
 
   fun initData() = intent {
     if (isFirstVisit) {
@@ -99,11 +166,11 @@ class AddTimetableCellViewModel @Inject constructor(
         newData = newData,
       )
     }.onFailure {
-      postSideEffect(AddTimetableCellSideEffect.HandleException(it))
+      postSideEffect(OpenLectureSideEffect.HandleException(it))
     }
 
     if (needClear) {
-      postSideEffect(AddTimetableCellSideEffect.ScrollToTop)
+      postSideEffect(OpenLectureSideEffect.ScrollToTop)
       reduce { state.copy(isLoading = false) }
     }
   }
@@ -130,5 +197,5 @@ class AddTimetableCellViewModel @Inject constructor(
 
   fun showGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = true) } }
   fun hideGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = false) } }
-  fun popBackStack() = intent { postSideEffect(AddTimetableCellSideEffect.PopBackStack) }
+  fun popBackStack() = intent { postSideEffect(OpenLectureSideEffect.PopBackStack) }
 }

@@ -1,6 +1,7 @@
 package com.suwiki.core.model.timetable
 
 import androidx.compose.runtime.Stable
+import kotlinx.serialization.Serializable
 
 @Stable
 data class OpenLectureData(
@@ -9,17 +10,19 @@ data class OpenLectureData(
 )
 
 @Stable
+@Serializable
 data class OpenLecture(
-  val id: Long,
-  val name: String,
-  val type: String,
-  val major: String,
-  val grade: Int,
-  val professorName: String,
-  val originalCellList: List<Cell>,
+  val id: Long = -1L,
+  val name: String = "",
+  val type: String = "",
+  val major: String = "",
+  val grade: Int = -1,
+  val professorName: String = "",
+  val originalCellList: List<Cell> = emptyList(),
 )
 
 @Stable
+@Serializable
 data class Cell(
   val location: String,
   val day: TimetableDay,

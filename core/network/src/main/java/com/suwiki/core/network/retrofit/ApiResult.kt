@@ -29,7 +29,7 @@ sealed interface ApiResult<out T> {
   val isFailure: Boolean
     get() = this is Failure
 
-  fun getOrThrow(customHttpErrorHandler: (Failure.HttpError.() -> Exception)? = null): T {
+  fun getOrThrow(): T {
     throwFailure()
     return (this as Success).data
   }
