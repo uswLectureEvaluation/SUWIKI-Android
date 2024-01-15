@@ -70,7 +70,7 @@ fun MyInfoRoute(
     scrollState = scrollState,
     onClickNoticeButton = viewModel::navigateNotice,
     onClickMyEvaluationButton = viewModel::navigateMyEvaluation,
-    onClickMyAccountButton = viewModel::navigateMyAccount
+    onClickMyAccountButton = viewModel::navigateMyAccount,
   )
 }
 

@@ -29,7 +29,7 @@ class MyAccountViewModel @Inject constructor(
     reduce {
       state.copy(
         userId = user.userId,
-        userEmail = user.email
+        userEmail = user.email,
       )
     }
   }

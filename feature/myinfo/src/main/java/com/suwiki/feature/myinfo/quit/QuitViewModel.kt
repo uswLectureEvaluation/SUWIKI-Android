@@ -26,14 +26,16 @@ class QuitViewModel @Inject constructor(
   }
 
   fun quit(id: String, password: String) = intent {
+    showLoadingScreen()
     quitUseCase(
       id = id,
-      password = password
+      password = password,
     ).onSuccess {
       popBackStack()
     }.onFailure {
       postSideEffect(QuitSideEffect.HandleException(it))
     }
+    hideLoadingScreen()
   }
 
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }

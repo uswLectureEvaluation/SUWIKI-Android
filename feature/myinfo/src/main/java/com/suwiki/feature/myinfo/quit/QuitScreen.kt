@@ -62,7 +62,7 @@ fun QuitScreen(
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .background(White)
+      .background(White),
   ) {
     SuwikiAppBarWithTitle(
       showBackIcon = true,
@@ -70,7 +70,7 @@ fun QuitScreen(
       onClickBack = popBackStack,
     )
     Column(
-      modifier = Modifier.padding(start = 24.dp, end = 24.dp)
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp),
     ) {
       Text(
         modifier = Modifier

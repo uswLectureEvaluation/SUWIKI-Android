@@ -71,12 +71,12 @@ fun MyAccountScreen(
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .background(White)
+      .background(White),
   ) {
     SuwikiAppBarWithTitle(
       showBackIcon = true,
       showCloseIcon = false,
-      onClickBack = popBackStack
+      onClickBack = popBackStack,
     )
     Text(
       modifier = Modifier
@@ -87,11 +87,11 @@ fun MyAccountScreen(
     )
     UserInfoRowContainer(
       userInfo = stringResource(R.string.word_login_id),
-      userInfoValue = uiState.userId
+      userInfoValue = uiState.userId,
     )
     UserInfoRowContainer(
       userInfo = stringResource(R.string.word__authentication_email),
-      userInfoValue = uiState.userEmail
+      userInfoValue = uiState.userEmail,
     )
     Spacer(modifier = Modifier.height(24.dp))
     AlignContainer(
@@ -153,7 +153,7 @@ fun UserInfoRowContainer(
     }
     HorizontalDivider(
       modifier = Modifier
-        .background(GrayF6)
+        .background(GrayF6),
     )
   }
 }

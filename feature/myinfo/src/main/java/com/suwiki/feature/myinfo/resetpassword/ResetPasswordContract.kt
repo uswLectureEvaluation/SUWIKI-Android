@@ -16,11 +16,17 @@ data class ResetPasswordState(
   val showResetPasswordDialog: Boolean = false,
 ) {
   val passwordInvalidHelperTextId =
-    if (showPasswordInvalidErrorText) R.string.textfield_password_invalid_helper_text
-    else R.string.word_empty
+    if (showPasswordInvalidErrorText) {
+      R.string.textfield_password_invalid_helper_text
+    } else {
+      R.string.word_empty
+    }
   val passwordMatchHelperTextId =
-    if (showPasswordNotMatchErrorText) R.string.textfield_password_not_same_helper_text
-    else R.string.word_empty
+    if (showPasswordNotMatchErrorText) {
+      R.string.textfield_password_not_same_helper_text
+    } else {
+      R.string.word_empty
+    }
 }
 
 sealed interface ResetPasswordSideEffect {

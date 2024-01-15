@@ -19,7 +19,7 @@ class ResetPasswordViewModel @Inject constructor(
   val resetPasswordUseCase: ResetPasswordUseCase,
 ) : ContainerHost<ResetPasswordState, ResetPasswordSideEffect>, ViewModel() {
   override val container: Container<ResetPasswordState, ResetPasswordSideEffect> = container(
-    ResetPasswordState()
+    ResetPasswordState(),
   )
 
   fun checkNewPasswordInvalid(password: String) = intent {
@@ -35,7 +35,7 @@ class ResetPasswordViewModel @Inject constructor(
       state.copy(
         showResetPasswordButton =
         (!state.showPasswordInvalidErrorText && !state.showPasswordNotMatchErrorText) &&
-          (state.currentPassword != "" && state.newPassword != "" && state.checkNewPassword != "")
+          (state.currentPassword != "" && state.newPassword != "" && state.checkNewPassword != ""),
       )
     }
   }

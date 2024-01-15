@@ -60,7 +60,7 @@ fun ResetPasswordRoute(
   LaunchedEffect(
     key1 = uiState.showPasswordInvalidErrorText,
     key2 = uiState.showPasswordNotMatchErrorText,
-    key3 = uiState.currentPassword
+    key3 = uiState.currentPassword,
   ) {
     viewModel.checkShowResetPasswordButton()
   }
@@ -114,7 +114,7 @@ fun ResetPasswordScreen(
       onClickBack = onClickBack,
     )
     Column(
-      modifier = Modifier.padding(start = 24.dp, end = 24.dp)
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp),
     ) {
       Text(
         modifier = Modifier
