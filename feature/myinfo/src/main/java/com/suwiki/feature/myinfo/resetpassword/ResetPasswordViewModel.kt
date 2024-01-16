@@ -30,16 +30,6 @@ class ResetPasswordViewModel @Inject constructor(
     reduce { state.copy(showPasswordNotMatchErrorText = !(password == "" || password == state.newPassword)) }
   }
 
-  fun checkShowResetPasswordButton() = intent {
-    reduce {
-      state.copy(
-        showResetPasswordButton =
-        (!state.showPasswordInvalidErrorText && !state.showPasswordNotMatchErrorText) &&
-          (state.currentPassword != "" && state.newPassword != "" && state.checkNewPassword != ""),
-      )
-    }
-  }
-
   fun resetPassword() = intent {
     showLoadingScreen()
     resetPasswordUseCase(
@@ -58,7 +48,6 @@ class ResetPasswordViewModel @Inject constructor(
     reduce {
       state.copy(
         currentPassword = password,
-        showResetPasswordButton = false,
       )
     }
   }
@@ -68,7 +57,6 @@ class ResetPasswordViewModel @Inject constructor(
     reduce {
       state.copy(
         newPassword = password,
-        showResetPasswordButton = false,
       )
     }
   }
@@ -78,7 +66,6 @@ class ResetPasswordViewModel @Inject constructor(
     reduce {
       state.copy(
         checkNewPassword = password,
-        showResetPasswordButton = false,
       )
     }
   }

@@ -57,14 +57,6 @@ fun ResetPasswordRoute(
     viewModel.checkNewPasswordMatch(uiState.checkNewPassword)
   }
 
-  LaunchedEffect(
-    key1 = uiState.showPasswordInvalidErrorText,
-    key2 = uiState.showPasswordNotMatchErrorText,
-    key3 = uiState.currentPassword,
-  ) {
-    viewModel.checkShowResetPasswordButton()
-  }
-
   ResetPasswordScreen(
     uiState = uiState,
     onClickBack = viewModel::popBackStack,
