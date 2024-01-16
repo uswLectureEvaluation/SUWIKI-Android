@@ -19,6 +19,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.feature.timetable.R
+import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.EditTimetableCellBottomSheet
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
@@ -34,6 +35,7 @@ fun TimetableRoute(
   navigateOpenLecture: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
+  navigateCellEditor: (CellEditorArgument) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   val context = LocalContext.current
@@ -43,6 +45,7 @@ fun TimetableRoute(
       TimetableSideEffect.NavigateAddTimetableCell -> navigateOpenLecture()
       TimetableSideEffect.ShowNeedCreateTimetableToast -> onShowToast(context.getString(R.string.timetable_screen_need_create_timetable))
       TimetableSideEffect.NavigateCreateTimetable -> navigateCreateTimetable()
+      is TimetableSideEffect.NavigateCellEditor -> navigateCellEditor(sideEffect.argument)
     }
   }
 
@@ -58,6 +61,10 @@ fun TimetableRoute(
     onClickTimetableCell = viewModel::showEditCellBottomSheet,
     onDismissEditCellBottomSheet = viewModel::hideEditCellBottomSheet,
     onClickTimetableCellDeleteButton = viewModel::deleteCell,
+    onClickTimetableCellEditButton = { cell ->
+      viewModel.hideEditCellBottomSheet()
+      viewModel.navigateCellEdit(cell)
+    }
   )
 }
 
@@ -70,6 +77,7 @@ fun TimetableScreen(
   onClickTimetableCell: (TimetableCell) -> Unit = {},
   onDismissEditCellBottomSheet: () -> Unit = {},
   onClickTimetableCellDeleteButton: (TimetableCell) -> Unit = {},
+  onClickTimetableCellEditButton: (TimetableCell) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -113,6 +121,7 @@ fun TimetableScreen(
     onDismissRequest = onDismissEditCellBottomSheet,
     cell = uiState.selectedCell,
     onClickDeleteButton = onClickTimetableCellDeleteButton,
+    onClickEditButton = onClickTimetableCellEditButton,
   )
 }
 

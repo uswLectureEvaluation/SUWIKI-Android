@@ -66,11 +66,12 @@ fun CellEditorRoute(
     when (sideEffect) {
       is CellEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
       CellEditorSideEffect.PopBackStack -> popBackStack()
-      is CellEditorSideEffect.ShowOverlapCellToastEditor -> onShowToast(sideEffect.msg)
-      CellEditorSideEffect.ShowSuccessCellToastEditor -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
+      is CellEditorSideEffect.ShowToast -> onShowToast(sideEffect.msg)
+      CellEditorSideEffect.ShowAddSuccessCellToast -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
       CellEditorSideEffect.ShowNeedLectureNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_lecture_name))
       CellEditorSideEffect.ShowNeedLocationToast -> onShowToast(context.getString(R.string.add_cell_screen_need_location))
       CellEditorSideEffect.ShowNeedProfessorNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_professor_name))
+      CellEditorSideEffect.ShowEditSuccessCellToast -> onShowToast(context.getString(R.string.open_lecture_success_edit_cell_toast))
     }
   }
   CellEditorScreen(
@@ -85,7 +86,7 @@ fun CellEditorRoute(
     onClickAddButton = viewModel::addCell,
     onClickDeleteButton = viewModel::deleteCell,
     onClickColorChip = viewModel::updateCellColor,
-    onClickCompleteButton = viewModel::insertTimetable,
+    onClickCompleteButton = viewModel::upsertTimetable,
   )
 }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.domain.timetable.usecase.DeleteTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
+import com.suwiki.feature.timetable.navigation.toCellEditorArgument
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -56,6 +57,8 @@ class TimetableViewModel @Inject constructor(
       )
     }
   }
+
+  fun navigateCellEdit(cell: TimetableCell) = intent { postSideEffect(TimetableSideEffect.NavigateCellEditor(cell.toCellEditorArgument())) }
 
   fun hideEditCellBottomSheet() = intent { reduce { state.copy(showEditCellBottomSheet = false) } }
 

@@ -39,8 +39,9 @@ internal fun CellEditorArgument.toState() = CellEditorState(
 sealed interface CellEditorSideEffect {
   data object PopBackStack : CellEditorSideEffect
   data class HandleException(val throwable: Throwable) : CellEditorSideEffect
-  data class ShowOverlapCellToastEditor(val msg: String) : CellEditorSideEffect
-  data object ShowSuccessCellToastEditor : CellEditorSideEffect
+  data class ShowToast(val msg: String) : CellEditorSideEffect
+  data object ShowAddSuccessCellToast : CellEditorSideEffect
+  data object ShowEditSuccessCellToast : CellEditorSideEffect
   data object ShowNeedLectureNameToast : CellEditorSideEffect
   data object ShowNeedProfessorNameToast : CellEditorSideEffect
   data object ShowNeedLocationToast : CellEditorSideEffect

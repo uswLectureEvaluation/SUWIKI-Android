@@ -9,11 +9,11 @@ class UpdateTimetableCellUseCase @Inject constructor(
   private val timetableRepository: TimetableRepository,
 ) {
   suspend operator fun invoke(param: Param): Result<Unit> = runCatchingIgnoreCancelled {
-    timetableRepository.updateTimetableCell(oldCell = param.oldCell ,cellList = param.cellList)
+    timetableRepository.updateTimetableCell(oldCellId = param.oldCellId ,cellList = param.cellList)
   }
 
   data class Param(
-    val oldCell: TimetableCell,
+    val oldCellId: String,
     val cellList: List<TimetableCell>,
   )
 }

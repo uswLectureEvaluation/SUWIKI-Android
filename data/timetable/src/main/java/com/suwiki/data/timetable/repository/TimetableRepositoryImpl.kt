@@ -84,9 +84,9 @@ class TimetableRepositoryImpl @Inject constructor(
     return timetable
   }
 
-  override suspend fun updateTimetableCell(oldCell: TimetableCell, cellList: List<TimetableCell>) {
+  override suspend fun updateTimetableCell(oldCellId: String, cellList: List<TimetableCell>) {
     val timetable = getMainTimetable()!!
-    val tempCellList = timetable.cellList.minus(oldCell)
+    val tempCellList = timetable.cellList.filter { it.id != oldCellId }
 
     checkPeriodInvalid(cellList)
     checkCellOverlap(cellList, cellList)
@@ -128,6 +128,7 @@ class TimetableRepositoryImpl @Inject constructor(
       currentCellList
         .filter { it.day == toInsertCell.day }
         .filter { it.id != toInsertCell.id }
+        .filter { it.day != TimetableDay.E_LEARNING }
         .forEach { sameDayCell ->
           val isOverlap = toInsertCell.startPeriod in sameDayCell.startPeriod..sameDayCell.endPeriod ||
             toInsertCell.endPeriod in sameDayCell.startPeriod..sameDayCell.endPeriod ||

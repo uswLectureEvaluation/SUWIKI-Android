@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.encodeToUri
@@ -53,6 +54,7 @@ fun NavGraphBuilder.timetableNavGraph(
       handleException = handleException,
       onShowToast = onShowToast,
       navigateOpenLecture = navigateOpenLecture,
+      navigateCellEditor = navigateCellEditor,
     )
   }
 
@@ -105,13 +107,13 @@ object TimetableRoute {
 
 @Serializable
 data class CellEditorArgument(
-  val id: String = "",
+  val oldCellId: String = "",
   val name: String = "",
   val professorName: String = "",
   val cellList: List<CellArgument> = emptyList(),
   val timetableCellColor: TimetableCellColor = TimetableCellColor.entries.shuffled().first(),
 ) {
-  val isEditMode = id.isNotEmpty()
+  val isEditMode = oldCellId.isNotEmpty()
 }
 
 @Serializable
@@ -123,9 +125,9 @@ data class CellArgument(
 )
 
 internal fun OpenLecture.toCellEditorArgument() = CellEditorArgument(
-  name = this.name,
-  professorName = this.professorName,
-  cellList = this.originalCellList.map { it.toCellArgument() },
+  name = name,
+  professorName = professorName,
+  cellList = originalCellList.map { it.toCellArgument() },
 )
 
 internal fun Cell.toCellArgument() = CellArgument(
@@ -133,6 +135,20 @@ internal fun Cell.toCellArgument() = CellArgument(
   day = day,
   startPeriod = startPeriod.toString(),
   endPeriod = endPeriod.toString(),
+)
+
+internal fun TimetableCell.toCellEditorArgument() = CellEditorArgument(
+  oldCellId = id,
+  name = name,
+  professorName = professor,
+  cellList = listOf(
+    CellArgument(
+      location = location,
+      day = day,
+      startPeriod = startPeriod.toString(),
+      endPeriod = endPeriod.toString(),
+    ),
+  ),
 )
 
 

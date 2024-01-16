@@ -3,15 +3,16 @@ package com.suwiki.feature.timetable.celleditor
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.exception.TimetableCellOverlapException
+import com.suwiki.core.model.exception.TimetableCellPeriodInvalidException
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
+import com.suwiki.domain.timetable.usecase.UpdateTimetableCellUseCase
 import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -27,10 +28,12 @@ import javax.inject.Inject
 @HiltViewModel
 class CellEditorViewModel @Inject constructor(
   private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
+  private val updateTimetableCellUseCase: UpdateTimetableCellUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel(), ContainerHost<CellEditorState, CellEditorSideEffect> {
   private val argument = savedStateHandle.get<String>(TimetableRoute.CELL_EDITOR_ARGUMENT)!!
   private val cellEditorArgument = Json.decodeFromUri<CellEditorArgument>(argument)
+  private val isEditMode = cellEditorArgument.isEditMode
 
   override val container: Container<CellEditorState, CellEditorSideEffect> = container(
     cellEditorArgument.toState(),
@@ -115,7 +118,7 @@ class CellEditorViewModel @Inject constructor(
     }
   }
 
-  fun insertTimetable() = intent {
+  fun upsertTimetable() = intent {
     val sideEffect = when {
       state.lectureName.isEmpty() -> CellEditorSideEffect.ShowNeedLectureNameToast
       state.professorName.isEmpty() -> CellEditorSideEffect.ShowNeedProfessorNameToast
@@ -154,16 +157,26 @@ class CellEditorViewModel @Inject constructor(
       }
     }
 
-    insertTimetableCellUseCase(timetableCellList)
+    val useCase = if (isEditMode) updateTimetableCellUseCase(
+      UpdateTimetableCellUseCase.Param(
+        cellEditorArgument.oldCellId, timetableCellList,
+      ),
+    ) else {
+      insertTimetableCellUseCase(timetableCellList)
+    }
+
+    useCase
       .onSuccess {
-        postSideEffect(CellEditorSideEffect.ShowSuccessCellToastEditor)
+        if (isEditMode) postSideEffect(CellEditorSideEffect.ShowEditSuccessCellToast)
+        else postSideEffect(CellEditorSideEffect.ShowAddSuccessCellToast)
+
         popBackStack()
       }
-      .onFailure {
-        if (it is TimetableCellOverlapException) {
-          postSideEffect(CellEditorSideEffect.ShowOverlapCellToastEditor(it.message))
-        } else {
-          postSideEffect(CellEditorSideEffect.HandleException(it))
+      .onFailure { throwable ->
+        when (throwable) {
+          is TimetableCellOverlapException -> postSideEffect(CellEditorSideEffect.ShowToast(throwable.message))
+          is TimetableCellPeriodInvalidException -> postSideEffect(CellEditorSideEffect.ShowToast(throwable.message))
+          else -> postSideEffect(CellEditorSideEffect.HandleException(throwable))
         }
       }
   }
