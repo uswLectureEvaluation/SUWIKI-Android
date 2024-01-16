@@ -18,6 +18,8 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -128,7 +130,8 @@ class MyExamEvaluationEditViewModel @Inject constructor(
     reduce { state.copy(examInfo = examInfoList.toPersistentList()) }
   }
 
-  fun updateMyExamEvaluationValue(examEvaluationValue: String) = intent {
+  @OptIn(OrbitExperimental::class)
+  fun updateMyExamEvaluationValue(examEvaluationValue: String) = blockingIntent {
     reduce { state.copy(examEvaluation = examEvaluationValue) }
   }
 
