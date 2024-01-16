@@ -57,6 +57,7 @@ import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.timetableCellColorHexMap
 import com.suwiki.feature.timetable.R
+import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.android.awaitFrame
@@ -66,13 +67,13 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun OpenLectureRoute(
-    viewModel: OpenLectureViewModel = hiltViewModel(),
-    selectedOpenMajor: String,
-    popBackStack: () -> Unit,
-    handleException: (Throwable) -> Unit,
-    onShowToast: (String) -> Unit,
-    navigateOpenMajor: (String) -> Unit,
-    navigateCellEditor: (OpenLecture) -> Unit,
+  viewModel: OpenLectureViewModel = hiltViewModel(),
+  selectedOpenMajor: String,
+  popBackStack: () -> Unit,
+  handleException: (Throwable) -> Unit,
+  onShowToast: (String) -> Unit,
+  navigateOpenMajor: (String) -> Unit,
+  navigateCellEditor: (CellEditorArgument) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
 
@@ -84,7 +85,7 @@ fun OpenLectureRoute(
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is OpenLectureSideEffect.HandleException -> handleException(sideEffect.throwable)
-      OpenLectureSideEffect.NavigateAddCustomTimetableCell -> navigateCellEditor(OpenLecture())
+      OpenLectureSideEffect.NavigateAddCustomTimetableCell -> navigateCellEditor(CellEditorArgument())
       is OpenLectureSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
       OpenLectureSideEffect.PopBackStack -> popBackStack()
       OpenLectureSideEffect.ScrollToTop -> scope.launch {
@@ -94,7 +95,7 @@ fun OpenLectureRoute(
 
       is OpenLectureSideEffect.ShowOverlapCellToast -> onShowToast(sideEffect.msg)
       OpenLectureSideEffect.ShowSuccessAddCellToast -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
-      is OpenLectureSideEffect.NavigateCellEditor -> navigateCellEditor(sideEffect.openLecture)
+      is OpenLectureSideEffect.NavigateCellEditor -> navigateCellEditor(sideEffect.argument)
     }
   }
 

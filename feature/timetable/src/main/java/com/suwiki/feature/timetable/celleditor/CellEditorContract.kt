@@ -1,16 +1,18 @@
 package com.suwiki.feature.timetable.celleditor
 
-import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.feature.timetable.navigation.CellArgument
+import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 data class CellEditorState(
   val lectureName: String = "",
   val professorName: String = "",
   val cellStateList: PersistentList<CellState> = persistentListOf(CellState()),
-  val selectedTimetableCellColor: TimetableCellColor = TimetableCellColor.entries.shuffled().first(),
+  val selectedTimetableCellColor: TimetableCellColor = TimetableCellColor.GRAY_DARK,
 )
 
 data class CellState(
@@ -20,11 +22,18 @@ data class CellState(
   val endPeriod: String = "",
 )
 
-internal fun Cell.toState() = CellState(
+internal fun CellArgument.toState() = CellState(
   location = location,
   day = day,
-  startPeriod = startPeriod.toString(),
-  endPeriod = endPeriod.toString(),
+  startPeriod = startPeriod,
+  endPeriod = endPeriod,
+)
+
+internal fun CellEditorArgument.toState() = CellEditorState(
+  lectureName = name,
+  professorName = professorName,
+  cellStateList = cellList.map { it.toState() }.toPersistentList(),
+  selectedTimetableCellColor = timetableCellColor,
 )
 
 sealed interface CellEditorSideEffect {

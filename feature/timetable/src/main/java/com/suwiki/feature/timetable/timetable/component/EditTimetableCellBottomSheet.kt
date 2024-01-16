@@ -34,6 +34,7 @@ import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.timetable.R
+import com.suwiki.feature.timetable.openlecture.toText
 import com.suwiki.feature.timetable.timetable.component.timetable.toText
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -62,8 +63,20 @@ fun EditTimetableCellBottomSheet(
         Text(modifier = Modifier.align(Alignment.Bottom), text = cell.professor, style = SuwikiTheme.typography.header6)
       }
 
+      val infoText = if (cell.day == TimetableDay.E_LEARNING) {
+        cell.day.toText()
+      } else {
+        stringResource(
+          R.string.edit_timetable_cell_bottom_sheet_info,
+          cell.location,
+          cell.day.toText(),
+          cell.startPeriod,
+          cell.endPeriod,
+        )
+      }
+      
       Text(
-        text = "${cell.location} (${cell.day.toText()} ${cell.startPeriod} - ${cell.endPeriod}교시)",
+        text = infoText,
         style = SuwikiTheme.typography.body3,
       )
 

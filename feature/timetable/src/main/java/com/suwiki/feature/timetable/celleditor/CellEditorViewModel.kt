@@ -3,12 +3,12 @@ package com.suwiki.feature.timetable.celleditor
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.exception.TimetableCellOverlapException
-import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
+import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -29,15 +29,11 @@ class CellEditorViewModel @Inject constructor(
   private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel(), ContainerHost<CellEditorState, CellEditorSideEffect> {
-  private val openLectureArgument = savedStateHandle.get<String>(TimetableRoute.CELL_EDITOR_OPEN_LECTURE_ARGUMENT)!!
-  private val openLecture = Json.decodeFromUri<OpenLecture>(openLectureArgument)
+  private val argument = savedStateHandle.get<String>(TimetableRoute.CELL_EDITOR_ARGUMENT)!!
+  private val cellEditorArgument = Json.decodeFromUri<CellEditorArgument>(argument)
 
   override val container: Container<CellEditorState, CellEditorSideEffect> = container(
-    CellEditorState(
-      lectureName = openLecture.name,
-      professorName = openLecture.professorName,
-      cellStateList = openLecture.originalCellList.map { it.toState() }.toPersistentList(),
-    ),
+    cellEditorArgument.toState(),
   )
 
   fun updateCellColor(color: TimetableCellColor) = intent {

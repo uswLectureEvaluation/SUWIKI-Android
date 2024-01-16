@@ -7,12 +7,16 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.OpenLecture
+import com.suwiki.core.model.timetable.TimetableCellColor
+import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.feature.timetable.celleditor.CellEditorRoute
 import com.suwiki.feature.timetable.createtimetable.CreateTimetableRoute
 import com.suwiki.feature.timetable.openlecture.OpenLectureRoute
 import com.suwiki.feature.timetable.timetable.TimetableRoute
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 fun NavController.navigateTimetable(navOptions: NavOptions) {
@@ -27,8 +31,8 @@ fun NavController.navigateOpenLecture() {
   navigate(TimetableRoute.openLecture)
 }
 
-fun NavController.navigateCellEditor(openLecture: OpenLecture = OpenLecture()) {
-  navigate(TimetableRoute.cellEditorRoute(Json.encodeToUri(openLecture)))
+fun NavController.navigateCellEditor(argument: CellEditorArgument = CellEditorArgument()) {
+  navigate(TimetableRoute.cellEditorRoute(Json.encodeToUri(argument)))
 }
 
 fun NavGraphBuilder.timetableNavGraph(
@@ -38,7 +42,7 @@ fun NavGraphBuilder.timetableNavGraph(
   navigateOpenMajor: (String) -> Unit,
   navigateCreateTimetable: () -> Unit,
   navigateOpenLecture: () -> Unit,
-  navigateCellEditor: (OpenLecture) -> Unit,
+  navigateCellEditor: (CellEditorArgument) -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
 ) {
@@ -74,10 +78,11 @@ fun NavGraphBuilder.timetableNavGraph(
   }
 
   composable(
-    route = TimetableRoute.cellEditorRoute("{${TimetableRoute.CELL_EDITOR_OPEN_LECTURE_ARGUMENT}}"),
+    route = TimetableRoute.cellEditorRoute("{${TimetableRoute.CELL_EDITOR_ARGUMENT}}"),
     arguments = listOf(
-      navArgument(TimetableRoute.CELL_EDITOR_OPEN_LECTURE_ARGUMENT) {
+      navArgument(TimetableRoute.CELL_EDITOR_ARGUMENT) {
         type = NavType.StringType
+        nullable = true
       },
     ),
   ) {
@@ -93,7 +98,41 @@ object TimetableRoute {
   const val route = "timetable"
   const val createRoute = "$route/create"
   const val openLecture = "open-lecture"
-  const val CELL_EDITOR_OPEN_LECTURE_ARGUMENT = "open-lecture"
+  const val CELL_EDITOR_ARGUMENT = "cell-editor-argument"
 
   fun cellEditorRoute(openLecture: String) = "cell-editor/$openLecture"
 }
+
+@Serializable
+data class CellEditorArgument(
+  val id: String = "",
+  val name: String = "",
+  val professorName: String = "",
+  val cellList: List<CellArgument> = emptyList(),
+  val timetableCellColor: TimetableCellColor = TimetableCellColor.entries.shuffled().first(),
+) {
+  val isEditMode = id.isNotEmpty()
+}
+
+@Serializable
+data class CellArgument(
+  val location: String = "",
+  val day: TimetableDay = TimetableDay.MON,
+  val startPeriod: String = "",
+  val endPeriod: String = "",
+)
+
+internal fun OpenLecture.toCellEditorArgument() = CellEditorArgument(
+  name = this.name,
+  professorName = this.professorName,
+  cellList = this.originalCellList.map { it.toCellArgument() },
+)
+
+internal fun Cell.toCellArgument() = CellArgument(
+  location = location,
+  day = day,
+  startPeriod = startPeriod.toString(),
+  endPeriod = endPeriod.toString(),
+)
+
+

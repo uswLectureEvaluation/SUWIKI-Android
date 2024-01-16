@@ -8,9 +8,12 @@ import javax.inject.Inject
 class UpdateTimetableCellUseCase @Inject constructor(
   private val timetableRepository: TimetableRepository,
 ) {
-  suspend operator fun invoke(cell: TimetableCell): Result<Unit> = runCatchingIgnoreCancelled {
-    timetableRepository.updateTimetableCell(
-      cell = cell,
-    )
+  suspend operator fun invoke(param: Param): Result<Unit> = runCatchingIgnoreCancelled {
+    timetableRepository.updateTimetableCell(oldCell = param.oldCell ,cellList = param.cellList)
   }
+
+  data class Param(
+    val oldCell: TimetableCell,
+    val cellList: List<TimetableCell>,
+  )
 }

@@ -22,6 +22,7 @@ import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
 import com.suwiki.feature.signup.navigation.navigateSignup
 import com.suwiki.feature.signup.navigation.navigateSignupComplete
+import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.TimetableRoute
 import com.suwiki.feature.timetable.navigation.navigateCellEditor
 import com.suwiki.feature.timetable.navigation.navigateCreateTimetable
@@ -102,8 +103,8 @@ internal class MainNavigator(
     navController.navigateOpenMajor(selectedOpenMajor)
   }
 
-  fun navigateCellEditor(openLecture: OpenLecture) {
-    navController.navigateCellEditor(openLecture)
+  fun navigateCellEditor(argument: CellEditorArgument) {
+    navController.navigateCellEditor(argument)
   }
 
   fun navigateCreateTimetable() {
