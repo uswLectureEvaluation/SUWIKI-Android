@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.addcell
+package com.suwiki.feature.timetable.celleditor
 
 import com.suwiki.core.model.timetable.Cell
 import com.suwiki.core.model.timetable.TimetableCellColor
@@ -6,7 +6,7 @@ import com.suwiki.core.model.timetable.TimetableDay
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
-data class AddCellState(
+data class CellEditorState(
   val lectureName: String = "",
   val professorName: String = "",
   val cellStateList: PersistentList<CellState> = persistentListOf(CellState()),
@@ -27,12 +27,12 @@ internal fun Cell.toState() = CellState(
   endPeriod = endPeriod.toString(),
 )
 
-sealed interface AddCellSideEffect {
-  data object PopBackStack : AddCellSideEffect
-  data class HandleException(val throwable: Throwable) : AddCellSideEffect
-  data class ShowOverlapCellToast(val msg: String) : AddCellSideEffect
-  data object ShowSuccessAddCellToast : AddCellSideEffect
-  data object ShowNeedLectureNameToast : AddCellSideEffect
-  data object ShowNeedProfessorNameToast : AddCellSideEffect
-  data object ShowNeedLocationToast : AddCellSideEffect
+sealed interface CellEditorSideEffect {
+  data object PopBackStack : CellEditorSideEffect
+  data class HandleException(val throwable: Throwable) : CellEditorSideEffect
+  data class ShowOverlapCellToastEditor(val msg: String) : CellEditorSideEffect
+  data object ShowSuccessCellToastEditor : CellEditorSideEffect
+  data object ShowNeedLectureNameToast : CellEditorSideEffect
+  data object ShowNeedProfessorNameToast : CellEditorSideEffect
+  data object ShowNeedLocationToast : CellEditorSideEffect
 }

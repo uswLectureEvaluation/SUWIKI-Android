@@ -66,13 +66,13 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun OpenLectureRoute(
-  viewModel: OpenLectureViewModel = hiltViewModel(),
-  selectedOpenMajor: String,
-  popBackStack: () -> Unit,
-  handleException: (Throwable) -> Unit,
-  onShowToast: (String) -> Unit,
-  navigateOpenMajor: (String) -> Unit,
-  navigateAddCell: (OpenLecture) -> Unit,
+    viewModel: OpenLectureViewModel = hiltViewModel(),
+    selectedOpenMajor: String,
+    popBackStack: () -> Unit,
+    handleException: (Throwable) -> Unit,
+    onShowToast: (String) -> Unit,
+    navigateOpenMajor: (String) -> Unit,
+    navigateCellEditor: (OpenLecture) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
 
@@ -84,7 +84,7 @@ fun OpenLectureRoute(
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is OpenLectureSideEffect.HandleException -> handleException(sideEffect.throwable)
-      OpenLectureSideEffect.NavigateAddCustomTimetableCell -> navigateAddCell(OpenLecture())
+      OpenLectureSideEffect.NavigateAddCustomTimetableCell -> navigateCellEditor(OpenLecture())
       is OpenLectureSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
       OpenLectureSideEffect.PopBackStack -> popBackStack()
       OpenLectureSideEffect.ScrollToTop -> scope.launch {
@@ -94,7 +94,7 @@ fun OpenLectureRoute(
 
       is OpenLectureSideEffect.ShowOverlapCellToast -> onShowToast(sideEffect.msg)
       OpenLectureSideEffect.ShowSuccessAddCellToast -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
-      is OpenLectureSideEffect.NavigateAddCell -> navigateAddCell(sideEffect.openLecture)
+      is OpenLectureSideEffect.NavigateCellEditor -> navigateCellEditor(sideEffect.openLecture)
     }
   }
 
@@ -131,7 +131,7 @@ fun OpenLectureRoute(
     },
     onClickColorChip = viewModel::updateSelectedCellColor,
     onDismissColorSelectBottomSheet = viewModel::hideSelectColorBottomSheet,
-    onClickClassInfoCard = viewModel::navigateAddCell,
+    onClickClassInfoCard = viewModel::navigateCellEditor,
     onClickCustomAdd = viewModel::navigateAddCustomCell,
   )
 }

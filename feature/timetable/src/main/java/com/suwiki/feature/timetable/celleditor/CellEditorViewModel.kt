@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.addcell
+package com.suwiki.feature.timetable.celleditor
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -25,15 +25,15 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class AddCellViewModel @Inject constructor(
+class CellEditorViewModel @Inject constructor(
   private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
   savedStateHandle: SavedStateHandle,
-) : ViewModel(), ContainerHost<AddCellState, AddCellSideEffect> {
-  private val openLectureArgument = savedStateHandle.get<String>(TimetableRoute.ADD_CELL_ARGUMENT)!!
+) : ViewModel(), ContainerHost<CellEditorState, CellEditorSideEffect> {
+  private val openLectureArgument = savedStateHandle.get<String>(TimetableRoute.CELL_EDITOR_OPEN_LECTURE_ARGUMENT)!!
   private val openLecture = Json.decodeFromUri<OpenLecture>(openLectureArgument)
 
-  override val container: Container<AddCellState, AddCellSideEffect> = container(
-    AddCellState(
+  override val container: Container<CellEditorState, CellEditorSideEffect> = container(
+    CellEditorState(
       lectureName = openLecture.name,
       professorName = openLecture.professorName,
       cellStateList = openLecture.originalCellList.map { it.toState() }.toPersistentList(),
@@ -93,7 +93,7 @@ class AddCellViewModel @Inject constructor(
     reduceCell(index, toUpdateCell)
   }
 
-  private suspend fun SimpleSyntax<AddCellState, AddCellSideEffect>.reduceCell(
+  private suspend fun SimpleSyntax<CellEditorState, CellEditorSideEffect>.reduceCell(
     index: Int,
     toUpdateCell: CellState,
   ) {
@@ -121,9 +121,9 @@ class AddCellViewModel @Inject constructor(
 
   fun insertTimetable() = intent {
     val sideEffect = when {
-      state.lectureName.isEmpty() -> AddCellSideEffect.ShowNeedLectureNameToast
-      state.professorName.isEmpty() -> AddCellSideEffect.ShowNeedProfessorNameToast
-      state.cellStateList.any { it.location.isEmpty() } -> AddCellSideEffect.ShowNeedLocationToast
+      state.lectureName.isEmpty() -> CellEditorSideEffect.ShowNeedLectureNameToast
+      state.professorName.isEmpty() -> CellEditorSideEffect.ShowNeedProfessorNameToast
+      state.cellStateList.any { it.location.isEmpty() } -> CellEditorSideEffect.ShowNeedLocationToast
       else -> null
     }
 
@@ -160,17 +160,17 @@ class AddCellViewModel @Inject constructor(
 
     insertTimetableCellUseCase(timetableCellList)
       .onSuccess {
-        postSideEffect(AddCellSideEffect.ShowSuccessAddCellToast)
+        postSideEffect(CellEditorSideEffect.ShowSuccessCellToastEditor)
         popBackStack()
       }
       .onFailure {
         if (it is TimetableCellOverlapException) {
-          postSideEffect(AddCellSideEffect.ShowOverlapCellToast(it.message))
+          postSideEffect(CellEditorSideEffect.ShowOverlapCellToastEditor(it.message))
         } else {
-          postSideEffect(AddCellSideEffect.HandleException(it))
+          postSideEffect(CellEditorSideEffect.HandleException(it))
         }
       }
   }
 
-  fun popBackStack() = intent { postSideEffect(AddCellSideEffect.PopBackStack) }
+  fun popBackStack() = intent { postSideEffect(CellEditorSideEffect.PopBackStack) }
 }

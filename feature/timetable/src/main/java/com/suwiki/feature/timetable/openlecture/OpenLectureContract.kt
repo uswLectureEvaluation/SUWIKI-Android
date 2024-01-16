@@ -46,7 +46,7 @@ sealed interface OpenLectureSideEffect {
   data object ScrollToTop : OpenLectureSideEffect
   data object PopBackStack : OpenLectureSideEffect
   data class NavigateOpenMajor(val selectedOpenMajor: String) : OpenLectureSideEffect
-  data class NavigateAddCell(val openLecture: OpenLecture) : OpenLectureSideEffect
+  data class NavigateCellEditor(val openLecture: OpenLecture) : OpenLectureSideEffect
   data object NavigateAddCustomTimetableCell : OpenLectureSideEffect
   data class HandleException(val throwable: Throwable) : OpenLectureSideEffect
   data class ShowOverlapCellToast(val msg: String) : OpenLectureSideEffect

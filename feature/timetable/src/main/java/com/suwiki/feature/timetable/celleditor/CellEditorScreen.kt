@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.addcell
+package com.suwiki.feature.timetable.celleditor
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -54,8 +54,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun AddCellRoute(
-  viewModel: AddCellViewModel = hiltViewModel(),
+fun CellEditorRoute(
+  viewModel: CellEditorViewModel = hiltViewModel(),
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
@@ -64,16 +64,16 @@ fun AddCellRoute(
   val context = LocalContext.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      is AddCellSideEffect.HandleException -> handleException(sideEffect.throwable)
-      AddCellSideEffect.PopBackStack -> popBackStack()
-      is AddCellSideEffect.ShowOverlapCellToast -> onShowToast(sideEffect.msg)
-      AddCellSideEffect.ShowSuccessAddCellToast -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
-      AddCellSideEffect.ShowNeedLectureNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_lecture_name))
-      AddCellSideEffect.ShowNeedLocationToast -> onShowToast(context.getString(R.string.add_cell_screen_need_location))
-      AddCellSideEffect.ShowNeedProfessorNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_professor_name))
+      is CellEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
+      CellEditorSideEffect.PopBackStack -> popBackStack()
+      is CellEditorSideEffect.ShowOverlapCellToastEditor -> onShowToast(sideEffect.msg)
+      CellEditorSideEffect.ShowSuccessCellToastEditor -> onShowToast(context.getString(R.string.open_lecture_success_add_cell_toast))
+      CellEditorSideEffect.ShowNeedLectureNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_lecture_name))
+      CellEditorSideEffect.ShowNeedLocationToast -> onShowToast(context.getString(R.string.add_cell_screen_need_location))
+      CellEditorSideEffect.ShowNeedProfessorNameToast -> onShowToast(context.getString(R.string.add_cell_screen_need_professor_name))
     }
   }
-  AddCellScreen(
+  CellEditorScreen(
     uiState = uiState,
     onClickClose = viewModel::popBackStack,
     onValueChangeLectureName = viewModel::updateLectureName,
@@ -91,8 +91,8 @@ fun AddCellRoute(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AddCellScreen(
-  uiState: AddCellState = AddCellState(),
+fun CellEditorScreen(
+  uiState: CellEditorState = CellEditorState(),
   onClickClose: () -> Unit = {},
   onValueChangeLectureName: (String) -> Unit = {},
   onValueChangeProfessorName: (String) -> Unit = {},
@@ -123,7 +123,7 @@ fun AddCellScreen(
     ) {
       Spacer(modifier = Modifier.size(20.dp))
 
-      AddScreenRow(
+      EditorScreenRow(
         name = stringResource(R.string.add_cell_screen_lecture_name),
         verticalAlignment = Alignment.CenterVertically,
         content = {
@@ -136,7 +136,7 @@ fun AddCellScreen(
         },
       )
 
-      AddScreenRow(
+      EditorScreenRow(
         name = stringResource(R.string.add_cell_screen_professor_name),
         verticalAlignment = Alignment.CenterVertically,
         content = {
@@ -149,7 +149,7 @@ fun AddCellScreen(
         },
       )
 
-      AddScreenRow(
+      EditorScreenRow(
         name = stringResource(R.string.add_cell_screen_time_location),
         verticalAlignment = Alignment.CenterVertically,
         content = {
@@ -164,7 +164,7 @@ fun AddCellScreen(
 
       uiState.cellStateList.forEachIndexed { index, cell ->
         Column {
-          AddScreenRow(
+          EditorScreenRow(
             name = stringResource(R.string.add_cell_screen_day_of_week),
             verticalAlignment = Alignment.Top,
             content = {
@@ -241,7 +241,7 @@ fun AddCellScreen(
 
       Spacer(modifier = Modifier.size(20.dp))
 
-      AddScreenRow(
+      EditorScreenRow(
         name = stringResource(R.string.add_cell_screen_color),
         verticalAlignment = Alignment.Top,
         content = {
@@ -296,7 +296,7 @@ fun AddCellScreen(
 }
 
 @Composable
-fun AddScreenRow(
+fun EditorScreenRow(
   modifier: Modifier = Modifier,
   name: String,
   verticalAlignment: Alignment.Vertical,
@@ -319,8 +319,8 @@ fun AddScreenRow(
 
 @Preview
 @Composable
-fun AddCellScreenPreview() {
+fun CellEditorScreenPreview() {
   SuwikiTheme {
-    AddCellScreen()
+    CellEditorScreen()
   }
 }

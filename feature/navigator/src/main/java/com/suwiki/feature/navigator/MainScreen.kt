@@ -100,7 +100,7 @@ internal fun MainScreen(
           handleException = viewModel::handleException,
           onShowToast = viewModel::onShowToast,
           navigateOpenMajor = navigator::navigateOpenMajor,
-          navigateAddCell = navigator::navigateAddCell,
+          navigateCellEditor = navigator::navigateCellEditor,
         )
 
         lectureEvaluationNavGraph(

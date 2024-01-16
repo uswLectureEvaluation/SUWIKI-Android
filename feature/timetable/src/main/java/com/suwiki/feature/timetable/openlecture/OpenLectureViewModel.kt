@@ -42,7 +42,7 @@ class OpenLectureViewModel @Inject constructor(
 
   private var selectedOpenLecture: OpenLecture? = null
 
-  fun navigateAddCell(openLecture: OpenLecture = OpenLecture()) = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCell(openLecture)) }
+  fun navigateCellEditor(openLecture: OpenLecture = OpenLecture()) = intent { postSideEffect(OpenLectureSideEffect.NavigateCellEditor(openLecture)) }
   fun navigateAddCustomCell() = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCustomTimetableCell) }
 
   fun insertTimetable() = intent {
