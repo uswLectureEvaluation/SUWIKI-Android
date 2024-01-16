@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.domain.timetable.usecase.DeleteTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
+import com.suwiki.domain.timetable.usecase.GetTimetableCellTypeUseCase
+import com.suwiki.domain.timetable.usecase.SetTimetableCellTypeUseCase
 import com.suwiki.feature.timetable.navigation.toCellEditorArgument
+import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -18,15 +21,20 @@ import javax.inject.Inject
 class TimetableViewModel @Inject constructor(
   private val getMainTimetableUseCase: GetMainTimetableUseCase,
   private val deleteTimetableCellUseCase: DeleteTimetableCellUseCase,
+  private val getTimetableCellTypeUseCase: GetTimetableCellTypeUseCase,
+  private val setTimetableCellTypeUseCase: SetTimetableCellTypeUseCase,
 ) : ViewModel(), ContainerHost<TimetableState, TimetableSideEffect> {
   override val container: Container<TimetableState, TimetableSideEffect> = container(TimetableState())
 
   fun getMainTimetable() = intent {
+    val cellType = TimetableCellType.getType(getTimetableCellTypeUseCase().getOrNull())
+
     getMainTimetableUseCase()
       .onSuccess { timetable ->
         reduce {
           state.copy(
             timetable = timetable,
+            cellType = cellType,
             showTimetableEmptyColumn = timetable == null,
           )
         }
@@ -57,6 +65,15 @@ class TimetableViewModel @Inject constructor(
       )
     }
   }
+
+  fun updateCellType(position: Int) = intent {
+    val cellType = TimetableCellType.entries[position]
+    setTimetableCellTypeUseCase(cellType.name)
+      .onSuccess { reduce { state.copy(cellType = cellType) } }
+  }
+
+  fun showSelectCellTypeBottomSheet() = intent { reduce { state.copy(showSelectCellTypeBottomSheet = true) } }
+  fun hideSelectCellTypeBottomSheet() = intent { reduce { state.copy(showSelectCellTypeBottomSheet = false) } }
 
   fun navigateCellEdit(cell: TimetableCell) = intent { postSideEffect(TimetableSideEffect.NavigateCellEditor(cell.toCellEditorArgument())) }
 
