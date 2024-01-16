@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,10 +21,9 @@ class MyAccountViewModel @Inject constructor(
   override val container: Container<MyAccountState, MyAccountSideEffect> = container(MyAccountState())
 
   fun initData() = intent {
-    getUserInfoUseCase().collect(::updateUserIdAndEmail).runCatching {}
-      .onFailure {
-        postSideEffect(MyAccountSideEffect.HandleException(it))
-      }
+    getUserInfoUseCase()
+      .catch { e -> postSideEffect(MyAccountSideEffect.HandleException(e)) }
+      .collect(::updateUserIdAndEmail)
   }
 
   private fun updateUserIdAndEmail(user: User) = intent {
