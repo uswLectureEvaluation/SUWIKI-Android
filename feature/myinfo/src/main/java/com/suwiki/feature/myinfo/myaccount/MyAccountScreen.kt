@@ -151,10 +151,7 @@ fun UserInfoRowContainer(
         style = SuwikiTheme.typography.body5,
       )
     }
-    HorizontalDivider(
-      modifier = Modifier
-        .background(GrayF6),
-    )
+    HorizontalDivider(color = GrayF6)
   }
 }
 
