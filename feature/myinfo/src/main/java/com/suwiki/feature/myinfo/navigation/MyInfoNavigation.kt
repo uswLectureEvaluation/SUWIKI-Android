@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.suwiki.feature.myinfo.MyInfoRoute
 import com.suwiki.feature.myinfo.myaccount.MyAccountRoute
+import com.suwiki.feature.myinfo.mypoint.MyPointRoute
 import com.suwiki.feature.myinfo.quit.QuitRoute
 import com.suwiki.feature.myinfo.resetpassword.ResetPasswordRoute
 
@@ -26,6 +27,10 @@ fun NavController.navigateQuit() {
   navigate(MyInfoRoute.quitRoute)
 }
 
+fun NavController.navigateMyPoint() {
+  navigate(MyInfoRoute.myPointRoute)
+}
+
 fun NavGraphBuilder.myInfoNavGraph(
   padding: PaddingValues,
   popBackStack: () -> Unit = {},
@@ -36,6 +41,7 @@ fun NavGraphBuilder.myInfoNavGraph(
   navigateQuit: () -> Unit = {},
   navigateFindPassword: () -> Unit = {},
   navigateLogin: () -> Unit = {},
+  navigateMyPoint: () -> Unit = {},
   handleException: (Throwable) -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
@@ -44,6 +50,7 @@ fun NavGraphBuilder.myInfoNavGraph(
       navigateNotice = navigateNotice,
       navigateMyEvaluation = navigateMyEvaluation,
       navigateMyAccount = navigateMyAccount,
+      navigateMyPoint = navigateMyPoint,
     )
   }
   composable(route = MyInfoRoute.myAccountRoute) {
@@ -68,6 +75,12 @@ fun NavGraphBuilder.myInfoNavGraph(
       handleException = handleException,
     )
   }
+  composable(route = MyInfoRoute.myPointRoute) {
+    MyPointRoute(
+      popBackStack = popBackStack,
+      handleException = handleException,
+    )
+  }
 }
 
 object MyInfoRoute {
@@ -75,4 +88,5 @@ object MyInfoRoute {
   const val myAccountRoute = "my-account"
   const val resetPasswordRoute = "reset-password"
   const val quitRoute = "quit"
+  const val myPointRoute = "my-point"
 }
