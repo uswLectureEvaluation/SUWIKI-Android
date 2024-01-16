@@ -19,6 +19,7 @@ sealed interface TimetableSideEffect {
   data object ShowNeedCreateTimetableToast : TimetableSideEffect
   data object NavigateAddTimetableCell : TimetableSideEffect
   data object NavigateCreateTimetable : TimetableSideEffect
+  data object NavigateTimetableList : TimetableSideEffect
   data class NavigateCellEditor(val argument: CellEditorArgument) : TimetableSideEffect
   data class HandleException(val throwable: Throwable) : TimetableSideEffect
 }

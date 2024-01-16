@@ -17,6 +17,7 @@ import com.suwiki.feature.timetable.celleditor.CellEditorRoute
 import com.suwiki.feature.timetable.createtimetable.CreateTimetableRoute
 import com.suwiki.feature.timetable.openlecture.OpenLectureRoute
 import com.suwiki.feature.timetable.timetable.TimetableRoute
+import com.suwiki.feature.timetable.timetablelist.TimetableListRoute
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -24,12 +25,17 @@ fun NavController.navigateTimetable(navOptions: NavOptions) {
   navigate(TimetableRoute.route, navOptions)
 }
 
+
 fun NavController.navigateCreateTimetable() {
-  navigate(TimetableRoute.createRoute)
+  navigate(TimetableRoute.createTimetableRoute)
+}
+
+fun NavController.navigateTimetableList() {
+  navigate(TimetableRoute.timetableListRoute)
 }
 
 fun NavController.navigateOpenLecture() {
-  navigate(TimetableRoute.openLecture)
+  navigate(TimetableRoute.openLectureRoute)
 }
 
 fun NavController.navigateCellEditor(argument: CellEditorArgument = CellEditorArgument()) {
@@ -42,6 +48,7 @@ fun NavGraphBuilder.timetableNavGraph(
   popBackStack: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
   navigateCreateTimetable: () -> Unit,
+  navigateTimetableList: () -> Unit,
   navigateOpenLecture: () -> Unit,
   navigateCellEditor: (CellEditorArgument) -> Unit,
   handleException: (Throwable) -> Unit,
@@ -51,6 +58,7 @@ fun NavGraphBuilder.timetableNavGraph(
     TimetableRoute(
       padding = padding,
       navigateCreateTimetable = navigateCreateTimetable,
+      navigateTimetableList = navigateTimetableList,
       handleException = handleException,
       onShowToast = onShowToast,
       navigateOpenLecture = navigateOpenLecture,
@@ -58,7 +66,7 @@ fun NavGraphBuilder.timetableNavGraph(
     )
   }
 
-  composable(route = TimetableRoute.createRoute) {
+  composable(route = TimetableRoute.createTimetableRoute) {
     CreateTimetableRoute(
       popBackStack = popBackStack,
       handleException = handleException,
@@ -66,7 +74,7 @@ fun NavGraphBuilder.timetableNavGraph(
     )
   }
 
-  composable(route = TimetableRoute.openLecture) { navBackStackEntry ->
+  composable(route = TimetableRoute.openLectureRoute) { navBackStackEntry ->
     val selectedOpenMajor = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "전체"
 
     OpenLectureRoute(
@@ -94,15 +102,25 @@ fun NavGraphBuilder.timetableNavGraph(
       onShowToast = onShowToast,
     )
   }
+
+  composable(
+    route = TimetableRoute.timetableListRoute
+  ) {
+    TimetableListRoute(
+      handleException = handleException,
+      popBackStack = popBackStack,
+    )
+  }
 }
 
 object TimetableRoute {
   const val route = "timetable"
-  const val createRoute = "$route/create"
-  const val openLecture = "open-lecture"
+  const val createTimetableRoute = "$route/create"
+  const val openLectureRoute = "open-lecture"
+  const val timetableListRoute = "$route/list"
   const val CELL_EDITOR_ARGUMENT = "cell-editor-argument"
 
-  fun cellEditorRoute(openLecture: String) = "cell-editor/$openLecture"
+  fun cellEditorRoute(cellEditor: String) = "cell-editor/$cellEditor"
 }
 
 @Serializable

@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyExamEvaluation
 import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyLectureEvaluation
 import com.suwiki.feature.lectureevaluation.my.navigation.navigateMyEvaluation
@@ -28,6 +27,7 @@ import com.suwiki.feature.timetable.navigation.navigateCellEditor
 import com.suwiki.feature.timetable.navigation.navigateCreateTimetable
 import com.suwiki.feature.timetable.navigation.navigateOpenLecture
 import com.suwiki.feature.timetable.navigation.navigateTimetable
+import com.suwiki.feature.timetable.navigation.navigateTimetableList
 
 internal class MainNavigator(
   val navController: NavHostController,
@@ -111,7 +111,11 @@ internal class MainNavigator(
     navController.navigateCreateTimetable()
   }
 
-  fun navigateAddTimetableCell() {
+  fun navigateTimetableList() {
+    navController.navigateTimetableList()
+  }
+
+  fun navigateOpenLecture() {
     navController.navigateOpenLecture()
   }
 

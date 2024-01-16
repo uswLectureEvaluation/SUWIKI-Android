@@ -37,6 +37,7 @@ fun TimetableRoute(
   viewModel: TimetableViewModel = hiltViewModel(),
   navigateCreateTimetable: () -> Unit,
   navigateOpenLecture: () -> Unit,
+  navigateTimetableList: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
   navigateCellEditor: (CellEditorArgument) -> Unit,
@@ -50,6 +51,7 @@ fun TimetableRoute(
       TimetableSideEffect.ShowNeedCreateTimetableToast -> onShowToast(context.getString(R.string.timetable_screen_need_create_timetable))
       TimetableSideEffect.NavigateCreateTimetable -> navigateCreateTimetable()
       is TimetableSideEffect.NavigateCellEditor -> navigateCellEditor(sideEffect.argument)
+      TimetableSideEffect.NavigateTimetableList -> navigateTimetableList()
     }
   }
 
@@ -75,6 +77,7 @@ fun TimetableRoute(
       viewModel.hideSelectCellTypeBottomSheet()
     },
     onClickSetting = viewModel::showSelectCellTypeBottomSheet,
+    onClickHamburger = viewModel::navigateTimetableList,
   )
 }
 
@@ -91,6 +94,7 @@ fun TimetableScreen(
   onDismissSelectBottomSheet: () -> Unit = {},
   onClickSelectBottomSheetItem: (Int) -> Unit = {},
   onClickSetting: () -> Unit = {},
+  onClickHamburger: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -100,7 +104,7 @@ fun TimetableScreen(
     TimetableAppbar(
       name = uiState.timetable?.name,
       onClickAdd = onClickAppbarAdd,
-      onClickHamburger = {},
+      onClickHamburger = onClickHamburger,
       onClickSetting = onClickSetting,
     )
 

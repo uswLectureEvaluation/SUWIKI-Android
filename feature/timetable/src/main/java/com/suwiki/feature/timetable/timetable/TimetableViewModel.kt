@@ -80,6 +80,7 @@ class TimetableViewModel @Inject constructor(
   fun hideEditCellBottomSheet() = intent { reduce { state.copy(showEditCellBottomSheet = false) } }
 
   fun navigateCreateTimetable() = intent { postSideEffect(TimetableSideEffect.NavigateCreateTimetable) }
+  fun navigateTimetableList() = intent { postSideEffect(TimetableSideEffect.NavigateTimetableList) }
 
   fun navigateAddTimetableCell() = intent {
     if (state.timetable == null) {
