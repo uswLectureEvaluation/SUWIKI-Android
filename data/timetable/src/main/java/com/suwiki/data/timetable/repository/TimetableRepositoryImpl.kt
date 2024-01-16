@@ -71,13 +71,15 @@ class TimetableRepositoryImpl @Inject constructor(
     )
   }
 
-  override suspend fun deleteTimetableCell(cell: TimetableCell) {
+  override suspend fun deleteTimetableCell(cell: TimetableCell): Timetable {
     val timetable = getMainTimetable()!!
+      .run {
+        copy(cellList = cellList.minus(cell))
+      }
     localTimetableDataSource.updateTimetable(
-      timetable.copy(
-        cellList = timetable.cellList.minus(cell),
-      ),
+      timetable
     )
+    return timetable
   }
 
   override suspend fun updateTimetableCell(cell: TimetableCell) {

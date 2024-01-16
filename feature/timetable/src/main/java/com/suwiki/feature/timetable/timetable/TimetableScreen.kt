@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.feature.timetable.R
+import com.suwiki.feature.timetable.timetable.component.EditTimetableCellBottomSheet
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
 import com.suwiki.feature.timetable.timetable.component.timetable.Timetable
@@ -53,6 +55,9 @@ fun TimetableRoute(
     uiState = uiState,
     onClickAddTimetable = viewModel::navigateCreateTimetable,
     onClickAppbarAdd = viewModel::navigateAddTimetableCell,
+    onClickTimetableCell = viewModel::showEditCellBottomSheet,
+    onDismissEditCellBottomSheet = viewModel::hideEditCellBottomSheet,
+    onClickTimetableCellDeleteButton = viewModel::deleteCell,
   )
 }
 
@@ -62,6 +67,9 @@ fun TimetableScreen(
   uiState: TimetableState = TimetableState(),
   onClickAddTimetable: () -> Unit = {},
   onClickAppbarAdd: () -> Unit = {},
+  onClickTimetableCell: (TimetableCell) -> Unit = {},
+  onDismissEditCellBottomSheet: () -> Unit = {},
+  onClickTimetableCellDeleteButton: (TimetableCell) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -93,9 +101,19 @@ fun TimetableScreen(
       enter = fadeIn(),
       exit = fadeOut(),
     ) {
-      Timetable(timetable = uiState.timetable!!)
+      Timetable(
+        timetable = uiState.timetable!!,
+        onClickTimetableCell = onClickTimetableCell,
+      )
     }
   }
+
+  EditTimetableCellBottomSheet(
+    isSheetOpen = uiState.showEditCellBottomSheet,
+    onDismissRequest = onDismissEditCellBottomSheet,
+    cell = uiState.selectedCell,
+    onClickDeleteButton = onClickTimetableCellDeleteButton,
+  )
 }
 
 @Preview

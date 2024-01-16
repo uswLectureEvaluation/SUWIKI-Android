@@ -1,6 +1,8 @@
 package com.suwiki.feature.timetable.timetable
 
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.domain.timetable.usecase.DeleteTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
@@ -14,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TimetableViewModel @Inject constructor(
   private val getMainTimetableUseCase: GetMainTimetableUseCase,
+  private val deleteTimetableCellUseCase: DeleteTimetableCellUseCase,
 ) : ViewModel(), ContainerHost<TimetableState, TimetableSideEffect> {
   override val container: Container<TimetableState, TimetableSideEffect> = container(TimetableState())
 
@@ -31,6 +34,30 @@ class TimetableViewModel @Inject constructor(
         postSideEffect(TimetableSideEffect.HandleException(it))
       }
   }
+
+  fun deleteCell(cell: TimetableCell) = intent {
+    deleteTimetableCellUseCase(cell)
+      .onSuccess {
+        reduce {
+          state.copy(
+            showEditCellBottomSheet = false,
+            timetable = it,
+          )
+        }
+      }
+      .onFailure { postSideEffect(TimetableSideEffect.HandleException(it)) }
+  }
+
+  fun showEditCellBottomSheet(cell: TimetableCell) = intent {
+    reduce {
+      state.copy(
+        showEditCellBottomSheet = true,
+        selectedCell = cell,
+      )
+    }
+  }
+
+  fun hideEditCellBottomSheet() = intent { reduce { state.copy(showEditCellBottomSheet = false) } }
 
   fun navigateCreateTimetable() = intent { postSideEffect(TimetableSideEffect.NavigateCreateTimetable) }
 
