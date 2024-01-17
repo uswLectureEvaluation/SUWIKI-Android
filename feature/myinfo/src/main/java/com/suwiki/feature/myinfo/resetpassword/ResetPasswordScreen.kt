@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -49,20 +49,9 @@ fun ResetPasswordRoute(
     }
   }
 
-  LaunchedEffectWithLifecycle(key1 = uiState.newPassword) {
+  LaunchedEffectWithLifecycle(key1 = uiState.newPassword, key2 = uiState.checkNewPassword) {
     viewModel.checkNewPasswordInvalid(uiState.newPassword)
-  }
-
-  LaunchedEffectWithLifecycle(key1 = uiState.checkNewPassword) {
     viewModel.checkNewPasswordMatch(uiState.checkNewPassword)
-  }
-
-  LaunchedEffect(
-    key1 = uiState.showPasswordInvalidErrorText,
-    key2 = uiState.showPasswordNotMatchErrorText,
-    key3 = uiState.currentPassword,
-  ) {
-    viewModel.checkShowResetPasswordButton()
   }
 
   ResetPasswordScreen(
@@ -79,8 +68,14 @@ fun ResetPasswordRoute(
     onClickCheckNewPasswordEyeIcon = viewModel::toggleShowCheckNewPassword,
     onClickFindPasswordButton = viewModel::navigateFindPassword,
     onClickResetPasswordButton = viewModel::resetPassword,
-    onDismissResetPasswordDialog = viewModel::hideResetPasswordDialog,
-    onClickResetPasswordDialogConfirm = viewModel::navigateLogin,
+    onDismissResetPasswordDialog = {
+      viewModel.hideResetPasswordDialog()
+      viewModel.popBackStack()
+    },
+    onClickResetPasswordDialogConfirm = {
+      viewModel.hideResetPasswordDialog()
+      viewModel.navigateLogin()
+    },
   )
 }
 
@@ -177,6 +172,7 @@ fun ResetPasswordScreen(
         Spacer(modifier = Modifier.height(20.dp))
         if (uiState.showResetPasswordButton) {
           SuwikiContainedLargeButton(
+            modifier = Modifier.imePadding(),
             text = stringResource(R.string.word_change),
             onClick = onClickResetPasswordButton,
           )
@@ -191,6 +187,7 @@ fun ResetPasswordScreen(
       confirmButtonText = stringResource(R.string.word_login),
       dismissButtonText = stringResource(R.string.word_cancel),
       onDismissRequest = onDismissResetPasswordDialog,
+      onClickDismiss = onDismissResetPasswordDialog,
       onClickConfirm = onClickResetPasswordDialogConfirm,
     )
   }

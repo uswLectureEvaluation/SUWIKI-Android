@@ -33,6 +33,7 @@ class UserRepositoryImpl @Inject constructor(
       id = id,
       password = password,
     )
+    logout()
   }
 
   override suspend fun getUserInfo(): Flow<User> = flow {

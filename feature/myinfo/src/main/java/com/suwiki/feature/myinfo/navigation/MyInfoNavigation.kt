@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import com.suwiki.feature.myinfo.MyInfoRoute
 import com.suwiki.feature.myinfo.myaccount.MyAccountRoute
 import com.suwiki.feature.myinfo.mypoint.MyPointRoute
@@ -42,7 +43,9 @@ fun NavGraphBuilder.myInfoNavGraph(
   navigateFindPassword: () -> Unit = {},
   navigateLogin: () -> Unit = {},
   navigateMyPoint: () -> Unit = {},
+  navigateLogin: (NavOptions?) -> Unit = {},
   handleException: (Throwable) -> Unit = {},
+  onShowToast: (String) -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
     MyInfoRoute(
@@ -51,6 +54,7 @@ fun NavGraphBuilder.myInfoNavGraph(
       navigateMyEvaluation = navigateMyEvaluation,
       navigateMyAccount = navigateMyAccount,
       navigateMyPoint = navigateMyPoint,
+      onShowToast = onShowToast,
     )
   }
   composable(route = MyInfoRoute.myAccountRoute) {
@@ -65,7 +69,13 @@ fun NavGraphBuilder.myInfoNavGraph(
     ResetPasswordRoute(
       popBackStack = popBackStack,
       navigateFindPassword = navigateFindPassword,
-      navigateLogin = navigateLogin,
+      navigateLogin = {
+        navigateLogin(
+          navOptions {
+            popUpTo(MyInfoRoute.route)
+          },
+        )
+      },
       handleException = handleException,
     )
   }
@@ -73,6 +83,7 @@ fun NavGraphBuilder.myInfoNavGraph(
     QuitRoute(
       popBackStack = popBackStack,
       handleException = handleException,
+      onShowToast = onShowToast,
     )
   }
   composable(route = MyInfoRoute.myPointRoute) {

@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
@@ -62,8 +63,8 @@ internal class MainNavigator(
     }
   }
 
-  fun navigateLogin() {
-    navController.navigateLogin()
+  fun navigateLogin(navOptions: NavOptions? = null) {
+    navController.navigateLogin(navOptions)
   }
 
   fun navigateFindId() {

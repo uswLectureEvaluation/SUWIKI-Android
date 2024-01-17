@@ -138,6 +138,7 @@ internal fun MainScreen(
           navigateLogin = navigator::navigateLogin,
           navigateMyPoint = navigator::navigateMyPoint,
           handleException = viewModel::handleException,
+          onShowToast = viewModel::onShowToast,
         )
 
         noticeNavGraph(
