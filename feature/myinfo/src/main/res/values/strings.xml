@@ -31,7 +31,7 @@
   <string name="word_cancel">취소</string>
   <string name="quit_screen_id_textfield_placeholder">아이디를 입력하세요</string>
   <string name="quit_screen_password_textfield_placeholder">비밀번호를 입력하세요</string>
-    <string name="quit_screen_quit_success_toast">회원 탈퇴 되었어요</string>
+  <string name="quit_screen_quit_success_toast">회원 탈퇴 되었어요</string>
   <string name="my_info_screen_need_login_toast">먼저 로그인 해주세요</string>
   <string name="word_point_status">포인트 현황</string>
   <string name="word_current_point">현재 포인트</string>
@@ -51,4 +51,5 @@
   <string name="text_point_policy_seventh">신고 보상 : 1p 적립</string>
   <string name="text_point_policy_eighth">시험정보 조회 : -20p</string>
   <string name="text_point_policy_ninth">강의평가/시험정보 삭제 : -30p</string>
+  <string name="word_dot">ㆍ</string>
 </resources>

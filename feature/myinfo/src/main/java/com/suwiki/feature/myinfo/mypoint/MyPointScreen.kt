@@ -188,7 +188,7 @@ fun PointPolicyText(
     modifier = Modifier.fillMaxWidth(),
   ) {
     Text(
-      text = "ㆍ",
+      text = stringResource(R.string.word_dot),
       style = SuwikiTheme.typography.caption4,
     )
     Text(
