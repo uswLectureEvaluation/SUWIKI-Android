@@ -112,7 +112,9 @@ fun MyPointScreen(
       Spacer(modifier = Modifier.height(12.dp))
       PointPolicyContainer()
       Spacer(modifier = Modifier.height(24.dp))
-      TitleContainer(title = stringResource(R.string.word_point_use_history))
+      if (uiState.purchaseHistory.size != 0) {
+        TitleContainer(title = stringResource(R.string.word_point_use_history))
+      }
       Column {
         uiState.purchaseHistory.forEach { purchaseHistory ->
           Row(
