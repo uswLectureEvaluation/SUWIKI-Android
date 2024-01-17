@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.suwiki.core.android.Dispatcher
 import com.suwiki.core.android.SuwikiDispatchers
 import com.suwiki.core.database.database.TimetableDatabase
@@ -26,6 +27,7 @@ class LocalTimetableDatasourceImpl @Inject constructor(
 
   companion object {
     private val MAIN_TIMETABLE_CREATE_TIME = longPreferencesKey("[KEY] is main timetable create time")
+    private val TIMETABLE_CELL_TYPE = stringPreferencesKey("[KEY] is main timetable cell type")
   }
 
   private val data: Flow<Preferences>
@@ -61,5 +63,13 @@ class LocalTimetableDatasourceImpl @Inject constructor(
 
   override suspend fun getMainTimetableCreateTime(): Flow<Long?> {
     return data.map { it[MAIN_TIMETABLE_CREATE_TIME] }
+  }
+
+  override suspend fun getTimetableCellType(): Flow<String> {
+    return data.map { it[TIMETABLE_CELL_TYPE] ?: "" }
+  }
+
+  override suspend fun setTimetableCellType(type: String) {
+    dataStore.edit { it[TIMETABLE_CELL_TYPE] = type }
   }
 }

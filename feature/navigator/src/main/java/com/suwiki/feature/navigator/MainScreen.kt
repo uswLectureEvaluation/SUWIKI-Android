@@ -95,12 +95,13 @@ internal fun MainScreen(
           padding = innerPadding,
           argumentName = OpenMajorRoute.ARGUMENT_NAME,
           popBackStack = navigator::popBackStackIfNotHome,
-          navigateCreateTimetable = navigator::navigateCreateTimetable,
-          navigateOpenLecture = navigator::navigateAddTimetableCell,
+          navigateTimetableEditor = navigator::navigateTimetableEditor,
+          navigateTimetableList = navigator::navigateTimetableList,
+          navigateOpenLecture = navigator::navigateOpenLecture,
           handleException = viewModel::handleException,
           onShowToast = viewModel::onShowToast,
           navigateOpenMajor = navigator::navigateOpenMajor,
-          navigateAddCell = navigator::navigateAddCell,
+          navigateCellEditor = navigator::navigateCellEditor,
         )
 
         lectureEvaluationNavGraph(

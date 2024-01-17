@@ -12,15 +12,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.feature.timetable.R
+import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.feature.timetable.timetable.component.EditTimetableCellBottomSheet
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
 import com.suwiki.feature.timetable.timetable.component.timetable.Timetable
+import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
+import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -28,10 +35,12 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun TimetableRoute(
   padding: PaddingValues,
   viewModel: TimetableViewModel = hiltViewModel(),
-  navigateCreateTimetable: () -> Unit,
+  navigateTimetableEditor: () -> Unit,
   navigateOpenLecture: () -> Unit,
+  navigateTimetableList: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
+  navigateCellEditor: (CellEditorArgument) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   val context = LocalContext.current
@@ -40,7 +49,9 @@ fun TimetableRoute(
       is TimetableSideEffect.HandleException -> handleException(sideEffect.throwable)
       TimetableSideEffect.NavigateAddTimetableCell -> navigateOpenLecture()
       TimetableSideEffect.ShowNeedCreateTimetableToast -> onShowToast(context.getString(R.string.timetable_screen_need_create_timetable))
-      TimetableSideEffect.NavigateCreateTimetable -> navigateCreateTimetable()
+      TimetableSideEffect.NavigateTimetableEditor -> navigateTimetableEditor()
+      is TimetableSideEffect.NavigateCellEditor -> navigateCellEditor(sideEffect.argument)
+      TimetableSideEffect.NavigateTimetableList -> navigateTimetableList()
     }
   }
 
@@ -51,8 +62,22 @@ fun TimetableRoute(
   TimetableScreen(
     padding = padding,
     uiState = uiState,
-    onClickAddTimetable = viewModel::navigateCreateTimetable,
+    onClickAddTimetable = viewModel::navigateTimetableEditor,
     onClickAppbarAdd = viewModel::navigateAddTimetableCell,
+    onClickTimetableCell = viewModel::showEditCellBottomSheet,
+    onDismissEditCellBottomSheet = viewModel::hideEditCellBottomSheet,
+    onClickTimetableCellDeleteButton = viewModel::deleteCell,
+    onClickTimetableCellEditButton = { cell ->
+      viewModel.hideEditCellBottomSheet()
+      viewModel.navigateCellEdit(cell)
+    },
+    onDismissSelectBottomSheet = viewModel::hideSelectCellTypeBottomSheet,
+    onClickSelectBottomSheetItem = { position ->
+      viewModel.updateCellType(position)
+      viewModel.hideSelectCellTypeBottomSheet()
+    },
+    onClickSetting = viewModel::showSelectCellTypeBottomSheet,
+    onClickHamburger = viewModel::navigateTimetableList,
   )
 }
 
@@ -62,6 +87,14 @@ fun TimetableScreen(
   uiState: TimetableState = TimetableState(),
   onClickAddTimetable: () -> Unit = {},
   onClickAppbarAdd: () -> Unit = {},
+  onClickTimetableCell: (TimetableCell) -> Unit = {},
+  onDismissEditCellBottomSheet: () -> Unit = {},
+  onClickTimetableCellDeleteButton: (TimetableCell) -> Unit = {},
+  onClickTimetableCellEditButton: (TimetableCell) -> Unit = {},
+  onDismissSelectBottomSheet: () -> Unit = {},
+  onClickSelectBottomSheetItem: (Int) -> Unit = {},
+  onClickSetting: () -> Unit = {},
+  onClickHamburger: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -71,8 +104,8 @@ fun TimetableScreen(
     TimetableAppbar(
       name = uiState.timetable?.name,
       onClickAdd = onClickAppbarAdd,
-      onClickHamburger = {},
-      onClickSetting = {},
+      onClickHamburger = onClickHamburger,
+      onClickSetting = onClickSetting,
     )
 
     AnimatedVisibility(
@@ -93,9 +126,30 @@ fun TimetableScreen(
       enter = fadeIn(),
       exit = fadeOut(),
     ) {
-      Timetable(timetable = uiState.timetable!!)
+      Timetable(
+        timetable = uiState.timetable ?: com.suwiki.core.model.timetable.Timetable(),
+        type = uiState.cellType,
+        onClickTimetableCell = onClickTimetableCell,
+      )
     }
   }
+
+  SuwikiSelectBottomSheet(
+    isSheetOpen = uiState.showSelectCellTypeBottomSheet,
+    onDismissRequest = onDismissSelectBottomSheet,
+    onClickItem = onClickSelectBottomSheetItem,
+    itemList = TimetableCellType.entries.map { stringResource(id = it.stringResId) }.toPersistentList(),
+    title = stringResource(R.string.timetable_screen_select_type_cell_title),
+    selectedPosition = uiState.cellType.ordinal,
+  )
+
+  EditTimetableCellBottomSheet(
+    isSheetOpen = uiState.showEditCellBottomSheet,
+    onDismissRequest = onDismissEditCellBottomSheet,
+    cell = uiState.selectedCell,
+    onClickDeleteButton = onClickTimetableCellDeleteButton,
+    onClickEditButton = onClickTimetableCellEditButton,
+  )
 }
 
 @Preview

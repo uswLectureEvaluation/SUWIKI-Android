@@ -9,6 +9,7 @@ import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
+import com.suwiki.feature.timetable.navigation.argument.toCellEditorArgument
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -42,7 +43,11 @@ class OpenLectureViewModel @Inject constructor(
 
   private var selectedOpenLecture: OpenLecture? = null
 
-  fun navigateAddCell(openLecture: OpenLecture = OpenLecture()) = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCell(openLecture)) }
+  fun navigateCellEditor(openLecture: OpenLecture = OpenLecture()) = intent {
+    postSideEffect(
+      OpenLectureSideEffect.NavigateCellEditor(openLecture.toCellEditorArgument()),
+    )
+  }
   fun navigateAddCustomCell() = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCustomTimetableCell) }
 
   fun insertTimetable() = intent {

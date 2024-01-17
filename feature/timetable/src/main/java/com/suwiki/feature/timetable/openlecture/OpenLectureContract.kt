@@ -6,6 +6,7 @@ import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.R
+import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -46,7 +47,7 @@ sealed interface OpenLectureSideEffect {
   data object ScrollToTop : OpenLectureSideEffect
   data object PopBackStack : OpenLectureSideEffect
   data class NavigateOpenMajor(val selectedOpenMajor: String) : OpenLectureSideEffect
-  data class NavigateAddCell(val openLecture: OpenLecture) : OpenLectureSideEffect
+  data class NavigateCellEditor(val argument: CellEditorArgument) : OpenLectureSideEffect
   data object NavigateAddCustomTimetableCell : OpenLectureSideEffect
   data class HandleException(val throwable: Throwable) : OpenLectureSideEffect
   data class ShowOverlapCellToast(val msg: String) : OpenLectureSideEffect

@@ -25,7 +25,10 @@ interface TimetableRepository {
 
   suspend fun insertTimetableCell(cellList: List<TimetableCell>)
 
-  suspend fun deleteTimetableCell(cell: TimetableCell)
+  suspend fun deleteTimetableCell(cell: TimetableCell): Timetable
 
-  suspend fun updateTimetableCell(cell: TimetableCell)
+  suspend fun updateTimetableCell(oldCellId: String, cellList: List<TimetableCell>)
+
+  suspend fun getTimetableCellType(): String
+  suspend fun setTimetableCellType(type: String)
 }
