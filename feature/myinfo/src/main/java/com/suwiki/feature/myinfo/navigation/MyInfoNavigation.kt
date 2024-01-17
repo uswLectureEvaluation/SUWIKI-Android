@@ -38,6 +38,7 @@ fun NavGraphBuilder.myInfoNavGraph(
   navigateFindPassword: () -> Unit = {},
   navigateLogin: (NavOptions?) -> Unit = {},
   handleException: (Throwable) -> Unit = {},
+  onShowToast: (String) -> Unit = {},
 ) {
   composable(route = MyInfoRoute.route) {
     MyInfoRoute(
@@ -45,6 +46,7 @@ fun NavGraphBuilder.myInfoNavGraph(
       navigateNotice = navigateNotice,
       navigateMyEvaluation = navigateMyEvaluation,
       navigateMyAccount = navigateMyAccount,
+      onShowToast = onShowToast
     )
   }
   composable(route = MyInfoRoute.myAccountRoute) {
@@ -73,6 +75,7 @@ fun NavGraphBuilder.myInfoNavGraph(
     QuitRoute(
       popBackStack = popBackStack,
       handleException = handleException,
+      onShowToast = onShowToast,
     )
   }
 }

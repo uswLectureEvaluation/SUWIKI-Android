@@ -137,6 +137,7 @@ internal fun MainScreen(
           navigateFindPassword = navigator::navigateFindPassword,
           navigateLogin = navigator::navigateLogin,
           handleException = viewModel::handleException,
+          onShowToast = viewModel::onShowToast,
         )
 
         noticeNavGraph(

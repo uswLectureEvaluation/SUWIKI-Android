@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,14 +28,17 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun QuitRoute(
   viewModel: QuitViewModel = hiltViewModel(),
+  onShowToast: (String) -> Unit,
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
+  val context = LocalContext.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is QuitSideEffect.PopBackStack -> popBackStack()
       is QuitSideEffect.HandleException -> handleException(sideEffect.throwable)
+      QuitSideEffect.ShowSuccessQuitToast -> onShowToast(context.getString(R.string.quit_screen_quit_success_toast))
     }
   }
   QuitScreen(

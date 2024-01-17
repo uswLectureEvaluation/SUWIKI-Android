@@ -36,6 +36,7 @@ class QuitViewModel @Inject constructor(
       id = id,
       password = password,
     ).onSuccess {
+      postSideEffect(QuitSideEffect.ShowSuccessQuitToast)
       popBackStack()
     }.onFailure {
       postSideEffect(QuitSideEffect.HandleException(it))

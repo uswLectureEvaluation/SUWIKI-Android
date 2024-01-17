@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,14 +50,17 @@ fun MyInfoRoute(
   navigateNotice: () -> Unit,
   navigateMyEvaluation: () -> Unit,
   navigateMyAccount: () -> Unit,
+  onShowToast: (String) -> Unit = {},
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
+  val context = LocalContext.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is MyInfoSideEffect.NavigateNotice -> navigateNotice()
       is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation()
       is MyInfoSideEffect.NavigateMyAccount -> navigateMyAccount()
+      MyInfoSideEffect.ShowNeedLoginToast -> onShowToast(context.getString(R.string.my_info_screen_need_login_toast))
     }
   }
 

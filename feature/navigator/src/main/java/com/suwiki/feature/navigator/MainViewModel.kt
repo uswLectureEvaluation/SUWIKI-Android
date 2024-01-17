@@ -44,6 +44,6 @@ class MainViewModel @Inject constructor() : ContainerHost<MainState, MainSideEff
   fun hideNetworkErrorDialog() = intent { reduce { state.copy(showNetworkErrorDialog = false) } }
 
   companion object {
-    private const val SHOW_TOAST_LENGTH = 2000L
+    private const val SHOW_TOAST_LENGTH = 3000L
   }
 }

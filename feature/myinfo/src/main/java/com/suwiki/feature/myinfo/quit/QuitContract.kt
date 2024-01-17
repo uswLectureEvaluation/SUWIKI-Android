@@ -10,6 +10,7 @@ data class QuitState(
 }
 
 sealed interface QuitSideEffect {
+  data object ShowSuccessQuitToast: QuitSideEffect
   data object PopBackStack : QuitSideEffect
   data class HandleException(val throwable: Throwable) : QuitSideEffect
 }
