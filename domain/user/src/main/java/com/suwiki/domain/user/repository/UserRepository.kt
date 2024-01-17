@@ -1,5 +1,6 @@
 package com.suwiki.domain.user.repository
 
+import com.suwiki.core.model.user.Suspension
 import com.suwiki.core.model.user.User
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +19,7 @@ interface UserRepository {
   )
 
   suspend fun getUserInfo(): Flow<User>
+
+  suspend fun getBanHistory(): List<Suspension.Ban>
+  suspend fun getBlackList(): List<Suspension.Block>
 }

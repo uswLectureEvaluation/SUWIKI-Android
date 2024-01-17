@@ -7,7 +7,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import com.suwiki.feature.myinfo.MyInfoRoute
+import com.suwiki.feature.myinfo.banhistory.BanHistoryRoute
 import com.suwiki.feature.myinfo.myaccount.MyAccountRoute
+import com.suwiki.feature.myinfo.mypoint.MyPointRoute
 import com.suwiki.feature.myinfo.quit.QuitRoute
 import com.suwiki.feature.myinfo.resetpassword.ResetPasswordRoute
 
@@ -27,6 +29,14 @@ fun NavController.navigateQuit() {
   navigate(MyInfoRoute.quitRoute)
 }
 
+fun NavController.navigateMyPoint() {
+  navigate(MyInfoRoute.myPointRoute)
+}
+
+fun NavController.navigateBanHistory() {
+  navigate(MyInfoRoute.banHistoryRoute)
+}
+
 fun NavGraphBuilder.myInfoNavGraph(
   padding: PaddingValues,
   popBackStack: () -> Unit = {},
@@ -36,6 +46,8 @@ fun NavGraphBuilder.myInfoNavGraph(
   navigateResetPassword: () -> Unit = {},
   navigateQuit: () -> Unit = {},
   navigateFindPassword: () -> Unit = {},
+  navigateMyPoint: () -> Unit = {},
+  navigateBanHistory: () -> Unit = {},
   navigateLogin: (NavOptions?) -> Unit = {},
   handleException: (Throwable) -> Unit = {},
   onShowToast: (String) -> Unit = {},
@@ -46,6 +58,8 @@ fun NavGraphBuilder.myInfoNavGraph(
       navigateNotice = navigateNotice,
       navigateMyEvaluation = navigateMyEvaluation,
       navigateMyAccount = navigateMyAccount,
+      navigateMyPoint = navigateMyPoint,
+      navigateBanHistory = navigateBanHistory,
       onShowToast = onShowToast,
     )
   }
@@ -78,6 +92,18 @@ fun NavGraphBuilder.myInfoNavGraph(
       onShowToast = onShowToast,
     )
   }
+  composable(route = MyInfoRoute.myPointRoute) {
+    MyPointRoute(
+      popBackStack = popBackStack,
+      handleException = handleException,
+    )
+  }
+  composable(route = MyInfoRoute.banHistoryRoute) {
+    BanHistoryRoute(
+      popBackStack = popBackStack,
+      handleException = handleException,
+    )
+  }
 }
 
 object MyInfoRoute {
@@ -85,4 +111,6 @@ object MyInfoRoute {
   const val myAccountRoute = "my-account"
   const val resetPasswordRoute = "reset-password"
   const val quitRoute = "quit"
+  const val myPointRoute = "my-point"
+  const val banHistoryRoute = "ban-history"
 }

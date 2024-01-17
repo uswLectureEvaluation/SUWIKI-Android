@@ -1,6 +1,7 @@
 package com.suwiki.data.user.repository
 
 import com.suwiki.core.model.exception.AuthorizationException
+import com.suwiki.core.model.user.Suspension
 import com.suwiki.core.model.user.User
 import com.suwiki.core.security.SecurityPreferences
 import com.suwiki.data.user.datasource.LocalUserDataSource
@@ -54,5 +55,13 @@ class UserRepositoryImpl @Inject constructor(
 
     emit(remoteUserInfo)
     localUserDataSource.setUserInfo(remoteUserInfo)
+  }
+
+  override suspend fun getBanHistory(): List<Suspension.Ban> {
+    return remoteUserDataSource.getBanHistory()
+  }
+
+  override suspend fun getBlackList(): List<Suspension.Block> {
+    return remoteUserDataSource.getBlackList()
   }
 }

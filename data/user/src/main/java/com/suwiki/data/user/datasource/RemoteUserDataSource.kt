@@ -1,5 +1,6 @@
 package com.suwiki.data.user.datasource
 
+import com.suwiki.core.model.user.Suspension
 import com.suwiki.core.model.user.User
 
 interface RemoteUserDataSource {
@@ -15,4 +16,8 @@ interface RemoteUserDataSource {
   )
 
   suspend fun getUserInfo(): User
+
+  suspend fun getBanHistory(): List<Suspension.Ban>
+
+  suspend fun getBlackList(): List<Suspension.Block>
 }

@@ -137,6 +137,8 @@ internal fun MainScreen(
           navigateQuit = navigator::navigateQuit,
           navigateFindPassword = navigator::navigateFindPassword,
           navigateLogin = navigator::navigateLogin,
+          navigateMyPoint = navigator::navigateMyPoint,
+          navigateBanHistory = navigator::navigateBanHistory,
           handleException = viewModel::handleException,
           onShowToast = viewModel::onShowToast,
         )

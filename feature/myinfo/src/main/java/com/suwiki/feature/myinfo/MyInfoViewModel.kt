@@ -52,4 +52,6 @@ class MyInfoViewModel @Inject constructor(
       },
     )
   }
+  fun navigateMyPoint() = intent { postSideEffect(MyInfoSideEffect.NavigateMyPoint) }
+  fun navigateBanHistory() = intent { postSideEffect(MyInfoSideEffect.NavigateBanHistory) }
 }

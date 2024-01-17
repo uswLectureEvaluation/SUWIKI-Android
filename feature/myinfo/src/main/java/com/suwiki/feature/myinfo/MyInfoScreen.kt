@@ -43,6 +43,11 @@ import okhttp3.internal.immutableListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
+data class MyInfoListItem(
+  val title: String,
+  val onClick: () -> Unit,
+)
+
 @Composable
 fun MyInfoRoute(
   padding: PaddingValues,
@@ -50,6 +55,8 @@ fun MyInfoRoute(
   navigateNotice: () -> Unit,
   navigateMyEvaluation: () -> Unit,
   navigateMyAccount: () -> Unit,
+  navigateMyPoint: () -> Unit,
+  navigateBanHistory: () -> Unit,
   onShowToast: (String) -> Unit = {},
 ) {
   val scrollState = rememberScrollState()
@@ -60,6 +67,8 @@ fun MyInfoRoute(
       is MyInfoSideEffect.NavigateNotice -> navigateNotice()
       is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation()
       is MyInfoSideEffect.NavigateMyAccount -> navigateMyAccount()
+      is MyInfoSideEffect.NavigateMyPoint -> navigateMyPoint()
+      is MyInfoSideEffect.NavigateBanHistory -> navigateBanHistory()
       MyInfoSideEffect.ShowNeedLoginToast -> onShowToast(context.getString(R.string.my_info_screen_need_login_toast))
     }
   }
@@ -75,6 +84,8 @@ fun MyInfoRoute(
     onClickNoticeButton = viewModel::navigateNotice,
     onClickMyEvaluationButton = viewModel::navigateMyEvaluation,
     onClickMyAccountButton = viewModel::navigateMyAccount,
+    onClickMyPointItem = viewModel::navigateMyPoint,
+    onClickBanHistoryItem = viewModel::navigateBanHistory,
   )
 }
 
@@ -86,10 +97,18 @@ fun MyInfoScreen(
   onClickNoticeButton: () -> Unit,
   onClickMyEvaluationButton: () -> Unit,
   onClickMyAccountButton: () -> Unit,
+  onClickMyPointItem: () -> Unit,
+  onClickBanHistoryItem: () -> Unit,
 ) {
   val myList = immutableListOf(
-    R.string.my_info_point,
-    R.string.my_info_ban_history,
+    MyInfoListItem(
+      title = stringResource(R.string.my_info_point),
+      onClick = onClickMyPointItem,
+    ),
+    MyInfoListItem(
+      title = stringResource(R.string.my_info_ban_history),
+      onClick = onClickBanHistoryItem,
+    ),
   )
   val serviceList = immutableListOf(
     R.string.my_info_send_feedback,
@@ -163,14 +182,17 @@ fun MyInfoScreen(
       if (uiState.showMyInfoCard) {
         SuwikiMenuItem(title = stringResource(R.string.my_info_my))
 
-        myList.forEach { title ->
-          MyInfoListItem(title = stringResource(title))
+        myList.forEach { item ->
+          MyInfoListItemContainer(
+            title = item.title,
+            onClick = item.onClick,
+          )
         }
       }
       SuwikiMenuItem(title = stringResource(R.string.my_info_service))
 
       serviceList.forEach { title ->
-        MyInfoListItem(title = stringResource(title))
+        MyInfoListItemContainer(title = stringResource(title))
       }
     }
     if (uiState.isLoading) {
@@ -300,7 +322,7 @@ private fun MyInfoMenuItem(
 }
 
 @Composable
-private fun MyInfoListItem(
+private fun MyInfoListItemContainer(
   title: String = "",
   onClick: () -> Unit = {},
 ) {
@@ -337,6 +359,8 @@ fun MyInfoScreenScreenPreview() {
       onClickNoticeButton = {},
       onClickMyEvaluationButton = {},
       onClickMyAccountButton = {},
+      onClickMyPointItem = {},
+      onClickBanHistoryItem = {},
     )
   }
 }
