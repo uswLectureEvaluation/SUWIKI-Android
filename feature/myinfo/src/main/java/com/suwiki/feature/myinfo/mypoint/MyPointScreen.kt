@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.theme.Gray95
+import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.lectureevaluation.PurchaseHistory
@@ -39,6 +41,20 @@ const val VIEW_EXAM_POINT = 20
 
 // TODO(REMOVE)
 val samplePurchaseHistory = persistentListOf(
+  PurchaseHistory(
+    id = 0,
+    lectureName = "회로이론",
+    professor = "양윤기",
+    majorType = "정보통신",
+    createDate = LocalDateTime.now(),
+  ),
+  PurchaseHistory(
+    id = 0,
+    lectureName = "회로이론",
+    professor = "양윤기",
+    majorType = "정보통신",
+    createDate = LocalDateTime.now(),
+  ),
   PurchaseHistory(
     id = 0,
     lectureName = "회로이론",
@@ -187,7 +203,8 @@ fun TitleContainer(
 ) {
   Text(
     modifier = Modifier
-      .fillMaxWidth(),
+      .fillMaxWidth()
+      .padding(vertical = 14.dp),
     text = title,
     style = SuwikiTheme.typography.body2,
   )
@@ -200,21 +217,24 @@ fun MyPointRowContainer(
   point: String,
   verticalAlignment: Alignment.Vertical,
 ) {
-  Row(
-    verticalAlignment = verticalAlignment,
-    horizontalArrangement = Arrangement.spacedBy(48.dp),
-    modifier = modifier.fillMaxWidth(),
-  ) {
-    Text(
-      modifier = Modifier.width(120.dp),
-      text = title,
-      style = SuwikiTheme.typography.body5,
-      color = Gray95,
-    )
-    Text(
-      text = point,
-      style = SuwikiTheme.typography.body5,
-    )
+  Column {
+    Row(
+      verticalAlignment = verticalAlignment,
+      horizontalArrangement = Arrangement.spacedBy(48.dp),
+      modifier = modifier.fillMaxWidth(),
+    ) {
+      Text(
+        modifier = Modifier.width(120.dp),
+        text = title,
+        style = SuwikiTheme.typography.body5,
+        color = Gray95,
+      )
+      Text(
+        text = point,
+        style = SuwikiTheme.typography.body5,
+      )
+    }
+    HorizontalDivider(color = GrayF6)
   }
 }
 
