@@ -10,8 +10,8 @@ import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.UpdateTimetableCellUseCase
-import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.TimetableRoute
+import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container

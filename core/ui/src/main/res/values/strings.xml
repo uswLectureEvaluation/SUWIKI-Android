@@ -74,4 +74,5 @@
   <string name="word_delete">삭제</string>
     <string name="word_do_delete">삭제하기</string>
   <string name="word_do_edit">수정하기</string>
+  <string name="word_cancel">취소</string>
 </resources>

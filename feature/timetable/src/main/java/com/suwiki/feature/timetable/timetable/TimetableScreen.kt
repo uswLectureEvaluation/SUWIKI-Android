@@ -21,7 +21,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.feature.timetable.R
-import com.suwiki.feature.timetable.navigation.CellEditorArgument
+import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.EditTimetableCellBottomSheet
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
@@ -35,7 +35,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun TimetableRoute(
   padding: PaddingValues,
   viewModel: TimetableViewModel = hiltViewModel(),
-  navigateCreateTimetable: () -> Unit,
+  navigateTimetableEditor: () -> Unit,
   navigateOpenLecture: () -> Unit,
   navigateTimetableList: () -> Unit,
   handleException: (Throwable) -> Unit,
@@ -49,7 +49,7 @@ fun TimetableRoute(
       is TimetableSideEffect.HandleException -> handleException(sideEffect.throwable)
       TimetableSideEffect.NavigateAddTimetableCell -> navigateOpenLecture()
       TimetableSideEffect.ShowNeedCreateTimetableToast -> onShowToast(context.getString(R.string.timetable_screen_need_create_timetable))
-      TimetableSideEffect.NavigateCreateTimetable -> navigateCreateTimetable()
+      TimetableSideEffect.NavigateTimetableEditor -> navigateTimetableEditor()
       is TimetableSideEffect.NavigateCellEditor -> navigateCellEditor(sideEffect.argument)
       TimetableSideEffect.NavigateTimetableList -> navigateTimetableList()
     }
@@ -62,7 +62,7 @@ fun TimetableRoute(
   TimetableScreen(
     padding = padding,
     uiState = uiState,
-    onClickAddTimetable = viewModel::navigateCreateTimetable,
+    onClickAddTimetable = viewModel::navigateTimetableEditor,
     onClickAppbarAdd = viewModel::navigateAddTimetableCell,
     onClickTimetableCell = viewModel::showEditCellBottomSheet,
     onDismissEditCellBottomSheet = viewModel::hideEditCellBottomSheet,
@@ -127,7 +127,7 @@ fun TimetableScreen(
       exit = fadeOut(),
     ) {
       Timetable(
-        timetable = uiState.timetable!!,
+        timetable = uiState.timetable ?: com.suwiki.core.model.timetable.Timetable(),
         type = uiState.cellType,
         onClickTimetableCell = onClickTimetableCell,
       )

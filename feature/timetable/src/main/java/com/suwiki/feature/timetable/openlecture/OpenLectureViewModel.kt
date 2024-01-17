@@ -9,7 +9,7 @@ import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
-import com.suwiki.feature.timetable.navigation.toCellEditorArgument
+import com.suwiki.feature.timetable.navigation.argument.toCellEditorArgument
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList

@@ -21,10 +21,11 @@ import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
 import com.suwiki.feature.signup.navigation.navigateSignup
 import com.suwiki.feature.signup.navigation.navigateSignupComplete
-import com.suwiki.feature.timetable.navigation.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.TimetableRoute
+import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument
 import com.suwiki.feature.timetable.navigation.navigateCellEditor
-import com.suwiki.feature.timetable.navigation.navigateCreateTimetable
+import com.suwiki.feature.timetable.navigation.navigateTimetableEditor
 import com.suwiki.feature.timetable.navigation.navigateOpenLecture
 import com.suwiki.feature.timetable.navigation.navigateTimetable
 import com.suwiki.feature.timetable.navigation.navigateTimetableList
@@ -107,8 +108,8 @@ internal class MainNavigator(
     navController.navigateCellEditor(argument)
   }
 
-  fun navigateCreateTimetable() {
-    navController.navigateCreateTimetable()
+  fun navigateTimetableEditor(argument: TimetableEditorArgument = TimetableEditorArgument()) {
+    navController.navigateTimetableEditor(argument)
   }
 
   fun navigateTimetableList() {

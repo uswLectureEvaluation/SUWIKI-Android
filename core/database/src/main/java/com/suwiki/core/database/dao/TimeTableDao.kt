@@ -9,7 +9,7 @@ import com.suwiki.core.database.model.TimetableEntity
 
 @Dao
 interface TimeTableDao {
-  @Query("SELECT * FROM TimetableEntity")
+  @Query("SELECT * FROM TimetableEntity ORDER BY createTime DESC")
   fun getAll(): List<TimetableEntity>
 
   @Query("SELECT * FROM TimetableEntity WHERE createTime = :createTime")

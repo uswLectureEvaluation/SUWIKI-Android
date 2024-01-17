@@ -95,7 +95,7 @@ internal fun MainScreen(
           padding = innerPadding,
           argumentName = OpenMajorRoute.ARGUMENT_NAME,
           popBackStack = navigator::popBackStackIfNotHome,
-          navigateCreateTimetable = navigator::navigateCreateTimetable,
+          navigateTimetableEditor = navigator::navigateTimetableEditor,
           navigateTimetableList = navigator::navigateTimetableList,
           navigateOpenLecture = navigator::navigateOpenLecture,
           handleException = viewModel::handleException,

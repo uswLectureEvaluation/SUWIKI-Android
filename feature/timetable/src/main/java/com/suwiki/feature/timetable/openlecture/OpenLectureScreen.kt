@@ -57,7 +57,7 @@ import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.timetableCellColorHexMap
 import com.suwiki.feature.timetable.R
-import com.suwiki.feature.timetable.navigation.CellEditorArgument
+import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.android.awaitFrame

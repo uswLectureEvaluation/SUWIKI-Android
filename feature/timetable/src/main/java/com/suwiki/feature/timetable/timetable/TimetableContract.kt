@@ -3,7 +3,7 @@ package com.suwiki.feature.timetable.timetable
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.feature.timetable.navigation.CellEditorArgument
+import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 
 data class TimetableState(
@@ -18,7 +18,7 @@ data class TimetableState(
 sealed interface TimetableSideEffect {
   data object ShowNeedCreateTimetableToast : TimetableSideEffect
   data object NavigateAddTimetableCell : TimetableSideEffect
-  data object NavigateCreateTimetable : TimetableSideEffect
+  data object NavigateTimetableEditor : TimetableSideEffect
   data object NavigateTimetableList : TimetableSideEffect
   data class NavigateCellEditor(val argument: CellEditorArgument) : TimetableSideEffect
   data class HandleException(val throwable: Throwable) : TimetableSideEffect

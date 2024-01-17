@@ -6,7 +6,7 @@ import com.suwiki.domain.timetable.usecase.DeleteTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
 import com.suwiki.domain.timetable.usecase.GetTimetableCellTypeUseCase
 import com.suwiki.domain.timetable.usecase.SetTimetableCellTypeUseCase
-import com.suwiki.feature.timetable.navigation.toCellEditorArgument
+import com.suwiki.feature.timetable.navigation.argument.toCellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
@@ -79,7 +79,7 @@ class TimetableViewModel @Inject constructor(
 
   fun hideEditCellBottomSheet() = intent { reduce { state.copy(showEditCellBottomSheet = false) } }
 
-  fun navigateCreateTimetable() = intent { postSideEffect(TimetableSideEffect.NavigateCreateTimetable) }
+  fun navigateTimetableEditor() = intent { postSideEffect(TimetableSideEffect.NavigateTimetableEditor) }
   fun navigateTimetableList() = intent { postSideEffect(TimetableSideEffect.NavigateTimetableList) }
 
   fun navigateAddTimetableCell() = intent {

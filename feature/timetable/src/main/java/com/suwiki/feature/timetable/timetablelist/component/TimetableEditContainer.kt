@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,9 +24,11 @@ import com.suwiki.core.designsystem.component.badge.BadgeColor
 import com.suwiki.core.designsystem.component.badge.SuwikiBadge
 import com.suwiki.core.designsystem.component.button.SuwikiContainedSmallButton
 import com.suwiki.core.designsystem.theme.Black
+import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
 fun TimetableEditContainer(
@@ -32,11 +36,22 @@ fun TimetableEditContainer(
   timetable: Timetable = Timetable(),
   onClickEditButton: () -> Unit = {},
   onClickDeleteButton: () -> Unit = {},
+  onClick: () -> Unit = {},
 ) {
   Row(
     modifier = modifier
       .fillMaxWidth()
       .background(White)
+      .drawBehind {
+        val strokeWidth = 1.dp.toPx()
+        drawLine(
+          color = GrayF6,
+          start = Offset(0f, size.height - strokeWidth),
+          end = Offset(size.width, size.height - strokeWidth),
+          strokeWidth = strokeWidth,
+        )
+      }
+      .suwikiClickable(onClick = onClick)
       .padding(24.dp),
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.SpaceBetween,

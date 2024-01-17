@@ -34,4 +34,7 @@
   <string name="timetable_cell_type_classname_professor">수업명, 교수명</string>
   <string name="timetable_cell_type_classname_professor_location">수업명, 교수명, 장소</string>
   <string name="timetable_screen_select_type_cell_title">보여질 강의정보</string>
+    <string name="timetable_list_screen_empty_timetable">시간표가 없어요</string>
+  <string name="delete_timetable_dialog_title">시간표 삭제</string>
+  <string name="delete_timetable_dialog_body">정말로 삭제하시겠어요?</string>
 </resources>
