@@ -150,12 +150,7 @@ fun MyPointScreen(
         verticalAlignment = Alignment.Bottom,
       )
       Spacer(modifier = Modifier.height(12.dp))
-      Text(
-        modifier = Modifier
-          .padding(vertical = 12.dp),
-        text = stringResource(R.string.text_point_policy),
-        style = SuwikiTheme.typography.caption4,
-      )
+      PointPolicyContainer()
       Spacer(modifier = Modifier.height(24.dp))
       TitleContainer(title = stringResource(R.string.word_point_use_history))
       Column {
@@ -192,8 +187,7 @@ fun TitleContainer(
 ) {
   Text(
     modifier = Modifier
-      .fillMaxWidth()
-      .padding(vertical = 14.dp),
+      .fillMaxWidth(),
     text = title,
     style = SuwikiTheme.typography.body2,
   )
@@ -221,6 +215,44 @@ fun MyPointRowContainer(
       text = point,
       style = SuwikiTheme.typography.body5,
     )
+  }
+}
+
+@Composable
+fun PointPolicyText(
+  text: String,
+) {
+  Row(
+    modifier = Modifier.fillMaxWidth()
+  ) {
+    Text(
+      text = "ㆍ",
+      style = SuwikiTheme.typography.caption4,
+    )
+    Text(
+      text = text,
+      style = SuwikiTheme.typography.caption4,
+    )
+  }
+}
+
+@Composable
+fun PointPolicyContainer() {
+  Column(
+    modifier = Modifier
+      .padding(vertical = 12.dp),
+  ) {
+    PointPolicyText(stringResource(R.string.text_point_policy_first))
+    PointPolicyText(stringResource(R.string.text_point_policy_second))
+    PointPolicyText(stringResource(R.string.text_point_policy_third))
+    PointPolicyText(stringResource(R.string.text_point_policy_fourth))
+    Text("")
+    PointPolicyText(stringResource(R.string.text_point_policy_fifth))
+    PointPolicyText(stringResource(R.string.text_point_policy_sixth))
+    PointPolicyText(stringResource(R.string.text_point_policy_seventh))
+    Text("")
+    PointPolicyText(stringResource(R.string.text_point_policy_eighth))
+    PointPolicyText(stringResource(R.string.text_point_policy_ninth))
   }
 }
 
