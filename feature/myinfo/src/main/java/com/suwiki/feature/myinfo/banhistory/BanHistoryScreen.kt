@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -58,6 +59,10 @@ fun BanHistoryRoute(
       is BanHistorySideEffect.PopBackStack -> popBackStack()
       is BanHistorySideEffect.HandleException -> handleException(sideEffect.throwable)
     }
+  }
+
+  LaunchedEffect(key1 = Unit) {
+    viewModel.initData()
   }
 
   BanHistoryScreen(

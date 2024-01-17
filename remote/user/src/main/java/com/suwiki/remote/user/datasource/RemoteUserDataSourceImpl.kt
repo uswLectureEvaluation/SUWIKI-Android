@@ -1,6 +1,7 @@
 package com.suwiki.remote.user.datasource
 
 import com.suwiki.core.model.exception.RequestFailException
+import com.suwiki.core.model.user.Suspension
 import com.suwiki.core.model.user.User
 import com.suwiki.data.user.datasource.RemoteUserDataSource
 import com.suwiki.remote.user.api.UserApi
@@ -42,5 +43,9 @@ class RemoteUserDataSourceImpl @Inject constructor(
 
   override suspend fun getUserInfo(): User {
     return userApi.getUserData().getOrThrow().toModel()
+  }
+
+  override suspend fun getBanHistory(): List<Suspension.Ban> {
+    return userApi.getBanHistoryData().getOrThrow().map { it.toModel() }
   }
 }
