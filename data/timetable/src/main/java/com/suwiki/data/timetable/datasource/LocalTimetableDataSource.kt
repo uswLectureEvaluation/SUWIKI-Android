@@ -18,4 +18,7 @@ interface LocalTimetableDataSource {
 
   suspend fun updateTimetable(data: Timetable)
   suspend fun insertTimetable(data: Timetable)
+
+  suspend fun getTimetableCellType(): Flow<String>
+  suspend fun setTimetableCellType(type: String)
 }

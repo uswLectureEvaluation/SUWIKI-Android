@@ -35,7 +35,7 @@ fun Timetable(
   modifier: Modifier = Modifier,
   type: TimetableCellType = TimetableCellType.CLASSNAME_PROFESSOR_LOCATION,
   timetable: Timetable,
-  onClickClassCell: (TimetableCell) -> Unit = { _ -> },
+  onClickTimetableCell: (TimetableCell) -> Unit = { _ -> },
 ) {
   val scrollState = rememberScrollState()
 
@@ -66,7 +66,7 @@ fun Timetable(
             day = day,
             cellList = cellGroupedByDay[day] ?: emptyList(),
             lastPeriod = maxPeriod,
-            onClickClassCell = onClickClassCell,
+            onClickClassCell = onClickTimetableCell,
           )
         }
     }
@@ -76,7 +76,7 @@ fun Timetable(
       .flatMap { it.value }
       .forEach { cell ->
         ELearningCell(
-          onClickClassCell = onClickClassCell,
+          onClickClassCell = onClickTimetableCell,
           cell = cell,
         )
       }

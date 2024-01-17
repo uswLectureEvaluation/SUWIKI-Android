@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Stable
 @Serializable
 data class Timetable(
-  val createTime: Long,
-  val year: String,
-  val semester: String,
-  val name: String,
-  val cellList: List<TimetableCell>,
+  val createTime: Long = 0,
+  val year: String = "",
+  val semester: String = "",
+  val name: String = "",
+  val cellList: List<TimetableCell> = emptyList(),
 )

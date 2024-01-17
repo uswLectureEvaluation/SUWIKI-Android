@@ -4,6 +4,7 @@ import com.suwiki.core.model.exception.TimetableCellOverlapException
 import com.suwiki.core.model.exception.TimetableCellPeriodInvalidException
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.domain.timetable.repository.TimetableRepository
 import kotlinx.coroutines.flow.firstOrNull
@@ -63,6 +64,7 @@ class TimetableRepositoryImpl @Inject constructor(
   override suspend fun insertTimetableCell(cellList: List<TimetableCell>) {
     val timetable = getMainTimetable()!!
     checkPeriodInvalid(cellList)
+    checkCellOverlap(cellList, cellList)
     checkCellOverlap(cellList, timetable.cellList)
     localTimetableDataSource.updateTimetable(
       timetable.copy(
@@ -71,25 +73,28 @@ class TimetableRepositoryImpl @Inject constructor(
     )
   }
 
-  override suspend fun deleteTimetableCell(cell: TimetableCell) {
+  override suspend fun deleteTimetableCell(cell: TimetableCell): Timetable {
     val timetable = getMainTimetable()!!
+      .run {
+        copy(cellList = cellList.minus(cell))
+      }
     localTimetableDataSource.updateTimetable(
-      timetable.copy(
-        cellList = timetable.cellList.minus(cell),
-      ),
+      timetable,
     )
+    return timetable
   }
 
-  override suspend fun updateTimetableCell(cell: TimetableCell) {
+  override suspend fun updateTimetableCell(oldCellId: String, cellList: List<TimetableCell>) {
     val timetable = getMainTimetable()!!
-    val oldCell = timetable.cellList.find { it.id == cell.id }!!
-    val tempCellList = timetable.cellList.minus(oldCell)
-    val toInsertCell = listOf(cell)
-    checkPeriodInvalid(toInsertCell)
-    checkCellOverlap(toInsertCell, tempCellList)
+    val tempCellList = timetable.cellList.filter { it.id != oldCellId }
+
+    checkPeriodInvalid(cellList)
+    checkCellOverlap(cellList, cellList)
+    checkCellOverlap(cellList, tempCellList)
+
     localTimetableDataSource.updateTimetable(
       timetable.copy(
-        cellList = tempCellList.plus(cell),
+        cellList = tempCellList.plus(cellList),
       ),
     )
   }
@@ -102,7 +107,7 @@ class TimetableRepositoryImpl @Inject constructor(
   private fun checkPeriodInvalid(
     cellList: List<TimetableCell>,
   ) {
-    cellList.forEach { cell ->
+    cellList.filter { it.day != TimetableDay.E_LEARNING }.forEach { cell ->
       val isNotValid = cell.startPeriod > cell.endPeriod ||
         cell.startPeriod !in 1..15 ||
         cell.endPeriod !in 1..15
@@ -122,6 +127,8 @@ class TimetableRepositoryImpl @Inject constructor(
     toInsertCellList.forEach { toInsertCell ->
       currentCellList
         .filter { it.day == toInsertCell.day }
+        .filter { it.id != toInsertCell.id }
+        .filter { it.day != TimetableDay.E_LEARNING }
         .forEach { sameDayCell ->
           val isOverlap = toInsertCell.startPeriod in sameDayCell.startPeriod..sameDayCell.endPeriod ||
             toInsertCell.endPeriod in sameDayCell.startPeriod..sameDayCell.endPeriod ||
@@ -137,5 +144,13 @@ class TimetableRepositoryImpl @Inject constructor(
           }
         }
     }
+  }
+
+  override suspend fun getTimetableCellType(): String {
+    return localTimetableDataSource.getTimetableCellType().firstOrNull() ?: ""
+  }
+
+  override suspend fun setTimetableCellType(type: String) {
+    localTimetableDataSource.setTimetableCellType(type)
   }
 }

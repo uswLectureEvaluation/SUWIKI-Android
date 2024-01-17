@@ -1,5 +1,6 @@
 package com.suwiki.feature.timetable.timetable.component.timetable.cell
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -22,14 +23,23 @@ import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.timetableCellColorHexMap
+import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.timetable.component.timetable.timetableBorderWidth
 import com.suwiki.feature.timetable.timetable.component.timetable.timetableHeightPerHour
 
-enum class TimetableCellType {
-  CLASSNAME,
-  CLASSNAME_LOCATION,
-  CLASSNAME_PROFESSOR,
-  CLASSNAME_PROFESSOR_LOCATION,
+enum class TimetableCellType(@StringRes val stringResId: Int) {
+  CLASSNAME(R.string.timetable_cell_type_classname),
+  CLASSNAME_LOCATION(R.string.timetable_cell_type_classname_location),
+  CLASSNAME_PROFESSOR(R.string.timetable_cell_type_classname_professor),
+  CLASSNAME_PROFESSOR_LOCATION(R.string.timetable_cell_type_classname_professor_location),
+  ;
+
+  companion object {
+    fun getType(value: String?) = TimetableCellType
+      .entries
+      .find { it.name == value }
+      ?: CLASSNAME_PROFESSOR_LOCATION
+  }
 }
 
 private fun TimetableCellColor.toHex(): Long = timetableCellColorHexMap[this]!!

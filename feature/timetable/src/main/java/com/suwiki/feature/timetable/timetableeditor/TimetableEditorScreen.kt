@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.createtimetable
+package com.suwiki.feature.timetable.timetableeditor
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -27,8 +27,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun CreateTimetableRoute(
-  viewModel: CreateTimetableViewModel = hiltViewModel(),
+fun TimetableEditorRoute(
+  viewModel: TimetableEditorViewModel = hiltViewModel(),
   popBackStack: () -> Unit,
   handleException: (Throwable) -> Unit,
   onShowToast: (String) -> Unit,
@@ -37,18 +37,18 @@ fun CreateTimetableRoute(
   val context = LocalContext.current
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      is CreateTimetableSideEffect.HandleException -> handleException(sideEffect.throwable)
-      CreateTimetableSideEffect.PopBackStack -> popBackStack()
-      CreateTimetableSideEffect.NeedSelectSemesterToast -> onShowToast(
+      is TimetableEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
+      TimetableEditorSideEffect.PopBackStack -> popBackStack()
+      TimetableEditorSideEffect.NeedSelectSemesterToast -> onShowToast(
         context.getString(R.string.create_timetable_need_select_semester),
       )
     }
   }
-  CreateTimetableScreen(
+  TimetableEditorScreen(
     uiState = uiState,
     onValueChangeTimetableName = viewModel::updateName,
     onClickBack = viewModel::popBackStack,
-    onClickCompleteButton = viewModel::insertTimetable,
+    onClickCompleteButton = viewModel::upsertTimetable,
     onClickSelectionContainer = viewModel::showSemesterBottomSheet,
     hideSemesterBottomSheet = viewModel::hideSemesterBottomSheet,
     onClickSemesterItem = { position ->
@@ -60,8 +60,8 @@ fun CreateTimetableRoute(
 }
 
 @Composable
-fun CreateTimetableScreen(
-  uiState: CreateTimetableState = CreateTimetableState(),
+fun TimetableEditorScreen(
+  uiState: TimetableEditorState = TimetableEditorState(),
   onValueChangeTimetableName: (String) -> Unit = {},
   onClickTextFieldClearButton: () -> Unit = {},
   onClickBack: () -> Unit = {},
@@ -125,8 +125,8 @@ fun CreateTimetableScreen(
 
 @Preview
 @Composable
-fun CreateTimetableScreenPreview() {
+fun TimetableEditorScreenPreview() {
   SuwikiTheme {
-    CreateTimetableScreen()
+    TimetableEditorScreen()
   }
 }
