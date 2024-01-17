@@ -39,59 +39,6 @@ const val WRITE_LECTURE_EVALUATION_POINT = 10
 const val WRITE_EXAM_EVALUATION_POINT = 20
 const val VIEW_EXAM_POINT = 20
 
-// TODO(REMOVE)
-val samplePurchaseHistory = persistentListOf(
-  PurchaseHistory(
-    id = 0,
-    lectureName = "회로이론",
-    professor = "양윤기",
-    majorType = "정보통신",
-    createDate = LocalDateTime.now(),
-  ),
-  PurchaseHistory(
-    id = 0,
-    lectureName = "회로이론",
-    professor = "양윤기",
-    majorType = "정보통신",
-    createDate = LocalDateTime.now(),
-  ),
-  PurchaseHistory(
-    id = 0,
-    lectureName = "회로이론",
-    professor = "양윤기",
-    majorType = "정보통신",
-    createDate = LocalDateTime.now(),
-  ),
-  PurchaseHistory(
-    id = 0,
-    lectureName = "회로이론",
-    professor = "양윤기",
-    majorType = "정보통신",
-    createDate = LocalDateTime.now(),
-  ),
-  PurchaseHistory(
-    id = 0,
-    lectureName = "회로이론",
-    professor = "양윤기",
-    majorType = "정보통신",
-    createDate = LocalDateTime.now(),
-  ),
-  PurchaseHistory(
-    id = 0,
-    lectureName = "회로이론",
-    professor = "양윤기",
-    majorType = "정보통신",
-    createDate = LocalDateTime.now(),
-  ),
-  PurchaseHistory(
-    id = 0,
-    lectureName = "회로이론",
-    professor = "양윤기",
-    majorType = "정보통신",
-    createDate = LocalDateTime.now(),
-  ),
-)
-
 @Composable
 fun MyPointRoute(
   viewModel: MyPointViewModel = hiltViewModel(),
@@ -170,8 +117,7 @@ fun MyPointScreen(
       Spacer(modifier = Modifier.height(24.dp))
       TitleContainer(title = stringResource(R.string.word_point_use_history))
       Column {
-//        uiState.purchaseHistory.forEach { purchaseHistory ->
-        samplePurchaseHistory.forEach { purchaseHistory ->
+        uiState.purchaseHistory.forEach { purchaseHistory ->
           Row(
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -181,8 +127,7 @@ fun MyPointScreen(
           ) {
             Text(
               modifier = Modifier.width(120.dp),
-//              text = purchaseHistory.createDate.toString(),
-              text = "2023-03-24",
+              text = purchaseHistory.createDate.toString(),
               style = SuwikiTheme.typography.body5,
               color = Gray95,
             )

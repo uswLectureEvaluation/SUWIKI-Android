@@ -14,38 +14,8 @@ import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.container.SuwikiNoticeContainer
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.model.user.Suspension
-import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import java.time.LocalDateTime
-
-val sampleBanHistory = persistentListOf(
-  Suspension.Ban(
-    reason = "사유",
-    judgement = "5일 정지",
-    createdAt = LocalDateTime.now(),
-    expiredAt = LocalDateTime.now()
-  ),
-  Suspension.Ban(
-    reason = "사유",
-    judgement = "5일 정지",
-    createdAt = LocalDateTime.now(),
-    expiredAt = LocalDateTime.now()
-  ),
-  Suspension.Ban(
-    reason = "사유",
-    judgement = "5일 정지",
-    createdAt = LocalDateTime.now(),
-    expiredAt = LocalDateTime.now()
-  ),
-  Suspension.Ban(
-    reason = "사유",
-    judgement = "5일 정지",
-    createdAt = LocalDateTime.now(),
-    expiredAt = LocalDateTime.now()
-  ),
-)
 
 @Composable
 fun BanHistoryRoute(
@@ -88,8 +58,7 @@ fun BanHistoryScreen(
       onClickBack = popBackStack,
     )
     LazyColumn {
-//      items(items = uiState.banHistory) { banHistory ->
-      items(items = sampleBanHistory) { banHistory ->
+      items(items = uiState.banHistory) { banHistory ->
         SuwikiNoticeContainer(
           titleText = banHistory.reason,
           dateText = banHistory.createdAt.toString(),
