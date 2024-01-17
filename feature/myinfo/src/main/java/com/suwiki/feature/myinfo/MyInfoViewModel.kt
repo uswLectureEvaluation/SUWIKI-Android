@@ -45,8 +45,11 @@ class MyInfoViewModel @Inject constructor(
   fun navigateMyEvaluation() = intent { postSideEffect(MyInfoSideEffect.NavigateMyEvaluation) }
   fun navigateMyAccount() = intent {
     postSideEffect(
-      if (isLoggedIn) MyInfoSideEffect.NavigateMyAccount
-      else MyInfoSideEffect.ShowNeedLoginToast,
+      if (isLoggedIn) {
+        MyInfoSideEffect.NavigateMyAccount
+      } else {
+        MyInfoSideEffect.ShowNeedLoginToast
+      },
     )
   }
 }

@@ -46,7 +46,7 @@ fun NavGraphBuilder.myInfoNavGraph(
       navigateNotice = navigateNotice,
       navigateMyEvaluation = navigateMyEvaluation,
       navigateMyAccount = navigateMyAccount,
-      onShowToast = onShowToast
+      onShowToast = onShowToast,
     )
   }
   composable(route = MyInfoRoute.myAccountRoute) {
