@@ -1,7 +1,6 @@
 package com.suwiki.data.user.repository
 
 import com.suwiki.core.model.exception.AuthorizationException
-import com.suwiki.core.model.lectureevaluation.PurchaseHistory
 import com.suwiki.core.model.user.Suspension
 import com.suwiki.core.model.user.User
 import com.suwiki.core.security.SecurityPreferences

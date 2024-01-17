@@ -28,12 +28,9 @@ import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.model.lectureevaluation.PurchaseHistory
 import com.suwiki.feature.myinfo.R
-import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import java.time.LocalDateTime
 
 const val WRITE_LECTURE_EVALUATION_POINT = 10
 const val WRITE_EXAM_EVALUATION_POINT = 20
@@ -73,7 +70,7 @@ fun MyPointScreen(
 ) {
   Column(
     modifier = Modifier
-      .background(White)
+      .background(White),
   ) {
     SuwikiAppBarWithTitle(
       title = stringResource(R.string.my_info_point),
@@ -85,31 +82,31 @@ fun MyPointScreen(
       modifier = Modifier
         .fillMaxSize()
         .padding(start = 24.dp, end = 24.dp)
-        .verticalScroll(scrollState)
+        .verticalScroll(scrollState),
     ) {
       TitleContainer(title = stringResource(R.string.word_point_status))
       MyPointRowContainer(
         modifier = Modifier.padding(vertical = 14.dp),
         title = stringResource(R.string.word_current_point),
-        point = uiState.currentPoint.toString(),
+        point = stringResource(R.string.word_current_point_value, uiState.currentPoint),
         verticalAlignment = Alignment.Bottom,
       )
       MyPointRowContainer(
         modifier = Modifier.padding(vertical = 14.dp),
         title = stringResource(R.string.text_written_lecture_evaluation, uiState.writtenLectureEvaluations),
-        point = stringResource(R.string.word_plus_point, uiState.writtenLectureEvaluations * WRITE_LECTURE_EVALUATION_POINT),
+        point = stringResource(R.string.word_plus_point_value, uiState.writtenLectureEvaluations * WRITE_LECTURE_EVALUATION_POINT),
         verticalAlignment = Alignment.Bottom,
       )
       MyPointRowContainer(
         modifier = Modifier.padding(vertical = 14.dp),
         title = stringResource(R.string.text_written_exam_evaluation, uiState.writtenExamEvaluations * WRITE_EXAM_EVALUATION_POINT),
-        point = stringResource(R.string.word_plus_point, uiState.writtenExamEvaluations * WRITE_EXAM_EVALUATION_POINT),
+        point = stringResource(R.string.word_plus_point_value, uiState.writtenExamEvaluations * WRITE_EXAM_EVALUATION_POINT),
         verticalAlignment = Alignment.Bottom,
       )
       MyPointRowContainer(
         modifier = Modifier.padding(vertical = 14.dp),
         title = stringResource(R.string.text_view_exam, uiState.viewExam),
-        point = stringResource(R.string.word_minus_point, uiState.viewExam * VIEW_EXAM_POINT),
+        point = stringResource(R.string.word_minus_point_value, uiState.viewExam * VIEW_EXAM_POINT),
         verticalAlignment = Alignment.Bottom,
       )
       Spacer(modifier = Modifier.height(12.dp))
@@ -188,7 +185,7 @@ fun PointPolicyText(
   text: String,
 ) {
   Row(
-    modifier = Modifier.fillMaxWidth()
+    modifier = Modifier.fillMaxWidth(),
   ) {
     Text(
       text = "ㆍ",

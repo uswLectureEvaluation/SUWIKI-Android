@@ -8,12 +8,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.container.SuwikiNoticeContainer
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.myinfo.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -49,10 +51,10 @@ fun BanHistoryScreen(
   Column(
     modifier = Modifier
       .fillMaxSize()
-      .background(White)
+      .background(White),
   ) {
     SuwikiAppBarWithTitle(
-      title = "이용제한 내역",
+      title = stringResource(R.string.my_info_ban_history),
       showBackIcon = true,
       showCloseIcon = false,
       onClickBack = popBackStack,

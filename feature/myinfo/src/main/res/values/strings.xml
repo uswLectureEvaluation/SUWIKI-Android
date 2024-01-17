@@ -39,8 +39,9 @@
   <string name="text_written_exam_evaluation">작성한 시험정보(%d)</string>
   <string name="text_view_exam">시험정보 열람(%d)</string>
   <string name="word_point_use_history">포인트 사용 내역</string>
-  <string name="word_plus_point">+%dp</string>
-  <string name="word_minus_point">-%dp</string>
+  <string name="word_current_point_value">%dp</string>
+  <string name="word_plus_point_value">+%dp</string>
+  <string name="word_minus_point_value">-%dp</string>
   <string name="text_point_policy_first">포인트는 강의평가 서비스 내에서만 이용됩니다.</string>
   <string name="text_point_policy_second">다른 계정으로 학교 인증 시 해당 계정으로 포인트가 합산 되며, 기존 포인트는 초기화 됩니다.</string>
   <string name="text_point_policy_third">포인트 획득을 위해 허위/중복/성의없는 정보를 작성 할 경우 서비스 이용이 제한 될 수 있습니다.</string>
