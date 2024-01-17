@@ -56,6 +56,7 @@ fun MyInfoRoute(
   navigateMyEvaluation: () -> Unit,
   navigateMyAccount: () -> Unit,
   navigateMyPoint: () -> Unit,
+  navigateBanHistory: () -> Unit,
   onShowToast: (String) -> Unit = {},
 ) {
   val scrollState = rememberScrollState()
@@ -67,6 +68,7 @@ fun MyInfoRoute(
       is MyInfoSideEffect.NavigateMyEvaluation -> navigateMyEvaluation()
       is MyInfoSideEffect.NavigateMyAccount -> navigateMyAccount()
       is MyInfoSideEffect.NavigateMyPoint -> navigateMyPoint()
+      is MyInfoSideEffect.NavigateBanHistory -> navigateBanHistory()
       MyInfoSideEffect.ShowNeedLoginToast -> onShowToast(context.getString(R.string.my_info_screen_need_login_toast))
     }
   }
@@ -83,7 +85,7 @@ fun MyInfoRoute(
     onClickMyEvaluationButton = viewModel::navigateMyEvaluation,
     onClickMyAccountButton = viewModel::navigateMyAccount,
     onClickMyPointItem = viewModel::navigateMyPoint,
-    onClickBanHistoryItem = {},
+    onClickBanHistoryItem = viewModel::navigateBanHistory,
   )
 }
 

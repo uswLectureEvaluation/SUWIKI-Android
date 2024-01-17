@@ -17,6 +17,7 @@ import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLe
 import com.suwiki.feature.login.navigation.navigateFindId
 import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
+import com.suwiki.feature.myinfo.navigation.navigateBanHistory
 import com.suwiki.feature.myinfo.navigation.navigateMyAccount
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
 import com.suwiki.feature.myinfo.navigation.navigateMyPoint
@@ -97,6 +98,10 @@ internal class MainNavigator(
 
   fun navigateMyPoint() {
     navController.navigateMyPoint()
+  }
+
+  fun navigateBanHistory() {
+    navController.navigateBanHistory()
   }
 
   fun navigateNotice() {

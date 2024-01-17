@@ -12,5 +12,6 @@ sealed interface MyInfoSideEffect {
   data object NavigateMyEvaluation : MyInfoSideEffect
   data object NavigateMyAccount : MyInfoSideEffect
   data object NavigateMyPoint : MyInfoSideEffect
+  data object NavigateBanHistory : MyInfoSideEffect
   data object ShowNeedLoginToast : MyInfoSideEffect
 }
