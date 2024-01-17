@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
@@ -16,7 +17,10 @@ import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLe
 import com.suwiki.feature.login.navigation.navigateFindId
 import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
+import com.suwiki.feature.myinfo.navigation.navigateMyAccount
 import com.suwiki.feature.myinfo.navigation.navigateMyInfo
+import com.suwiki.feature.myinfo.navigation.navigateQuit
+import com.suwiki.feature.myinfo.navigation.navigateResetPassword
 import com.suwiki.feature.notice.navigation.navigateNotice
 import com.suwiki.feature.notice.navigation.navigateNoticeDetail
 import com.suwiki.feature.openmajor.navigation.navigateOpenMajor
@@ -58,8 +62,8 @@ internal class MainNavigator(
     }
   }
 
-  fun navigateLogin() {
-    navController.navigateLogin()
+  fun navigateLogin(navOptions: NavOptions? = null) {
+    navController.navigateLogin(navOptions)
   }
 
   fun navigateFindId() {
@@ -76,6 +80,18 @@ internal class MainNavigator(
 
   fun navigateSignupComplete() {
     navController.navigateSignupComplete()
+  }
+
+  fun navigateMyAccount() {
+    navController.navigateMyAccount()
+  }
+
+  fun navigateResetPassword() {
+    navController.navigateResetPassword()
+  }
+
+  fun navigateQuit() {
+    navController.navigateQuit()
   }
 
   fun navigateNotice() {

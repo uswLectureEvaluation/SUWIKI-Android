@@ -128,8 +128,16 @@ internal fun MainScreen(
 
         myInfoNavGraph(
           padding = innerPadding,
+          popBackStack = navigator::popBackStackIfNotHome,
           navigateNotice = navigator::navigateNotice,
           navigateMyEvaluation = navigator::navigateMyEvaluation,
+          navigateMyAccount = navigator::navigateMyAccount,
+          navigateResetPassword = navigator::navigateResetPassword,
+          navigateQuit = navigator::navigateQuit,
+          navigateFindPassword = navigator::navigateFindPassword,
+          navigateLogin = navigator::navigateLogin,
+          handleException = viewModel::handleException,
+          onShowToast = viewModel::onShowToast,
         )
 
         noticeNavGraph(

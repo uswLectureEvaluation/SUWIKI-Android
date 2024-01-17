@@ -2,13 +2,17 @@ package com.suwiki.feature.login.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.suwiki.feature.login.findid.FindIdRoute
 import com.suwiki.feature.login.findpassword.FindPasswordRoute
 import com.suwiki.feature.login.login.LoginRoute
 
-fun NavController.navigateLogin() {
-  navigate(LoginRoute.route)
+fun NavController.navigateLogin(navOptions: NavOptions? = null) {
+  navigate(
+    route = LoginRoute.route,
+    navOptions = navOptions,
+  )
 }
 
 fun NavController.navigateFindId() {

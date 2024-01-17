@@ -14,4 +14,23 @@
   <string name="my_info_login">로그인하세요</string>
   <string name="my_info_check_mine">내 글과 포인트, 구매 내역을 확인해 보세요.</string>
   <string name="my_info_my_post">내 글 관리</string>
+  <string name="word_my_account">내 계정</string>
+  <string name="word_login_id">로그인 아이디</string>
+  <string name="word__authentication_email">학교 인증 메일</string>
+  <string name="word_reset_password">비밀번호 변경</string>
+  <string name="word_logout">로그아웃</string>
+  <string name="word_quit">회원 탈퇴</string>
+  <string name="word_current_password">현재 비밀번호</string>
+  <string name="reset_password_screen_current_password_textfield_placeholder">현재 비밀번호를 입력하세요</string>
+  <string name="word_new_password">새로운 비밀번호</string>
+  <string name="word_new_password_check">새로운 비밀번호 확인</string>
+  <string name="reset_password_screen_check_new_password_textfield_placeholder">새로운 비밀번호를 입력하세요</string>
+  <string name="word_change">변경하기</string>
+  <string name="reset_password_screen_dialog_header">비밀번호가 변경되었습니다.</string>
+  <string name="reset_password_screen_dialog_body">새로운 비밀번호로 로그인 하시겠습니까?</string>
+  <string name="word_cancel">취소</string>
+  <string name="quit_screen_id_textfield_placeholder">아이디를 입력하세요</string>
+  <string name="quit_screen_password_textfield_placeholder">비밀번호를 입력하세요</string>
+    <string name="quit_screen_quit_success_toast">회원 탈퇴 되었어요</string>
+  <string name="my_info_screen_need_login_toast">먼저 로그인 해주세요</string>
 </resources>

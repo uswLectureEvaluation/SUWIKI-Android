@@ -18,6 +18,8 @@ class MyInfoViewModel @Inject constructor(
 ) : ContainerHost<MyInfoState, MyInfoSideEffect>, ViewModel() {
   override val container: Container<MyInfoState, MyInfoSideEffect> = container(MyInfoState())
 
+  private var isLoggedIn: Boolean = false
+
   suspend fun checkLoggedIn() {
     showLoadingScreen()
     /* TODO 에러 처리 */
@@ -27,6 +29,7 @@ class MyInfoViewModel @Inject constructor(
 
   private fun reduceUser(user: User) = intent {
     reduce {
+      isLoggedIn = user.isLoggedIn
       state.copy(
         showMyInfoCard = user.isLoggedIn,
         loginId = user.userId,
@@ -40,4 +43,13 @@ class MyInfoViewModel @Inject constructor(
 
   fun navigateNotice() = intent { postSideEffect(MyInfoSideEffect.NavigateNotice) }
   fun navigateMyEvaluation() = intent { postSideEffect(MyInfoSideEffect.NavigateMyEvaluation) }
+  fun navigateMyAccount() = intent {
+    postSideEffect(
+      if (isLoggedIn) {
+        MyInfoSideEffect.NavigateMyAccount
+      } else {
+        MyInfoSideEffect.ShowNeedLoginToast
+      },
+    )
+  }
 }
