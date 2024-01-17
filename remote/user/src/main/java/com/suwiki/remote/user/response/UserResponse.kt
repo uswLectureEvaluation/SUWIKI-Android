@@ -8,10 +8,10 @@ import kotlinx.serialization.Serializable
 data class UserResponse(
   @SerialName("loginId") val userId: String,
   val email: String,
-  val point: Int,
-  val writtenEvaluation: Int,
-  val writtenExam: Int,
-  val viewExam: Int,
+  val point: Int = 0,
+  val writtenEvaluation: Int = 0,
+  val writtenExam: Int = 0,
+  val viewExam: Int = 0,
 )
 
 internal fun UserResponse.toModel() = User(

@@ -26,6 +26,11 @@ class MyAccountViewModel @Inject constructor(
   }
 
   private fun updateUserIdAndEmail(user: User) = intent {
+    if (user.isLoggedIn.not()) {
+      popBackStack()
+      return@intent
+    }
+
     reduce {
       state.copy(
         userId = user.userId,
