@@ -66,6 +66,12 @@ fun BanHistoryScreen(
           dateText = banHistory.createdAt.toString(),
         )
       }
+      items(items = uiState.blackList) { blackList ->
+        SuwikiNoticeContainer(
+          titleText = blackList.reason,
+          dateText = blackList.createdAt.toString(),
+        )
+      }
     }
   }
 }

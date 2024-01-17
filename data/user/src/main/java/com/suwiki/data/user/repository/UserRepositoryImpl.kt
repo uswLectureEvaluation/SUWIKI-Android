@@ -60,4 +60,8 @@ class UserRepositoryImpl @Inject constructor(
   override suspend fun getBanHistory(): List<Suspension.Ban> {
     return remoteUserDataSource.getBanHistory()
   }
+
+  override suspend fun getBlackList(): List<Suspension.Block> {
+    return remoteUserDataSource.getBlackList()
+  }
 }

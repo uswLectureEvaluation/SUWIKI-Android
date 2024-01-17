@@ -7,6 +7,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class BanHistoryState(
   val isLoading: Boolean = false,
   val banHistory: PersistentList<Suspension.Ban> = persistentListOf(),
+  val blackList: PersistentList<Suspension.Block> = persistentListOf(),
 )
 
 sealed interface BanHistorySideEffect {

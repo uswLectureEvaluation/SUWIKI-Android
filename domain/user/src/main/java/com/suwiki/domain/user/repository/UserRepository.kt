@@ -21,4 +21,5 @@ interface UserRepository {
   suspend fun getUserInfo(): Flow<User>
 
   suspend fun getBanHistory(): List<Suspension.Ban>
+  suspend fun getBlackList(): List<Suspension.Block>
 }

@@ -18,4 +18,6 @@ interface RemoteUserDataSource {
   suspend fun getUserInfo(): User
 
   suspend fun getBanHistory(): List<Suspension.Ban>
+
+  suspend fun getBlackList(): List<Suspension.Block>
 }

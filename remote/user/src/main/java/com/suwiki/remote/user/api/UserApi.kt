@@ -4,6 +4,7 @@ import com.suwiki.core.network.retrofit.ApiResult
 import com.suwiki.remote.user.request.QuitRequest
 import com.suwiki.remote.user.request.ResetPasswordRequest
 import com.suwiki.remote.user.response.BanHistoryResponse
+import com.suwiki.remote.user.response.BlackListResponse
 import com.suwiki.remote.user.response.SuccessCheckResponse
 import com.suwiki.remote.user.response.UserResponse
 import retrofit2.http.Body
@@ -32,6 +33,11 @@ interface UserApi {
   @GET("$USER/my-page")
   suspend fun getUserData(): ApiResult<UserResponse>
 
+  // 이용제한 내역 조회 API
   @GET("$USER/restricted-reason")
   suspend fun getBanHistoryData(): ApiResult<List<BanHistoryResponse>>
+
+  // 블랙리스트 내역 조회 API
+  @GET("$USER/blacklist-reason")
+  suspend fun getBlackListData(): ApiResult<List<BlackListResponse>>
 }

@@ -2,6 +2,7 @@ package com.suwiki.feature.myinfo.banhistory
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.domain.user.usecase.GetBanHistoryUseCase
+import com.suwiki.domain.user.usecase.GetBlackListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.Container
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BanHistoryViewModel @Inject constructor(
   private val getBanHistoryUseCase: GetBanHistoryUseCase,
+  private val getBlackListUseCase: GetBlackListUseCase,
 ) : ContainerHost<BanHistoryState, BanHistorySideEffect>, ViewModel() {
   override val container: Container<BanHistoryState, BanHistorySideEffect> = container(BanHistoryState())
 
@@ -22,6 +24,13 @@ class BanHistoryViewModel @Inject constructor(
     getBanHistoryUseCase()
       .onSuccess {
         reduce { state.copy(banHistory = it.toPersistentList()) }
+      }
+      .onFailure {
+        postSideEffect(BanHistorySideEffect.HandleException(it))
+      }
+    getBlackListUseCase()
+      .onSuccess {
+        reduce { state.copy(blackList = it.toPersistentList()) }
       }
       .onFailure {
         postSideEffect(BanHistorySideEffect.HandleException(it))

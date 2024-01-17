@@ -48,4 +48,8 @@ class RemoteUserDataSourceImpl @Inject constructor(
   override suspend fun getBanHistory(): List<Suspension.Ban> {
     return userApi.getBanHistoryData().getOrThrow().map { it.toModel() }
   }
+
+  override suspend fun getBlackList(): List<Suspension.Block> {
+    return userApi.getBlackListData().getOrThrow().map { it.toModel() }
+  }
 }
