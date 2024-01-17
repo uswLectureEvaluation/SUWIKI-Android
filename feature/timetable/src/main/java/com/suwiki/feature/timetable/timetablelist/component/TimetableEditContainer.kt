@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -76,7 +75,6 @@ fun TimetableEditContainer(
       SuwikiBadge(color = BadgeColor.Gray, text = "${timetable.year}-${timetable.semester}")
     }
 
-
     Row(
       horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
@@ -99,7 +97,11 @@ fun TimetableEditContainerPreview() {
     Column {
       TimetableEditContainer(
         timetable = Timetable(
-          createTime = 0, year = "2024", semester = "1", name = "시간표시간표시간표시간표시간표시간표시간표시간표", cellList = listOf(),
+          createTime = 0,
+          year = "2024",
+          semester = "1",
+          name = "시간표시간표시간표시간표시간표시간표시간표시간표",
+          cellList = listOf(),
         ),
       )
     }

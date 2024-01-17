@@ -10,6 +10,6 @@ class DeleteTimetableCellUseCase @Inject constructor(
   private val timetableRepository: TimetableRepository,
 ) {
   suspend operator fun invoke(cell: TimetableCell): Result<Timetable> = runCatchingIgnoreCancelled {
-    timetableRepository.deleteTimetableCell(cell = cell,)
+    timetableRepository.deleteTimetableCell(cell = cell)
   }
 }

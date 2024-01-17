@@ -1,11 +1,7 @@
 package com.suwiki.feature.timetable.timetablelist
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,18 +9,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTextButton
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
-import com.suwiki.core.designsystem.component.container.SuwikiReviewEditContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -32,15 +24,13 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument
-import com.suwiki.feature.timetable.navigation.argument.toTimetableEditorArgument
 import com.suwiki.feature.timetable.timetablelist.component.TimetableEditContainer
-import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun TimetableListRoute(
-  viewModel: TimetableListListViewModel = hiltViewModel(),
+  viewModel: TimetableListViewModel = hiltViewModel(),
   popBackStack: () -> Unit,
   navigateTimetableEditor: (TimetableEditorArgument) -> Unit,
   handleException: (Throwable) -> Unit,
@@ -112,7 +102,7 @@ fun TimetableListScreen(
           timetable = timetable,
           onClickEditButton = { onClickTimetableEditButton(timetable) },
           onClickDeleteButton = { onClickTimetableDeleteButton(timetable) },
-          onClick = { onClickTimetableContainer(timetable.createTime) }
+          onClick = { onClickTimetableContainer(timetable.createTime) },
         )
       }
     }

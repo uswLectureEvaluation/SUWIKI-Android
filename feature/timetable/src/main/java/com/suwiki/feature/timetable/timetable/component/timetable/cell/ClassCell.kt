@@ -31,7 +31,8 @@ enum class TimetableCellType(@StringRes val stringResId: Int) {
   CLASSNAME(R.string.timetable_cell_type_classname),
   CLASSNAME_LOCATION(R.string.timetable_cell_type_classname_location),
   CLASSNAME_PROFESSOR(R.string.timetable_cell_type_classname_professor),
-  CLASSNAME_PROFESSOR_LOCATION(R.string.timetable_cell_type_classname_professor_location);
+  CLASSNAME_PROFESSOR_LOCATION(R.string.timetable_cell_type_classname_professor_location),
+  ;
 
   companion object {
     fun getType(value: String?) = TimetableCellType

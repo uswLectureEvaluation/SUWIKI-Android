@@ -51,5 +51,5 @@ internal fun TimetableCell.toCellEditorArgument() = CellEditorArgument(
       endPeriod = endPeriod.toString(),
     ),
   ),
-  timetableCellColor = color
+  timetableCellColor = color,
 )

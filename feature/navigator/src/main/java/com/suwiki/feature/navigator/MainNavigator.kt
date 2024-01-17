@@ -25,9 +25,9 @@ import com.suwiki.feature.timetable.navigation.TimetableRoute
 import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument
 import com.suwiki.feature.timetable.navigation.navigateCellEditor
-import com.suwiki.feature.timetable.navigation.navigateTimetableEditor
 import com.suwiki.feature.timetable.navigation.navigateOpenLecture
 import com.suwiki.feature.timetable.navigation.navigateTimetable
+import com.suwiki.feature.timetable.navigation.navigateTimetableEditor
 import com.suwiki.feature.timetable.navigation.navigateTimetableList
 
 internal class MainNavigator(

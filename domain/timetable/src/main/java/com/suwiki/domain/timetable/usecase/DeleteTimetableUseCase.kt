@@ -11,7 +11,7 @@ class DeleteTimetableUseCase @Inject constructor(
   suspend operator fun invoke(timetable: Timetable): Result<Unit> = runCatchingIgnoreCancelled {
     with(timetableRepository) {
       deleteTimetable(timetable)
-      
+
       val mainTimetableCreateTime = getMainTimetableCreateTime()
       if (mainTimetableCreateTime != timetable.createTime) return@runCatchingIgnoreCancelled
 

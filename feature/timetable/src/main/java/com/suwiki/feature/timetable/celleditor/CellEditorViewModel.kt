@@ -157,18 +157,24 @@ class CellEditorViewModel @Inject constructor(
       }
     }
 
-    val useCase = if (isEditMode) updateTimetableCellUseCase(
-      UpdateTimetableCellUseCase.Param(
-        cellEditorArgument.oldCellId, timetableCellList,
-      ),
-    ) else {
+    val useCase = if (isEditMode) {
+      updateTimetableCellUseCase(
+        UpdateTimetableCellUseCase.Param(
+          cellEditorArgument.oldCellId,
+          timetableCellList,
+        ),
+      )
+    } else {
       insertTimetableCellUseCase(timetableCellList)
     }
 
     useCase
       .onSuccess {
-        if (isEditMode) postSideEffect(CellEditorSideEffect.ShowEditSuccessCellToast)
-        else postSideEffect(CellEditorSideEffect.ShowAddSuccessCellToast)
+        if (isEditMode) {
+          postSideEffect(CellEditorSideEffect.ShowEditSuccessCellToast)
+        } else {
+          postSideEffect(CellEditorSideEffect.ShowAddSuccessCellToast)
+        }
 
         popBackStack()
       }

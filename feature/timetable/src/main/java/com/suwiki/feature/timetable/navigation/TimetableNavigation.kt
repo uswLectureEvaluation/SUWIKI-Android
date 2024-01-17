@@ -9,18 +9,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.feature.timetable.celleditor.CellEditorRoute
-import com.suwiki.feature.timetable.timetableeditor.TimetableEditorRoute
 import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument
 import com.suwiki.feature.timetable.openlecture.OpenLectureRoute
 import com.suwiki.feature.timetable.timetable.TimetableRoute
+import com.suwiki.feature.timetable.timetableeditor.TimetableEditorRoute
 import com.suwiki.feature.timetable.timetablelist.TimetableListRoute
 import kotlinx.serialization.json.Json
 
 fun NavController.navigateTimetable(navOptions: NavOptions) {
   navigate(TimetableRoute.route, navOptions)
 }
-
 
 fun NavController.navigateTimetableEditor(argument: TimetableEditorArgument = TimetableEditorArgument()) {
   navigate(TimetableRoute.timetableEditorRoute(Json.encodeToUri(argument)))
@@ -72,8 +71,7 @@ fun NavGraphBuilder.timetableNavGraph(
         nullable = true
       },
     ),
-  )
-  {
+  ) {
     TimetableEditorRoute(
       popBackStack = popBackStack,
       handleException = handleException,
@@ -131,5 +129,3 @@ object TimetableRoute {
   fun timetableEditorRoute(timetableEditor: String) = "$route/editor/$timetableEditor"
   fun cellEditorRoute(cellEditor: String) = "cell-editor/$cellEditor"
 }
-
-

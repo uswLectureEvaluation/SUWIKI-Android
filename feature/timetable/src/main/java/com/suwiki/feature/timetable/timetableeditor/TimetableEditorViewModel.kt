@@ -28,7 +28,9 @@ class TimetableEditorViewModel @Inject constructor(
   private val argument = savedStateHandle.get<String>(TimetableRoute.TIMETABLE_EDITOR_ARGUMENT)!!
   private val timetableEditorArgument = Json.decodeFromUri<TimetableEditorArgument>(argument)
   private val isEditMode = timetableEditorArgument.isEditMode
-  override val container: Container<TimetableEditorState, TimetableEditorSideEffect> = container(timetableEditorArgument.toState())
+  override val container: Container<TimetableEditorState, TimetableEditorSideEffect> = container(
+    timetableEditorArgument.toState(),
+  )
 
   fun showSemesterBottomSheet() = intent { reduce { state.copy(isSheetOpenSemester = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(isSheetOpenSemester = false) } }
@@ -43,14 +45,14 @@ class TimetableEditorViewModel @Inject constructor(
       return@intent
     }
 
-    val useCase = if(isEditMode) {
+    val useCase = if (isEditMode) {
       updateTimetableUseCase(
         param = UpdateTimetableUseCase.Param(
           createTime = timetableEditorArgument.createTime,
           name = state.name,
           year = state.semester!!.year,
           semester = state.semester!!.semester,
-        )
+        ),
       )
     } else {
       insertTimetableUseCase(
@@ -64,10 +66,10 @@ class TimetableEditorViewModel @Inject constructor(
 
     useCase
       .onSuccess {
-      postSideEffect(TimetableEditorSideEffect.PopBackStack)
-    }.onFailure {
-      postSideEffect(TimetableEditorSideEffect.HandleException(it))
-    }
+        postSideEffect(TimetableEditorSideEffect.PopBackStack)
+      }.onFailure {
+        postSideEffect(TimetableEditorSideEffect.HandleException(it))
+      }
   }
 
   fun popBackStack() = intent { postSideEffect(TimetableEditorSideEffect.PopBackStack) }

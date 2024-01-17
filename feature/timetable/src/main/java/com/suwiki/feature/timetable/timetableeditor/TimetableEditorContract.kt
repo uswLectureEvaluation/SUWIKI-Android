@@ -20,7 +20,7 @@ data class TimetableEditorState(
 
 internal fun TimetableEditorArgument.toState() = TimetableEditorState(
   name = name,
-  selectedSemesterPosition = semesterList.indexOf(Semester(year, semester))
+  selectedSemesterPosition = semesterList.indexOf(Semester(year, semester)),
 )
 
 val semesterList: PersistentList<Semester> = run {

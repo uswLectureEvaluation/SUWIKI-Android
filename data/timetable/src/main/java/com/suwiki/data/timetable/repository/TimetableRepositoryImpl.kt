@@ -7,7 +7,6 @@ import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.domain.timetable.repository.TimetableRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
@@ -80,7 +79,7 @@ class TimetableRepositoryImpl @Inject constructor(
         copy(cellList = cellList.minus(cell))
       }
     localTimetableDataSource.updateTimetable(
-      timetable
+      timetable,
     )
     return timetable
   }

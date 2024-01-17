@@ -61,14 +61,14 @@ fun TimetableEditorRoute(
 
 @Composable
 fun TimetableEditorScreen(
-    uiState: TimetableEditorState = TimetableEditorState(),
-    onValueChangeTimetableName: (String) -> Unit = {},
-    onClickTextFieldClearButton: () -> Unit = {},
-    onClickBack: () -> Unit = {},
-    onClickCompleteButton: () -> Unit = {},
-    onClickSelectionContainer: () -> Unit = {},
-    hideSemesterBottomSheet: () -> Unit = {},
-    onClickSemesterItem: (Int) -> Unit = {},
+  uiState: TimetableEditorState = TimetableEditorState(),
+  onValueChangeTimetableName: (String) -> Unit = {},
+  onClickTextFieldClearButton: () -> Unit = {},
+  onClickBack: () -> Unit = {},
+  onClickCompleteButton: () -> Unit = {},
+  onClickSelectionContainer: () -> Unit = {},
+  hideSemesterBottomSheet: () -> Unit = {},
+  onClickSemesterItem: (Int) -> Unit = {},
 ) {
   val context = LocalContext.current
 
