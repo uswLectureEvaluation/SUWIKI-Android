@@ -18,15 +18,11 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.suwiki.core.designsystem.theme.GrayCB
-import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.toHex
-import com.suwiki.feature.timetable.timetable.component.timetable.timetableBorderWidth
-import com.suwiki.feature.timetable.timetable.component.timetable.timetableHeightPerHour
 import com.suwiki.feature.timetable.widget.timetable.glanceTimetableBorderWidth
 import com.suwiki.feature.timetable.widget.timetable.glanceTimetableHeightPerHour
 
@@ -46,13 +42,12 @@ internal fun GlanceClassCell(
 
   val height = (data.endPeriod - data.startPeriod + 1) * glanceTimetableHeightPerHour - 8.dp
 
-
   Box(
     modifier = modifier
       .fillMaxWidth()
       .height(height)
       .background(GrayF6)
-      .padding(glanceTimetableBorderWidth)
+      .padding(glanceTimetableBorderWidth),
   ) {
     Column(
       modifier = modifier
@@ -91,5 +86,4 @@ internal fun GlanceClassCell(
       }
     }
   }
-
 }

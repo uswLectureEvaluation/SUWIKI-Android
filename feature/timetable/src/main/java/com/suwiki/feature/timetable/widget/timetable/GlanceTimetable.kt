@@ -2,24 +2,20 @@ package com.suwiki.feature.timetable.widget.timetable
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
-import androidx.glance.action.Action
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.width
 import com.suwiki.core.model.timetable.Timetable
-import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.feature.timetable.timetable.component.timetable.maxPeriod
 import com.suwiki.feature.timetable.widget.timetable.cell.GlanceELearningCell
 import com.suwiki.feature.timetable.widget.timetable.column.GlanceClassColumn
 import com.suwiki.feature.timetable.widget.timetable.column.GlanceTimeColumn
-import kotlin.math.max
 
 @Composable
 @GlanceComposable

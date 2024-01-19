@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
 import androidx.glance.appwidget.lazy.LazyColumn
-import androidx.glance.layout.Column
 import com.suwiki.feature.timetable.widget.timetable.cell.GlanceEmptyCell
 
 @Composable

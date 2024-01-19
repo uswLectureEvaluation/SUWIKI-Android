@@ -2,7 +2,6 @@ package com.suwiki.feature.timetable.widget.timetable
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.model.timetable.TimetableDay

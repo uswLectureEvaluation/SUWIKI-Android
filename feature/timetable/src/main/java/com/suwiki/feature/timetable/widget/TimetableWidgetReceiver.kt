@@ -16,10 +16,8 @@ import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,7 +29,7 @@ class TimetableWidgetReceiver : GlanceAppWidgetReceiver() {
 
   private fun observeData(context: Context) {
     CoroutineScope(Dispatchers.IO).launch {
-      if(::getMainTimetableUseCase.isInitialized.not()) return@launch
+      if (::getMainTimetableUseCase.isInitialized.not()) return@launch
 
       val timetable = getMainTimetableUseCase().getOrNull() ?: Timetable()
 
