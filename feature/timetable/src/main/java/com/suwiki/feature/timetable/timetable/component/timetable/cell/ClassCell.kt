@@ -42,7 +42,7 @@ enum class TimetableCellType(@StringRes val stringResId: Int) {
   }
 }
 
-private fun TimetableCellColor.toHex(): Long = timetableCellColorHexMap[this]!!
+fun TimetableCellColor.toHex(): Long = timetableCellColorHexMap[this]!!
 
 @Composable
 internal fun ClassCell(

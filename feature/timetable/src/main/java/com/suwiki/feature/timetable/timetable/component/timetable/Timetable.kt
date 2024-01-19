@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.component.timetable.cell.ELearningCell
-import com.suwiki.core.designsystem.component.timetable.column.ClassColumn
 import com.suwiki.core.designsystem.component.timetable.column.TimeColumn
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -22,6 +21,7 @@ import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
+import com.suwiki.feature.timetable.timetable.component.timetable.column.ClassColumn
 import kotlin.math.max
 
 private const val MIN_MAX_PERIOD = 8

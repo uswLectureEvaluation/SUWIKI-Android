@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.timetable.column
+package com.suwiki.feature.timetable.timetable.component.timetable.column
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

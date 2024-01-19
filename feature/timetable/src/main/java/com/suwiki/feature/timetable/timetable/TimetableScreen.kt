@@ -27,6 +27,7 @@ import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
 import com.suwiki.feature.timetable.timetable.component.timetable.Timetable
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
+import com.suwiki.feature.timetable.widget.sendWidgetUpdateCommand
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -57,6 +58,10 @@ fun TimetableRoute(
 
   LaunchedEffect(key1 = Unit) {
     viewModel.getMainTimetable()
+  }
+
+  LaunchedEffect(key1 = uiState.timetable) {
+    sendWidgetUpdateCommand(context)
   }
 
   TimetableScreen(
