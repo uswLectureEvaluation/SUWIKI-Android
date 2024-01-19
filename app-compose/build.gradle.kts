@@ -5,6 +5,7 @@ plugins {
   alias(libs.plugins.suwiki.android.hilt)
   alias(libs.plugins.google.services)
   alias(libs.plugins.firebase.crashlytics)
+  id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
