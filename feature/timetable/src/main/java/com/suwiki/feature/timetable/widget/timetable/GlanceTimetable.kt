@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
+import androidx.glance.action.Action
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
@@ -34,7 +35,7 @@ fun GlanceTimetable(
 
   Column(
     modifier = modifier
-      .fillMaxSize()
+      .fillMaxSize(),
   ) {
     Row {
       GlanceTimeColumn(
