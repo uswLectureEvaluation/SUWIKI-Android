@@ -3,6 +3,7 @@ package com.suwiki.feature.myinfo.myaccount
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
+import com.suwiki.domain.user.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import org.orbitmvi.orbit.Container
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyAccountViewModel @Inject constructor(
-  val getUserInfoUseCase: GetUserInfoUseCase,
+  private val getUserInfoUseCase: GetUserInfoUseCase,
+  private val logoutUseCase: LogoutUseCase,
 ) : ContainerHost<MyAccountState, MyAccountSideEffect>, ViewModel() {
   override val container: Container<MyAccountState, MyAccountSideEffect> = container(MyAccountState())
 
@@ -23,6 +25,12 @@ class MyAccountViewModel @Inject constructor(
     getUserInfoUseCase()
       .catch { e -> postSideEffect(MyAccountSideEffect.HandleException(e)) }
       .collect(::updateUserIdAndEmail)
+  }
+
+  fun logout() = intent {
+    logoutUseCase()
+      .onSuccess { popBackStack() }
+      .onFailure { postSideEffect(MyAccountSideEffect.HandleException(it)) }
   }
 
   private fun updateUserIdAndEmail(user: User) = intent {
