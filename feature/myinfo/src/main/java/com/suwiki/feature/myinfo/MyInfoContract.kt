@@ -9,6 +9,7 @@ data class MyInfoState(
 
 sealed interface MyInfoSideEffect {
   data object NavigateNotice : MyInfoSideEffect
+  data object NavigateLogin : MyInfoSideEffect
   data object NavigateMyEvaluation : MyInfoSideEffect
   data object NavigateMyAccount : MyInfoSideEffect
   data object NavigateMyPoint : MyInfoSideEffect

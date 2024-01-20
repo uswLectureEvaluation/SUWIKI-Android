@@ -65,6 +65,7 @@ fun MyInfoRoute(
   navigateMyAccount: () -> Unit,
   navigateMyPoint: () -> Unit,
   navigateBanHistory: () -> Unit,
+  navigateLogin: () -> Unit,
   onShowToast: (String) -> Unit = {},
   handleException: (Throwable) -> Unit = {},
 ) {
@@ -94,6 +95,7 @@ fun MyInfoRoute(
       MyInfoSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
       MyInfoSideEffect.OpenAskWebSite -> uriHandler.openUri(ASK_SITE)
       MyInfoSideEffect.OpenFeedbackWebSite -> uriHandler.openUri(FEEDBACK_SITE)
+      MyInfoSideEffect.NavigateLogin -> navigateLogin()
     }
   }
 
@@ -115,6 +117,7 @@ fun MyInfoRoute(
     onClickTerm = viewModel::openTermSite,
     onClickPersonalInfoPolicy = viewModel::openPersonalPolicySite,
     onClickOpenLicense = viewModel::showOpenLicense,
+    onClickLogin = viewModel::navigateLogin,
   )
 }
 
@@ -133,6 +136,7 @@ fun MyInfoScreen(
   onClickTerm: () -> Unit,
   onClickPersonalInfoPolicy: () -> Unit,
   onClickOpenLicense: () -> Unit,
+  onClickLogin: () -> Unit,
 ) {
   val myList = immutableListOf(
     MyInfoListItem(
@@ -181,7 +185,7 @@ fun MyInfoScreen(
               onClickMyEvaluation = onClickMyEvaluationButton,
             )
           } else {
-            LogoutMyInfoCard()
+            LogoutMyInfoCard(onClickLogin)
           }
         }
         Row(
@@ -416,6 +420,7 @@ fun MyInfoScreenScreenPreview() {
       onClickPersonalInfoPolicy = {},
       onClickOpenLicense = {},
       onClickAskButton = {},
+      onClickLogin = {},
       )
   }
 }

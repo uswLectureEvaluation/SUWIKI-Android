@@ -56,6 +56,7 @@ class MyInfoViewModel @Inject constructor(
     )
   }
   fun navigateMyPoint() = intent { postSideEffect(MyInfoSideEffect.NavigateMyPoint) }
+  fun navigateLogin() = intent { postSideEffect(MyInfoSideEffect.NavigateLogin) }
   fun navigateBanHistory() = intent { postSideEffect(MyInfoSideEffect.NavigateBanHistory) }
 
   fun openTermSite() = intent { postSideEffect(MyInfoSideEffect.OpenTermWebSite) }
