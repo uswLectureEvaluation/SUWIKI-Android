@@ -58,5 +58,11 @@ class MyInfoViewModel @Inject constructor(
   fun navigateMyPoint() = intent { postSideEffect(MyInfoSideEffect.NavigateMyPoint) }
   fun navigateBanHistory() = intent { postSideEffect(MyInfoSideEffect.NavigateBanHistory) }
 
+  fun openTermSite() = intent { postSideEffect(MyInfoSideEffect.OpenTermWebSite) }
+  fun openPersonalPolicySite() = intent { postSideEffect(MyInfoSideEffect.OpenPersonalPolicyWebSite) }
+
+  fun openAskSite() = intent { postSideEffect(MyInfoSideEffect.OpenAskWebSite) }
+  fun openFeedbackSite() = intent { postSideEffect(MyInfoSideEffect.OpenFeedbackWebSite) }
+
   fun showOpenLicense() = intent { postSideEffect(MyInfoSideEffect.ShowOpenLicenses) }
 }

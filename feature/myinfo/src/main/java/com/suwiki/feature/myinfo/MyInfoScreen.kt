@@ -25,11 +25,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
@@ -43,6 +43,10 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.findActivity
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.util.ASK_SITE
+import com.suwiki.core.ui.util.FEEDBACK_SITE
+import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
+import com.suwiki.core.ui.util.TERMS_SITE
 import okhttp3.internal.immutableListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -66,7 +70,10 @@ fun MyInfoRoute(
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
+
+  val uriHandler = LocalUriHandler.current
   val context = LocalContext.current
+
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is MyInfoSideEffect.NavigateNotice -> navigateNotice()
@@ -83,6 +90,10 @@ fun MyInfoRoute(
       )
 
       is MyInfoSideEffect.HandleException -> handleException(sideEffect.throwable)
+      MyInfoSideEffect.OpenPersonalPolicyWebSite -> uriHandler.openUri(PRIVACY_POLICY_SITE)
+      MyInfoSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
+      MyInfoSideEffect.OpenAskWebSite -> uriHandler.openUri(ASK_SITE)
+      MyInfoSideEffect.OpenFeedbackWebSite -> uriHandler.openUri(FEEDBACK_SITE)
     }
   }
 
@@ -99,9 +110,10 @@ fun MyInfoRoute(
     onClickMyAccountButton = viewModel::navigateMyAccount,
     onClickMyPointItem = viewModel::navigateMyPoint,
     onClickBanHistoryItem = viewModel::navigateBanHistory,
-    onClickSendFeedback = {},
-    onClickTerm = {},
-    onClickPersonalInfoPolicy = {},
+    onClickAskButton = viewModel::openAskSite,
+    onClickSendFeedback = viewModel::openFeedbackSite,
+    onClickTerm = viewModel::openTermSite,
+    onClickPersonalInfoPolicy = viewModel::openPersonalPolicySite,
     onClickOpenLicense = viewModel::showOpenLicense,
   )
 }
@@ -116,6 +128,7 @@ fun MyInfoScreen(
   onClickMyAccountButton: () -> Unit,
   onClickMyPointItem: () -> Unit,
   onClickBanHistoryItem: () -> Unit,
+  onClickAskButton: () -> Unit,
   onClickSendFeedback: () -> Unit,
   onClickTerm: () -> Unit,
   onClickPersonalInfoPolicy: () -> Unit,
@@ -192,6 +205,7 @@ fun MyInfoScreen(
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_contact),
             iconId = R.drawable.ic_my_info_comment,
+            onClickItem = onClickAskButton,
           )
           VerticalDivider(
             modifier = Modifier
@@ -401,6 +415,7 @@ fun MyInfoScreenScreenPreview() {
       onClickTerm = {},
       onClickPersonalInfoPolicy = {},
       onClickOpenLicense = {},
+      onClickAskButton = {},
       )
   }
 }

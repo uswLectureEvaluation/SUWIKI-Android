@@ -16,4 +16,8 @@ sealed interface MyInfoSideEffect {
   data object ShowNeedLoginToast : MyInfoSideEffect
   data object ShowOpenLicenses : MyInfoSideEffect
   data class HandleException(val throwable: Throwable) : MyInfoSideEffect
+  data object OpenPersonalPolicyWebSite : MyInfoSideEffect
+  data object OpenTermWebSite : MyInfoSideEffect
+  data object OpenAskWebSite : MyInfoSideEffect
+  data object OpenFeedbackWebSite : MyInfoSideEffect
 }
