@@ -242,7 +242,7 @@ fun MyInfoScreen(
       }
       SuwikiMenuItem(title = stringResource(R.string.my_info_service))
 
-      serviceList.forEach { (title, onClick)->
+      serviceList.forEach { (title, onClick) ->
         MyInfoListItemContainer(
           title = title,
           onClick = onClick,
@@ -421,6 +421,6 @@ fun MyInfoScreenScreenPreview() {
       onClickOpenLicense = {},
       onClickAskButton = {},
       onClickLogin = {},
-      )
+    )
   }
 }
