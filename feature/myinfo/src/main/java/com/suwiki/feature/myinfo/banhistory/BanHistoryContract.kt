@@ -8,7 +8,9 @@ data class BanHistoryState(
   val isLoading: Boolean = false,
   val banHistory: PersistentList<Suspension.Ban> = persistentListOf(),
   val blackList: PersistentList<Suspension.Block> = persistentListOf(),
-)
+) {
+  val showEmptyScreen = banHistory.isEmpty() && blackList.isEmpty()
+}
 
 sealed interface BanHistorySideEffect {
   data object PopBackStack : BanHistorySideEffect
