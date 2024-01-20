@@ -52,4 +52,5 @@
   <string name="text_point_policy_eighth">시험정보 조회 : -20p</string>
   <string name="text_point_policy_ninth">강의평가/시험정보 삭제 : -30p</string>
   <string name="word_dot">ㆍ</string>
+    <string name="ban_history_screen_empt">이용제한 내역이 없어요</string>
 </resources>
