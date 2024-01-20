@@ -37,7 +37,7 @@ import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.encodeToUri
-import com.suwiki.feature.lectureevaluation.my.model.MyEvaluationTab
+import com.suwiki.core.model.enums.LectureEvaluationTab
 import com.suwiki.feature.lectureevaluation.my.model.MyExamEvaluationsSample
 import com.suwiki.feature.lectureevaluation.my.model.MyLectureEvaluationsSample
 import kotlinx.collections.immutable.PersistentList
@@ -45,7 +45,7 @@ import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-private val MY_EVALUATION_PAGE_COUNT = MyEvaluationTab.entries.size
+private val MY_EVALUATION_PAGE_COUNT = LectureEvaluationTab.entries.size
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -129,10 +129,10 @@ fun MyEvaluationScreen(
     SuwikiTabBar(
       selectedTabPosition = pagerState.currentPage,
     ) {
-      MyEvaluationTab.entries.forEach { tab ->
+      LectureEvaluationTab.entries.forEach { tab ->
         with(tab) {
           TabTitle(
-            title = stringResource(title),
+            title = title,
             position = position,
             selected = pagerState.currentPage == position,
             onClick = { onClickTab(position) },
@@ -144,15 +144,15 @@ fun MyEvaluationScreen(
       modifier = Modifier.weight(1f),
       state = pagerState,
     ) { page ->
-      when (MyEvaluationTab.entries[page]) {
-        MyEvaluationTab.LECTURE_EVALUATION -> {
+      when (LectureEvaluationTab.entries[page]) {
+        LectureEvaluationTab.LECTURE_EVALUATION -> {
           MyEvaluationLazyColumn(
 //            itemList = uiState.myLectureEvaluationList,
             itemList = MyLectureEvaluationsSample,
             onClickLectureEditButton = onClickLectureEvaluationEditButton,
           )
         }
-        MyEvaluationTab.EXAM_INFO -> {
+        LectureEvaluationTab.EXAM_INFO -> {
           MyEvaluationLazyColumn(
 //            itemList = uiState.myExamEvaluationList,
             itemList = MyExamEvaluationsSample,
