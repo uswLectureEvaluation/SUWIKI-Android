@@ -25,13 +25,10 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-const val MINIMUM_DELETE_POINT = 30
-
 @HiltViewModel
 class MyLectureEvaluationEditViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
   val getUserInfoUseCase: GetUserInfoUseCase,
-  val deleteLectureEvaluationUseCase: DeleteLectureEvaluationUseCase,
   val updateLectureEvaluationUseCase: UpdateLectureEvaluationUseCase,
 ) : ContainerHost<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect>, ViewModel() {
   override val container: Container<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect> =
@@ -95,18 +92,6 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
       ),
     )
       .onSuccess {
-        showReviseToast()
-        popBackStack()
-      }
-      .onFailure {
-        postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
-      }
-  }
-
-  fun deleteLectureEvaluation() = intent {
-    deleteLectureEvaluationUseCase(myLectureEvaluationItem.id)
-      .onSuccess {
-        showDeleteToast()
         popBackStack()
       }
       .onFailure {
@@ -149,24 +134,10 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     reduce { state.copy(teamLevel = teamLevel) }
   }
 
-  fun showDeleteOrLackPointDialog() = intent {
-    if (state.point > MINIMUM_DELETE_POINT) {
-      showLectureEvaluationDeleteDialog()
-    } else {
-      showLackPointDialog()
-    }
-  }
-
   private fun showLoadingScreen() = intent { reduce { state.copy(isLoading = true) } }
   private fun hideLoadingScreen() = intent { reduce { state.copy(isLoading = false) } }
-  private fun showLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = true) } }
-  fun hideLectureEvaluationDeleteDialog() = intent { reduce { state.copy(showDeleteLectureEvaluationDialog = false) } }
-  private fun showLackPointDialog() = intent { reduce { state.copy(showLackPointDialog = true) } }
-  fun hideLackPointDialog() = intent { reduce { state.copy(showLackPointDialog = false) } }
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
 
   fun popBackStack() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.PopBackStack) }
-  private fun showDeleteToast() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast) }
-  private fun showReviseToast() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationReviseToast) }
 }

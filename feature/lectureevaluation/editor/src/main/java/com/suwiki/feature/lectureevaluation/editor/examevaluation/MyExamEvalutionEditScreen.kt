@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.editor.examevaluation
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -64,9 +65,6 @@ fun MyExamEvaluationEditRoute(
         onShowToast(context.getString(R.string.exam_evaluation_delete_toast_msg))
       }
 
-      MyExamEvaluationEditSideEffect.ShowMyExamEvaluationReviseToast -> {
-        onShowToast(context.getString(R.string.exam_evaluation_revise_toast_msg))
-      }
       is MyExamEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
@@ -88,15 +86,11 @@ fun MyExamEvaluationEditRoute(
     onClickExamLevelChip = viewModel::updateExamLevel,
     onClickExamInfoChip = viewModel::updateExamInfo,
     onExamEvaluationValueChange = viewModel::updateMyExamEvaluationValue,
-    onClickExamEvaluationDeleteButton = viewModel::showDeleteOrLackPointDialog,
-    onDismissExamEvaluationDelete = viewModel::hideExamEvaluationDeleteDialog,
-    onDismissLackPoint = viewModel::hideLackPointDialog,
-    onClickExamEvaluationDeleteConfirm = viewModel::deleteExamEvaluation,
     onClickExamEvaluationReviseButton = viewModel::updateExamEvaluation,
   )
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MyExamEvaluationEditScreen(
   scrollState: ScrollState,
@@ -110,11 +104,8 @@ fun MyExamEvaluationEditScreen(
   onExamTypeBottomSheetDismissRequest: () -> Unit = {},
   onClickExamLevelChip: (ExamLevel) -> Unit = {},
   onClickExamInfoChip: (ExamInfo) -> Unit = {},
-  onClickExamEvaluationDeleteButton: () -> Unit = {},
-  onClickExamEvaluationDeleteConfirm: () -> Unit = {},
   onExamEvaluationValueChange: (String) -> Unit = { _ -> },
-  onDismissExamEvaluationDelete: () -> Unit = {},
-  onDismissLackPoint: () -> Unit = {},
+
   onClickExamEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
@@ -194,50 +185,15 @@ fun MyExamEvaluationEditScreen(
         onValueChange = onExamEvaluationValueChange,
       )
     }
-    Row(
-      horizontalArrangement = Arrangement.spacedBy(16.dp),
+
+    SuwikiContainedMediumButton(
       modifier = Modifier
-        .fillMaxWidth()
         .padding(24.dp)
+        .fillMaxWidth()
+        .height(50.dp)
         .imePadding(),
-    ) {
-      SuwikiContainedMediumButton(
-        modifier = Modifier
-          .weight(1f)
-          .height(50.dp),
-        text = stringResource(R.string.text_delete),
-        enabled = false,
-        onClick = onClickExamEvaluationDeleteButton,
-      )
-      SuwikiContainedMediumButton(
-        modifier = Modifier
-          .weight(1f)
-          .height(50.dp),
-        text = stringResource(R.string.text_revise),
-        onClick = onClickExamEvaluationReviseButton,
-      )
-    }
-  }
-
-  if (uiState.showDeleteExamEvaluationDialog) {
-    SuwikiDialog(
-      headerText = stringResource(R.string.delete_dialog_header),
-      bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
-      confirmButtonText = stringResource(R.string.word_delete),
-      dismissButtonText = stringResource(R.string.word_cancel),
-      onDismissRequest = onDismissExamEvaluationDelete,
-      onClickConfirm = onClickExamEvaluationDeleteConfirm,
-      onClickDismiss = onDismissExamEvaluationDelete,
-    )
-  }
-
-  if (uiState.showLackPointDialog) {
-    SuwikiDialog(
-      headerText = stringResource(R.string.lack_point_dialog_header),
-      bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
-      confirmButtonText = stringResource(R.string.word_confirm),
-      onDismissRequest = onDismissLackPoint,
-      onClickConfirm = onDismissLackPoint,
+      text = stringResource(R.string.text_complete),
+      onClick = onClickExamEvaluationReviseButton,
     )
   }
 
@@ -245,7 +201,7 @@ fun MyExamEvaluationEditScreen(
     isSheetOpen = uiState.showExamTypeBottomSheet,
     onDismissRequest = onExamTypeBottomSheetDismissRequest,
     onClickItem = { onClickExamTypeItem(it) },
-    itemList = ExamType.values().map { it.value }.toPersistentList(),
+    itemList = ExamType.entries.map { it.value }.toPersistentList(),
     title = stringResource(R.string.word_choose_semester),
     selectedPosition = uiState.selectedExamTypePosition,
   )
@@ -286,7 +242,7 @@ fun LectureExamEditContainer(
 
 @Preview
 @Composable
-fun MyExamEvalutionEditScreenPreview() {
+fun MyExamEvaluationEditScreenPreview() {
   val scrollState = rememberScrollState()
 
   SuwikiTheme {

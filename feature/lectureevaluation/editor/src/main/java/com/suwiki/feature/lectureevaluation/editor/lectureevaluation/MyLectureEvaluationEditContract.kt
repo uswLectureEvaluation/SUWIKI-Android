@@ -21,13 +21,10 @@ data class MyLectureEvaluationEditState(
   val teamLevel: TeamLevel? = null,
   val lectureEvaluation: String = "",
   val showSemesterBottomSheet: Boolean = false,
-  val showDeleteLectureEvaluationDialog: Boolean = false,
-  val showLackPointDialog: Boolean = false,
 )
 
 sealed interface MyLectureEvaluationEditSideEffect {
   data object PopBackStack : MyLectureEvaluationEditSideEffect
   data object ShowMyLectureEvaluationDeleteToast : MyLectureEvaluationEditSideEffect
-  data object ShowMyLectureEvaluationReviseToast : MyLectureEvaluationEditSideEffect
   data class HandleException(val throwable: Throwable) : MyLectureEvaluationEditSideEffect
 }

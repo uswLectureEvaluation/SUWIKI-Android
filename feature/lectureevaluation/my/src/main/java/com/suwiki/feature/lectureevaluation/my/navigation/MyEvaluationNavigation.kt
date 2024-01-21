@@ -16,7 +16,7 @@ fun NavGraphBuilder.myEvaluationNavGraph(
   navigateMyExamEvaluationEdit: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
 ) {
-  composable(route = MyEvaluationRoute.route) {
+  composable(route = MyEvaluationRoute.route) { navBackStackEntry ->
     MyEvaluationRoute(
       popBackStack = popBackStack,
       navigateMyLectureEvaluation = navigateMyLectureEvaluationEdit,

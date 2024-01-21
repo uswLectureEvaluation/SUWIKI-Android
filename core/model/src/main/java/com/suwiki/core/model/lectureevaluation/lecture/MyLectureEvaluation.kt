@@ -17,4 +17,4 @@ data class MyLectureEvaluation(
   val difficulty: Int = 0, // 학점 잘주는가? (까다로움 == 0, 보통 == 1, 학점느님 ==2)
   val homework: Int = 0, // 과제양 (없음 ==0, 보통 == 1, 많음 == 2)
   val content: String = "",
-) : java.io.Serializable
+)
