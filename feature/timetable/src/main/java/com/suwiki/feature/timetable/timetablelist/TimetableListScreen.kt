@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTextButton
+import com.suwiki.core.designsystem.component.container.SuwikiEditContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -24,7 +25,6 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument
-import com.suwiki.core.designsystem.component.container.SuwikiEditContainer
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

@@ -214,7 +214,6 @@ fun MyEvaluationScreen(
     )
   }
 
-
   if (uiState.isLoading) {
     LoadingScreen()
   }

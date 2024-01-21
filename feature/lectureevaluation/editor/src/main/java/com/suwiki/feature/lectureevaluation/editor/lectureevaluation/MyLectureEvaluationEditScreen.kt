@@ -33,7 +33,6 @@ import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.ChipColor
 import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
 import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
-import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.component.slider.SuwikiSlider

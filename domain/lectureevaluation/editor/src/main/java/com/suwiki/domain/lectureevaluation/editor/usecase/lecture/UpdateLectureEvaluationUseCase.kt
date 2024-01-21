@@ -8,7 +8,7 @@ class UpdateLectureEvaluationUseCase @Inject constructor(
   private val lectureEditorRepository: LectureEditorRepository,
 ) {
   suspend operator fun invoke(param: Param): Result<Unit> = runCatchingIgnoreCancelled {
-    with(param){
+    with(param) {
       lectureEditorRepository.updateLectureEvaluation(
         lectureId = lectureId,
         selectedSemester = selectedSemester,

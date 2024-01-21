@@ -46,7 +46,9 @@ class MyEvaluationViewModel @Inject constructor(
       lectureEvaluationPage = 1
       isLastLectureEvaluation = false
       persistentListOf()
-    } else state.myLectureEvaluationList
+    } else {
+      state.myLectureEvaluationList
+    }
 
     if (isLastLectureEvaluation) return@intent
 
@@ -68,7 +70,9 @@ class MyEvaluationViewModel @Inject constructor(
       examEvaluationPage = 1
       isLastExamEvaluation = false
       persistentListOf()
-    } else state.myExamEvaluationList
+    } else {
+      state.myExamEvaluationList
+    }
 
     if (isLastExamEvaluation) return@intent
 
@@ -96,7 +100,6 @@ class MyEvaluationViewModel @Inject constructor(
     joinAll(getMyLectureEvaluations(true), getMyExamEvaluations(true))
     hideLoadingScreen()
   }
-
 
   fun deleteExamEvaluation() = intent {
     deleteExamEvaluationUseCase(toDeleteExamId)
@@ -129,7 +132,6 @@ class MyEvaluationViewModel @Inject constructor(
   }
 
   private fun setPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
-
 
   fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentTabPage = currentPage) } }
 

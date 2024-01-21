@@ -25,7 +25,7 @@ data class MyLectureEvaluationResponse(
 internal fun MyLectureEvaluationResponse.toModel() = MyLectureEvaluation(
   id = id,
   lectureInfo = LectureInfo(
-    semesterList = semesterList.replace(" ","").split(","),
+    semesterList = semesterList.replace(" ", "").split(","),
     professor = professor,
     majorType = majorType,
     lectureType = null,
