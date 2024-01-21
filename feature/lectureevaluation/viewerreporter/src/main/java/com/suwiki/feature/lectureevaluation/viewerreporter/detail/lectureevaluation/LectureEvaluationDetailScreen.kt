@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.container.LabelColor
 import com.suwiki.core.designsystem.component.container.SuwikiReviewStatisticsContainer
@@ -38,11 +39,27 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.LectureEvaluationTab
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 private val LECTURE_EVALUATION_PAGE_COUNT = LectureEvaluationTab.entries.size
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LectureEvaluationDetailRoute() {
+fun LectureEvaluationDetailRoute(
+  viewModel: LectureEvaluationDetailViewModel = hiltViewModel(),
+  popBackStack: () -> Unit = {},
+  handleException: (Throwable) -> Unit = {},
+) {
+  val uiState = viewModel.collectAsState().value
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      is LectureEvaluationDetailSideEffect.PopBackStack -> popBackStack()
+      is LectureEvaluationDetailSideEffect.HandleException -> handleException(sideEffect.throwable)
+    }
+  }
+
+  LectureEvaluationDetailScreen()
 }
 
 @OptIn(ExperimentalFoundationApi::class)

@@ -13,6 +13,7 @@ import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyExamEval
 import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyLectureEvaluation
 import com.suwiki.feature.lectureevaluation.my.navigation.navigateMyEvaluation
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
+import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluationDetail
 import com.suwiki.feature.login.navigation.navigateFindId
 import com.suwiki.feature.login.navigation.navigateFindPassword
 import com.suwiki.feature.login.navigation.navigateLogin
@@ -84,6 +85,10 @@ internal class MainNavigator(
 
   fun navigateSignupComplete() {
     navController.navigateSignupComplete()
+  }
+
+  fun navigateLectureEvaluationDetail(id: String) {
+    navController.navigateLectureEvaluationDetail(id)
   }
 
   fun navigateMyAccount() {

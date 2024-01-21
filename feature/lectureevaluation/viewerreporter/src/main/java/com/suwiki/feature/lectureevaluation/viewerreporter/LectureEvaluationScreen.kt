@@ -54,6 +54,7 @@ fun LectureEvaluationRoute(
   selectedOpenMajor: String,
   navigateLogin: () -> Unit,
   navigateSignUp: () -> Unit,
+  navigateLectureEvaluationDetail: (String) -> Unit,
   navigateOpenMajor: (String) -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
@@ -77,6 +78,7 @@ fun LectureEvaluationRoute(
 
       is LectureEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)
       is LectureEvaluationSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
+      is LectureEvaluationSideEffect.NavigateLectureEvaluationDetail -> navigateLectureEvaluationDetail(sideEffect.id)
     }
   }
 
@@ -112,6 +114,7 @@ fun LectureEvaluationRoute(
     onClickTermArrowIcon = viewModel::openTermWebSite,
     onClickPersonalCheckIcon = viewModel::togglePersonalPolicyChecked,
     onClickPersonalArrowIcon = viewModel::openPersonalPolicyWebSite,
+    onClickLectureEvaluationItem = viewModel::navigateLectureEvaluationDetail,
     onClickAgreementButton = {
       viewModel.hideAgreementBottomSheet()
       viewModel.hideOnboardingBottomSheet()
@@ -153,6 +156,7 @@ fun LectureEvaluationScreen(
   onClickPersonalCheckIcon: () -> Unit = {},
   onClickPersonalArrowIcon: () -> Unit = {},
   onClickAgreementButton: () -> Unit = {},
+  onClickLectureEvaluationItem: (String) -> Unit = {},
 ) {
   Column(
     modifier = Modifier
@@ -187,6 +191,7 @@ fun LectureEvaluationScreen(
     LectureEvaluationLazyColumn(
       listState = listState,
       openLectureEvaluationInfoList = uiState.lectureEvaluationList,
+      onClickOpenLectureEvaluationDetail = onClickLectureEvaluationItem,
     )
   }
 

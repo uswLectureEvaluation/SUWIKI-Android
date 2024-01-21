@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.enums.LectureAlign
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationExtraAverageUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class LectureEvaluationViewModel @Inject constructor(
   private val getUserInfoUseCase: GetUserInfoUseCase,
   private val getLectureEvaluationListUseCase: RetrieveLectureEvaluationAverageListUseCase,
+  private val getLectureEvaluationExtraAverageUseCase: GetLectureEvaluationExtraAverageUseCase,
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
     container(LectureEvaluationState())
@@ -113,6 +115,12 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
+  fun getLectureEvaluationDetail(id: Long) = intent {
+    getLectureEvaluationExtraAverageUseCase(id)
+      .onSuccess { }
+      .onFailure { }
+  }
+
   private fun handleGetLectureEvaluationListSuccess(
     alignPosition: Int,
     majorType: String,
@@ -139,6 +147,7 @@ class LectureEvaluationViewModel @Inject constructor(
   fun navigateOpenMajor(selectedOpenMajor: String) = intent { postSideEffect(LectureEvaluationSideEffect.NavigateOpenMajor(selectedOpenMajor)) }
   fun navigateLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLogin) }
   fun navigateSignup() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateSignUp) }
+  fun navigateLectureEvaluationDetail(id: String) = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLectureEvaluationDetail(id)) }
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }
 
