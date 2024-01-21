@@ -113,7 +113,6 @@ internal fun MainScreen(
         )
 
         myEvaluationNavGraph(
-          padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
           navigateMyLectureEvaluationEdit = navigator::navigateMyLectureEvaluationEdit,
           navigateMyExamEvaluationEdit = navigator::navigateMyExamEvaluationEdit,

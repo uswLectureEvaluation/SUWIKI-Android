@@ -7,9 +7,13 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class MyEvaluationState(
   val isLoading: Boolean = false,
+  val point: Int = 0,
   val currentTabPage: Int = 0,
   val myLectureEvaluationList: PersistentList<MyLectureEvaluation> = persistentListOf(),
   val myExamEvaluationList: PersistentList<MyExamEvaluation> = persistentListOf(),
+  val showDeleteLectureEvaluationDialog: Boolean = false,
+  val showDeleteExamEvaluationDialog: Boolean = false,
+  val showLackPointDialog: Boolean = false,
 )
 
 sealed interface MyEvaluationSideEffect {
