@@ -3,7 +3,6 @@ package com.suwiki.feature.lectureevaluation.viewerreporter
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.enums.LectureAlign
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
-import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationExtraAverageUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +23,6 @@ import javax.inject.Inject
 class LectureEvaluationViewModel @Inject constructor(
   private val getUserInfoUseCase: GetUserInfoUseCase,
   private val getLectureEvaluationListUseCase: RetrieveLectureEvaluationAverageListUseCase,
-  private val getLectureEvaluationExtraAverageUseCase: GetLectureEvaluationExtraAverageUseCase,
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
     container(LectureEvaluationState())
@@ -113,12 +111,6 @@ class LectureEvaluationViewModel @Inject constructor(
       postSideEffect(LectureEvaluationSideEffect.ScrollToTop)
       reduce { state.copy(isLoading = false) }
     }
-  }
-
-  fun getLectureEvaluationDetail(id: Long) = intent {
-    getLectureEvaluationExtraAverageUseCase(id)
-      .onSuccess { }
-      .onFailure { }
   }
 
   private fun handleGetLectureEvaluationListSuccess(

@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -59,7 +60,13 @@ fun LectureEvaluationDetailRoute(
     }
   }
 
-  LectureEvaluationDetailScreen()
+  LaunchedEffect(key1 = Unit) {
+    viewModel.getLectureEvaluationDetail()
+  }
+
+  LectureEvaluationDetailScreen(
+    uiState = uiState,
+  )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -82,15 +89,15 @@ fun LectureEvaluationDetailScreen(
         onClickBack = popBackStack,
       )
       SuwikiReviewStatisticsContainer(
-        lectureType = "강의유형",
-        lectureName = "Tilte",
-        openMajor = "개설학과",
-        professor = "교수명",
+        lectureType = uiState.lectureInfo.lectureType ?: "강의유형",
+        lectureName = uiState.lectureInfo.lectureName,
+        openMajor = uiState.lectureInfo.majorType,
+        professor = uiState.lectureInfo.professor,
         reviewCount = 3,
-        rating = 3.0f,
-        honeyRating = 3.0f,
-        learningRating = 3.0f,
-        satisfactionRating = 3.0f,
+        rating = uiState.lectureTotalAvg,
+        honeyRating = uiState.lectureHoneyAvg,
+        learningRating = uiState.lectureLearningAvg,
+        satisfactionRating = uiState.lectureSatisfactionAvg,
         grade = "label",
         gradeLabelColor = LabelColor.BLUE,
         homework = "label",
@@ -122,7 +129,7 @@ fun LectureEvaluationDetailScreen(
           ) { page ->
             when (LectureEvaluationTab.entries[page]) {
               LectureEvaluationTab.LECTURE_EVALUATION -> {
-                items.forEach {
+                items.forEach { _ ->
                   SuwikiUserReviewContainer(
                     isAuthor = false,
                     text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
@@ -153,9 +160,9 @@ fun LectureEvaluationWriteButton(
   Row(
     modifier = modifier
       .clip(shape = RoundedCornerShape(10.dp))
+      .suwikiClickable(onClick = onClick)
       .background(Primary)
-      .padding(vertical = 8.dp, horizontal = 16.dp)
-      .suwikiClickable(onClick = onClick),
+      .padding(vertical = 8.dp, horizontal = 16.dp),
   ) {
     Icon(
       modifier = Modifier.align(Alignment.CenterVertically),
