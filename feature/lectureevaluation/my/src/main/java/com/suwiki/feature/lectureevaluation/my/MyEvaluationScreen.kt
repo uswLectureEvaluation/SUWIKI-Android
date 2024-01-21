@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
@@ -26,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.container.SuwikiReviewEditContainer
+import com.suwiki.core.designsystem.component.container.SuwikiEditContainer
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
 import com.suwiki.core.designsystem.component.tabbar.TabTitle
@@ -44,13 +45,13 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import timber.log.Timber
 
 private val MY_EVALUATION_PAGE_COUNT = MyEvaluationTab.entries.size
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MyEvaluationRoute(
-  padding: PaddingValues,
   viewModel: MyEvaluationViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   navigateMyLectureEvaluation: (String) -> Unit = {},
@@ -92,9 +93,10 @@ fun MyEvaluationRoute(
   }
 
   MyEvaluationScreen(
-    padding = padding,
     uiState = uiState,
     pagerState = pagerState,
+    lectureEvaluationListState = lectureEvaluationListState,
+    examEvaluationListState = examEvaluationListState,
     onClickTab = viewModel::syncPager,
     onClickBack = viewModel::popBackStack,
     onClickLectureEvaluationEditButton = viewModel::navigateMyLectureEvaluation,
@@ -103,12 +105,12 @@ fun MyEvaluationRoute(
 }
 
 @OptIn(ExperimentalFoundationApi::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MyEvaluationScreen(
-  padding: PaddingValues,
   uiState: MyEvaluationState,
   pagerState: PagerState = rememberPagerState(pageCount = { MY_EVALUATION_PAGE_COUNT }),
+  lectureEvaluationListState: LazyListState = rememberLazyListState(),
+  examEvaluationListState: LazyListState = rememberLazyListState(),
   onClickTab: (Int) -> Unit = {},
   onClickBack: () -> Unit = {},
   onClickLectureEvaluationEditButton: (String) -> Unit = {},
@@ -116,7 +118,6 @@ fun MyEvaluationScreen(
 ) {
   Column(
     modifier = Modifier
-      .padding(padding)
       .background(White)
       .fillMaxSize(),
   ) {
@@ -147,15 +148,16 @@ fun MyEvaluationScreen(
       when (MyEvaluationTab.entries[page]) {
         MyEvaluationTab.LECTURE_EVALUATION -> {
           MyEvaluationLazyColumn(
-//            itemList = uiState.myLectureEvaluationList,
-            itemList = MyLectureEvaluationsSample,
+            itemList = uiState.myLectureEvaluationList,
+            listState = lectureEvaluationListState,
             onClickLectureEditButton = onClickLectureEvaluationEditButton,
           )
         }
+
         MyEvaluationTab.EXAM_INFO -> {
           MyEvaluationLazyColumn(
-//            itemList = uiState.myExamEvaluationList,
-            itemList = MyExamEvaluationsSample,
+            itemList = uiState.myExamEvaluationList,
+            listState = examEvaluationListState,
             onClickExamEditButton = onClickExamEvaluationEditButton,
           )
         }
@@ -171,28 +173,33 @@ fun MyEvaluationScreen(
 fun MyEvaluationLazyColumn(
   modifier: Modifier = Modifier,
   itemList: PersistentList<Any>,
+  listState: LazyListState,
   onClickLectureEditButton: (String) -> Unit = {},
   onClickExamEditButton: (String) -> Unit = {},
 ) {
   LazyColumn(
     modifier = modifier.fillMaxSize(),
+    state = listState,
   ) {
     items(items = itemList) { item ->
       when (item) {
         is MyLectureEvaluation -> {
-          SuwikiReviewEditContainer(
-            semesterText = item.selectedSemester,
-            classNameText = item.lectureInfo.lectureName,
+          SuwikiEditContainer(
+            semester = item.selectedSemester,
+            name = item.lectureInfo.lectureName,
             onClickEditButton = { onClickLectureEditButton(Json.encodeToUri(item)) },
+            onClickDeleteButton = {},
           )
         }
+
         is MyExamEvaluation -> {
           val (examSemester, examName) = item.selectedSemester to item.lectureName
 
-          SuwikiReviewEditContainer(
-            semesterText = examSemester ?: stringResource(R.string.word_semester),
-            classNameText = examName ?: stringResource(R.string.word_lecture_name),
+          SuwikiEditContainer(
+            semester = examSemester ?: "",
+            name = examName ?: "",
             onClickEditButton = { onClickExamEditButton(Json.encodeToUri(item)) },
+            onClickDeleteButton = {},
           )
         }
       }
@@ -207,7 +214,6 @@ fun MyEvaluationPreview() {
   var currentPage by remember { mutableIntStateOf(0) }
   SuwikiTheme {
     MyEvaluationScreen(
-      padding = PaddingValues(0.dp),
       uiState = MyEvaluationState(
         currentTabPage = currentPage,
       ),

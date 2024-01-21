@@ -21,39 +21,50 @@ class MyEvaluationViewModel @Inject constructor(
 ) : ContainerHost<MyEvaluationState, MyEvaluationSideEffect>, ViewModel() {
   override val container: Container<MyEvaluationState, MyEvaluationSideEffect> = container(MyEvaluationState())
 
-  private var currentLectureEvaluationPage = 1
-  private var currentExamEvaluationPage = 1
+  private var isFirstVisit = true
+  private var lectureEvaluationPage = 1
+  private var isLastLectureEvaluation = false
+  private var examEvaluationPage = 1
+  private var isLastExamEvaluation = false
 
   fun getMyLectureEvaluations() = intent {
-    showLoadingScreen()
-    getMyLectureEvaluationListUseCase(currentLectureEvaluationPage)
+    if (isLastLectureEvaluation) return@intent
+
+    getMyLectureEvaluationListUseCase(lectureEvaluationPage)
       .onSuccess {
-        reduce { state.copy(myLectureEvaluationList = state.myLectureEvaluationList.addAll(it.toPersistentList())) }
-        currentLectureEvaluationPage++
+        reduce {
+          lectureEvaluationPage++
+          isLastLectureEvaluation = it.isEmpty()
+          state.copy(myLectureEvaluationList = state.myLectureEvaluationList.addAll(it.toPersistentList()))
+        }
       }
       .onFailure {
         postSideEffect(MyEvaluationSideEffect.HandleException(it))
       }
-    hideLoadingScreen()
   }
 
   fun getMyExamEvaluations() = intent {
-    showLoadingScreen()
-    getMyExamEvaluationListUseCase(currentExamEvaluationPage)
+    if (isLastExamEvaluation) return@intent
+
+    getMyExamEvaluationListUseCase(examEvaluationPage)
       .onSuccess {
-        reduce { state.copy(myExamEvaluationList = state.myExamEvaluationList.addAll(it.toPersistentList())) }
-        currentExamEvaluationPage++
+        reduce {
+          examEvaluationPage++
+          isLastExamEvaluation = it.isEmpty()
+          state.copy(myExamEvaluationList = state.myExamEvaluationList.addAll(it.toPersistentList()))
+        }
       }
       .onFailure {
         postSideEffect(MyEvaluationSideEffect.HandleException(it))
       }
-    hideLoadingScreen()
   }
 
   fun initData() = intent {
+    if (isFirstVisit.not()) return@intent
     showLoadingScreen()
     joinAll(getMyLectureEvaluations(), getMyExamEvaluations())
     hideLoadingScreen()
+    isFirstVisit = false
   }
 
   fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentTabPage = currentPage) } }

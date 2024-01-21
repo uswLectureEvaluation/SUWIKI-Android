@@ -11,7 +11,6 @@ fun NavController.navigateMyEvaluation() {
 }
 
 fun NavGraphBuilder.myEvaluationNavGraph(
-  padding: PaddingValues,
   popBackStack: () -> Unit = {},
   navigateMyLectureEvaluationEdit: (String) -> Unit = {},
   navigateMyExamEvaluationEdit: (String) -> Unit = {},
@@ -19,7 +18,6 @@ fun NavGraphBuilder.myEvaluationNavGraph(
 ) {
   composable(route = MyEvaluationRoute.route) {
     MyEvaluationRoute(
-      padding = padding,
       popBackStack = popBackStack,
       navigateMyLectureEvaluation = navigateMyLectureEvaluationEdit,
       navigateMyExamEvaluation = navigateMyExamEvaluationEdit,

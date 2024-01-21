@@ -1,4 +1,4 @@
-package com.suwiki.feature.timetable.timetablelist.component
+package com.suwiki.core.designsystem.component.container
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,13 +25,13 @@ import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
-fun TimetableEditContainer(
+fun SuwikiEditContainer(
   modifier: Modifier = Modifier,
-  timetable: Timetable = Timetable(),
+  name: String,
+  semester: String,
   onClickEditButton: () -> Unit = {},
   onClickDeleteButton: () -> Unit = {},
   onClick: () -> Unit = {},
@@ -67,12 +66,12 @@ fun TimetableEditContainer(
         modifier = Modifier.weight(1f, false),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        text = timetable.name,
+        text = name,
         style = SuwikiTheme.typography.header6,
         color = Black,
       )
 
-      SuwikiBadge(color = BadgeColor.Gray, text = "${timetable.year}-${timetable.semester}")
+      SuwikiBadge(color = BadgeColor.Gray, text = semester)
     }
 
     Row(
@@ -95,14 +94,9 @@ fun TimetableEditContainer(
 fun TimetableEditContainerPreview() {
   SuwikiTheme {
     Column {
-      TimetableEditContainer(
-        timetable = Timetable(
-          createTime = 0,
-          year = "2024",
-          semester = "1",
-          name = "시간표시간표시간표시간표시간표시간표시간표시간표",
-          cellList = listOf(),
-        ),
+      SuwikiEditContainer(
+        name = "시간표시간표시간표시간표시간표시간표시간표시간표",
+        semester = "1",
       )
     }
   }

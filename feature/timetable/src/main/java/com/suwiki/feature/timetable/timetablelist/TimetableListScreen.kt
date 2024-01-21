@@ -24,7 +24,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument
-import com.suwiki.feature.timetable.timetablelist.component.TimetableEditContainer
+import com.suwiki.core.designsystem.component.container.SuwikiEditContainer
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -98,8 +98,9 @@ fun TimetableListScreen(
 
     LazyColumn {
       items(items = uiState.timetableList, key = { it.createTime }) { timetable ->
-        TimetableEditContainer(
-          timetable = timetable,
+        SuwikiEditContainer(
+          name = timetable.name,
+          semester = "${timetable.year}-${timetable.semester}",
           onClickEditButton = { onClickTimetableEditButton(timetable) },
           onClickDeleteButton = { onClickTimetableDeleteButton(timetable) },
           onClick = { onClickTimetableContainer(timetable.createTime) },
