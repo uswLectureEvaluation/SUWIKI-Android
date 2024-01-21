@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.container.LabelColor
+import com.suwiki.core.designsystem.component.container.SuwikiExamReviewContainer
 import com.suwiki.core.designsystem.component.container.SuwikiReviewStatisticsContainer
 import com.suwiki.core.designsystem.component.container.SuwikiUserReviewContainer
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
@@ -38,6 +40,7 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.LectureEvaluationTab
+import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 import org.orbitmvi.orbit.compose.collectAsState
@@ -59,13 +62,25 @@ fun LectureEvaluationDetailRoute(
       is LectureEvaluationDetailSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
+  val pagerState = rememberPagerState(pageCount = { LECTURE_EVALUATION_PAGE_COUNT })
 
   LaunchedEffect(key1 = Unit) {
     viewModel.getLectureEvaluationDetail()
   }
 
+  LaunchedEffect(key1 = uiState.currentTabPage) {
+    pagerState.animateScrollToPage(uiState.currentTabPage)
+  }
+
+  snapshotFlow { pagerState.currentPage }.collectWithLifecycle {
+    viewModel.syncPager(it)
+  }
+
   LectureEvaluationDetailScreen(
     uiState = uiState,
+    pagerState = pagerState,
+    onClickBack = viewModel::popBackStack,
+    onClickTab = viewModel::syncPager,
   )
 }
 
@@ -74,7 +89,7 @@ fun LectureEvaluationDetailRoute(
 fun LectureEvaluationDetailScreen(
   uiState: LectureEvaluationDetailState = LectureEvaluationDetailState(),
   pagerState: PagerState = rememberPagerState(pageCount = { LECTURE_EVALUATION_PAGE_COUNT }),
-  popBackStack: () -> Unit = {},
+  onClickBack: () -> Unit = {},
   onClickTab: (Int) -> Unit = {},
 ) {
   Box(
@@ -82,62 +97,81 @@ fun LectureEvaluationDetailScreen(
       .fillMaxSize()
       .background(White)
   ) {
-    Column {
-      SuwikiAppBarWithTitle(
-        showBackIcon = true,
-        showCloseIcon = false,
-        onClickBack = popBackStack,
-      )
-      SuwikiReviewStatisticsContainer(
-        lectureType = uiState.lectureInfo.lectureType ?: "강의유형",
-        lectureName = uiState.lectureInfo.lectureName,
-        openMajor = uiState.lectureInfo.majorType,
-        professor = uiState.lectureInfo.professor,
-        reviewCount = 3,
-        rating = uiState.lectureTotalAvg,
-        honeyRating = uiState.lectureHoneyAvg,
-        learningRating = uiState.lectureLearningAvg,
-        satisfactionRating = uiState.lectureSatisfactionAvg,
-        grade = "label",
-        gradeLabelColor = LabelColor.BLUE,
-        homework = "label",
-        homeworkLabelColor = LabelColor.GREEN,
-        team = "label",
-        teamLabelColor = LabelColor.ORANGE,
-      )
-      LazyColumn {
-        stickyHeader {
-          SuwikiTabBar(
-            selectedTabPosition = pagerState.currentPage,
-          ) {
-            LectureEvaluationTab.entries.forEach { tab ->
-              with(tab) {
-                TabTitle(
-                  title = title,
-                  position = position,
-                  selected = pagerState.currentPage == position,
-                  onClick = { onClickTab(position) },
-                )
-              }
+    LazyColumn {
+      stickyHeader {
+        SuwikiAppBarWithTitle(
+          showBackIcon = true,
+          showCloseIcon = false,
+          onClickBack = onClickBack,
+        )
+      }
+      item {
+        SuwikiReviewStatisticsContainer(
+          lectureType = uiState.lectureInfo.lectureType ?: "강의유형",
+          lectureName = uiState.lectureInfo.lectureName,
+          openMajor = uiState.lectureInfo.majorType,
+          professor = uiState.lectureInfo.professor,
+          reviewCount = 3,
+          rating = uiState.lectureTotalAvg,
+          honeyRating = uiState.lectureHoneyAvg,
+          learningRating = uiState.lectureLearningAvg,
+          satisfactionRating = uiState.lectureSatisfactionAvg,
+          grade = "label",
+          gradeLabelColor = LabelColor.BLUE,
+          homework = "label",
+          homeworkLabelColor = LabelColor.GREEN,
+          team = "label",
+          teamLabelColor = LabelColor.ORANGE,
+        )
+      }
+      stickyHeader {
+        SuwikiTabBar(
+          selectedTabPosition = pagerState.currentPage,
+        ) {
+          LectureEvaluationTab.entries.forEach { tab ->
+            with(tab) {
+              TabTitle(
+                title = title,
+                position = position,
+                selected = pagerState.currentPage == position,
+                onClick = { onClickTab(position) },
+              )
             }
           }
         }
-        items(items = listOf("", "", "", "", "", "", "", "")) { items ->
-          HorizontalPager(
-            modifier = Modifier.weight(1f),
-            state = pagerState,
-          ) { page ->
-            when (LectureEvaluationTab.entries[page]) {
-              LectureEvaluationTab.LECTURE_EVALUATION -> {
-                items.forEach { _ ->
+      }
+      item {
+        HorizontalPager(
+          state = pagerState,
+        ) { pager ->
+          when (LectureEvaluationTab.entries[pager]) {
+            LectureEvaluationTab.LECTURE_EVALUATION -> {
+              val evaluations = listOf("1", "2", "3", "4", "5", "6")
+              Column(
+                modifier = Modifier.fillMaxSize(),
+              ) {
+                evaluations.forEach { evaluation ->
                   SuwikiUserReviewContainer(
                     isAuthor = false,
-                    text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
+                    text = evaluation,
                   )
                 }
               }
-              LectureEvaluationTab.EXAM_INFO -> {
-//              TODO(시험정보 리스트)
+            }
+            LectureEvaluationTab.EXAM_INFO -> {
+              val evaluations = listOf("a", "b", "c", "d", "e", "f")
+              Column(
+                modifier = Modifier.fillMaxSize(),
+              ) {
+                evaluations.forEach { evaluation ->
+                  SuwikiExamReviewContainer(
+                    isAuthor = false,
+                    difficulty = "어려움",
+                    examType = "응용,실습,과제,PPT",
+                    text = evaluation,
+                    onClickButton = {},
+                  )
+                }
               }
             }
           }
@@ -147,7 +181,8 @@ fun LectureEvaluationDetailScreen(
     LectureEvaluationWriteButton(
       modifier = Modifier
         .padding(12.dp)
-        .align(Alignment.BottomCenter)
+        .align(Alignment.BottomCenter),
+      onClick = { /*TODO*/ },
     )
   }
 }
@@ -176,10 +211,6 @@ fun LectureEvaluationWriteButton(
       style = SuwikiTheme.typography.body2,
     )
   }
-}
-
-@Composable
-fun LectureEvaluationLazyColumn() {
 }
 
 @OptIn(ExperimentalFoundationApi::class)

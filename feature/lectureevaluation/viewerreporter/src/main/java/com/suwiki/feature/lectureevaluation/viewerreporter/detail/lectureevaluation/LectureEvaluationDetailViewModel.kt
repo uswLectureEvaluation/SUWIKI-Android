@@ -23,6 +23,8 @@ class LectureEvaluationDetailViewModel @Inject constructor(
 
   private val evaluationId: Long = savedStateHandle.get<String>(LectureEvaluationRoute.lectureEvaluationDetail)!!.toLong()
 
+  fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentTabPage = currentPage) } }
+
   fun getLectureEvaluationDetail() = intent {
     getLectureEvaluationExtraAverageUseCase(evaluationId)
       .onSuccess { lectureEvaluationExtraAverage ->
@@ -44,4 +46,6 @@ class LectureEvaluationDetailViewModel @Inject constructor(
         postSideEffect(LectureEvaluationDetailSideEffect.HandleException(it))
       }
   }
+
+  fun popBackStack() = intent { postSideEffect(LectureEvaluationDetailSideEffect.PopBackStack) }
 }
