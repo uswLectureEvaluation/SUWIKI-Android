@@ -57,7 +57,7 @@ class MyEvaluationViewModel @Inject constructor(
         reduce {
           lectureEvaluationPage++
           isLastLectureEvaluation = it.isEmpty()
-          state.copy(myLectureEvaluationList = currentList.addAll(it).distinct().toPersistentList())
+          state.copy(myLectureEvaluationList = currentList.addAll(it).distinctBy { it.id }.toPersistentList())
         }
       }
       .onFailure {
@@ -81,7 +81,7 @@ class MyEvaluationViewModel @Inject constructor(
         reduce {
           examEvaluationPage++
           isLastExamEvaluation = it.isEmpty()
-          state.copy(myExamEvaluationList = currentList.addAll(it).distinct().toPersistentList())
+          state.copy(myExamEvaluationList = currentList.addAll(it).distinctBy { it.id }.toPersistentList())
         }
       }
       .onFailure {
