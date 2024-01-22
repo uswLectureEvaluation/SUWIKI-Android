@@ -10,4 +10,6 @@ android {
 dependencies {
   implementation(projects.domain.user)
   implementation(projects.domain.lectureevaluation.viewerreporter)
+
+  implementation(libs.compose.toolbar)
 }

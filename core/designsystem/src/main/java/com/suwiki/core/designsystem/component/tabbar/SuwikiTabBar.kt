@@ -53,6 +53,7 @@ data class TabPosition(
 // https://github.com/GautierLouis/ComposePlayground/blob/1c5ffb483291bb21d9820a2fe7a18aec049c7bd2/app/src/main/java/com/louis/composeplayground/ui/TabRow.kt
 @Composable
 fun SuwikiTabBar(
+  modifier: Modifier = Modifier,
   indicatorColor: Color = Black,
   paddingValues: PaddingValues = PaddingValues(start = 12.dp, end = 12.dp),
   animationSpec: AnimationSpec<Dp> = tween(durationMillis = 250, easing = FastOutSlowInEasing),
@@ -60,6 +61,7 @@ fun SuwikiTabBar(
   tabItem: @Composable () -> Unit,
 ) {
   Surface(
+    modifier = Modifier,
     color = White,
   ) {
     SubcomposeLayout(

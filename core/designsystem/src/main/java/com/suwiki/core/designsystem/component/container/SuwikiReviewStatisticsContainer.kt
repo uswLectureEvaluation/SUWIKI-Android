@@ -34,6 +34,7 @@ import com.suwiki.core.designsystem.theme.Blue10
 import com.suwiki.core.designsystem.theme.Blue100
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayDA
+import com.suwiki.core.designsystem.theme.GrayFB
 import com.suwiki.core.designsystem.theme.Green10
 import com.suwiki.core.designsystem.theme.Green100
 import com.suwiki.core.designsystem.theme.Orange10
@@ -48,7 +49,6 @@ fun SuwikiReviewStatisticsContainer(
   lectureName: String,
   openMajor: String,
   professor: String,
-  reviewCount: Int,
   rating: Float,
   grade: String? = null,
   gradeLabelColor: LabelColor? = null,
@@ -63,7 +63,7 @@ fun SuwikiReviewStatisticsContainer(
   Column(
     modifier = modifier
       .fillMaxWidth()
-      .background(White)
+      .background(GrayFB)
       .padding(top = 14.dp, bottom = 24.dp, start = 24.dp, end = 24.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
@@ -134,7 +134,6 @@ fun SuwikiReviewStatisticsContainer(
     }
     Spacer(modifier = Modifier.height(23.dp))
     SuwikiReviewGradeCard(
-      reviewCount = reviewCount,
       rating = rating,
       honeyRating = honeyRating,
       learningRating = learningRating,
@@ -205,7 +204,6 @@ fun SuwikiReviewStaticsContainerPreview() {
         lectureName = "Tilte",
         openMajor = "개설학과",
         professor = "교수명",
-        reviewCount = 3,
         rating = 3.0f,
         honeyRating = 3.0f,
         learningRating = 3.0f,
@@ -222,7 +220,6 @@ fun SuwikiReviewStaticsContainerPreview() {
         lectureName = "Tilte",
         openMajor = "개설학과",
         professor = "교수명",
-        reviewCount = 0,
         rating = 0.0f,
         honeyRating = 0.0f,
         learningRating = 0.0f,

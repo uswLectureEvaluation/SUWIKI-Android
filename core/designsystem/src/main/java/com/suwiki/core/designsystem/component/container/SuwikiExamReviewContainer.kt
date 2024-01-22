@@ -66,7 +66,7 @@ fun SuwikiExamReviewContainer(
     Spacer(modifier = Modifier.height(10.dp))
     Row(
       modifier = modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.spacedBy(2.dp),
+      horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
       Text(
         text = stringResource(id = R.string.word_difficulcy),
@@ -82,7 +82,7 @@ fun SuwikiExamReviewContainer(
     Spacer(modifier = Modifier.height(2.dp))
     Row(
       modifier = modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.spacedBy(2.dp),
+      horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
       Text(
         text = stringResource(id = R.string.word_type_exam),
