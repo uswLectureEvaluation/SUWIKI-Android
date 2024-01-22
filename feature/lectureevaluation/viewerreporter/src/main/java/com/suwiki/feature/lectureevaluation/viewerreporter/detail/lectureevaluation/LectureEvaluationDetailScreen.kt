@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -43,6 +42,7 @@ import com.suwiki.core.model.enums.LectureEvaluationTab
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
+import kotlinx.collections.immutable.persistentListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -146,29 +146,25 @@ fun LectureEvaluationDetailScreen(
         ) { pager ->
           when (LectureEvaluationTab.entries[pager]) {
             LectureEvaluationTab.LECTURE_EVALUATION -> {
-              val evaluations = listOf("1", "2", "3", "4", "5", "6")
-              Column(
-                modifier = Modifier.fillMaxSize(),
-              ) {
-                evaluations.forEach { evaluation ->
+              val evaluations = persistentListOf("1", "2", "3", "4", "5", "6")
+              Column {
+                evaluations.forEach { it ->
                   SuwikiUserReviewContainer(
                     isAuthor = false,
-                    text = evaluation,
+                    text = it,
                   )
                 }
               }
             }
             LectureEvaluationTab.EXAM_INFO -> {
-              val evaluations = listOf("a", "b", "c", "d", "e", "f")
-              Column(
-                modifier = Modifier.fillMaxSize(),
-              ) {
-                evaluations.forEach { evaluation ->
+              val evaluations = persistentListOf("a", "b", "c", "d", "e", "f")
+              Column {
+                evaluations.forEach { it ->
                   SuwikiExamReviewContainer(
                     isAuthor = false,
                     difficulty = "어려움",
                     examType = "응용,실습,과제,PPT",
-                    text = evaluation,
+                    text = it,
                     onClickButton = {},
                   )
                 }
