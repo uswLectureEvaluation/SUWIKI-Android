@@ -47,11 +47,15 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.LectureEvaluationTab
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
+import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.SuwikiReviewStatisticsContainer
+import kotlinx.serialization.json.Json
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ExperimentalToolbarApi
 import me.onebone.toolbar.ScrollStrategy
@@ -66,6 +70,8 @@ private val LECTURE_EVALUATION_PAGE_COUNT = LectureEvaluationTab.entries.size
 fun LectureEvaluationDetailRoute(
   viewModel: LectureEvaluationDetailViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
+  navigateLectureEvaluationEditor: (String) -> Unit = {},
+  navigateExamEvaluationEditor: (String) -> Unit = {},
   onShowToast: (String) -> Unit,
   handleException: (Throwable) -> Unit = {},
 ) {
@@ -79,6 +85,8 @@ fun LectureEvaluationDetailRoute(
       is LectureEvaluationDetailSideEffect.PopBackStack -> popBackStack()
       is LectureEvaluationDetailSideEffect.HandleException -> handleException(sideEffect.throwable)
       is LectureEvaluationDetailSideEffect.ShowLackPointToast -> onShowToast(sideEffect.msg)
+      is LectureEvaluationDetailSideEffect.NavigateExamEvaluationEditor -> navigateExamEvaluationEditor(sideEffect.argument)
+      is LectureEvaluationDetailSideEffect.NavigateLectureEvaluationEditor -> navigateLectureEvaluationEditor(sideEffect.argument)
     }
   }
   val pagerState = rememberPagerState(pageCount = { LECTURE_EVALUATION_PAGE_COUNT })
@@ -111,6 +119,7 @@ fun LectureEvaluationDetailRoute(
     onClickBack = viewModel::popBackStack,
     onClickTab = viewModel::syncPager,
     onClickBuyExamButton = viewModel::buyExam,
+    onClickWriteButton = viewModel::navigateEvaluationEditor,
   )
 }
 
@@ -124,6 +133,7 @@ fun LectureEvaluationDetailScreen(
   onClickBack: () -> Unit = {},
   onClickTab: (Int) -> Unit = {},
   onClickBuyExamButton: () -> Unit = {},
+  onClickWriteButton: () -> Unit = {},
 ) {
   val state = rememberCollapsingToolbarScaffoldState()
 
@@ -254,7 +264,7 @@ fun LectureEvaluationDetailScreen(
         modifier = Modifier
           .padding(12.dp)
           .align(Alignment.BottomCenter),
-        onClick = { /*TODO*/ },
+        onClick = onClickWriteButton,
       )
     }
   }

@@ -12,4 +12,5 @@ dependencies {
   implementation(projects.domain.lectureevaluation.viewerreporter)
 
   implementation(libs.compose.toolbar)
+  implementation(libs.kotlinx.serialization.json)
 }

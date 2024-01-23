@@ -142,7 +142,7 @@ fun MyLectureEvaluationEditScreen(
           .fillMaxWidth(),
       ) {
         SuwikiSelectionContainer(
-          title = uiState.selectedSemester,
+          title = uiState.selectedSemester.ifEmpty { stringResource(id = R.string.word_choose_semester) },
           onClick = onClickSemesterButton,
         )
 

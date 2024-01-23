@@ -124,13 +124,13 @@ fun MyExamEvaluationEditScreen(
     ) {
       Spacer(modifier = Modifier.height(20.dp))
       SuwikiSelectionContainer(
-        title = uiState.selectedSemester ?: stringResource(R.string.word_choose_semester),
+        title = uiState.selectedSemester?.ifEmpty { stringResource(R.string.word_choose_semester) } ?: stringResource(R.string.word_choose_semester),
         onClick = onClickSemesterButton,
       )
       Spacer(modifier = Modifier.height(14.dp))
 
       SuwikiSelectionContainer(
-        title = uiState.selectedExamType ?: stringResource(R.string.word_choose_test_type),
+        title = uiState.selectedExamType?.ifEmpty { stringResource(R.string.word_choose_test_type) } ?: stringResource(R.string.word_choose_test_type),
         onClick = onClickExamTypeButton,
       )
 
@@ -199,7 +199,7 @@ fun MyExamEvaluationEditScreen(
     onDismissRequest = onExamTypeBottomSheetDismissRequest,
     onClickItem = { onClickExamTypeItem(it) },
     itemList = ExamType.entries.map { it.value }.toPersistentList(),
-    title = stringResource(R.string.word_choose_semester),
+    title = stringResource(R.string.word_choose_test_type),
     selectedPosition = uiState.selectedExamTypePosition,
   )
 
@@ -208,7 +208,7 @@ fun MyExamEvaluationEditScreen(
     onDismissRequest = onSemesterBottomSheetDismissRequest,
     onClickItem = { onClickSemesterItem(it) },
     itemList = uiState.semesterList,
-    title = stringResource(R.string.word_choose_test_type),
+    title = stringResource(R.string.word_choose_semester),
     selectedPosition = uiState.selectedSemesterPosition,
   )
 

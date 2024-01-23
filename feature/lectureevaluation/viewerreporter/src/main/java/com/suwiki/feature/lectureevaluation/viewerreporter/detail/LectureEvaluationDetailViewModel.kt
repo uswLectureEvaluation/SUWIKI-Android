@@ -2,7 +2,12 @@ package com.suwiki.feature.lectureevaluation.viewerreporter.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.enums.LectureEvaluationTab
 import com.suwiki.core.model.exception.UserPointLackException
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.BuyExamUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.GetExamEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationExtraAverageUseCase
@@ -12,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.joinAll
+import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -134,6 +140,33 @@ class LectureEvaluationDetailViewModel @Inject constructor(
           else -> postSideEffect(LectureEvaluationDetailSideEffect.HandleException(throwable))
         }
       }
+  }
+
+  fun navigateEvaluationEditor() = intent {
+    if (state.currentTabPage == LectureEvaluationTab.LECTURE_EVALUATION.position) {
+      postSideEffect(
+        LectureEvaluationDetailSideEffect.NavigateLectureEvaluationEditor(
+          Json.encodeToUri(
+            MyLectureEvaluation(
+              id = evaluationId,
+              lectureInfo = state.lectureEvaluationExtraAverage.info,
+            ),
+          ),
+        ),
+      )
+    } else {
+      postSideEffect(LectureEvaluationDetailSideEffect.NavigateExamEvaluationEditor(
+        Json.encodeToUri(
+          MyExamEvaluation(
+            id = evaluationId,
+            lectureName = state.lectureEvaluationExtraAverage.info.lectureName,
+            professor = state.lectureEvaluationExtraAverage.info.professor,
+            majorType = state.lectureEvaluationExtraAverage.info.majorType,
+            semesterList = state.lectureEvaluationExtraAverage.info.semesterList,
+          )
+        )
+      ))
+    }
   }
 
   fun popBackStack() = intent { postSideEffect(LectureEvaluationDetailSideEffect.PopBackStack) }

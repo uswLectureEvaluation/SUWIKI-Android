@@ -20,4 +20,6 @@ sealed interface LectureEvaluationDetailSideEffect {
   data class ShowLackPointToast(val msg: String) : LectureEvaluationDetailSideEffect
   data object PopBackStack : LectureEvaluationDetailSideEffect
   data class HandleException(val throwable: Throwable) : LectureEvaluationDetailSideEffect
+  data class NavigateLectureEvaluationEditor(val argument: String) : LectureEvaluationDetailSideEffect
+  data class NavigateExamEvaluationEditor(val argument: String) : LectureEvaluationDetailSideEffect
 }

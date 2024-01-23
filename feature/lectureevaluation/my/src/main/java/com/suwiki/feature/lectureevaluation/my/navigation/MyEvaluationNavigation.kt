@@ -11,15 +11,15 @@ fun NavController.navigateMyEvaluation() {
 
 fun NavGraphBuilder.myEvaluationNavGraph(
   popBackStack: () -> Unit = {},
-  navigateMyLectureEvaluationEdit: (String) -> Unit = {},
-  navigateMyExamEvaluationEdit: (String) -> Unit = {},
+  navigateLectureEvaluationEditor: (String) -> Unit = {},
+  navigateExamEvaluationEditor: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
 ) {
   composable(route = MyEvaluationRoute.route) { navBackStackEntry ->
     MyEvaluationRoute(
       popBackStack = popBackStack,
-      navigateLectureEvaluationEditor = navigateMyLectureEvaluationEdit,
-      navigateExamEvaluationEditor = navigateMyExamEvaluationEdit,
+      navigateLectureEvaluationEditor = navigateLectureEvaluationEditor,
+      navigateExamEvaluationEditor = navigateExamEvaluationEditor,
       handleException = handleException,
     )
   }
