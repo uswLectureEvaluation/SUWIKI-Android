@@ -9,7 +9,6 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class LectureEvaluationEditorState(
   val isLoading: Boolean = false,
-  val point: Int = 0,
   val semesterList: PersistentList<String> = persistentListOf(""),
   val selectedSemester: String = "",
   val selectedSemesterPosition: Int? = null,

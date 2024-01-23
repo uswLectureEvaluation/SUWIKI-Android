@@ -3,6 +3,7 @@ package com.suwiki.data.lectureevaluation.editor.datasource
 interface RemoteLectureEditorDataSource {
 
   suspend fun postLectureEvaluation(
+    lectureId: Long,
     lectureName: String,
     professor: String,
     selectedSemester: String,

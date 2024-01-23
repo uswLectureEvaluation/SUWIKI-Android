@@ -21,5 +21,6 @@
     <string name="lecture_evaluation_detail_empty_data">등록된 평가가 없어요</string>
   <string name="lecture_evaluation_detail_screen_buy_exam">시험 정보 열람 -20p</string>
   <string name="lecture_evaluation_detail_screen_write">작성하기</string>
+    <string name="toast_already_write">이미 작성한 이력이 있어요</string>
 
 </resources>

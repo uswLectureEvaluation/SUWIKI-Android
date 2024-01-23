@@ -10,6 +10,7 @@ class PostLectureEvaluationUseCase @Inject constructor(
   suspend operator fun invoke(param: Param): Result<Unit> = runCatchingIgnoreCancelled {
     param.run {
       lectureEditorRepository.postLectureEvaluation(
+        lectureId = id,
         lectureName = lectureName,
         professor = professor,
         selectedSemester = selectedSemester,
@@ -25,6 +26,7 @@ class PostLectureEvaluationUseCase @Inject constructor(
   }
 
   data class Param(
+    val id: Long,
     val lectureName: String,
     val professor: String,
     val selectedSemester: String,

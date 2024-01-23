@@ -98,7 +98,7 @@ fun LectureEvaluationEditorRoute(
     onClickGradeChip = viewModel::updateGradeLevel,
     onClickHomeworkChip = viewModel::updateHomeworkLevel,
     onClickTeamChip = viewModel::updateTeamLevel,
-    onClickLectureEvaluationReviseButton = viewModel::updateLectureEvaluation,
+    onClickLectureEvaluationReviseButton = viewModel::postOrUpdateLectureEvaluation,
   )
 }
 

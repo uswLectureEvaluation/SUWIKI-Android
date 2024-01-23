@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -80,6 +81,8 @@ fun LectureEvaluationDetailRoute(
   val lectureEvaluationListState = rememberLazyListState()
   val examEvaluationListState = rememberLazyListState()
 
+  val context = LocalContext.current
+
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is LectureEvaluationDetailSideEffect.PopBackStack -> popBackStack()
@@ -87,6 +90,7 @@ fun LectureEvaluationDetailRoute(
       is LectureEvaluationDetailSideEffect.ShowLackPointToast -> onShowToast(sideEffect.msg)
       is LectureEvaluationDetailSideEffect.NavigateExamEvaluationEditor -> navigateExamEvaluationEditor(sideEffect.argument)
       is LectureEvaluationDetailSideEffect.NavigateLectureEvaluationEditor -> navigateLectureEvaluationEditor(sideEffect.argument)
+      LectureEvaluationDetailSideEffect.ShowAlreadyWriteToast -> onShowToast(context.getString(R.string.toast_already_write))
     }
   }
   val pagerState = rememberPagerState(pageCount = { LECTURE_EVALUATION_PAGE_COUNT })

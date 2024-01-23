@@ -8,6 +8,7 @@ class LectureEditorRepositoryImpl @Inject constructor(
   private val lectureEditorDataSource: RemoteLectureEditorDataSource,
 ) : LectureEditorRepository {
   override suspend fun postLectureEvaluation(
+    lectureId: Long,
     lectureName: String,
     professor: String,
     selectedSemester: String,
@@ -20,6 +21,7 @@ class LectureEditorRepositoryImpl @Inject constructor(
     content: String,
   ) {
     lectureEditorDataSource.postLectureEvaluation(
+      lectureId = lectureId,
       lectureName = lectureName,
       professor = professor,
       selectedSemester = selectedSemester,

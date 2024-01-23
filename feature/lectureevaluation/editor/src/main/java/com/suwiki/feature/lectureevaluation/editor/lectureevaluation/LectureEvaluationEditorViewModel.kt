@@ -8,12 +8,14 @@ import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.model.user.User
 import com.suwiki.core.ui.extension.decodeFromUri
+import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.PostLectureEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.UpdateLectureEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import com.suwiki.feature.lectureevaluation.editor.examevaluation.ExamEvaluationEditorSideEffect
 import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.catch
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -28,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LectureEvaluationEditorViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
-  val getUserInfoUseCase: GetUserInfoUseCase,
+  val postLectureEvaluationUseCase: PostLectureEvaluationUseCase,
   val updateLectureEvaluationUseCase: UpdateLectureEvaluationUseCase,
 ) : ContainerHost<LectureEvaluationEditorState, LectureEvaluationEditorSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationEditorState, LectureEvaluationEditorSideEffect> =
@@ -36,14 +38,11 @@ class LectureEvaluationEditorViewModel @Inject constructor(
 
   private val myLectureEvaluation = savedStateHandle.get<String>(EvaluationEditorRoute.lectureEvaluation)!!
   private val myLectureEvaluationItem: MyLectureEvaluation = Json.decodeFromUri(myLectureEvaluation)
+  private val isEditMode = myLectureEvaluationItem.content.isNotEmpty()
 
   suspend fun initData() = intent {
     showLoadingScreen()
     with(myLectureEvaluationItem) {
-      getUserInfoUseCase().collect(::getPoint).runCatching {}
-        .onFailure {
-          postSideEffect(LectureEvaluationEditorSideEffect.HandleException(it))
-        }
       reduce {
         state.copy(
           selectedSemester = selectedSemester,
@@ -74,9 +73,7 @@ class LectureEvaluationEditorViewModel @Inject constructor(
     hideLoadingScreen()
   }
 
-  private fun getPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
-
-  fun updateLectureEvaluation() = intent {
+  fun postOrUpdateLectureEvaluation() = intent {
     if (state.lectureEvaluation.length < 30) {
       postSideEffect(LectureEvaluationEditorSideEffect.ShowInputMoreTextToast)
       return@intent
@@ -87,10 +84,38 @@ class LectureEvaluationEditorViewModel @Inject constructor(
       return@intent
     }
 
+    if (isEditMode) updateLectureEvaluation()
+    else postLectureEvaluation()
+  }
+
+  private fun postLectureEvaluation() = intent {
+    postLectureEvaluationUseCase(
+      PostLectureEvaluationUseCase.Param(
+        id = myLectureEvaluationItem.id,
+        lectureName = myLectureEvaluationItem.lectureInfo.lectureName,
+        professor = myLectureEvaluationItem.lectureInfo.professor,
+        selectedSemester = state.selectedSemester,
+        satisfaction = "%.1f".format(state.satisfactionRating).toFloat(),
+        learning = "%.1f".format(state.learningRating).toFloat(),
+        honey = "%.1f".format(state.honeyRating).toFloat(),
+        team = state.teamLevel!!.value,
+        difficulty = state.gradeLevel!!.value,
+        homework = state.homeworkLevel!!.value,
+        content = state.lectureEvaluation,
+      ),
+    )
+      .onSuccess {
+        popBackStack()
+      }
+      .onFailure {
+        postSideEffect(LectureEvaluationEditorSideEffect.HandleException(it))
+      }
+  }
+
+  private fun updateLectureEvaluation() = intent {
     updateLectureEvaluationUseCase(
       UpdateLectureEvaluationUseCase.Param(
         lectureId = myLectureEvaluationItem.id,
-        professor = myLectureEvaluationItem.lectureInfo.professor,
         selectedSemester = state.selectedSemester,
         satisfaction = "%.1f".format(state.satisfactionRating).toFloat(),
         learning = "%.1f".format(state.learningRating).toFloat(),

@@ -22,4 +22,5 @@ sealed interface LectureEvaluationDetailSideEffect {
   data class HandleException(val throwable: Throwable) : LectureEvaluationDetailSideEffect
   data class NavigateLectureEvaluationEditor(val argument: String) : LectureEvaluationDetailSideEffect
   data class NavigateExamEvaluationEditor(val argument: String) : LectureEvaluationDetailSideEffect
+  data object ShowAlreadyWriteToast : LectureEvaluationDetailSideEffect
 }

@@ -144,6 +144,11 @@ class LectureEvaluationDetailViewModel @Inject constructor(
 
   fun navigateEvaluationEditor() = intent {
     if (state.currentTabPage == LectureEvaluationTab.LECTURE_EVALUATION.position) {
+      if (state.isLectureEvaluationWritten) {
+        postSideEffect(LectureEvaluationDetailSideEffect.ShowAlreadyWriteToast)
+        return@intent
+      }
+
       postSideEffect(
         LectureEvaluationDetailSideEffect.NavigateLectureEvaluationEditor(
           Json.encodeToUri(
@@ -155,6 +160,11 @@ class LectureEvaluationDetailViewModel @Inject constructor(
         ),
       )
     } else {
+      if (state.isExamEvaluationWritten) {
+        postSideEffect(LectureEvaluationDetailSideEffect.ShowAlreadyWriteToast)
+        return@intent
+      }
+
       postSideEffect(LectureEvaluationDetailSideEffect.NavigateExamEvaluationEditor(
         Json.encodeToUri(
           MyExamEvaluation(
