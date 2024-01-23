@@ -40,6 +40,7 @@ import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.button.SuwikiOutlinedButton
 import com.suwiki.core.designsystem.component.container.SuwikiExamReviewContainer
 import com.suwiki.core.designsystem.component.container.SuwikiUserReviewContainer
+import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
 import com.suwiki.core.designsystem.component.tabbar.TabTitle
@@ -124,6 +125,18 @@ fun LectureEvaluationDetailRoute(
     onClickTab = viewModel::syncPager,
     onClickBuyExamButton = viewModel::buyExam,
     onClickWriteButton = viewModel::navigateEvaluationEditor,
+    onClickLectureReportButton = viewModel::showLectureReportDialog,
+    onClickLectureReportConfirm = {
+      viewModel.hideLectureReportDialog()
+      viewModel.reportLecture()
+    },
+    onDismissLectureReport = viewModel::hideLectureReportDialog,
+    onClickExamReportButton = viewModel::showExamReportDialog,
+    onClickExamReportConfirm = {
+      viewModel.hideExamReportDialog()
+      viewModel.reportExam()
+    },
+    onDismissExamReport = viewModel::hideExamReportDialog,
   )
 }
 
@@ -138,6 +151,12 @@ fun LectureEvaluationDetailScreen(
   onClickTab: (Int) -> Unit = {},
   onClickBuyExamButton: () -> Unit = {},
   onClickWriteButton: () -> Unit = {},
+  onClickLectureReportButton: (Long) -> Unit = {},
+  onClickLectureReportConfirm: () -> Unit = {},
+  onDismissLectureReport: () -> Unit = {},
+  onClickExamReportButton: (Long) -> Unit = {},
+  onClickExamReportConfirm: () -> Unit = {},
+  onDismissExamReport: () -> Unit = {},
 ) {
   val state = rememberCollapsingToolbarScaffoldState()
 
@@ -208,6 +227,7 @@ fun LectureEvaluationDetailScreen(
                   semester = it.selectedSemester,
                   content = it.content,
                   rating = it.totalAvg,
+                  onClickButton = { onClickLectureReportButton(it.id) }
                 )
               }
             }
@@ -256,7 +276,7 @@ fun LectureEvaluationDetailScreen(
                       content = it.content,
                       semester = it.selectedSemester,
                       examInfo = it.examInfo,
-                      onClickButton = {},
+                      onClickButton = { onClickExamReportButton(it.id) },
                     )
                   }
                 }
@@ -280,6 +300,30 @@ fun LectureEvaluationDetailScreen(
       modifier = Modifier
         .padding(top = 50.dp)
         .background(Color.White),
+    )
+  }
+
+  if (uiState.showLectureReportDialog) {
+    SuwikiDialog(
+      headerText = "강의평가 신고",
+      bodyText = "허위 신고 시 서비스 이용에 제한을 받을 수 있습니다.",
+      confirmButtonText = "신고",
+      onDismissRequest = onDismissLectureReport,
+      onClickConfirm = onClickLectureReportConfirm,
+      dismissButtonText = "취소",
+      onClickDismiss = onDismissLectureReport,
+    )
+  }
+
+  if (uiState.showExamReportDialog) {
+    SuwikiDialog(
+      headerText = "시험정보 신고",
+      bodyText = "허위 신고 시 서비스 이용에 제한을 받을 수 있습니다.",
+      confirmButtonText = "신고",
+      onDismissRequest = onDismissExamReport,
+      onClickConfirm = onClickExamReportConfirm,
+      dismissButtonText = "취소",
+      onClickDismiss = onDismissExamReport,
     )
   }
 }

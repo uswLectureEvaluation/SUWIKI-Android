@@ -15,6 +15,8 @@ data class LectureEvaluationDetailState(
   val examEvaluationList: PersistentList<ExamEvaluation> = persistentListOf(),
   val needBuyExam: Boolean = false,
   val isExamEvaluationWritten: Boolean = false,
+  val showLectureReportDialog: Boolean = false,
+  val showExamReportDialog: Boolean = false,
 )
 sealed interface LectureEvaluationDetailSideEffect {
   data class ShowLackPointToast(val msg: String) : LectureEvaluationDetailSideEffect

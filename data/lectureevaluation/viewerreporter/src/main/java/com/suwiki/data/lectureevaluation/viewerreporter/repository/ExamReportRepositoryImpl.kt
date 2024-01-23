@@ -8,9 +8,9 @@ class ExamReportRepositoryImpl @Inject constructor(
   private val remoteExamReportDataSource: RemoteExamReportDataSource,
 ) : ExamReportRepository {
 
-  override suspend fun reportExam(evaluateIdx: Long, content: String) {
+  override suspend fun reportExam(examIdx: Long, content: String) {
     remoteExamReportDataSource.reportExam(
-      evaluateIdx = evaluateIdx,
+      examIdx = examIdx,
       content = content,
     )
   }
