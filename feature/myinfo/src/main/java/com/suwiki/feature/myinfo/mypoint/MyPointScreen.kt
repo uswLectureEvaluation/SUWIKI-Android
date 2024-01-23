@@ -20,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -125,12 +126,16 @@ fun MyPointScreen(
               .padding(vertical = 17.dp),
           ) {
             Text(
-              modifier = Modifier.width(120.dp),
+              modifier = Modifier.weight(1f),
+              maxLines = 1,
               text = purchaseHistory.createDate.toString(),
               style = SuwikiTheme.typography.body5,
               color = Gray95,
             )
             Text(
+              modifier = Modifier.weight(1f),
+              maxLines = 1,
+              textAlign = TextAlign.End,
               text = purchaseHistory.lectureName,
               style = SuwikiTheme.typography.body5,
             )

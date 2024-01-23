@@ -26,6 +26,7 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
   navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
   navigateLectureEvaluationDetail: (String) -> Unit,
+  onShowToast: (String) -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
   composable(route = LectureEvaluationRoute.route) { navBackStackEntry ->
@@ -51,6 +52,7 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
   ) {
     LectureEvaluationDetailRoute(
       popBackStack = popBackStack,
+      onShowToast = onShowToast,
       handleException = handleException,
     )
   }

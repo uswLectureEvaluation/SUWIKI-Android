@@ -20,6 +20,5 @@ class GetLectureEvaluationListUseCase @Inject constructor(
   data class Param(
     val lectureId: Long,
     val page: Int,
-    val majorType: String,
   )
 }

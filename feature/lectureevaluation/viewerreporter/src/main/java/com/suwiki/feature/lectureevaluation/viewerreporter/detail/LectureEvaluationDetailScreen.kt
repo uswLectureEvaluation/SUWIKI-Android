@@ -2,12 +2,16 @@ package com.suwiki.feature.lectureevaluation.viewerreporter.detail
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -26,21 +30,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.LabelColor
+import com.suwiki.core.designsystem.component.button.SuwikiOutlinedButton
 import com.suwiki.core.designsystem.component.container.SuwikiExamReviewContainer
 import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.SuwikiReviewStatisticsContainer
 import com.suwiki.core.designsystem.component.container.SuwikiUserReviewContainer
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
 import com.suwiki.core.designsystem.component.tabbar.TabTitle
+import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.LectureEvaluationTab
+import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
@@ -59,19 +67,33 @@ private val LECTURE_EVALUATION_PAGE_COUNT = LectureEvaluationTab.entries.size
 fun LectureEvaluationDetailRoute(
   viewModel: LectureEvaluationDetailViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
+  onShowToast: (String) -> Unit,
   handleException: (Throwable) -> Unit = {},
 ) {
   val uiState = viewModel.collectAsState().value
+
+  val lectureEvaluationListState = rememberLazyListState()
+  val examEvaluationListState = rememberLazyListState()
+
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is LectureEvaluationDetailSideEffect.PopBackStack -> popBackStack()
       is LectureEvaluationDetailSideEffect.HandleException -> handleException(sideEffect.throwable)
+      is LectureEvaluationDetailSideEffect.ShowLackPointToast -> onShowToast(sideEffect.msg)
     }
   }
   val pagerState = rememberPagerState(pageCount = { LECTURE_EVALUATION_PAGE_COUNT })
 
   LaunchedEffect(key1 = Unit) {
-    viewModel.getLectureEvaluationDetail()
+    viewModel.initData()
+  }
+
+  lectureEvaluationListState.OnBottomReached {
+    viewModel.getLectureEvaluationList()
+  }
+
+  examEvaluationListState.OnBottomReached {
+    viewModel.getExamEvaluationList()
   }
 
   LaunchedEffect(key1 = uiState.currentTabPage) {
@@ -85,8 +107,11 @@ fun LectureEvaluationDetailRoute(
   LectureEvaluationDetailScreen(
     uiState = uiState,
     pagerState = pagerState,
+    lectureEvaluationListState = lectureEvaluationListState,
+    examEvaluationListState = examEvaluationListState,
     onClickBack = viewModel::popBackStack,
     onClickTab = viewModel::syncPager,
+    onClickBuyExamButton = viewModel::buyExam,
   )
 }
 
@@ -95,8 +120,11 @@ fun LectureEvaluationDetailRoute(
 fun LectureEvaluationDetailScreen(
   uiState: LectureEvaluationDetailState = LectureEvaluationDetailState(),
   pagerState: PagerState = rememberPagerState(pageCount = { LECTURE_EVALUATION_PAGE_COUNT }),
+  lectureEvaluationListState: LazyListState = rememberLazyListState(),
+  examEvaluationListState: LazyListState = rememberLazyListState(),
   onClickBack: () -> Unit = {},
   onClickTab: (Int) -> Unit = {},
+  onClickBuyExamButton: () -> Unit = {},
 ) {
   val state = rememberCollapsingToolbarScaffoldState()
 
@@ -116,20 +144,7 @@ fun LectureEvaluationDetailScreen(
       toolbar = {
         Column {
           SuwikiReviewStatisticsContainer(
-            lectureType = uiState.lectureInfo.lectureType ?: "강의유형",
-            lectureName = uiState.lectureInfo.lectureName,
-            openMajor = uiState.lectureInfo.majorType,
-            professor = uiState.lectureInfo.professor,
-            rating = uiState.lectureTotalAvg,
-            honeyRating = uiState.lectureHoneyAvg,
-            learningRating = uiState.lectureLearningAvg,
-            satisfactionRating = uiState.lectureSatisfactionAvg,
-            grade = "label",
-            gradeLabelColor = LabelColor.BLUE,
-            homework = "label",
-            homeworkLabelColor = LabelColor.GREEN,
-            team = "label",
-            teamLabelColor = LabelColor.ORANGE,
+            data = uiState.lectureEvaluationExtraAverage,
           )
 
           SuwikiTabBar(
@@ -149,38 +164,87 @@ fun LectureEvaluationDetailScreen(
         }
       },
     ) {
-
       HorizontalPager(
+        modifier = Modifier.fillMaxSize(),
         state = pagerState,
       ) { pager ->
         when (LectureEvaluationTab.entries[pager]) {
           LectureEvaluationTab.LECTURE_EVALUATION -> {
-            val evaluations = persistentListOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-            LazyColumn {
+            if (uiState.lectureEvaluationList.isEmpty()) {
+              Text(
+                modifier = Modifier
+                  .padding(52.dp)
+                  .fillMaxSize(),
+                textAlign = TextAlign.Center,
+                text = stringResource(R.string.lecture_evaluation_detail_empty_data),
+                style = SuwikiTheme.typography.header4,
+                color = Gray95,
+              )
+            }
+
+            LazyColumn(
+              modifier = Modifier.fillMaxSize(),
+              state = lectureEvaluationListState,
+              contentPadding = PaddingValues(bottom = 100.dp),
+            ) {
               items(
-                items = evaluations,
-                key = { it }) {
+                items = uiState.lectureEvaluationList,
+                key = { it.id },
+              ) {
                 SuwikiUserReviewContainer(
-                  isAuthor = false,
-                  text = it,
+                  semester = it.selectedSemester,
+                  content = it.content,
+                  rating = it.totalAvg,
                 )
               }
             }
           }
 
           LectureEvaluationTab.EXAM_INFO -> {
-            val evaluations = persistentListOf("a", "b", "c", "d", "e", "f")
-            LazyColumn {
-              items(
-                items = evaluations,
-                key = { it }) {
-                SuwikiExamReviewContainer(
-                  isAuthor = false,
-                  difficulty = "어려움",
-                  examType = "응용,실습,과제,PPT",
-                  text = it,
-                  onClickButton = {},
+            when {
+              uiState.needBuyExam -> {
+                Box(modifier = Modifier.fillMaxSize()) {
+                  SuwikiOutlinedButton(
+                    modifier = Modifier
+                      .padding(52.dp),
+                    text = stringResource(R.string.lecture_evaluation_detail_screen_buy_exam),
+                    onClick = onClickBuyExamButton,
+                  )
+                }
+              }
+
+              uiState.examEvaluationList.isEmpty() -> {
+                Text(
+                  modifier = Modifier
+                    .padding(52.dp)
+                    .fillMaxSize(),
+                  textAlign = TextAlign.Center,
+                  text = stringResource(R.string.lecture_evaluation_detail_empty_data),
+                  style = SuwikiTheme.typography.header4,
+                  color = Gray95,
                 )
+              }
+
+              else -> {
+                LazyColumn(
+                  modifier = Modifier.fillMaxSize(),
+                  state = examEvaluationListState,
+                  contentPadding = PaddingValues(bottom = 100.dp),
+                ) {
+                  items(
+                    items = uiState.examEvaluationList,
+                    key = {
+                      it.id
+                    },
+                  ) {
+                    SuwikiExamReviewContainer(
+                      difficulty = it.examDifficulty,
+                      examType = it.examType,
+                      content = it.content,
+                      onClickButton = {},
+                    )
+                  }
+                }
               }
             }
           }
@@ -201,7 +265,7 @@ fun LectureEvaluationDetailScreen(
     LoadingScreen(
       modifier = Modifier
         .padding(top = 50.dp)
-        .background(Color.White)
+        .background(Color.White),
     )
   }
 

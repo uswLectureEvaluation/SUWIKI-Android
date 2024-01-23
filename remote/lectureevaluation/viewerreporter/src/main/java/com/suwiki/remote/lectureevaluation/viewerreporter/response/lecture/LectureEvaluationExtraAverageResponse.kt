@@ -1,8 +1,12 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture
 
+import com.suwiki.core.model.enums.GradeLevel
+import com.suwiki.core.model.enums.HomeworkLevel
+import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
 import kotlinx.serialization.Serializable
+import kotlin.math.roundToInt
 
 @Serializable
 data class LectureEvaluationExtraAverageResponse(
@@ -23,18 +27,18 @@ data class LectureEvaluationExtraAverageResponse(
 
 internal fun LectureEvaluationExtraAverageResponse.toModel() = LectureEvaluationExtraAverage(
   id = id,
-  lectureInfo = LectureInfo(
+  info = LectureInfo(
     semesterList = semesterList.replace(" ", "").split(","),
     professor = professor,
     majorType = majorType,
     lectureType = lectureType,
     lectureName = lectureName,
   ),
-  lectureTotalAvg = lectureTotalAvg,
-  lectureSatisfactionAvg = lectureSatisfactionAvg,
-  lectureHoneyAvg = lectureHoneyAvg,
-  lectureLearningAvg = lectureLearningAvg,
-  lectureTeamAvg = lectureTeamAvg,
-  lectureDifficultyAvg = lectureDifficultyAvg,
-  lectureHomeworkAvg = lectureHomeworkAvg,
+  totalAvg = lectureTotalAvg,
+  satisfactionAvg = lectureSatisfactionAvg,
+  honeyAvg = lectureHoneyAvg,
+  learningAvg = lectureLearningAvg,
+  teamAvg = TeamLevel.valueOf(lectureTeamAvg.roundToInt()),
+  gradeAvg = GradeLevel.valueOf(lectureDifficultyAvg.roundToInt()),
+  homeworkAvg = HomeworkLevel.valueOf(lectureHomeworkAvg.roundToInt()),
 )

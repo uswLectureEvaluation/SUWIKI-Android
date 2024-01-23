@@ -111,6 +111,7 @@ internal fun MainScreen(
           navigateSignUp = navigator::navigateSignup,
           handleException = viewModel::handleException,
           navigateOpenMajor = navigator::navigateOpenMajor,
+          onShowToast = viewModel::onShowToast,
           navigateLectureEvaluationDetail = navigator::navigateLectureEvaluationDetail,
         )
 

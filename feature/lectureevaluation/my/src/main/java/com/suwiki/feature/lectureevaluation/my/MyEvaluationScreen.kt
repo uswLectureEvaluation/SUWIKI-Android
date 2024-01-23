@@ -48,8 +48,8 @@ private val MY_EVALUATION_PAGE_COUNT = LectureEvaluationTab.entries.size
 fun MyEvaluationRoute(
   viewModel: MyEvaluationViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
-  navigateMyLectureEvaluation: (String) -> Unit = {},
-  navigateMyExamEvaluation: (String) -> Unit = {},
+  navigateLectureEvaluationEditor: (String) -> Unit = {},
+  navigateExamEvaluationEditor: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
@@ -59,8 +59,8 @@ fun MyEvaluationRoute(
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       MyEvaluationSideEffect.PopBackStack -> popBackStack()
-      is MyEvaluationSideEffect.NavigateMyLectureEvaluation -> navigateMyLectureEvaluation(sideEffect.lectureEvaluation)
-      is MyEvaluationSideEffect.NavigateMyExamEvaluation -> navigateMyExamEvaluation(sideEffect.examEvaluation)
+      is MyEvaluationSideEffect.NavigateLectureEvaluationEditor -> navigateLectureEvaluationEditor(sideEffect.lectureEvaluation)
+      is MyEvaluationSideEffect.NavigateExamEvaluationEditor -> navigateExamEvaluationEditor(sideEffect.examEvaluation)
       is MyEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }

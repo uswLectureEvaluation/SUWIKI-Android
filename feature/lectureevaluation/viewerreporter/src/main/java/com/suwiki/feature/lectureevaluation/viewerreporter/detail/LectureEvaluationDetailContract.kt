@@ -1,20 +1,23 @@
 package com.suwiki.feature.lectureevaluation.viewerreporter.detail
 
-import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
+import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 data class LectureEvaluationDetailState(
   val isLoading: Boolean = false,
   val currentTabPage: Int = 0,
-  val lectureInfo: LectureInfo = LectureInfo(),
-  val lectureTotalAvg: Float = 0f,
-  val lectureSatisfactionAvg: Float = 0f,
-  val lectureHoneyAvg: Float = 0f,
-  val lectureLearningAvg: Float = 0f,
-  val lectureTeamAvg: Float = 0f,
-  val lectureDifficultyAvg: Float = 0f,
-  val lectureHomeworkAvg: Float = 0f,
+  val lectureEvaluationExtraAverage: LectureEvaluationExtraAverage = LectureEvaluationExtraAverage(),
+  val lectureEvaluationList: PersistentList<LectureEvaluation> = persistentListOf(),
+  val isLectureEvaluationWritten: Boolean = false,
+  val examEvaluationList: PersistentList<ExamEvaluation> = persistentListOf(),
+  val needBuyExam: Boolean = false,
+  val isExamEvaluationWritten: Boolean = false,
 )
 sealed interface LectureEvaluationDetailSideEffect {
+  data class ShowLackPointToast(val msg: String) : LectureEvaluationDetailSideEffect
   data object PopBackStack : LectureEvaluationDetailSideEffect
   data class HandleException(val throwable: Throwable) : LectureEvaluationDetailSideEffect
 }

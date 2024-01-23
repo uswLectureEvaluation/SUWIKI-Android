@@ -25,8 +25,10 @@ import com.suwiki.core.designsystem.theme.White
 @Composable
 fun SuwikiUserReviewContainer(
   modifier: Modifier = Modifier,
-  text: String,
-  isAuthor: Boolean,
+  content: String,
+  semester: String,
+  rating: Float,
+  isAuthor: Boolean = false,
   onClickButton: () -> Unit = {},
 ) {
   val buttonText = if (isAuthor) stringResource(id = R.string.word_edit) else stringResource(id = R.string.word_report)
@@ -49,14 +51,14 @@ fun SuwikiUserReviewContainer(
       }
       SuwikiBadge(
         color = BadgeColor.Gray,
-        text = stringResource(id = R.string.word_semester),
+        text = semester,
       )
       Spacer(modifier = Modifier.weight(1f))
       SuwikiContainedSmallButton(text = buttonText, onClick = onClickButton)
     }
-    SuwikiRatingBar(rating = 3.0f)
+    SuwikiRatingBar(rating = rating)
     Text(
-      text = text,
+      text = content,
       style = SuwikiTheme.typography.body7,
       color = Black,
     )
@@ -70,11 +72,15 @@ fun ReviewContainerPreview() {
     Column {
       SuwikiUserReviewContainer(
         isAuthor = false,
-        text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
+        semester = "2023-1",
+        rating = 3.0f,
+        content = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
       )
       SuwikiUserReviewContainer(
+        rating = 3.0f,
+        semester = "2023-1",
         isAuthor = true,
-        text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
+        content = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
       )
     }
   }

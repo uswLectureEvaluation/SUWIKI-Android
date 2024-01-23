@@ -29,8 +29,8 @@ fun SuwikiExamReviewContainer(
   modifier: Modifier = Modifier,
   difficulty: String,
   examType: String,
-  text: String,
-  isAuthor: Boolean,
+  content: String,
+  isAuthor: Boolean = false,
   onClickButton: () -> Unit,
 ) {
   val buttonText = if (isAuthor) stringResource(id = R.string.word_edit) else stringResource(id = R.string.word_report)
@@ -97,7 +97,7 @@ fun SuwikiExamReviewContainer(
     }
     Spacer(modifier = Modifier.height(10.dp))
     Text(
-      text = text,
+      text = content,
       style = SuwikiTheme.typography.body7,
       color = Black,
     )
@@ -113,14 +113,14 @@ fun SuwikiExamReviewContainerPreview() {
         isAuthor = false,
         difficulty = "어려움",
         examType = "응용,실습,과제,PPT",
-        text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
+        content = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
         onClickButton = {},
       )
       SuwikiExamReviewContainer(
         isAuthor = true,
         difficulty = "어려움",
         examType = "응용,실습,과제,PPT",
-        text = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
+        content = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
         onClickButton = {},
       )
     }

@@ -18,7 +18,7 @@ data class MyEvaluationState(
 
 sealed interface MyEvaluationSideEffect {
   data object PopBackStack : MyEvaluationSideEffect
-  data class NavigateMyLectureEvaluation(val lectureEvaluation: String) : MyEvaluationSideEffect
-  data class NavigateMyExamEvaluation(val examEvaluation: String) : MyEvaluationSideEffect
+  data class NavigateLectureEvaluationEditor(val lectureEvaluation: String) : MyEvaluationSideEffect
+  data class NavigateExamEvaluationEditor(val examEvaluation: String) : MyEvaluationSideEffect
   data class HandleException(val throwable: Throwable) : MyEvaluationSideEffect
 }

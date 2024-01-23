@@ -18,8 +18,8 @@ fun NavGraphBuilder.myEvaluationNavGraph(
   composable(route = MyEvaluationRoute.route) { navBackStackEntry ->
     MyEvaluationRoute(
       popBackStack = popBackStack,
-      navigateMyLectureEvaluation = navigateMyLectureEvaluationEdit,
-      navigateMyExamEvaluation = navigateMyExamEvaluationEdit,
+      navigateLectureEvaluationEditor = navigateMyLectureEvaluationEdit,
+      navigateExamEvaluationEditor = navigateMyExamEvaluationEdit,
       handleException = handleException,
     )
   }

@@ -18,5 +18,7 @@
   <string name="word_best_lectures">BEST 강의</string>
 
   <string name="word_empty_search_result">검색 결과가 없습니다.\n검색어가 정확한지 확인하세요.</string>
+    <string name="lecture_evaluation_detail_empty_data">등록된 평가가 없어요</string>
+  <string name="lecture_evaluation_detail_screen_buy_exam">시험 정보 열람 -20p</string>
 
 </resources>

@@ -28,7 +28,7 @@ internal fun MyLectureEvaluationResponse.toModel() = MyLectureEvaluation(
     semesterList = semesterList.replace(" ", "").split(","),
     professor = professor,
     majorType = majorType,
-    lectureType = null,
+    lectureType = "",
     lectureName = lectureName,
   ),
   selectedSemester = selectedSemester,
