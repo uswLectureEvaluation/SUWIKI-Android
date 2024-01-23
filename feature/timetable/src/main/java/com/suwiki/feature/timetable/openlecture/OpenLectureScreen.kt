@@ -191,7 +191,7 @@ fun OpenLectureScreen(
         Column(
           modifier = Modifier.graphicsLayer {
             alpha = state.toolbarState.progress
-          }
+          },
         ) {
           Row(
             modifier = Modifier.padding(horizontal = 24.dp),
