@@ -20,7 +20,7 @@ internal class AuthenticationInterceptor @Inject constructor(
       Timber.tag(RETROFIT_TAG)
         .d(
           "AuthenticationInterceptor - intercept() called / request header: %s",
-          request.headers,
+          accessToken,
         )
       return@runBlocking chain.proceed(request)
     }

@@ -1,5 +1,6 @@
 package com.suwiki.feature.myinfo
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -24,11 +25,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiMenuItem
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.shadow.cardShadow
@@ -38,7 +41,12 @@ import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.findActivity
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.util.ASK_SITE
+import com.suwiki.core.ui.util.FEEDBACK_SITE
+import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
+import com.suwiki.core.ui.util.TERMS_SITE
 import okhttp3.internal.immutableListOf
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -57,11 +65,16 @@ fun MyInfoRoute(
   navigateMyAccount: () -> Unit,
   navigateMyPoint: () -> Unit,
   navigateBanHistory: () -> Unit,
+  navigateLogin: () -> Unit,
   onShowToast: (String) -> Unit = {},
+  handleException: (Throwable) -> Unit = {},
 ) {
   val scrollState = rememberScrollState()
   val uiState = viewModel.collectAsState().value
+
+  val uriHandler = LocalUriHandler.current
   val context = LocalContext.current
+
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
       is MyInfoSideEffect.NavigateNotice -> navigateNotice()
@@ -70,6 +83,19 @@ fun MyInfoRoute(
       is MyInfoSideEffect.NavigateMyPoint -> navigateMyPoint()
       is MyInfoSideEffect.NavigateBanHistory -> navigateBanHistory()
       MyInfoSideEffect.ShowNeedLoginToast -> onShowToast(context.getString(R.string.my_info_screen_need_login_toast))
+      MyInfoSideEffect.ShowOpenLicenses -> context.startActivity(
+        Intent(
+          context.findActivity(),
+          OssLicensesMenuActivity::class.java,
+        ),
+      )
+
+      is MyInfoSideEffect.HandleException -> handleException(sideEffect.throwable)
+      MyInfoSideEffect.OpenPersonalPolicyWebSite -> uriHandler.openUri(PRIVACY_POLICY_SITE)
+      MyInfoSideEffect.OpenTermWebSite -> uriHandler.openUri(TERMS_SITE)
+      MyInfoSideEffect.OpenAskWebSite -> uriHandler.openUri(ASK_SITE)
+      MyInfoSideEffect.OpenFeedbackWebSite -> uriHandler.openUri(FEEDBACK_SITE)
+      MyInfoSideEffect.NavigateLogin -> navigateLogin()
     }
   }
 
@@ -86,6 +112,12 @@ fun MyInfoRoute(
     onClickMyAccountButton = viewModel::navigateMyAccount,
     onClickMyPointItem = viewModel::navigateMyPoint,
     onClickBanHistoryItem = viewModel::navigateBanHistory,
+    onClickAskButton = viewModel::openAskSite,
+    onClickSendFeedback = viewModel::openFeedbackSite,
+    onClickTerm = viewModel::openTermSite,
+    onClickPersonalInfoPolicy = viewModel::openPersonalPolicySite,
+    onClickOpenLicense = viewModel::showOpenLicense,
+    onClickLogin = viewModel::navigateLogin,
   )
 }
 
@@ -99,6 +131,12 @@ fun MyInfoScreen(
   onClickMyAccountButton: () -> Unit,
   onClickMyPointItem: () -> Unit,
   onClickBanHistoryItem: () -> Unit,
+  onClickAskButton: () -> Unit,
+  onClickSendFeedback: () -> Unit,
+  onClickTerm: () -> Unit,
+  onClickPersonalInfoPolicy: () -> Unit,
+  onClickOpenLicense: () -> Unit,
+  onClickLogin: () -> Unit,
 ) {
   val myList = immutableListOf(
     MyInfoListItem(
@@ -111,10 +149,22 @@ fun MyInfoScreen(
     ),
   )
   val serviceList = immutableListOf(
-    R.string.my_info_send_feedback,
-    R.string.my_info_use_terms,
-    R.string.my_info_privacy_policy,
-    R.string.my_info_open_source_library,
+    MyInfoListItem(
+      title = stringResource(R.string.my_info_send_feedback),
+      onClick = onClickSendFeedback,
+    ),
+    MyInfoListItem(
+      title = stringResource(R.string.my_info_use_terms),
+      onClick = onClickTerm,
+    ),
+    MyInfoListItem(
+      title = stringResource(R.string.my_info_privacy_policy),
+      onClick = onClickPersonalInfoPolicy,
+    ),
+    MyInfoListItem(
+      title = stringResource(R.string.my_info_open_source_library),
+      onClick = onClickOpenLicense,
+    ),
   )
   Column(
     modifier = Modifier
@@ -135,7 +185,7 @@ fun MyInfoScreen(
               onClickMyEvaluation = onClickMyEvaluationButton,
             )
           } else {
-            LogoutMyInfoCard()
+            LogoutMyInfoCard(onClickLogin)
           }
         }
         Row(
@@ -159,6 +209,7 @@ fun MyInfoScreen(
           MyInfoMenuItem(
             title = stringResource(R.string.my_info_contact),
             iconId = R.drawable.ic_my_info_comment,
+            onClickItem = onClickAskButton,
           )
           VerticalDivider(
             modifier = Modifier
@@ -182,17 +233,20 @@ fun MyInfoScreen(
       if (uiState.showMyInfoCard) {
         SuwikiMenuItem(title = stringResource(R.string.my_info_my))
 
-        myList.forEach { item ->
+        myList.forEach { (title, onClick) ->
           MyInfoListItemContainer(
-            title = item.title,
-            onClick = item.onClick,
+            title = title,
+            onClick = onClick,
           )
         }
       }
       SuwikiMenuItem(title = stringResource(R.string.my_info_service))
 
-      serviceList.forEach { title ->
-        MyInfoListItemContainer(title = stringResource(title))
+      serviceList.forEach { (title, onClick) ->
+        MyInfoListItemContainer(
+          title = title,
+          onClick = onClick,
+        )
       }
     }
     if (uiState.isLoading) {
@@ -361,6 +415,12 @@ fun MyInfoScreenScreenPreview() {
       onClickMyAccountButton = {},
       onClickMyPointItem = {},
       onClickBanHistoryItem = {},
+      onClickSendFeedback = {},
+      onClickTerm = {},
+      onClickPersonalInfoPolicy = {},
+      onClickOpenLicense = {},
+      onClickAskButton = {},
+      onClickLogin = {},
     )
   }
 }

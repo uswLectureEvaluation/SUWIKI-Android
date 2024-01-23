@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
+import kotlinx.coroutines.flow.collectLatest
 
 // https://manavtamboli.medium.com/infinite-list-paged-list-in-jetpack-compose-b10fc7e74768
 @Composable
@@ -26,9 +27,9 @@ fun LazyListState.OnBottomReached(
       lastVisibleItem.index >= layoutInfo.totalItemsCount - 1 - buffer
     }
   }
-  LaunchedEffect(shouldLoadMore.value) {
+  LaunchedEffect(shouldLoadMore) {
     snapshotFlow { shouldLoadMore.value }
-      .collect {
+      .collectLatest {
         if (it) {
           onLoadMore()
         }

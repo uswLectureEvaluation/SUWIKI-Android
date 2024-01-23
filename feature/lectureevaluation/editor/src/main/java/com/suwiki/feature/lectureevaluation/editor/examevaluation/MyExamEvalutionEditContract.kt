@@ -17,13 +17,10 @@ data class MyExamEvaluationEditState(
   val examInfo: PersistentList<String> = persistentListOf(),
   val showSemesterBottomSheet: Boolean = false,
   val showExamTypeBottomSheet: Boolean = false,
-  val showDeleteExamEvaluationDialog: Boolean = false,
-  val showLackPointDialog: Boolean = false,
 )
 
 sealed interface MyExamEvaluationEditSideEffect {
   data object PopBackStack : MyExamEvaluationEditSideEffect
   data object ShowMyExamEvaluationDeleteToast : MyExamEvaluationEditSideEffect
-  data object ShowMyExamEvaluationReviseToast : MyExamEvaluationEditSideEffect
   data class HandleException(val throwable: Throwable) : MyExamEvaluationEditSideEffect
 }

@@ -55,7 +55,7 @@ fun MyAccountRoute(
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
     onClickResetPassword = viewModel::navigateResetPassword,
-    onClickLogout = { /*TODO(LOGOUT)*/ },
+    onClickLogout = viewModel::logout,
     onClickQuit = viewModel::navigateQuit,
   )
 }

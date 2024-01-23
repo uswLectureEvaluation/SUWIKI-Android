@@ -33,7 +33,6 @@ import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
 import com.suwiki.core.designsystem.component.chips.ChipColor
 import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
 import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
-import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.component.slider.SuwikiSlider
@@ -66,10 +65,6 @@ fun MyLectureEvaluationEditRoute(
       MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast -> {
         onShowToast(context.getString(R.string.lecture_evaluation_delete_toast_msg))
       }
-
-      MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationReviseToast -> {
-        onShowToast(context.getString(R.string.lecture_evaluation_revise_toast_msg))
-      }
       is MyLectureEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
@@ -97,13 +92,9 @@ fun MyLectureEvaluationEditRoute(
     onLearningRatingValueChange = viewModel::updateLearningRating,
     onSatisfactionRatingValueChange = viewModel::updateSatisfactionRating,
     onLectureEvaluationValueChange = viewModel::updateMyLectureEvaluationValue,
-    onClickLectureEvaluationDeleteButton = viewModel::showDeleteOrLackPointDialog,
-    onDismissLectureEvaluationDelete = viewModel::hideLectureEvaluationDeleteDialog,
-    onDismissLackPoint = viewModel::hideLackPointDialog,
     onClickGradeChip = viewModel::updateGradeLevel,
     onClickHomeworkChip = viewModel::updateHomeworkLevel,
     onClickTeamChip = viewModel::updateTeamLevel,
-    onClickLectureEvaluationDeleteConfirm = viewModel::deleteLectureEvaluation,
     onClickLectureEvaluationReviseButton = viewModel::updateLectureEvaluation,
   )
 }
@@ -123,10 +114,6 @@ fun MyLectureEvaluationEditScreen(
   onClickHomeworkChip: (HomeworkLevel) -> Unit = {},
   onClickTeamChip: (TeamLevel) -> Unit = {},
   onLectureEvaluationValueChange: (String) -> Unit = { _ -> },
-  onClickLectureEvaluationDeleteButton: () -> Unit = {},
-  onClickLectureEvaluationDeleteConfirm: () -> Unit = {},
-  onDismissLectureEvaluationDelete: () -> Unit = {},
-  onDismissLackPoint: () -> Unit = {},
   onClickLectureEvaluationReviseButton: () -> Unit = {},
 ) {
   Column(
@@ -280,50 +267,14 @@ fun MyLectureEvaluationEditScreen(
       )
     }
 
-    Row(
+    SuwikiContainedMediumButton(
       modifier = Modifier
+        .padding(24.dp)
         .fillMaxWidth()
-        .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
+        .height(50.dp)
         .imePadding(),
-      horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-      SuwikiContainedMediumButton(
-        modifier = Modifier
-          .weight(1f)
-          .height(50.dp),
-        text = stringResource(R.string.text_delete),
-        enabled = false,
-        onClick = onClickLectureEvaluationDeleteButton,
-      )
-      SuwikiContainedMediumButton(
-        modifier = Modifier
-          .weight(1f)
-          .height(50.dp),
-        text = stringResource(R.string.text_revise),
-        onClick = onClickLectureEvaluationReviseButton,
-      )
-    }
-  }
-
-  if (uiState.showDeleteLectureEvaluationDialog) {
-    SuwikiDialog(
-      headerText = stringResource(R.string.delete_dialog_header),
-      bodyText = stringResource(R.string.delete_dialog_body, uiState.point),
-      confirmButtonText = stringResource(R.string.word_delete),
-      dismissButtonText = stringResource(R.string.word_cancel),
-      onDismissRequest = onDismissLectureEvaluationDelete,
-      onClickConfirm = onClickLectureEvaluationDeleteConfirm,
-      onClickDismiss = onDismissLectureEvaluationDelete,
-    )
-  }
-
-  if (uiState.showLackPointDialog) {
-    SuwikiDialog(
-      headerText = stringResource(R.string.lack_point_dialog_header),
-      bodyText = stringResource(R.string.lack_point_dialog_body, uiState.point),
-      confirmButtonText = stringResource(R.string.word_confirm),
-      onDismissRequest = onDismissLackPoint,
-      onClickConfirm = onDismissLackPoint,
+      text = stringResource(R.string.text_complete),
+      onClick = onClickLectureEvaluationReviseButton,
     )
   }
 

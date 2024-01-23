@@ -1,6 +1,5 @@
 package com.suwiki.feature.lectureevaluation.my.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -11,15 +10,13 @@ fun NavController.navigateMyEvaluation() {
 }
 
 fun NavGraphBuilder.myEvaluationNavGraph(
-  padding: PaddingValues,
   popBackStack: () -> Unit = {},
   navigateMyLectureEvaluationEdit: (String) -> Unit = {},
   navigateMyExamEvaluationEdit: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
 ) {
-  composable(route = MyEvaluationRoute.route) {
+  composable(route = MyEvaluationRoute.route) { navBackStackEntry ->
     MyEvaluationRoute(
-      padding = padding,
       popBackStack = popBackStack,
       navigateMyLectureEvaluation = navigateMyLectureEvaluationEdit,
       navigateMyExamEvaluation = navigateMyExamEvaluationEdit,

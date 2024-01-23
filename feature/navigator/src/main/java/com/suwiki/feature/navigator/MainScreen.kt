@@ -36,7 +36,6 @@ import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.editor.navigation.myEvaluationEditNavGraph
 import com.suwiki.feature.lectureevaluation.my.navigation.myEvaluationNavGraph
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
-import com.suwiki.feature.login.R
 import com.suwiki.feature.login.navigation.loginNavGraph
 import com.suwiki.feature.myinfo.navigation.myInfoNavGraph
 import com.suwiki.feature.notice.navigation.noticeNavGraph
@@ -116,7 +115,6 @@ internal fun MainScreen(
         )
 
         myEvaluationNavGraph(
-          padding = innerPadding,
           popBackStack = navigator::popBackStackIfNotHome,
           navigateMyLectureEvaluationEdit = navigator::navigateMyLectureEvaluationEdit,
           navigateMyExamEvaluationEdit = navigator::navigateMyExamEvaluationEdit,
@@ -157,7 +155,7 @@ internal fun MainScreen(
         SuwikiDialog(
           headerText = stringResource(com.suwiki.feature.navigator.R.string.dialog_network_header),
           bodyText = stringResource(com.suwiki.feature.navigator.R.string.dialog_network_body),
-          confirmButtonText = stringResource(id = R.string.word_confirm),
+          confirmButtonText = stringResource(id = com.suwiki.core.ui.R.string.word_confirm),
           onDismissRequest = viewModel::hideNetworkErrorDialog,
           onClickConfirm = viewModel::hideNetworkErrorDialog,
         )

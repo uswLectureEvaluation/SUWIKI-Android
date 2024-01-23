@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -23,7 +24,9 @@ class MyInfoViewModel @Inject constructor(
   suspend fun checkLoggedIn() {
     showLoadingScreen()
     /* TODO 에러 처리 */
-    getUserInfoUseCase().collect(::reduceUser)
+    getUserInfoUseCase()
+      .catch { intent { postSideEffect(MyInfoSideEffect.HandleException(it)) } }
+      .collect(::reduceUser)
     hideLoadingScreen()
   }
 
@@ -53,5 +56,14 @@ class MyInfoViewModel @Inject constructor(
     )
   }
   fun navigateMyPoint() = intent { postSideEffect(MyInfoSideEffect.NavigateMyPoint) }
+  fun navigateLogin() = intent { postSideEffect(MyInfoSideEffect.NavigateLogin) }
   fun navigateBanHistory() = intent { postSideEffect(MyInfoSideEffect.NavigateBanHistory) }
+
+  fun openTermSite() = intent { postSideEffect(MyInfoSideEffect.OpenTermWebSite) }
+  fun openPersonalPolicySite() = intent { postSideEffect(MyInfoSideEffect.OpenPersonalPolicyWebSite) }
+
+  fun openAskSite() = intent { postSideEffect(MyInfoSideEffect.OpenAskWebSite) }
+  fun openFeedbackSite() = intent { postSideEffect(MyInfoSideEffect.OpenFeedbackWebSite) }
+
+  fun showOpenLicense() = intent { postSideEffect(MyInfoSideEffect.ShowOpenLicenses) }
 }

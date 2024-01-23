@@ -24,7 +24,7 @@ data class LectureEvaluationExtraAverageResponse(
 internal fun LectureEvaluationExtraAverageResponse.toModel() = LectureEvaluationExtraAverage(
   id = id,
   lectureInfo = LectureInfo(
-    semesterList = semesterList.split(","),
+    semesterList = semesterList.replace(" ", "").split(","),
     professor = professor,
     majorType = majorType,
     lectureType = lectureType,
