@@ -1,4 +1,4 @@
-package com.suwiki.feature.lectureevaluation.viewerreporter.detail.lectureevaluation
+package com.suwiki.feature.lectureevaluation.viewerreporter.detail
 
 import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
 

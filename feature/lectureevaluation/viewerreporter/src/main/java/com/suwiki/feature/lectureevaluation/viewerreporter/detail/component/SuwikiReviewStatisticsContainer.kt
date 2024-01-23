@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.container
+package com.suwiki.feature.lectureevaluation.viewerreporter.detail.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,25 +40,24 @@ import com.suwiki.core.designsystem.theme.Green100
 import com.suwiki.core.designsystem.theme.Orange10
 import com.suwiki.core.designsystem.theme.Orange100
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
 
 @Composable
 fun SuwikiReviewStatisticsContainer(
-  modifier: Modifier = Modifier,
-  lectureType: String,
-  lectureName: String,
-  openMajor: String,
-  professor: String,
-  rating: Float,
-  grade: String? = null,
-  gradeLabelColor: LabelColor? = null,
-  homework: String? = null,
-  homeworkLabelColor: LabelColor? = null,
-  team: String? = null,
-  teamLabelColor: LabelColor? = null,
-  honeyRating: Float,
-  learningRating: Float,
-  satisfactionRating: Float,
+    modifier: Modifier = Modifier,
+    lectureType: String,
+    lectureName: String,
+    openMajor: String,
+    professor: String,
+    rating: Float,
+    grade: String? = null,
+    gradeLabelColor: LabelColor? = null,
+    homework: String? = null,
+    homeworkLabelColor: LabelColor? = null,
+    team: String? = null,
+    teamLabelColor: LabelColor? = null,
+    honeyRating: Float,
+    learningRating: Float,
+    satisfactionRating: Float,
 ) {
   Column(
     modifier = modifier
@@ -162,10 +161,10 @@ enum class LabelColor(
 
 @Composable
 private fun StatisticsLabel(
-  modifier: Modifier = Modifier,
-  color: LabelColor,
-  name: String,
-  value: String,
+    modifier: Modifier = Modifier,
+    color: LabelColor,
+    name: String,
+    value: String,
 ) {
   with(color) {
     Box(

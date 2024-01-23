@@ -27,7 +27,9 @@ import com.suwiki.core.ui.extension.suwikiClickable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuwikiBottomSheet(
-  sheetState: SheetState = rememberModalBottomSheetState(),
+  sheetState: SheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = true
+  ),
   isSheetOpen: Boolean,
   onDismissRequest: () -> Unit = {},
   content: @Composable ColumnScope.() -> Unit,

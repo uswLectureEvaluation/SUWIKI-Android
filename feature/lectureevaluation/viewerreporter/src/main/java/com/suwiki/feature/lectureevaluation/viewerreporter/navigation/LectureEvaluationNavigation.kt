@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.suwiki.feature.lectureevaluation.viewerreporter.LectureEvaluationRoute
-import com.suwiki.feature.lectureevaluation.viewerreporter.detail.lectureevaluation.LectureEvaluationDetailRoute
+import com.suwiki.feature.lectureevaluation.viewerreporter.detail.LectureEvaluationDetailRoute
 
 fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
   navigate(LectureEvaluationRoute.route, navOptions)
