@@ -287,7 +287,7 @@ fun LectureEvaluationWriteButton(
       tint = White,
     )
     Text(
-      text = "작성하기",
+      text = stringResource(R.string.lecture_evaluation_detail_screen_write),
       color = White,
       style = SuwikiTheme.typography.body2,
     )
