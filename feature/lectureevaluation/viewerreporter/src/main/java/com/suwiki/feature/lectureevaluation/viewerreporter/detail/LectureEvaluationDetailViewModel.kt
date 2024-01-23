@@ -28,7 +28,9 @@ class LectureEvaluationDetailViewModel @Inject constructor(
   private val getExamEvaluationListUseCase: GetExamEvaluationListUseCase,
   private val buyExamUseCase: BuyExamUseCase,
 ) : ContainerHost<LectureEvaluationDetailState, LectureEvaluationDetailSideEffect>, ViewModel() {
-  override val container: Container<LectureEvaluationDetailState, LectureEvaluationDetailSideEffect> = container(LectureEvaluationDetailState())
+  override val container: Container<LectureEvaluationDetailState, LectureEvaluationDetailSideEffect> = container(
+    LectureEvaluationDetailState(),
+  )
 
   private val evaluationId: Long = savedStateHandle.get<String>(LectureEvaluationRoute.lectureEvaluationDetail)!!.toLong()
   private var lectureEvaluationPage = 1

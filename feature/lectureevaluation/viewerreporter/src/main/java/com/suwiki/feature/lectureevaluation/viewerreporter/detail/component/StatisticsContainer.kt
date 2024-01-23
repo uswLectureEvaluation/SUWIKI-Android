@@ -49,8 +49,8 @@ import com.suwiki.core.ui.extension.toText
 
 @Composable
 fun SuwikiReviewStatisticsContainer(
-    modifier: Modifier = Modifier,
-    data: LectureEvaluationExtraAverage,
+  modifier: Modifier = Modifier,
+  data: LectureEvaluationExtraAverage,
 ) {
   Column(
     modifier = modifier
@@ -145,10 +145,10 @@ enum class LabelColor(
 
 @Composable
 private fun StatisticsLabel(
-    modifier: Modifier = Modifier,
-    color: LabelColor,
-    name: String,
-    value: String,
+  modifier: Modifier = Modifier,
+  color: LabelColor,
+  name: String,
+  value: String,
 ) {
   with(color) {
     Box(
@@ -198,8 +198,8 @@ fun SuwikiReviewStaticsContainerPreview() {
           learningAvg = 3.0f,
           teamAvg = TeamLevel.EXIST,
           gradeAvg = GradeLevel.DIFFICULT,
-          homeworkAvg = HomeworkLevel.MANY
-        )
+          homeworkAvg = HomeworkLevel.MANY,
+        ),
       )
       SuwikiReviewStatisticsContainer(
         data = LectureEvaluationExtraAverage(
@@ -217,8 +217,8 @@ fun SuwikiReviewStaticsContainerPreview() {
           learningAvg = 0.0f,
           teamAvg = TeamLevel.EXIST,
           gradeAvg = GradeLevel.DIFFICULT,
-          homeworkAvg = HomeworkLevel.MANY
-        )
+          homeworkAvg = HomeworkLevel.MANY,
+        ),
       )
     }
   }

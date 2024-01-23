@@ -28,7 +28,7 @@ import com.suwiki.core.ui.extension.suwikiClickable
 @Composable
 fun SuwikiBottomSheet(
   sheetState: SheetState = rememberModalBottomSheetState(
-    skipPartiallyExpanded = true
+    skipPartiallyExpanded = true,
   ),
   isSheetOpen: Boolean,
   onDismissRequest: () -> Unit = {},
