@@ -3,7 +3,6 @@ package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
-import com.suwiki.feature.lectureevaluation.editor.examevaluation.ExamEvaluationEditorSideEffect
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

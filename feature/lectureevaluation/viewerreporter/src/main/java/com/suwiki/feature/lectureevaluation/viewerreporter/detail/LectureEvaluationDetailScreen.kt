@@ -49,15 +49,11 @@ import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.LectureEvaluationTab
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
-import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.SuwikiReviewStatisticsContainer
-import kotlinx.serialization.json.Json
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ExperimentalToolbarApi
 import me.onebone.toolbar.ScrollStrategy
@@ -227,7 +223,7 @@ fun LectureEvaluationDetailScreen(
                   semester = it.selectedSemester,
                   content = it.content,
                   rating = it.totalAvg,
-                  onClickButton = { onClickLectureReportButton(it.id) }
+                  onClickButton = { onClickLectureReportButton(it.id) },
                 )
               }
             }

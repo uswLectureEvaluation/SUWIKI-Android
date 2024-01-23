@@ -9,7 +9,6 @@ import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.PostExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
-import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.LectureEvaluationEditorSideEffect
 import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -81,8 +80,11 @@ class ExamEvaluationEditorViewModel @Inject constructor(
       return@intent
     }
 
-    if (isEditMode) updateExamEvaluation()
-    else postExamEvaluation()
+    if (isEditMode) {
+      updateExamEvaluation()
+    } else {
+      postExamEvaluation()
+    }
   }
 
   private fun postExamEvaluation() = intent {

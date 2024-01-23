@@ -134,7 +134,8 @@ fun ExamEvaluationEditorScreen(
       Spacer(modifier = Modifier.height(14.dp))
 
       SuwikiSelectionContainer(
-        title = uiState.selectedExamType?.ifEmpty { stringResource(R.string.word_choose_test_type) } ?: stringResource(R.string.word_choose_test_type),
+        title = uiState.selectedExamType?.ifEmpty { stringResource(R.string.word_choose_test_type) }
+          ?: stringResource(R.string.word_choose_test_type),
         onClick = onClickExamTypeButton,
       )
 

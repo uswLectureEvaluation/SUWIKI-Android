@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -62,6 +65,9 @@ import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
+import me.onebone.toolbar.CollapsingToolbarScaffold
+import me.onebone.toolbar.ScrollStrategy
+import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -158,6 +164,8 @@ fun OpenLectureScreen(
 ) {
   val context = LocalContext.current
 
+  val state = rememberCollapsingToolbarScaffoldState()
+
   Column(
     modifier = Modifier
       .fillMaxSize()
@@ -169,61 +177,78 @@ fun OpenLectureScreen(
       onClickTextButton = onClickCustomAdd,
     )
 
-    Spacer(modifier = Modifier.size(12.dp))
-
-    Row(
-      modifier = Modifier.padding(horizontal = 24.dp),
-      horizontalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-      FilterContainer(
-        filterName = stringResource(R.string.word_open_major),
-        value = uiState.selectedOpenMajor,
-        onClick = { onClickOpenMajorFilterContainer(uiState.selectedOpenMajor) },
-      )
-
-      FilterContainer(
-        filterName = stringResource(R.string.word_school_level),
-        value = stringResource(id = uiState.schoolLevel.stringResId),
-        onClick = onClickSchoolLevelFilterContainer,
-      )
-    }
-
-    SuwikiSearchBar(
-      modifier = Modifier.padding(top = 10.dp),
-      placeholder = stringResource(R.string.add_timetable_cell_search_bar_placeholder),
-      onClickSearchButton = onClickSearchButton,
-      value = uiState.searchValue,
-      onClickClearButton = onClickClearButton,
-      onValueChange = onValueChangeSearch,
-    )
-
-    if (uiState.openLectureList.isEmpty()) {
-      EmptyText(
-        stringResource(R.string.word_empty_result),
-      )
-    }
-
-    LazyColumn(
+    CollapsingToolbarScaffold(
       modifier = Modifier
-        .fillMaxSize(),
-      contentPadding = PaddingValues(bottom = 24.dp),
-      state = listState,
-    ) {
-      items(
-        items = uiState.openLectureList,
-        key = { it.id },
-      ) { lectureEvaluation ->
-        with(lectureEvaluation) {
-          SuwikiClassInformationCard(
-            className = name,
-            professor = professorName,
-            cellInfo = originalCellList.toText(context),
-            grade = stringResource(id = R.string.word_num_school_level, grade),
-            classType = type,
-            openMajor = major,
-            onClick = { onClickClassInfoCard(this) },
-            onClickAdd = { onClickCellAdd(this) },
+        .weight(1f),
+      state = state,
+      scrollStrategy = ScrollStrategy.EnterAlways,
+      toolbar = {
+        Spacer(
+          modifier = Modifier
+            .fillMaxWidth()
+            .height(32.dp),
+        )
+        Column(
+          modifier = Modifier.graphicsLayer {
+            alpha = state.toolbarState.progress
+          }
+        ) {
+          Row(
+            modifier = Modifier.padding(horizontal = 24.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+          ) {
+            FilterContainer(
+              filterName = stringResource(R.string.word_open_major),
+              value = uiState.selectedOpenMajor,
+              onClick = { onClickOpenMajorFilterContainer(uiState.selectedOpenMajor) },
+            )
+
+            FilterContainer(
+              filterName = stringResource(R.string.word_school_level),
+              value = stringResource(id = uiState.schoolLevel.stringResId),
+              onClick = onClickSchoolLevelFilterContainer,
+            )
+          }
+
+          SuwikiSearchBar(
+            modifier = Modifier.padding(top = 10.dp),
+            placeholder = stringResource(R.string.add_timetable_cell_search_bar_placeholder),
+            onClickSearchButton = onClickSearchButton,
+            value = uiState.searchValue,
+            onClickClearButton = onClickClearButton,
+            onValueChange = onValueChangeSearch,
           )
+        }
+      },
+    ) {
+      if (uiState.openLectureList.isEmpty()) {
+        EmptyText(
+          stringResource(R.string.word_empty_result),
+        )
+      }
+
+      LazyColumn(
+        modifier = Modifier
+          .fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 24.dp),
+        state = listState,
+      ) {
+        items(
+          items = uiState.openLectureList,
+          key = { it.id },
+        ) { lectureEvaluation ->
+          with(lectureEvaluation) {
+            SuwikiClassInformationCard(
+              className = name,
+              professor = professorName,
+              cellInfo = originalCellList.toText(context),
+              grade = stringResource(id = R.string.word_num_school_level, grade),
+              classType = type,
+              openMajor = major,
+              onClick = { onClickClassInfoCard(this) },
+              onClickAdd = { onClickCellAdd(this) },
+            )
+          }
         }
       }
     }

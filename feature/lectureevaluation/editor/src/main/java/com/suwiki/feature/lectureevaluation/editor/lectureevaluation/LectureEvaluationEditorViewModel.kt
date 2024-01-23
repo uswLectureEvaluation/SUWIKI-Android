@@ -6,16 +6,12 @@ import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
-import com.suwiki.core.model.user.User
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.PostLectureEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.UpdateLectureEvaluationUseCase
-import com.suwiki.domain.user.usecase.GetUserInfoUseCase
-import com.suwiki.feature.lectureevaluation.editor.examevaluation.ExamEvaluationEditorSideEffect
 import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.flow.catch
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -84,8 +80,11 @@ class LectureEvaluationEditorViewModel @Inject constructor(
       return@intent
     }
 
-    if (isEditMode) updateLectureEvaluation()
-    else postLectureEvaluation()
+    if (isEditMode) {
+      updateLectureEvaluation()
+    } else {
+      postLectureEvaluation()
+    }
   }
 
   private fun postLectureEvaluation() = intent {

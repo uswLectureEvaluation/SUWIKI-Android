@@ -1,7 +1,6 @@
 package com.suwiki.feature.lectureevaluation.editor.examevaluation
 
 import com.suwiki.core.model.enums.ExamLevel
-import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.LectureEvaluationEditorSideEffect
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

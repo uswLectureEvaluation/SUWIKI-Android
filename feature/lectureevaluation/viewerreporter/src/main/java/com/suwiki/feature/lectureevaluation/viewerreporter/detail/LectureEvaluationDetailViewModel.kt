@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.enums.LectureEvaluationTab
 import com.suwiki.core.model.exception.UserPointLackException
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.BuyExamUseCase
@@ -20,7 +19,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.joinAll
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonPrimitive
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
