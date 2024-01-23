@@ -30,18 +30,18 @@ import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
 import com.suwiki.core.designsystem.component.tabbar.TabTitle
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.enums.LectureEvaluationTab
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.encodeToUri
-import com.suwiki.feature.lectureevaluation.my.model.MyEvaluationTab
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-private val MY_EVALUATION_PAGE_COUNT = MyEvaluationTab.entries.size
+private val MY_EVALUATION_PAGE_COUNT = LectureEvaluationTab.entries.size
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -143,10 +143,10 @@ fun MyEvaluationScreen(
     SuwikiTabBar(
       selectedTabPosition = pagerState.currentPage,
     ) {
-      MyEvaluationTab.entries.forEach { tab ->
+      LectureEvaluationTab.entries.forEach { tab ->
         with(tab) {
           TabTitle(
-            title = stringResource(title),
+            title = title,
             position = position,
             selected = pagerState.currentPage == position,
             onClick = { onClickTab(position) },
@@ -158,8 +158,8 @@ fun MyEvaluationScreen(
       modifier = Modifier.weight(1f),
       state = pagerState,
     ) { page ->
-      when (MyEvaluationTab.entries[page]) {
-        MyEvaluationTab.LECTURE_EVALUATION -> {
+      when (LectureEvaluationTab.entries[page]) {
+        LectureEvaluationTab.LECTURE_EVALUATION -> {
           MyLectureEvaluationLazyColumn(
             itemList = uiState.myLectureEvaluationList,
             listState = lectureEvaluationListState,
@@ -168,7 +168,7 @@ fun MyEvaluationScreen(
           )
         }
 
-        MyEvaluationTab.EXAM_INFO -> {
+        LectureEvaluationTab.EXAM_INFO -> {
           MyExamEvaluationLazyColumn(
             itemList = uiState.myExamEvaluationList,
             listState = examEvaluationListState,
