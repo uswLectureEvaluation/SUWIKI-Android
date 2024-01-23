@@ -4,7 +4,7 @@ import com.suwiki.core.model.enums.ExamLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
-data class MyExamEvaluationEditState(
+data class ExamEvaluationEditorState(
   val isLoading: Boolean = false,
   val point: Int = 0,
   val semesterList: PersistentList<String> = persistentListOf(""),
@@ -19,8 +19,8 @@ data class MyExamEvaluationEditState(
   val showExamTypeBottomSheet: Boolean = false,
 )
 
-sealed interface MyExamEvaluationEditSideEffect {
-  data object PopBackStack : MyExamEvaluationEditSideEffect
-  data object ShowMyExamEvaluationDeleteToast : MyExamEvaluationEditSideEffect
-  data class HandleException(val throwable: Throwable) : MyExamEvaluationEditSideEffect
+sealed interface ExamEvaluationEditorSideEffect {
+  data object PopBackStack : ExamEvaluationEditorSideEffect
+  data object ShowExamEvaluationDeleteToast : ExamEvaluationEditorSideEffect
+  data class HandleException(val throwable: Throwable) : ExamEvaluationEditorSideEffect
 }

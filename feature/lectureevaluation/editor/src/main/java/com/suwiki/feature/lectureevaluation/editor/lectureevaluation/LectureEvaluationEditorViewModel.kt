@@ -10,7 +10,7 @@ import com.suwiki.core.model.user.User
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.UpdateLectureEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
-import com.suwiki.feature.lectureevaluation.editor.navigation.MyEvaluationEditRoute
+import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.json.Json
@@ -25,15 +25,15 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class MyLectureEvaluationEditViewModel @Inject constructor(
+class LectureEvaluationEditorViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
   val getUserInfoUseCase: GetUserInfoUseCase,
   val updateLectureEvaluationUseCase: UpdateLectureEvaluationUseCase,
-) : ContainerHost<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect>, ViewModel() {
-  override val container: Container<MyLectureEvaluationEditState, MyLectureEvaluationEditSideEffect> =
-    container(MyLectureEvaluationEditState())
+) : ContainerHost<LectureEvaluationEditorState, LectureEvaluationEditorSideEffect>, ViewModel() {
+  override val container: Container<LectureEvaluationEditorState, LectureEvaluationEditorSideEffect> =
+    container(LectureEvaluationEditorState())
 
-  private val myLectureEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myLectureEvaluation)!!
+  private val myLectureEvaluation = savedStateHandle.get<String>(EvaluationEditorRoute.lectureEvaluation)!!
   private val myLectureEvaluationItem: MyLectureEvaluation = Json.decodeFromUri(myLectureEvaluation)
 
   suspend fun initData() = intent {
@@ -41,7 +41,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
     with(myLectureEvaluationItem) {
       getUserInfoUseCase().collect(::getPoint).runCatching {}
         .onFailure {
-          postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
+          postSideEffect(LectureEvaluationEditorSideEffect.HandleException(it))
         }
       reduce {
         state.copy(
@@ -94,7 +94,7 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
         popBackStack()
       }
       .onFailure {
-        postSideEffect(MyLectureEvaluationEditSideEffect.HandleException(it))
+        postSideEffect(LectureEvaluationEditorSideEffect.HandleException(it))
       }
   }
 
@@ -138,5 +138,5 @@ class MyLectureEvaluationEditViewModel @Inject constructor(
   fun showSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = true) } }
   fun hideSemesterBottomSheet() = intent { reduce { state.copy(showSemesterBottomSheet = false) } }
 
-  fun popBackStack() = intent { postSideEffect(MyLectureEvaluationEditSideEffect.PopBackStack) }
+  fun popBackStack() = intent { postSideEffect(LectureEvaluationEditorSideEffect.PopBackStack) }
 }

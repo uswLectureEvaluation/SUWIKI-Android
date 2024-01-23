@@ -6,7 +6,7 @@ import com.suwiki.core.model.enums.TeamLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
-data class MyLectureEvaluationEditState(
+data class LectureEvaluationEditorState(
   val isLoading: Boolean = false,
   val point: Int = 0,
   val semesterList: PersistentList<String> = persistentListOf(""),
@@ -23,8 +23,8 @@ data class MyLectureEvaluationEditState(
   val showSemesterBottomSheet: Boolean = false,
 )
 
-sealed interface MyLectureEvaluationEditSideEffect {
-  data object PopBackStack : MyLectureEvaluationEditSideEffect
-  data object ShowMyLectureEvaluationDeleteToast : MyLectureEvaluationEditSideEffect
-  data class HandleException(val throwable: Throwable) : MyLectureEvaluationEditSideEffect
+sealed interface LectureEvaluationEditorSideEffect {
+  data object PopBackStack : LectureEvaluationEditorSideEffect
+  data object ShowLectureEvaluationDeleteToast : LectureEvaluationEditorSideEffect
+  data class HandleException(val throwable: Throwable) : LectureEvaluationEditorSideEffect
 }

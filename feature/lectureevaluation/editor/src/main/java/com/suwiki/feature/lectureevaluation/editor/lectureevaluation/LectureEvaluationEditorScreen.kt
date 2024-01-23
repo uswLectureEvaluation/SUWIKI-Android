@@ -50,8 +50,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.Locale
 
 @Composable
-fun MyLectureEvaluationEditRoute(
-  viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
+fun LectureEvaluationEditorRoute(
+  viewModel: LectureEvaluationEditorViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
@@ -61,11 +61,11 @@ fun MyLectureEvaluationEditRoute(
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyLectureEvaluationEditSideEffect.PopBackStack -> popBackStack()
-      MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast -> {
+      LectureEvaluationEditorSideEffect.PopBackStack -> popBackStack()
+      LectureEvaluationEditorSideEffect.ShowLectureEvaluationDeleteToast -> {
         onShowToast(context.getString(R.string.lecture_evaluation_delete_toast_msg))
       }
-      is MyLectureEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
+      is LectureEvaluationEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
 
@@ -81,7 +81,7 @@ fun MyLectureEvaluationEditRoute(
     viewModel.updateTotalAvg()
   }
 
-  MyLectureEvaluationEditScreen(
+  LectureEvaluationEditorScreen(
     uiState = uiState,
     scrollState = scrollState,
     popBackStack = viewModel::popBackStack,
@@ -100,8 +100,8 @@ fun MyLectureEvaluationEditRoute(
 }
 
 @Composable
-fun MyLectureEvaluationEditScreen(
-  uiState: MyLectureEvaluationEditState,
+fun LectureEvaluationEditorScreen(
+  uiState: LectureEvaluationEditorState,
   scrollState: ScrollState,
   popBackStack: () -> Unit,
   onClickSemesterButton: () -> Unit = {},
@@ -314,12 +314,12 @@ fun LectureEvaluationEditContainer(
 
 @Preview
 @Composable
-fun MyLectureEvaluationEditPreview() {
+fun LectureEvaluationEditorPreview() {
   SuwikiTheme {
     val scrollState = rememberScrollState()
 
-    MyLectureEvaluationEditScreen(
-      uiState = MyLectureEvaluationEditState(),
+    LectureEvaluationEditorScreen(
+      uiState = LectureEvaluationEditorState(),
       scrollState = scrollState,
       popBackStack = {},
     )

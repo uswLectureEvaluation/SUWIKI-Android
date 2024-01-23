@@ -8,7 +8,7 @@ import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
-import com.suwiki.feature.lectureevaluation.editor.navigation.MyEvaluationEditRoute
+import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.serialization.json.Json
@@ -23,14 +23,14 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class MyExamEvaluationEditViewModel @Inject constructor(
+class ExamEvaluationEditorViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
   val updateExamEvaluationUseCase: UpdateExamEvaluationUseCase,
-) : ContainerHost<MyExamEvaluationEditState, MyExamEvaluationEditSideEffect>, ViewModel() {
-  override val container: Container<MyExamEvaluationEditState, MyExamEvaluationEditSideEffect> =
-    container(MyExamEvaluationEditState())
+) : ContainerHost<ExamEvaluationEditorState, ExamEvaluationEditorSideEffect>, ViewModel() {
+  override val container: Container<ExamEvaluationEditorState, ExamEvaluationEditorSideEffect> =
+    container(ExamEvaluationEditorState())
 
-  private val myExamEvaluation = savedStateHandle.get<String>(MyEvaluationEditRoute.myExamEvaluation)!!
+  private val myExamEvaluation = savedStateHandle.get<String>(EvaluationEditorRoute.examEvaluation)!!
   private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromUri(myExamEvaluation)
 
   suspend fun initData() = intent {
@@ -75,7 +75,7 @@ class MyExamEvaluationEditViewModel @Inject constructor(
         popBackStack()
       }
       .onFailure {
-        postSideEffect(MyExamEvaluationEditSideEffect.HandleException(it))
+        postSideEffect(ExamEvaluationEditorSideEffect.HandleException(it))
       }
   }
 
@@ -120,5 +120,5 @@ class MyExamEvaluationEditViewModel @Inject constructor(
   fun showExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = true) } }
   fun hideExamTypeBottomSheet() = intent { reduce { state.copy(showExamTypeBottomSheet = false) } }
 
-  fun popBackStack() = intent { postSideEffect(MyExamEvaluationEditSideEffect.PopBackStack) }
+  fun popBackStack() = intent { postSideEffect(ExamEvaluationEditorSideEffect.PopBackStack) }
 }

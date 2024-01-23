@@ -46,8 +46,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun MyExamEvaluationEditRoute(
-  viewModel: MyExamEvaluationEditViewModel = hiltViewModel(),
+fun ExamEvaluationEditorRoute(
+  viewModel: ExamEvaluationEditorViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
@@ -57,12 +57,12 @@ fun MyExamEvaluationEditRoute(
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyExamEvaluationEditSideEffect.PopBackStack -> popBackStack()
-      MyExamEvaluationEditSideEffect.ShowMyExamEvaluationDeleteToast -> {
+      ExamEvaluationEditorSideEffect.PopBackStack -> popBackStack()
+      ExamEvaluationEditorSideEffect.ShowExamEvaluationDeleteToast -> {
         onShowToast(context.getString(R.string.exam_evaluation_delete_toast_msg))
       }
 
-      is MyExamEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
+      is ExamEvaluationEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
     }
   }
 
@@ -70,7 +70,7 @@ fun MyExamEvaluationEditRoute(
     viewModel.initData()
   }
 
-  MyExamEvaluationEditScreen(
+  ExamEvaluationEditorScreen(
     scrollState = scrollState,
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
@@ -89,9 +89,9 @@ fun MyExamEvaluationEditRoute(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MyExamEvaluationEditScreen(
+fun ExamEvaluationEditorScreen(
   scrollState: ScrollState,
-  uiState: MyExamEvaluationEditState,
+  uiState: ExamEvaluationEditorState,
   popBackStack: () -> Unit = {},
   onClickSemesterButton: () -> Unit = {},
   onClickSemesterItem: (Int) -> Unit = {},
@@ -239,13 +239,13 @@ fun LectureExamEditContainer(
 
 @Preview
 @Composable
-fun MyExamEvaluationEditScreenPreview() {
+fun ExamEvaluationEditorScreenPreview() {
   val scrollState = rememberScrollState()
 
   SuwikiTheme {
-    MyExamEvaluationEditScreen(
+    ExamEvaluationEditorScreen(
       scrollState = scrollState,
-      uiState = MyExamEvaluationEditState(),
+      uiState = ExamEvaluationEditorState(),
     )
   }
 }

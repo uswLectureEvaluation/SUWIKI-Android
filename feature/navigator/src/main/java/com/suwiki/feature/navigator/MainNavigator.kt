@@ -9,8 +9,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyExamEvaluation
-import com.suwiki.feature.lectureevaluation.editor.navigation.navigateMyLectureEvaluation
+import com.suwiki.feature.lectureevaluation.editor.navigation.navigateExamEvaluationEditor
+import com.suwiki.feature.lectureevaluation.editor.navigation.navigateLectureEvaluationEditor
 import com.suwiki.feature.lectureevaluation.my.navigation.navigateMyEvaluation
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluationDetail
@@ -123,12 +123,12 @@ internal class MainNavigator(
     navController.navigateMyEvaluation()
   }
 
-  fun navigateMyLectureEvaluationEdit(lectureEvaluation: String) {
-    navController.navigateMyLectureEvaluation(lectureEvaluation)
+  fun navigateLectureEvaluationEditor(lectureEvaluation: String) {
+    navController.navigateLectureEvaluationEditor(lectureEvaluation)
   }
 
-  fun navigateMyExamEvaluationEdit(examEvaluation: String) {
-    navController.navigateMyExamEvaluation(examEvaluation)
+  fun navigateExamEvaluationEditor(examEvaluation: String) {
+    navController.navigateExamEvaluationEditor(examEvaluation)
   }
 
   fun navigateOpenMajor(selectedOpenMajor: String) {

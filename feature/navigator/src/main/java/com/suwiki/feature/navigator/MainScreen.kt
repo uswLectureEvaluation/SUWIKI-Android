@@ -109,8 +109,8 @@ internal fun MainScreen(
           popBackStack = navigator::popBackStackIfNotHome,
           navigateLogin = navigator::navigateLogin,
           navigateSignUp = navigator::navigateSignup,
-          navigateLectureEvaluationEditor = navigator::navigateMyLectureEvaluationEdit,
-          navigateExamEvaluationEditor = navigator::navigateMyExamEvaluationEdit,
+          navigateLectureEvaluationEditor = navigator::navigateLectureEvaluationEditor,
+          navigateExamEvaluationEditor = navigator::navigateExamEvaluationEditor,
           handleException = viewModel::handleException,
           navigateOpenMajor = navigator::navigateOpenMajor,
           onShowToast = viewModel::onShowToast,
@@ -119,8 +119,8 @@ internal fun MainScreen(
 
         myEvaluationNavGraph(
           popBackStack = navigator::popBackStackIfNotHome,
-          navigateLectureEvaluationEditor = navigator::navigateMyLectureEvaluationEdit,
-          navigateExamEvaluationEditor = navigator::navigateMyExamEvaluationEdit,
+          navigateLectureEvaluationEditor = navigator::navigateLectureEvaluationEditor,
+          navigateExamEvaluationEditor = navigator::navigateExamEvaluationEditor,
           handleException = viewModel::handleException,
         )
 
