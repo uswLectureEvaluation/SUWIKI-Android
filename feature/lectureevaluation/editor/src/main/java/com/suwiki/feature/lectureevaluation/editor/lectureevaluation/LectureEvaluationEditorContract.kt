@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
+import com.suwiki.feature.lectureevaluation.editor.examevaluation.ExamEvaluationEditorSideEffect
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -21,9 +22,16 @@ data class LectureEvaluationEditorState(
   val teamLevel: TeamLevel? = null,
   val lectureEvaluation: String = "",
   val showSemesterBottomSheet: Boolean = false,
-)
+) {
+  val buttonEnabled = gradeLevel != null &&
+    homeworkLevel != null &&
+    teamLevel != null &&
+    lectureEvaluation.isNotEmpty()
+}
 
 sealed interface LectureEvaluationEditorSideEffect {
+  data object ShowInputMoreTextToast : LectureEvaluationEditorSideEffect
+  data object ShowSelectSemesterToast : LectureEvaluationEditorSideEffect
   data object PopBackStack : LectureEvaluationEditorSideEffect
   data object ShowLectureEvaluationDeleteToast : LectureEvaluationEditorSideEffect
   data class HandleException(val throwable: Throwable) : LectureEvaluationEditorSideEffect

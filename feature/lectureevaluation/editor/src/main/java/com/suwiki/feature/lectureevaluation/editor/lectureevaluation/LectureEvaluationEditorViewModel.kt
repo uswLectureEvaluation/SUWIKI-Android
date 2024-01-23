@@ -10,6 +10,7 @@ import com.suwiki.core.model.user.User
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.UpdateLectureEvaluationUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
+import com.suwiki.feature.lectureevaluation.editor.examevaluation.ExamEvaluationEditorSideEffect
 import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
@@ -76,6 +77,16 @@ class LectureEvaluationEditorViewModel @Inject constructor(
   private fun getPoint(user: User) = intent { reduce { state.copy(point = user.point) } }
 
   fun updateLectureEvaluation() = intent {
+    if (state.lectureEvaluation.length < 30) {
+      postSideEffect(LectureEvaluationEditorSideEffect.ShowInputMoreTextToast)
+      return@intent
+    }
+
+    if (state.selectedSemester.isEmpty()) {
+      postSideEffect(LectureEvaluationEditorSideEffect.ShowSelectSemesterToast)
+      return@intent
+    }
+
     updateLectureEvaluationUseCase(
       UpdateLectureEvaluationUseCase.Param(
         lectureId = myLectureEvaluationItem.id,

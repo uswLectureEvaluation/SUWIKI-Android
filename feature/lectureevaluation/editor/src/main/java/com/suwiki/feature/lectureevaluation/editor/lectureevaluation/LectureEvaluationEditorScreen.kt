@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -66,6 +67,8 @@ fun LectureEvaluationEditorRoute(
         onShowToast(context.getString(R.string.lecture_evaluation_delete_toast_msg))
       }
       is LectureEvaluationEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
+      LectureEvaluationEditorSideEffect.ShowInputMoreTextToast -> onShowToast(context.getString(R.string.toast_need_input_30))
+      LectureEvaluationEditorSideEffect.ShowSelectSemesterToast -> onShowToast(context.getString(R.string.toast_select_semester))
     }
   }
 
@@ -131,7 +134,7 @@ fun LectureEvaluationEditorScreen(
     Column(
       modifier = Modifier
         .weight(1f)
-        .padding(24.dp)
+        .padding(horizontal = 24.dp)
         .verticalScroll(scrollState),
     ) {
       Spacer(modifier = Modifier.height(20.dp))
@@ -267,15 +270,19 @@ fun LectureEvaluationEditorScreen(
       )
     }
 
-    SuwikiContainedMediumButton(
-      modifier = Modifier
-        .padding(24.dp)
-        .fillMaxWidth()
-        .height(50.dp)
-        .imePadding(),
-      text = stringResource(R.string.text_complete),
-      onClick = onClickLectureEvaluationReviseButton,
-    )
+    Box(modifier = Modifier.imePadding()) {
+      SuwikiContainedMediumButton(
+        modifier = Modifier
+          .padding(24.dp)
+          .fillMaxWidth()
+          .height(50.dp)
+          .imePadding(),
+        text = stringResource(R.string.text_complete),
+        enabled = uiState.buttonEnabled,
+        clickable = uiState.buttonEnabled,
+        onClick = onClickLectureEvaluationReviseButton,
+      )
+    }
   }
 
   SuwikiSelectBottomSheet(

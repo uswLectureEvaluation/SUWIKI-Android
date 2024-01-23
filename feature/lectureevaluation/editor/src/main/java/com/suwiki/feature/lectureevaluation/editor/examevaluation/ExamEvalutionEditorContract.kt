@@ -1,6 +1,7 @@
 package com.suwiki.feature.lectureevaluation.editor.examevaluation
 
 import com.suwiki.core.model.enums.ExamLevel
+import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.LectureEvaluationEditorSideEffect
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -17,9 +18,16 @@ data class ExamEvaluationEditorState(
   val examInfo: PersistentList<String> = persistentListOf(),
   val showSemesterBottomSheet: Boolean = false,
   val showExamTypeBottomSheet: Boolean = false,
-)
+) {
+  val buttonEnabled = examLevel != null &&
+    examInfo.isNotEmpty() &&
+    examEvaluation.isNotEmpty()
+}
 
 sealed interface ExamEvaluationEditorSideEffect {
+  data object ShowInputMoreTextToast : ExamEvaluationEditorSideEffect
+  data object ShowSelectSemesterToast : ExamEvaluationEditorSideEffect
+  data object ShowSelectExamTypeToast : ExamEvaluationEditorSideEffect
   data object PopBackStack : ExamEvaluationEditorSideEffect
   data object ShowExamEvaluationDeleteToast : ExamEvaluationEditorSideEffect
   data class HandleException(val throwable: Throwable) : ExamEvaluationEditorSideEffect

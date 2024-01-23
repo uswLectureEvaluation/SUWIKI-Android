@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.editor.examevaluation
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -63,6 +64,9 @@ fun ExamEvaluationEditorRoute(
       }
 
       is ExamEvaluationEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
+      ExamEvaluationEditorSideEffect.ShowInputMoreTextToast -> onShowToast(context.getString(R.string.toast_need_input_30))
+      ExamEvaluationEditorSideEffect.ShowSelectExamTypeToast -> onShowToast(context.getString(R.string.toast_select_exam_type))
+      ExamEvaluationEditorSideEffect.ShowSelectSemesterToast -> onShowToast(context.getString(R.string.toast_select_semester))
     }
   }
 
@@ -119,7 +123,7 @@ fun ExamEvaluationEditorScreen(
     Column(
       modifier = Modifier
         .weight(1f)
-        .padding(24.dp)
+        .padding(horizontal = 24.dp)
         .verticalScroll(scrollState),
     ) {
       Spacer(modifier = Modifier.height(20.dp))
@@ -183,15 +187,19 @@ fun ExamEvaluationEditorScreen(
       )
     }
 
-    SuwikiContainedMediumButton(
-      modifier = Modifier
-        .padding(24.dp)
-        .fillMaxWidth()
-        .height(50.dp)
-        .imePadding(),
-      text = stringResource(R.string.text_complete),
-      onClick = onClickExamEvaluationReviseButton,
-    )
+    Box(modifier = Modifier.imePadding()) {
+      SuwikiContainedMediumButton(
+        modifier = Modifier
+          .padding(24.dp)
+          .fillMaxWidth()
+          .height(50.dp)
+          .imePadding(),
+        text = stringResource(R.string.text_complete),
+        enabled = uiState.buttonEnabled,
+        clickable = uiState.buttonEnabled,
+        onClick = onClickExamEvaluationReviseButton,
+      )
+    }
   }
 
   SuwikiSelectBottomSheet(
