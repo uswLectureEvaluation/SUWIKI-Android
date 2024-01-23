@@ -106,10 +106,13 @@ internal fun MainScreen(
         lectureEvaluationNavGraph(
           padding = innerPadding,
           argumentName = OpenMajorRoute.ARGUMENT_NAME,
+          popBackStack = navigator::popBackStackIfNotHome,
           navigateLogin = navigator::navigateLogin,
           navigateSignUp = navigator::navigateSignup,
           handleException = viewModel::handleException,
           navigateOpenMajor = navigator::navigateOpenMajor,
+          onShowToast = viewModel::onShowToast,
+          navigateLectureEvaluationDetail = navigator::navigateLectureEvaluationDetail,
         )
 
         myEvaluationNavGraph(

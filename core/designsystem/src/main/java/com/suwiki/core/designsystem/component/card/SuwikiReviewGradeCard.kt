@@ -26,24 +26,23 @@ import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import java.util.Locale
 
 @Composable
 fun SuwikiReviewGradeCard(
   modifier: Modifier = Modifier,
-  reviewCount: Int,
   rating: Float,
   honeyRating: Float,
   learningRating: Float,
   satisfactionRating: Float,
 ) {
-  val reviewCountColor = if (reviewCount > 0) Primary else GrayDA
-  val reviewIndicatorColor = if (reviewCount > 0) Black else GrayDA
+  val reviewCountColor = if (rating > 0) Primary else GrayDA
+  val reviewIndicatorColor = if (rating > 0) Black else GrayDA
   Row(
     modifier = modifier
       .fillMaxWidth()
@@ -59,20 +58,13 @@ fun SuwikiReviewGradeCard(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       Text(
-        text = "$rating",
+        text = "%.1f".format(Locale.US, rating),
         style = SuwikiTheme.typography.header1,
         color = reviewCountColor,
       )
       SuwikiRatingBar(
         rating = rating,
       )
-      if (reviewCount > 0) {
-        Text(
-          text = stringResource(id = R.string.review_count, reviewCount),
-          style = SuwikiTheme.typography.caption7,
-          color = Gray95,
-        )
-      }
     }
     VerticalDivider(
       color = GrayF6,
@@ -131,7 +123,7 @@ fun SuwikiProgressLine(
       strokeCap = StrokeCap.Round,
     )
     Text(
-      text = "$rating",
+      text = "%.1f".format(Locale.US, rating),
       style = SuwikiTheme.typography.caption1,
       color = textColor,
     )
@@ -147,7 +139,6 @@ fun SuwikiReviewGradeCardPreview() {
     ) {
       SuwikiReviewGradeCard(
         modifier = Modifier,
-        reviewCount = 4,
         rating = 4.3f,
         honeyRating = 3.4f,
         learningRating = 3.4f,
@@ -156,7 +147,6 @@ fun SuwikiReviewGradeCardPreview() {
       Spacer(modifier = Modifier.height(20.dp))
       SuwikiReviewGradeCard(
         modifier = Modifier,
-        reviewCount = 0,
         rating = 0.0f,
         honeyRating = 0.0f,
         learningRating = 0.0f,

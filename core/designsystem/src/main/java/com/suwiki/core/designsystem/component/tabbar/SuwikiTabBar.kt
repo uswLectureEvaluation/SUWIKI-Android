@@ -60,6 +60,7 @@ fun SuwikiTabBar(
   tabItem: @Composable () -> Unit,
 ) {
   Surface(
+    modifier = Modifier,
     color = White,
   ) {
     SubcomposeLayout(

@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.container
+package com.suwiki.feature.lectureevaluation.viewerreporter.detail.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,43 +34,35 @@ import com.suwiki.core.designsystem.theme.Blue10
 import com.suwiki.core.designsystem.theme.Blue100
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayDA
+import com.suwiki.core.designsystem.theme.GrayFB
 import com.suwiki.core.designsystem.theme.Green10
 import com.suwiki.core.designsystem.theme.Green100
 import com.suwiki.core.designsystem.theme.Orange10
 import com.suwiki.core.designsystem.theme.Orange100
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.model.enums.GradeLevel
+import com.suwiki.core.model.enums.HomeworkLevel
+import com.suwiki.core.model.enums.TeamLevel
+import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
+import com.suwiki.core.ui.extension.toText
 
 @Composable
 fun SuwikiReviewStatisticsContainer(
   modifier: Modifier = Modifier,
-  lectureType: String,
-  lectureName: String,
-  openMajor: String,
-  professor: String,
-  reviewCount: Int,
-  rating: Float,
-  grade: String? = null,
-  gradeLabelColor: LabelColor? = null,
-  homework: String? = null,
-  homeworkLabelColor: LabelColor? = null,
-  team: String? = null,
-  teamLabelColor: LabelColor? = null,
-  honeyRating: Float,
-  learningRating: Float,
-  satisfactionRating: Float,
+  data: LectureEvaluationExtraAverage,
 ) {
   Column(
     modifier = modifier
       .fillMaxWidth()
-      .background(White)
+      .background(GrayFB)
       .padding(top = 14.dp, bottom = 24.dp, start = 24.dp, end = 24.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
-    SuwikiBadge(color = BadgeColor.Gray, text = lectureType)
+    SuwikiBadge(color = BadgeColor.Gray, text = data.info.lectureType)
     Spacer(modifier = Modifier.height(4.dp))
     Text(
-      text = lectureName,
+      text = data.info.lectureName,
       style = SuwikiTheme.typography.header3,
       color = Black,
     )
@@ -83,7 +75,7 @@ fun SuwikiReviewStatisticsContainer(
       horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
       Text(
-        text = openMajor,
+        text = data.info.majorType,
         style = SuwikiTheme.typography.body7,
         color = Gray6A,
       )
@@ -95,50 +87,40 @@ fun SuwikiReviewStatisticsContainer(
           .padding(vertical = 3.dp),
       )
       Text(
-        text = professor,
+        text = data.info.professor,
         style = SuwikiTheme.typography.body7,
         color = Gray6A,
       )
     }
 
-    val isGradeValid = grade != null && gradeLabelColor != null
-    val isHomeworkValid = homework != null && homeworkLabelColor != null
-    val isTeamValid = team != null && teamLabelColor != null
-
-    if (
-      rating > 0.0f &&
-      isGradeValid &&
-      isHomeworkValid &&
-      isTeamValid
-    ) {
+    if (data.totalAvg > 0.0f) {
       Spacer(modifier = Modifier.height(14.dp))
       Row(
         horizontalArrangement = Arrangement.spacedBy(7.dp),
       ) {
         StatisticsLabel(
-          color = gradeLabelColor!!,
+          color = LabelColor.entries[data.gradeAvg.ordinal],
           name = stringResource(R.string.word_grade),
-          value = grade!!,
+          value = data.gradeAvg.toText(),
         )
         StatisticsLabel(
-          color = homeworkLabelColor!!,
+          color = LabelColor.entries[data.homeworkAvg.ordinal],
           name = stringResource(R.string.word_homework),
-          value = homework!!,
+          value = data.homeworkAvg.toText(),
         )
         StatisticsLabel(
-          color = teamLabelColor!!,
+          color = LabelColor.entries.minus(LabelColor.BLUE)[data.teamAvg.ordinal],
           name = stringResource(R.string.word_team),
-          value = team!!,
+          value = data.teamAvg.toText(),
         )
       }
     }
     Spacer(modifier = Modifier.height(23.dp))
     SuwikiReviewGradeCard(
-      reviewCount = reviewCount,
-      rating = rating,
-      honeyRating = honeyRating,
-      learningRating = learningRating,
-      satisfactionRating = satisfactionRating,
+      rating = data.totalAvg,
+      honeyRating = data.honeyAvg,
+      learningRating = data.learningAvg,
+      satisfactionRating = data.satisfactionAvg,
     )
   }
 }
@@ -147,17 +129,17 @@ enum class LabelColor(
   val backgroundColor: Color,
   val contentColor: Color,
 ) {
-  ORANGE(
-    backgroundColor = Orange10,
-    contentColor = Orange100,
+  GREEN(
+    backgroundColor = Green10,
+    contentColor = Green100,
   ),
   BLUE(
     backgroundColor = Blue10,
     contentColor = Blue100,
   ),
-  GREEN(
-    backgroundColor = Green10,
-    contentColor = Green100,
+  ORANGE(
+    backgroundColor = Orange10,
+    contentColor = Orange100,
   ),
 }
 
@@ -201,32 +183,42 @@ fun SuwikiReviewStaticsContainerPreview() {
   SuwikiTheme {
     Column {
       SuwikiReviewStatisticsContainer(
-        lectureType = "강의유형",
-        lectureName = "Tilte",
-        openMajor = "개설학과",
-        professor = "교수명",
-        reviewCount = 3,
-        rating = 3.0f,
-        honeyRating = 3.0f,
-        learningRating = 3.0f,
-        satisfactionRating = 3.0f,
-        grade = "label",
-        gradeLabelColor = LabelColor.BLUE,
-        homework = "label",
-        homeworkLabelColor = LabelColor.GREEN,
-        team = "label",
-        teamLabelColor = LabelColor.ORANGE,
+        data = LectureEvaluationExtraAverage(
+          id = 0,
+          info = LectureInfo(
+            semesterList = listOf(),
+            professor = "교수",
+            majorType = "전공",
+            lectureType = "유형",
+            lectureName = "이름",
+          ),
+          totalAvg = 3.0f,
+          satisfactionAvg = 3.0f,
+          honeyAvg = 3.0f,
+          learningAvg = 3.0f,
+          teamAvg = TeamLevel.EXIST,
+          gradeAvg = GradeLevel.DIFFICULT,
+          homeworkAvg = HomeworkLevel.MANY,
+        ),
       )
       SuwikiReviewStatisticsContainer(
-        lectureType = "강의유형",
-        lectureName = "Tilte",
-        openMajor = "개설학과",
-        professor = "교수명",
-        reviewCount = 0,
-        rating = 0.0f,
-        honeyRating = 0.0f,
-        learningRating = 0.0f,
-        satisfactionRating = 0.0f,
+        data = LectureEvaluationExtraAverage(
+          id = 0,
+          info = LectureInfo(
+            semesterList = listOf(),
+            professor = "교수",
+            majorType = "전공",
+            lectureType = "유형",
+            lectureName = "이름",
+          ),
+          totalAvg = 0.0f,
+          satisfactionAvg = 0.0f,
+          honeyAvg = 0.0f,
+          learningAvg = 0.0f,
+          teamAvg = TeamLevel.EXIST,
+          gradeAvg = GradeLevel.DIFFICULT,
+          homeworkAvg = HomeworkLevel.MANY,
+        ),
       )
     }
   }

@@ -140,11 +140,11 @@ class MyEvaluationViewModel @Inject constructor(
 
   fun popBackStack() = intent { postSideEffect(MyEvaluationSideEffect.PopBackStack) }
   fun navigateMyLectureEvaluation(lectureEvaluation: String) = intent {
-    postSideEffect(MyEvaluationSideEffect.NavigateMyLectureEvaluation(lectureEvaluation))
+    postSideEffect(MyEvaluationSideEffect.NavigateLectureEvaluationEditor(lectureEvaluation))
   }
 
   fun navigateMyExamEvaluation(examEvaluation: String) = intent {
-    postSideEffect(MyEvaluationSideEffect.NavigateMyExamEvaluation(examEvaluation))
+    postSideEffect(MyEvaluationSideEffect.NavigateExamEvaluationEditor(examEvaluation))
   }
 
   fun showExamDeleteOrLackPointDialog(id: Long) = intent {

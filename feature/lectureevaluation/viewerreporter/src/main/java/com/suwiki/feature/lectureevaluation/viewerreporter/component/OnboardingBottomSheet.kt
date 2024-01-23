@@ -56,7 +56,7 @@ private fun OnboardingBottomSheetContent(
   onClickSignupButton: () -> Unit = {},
 ) {
   Column(
-    modifier = Modifier.padding(top = 62.dp, bottom = 50.dp, start = 24.dp, end = 24.dp),
+    modifier = Modifier.padding(top = 32.dp, bottom = 32.dp, start = 24.dp, end = 24.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     Image(
@@ -65,18 +65,18 @@ private fun OnboardingBottomSheetContent(
       contentDescription = stringResource(R.string.content_description_logo),
     )
 
-    Spacer(modifier = Modifier.size(107.dp))
+    Spacer(modifier = Modifier.size(64.dp))
 
     OnboardingPager(pagerState)
 
-    Spacer(modifier = Modifier.size(34.dp))
+    Spacer(modifier = Modifier.size(28.dp))
 
     OnboardingPagerIndicator(
       pageCount = ONBOARDING_PAGE_COUNT,
       pagerState = pagerState,
     )
 
-    Spacer(modifier = Modifier.size(50.dp))
+    Spacer(modifier = Modifier.size(48.dp))
 
     SuwikiContainedLargeButton(text = stringResource(R.string.onboarding_button_signup), onClick = onClickSignupButton)
     Spacer(modifier = Modifier.size(12.dp))

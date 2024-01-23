@@ -1,10 +1,14 @@
 package com.suwiki.core.model.lectureevaluation.lecture
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class LectureEvaluationList(
   val data: List<LectureEvaluation>,
   val written: Boolean,
 )
 
+@Stable
 data class LectureEvaluation(
   val id: Long,
   val selectedSemester: String,

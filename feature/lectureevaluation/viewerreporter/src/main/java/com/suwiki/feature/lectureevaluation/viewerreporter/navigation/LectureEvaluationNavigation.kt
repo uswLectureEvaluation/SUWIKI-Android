@@ -4,19 +4,29 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.suwiki.feature.lectureevaluation.viewerreporter.LectureEvaluationRoute
+import com.suwiki.feature.lectureevaluation.viewerreporter.detail.LectureEvaluationDetailRoute
 
 fun NavController.navigateLectureEvaluation(navOptions: NavOptions) {
   navigate(LectureEvaluationRoute.route, navOptions)
 }
 
+fun NavController.navigateLectureEvaluationDetail(id: String) {
+  navigate(LectureEvaluationRoute.detailRoute(id))
+}
+
 fun NavGraphBuilder.lectureEvaluationNavGraph(
   padding: PaddingValues,
   argumentName: String,
+  popBackStack: () -> Unit,
   navigateLogin: () -> Unit,
   navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
+  navigateLectureEvaluationDetail: (String) -> Unit,
+  onShowToast: (String) -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
   composable(route = LectureEvaluationRoute.route) { navBackStackEntry ->
@@ -27,6 +37,22 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
       navigateLogin = navigateLogin,
       navigateSignUp = navigateSignUp,
       navigateOpenMajor = navigateOpenMajor,
+      navigateLectureEvaluationDetail = navigateLectureEvaluationDetail,
+      handleException = handleException,
+    )
+  }
+
+  composable(
+    route = LectureEvaluationRoute.detailRoute("{${LectureEvaluationRoute.lectureEvaluationDetail}}"),
+    arguments = listOf(
+      navArgument(LectureEvaluationRoute.lectureEvaluationDetail) {
+        type = NavType.StringType
+      },
+    ),
+  ) {
+    LectureEvaluationDetailRoute(
+      popBackStack = popBackStack,
+      onShowToast = onShowToast,
       handleException = handleException,
     )
   }
@@ -34,4 +60,7 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
 
 object LectureEvaluationRoute {
   const val route = "lecture-evaluation"
+  const val lectureEvaluationDetail = "lecture-evaluation-detail"
+
+  fun detailRoute(lectureEvaluationDetail: String) = "lecture-evaluation-detail/$lectureEvaluationDetail"
 }

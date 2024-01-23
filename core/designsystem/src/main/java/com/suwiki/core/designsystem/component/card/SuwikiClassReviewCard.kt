@@ -33,7 +33,6 @@ import com.suwiki.core.designsystem.component.badge.SuwikiBadge
 import com.suwiki.core.designsystem.shadow.cardShadow
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -48,7 +47,6 @@ fun SuwikiClassReviewCard(
   openMajor: String,
   professor: String,
   rating: Float,
-  reviewCount: Int? = null,
   classType: String,
   onClick: () -> Unit,
 ) {
@@ -102,6 +100,7 @@ fun SuwikiClassReviewCard(
       Spacer(modifier = Modifier.height(3.dp))
       Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
         modifier = Modifier.wrapContentWidth(),
       ) {
         Image(
@@ -113,13 +112,6 @@ fun SuwikiClassReviewCard(
           style = SuwikiTheme.typography.body1,
           color = Primary,
         )
-        if (reviewCount != null) {
-          Text(
-            text = "($reviewCount)",
-            style = SuwikiTheme.typography.body3,
-            color = Gray95,
-          )
-        }
       }
     }
 
@@ -141,7 +133,6 @@ fun CardPreview() {
         openMajor = "개설학과",
         professor = "교수명",
         rating = 4.0f,
-        reviewCount = 3,
         classType = "강의 유형",
         onClick = {},
       )

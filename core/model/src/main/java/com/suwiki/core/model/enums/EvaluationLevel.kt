@@ -7,6 +7,16 @@ enum class GradeLevel(val value: Int) {
   EASY(2),
   NORMAL(1),
   DIFFICULT(0),
+  ;
+
+  companion object {
+    fun valueOf(value: Int): GradeLevel = when (value) {
+      0 -> DIFFICULT
+      1 -> NORMAL
+      2 -> EASY
+      else -> throw IllegalArgumentException("존재하지 않는 GradeLevel 입니다.")
+    }
+  }
 }
 
 @Stable
@@ -14,12 +24,31 @@ enum class HomeworkLevel(val value: Int) {
   NONE(0),
   NORMAL(1),
   MANY(2),
+  ;
+
+  companion object {
+    fun valueOf(value: Int): HomeworkLevel = when (value) {
+      0 -> NONE
+      1 -> NORMAL
+      2 -> MANY
+      else -> throw IllegalArgumentException("존재하지 않는 HomeworkLevel 입니다.")
+    }
+  }
 }
 
 @Stable
 enum class TeamLevel(val value: Int) {
   NOT_EXIST(0),
   EXIST(1),
+  ;
+
+  companion object {
+    fun valueOf(value: Int): TeamLevel = when (value) {
+      0 -> NOT_EXIST
+      1 -> EXIST
+      else -> throw IllegalArgumentException("존재하지 않는 TeamLevel 입니다.")
+    }
+  }
 }
 
 // TODO api v2 리팩토링 필요

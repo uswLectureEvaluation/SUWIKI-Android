@@ -22,7 +22,7 @@ data class ExamEvaluationResponse(
   val id: Long,
   val selectedSemester: String,
   val examInfo: String,
-  val examType: String?,
+  val examType: String = "",
   val examDifficulty: String,
   val content: String,
 )

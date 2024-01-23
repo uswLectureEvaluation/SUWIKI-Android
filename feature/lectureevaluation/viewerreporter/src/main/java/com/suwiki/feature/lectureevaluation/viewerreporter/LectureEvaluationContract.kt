@@ -32,6 +32,7 @@ sealed interface LectureEvaluationSideEffect {
   data class NavigateOpenMajor(val selectedOpenMajor: String) : LectureEvaluationSideEffect
   data object NavigateLogin : LectureEvaluationSideEffect
   data object NavigateSignUp : LectureEvaluationSideEffect
+  data class NavigateLectureEvaluationDetail(val id: String) : LectureEvaluationSideEffect
   data object OpenTermWebSite : LectureEvaluationSideEffect
   data object OpenPersonalPolicyWebSite : LectureEvaluationSideEffect
   data object ScrollToTop : LectureEvaluationSideEffect

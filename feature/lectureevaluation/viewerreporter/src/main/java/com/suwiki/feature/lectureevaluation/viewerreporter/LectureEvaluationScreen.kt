@@ -43,6 +43,9 @@ import com.suwiki.feature.lectureevaluation.viewerreporter.component.OnboardingB
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.launch
+import me.onebone.toolbar.CollapsingToolbarScaffold
+import me.onebone.toolbar.ScrollStrategy
+import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -54,6 +57,7 @@ fun LectureEvaluationRoute(
   selectedOpenMajor: String,
   navigateLogin: () -> Unit,
   navigateSignUp: () -> Unit,
+  navigateLectureEvaluationDetail: (String) -> Unit,
   navigateOpenMajor: (String) -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
@@ -77,6 +81,7 @@ fun LectureEvaluationRoute(
 
       is LectureEvaluationSideEffect.HandleException -> handleException(sideEffect.throwable)
       is LectureEvaluationSideEffect.NavigateOpenMajor -> navigateOpenMajor(sideEffect.selectedOpenMajor)
+      is LectureEvaluationSideEffect.NavigateLectureEvaluationDetail -> navigateLectureEvaluationDetail(sideEffect.id)
     }
   }
 
@@ -112,6 +117,7 @@ fun LectureEvaluationRoute(
     onClickTermArrowIcon = viewModel::openTermWebSite,
     onClickPersonalCheckIcon = viewModel::togglePersonalPolicyChecked,
     onClickPersonalArrowIcon = viewModel::openPersonalPolicyWebSite,
+    onClickLectureEvaluationItem = viewModel::navigateLectureEvaluationDetail,
     onClickAgreementButton = {
       viewModel.hideAgreementBottomSheet()
       viewModel.hideOnboardingBottomSheet()
@@ -153,33 +159,41 @@ fun LectureEvaluationScreen(
   onClickPersonalCheckIcon: () -> Unit = {},
   onClickPersonalArrowIcon: () -> Unit = {},
   onClickAgreementButton: () -> Unit = {},
+  onClickLectureEvaluationItem: (String) -> Unit = {},
 ) {
-  Column(
+  val state = rememberCollapsingToolbarScaffoldState()
+
+  CollapsingToolbarScaffold(
     modifier = Modifier
       .fillMaxSize()
       .padding(padding),
+    state = state,
+    scrollStrategy = ScrollStrategy.EnterAlways,
+    toolbar = {
+      Column {
+        SuwikiEvaluationAppBar(
+          title = stringResource(R.string.word_lecture_evaluation),
+          major = uiState.selectedOpenMajor,
+          onClickMajor = { onClickSelectedOpenMajor(uiState.selectedOpenMajor) },
+        )
+        SuwikiSearchBarWithFilter(
+          placeHolder = stringResource(R.string.word_search_placeholder),
+          value = uiState.searchValue,
+          onValueChange = onValueChangeSearchBar,
+          onClickClearButton = onClickSearchBarClearButton,
+          onClickFilterButton = showAlignBottomSheet,
+          onClickSearchButton = onClickSearchButton,
+        )
+        Text(
+          modifier = Modifier
+            .padding(start = 24.dp, top = 10.dp),
+          text = uiState.alignValue.toText(),
+          style = SuwikiTheme.typography.body2,
+          color = Gray95,
+        )
+      }
+    },
   ) {
-    SuwikiEvaluationAppBar(
-      title = stringResource(R.string.word_lecture_evaluation),
-      major = uiState.selectedOpenMajor,
-      onClickMajor = { onClickSelectedOpenMajor(uiState.selectedOpenMajor) },
-    )
-    SuwikiSearchBarWithFilter(
-      placeHolder = stringResource(R.string.word_search_placeholder),
-      value = uiState.searchValue,
-      onValueChange = onValueChangeSearchBar,
-      onClickClearButton = onClickSearchBarClearButton,
-      onClickFilterButton = showAlignBottomSheet,
-      onClickSearchButton = onClickSearchButton,
-    )
-    Text(
-      modifier = Modifier
-        .padding(start = 24.dp, top = 10.dp),
-      text = uiState.alignValue.toText(),
-      style = SuwikiTheme.typography.body2,
-      color = Gray95,
-    )
-
     if (uiState.showSearchEmptyResultScreen) {
       EmptyText(stringResource(R.string.word_empty_search_result))
     }
@@ -187,6 +201,7 @@ fun LectureEvaluationScreen(
     LectureEvaluationLazyColumn(
       listState = listState,
       openLectureEvaluationInfoList = uiState.lectureEvaluationList,
+      onClickOpenLectureEvaluationDetail = onClickLectureEvaluationItem,
     )
   }
 
