@@ -7,6 +7,7 @@ import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.ui.extension.decodeFromUri
+import com.suwiki.domain.lectureevaluation.editor.usecase.exam.PostExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.LectureEvaluationEditorSideEffect
 import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute
@@ -26,6 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ExamEvaluationEditorViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
+  val postExamEvaluationUseCase: PostExamEvaluationUseCase,
   val updateExamEvaluationUseCase: UpdateExamEvaluationUseCase,
 ) : ContainerHost<ExamEvaluationEditorState, ExamEvaluationEditorSideEffect>, ViewModel() {
   override val container: Container<ExamEvaluationEditorState, ExamEvaluationEditorSideEffect> =
@@ -33,6 +35,7 @@ class ExamEvaluationEditorViewModel @Inject constructor(
 
   private val myExamEvaluation = savedStateHandle.get<String>(EvaluationEditorRoute.examEvaluation)!!
   private val myExamEvaluationItem: MyExamEvaluation = Json.decodeFromUri(myExamEvaluation)
+  private val isEditMode = myExamEvaluationItem.content.isNotEmpty()
 
   suspend fun initData() = intent {
     showLoadingScreen()
@@ -61,7 +64,8 @@ class ExamEvaluationEditorViewModel @Inject constructor(
     }
     hideLoadingScreen()
   }
-  fun updateExamEvaluation() = intent {
+
+  fun postOrUpdateExamEvaluation() = intent {
     if (state.examEvaluation.length < 30) {
       postSideEffect(ExamEvaluationEditorSideEffect.ShowInputMoreTextToast)
       return@intent
@@ -77,6 +81,32 @@ class ExamEvaluationEditorViewModel @Inject constructor(
       return@intent
     }
 
+    if (isEditMode) updateExamEvaluation()
+    else postExamEvaluation()
+  }
+
+  private fun postExamEvaluation() = intent {
+    postExamEvaluationUseCase(
+      PostExamEvaluationUseCase.Param(
+        lectureId = myExamEvaluationItem.id,
+        lectureName = myExamEvaluationItem.lectureName,
+        professor = myExamEvaluationItem.professor,
+        selectedSemester = state.selectedSemester,
+        examInfo = state.examInfo.filter { it.isNotBlank() }.joinToString(", "),
+        examType = state.selectedExamType,
+        examDifficulty = state.examLevel!!.value,
+        content = state.examEvaluation,
+      ),
+    )
+      .onSuccess {
+        popBackStack()
+      }
+      .onFailure {
+        postSideEffect(ExamEvaluationEditorSideEffect.HandleException(it))
+      }
+  }
+
+  private fun updateExamEvaluation() = intent {
     updateExamEvaluationUseCase(
       UpdateExamEvaluationUseCase.Param(
         lectureId = myExamEvaluationItem.id,

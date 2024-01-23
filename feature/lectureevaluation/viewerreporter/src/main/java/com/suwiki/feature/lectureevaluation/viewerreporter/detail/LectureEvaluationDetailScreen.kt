@@ -254,6 +254,8 @@ fun LectureEvaluationDetailScreen(
                       difficulty = it.examDifficulty,
                       examType = it.examType,
                       content = it.content,
+                      semester = it.selectedSemester,
+                      examInfo = it.examInfo,
                       onClickButton = {},
                     )
                   }

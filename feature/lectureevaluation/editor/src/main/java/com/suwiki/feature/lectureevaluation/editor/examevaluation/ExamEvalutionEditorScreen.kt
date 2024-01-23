@@ -87,7 +87,7 @@ fun ExamEvaluationEditorRoute(
     onClickExamLevelChip = viewModel::updateExamLevel,
     onClickExamInfoChip = viewModel::updateExamInfo,
     onExamEvaluationValueChange = viewModel::updateMyExamEvaluationValue,
-    onClickExamEvaluationReviseButton = viewModel::updateExamEvaluation,
+    onClickExamEvaluationReviseButton = viewModel::postOrUpdateExamEvaluation,
   )
 }
 
