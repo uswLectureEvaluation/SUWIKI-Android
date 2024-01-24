@@ -2,16 +2,23 @@ package com.suwiki.feature.lectureevaluation.viewerreporter.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.suwiki.core.model.enums.LectureEvaluationTab
 import com.suwiki.core.model.exception.UserPointLackException
+import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.BuyExamUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.GetExamEvaluationListUseCase
+import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.ReportExamUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationExtraAverageUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationListUseCase
+import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.ReportLectureUseCase
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.LectureEvaluationRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.joinAll
+import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -26,6 +33,8 @@ class LectureEvaluationDetailViewModel @Inject constructor(
   private val getLectureEvaluationExtraAverageUseCase: GetLectureEvaluationExtraAverageUseCase,
   private val getLectureEvaluationListUseCase: GetLectureEvaluationListUseCase,
   private val getExamEvaluationListUseCase: GetExamEvaluationListUseCase,
+  private val reportExamUseCase: ReportExamUseCase,
+  private val reportLectureUseCase: ReportLectureUseCase,
   private val buyExamUseCase: BuyExamUseCase,
 ) : ContainerHost<LectureEvaluationDetailState, LectureEvaluationDetailSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationDetailState, LectureEvaluationDetailSideEffect> = container(
@@ -37,6 +46,53 @@ class LectureEvaluationDetailViewModel @Inject constructor(
   private var isLastLectureEvaluation = false
   private var examEvaluationPage = 1
   private var isLastExamEvaluation = false
+
+  private var lectureReportId: Long = 0
+  private var examReportId: Long = 0
+
+  fun showLectureReportDialog(lectureReportId: Long) = intent {
+    this@LectureEvaluationDetailViewModel.lectureReportId = lectureReportId
+    reduce {
+      state.copy(
+        showLectureReportDialog = true,
+      )
+    }
+  }
+
+  fun hideLectureReportDialog() = intent {
+    reduce {
+      state.copy(
+        showLectureReportDialog = false,
+      )
+    }
+  }
+
+  fun showExamReportDialog(examReportId: Long) = intent {
+    this@LectureEvaluationDetailViewModel.examReportId = examReportId
+    reduce {
+      state.copy(
+        showExamReportDialog = true,
+      )
+    }
+  }
+
+  fun hideExamReportDialog() = intent {
+    reduce {
+      state.copy(
+        showExamReportDialog = false,
+      )
+    }
+  }
+
+  fun reportLecture() = intent {
+    reportLectureUseCase(lectureReportId)
+      .onFailure { postSideEffect(LectureEvaluationDetailSideEffect.HandleException(it)) }
+  }
+
+  fun reportExam() = intent {
+    reportExamUseCase(examReportId)
+      .onFailure { postSideEffect(LectureEvaluationDetailSideEffect.HandleException(it)) }
+  }
 
   fun syncPager(currentPage: Int) = intent { reduce { state.copy(currentTabPage = currentPage) } }
 
@@ -134,6 +190,45 @@ class LectureEvaluationDetailViewModel @Inject constructor(
           else -> postSideEffect(LectureEvaluationDetailSideEffect.HandleException(throwable))
         }
       }
+  }
+
+  fun navigateEvaluationEditor() = intent {
+    if (state.currentTabPage == LectureEvaluationTab.LECTURE_EVALUATION.position) {
+      if (state.isLectureEvaluationWritten) {
+        postSideEffect(LectureEvaluationDetailSideEffect.ShowAlreadyWriteToast)
+        return@intent
+      }
+
+      postSideEffect(
+        LectureEvaluationDetailSideEffect.NavigateLectureEvaluationEditor(
+          Json.encodeToUri(
+            MyLectureEvaluation(
+              id = evaluationId,
+              lectureInfo = state.lectureEvaluationExtraAverage.info,
+            ),
+          ),
+        ),
+      )
+    } else {
+      if (state.isExamEvaluationWritten) {
+        postSideEffect(LectureEvaluationDetailSideEffect.ShowAlreadyWriteToast)
+        return@intent
+      }
+
+      postSideEffect(
+        LectureEvaluationDetailSideEffect.NavigateExamEvaluationEditor(
+          Json.encodeToUri(
+            MyExamEvaluation(
+              id = evaluationId,
+              lectureName = state.lectureEvaluationExtraAverage.info.lectureName,
+              professor = state.lectureEvaluationExtraAverage.info.professor,
+              majorType = state.lectureEvaluationExtraAverage.info.majorType,
+              semesterList = state.lectureEvaluationExtraAverage.info.semesterList,
+            ),
+          ),
+        ),
+      )
+    }
   }
 
   fun popBackStack() = intent { postSideEffect(LectureEvaluationDetailSideEffect.PopBackStack) }

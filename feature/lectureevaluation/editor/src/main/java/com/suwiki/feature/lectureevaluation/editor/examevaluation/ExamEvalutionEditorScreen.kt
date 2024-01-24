@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.editor.examevaluation
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -46,8 +47,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun MyExamEvaluationEditRoute(
-  viewModel: MyExamEvaluationEditViewModel = hiltViewModel(),
+fun ExamEvaluationEditorRoute(
+  viewModel: ExamEvaluationEditorViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
@@ -57,12 +58,15 @@ fun MyExamEvaluationEditRoute(
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyExamEvaluationEditSideEffect.PopBackStack -> popBackStack()
-      MyExamEvaluationEditSideEffect.ShowMyExamEvaluationDeleteToast -> {
+      ExamEvaluationEditorSideEffect.PopBackStack -> popBackStack()
+      ExamEvaluationEditorSideEffect.ShowExamEvaluationDeleteToast -> {
         onShowToast(context.getString(R.string.exam_evaluation_delete_toast_msg))
       }
 
-      is MyExamEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
+      is ExamEvaluationEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
+      ExamEvaluationEditorSideEffect.ShowInputMoreTextToast -> onShowToast(context.getString(R.string.toast_need_input_30))
+      ExamEvaluationEditorSideEffect.ShowSelectExamTypeToast -> onShowToast(context.getString(R.string.toast_select_exam_type))
+      ExamEvaluationEditorSideEffect.ShowSelectSemesterToast -> onShowToast(context.getString(R.string.toast_select_semester))
     }
   }
 
@@ -70,7 +74,7 @@ fun MyExamEvaluationEditRoute(
     viewModel.initData()
   }
 
-  MyExamEvaluationEditScreen(
+  ExamEvaluationEditorScreen(
     scrollState = scrollState,
     uiState = uiState,
     popBackStack = viewModel::popBackStack,
@@ -83,15 +87,15 @@ fun MyExamEvaluationEditRoute(
     onClickExamLevelChip = viewModel::updateExamLevel,
     onClickExamInfoChip = viewModel::updateExamInfo,
     onExamEvaluationValueChange = viewModel::updateMyExamEvaluationValue,
-    onClickExamEvaluationReviseButton = viewModel::updateExamEvaluation,
+    onClickExamEvaluationReviseButton = viewModel::postOrUpdateExamEvaluation,
   )
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MyExamEvaluationEditScreen(
+fun ExamEvaluationEditorScreen(
   scrollState: ScrollState,
-  uiState: MyExamEvaluationEditState,
+  uiState: ExamEvaluationEditorState,
   popBackStack: () -> Unit = {},
   onClickSemesterButton: () -> Unit = {},
   onClickSemesterItem: (Int) -> Unit = {},
@@ -119,18 +123,19 @@ fun MyExamEvaluationEditScreen(
     Column(
       modifier = Modifier
         .weight(1f)
-        .padding(24.dp)
+        .padding(horizontal = 24.dp)
         .verticalScroll(scrollState),
     ) {
       Spacer(modifier = Modifier.height(20.dp))
       SuwikiSelectionContainer(
-        title = uiState.selectedSemester ?: stringResource(R.string.word_choose_semester),
+        title = uiState.selectedSemester?.ifEmpty { stringResource(R.string.word_choose_semester) } ?: stringResource(R.string.word_choose_semester),
         onClick = onClickSemesterButton,
       )
       Spacer(modifier = Modifier.height(14.dp))
 
       SuwikiSelectionContainer(
-        title = uiState.selectedExamType ?: stringResource(R.string.word_choose_test_type),
+        title = uiState.selectedExamType?.ifEmpty { stringResource(R.string.word_choose_test_type) }
+          ?: stringResource(R.string.word_choose_test_type),
         onClick = onClickExamTypeButton,
       )
 
@@ -183,15 +188,19 @@ fun MyExamEvaluationEditScreen(
       )
     }
 
-    SuwikiContainedMediumButton(
-      modifier = Modifier
-        .padding(24.dp)
-        .fillMaxWidth()
-        .height(50.dp)
-        .imePadding(),
-      text = stringResource(R.string.text_complete),
-      onClick = onClickExamEvaluationReviseButton,
-    )
+    Box(modifier = Modifier.imePadding()) {
+      SuwikiContainedMediumButton(
+        modifier = Modifier
+          .padding(24.dp)
+          .fillMaxWidth()
+          .height(50.dp)
+          .imePadding(),
+        text = stringResource(R.string.text_complete),
+        enabled = uiState.buttonEnabled,
+        clickable = uiState.buttonEnabled,
+        onClick = onClickExamEvaluationReviseButton,
+      )
+    }
   }
 
   SuwikiSelectBottomSheet(
@@ -199,7 +208,7 @@ fun MyExamEvaluationEditScreen(
     onDismissRequest = onExamTypeBottomSheetDismissRequest,
     onClickItem = { onClickExamTypeItem(it) },
     itemList = ExamType.entries.map { it.value }.toPersistentList(),
-    title = stringResource(R.string.word_choose_semester),
+    title = stringResource(R.string.word_choose_test_type),
     selectedPosition = uiState.selectedExamTypePosition,
   )
 
@@ -208,7 +217,7 @@ fun MyExamEvaluationEditScreen(
     onDismissRequest = onSemesterBottomSheetDismissRequest,
     onClickItem = { onClickSemesterItem(it) },
     itemList = uiState.semesterList,
-    title = stringResource(R.string.word_choose_test_type),
+    title = stringResource(R.string.word_choose_semester),
     selectedPosition = uiState.selectedSemesterPosition,
   )
 
@@ -239,13 +248,13 @@ fun LectureExamEditContainer(
 
 @Preview
 @Composable
-fun MyExamEvaluationEditScreenPreview() {
+fun ExamEvaluationEditorScreenPreview() {
   val scrollState = rememberScrollState()
 
   SuwikiTheme {
-    MyExamEvaluationEditScreen(
+    ExamEvaluationEditorScreen(
       scrollState = scrollState,
-      uiState = MyExamEvaluationEditState(),
+      uiState = ExamEvaluationEditorState(),
     )
   }
 }

@@ -3,7 +3,7 @@ package com.suwiki.data.lectureevaluation.viewerreporter.datasource
 interface RemoteExamReportDataSource {
 
   suspend fun reportExam(
-    evaluateIdx: Long,
+    examIdx: Long,
     content: String = "",
   )
 }

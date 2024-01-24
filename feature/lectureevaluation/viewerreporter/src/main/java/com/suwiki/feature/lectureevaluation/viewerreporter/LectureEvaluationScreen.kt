@@ -117,7 +117,7 @@ fun LectureEvaluationRoute(
     onClickTermArrowIcon = viewModel::openTermWebSite,
     onClickPersonalCheckIcon = viewModel::togglePersonalPolicyChecked,
     onClickPersonalArrowIcon = viewModel::openPersonalPolicyWebSite,
-    onClickLectureEvaluationItem = viewModel::navigateLectureEvaluationDetail,
+    onClickLectureEvaluationItem = viewModel::navigateLectureEvaluationDetailIfLoggedIn,
     onClickAgreementButton = {
       viewModel.hideAgreementBottomSheet()
       viewModel.hideOnboardingBottomSheet()

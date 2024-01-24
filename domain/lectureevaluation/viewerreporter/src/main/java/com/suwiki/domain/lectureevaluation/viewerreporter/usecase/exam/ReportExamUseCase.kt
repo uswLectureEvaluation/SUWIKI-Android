@@ -7,7 +7,7 @@ import javax.inject.Inject
 class ReportExamUseCase @Inject constructor(
   private val examReportRepository: ExamReportRepository,
 ) {
-  suspend operator fun invoke(evaluateIdx: Long): Result<Unit> = runCatchingIgnoreCancelled {
-    examReportRepository.reportExam(evaluateIdx = evaluateIdx)
+  suspend operator fun invoke(examIdx: Long): Result<Unit> = runCatchingIgnoreCancelled {
+    examReportRepository.reportExam(examIdx = examIdx)
   }
 }

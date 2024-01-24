@@ -26,6 +26,8 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
   navigateSignUp: () -> Unit,
   navigateOpenMajor: (String) -> Unit,
   navigateLectureEvaluationDetail: (String) -> Unit,
+  navigateLectureEvaluationEditor: (String) -> Unit,
+  navigateExamEvaluationEditor: (String) -> Unit,
   onShowToast: (String) -> Unit,
   handleException: (Throwable) -> Unit,
 ) {
@@ -51,6 +53,8 @@ fun NavGraphBuilder.lectureEvaluationNavGraph(
     ),
   ) {
     LectureEvaluationDetailRoute(
+      navigateLectureEvaluationEditor = navigateLectureEvaluationEditor,
+      navigateExamEvaluationEditor = navigateExamEvaluationEditor,
       popBackStack = popBackStack,
       onShowToast = onShowToast,
       handleException = handleException,

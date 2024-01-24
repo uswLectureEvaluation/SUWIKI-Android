@@ -11,6 +11,7 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
 ) : RemoteLectureEditorDataSource {
 
   override suspend fun postLectureEvaluation(
+    lectureId: Long,
     lectureName: String,
     professor: String,
     selectedSemester: String,
@@ -36,6 +37,7 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
     )
 
     return lectureApi.postLectureEvaluation(
+      lectureId,
       request,
     ).getOrThrow()
   }

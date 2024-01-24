@@ -14,11 +14,13 @@ interface LectureEditorApi {
 
     const val EVALUATE_POST = "/evaluate-posts"
     const val QUERY_EVALUATE_ID = "evaluateIdx"
+    const val QUERY_LECTURE_ID = "lectureId"
   }
 
   // 강의 평가 쓰기
   @POST(EVALUATE_POST)
   suspend fun postLectureEvaluation(
+    @Query(QUERY_LECTURE_ID) lectureId: Long,
     @Body postLectureEvaluationRequest: PostLectureEvaluationRequest,
   ): ApiResult<Unit>
 

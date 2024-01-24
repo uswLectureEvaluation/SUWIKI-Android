@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReportExamRequest(
-  val evaluateIdx: Long,
+  val examIdx: Long,
   val content: String = "",
 )

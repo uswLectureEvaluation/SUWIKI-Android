@@ -29,6 +29,8 @@ fun SuwikiExamReviewContainer(
   modifier: Modifier = Modifier,
   difficulty: String,
   examType: String,
+  semester: String,
+  examInfo: String,
   content: String,
   isAuthor: Boolean = false,
   onClickButton: () -> Unit,
@@ -53,12 +55,12 @@ fun SuwikiExamReviewContainer(
       }
       SuwikiBadge(
         color = BadgeColor.Gray,
-        text = stringResource(id = R.string.word_semester),
+        text = semester,
       )
       Spacer(modifier = Modifier.width(6.dp))
       SuwikiBadge(
         color = BadgeColor.Gray,
-        text = stringResource(id = R.string.word_type_exam),
+        text = examType,
       )
       Spacer(modifier = Modifier.weight(1f))
       SuwikiContainedSmallButton(text = buttonText, onClick = onClickButton)
@@ -90,7 +92,7 @@ fun SuwikiExamReviewContainer(
         color = Gray95,
       )
       Text(
-        text = examType,
+        text = examInfo,
         style = SuwikiTheme.typography.caption1,
         color = Black,
       )
@@ -112,16 +114,20 @@ fun SuwikiExamReviewContainerPreview() {
       SuwikiExamReviewContainer(
         isAuthor = false,
         difficulty = "어려움",
-        examType = "응용,실습,과제,PPT",
+        examInfo = "응용,실습,과제,PPT",
         content = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
         onClickButton = {},
+        examType = "중간고사",
+        semester = "2023-1",
       )
       SuwikiExamReviewContainer(
         isAuthor = true,
         difficulty = "어려움",
-        examType = "응용,실습,과제,PPT",
+        examType = "중간고사",
         content = "거의 한 학기 팀플하시는데... 팀원 잘 만나면 잘 모르겠네요. 굉장히 오픈 마인드시긴해요.",
         onClickButton = {},
+        semester = "2023-1",
+        examInfo = "응용,실습,과제,PPT",
       )
     }
   }

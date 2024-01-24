@@ -25,7 +25,6 @@ class UpdateLectureEvaluationUseCase @Inject constructor(
 
   data class Param(
     val lectureId: Long,
-    val professor: String,
     val selectedSemester: String,
     val satisfaction: Float,
     val learning: Float,

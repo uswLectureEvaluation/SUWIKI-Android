@@ -10,12 +10,12 @@ class RemoteExamReportDataSourceImpl @Inject constructor(
 ) : RemoteExamReportDataSource {
 
   override suspend fun reportExam(
-    evaluateIdx: Long,
+    examIdx: Long,
     content: String,
   ) {
     return examApi.reportExam(
       ReportExamRequest(
-        evaluateIdx = evaluateIdx,
+        examIdx = examIdx,
         content = content,
       ),
     ).getOrThrow()

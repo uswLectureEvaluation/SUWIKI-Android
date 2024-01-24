@@ -12,4 +12,5 @@ dependencies {
   implementation(projects.domain.timetable)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.bundles.glance)
+  implementation(libs.compose.toolbar)
 }

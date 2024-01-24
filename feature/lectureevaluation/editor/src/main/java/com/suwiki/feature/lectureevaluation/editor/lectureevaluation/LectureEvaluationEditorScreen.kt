@@ -3,6 +3,7 @@ package com.suwiki.feature.lectureevaluation.editor.lectureevaluation
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -50,8 +51,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.Locale
 
 @Composable
-fun MyLectureEvaluationEditRoute(
-  viewModel: MyLectureEvaluationEditViewModel = hiltViewModel(),
+fun LectureEvaluationEditorRoute(
+  viewModel: LectureEvaluationEditorViewModel = hiltViewModel(),
   popBackStack: () -> Unit = {},
   onShowToast: (String) -> Unit = {},
   handleException: (Throwable) -> Unit,
@@ -61,11 +62,13 @@ fun MyLectureEvaluationEditRoute(
   val uiState = viewModel.collectAsState().value
   viewModel.collectSideEffect { sideEffect ->
     when (sideEffect) {
-      MyLectureEvaluationEditSideEffect.PopBackStack -> popBackStack()
-      MyLectureEvaluationEditSideEffect.ShowMyLectureEvaluationDeleteToast -> {
+      LectureEvaluationEditorSideEffect.PopBackStack -> popBackStack()
+      LectureEvaluationEditorSideEffect.ShowLectureEvaluationDeleteToast -> {
         onShowToast(context.getString(R.string.lecture_evaluation_delete_toast_msg))
       }
-      is MyLectureEvaluationEditSideEffect.HandleException -> handleException(sideEffect.throwable)
+      is LectureEvaluationEditorSideEffect.HandleException -> handleException(sideEffect.throwable)
+      LectureEvaluationEditorSideEffect.ShowInputMoreTextToast -> onShowToast(context.getString(R.string.toast_need_input_30))
+      LectureEvaluationEditorSideEffect.ShowSelectSemesterToast -> onShowToast(context.getString(R.string.toast_select_semester))
     }
   }
 
@@ -81,7 +84,7 @@ fun MyLectureEvaluationEditRoute(
     viewModel.updateTotalAvg()
   }
 
-  MyLectureEvaluationEditScreen(
+  LectureEvaluationEditorScreen(
     uiState = uiState,
     scrollState = scrollState,
     popBackStack = viewModel::popBackStack,
@@ -95,13 +98,13 @@ fun MyLectureEvaluationEditRoute(
     onClickGradeChip = viewModel::updateGradeLevel,
     onClickHomeworkChip = viewModel::updateHomeworkLevel,
     onClickTeamChip = viewModel::updateTeamLevel,
-    onClickLectureEvaluationReviseButton = viewModel::updateLectureEvaluation,
+    onClickLectureEvaluationReviseButton = viewModel::postOrUpdateLectureEvaluation,
   )
 }
 
 @Composable
-fun MyLectureEvaluationEditScreen(
-  uiState: MyLectureEvaluationEditState,
+fun LectureEvaluationEditorScreen(
+  uiState: LectureEvaluationEditorState,
   scrollState: ScrollState,
   popBackStack: () -> Unit,
   onClickSemesterButton: () -> Unit = {},
@@ -131,7 +134,7 @@ fun MyLectureEvaluationEditScreen(
     Column(
       modifier = Modifier
         .weight(1f)
-        .padding(24.dp)
+        .padding(horizontal = 24.dp)
         .verticalScroll(scrollState),
     ) {
       Spacer(modifier = Modifier.height(20.dp))
@@ -142,7 +145,7 @@ fun MyLectureEvaluationEditScreen(
           .fillMaxWidth(),
       ) {
         SuwikiSelectionContainer(
-          title = uiState.selectedSemester,
+          title = uiState.selectedSemester.ifEmpty { stringResource(id = R.string.word_choose_semester) },
           onClick = onClickSemesterButton,
         )
 
@@ -267,15 +270,19 @@ fun MyLectureEvaluationEditScreen(
       )
     }
 
-    SuwikiContainedMediumButton(
-      modifier = Modifier
-        .padding(24.dp)
-        .fillMaxWidth()
-        .height(50.dp)
-        .imePadding(),
-      text = stringResource(R.string.text_complete),
-      onClick = onClickLectureEvaluationReviseButton,
-    )
+    Box(modifier = Modifier.imePadding()) {
+      SuwikiContainedMediumButton(
+        modifier = Modifier
+          .padding(24.dp)
+          .fillMaxWidth()
+          .height(50.dp)
+          .imePadding(),
+        text = stringResource(R.string.text_complete),
+        enabled = uiState.buttonEnabled,
+        clickable = uiState.buttonEnabled,
+        onClick = onClickLectureEvaluationReviseButton,
+      )
+    }
   }
 
   SuwikiSelectBottomSheet(
@@ -314,12 +321,12 @@ fun LectureEvaluationEditContainer(
 
 @Preview
 @Composable
-fun MyLectureEvaluationEditPreview() {
+fun LectureEvaluationEditorPreview() {
   SuwikiTheme {
     val scrollState = rememberScrollState()
 
-    MyLectureEvaluationEditScreen(
-      uiState = MyLectureEvaluationEditState(),
+    LectureEvaluationEditorScreen(
+      uiState = LectureEvaluationEditorState(),
       scrollState = scrollState,
       popBackStack = {},
     )

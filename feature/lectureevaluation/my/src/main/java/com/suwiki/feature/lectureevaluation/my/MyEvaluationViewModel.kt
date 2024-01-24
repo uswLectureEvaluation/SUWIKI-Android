@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -41,52 +43,58 @@ class MyEvaluationViewModel @Inject constructor(
   private var toDeleteExamId: Long = 0
   private var toDeleteLectureId: Long = 0
 
+  private val mutex: Mutex = Mutex()
+
   fun getMyLectureEvaluations(needClear: Boolean = false) = intent {
-    val currentList = if (needClear) {
-      lectureEvaluationPage = 1
-      isLastLectureEvaluation = false
-      persistentListOf()
-    } else {
-      state.myLectureEvaluationList
-    }
+    mutex.withLock {
+      val currentList = if (needClear) {
+        lectureEvaluationPage = 1
+        isLastLectureEvaluation = false
+        persistentListOf()
+      } else {
+        state.myLectureEvaluationList
+      }
 
-    if (isLastLectureEvaluation) return@intent
+      if (isLastLectureEvaluation) return@intent
 
-    getMyLectureEvaluationListUseCase(lectureEvaluationPage)
-      .onSuccess {
-        reduce {
-          lectureEvaluationPage++
-          isLastLectureEvaluation = it.isEmpty()
-          state.copy(myLectureEvaluationList = currentList.addAll(it).distinctBy { it.id }.toPersistentList())
+      getMyLectureEvaluationListUseCase(lectureEvaluationPage)
+        .onSuccess {
+          reduce {
+            lectureEvaluationPage++
+            isLastLectureEvaluation = it.isEmpty()
+            state.copy(myLectureEvaluationList = currentList.addAll(it).distinctBy { it.id }.toPersistentList())
+          }
         }
-      }
-      .onFailure {
-        postSideEffect(MyEvaluationSideEffect.HandleException(it))
-      }
+        .onFailure {
+          postSideEffect(MyEvaluationSideEffect.HandleException(it))
+        }
+    }
   }
 
   fun getMyExamEvaluations(needClear: Boolean = false) = intent {
-    val currentList = if (needClear) {
-      examEvaluationPage = 1
-      isLastExamEvaluation = false
-      persistentListOf()
-    } else {
-      state.myExamEvaluationList
-    }
+    mutex.withLock {
+      val currentList = if (needClear) {
+        examEvaluationPage = 1
+        isLastExamEvaluation = false
+        persistentListOf()
+      } else {
+        state.myExamEvaluationList
+      }
 
-    if (isLastExamEvaluation) return@intent
+      if (isLastExamEvaluation) return@intent
 
-    getMyExamEvaluationListUseCase(examEvaluationPage)
-      .onSuccess {
-        reduce {
-          examEvaluationPage++
-          isLastExamEvaluation = it.isEmpty()
-          state.copy(myExamEvaluationList = currentList.addAll(it).distinctBy { it.id }.toPersistentList())
+      getMyExamEvaluationListUseCase(examEvaluationPage)
+        .onSuccess {
+          reduce {
+            examEvaluationPage++
+            isLastExamEvaluation = it.isEmpty()
+            state.copy(myExamEvaluationList = currentList.addAll(it).distinctBy { it.id }.toPersistentList())
+          }
         }
-      }
-      .onFailure {
-        postSideEffect(MyEvaluationSideEffect.HandleException(it))
-      }
+        .onFailure {
+          postSideEffect(MyEvaluationSideEffect.HandleException(it))
+        }
+    }
   }
 
   fun initData() = intent {

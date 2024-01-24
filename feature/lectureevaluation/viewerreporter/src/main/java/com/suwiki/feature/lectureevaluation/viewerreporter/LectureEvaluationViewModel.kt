@@ -139,7 +139,13 @@ class LectureEvaluationViewModel @Inject constructor(
   fun navigateOpenMajor(selectedOpenMajor: String) = intent { postSideEffect(LectureEvaluationSideEffect.NavigateOpenMajor(selectedOpenMajor)) }
   fun navigateLogin() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLogin) }
   fun navigateSignup() = intent { postSideEffect(LectureEvaluationSideEffect.NavigateSignUp) }
-  fun navigateLectureEvaluationDetail(id: String) = intent { postSideEffect(LectureEvaluationSideEffect.NavigateLectureEvaluationDetail(id)) }
+  fun navigateLectureEvaluationDetailIfLoggedIn(id: String) = intent {
+    if (isLoggedIn.not()) {
+      postSideEffect(LectureEvaluationSideEffect.NavigateLogin)
+    } else {
+      postSideEffect(LectureEvaluationSideEffect.NavigateLectureEvaluationDetail(id))
+    }
+  }
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }
 
