@@ -4,6 +4,7 @@ import com.suwiki.core.network.retrofit.ApiResult
 import com.suwiki.remote.notice.response.DataResponse
 import com.suwiki.remote.notice.response.NoticeDetailResponse
 import com.suwiki.remote.notice.response.NoticeResponse
+import com.suwiki.remote.notice.response.UpdateMandatoryResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -25,4 +26,10 @@ interface NoticeApi {
   suspend fun getNotice(
     @Query(QUERY_NOTICE_ID) id: Long,
   ): ApiResult<DataResponse<NoticeDetailResponse>>
+
+  @GET("/client/version/update-mandatory")
+  suspend fun checkUpdateMandatory(
+    @Query("os") os: String = "android",
+    @Query("versionCode") versionCode: Long,
+  ): ApiResult<UpdateMandatoryResponse>
 }

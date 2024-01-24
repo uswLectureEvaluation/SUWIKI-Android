@@ -18,8 +18,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
@@ -33,6 +36,8 @@ import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.core.ui.extension.versionCode
+import com.suwiki.core.ui.util.PLAY_STORE_SITE
 import com.suwiki.feature.lectureevaluation.editor.navigation.myEvaluationEditNavGraph
 import com.suwiki.feature.lectureevaluation.my.navigation.myEvaluationNavGraph
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
@@ -46,6 +51,7 @@ import com.suwiki.feature.timetable.navigation.timetableNavGraph
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 internal fun MainScreen(
@@ -54,6 +60,17 @@ internal fun MainScreen(
   navigator: MainNavigator = rememberMainNavigator(),
 ) {
   val uiState = viewModel.collectAsState().value
+  val uriHandler = LocalUriHandler.current
+  val context = LocalContext.current
+  viewModel.collectSideEffect { sideEffect ->
+    when (sideEffect) {
+      MainSideEffect.OpenPlayStoreSite -> uriHandler.openUri(PLAY_STORE_SITE)
+    }
+  }
+
+  LaunchedEffect(key1 = Unit) {
+    viewModel.checkUpdateMandatory(context.versionCode)
+  }
 
   Scaffold(
     modifier = modifier,
@@ -156,11 +173,21 @@ internal fun MainScreen(
 
       if (uiState.showNetworkErrorDialog) {
         SuwikiDialog(
-          headerText = stringResource(com.suwiki.feature.navigator.R.string.dialog_network_header),
-          bodyText = stringResource(com.suwiki.feature.navigator.R.string.dialog_network_body),
+          headerText = stringResource(R.string.dialog_network_header),
+          bodyText = stringResource(R.string.dialog_network_body),
           confirmButtonText = stringResource(id = com.suwiki.core.ui.R.string.word_confirm),
           onDismissRequest = viewModel::hideNetworkErrorDialog,
           onClickConfirm = viewModel::hideNetworkErrorDialog,
+        )
+      }
+
+      if (uiState.showUpdateMandatoryDialog) {
+        SuwikiDialog(
+          headerText = stringResource(R.string.dialog_update_mandatory_header),
+          bodyText = stringResource(R.string.dialog_update_mandatory_body),
+          confirmButtonText = stringResource(id = com.suwiki.core.ui.R.string.word_confirm),
+          onDismissRequest = {},
+          onClickConfirm = viewModel::openPlayStoreSite,
         )
       }
 

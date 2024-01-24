@@ -18,4 +18,8 @@ class RemoteNoticeDataSourceImpl @Inject constructor(
   override suspend fun getNoticeDetail(id: Long): NoticeDetail {
     return noticeApi.getNotice(id).getOrThrow().data.toModel()
   }
+
+  override suspend fun checkUpdateMandatory(versionCode: Long): Boolean {
+    return noticeApi.checkUpdateMandatory(versionCode = versionCode).getOrThrow().isUpdateMandatory
+  }
 }
