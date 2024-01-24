@@ -87,7 +87,7 @@ fun SuwikiReviewStatisticsContainer(
           .padding(vertical = 3.dp),
       )
       Text(
-        text = data.info.professor,
+        text = if (data.info.professor == "null") stringResource(id = com.suwiki.core.ui.R.string.word_none) else data.info.professor,
         style = SuwikiTheme.typography.body7,
         color = Gray6A,
       )
