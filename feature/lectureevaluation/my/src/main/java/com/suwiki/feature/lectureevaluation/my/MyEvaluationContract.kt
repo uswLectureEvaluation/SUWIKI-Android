@@ -14,7 +14,10 @@ data class MyEvaluationState(
   val showDeleteLectureEvaluationDialog: Boolean = false,
   val showDeleteExamEvaluationDialog: Boolean = false,
   val showLackPointDialog: Boolean = false,
-)
+) {
+  val showLectureEmptyScreen: Boolean = myLectureEvaluationList.isEmpty()
+  val showExamEmptyScreen: Boolean = myExamEvaluationList.isEmpty()
+}
 
 sealed interface MyEvaluationSideEffect {
   data object PopBackStack : MyEvaluationSideEffect
