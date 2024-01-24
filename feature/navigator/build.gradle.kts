@@ -8,6 +8,8 @@ android {
 }
 
 dependencies {
+  implementation(projects.domain.notice)
+
   implementation(projects.feature.lectureevaluation.editor)
   implementation(projects.feature.lectureevaluation.my)
   implementation(projects.feature.lectureevaluation.viewerreporter)

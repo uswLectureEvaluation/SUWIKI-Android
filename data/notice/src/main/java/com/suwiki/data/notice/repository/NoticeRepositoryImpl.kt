@@ -16,4 +16,8 @@ class NoticeRepositoryImpl @Inject constructor(
   override suspend fun getNoticeDetail(id: Long): NoticeDetail {
     return remoteNoticeDataSource.getNoticeDetail(id)
   }
+
+  override suspend fun checkUpdateMandatory(versionCode: Long): Boolean {
+    return remoteNoticeDataSource.checkUpdateMandatory(versionCode)
+  }
 }
