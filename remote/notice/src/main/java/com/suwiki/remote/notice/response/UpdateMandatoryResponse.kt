@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateMandatoryResponse(
-  val isUpdateMandatory: Boolean
+  val isUpdateMandatory: Boolean,
 )
