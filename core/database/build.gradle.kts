@@ -44,4 +44,7 @@ dependencies {
   implementation(libs.protobuf.kotlin.lite)
 
   implementation(libs.kotlinx.serialization.json)
+
+  testImplementation(libs.junit)
+  androidTestImplementation(libs.junit)
 }

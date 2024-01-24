@@ -30,7 +30,7 @@ dependencies {
   implementation(libs.retrofit.core)
   implementation(libs.retrofit.kotlin.serialization)
   implementation(libs.okhttp.logging)
-  androidTestImplementation(libs.junit4)
+  androidTestImplementation(libs.junit)
 
   implementation(libs.timber)
 }

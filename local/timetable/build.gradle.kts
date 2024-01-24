@@ -25,6 +25,6 @@ dependencies {
   implementation(libs.androidx.datastore.core)
   implementation(libs.androidx.datastore.preferences)
 
-  testImplementation(libs.junit4)
+  testImplementation(libs.junit)
   androidTestImplementation(libs.junit)
 }

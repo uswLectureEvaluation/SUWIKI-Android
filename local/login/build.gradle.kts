@@ -15,6 +15,6 @@ dependencies {
 
   implementation(libs.bundles.coroutine)
 
-  testImplementation(libs.junit4)
+  testImplementation(libs.junit)
   androidTestImplementation(libs.junit)
 }
