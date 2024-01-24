@@ -177,6 +177,7 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 

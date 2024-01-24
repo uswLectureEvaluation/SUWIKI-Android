@@ -36,6 +36,7 @@ dependencies {
   ksp(libs.room.compiler)
   implementation(libs.room.runtime)
   implementation(libs.room.ktx)
+  androidTestImplementation(libs.room.testing)
 
   implementation(libs.bundles.coroutine)
   implementation(libs.androidx.datastore.core)
