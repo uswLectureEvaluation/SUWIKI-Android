@@ -9,4 +9,5 @@
   <string name="delete_dialog_body">강의평가를 정말로 삭제하시겠습니까?\n현재 보유 포인트 : %dp</string>
   <string name="lack_point_dialog_header">포인트가 부족합니다.</string>
   <string name="lack_point_dialog_body">현재 보유 포인트 : %dp</string>
+  <string name="empty_screen_text">등록된 평가가 없어요</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,7 +22,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.container.SuwikiEditContainer
@@ -28,6 +32,7 @@ import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
 import com.suwiki.core.designsystem.component.tabbar.TabTitle
+import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.LectureEvaluationTab
@@ -160,21 +165,29 @@ fun MyEvaluationScreen(
     ) { page ->
       when (LectureEvaluationTab.entries[page]) {
         LectureEvaluationTab.LECTURE_EVALUATION -> {
-          MyLectureEvaluationLazyColumn(
-            itemList = uiState.myLectureEvaluationList,
-            listState = lectureEvaluationListState,
-            onClickLectureEditButton = onClickLectureEvaluationEditButton,
-            onClickDeleteButton = onClickLectureEvaluationDeleteButton,
-          )
+          if (uiState.showLectureEmptyScreen) {
+            EmptyScreen()
+          } else {
+            MyLectureEvaluationLazyColumn(
+              itemList = uiState.myLectureEvaluationList,
+              listState = lectureEvaluationListState,
+              onClickLectureEditButton = onClickLectureEvaluationEditButton,
+              onClickDeleteButton = onClickLectureEvaluationDeleteButton,
+            )
+          }
         }
 
         LectureEvaluationTab.EXAM_INFO -> {
-          MyExamEvaluationLazyColumn(
-            itemList = uiState.myExamEvaluationList,
-            listState = examEvaluationListState,
-            onClickExamEditButton = onClickExamEvaluationEditButton,
-            onClickDeleteButton = onClickExamEvaluationDeleteButton,
-          )
+          if (uiState.showExamEmptyScreen) {
+            EmptyScreen()
+          } else {
+            MyExamEvaluationLazyColumn(
+              itemList = uiState.myExamEvaluationList,
+              listState = examEvaluationListState,
+              onClickExamEditButton = onClickExamEvaluationEditButton,
+              onClickDeleteButton = onClickExamEvaluationDeleteButton,
+            )
+          }
         }
       }
     }
@@ -245,6 +258,19 @@ fun MyLectureEvaluationLazyColumn(
       )
     }
   }
+}
+
+@Composable
+fun EmptyScreen() {
+  Text(
+    modifier = Modifier
+      .padding(top = 150.dp)
+      .fillMaxSize(),
+    text = stringResource(R.string.empty_screen_text),
+    textAlign = TextAlign.Center,
+    style = SuwikiTheme.typography.header4,
+    color = Gray95,
+  )
 }
 
 @Composable
