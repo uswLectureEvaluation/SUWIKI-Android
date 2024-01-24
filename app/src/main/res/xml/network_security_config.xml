@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">portal.suwon.ac.kr</domain>
-        <domain includeSubdomains="true">mail.suwon.ac.kr</domain>
-        <domain includeSubdomains="true">www.suwon.ac.kr</domain>
-    </domain-config>
-</network-security-config>

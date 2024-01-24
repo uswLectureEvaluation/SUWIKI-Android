@@ -1,3 +1,0 @@
-package com.kunize.uswtimetable.util.interceptingFilter
-
-object UnknownFilterFailState: FilterState

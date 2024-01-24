@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:state_checked="true" android:drawable="@drawable/ll_outer_circle_mint" />
-    <item android:state_checked="false" android:drawable="@drawable/ll_circle_mint" />
-
-</selector>
