@@ -55,11 +55,15 @@ lottie = "6.0.0"
 
 oss-plugin = "0.10.6"
 oss = "17.0.1"
-junit = "1.1.5"
-espresso-core = "3.5.1"
+junit4 = "4.13.2"
+
 
 protobuf-plugin = "0.9.4"
 protobuf = "3.24.4"
+
+espresso-core = "3.5.1"
+junit-ktx = "1.1.5"
+androidx-test-runner = "1.5.2"
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -179,7 +183,9 @@ room-testing = { group = "androidx.room", name = "room-testing", version.ref = "
 
 oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "oss" }
 
-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ktx" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidx-test-runner" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }

@@ -18,6 +18,6 @@ dependencies {
   implementation(libs.androidx.datastore.preferences)
   implementation(libs.protobuf.kotlin.lite)
 
-  testImplementation(libs.junit)
-  androidTestImplementation(libs.junit)
+  testImplementation(libs.junit4)
+  androidTestImplementation(libs.junit4)
 }
