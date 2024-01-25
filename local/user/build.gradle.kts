@@ -19,5 +19,5 @@ dependencies {
   implementation(libs.protobuf.kotlin.lite)
 
   testImplementation(libs.junit4)
-  androidTestImplementation(libs.junit)
+  androidTestImplementation(libs.junit4)
 }

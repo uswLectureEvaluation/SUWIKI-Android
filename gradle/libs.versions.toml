@@ -1,7 +1,6 @@
 [versions]
 android-gradle-plugin = "8.1.2"
 material = "1.10.0"
-junit4 = "4.13.2"
 espresso = "3.4.0"
 ksp = "1.9.10-1.0.13"
 google-service = "4.3.15"
@@ -56,12 +55,15 @@ lottie = "6.0.0"
 
 oss-plugin = "0.10.6"
 oss = "17.0.1"
-junit = "1.1.5"
-espresso-core = "3.5.1"
-androidx-test-ext-junit = "1.1.5"
+junit4 = "4.13.2"
+
 
 protobuf-plugin = "0.9.4"
 protobuf = "3.24.4"
+
+espresso-core = "3.5.1"
+junit-ktx = "1.1.5"
+androidx-test-runner = "1.5.2"
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -177,13 +179,14 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-
-junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 
 oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "oss" }
-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit" }
+
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junit-ktx" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidx-test-runner" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }

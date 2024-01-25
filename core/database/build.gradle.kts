@@ -13,6 +13,11 @@ ksp {
 
 android {
   namespace = "com.suwiki.core.database"
+
+  sourceSets {
+    // Adds exported schema location as test app assets.
+    getByName("androidTest").assets.srcDir("$rootDir/schemas")
+  }
 }
 
 protobuf {
@@ -36,6 +41,7 @@ dependencies {
   ksp(libs.room.compiler)
   implementation(libs.room.runtime)
   implementation(libs.room.ktx)
+  androidTestImplementation(libs.room.testing)
 
   implementation(libs.bundles.coroutine)
   implementation(libs.androidx.datastore.core)
@@ -43,4 +49,7 @@ dependencies {
   implementation(libs.protobuf.kotlin.lite)
 
   implementation(libs.kotlinx.serialization.json)
+
+  androidTestImplementation(libs.androidx.junit.ktx)
+  androidTestImplementation(libs.androidx.test.runner)
 }

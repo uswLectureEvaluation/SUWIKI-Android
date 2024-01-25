@@ -18,7 +18,7 @@ internal class DataConventionPlugin : Plugin<Project> {
 
         "implementation"(libs.findBundle("coroutine").get())
 
-        "androidTestImplementation"(libs.findLibrary("junit").get())
+        "androidTestImplementation"(libs.findLibrary("junit4").get())
         "implementation"(libs.findLibrary("timber").get())
       }
     }

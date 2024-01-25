@@ -26,7 +26,7 @@ internal class FeatureComposeConventionPlugin : Plugin<Project> {
         "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
         "implementation"(libs.findLibrary("kotlinx.coroutines.core").get())
 
-        "androidTestImplementation"(libs.findLibrary("junit").get())
+        "androidTestImplementation"(libs.findLibrary("junit4").get())
         "implementation"(libs.findLibrary("timber").get())
       }
     }
