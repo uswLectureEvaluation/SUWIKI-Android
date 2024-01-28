@@ -33,18 +33,18 @@ import kotlin.math.roundToInt
 @Composable
 @ExperimentalMaterial3Api
 fun Slider(
-    value: Float,
-    onValueChange: (Float) -> Unit,
-    modifier: Modifier = Modifier,
-    trackOffset: Float,
-    enabled: Boolean = true,
-    onValueChangeFinished: (() -> Unit)? = null,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    @IntRange(from = 0)
+  value: Float,
+  onValueChange: (Float) -> Unit,
+  modifier: Modifier = Modifier,
+  trackOffset: Float,
+  enabled: Boolean = true,
+  onValueChangeFinished: (() -> Unit)? = null,
+  interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+  @IntRange(from = 0)
   steps: Int = 0,
-    thumb: @Composable (SliderState) -> Unit = { _ -> },
-    track: @Composable (SliderState) -> Unit = { _ -> },
-    valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+  thumb: @Composable (SliderState) -> Unit = { _ -> },
+  track: @Composable (SliderState) -> Unit = { _ -> },
+  valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
 ) {
   val state = remember(
     steps,
@@ -77,14 +77,14 @@ fun Slider(
 @Composable
 @ExperimentalMaterial3Api
 fun Slider(
-    state: SliderState,
-    modifier: Modifier = Modifier,
-    trackOffset: Float,
-    enabled: Boolean = true,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    thumb: @Composable (SliderState) -> Unit = {
+  state: SliderState,
+  modifier: Modifier = Modifier,
+  trackOffset: Float,
+  enabled: Boolean = true,
+  interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+  thumb: @Composable (SliderState) -> Unit = {
   },
-    track: @Composable (SliderState) -> Unit = { sliderState ->
+  track: @Composable (SliderState) -> Unit = { sliderState ->
   },
 ) {
   require(state.steps >= 0) { "steps should be >= 0" }
@@ -103,13 +103,13 @@ fun Slider(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SliderImpl(
-    modifier: Modifier,
-    state: SliderState,
-    enabled: Boolean,
-    interactionSource: MutableInteractionSource,
-    trackOffset: Float,
-    thumb: @Composable (SliderState) -> Unit,
-    track: @Composable (SliderState) -> Unit,
+  modifier: Modifier,
+  state: SliderState,
+  enabled: Boolean,
+  interactionSource: MutableInteractionSource,
+  trackOffset: Float,
+  thumb: @Composable (SliderState) -> Unit,
+  track: @Composable (SliderState) -> Unit,
 ) {
   val press = Modifier.sliderTapModifier(
     state,
@@ -194,9 +194,9 @@ private enum class SliderComponents {
 
 @OptIn(ExperimentalMaterial3Api::class)
 private fun Modifier.sliderTapModifier(
-    state: SliderState,
-    interactionSource: MutableInteractionSource,
-    enabled: Boolean,
+  state: SliderState,
+  interactionSource: MutableInteractionSource,
+  enabled: Boolean,
 ) = if (enabled) {
   pointerInput(state, interactionSource) {
     detectTapGestures(
@@ -213,8 +213,8 @@ private fun Modifier.sliderTapModifier(
 
 @OptIn(ExperimentalMaterial3Api::class)
 private fun Modifier.sliderSemantics(
-    state: SliderState,
-    enabled: Boolean,
+  state: SliderState,
+  enabled: Boolean,
 ): Modifier {
   return semantics {
     if (!enabled) disabled()

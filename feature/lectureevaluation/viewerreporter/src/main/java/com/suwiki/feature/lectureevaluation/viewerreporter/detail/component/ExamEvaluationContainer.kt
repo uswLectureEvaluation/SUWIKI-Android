@@ -34,7 +34,13 @@ fun ExamEvaluationContainer(
   isAuthor: Boolean = false,
   onClickButton: () -> Unit,
 ) {
-  val buttonText = if (isAuthor) stringResource(id = com.suwiki.core.ui.R.string.word_edit) else stringResource(id = com.suwiki.core.ui.R.string.word_report)
+  val buttonText = if (isAuthor) {
+    stringResource(id = com.suwiki.core.ui.R.string.word_edit)
+  } else {
+    stringResource(
+      id = com.suwiki.core.ui.R.string.word_report,
+    )
+  }
 
   Column(
     modifier = Modifier

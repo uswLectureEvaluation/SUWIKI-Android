@@ -3,8 +3,8 @@ package com.suwiki.feature.timetable.widget.timetable
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.ui.R
 import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.core.ui.R
 
 internal val glanceTimetableHeightPerHour = 48.dp
 

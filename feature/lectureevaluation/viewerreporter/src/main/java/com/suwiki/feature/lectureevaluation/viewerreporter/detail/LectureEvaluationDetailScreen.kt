@@ -38,8 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.button.SuwikiOutlinedButton
-import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.ExamEvaluationContainer
-import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.LectureEvaluationContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
@@ -53,6 +51,8 @@ import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
+import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.ExamEvaluationContainer
+import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.LectureEvaluationContainer
 import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.SuwikiReviewStatisticsContainer
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ExperimentalToolbarApi

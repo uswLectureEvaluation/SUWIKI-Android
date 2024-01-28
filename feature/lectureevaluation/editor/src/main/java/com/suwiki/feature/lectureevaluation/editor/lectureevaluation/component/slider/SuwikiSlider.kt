@@ -24,9 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider.material.Slider
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider.material.Slider
 import kotlin.math.round
 
 @OptIn(ExperimentalMaterial3Api::class)

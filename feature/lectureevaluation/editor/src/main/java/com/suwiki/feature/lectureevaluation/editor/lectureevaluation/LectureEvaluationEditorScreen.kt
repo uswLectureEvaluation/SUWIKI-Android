@@ -36,7 +36,6 @@ import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
 import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
-import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider.SuwikiSlider
 import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
@@ -46,6 +45,7 @@ import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.ui.extension.toText
 import com.suwiki.feature.lectureevaluation.editor.R
+import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider.SuwikiSlider
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.Locale
