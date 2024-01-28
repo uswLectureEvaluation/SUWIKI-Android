@@ -3,7 +3,7 @@ package com.suwiki.feature.timetable.timetable.component.timetable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.R
+import com.suwiki.core.ui.R
 import com.suwiki.core.model.timetable.TimetableDay
 
 internal val timetableHeightPerHour = 48.dp

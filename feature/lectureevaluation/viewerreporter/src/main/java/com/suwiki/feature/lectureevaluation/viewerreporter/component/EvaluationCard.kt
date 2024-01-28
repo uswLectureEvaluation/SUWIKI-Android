@@ -28,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.component.badge.BadgeColor
 import com.suwiki.core.designsystem.component.badge.SuwikiBadge
 import com.suwiki.core.designsystem.shadow.cardShadow
@@ -105,7 +104,7 @@ fun EvaluationCard(
         modifier = Modifier.wrapContentWidth(),
       ) {
         Image(
-          painter = painterResource(id = R.drawable.ic_star),
+          painter = painterResource(id = com.suwiki.core.ui.R.drawable.ic_star_filled),
           contentDescription = null,
         )
         Text(
