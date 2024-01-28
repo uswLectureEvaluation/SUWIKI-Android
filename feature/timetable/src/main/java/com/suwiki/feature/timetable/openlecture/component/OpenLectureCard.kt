@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.card
+package com.suwiki.feature.timetable.openlecture.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +32,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
-fun SuwikiClassInformationCard(
+fun OpenLectureCard(
   modifier: Modifier = Modifier,
   className: String,
   professor: String,
@@ -136,10 +136,10 @@ fun SuwikiClassInformationCard(
 
 @Preview
 @Composable
-fun ClassInformationPreview() {
+fun OpenLectureCardPreview() {
   SuwikiTheme {
     Column {
-      SuwikiClassInformationCard(
+      OpenLectureCard(
         modifier = Modifier,
         className = "강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명 강의명",
         professor = "교수명 교수명 교수명 교수명 교수명",

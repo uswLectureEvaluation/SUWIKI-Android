@@ -45,7 +45,7 @@ import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTextButton
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
-import com.suwiki.core.designsystem.component.card.SuwikiClassInformationCard
+import com.suwiki.feature.timetable.openlecture.component.OpenLectureCard
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBar
 import com.suwiki.core.designsystem.theme.Gray6A
@@ -238,7 +238,7 @@ fun OpenLectureScreen(
           key = { it.id },
         ) { lectureEvaluation ->
           with(lectureEvaluation) {
-            SuwikiClassInformationCard(
+            OpenLectureCard(
               className = name,
               professor = professorName,
               cellInfo = originalCellList.toText(context),

@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.container.SuwikiNoticeContainer
+import com.suwiki.core.designsystem.component.container.SuwikiBoardContainer
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
@@ -79,13 +79,13 @@ fun BanHistoryScreen(
 
     LazyColumn {
       items(items = uiState.banHistory) { banHistory ->
-        SuwikiNoticeContainer(
+        SuwikiBoardContainer(
           titleText = banHistory.reason,
           dateText = banHistory.createdAt.toString(),
         )
       }
       items(items = uiState.blackList) { blackList ->
-        SuwikiNoticeContainer(
+        SuwikiBoardContainer(
           titleText = blackList.reason,
           dateText = blackList.createdAt.toString(),
         )

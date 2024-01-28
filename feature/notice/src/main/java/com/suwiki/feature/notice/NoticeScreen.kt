@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.container.SuwikiNoticeContainer
+import com.suwiki.core.designsystem.component.container.SuwikiBoardContainer
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
@@ -80,7 +80,7 @@ fun NoticeScreen(
     )
     LazyColumn {
       items(items = noticeList, key = { it.id }) { notice ->
-        SuwikiNoticeContainer(
+        SuwikiBoardContainer(
           titleText = notice.title,
           dateText = notice.date.toString(),
           onClick = { navigateNoticeDetail(notice.id) },

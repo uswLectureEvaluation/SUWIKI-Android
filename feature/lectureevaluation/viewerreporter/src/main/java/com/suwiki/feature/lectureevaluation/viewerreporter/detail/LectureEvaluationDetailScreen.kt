@@ -38,8 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.core.designsystem.component.button.SuwikiOutlinedButton
-import com.suwiki.core.designsystem.component.container.SuwikiExamReviewContainer
-import com.suwiki.core.designsystem.component.container.SuwikiUserReviewContainer
+import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.ExamEvaluationContainer
+import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.LectureEvaluationContainer
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.tabbar.SuwikiTabBar
@@ -219,7 +219,7 @@ fun LectureEvaluationDetailScreen(
                 items = uiState.lectureEvaluationList,
                 key = { it.id },
               ) {
-                SuwikiUserReviewContainer(
+                LectureEvaluationContainer(
                   semester = it.selectedSemester,
                   content = it.content,
                   rating = it.totalAvg,
@@ -266,7 +266,7 @@ fun LectureEvaluationDetailScreen(
                       it.id
                     },
                   ) {
-                    SuwikiExamReviewContainer(
+                    ExamEvaluationContainer(
                       difficulty = it.examDifficulty,
                       examType = it.examType,
                       content = it.content,

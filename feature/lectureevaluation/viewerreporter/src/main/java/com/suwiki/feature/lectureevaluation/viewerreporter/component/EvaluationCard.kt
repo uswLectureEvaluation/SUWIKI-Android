@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.card
+package com.suwiki.feature.lectureevaluation.viewerreporter.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -42,7 +42,7 @@ import com.suwiki.core.ui.extension.suwikiClickable
 import java.util.Locale
 
 @Composable
-fun SuwikiClassReviewCard(
+fun EvaluationCard(
   modifier: Modifier = Modifier,
   className: String,
   openMajor: String,
@@ -128,7 +128,7 @@ fun SuwikiClassReviewCard(
 fun CardPreview() {
   SuwikiTheme {
     Box(modifier = Modifier.padding(10.dp)) {
-      SuwikiClassReviewCard(
+      EvaluationCard(
         modifier = Modifier,
         className = "강의명강의명강의명강의명강의명강의명",
         openMajor = "개설학과",

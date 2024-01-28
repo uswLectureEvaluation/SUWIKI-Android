@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.toast
+package com.suwiki.feature.navigator.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

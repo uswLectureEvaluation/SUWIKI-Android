@@ -18,7 +18,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.ui.extension.suwikiClickable
 
 @Composable
-fun SuwikiNoticeContainer(
+fun SuwikiBoardContainer(
   modifier: Modifier = Modifier,
   titleText: String,
   dateText: String,
@@ -50,7 +50,7 @@ fun SuwikiNoticeContainer(
 fun SuwikiNoticeContainerPreview() {
   SuwikiTheme {
     Column {
-      SuwikiNoticeContainer(
+      SuwikiBoardContainer(
         titleText = "Title",
         dateText = "date",
         onClick = {},

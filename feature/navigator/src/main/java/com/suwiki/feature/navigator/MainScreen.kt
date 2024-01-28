@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
-import com.suwiki.core.designsystem.component.toast.SuwikiToast
+import com.suwiki.feature.navigator.component.SuwikiToast
 import com.suwiki.core.designsystem.shadow.bottomNavigationShadow
 import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary

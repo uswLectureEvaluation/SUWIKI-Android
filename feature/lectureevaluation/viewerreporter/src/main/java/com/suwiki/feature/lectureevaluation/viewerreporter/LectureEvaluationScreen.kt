@@ -24,12 +24,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.designsystem.component.appbar.SuwikiEvaluationAppBar
+import com.suwiki.feature.lectureevaluation.viewerreporter.component.EvaluationAppBar
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiAgreementBottomSheet
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
-import com.suwiki.core.designsystem.component.card.SuwikiClassReviewCard
+import com.suwiki.feature.lectureevaluation.viewerreporter.component.EvaluationCard
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
-import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBarWithFilter
+import com.suwiki.feature.lectureevaluation.viewerreporter.component.EvaluationSearchBar
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
@@ -171,12 +171,12 @@ fun LectureEvaluationScreen(
     scrollStrategy = ScrollStrategy.EnterAlways,
     toolbar = {
       Column {
-        SuwikiEvaluationAppBar(
+        EvaluationAppBar(
           title = stringResource(R.string.word_lecture_evaluation),
           major = uiState.selectedOpenMajor,
           onClickMajor = { onClickSelectedOpenMajor(uiState.selectedOpenMajor) },
         )
-        SuwikiSearchBarWithFilter(
+        EvaluationSearchBar(
           placeHolder = stringResource(R.string.word_search_placeholder),
           value = uiState.searchValue,
           onValueChange = onValueChangeSearchBar,
@@ -259,7 +259,7 @@ private fun LectureEvaluationLazyColumn(
       key = { it!!.id },
     ) { lectureEvaluation ->
       with(lectureEvaluation) {
-        SuwikiClassReviewCard(
+        EvaluationCard(
           className = this!!.lectureInfo.lectureName,
           openMajor = lectureInfo.majorType,
           professor = lectureInfo.professor,
