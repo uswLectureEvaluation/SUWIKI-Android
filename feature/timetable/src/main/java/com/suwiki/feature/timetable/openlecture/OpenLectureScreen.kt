@@ -45,7 +45,6 @@ import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTextButton
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
-import com.suwiki.core.designsystem.component.card.SuwikiClassInformationCard
 import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.searchbar.SuwikiSearchBar
 import com.suwiki.core.designsystem.theme.Gray6A
@@ -61,6 +60,7 @@ import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.timetableCellColorHexMap
 import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.feature.timetable.openlecture.component.OpenLectureCard
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.android.awaitFrame
@@ -238,7 +238,7 @@ fun OpenLectureScreen(
           key = { it.id },
         ) { lectureEvaluation ->
           with(lectureEvaluation) {
-            SuwikiClassInformationCard(
+            OpenLectureCard(
               className = name,
               professor = professorName,
               cellInfo = originalCellList.toText(context),

@@ -195,7 +195,7 @@ fun ExamEvaluationEditorScreen(
           .fillMaxWidth()
           .height(50.dp)
           .imePadding(),
-        text = stringResource(R.string.text_complete),
+        text = stringResource(com.suwiki.core.ui.R.string.word_complete),
         enabled = uiState.buttonEnabled,
         clickable = uiState.buttonEnabled,
         onClick = onClickExamEvaluationReviseButton,

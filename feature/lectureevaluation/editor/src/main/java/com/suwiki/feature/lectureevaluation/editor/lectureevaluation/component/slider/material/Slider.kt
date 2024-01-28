@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.slider.material
+package com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider.material
 
 import androidx.annotation.IntRange
 import androidx.compose.foundation.focusable

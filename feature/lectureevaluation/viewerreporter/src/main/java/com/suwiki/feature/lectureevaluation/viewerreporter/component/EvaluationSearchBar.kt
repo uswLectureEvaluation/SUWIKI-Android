@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.searchbar
+package com.suwiki.feature.lectureevaluation.viewerreporter.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,23 +20,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.align.SuwikiAlignButton
+import com.suwiki.core.designsystem.component.searchbar.BasicSearchBar
 import com.suwiki.core.designsystem.shadow.cardShadow
+import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayFB
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
+import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.lectureevaluation.viewerreporter.R
 
 @Composable
-fun SuwikiSearchBarWithFilter(
+fun EvaluationSearchBar(
   modifier: Modifier = Modifier,
   placeHolder: String = "",
   value: String = "",
@@ -91,6 +97,24 @@ fun SuwikiSearchBarWithFilter(
   }
 }
 
+@Composable
+fun SuwikiAlignButton(
+  modifier: Modifier = Modifier,
+  onClick: () -> Unit = {},
+) {
+  Icon(
+    painter = painterResource(id = R.drawable.ic_filter),
+    contentDescription = "",
+    modifier = modifier
+      .cardShadow()
+      .clip(RoundedCornerShape(10.dp))
+      .suwikiClickable(onClick = onClick)
+      .background(White)
+      .padding(8.dp),
+    tint = Gray6A,
+  )
+}
+
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun SuwikiSearchBarWithFilterPreview() {
@@ -102,7 +126,7 @@ fun SuwikiSearchBarWithFilterPreview() {
     Column(
       verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-      SuwikiSearchBarWithFilter(
+      EvaluationSearchBar(
         placeHolder = "Hinted search text",
         value = normalValue,
         onValueChange = { normalValue = it },

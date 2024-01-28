@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.slider
+package com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

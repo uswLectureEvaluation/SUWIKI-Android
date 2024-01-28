@@ -5,16 +5,6 @@
   <string name="lecture_align_satisfaction">만족도 높은 강의</string>
   <string name="lecture_align_learning">배울게 많은 강의</string>
   <string name="lecture_align_best">BEST 강의</string>
-  <string name="word_email">이메일</string>
-  <string name="word_password_confirm">비밀번호 확인</string>
-  <string name="word_password">비밀번호</string>
-  <string name="word_id">아이디</string>
-  <string name="word_find_id">아이디 찾기</string>
-  <string name="word_find_password">비밀번호 찾기</string>
-  <string name="word_confirm">확인</string>
-  <string name="word_signup">회원가입</string>
-  <string name="word_login">로그인</string>
-  <string name="word_empty" />
 
   <!-- TextField Id -->
   <string name="textfield_id_placeholder">6~20자 영문/숫자</string>
@@ -30,6 +20,25 @@
   <string name="textfield_email_notice_text">웹메일이 휴면 상태인지 확인해주세요\n웹메일 계정은 포털 계정과 다릅니다\n</string>
   <string name="textfield_email_invalid_text">\@suwon.ac.kr 형식이 아닙니다</string>
   <string name="textfield_email_placeholder">\@suwon.ac.kr</string>
+
+  <string name="word_email">이메일</string>
+  <string name="word_password_confirm">비밀번호 확인</string>
+  <string name="word_password">비밀번호</string>
+  <string name="word_id">아이디</string>
+  <string name="word_find_id">아이디 찾기</string>
+  <string name="word_find_password">비밀번호 찾기</string>
+  <string name="word_confirm">확인</string>
+  <string name="word_signup">회원가입</string>
+  <string name="word_login">로그인</string>
+  <string name="word_lecture_evaluation">강의평가</string>
+  <string name="word_exam_info">시험정보</string>
+  <string name="word_honey_rating">꿀강지수</string>
+  <string name="word_learning_rating">배움지수</string>
+  <string name="word_satisfaction_rating">만족도</string>
+  <string name="word_grade">학점</string>
+  <string name="word_homework">과제</string>
+  <string name="word_team">조모임</string>
+  <string name="word_empty" />
   <string name="word_grade_easy">너그러움</string>
   <string name="word_grade_normal">보통</string>
   <string name="word_grade_difficulty">까다로움</string>
@@ -59,7 +68,6 @@
   <string name="word_school_level">학년</string>
   <string name="word_num_school_level">%d학년</string>
   <string name="word_all">전체</string>
-
   <string name="word_mon">월</string>
   <string name="word_tue">화</string>
   <string name="word_wed">수</string>
@@ -72,7 +80,31 @@
   <string name="word_apply">적용</string>
   <string name="word_add">추가</string>
   <string name="word_delete">삭제</string>
-    <string name="word_do_delete">삭제하기</string>
+  <string name="word_do_delete">삭제하기</string>
   <string name="word_do_edit">수정하기</string>
   <string name="word_cancel">취소</string>
+  <string name="learning_quality">배움지수</string>
+  <string name="satisfaction_quality">만족지수</string>
+  <string name="review_count">%d개의 리뷰</string>
+  <string name="word_my">MY</string>
+  <string name="word_semester">학기</string>
+  <string name="word_edit">수정</string>
+  <string name="word_report">신고</string>
+  <string name="word_type_exam">시험유형</string>
+  <string name="word_choose_semester">수강학기 선택</string>
+  <string name="word_choose_test_type">시험종류 선택</string>
+  <string name="word_difficulty">난이도</string>
+  <string name="word_test_info">시험유형</string>
+  <string name="word_manage_my_evaluation">내 글 관리</string>
+  <string name="word_lecture_name">과목명</string>
+  <string name="word_sort">정렬</string>
+  <string name="word_search_placeholder">강의명 혹은 교수명을 검색하세요</string>
+
+  <string name="word_recent_lectures">최근 올라온 강의</string>
+  <string name="word_great_lectures">꿀 강의</string>
+  <string name="word_high_satisfaction_lectures">만족도 높은 강의</string>
+  <string name="word_knowledgeable_lectures">배울 게 많은 강의</string>
+  <string name="word_best_lectures">BEST 강의</string>
+
+  <string name="word_empty_search_result">검색 결과가 없습니다.\n검색어가 정확한지 확인하세요.</string>
 </resources>
