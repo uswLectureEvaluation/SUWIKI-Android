@@ -16,7 +16,7 @@
   <string name="my_info_my_post">내 글 관리</string>
   <string name="word_my_account">내 계정</string>
   <string name="word_login_id">로그인 아이디</string>
-  <string name="word__authentication_email">학교 인증 메일</string>
+  <string name="word_authentication_email">학교 인증 메일</string>
   <string name="word_reset_password">비밀번호 변경</string>
   <string name="word_logout">로그아웃</string>
   <string name="word_quit">회원 탈퇴</string>
@@ -28,7 +28,6 @@
   <string name="word_change">변경하기</string>
   <string name="reset_password_screen_dialog_header">비밀번호가 변경되었습니다.</string>
   <string name="reset_password_screen_dialog_body">새로운 비밀번호로 로그인 하시겠습니까?</string>
-  <string name="word_cancel">취소</string>
   <string name="quit_screen_id_textfield_placeholder">아이디를 입력하세요</string>
   <string name="quit_screen_password_textfield_placeholder">비밀번호를 입력하세요</string>
   <string name="quit_screen_quit_success_toast">회원 탈퇴 되었어요</string>

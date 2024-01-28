@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="word_manage_my_evaluation">내 글 관리</string>
-  <string name="word_semester">학기</string>
-  <string name="word_lecture_name">과목명</string>
-  <string name="word_lecture_evaluation">강의평가</string>
-  <string name="word_exam_info">시험정보</string>
   <string name="delete_dialog_header">30포인트가 차감됩니다.</string>
-  <string name="delete_dialog_body">강의평가를 정말로 삭제하시겠습니까?\n현재 보유 포인트 : %dp</string>
+  <string name="delete_dialog_body">작성한 평가를 정말로 삭제하시겠습니까?\n현재 보유 포인트 : %dp</string>
   <string name="lack_point_dialog_header">포인트가 부족합니다.</string>
   <string name="lack_point_dialog_body">현재 보유 포인트 : %dp</string>
   <string name="empty_screen_text">등록된 평가가 없어요</string>

@@ -71,7 +71,7 @@ fun ExamEvaluationContainer(
       horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
       Text(
-        text = stringResource(id = R.string.word_difficulcy),
+        text = stringResource(id = R.string.word_difficulty),
         style = SuwikiTheme.typography.caption2,
         color = Gray95,
       )

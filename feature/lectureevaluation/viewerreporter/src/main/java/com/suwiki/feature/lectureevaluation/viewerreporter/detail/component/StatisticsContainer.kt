@@ -176,7 +176,7 @@ fun ReviewGradeCard(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       ReviewProgressLine(
-        name = stringResource(id = R.string.honey_quality),
+        name = stringResource(id = com.suwiki.core.ui.R.string.word_honey_rating),
         rating = honeyRating,
         textColor = reviewIndicatorColor,
       )

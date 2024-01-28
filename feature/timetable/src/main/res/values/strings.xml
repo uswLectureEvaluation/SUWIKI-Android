@@ -2,10 +2,10 @@
 <resources>
   <string name="timetable_screen_create_timetable">시간표를 만들어\n일정을 관리해보세요</string>
   <string name="timetable_screen_create_timetable_button">시간표 만들기</string>
-    <string name="create_timetable_screen_semester">%s년 %s학기</string>
+  <string name="create_timetable_screen_semester">%s년 %s학기</string>
   <string name="create_timetable_need_select_semester">수강학기를 선택해주세요!</string>
   <string name="create_timetable_screen_placeholder">시간표 이름</string>
-    <string name="timetable_screen_need_create_timetable">시간표를 먼저 생성해주세요</string>
+  <string name="timetable_screen_need_create_timetable">시간표를 먼저 생성해주세요</string>
   <string name="add_timetable_screen_add_lecture">강의 직접추가</string>
   <string name="add_timetable_cell_search_bar_placeholder">강의명 또는 교수명을 검색하세요</string>
   <string name="all_timetable_cell_screen_grade_1">1학년</string>
@@ -16,7 +16,7 @@
   <string name="open_lecture_success_add_cell_toast">시간표에 강의를 추가했어요</string>
   <string name="open_lecture_success_edit_cell_toast">강의 수정을 완료했어요</string>
   <string name="add_cell_screen_title">강의 추가</string>
-    <string name="add_cell_screen_lecture_name">강의명</string>
+  <string name="add_cell_screen_lecture_name">강의명</string>
   <string name="add_cell_screen_input_lecture_name">강의명 입력</string>
   <string name="add_cell_screen_professor_name">교수명</string>
   <string name="add_cell_screen_input_professor_name">교수명 입력</string>
@@ -28,13 +28,13 @@
   <string name="add_cell_screen_need_lecture_name">강의명을 입력해주세요</string>
   <string name="add_cell_screen_need_location">장소를 입력해주세요</string>
   <string name="add_cell_screen_need_professor_name">교수명을 입력해주세요</string>
-    <string name="edit_timetable_cell_bottom_sheet_info">%1$s (%2$s %3$s - %4$s교시)</string>
+  <string name="edit_timetable_cell_bottom_sheet_info">%1$s (%2$s %3$s - %4$s교시)</string>
   <string name="timetable_cell_type_classname">수업명</string>
   <string name="timetable_cell_type_classname_location">수업명, 장소</string>
   <string name="timetable_cell_type_classname_professor">수업명, 교수명</string>
   <string name="timetable_cell_type_classname_professor_location">수업명, 교수명, 장소</string>
   <string name="timetable_screen_select_type_cell_title">보여질 강의정보</string>
-    <string name="timetable_list_screen_empty_timetable">시간표가 없어요</string>
+  <string name="timetable_list_screen_empty_timetable">시간표가 없어요</string>
   <string name="delete_timetable_dialog_title">시간표 삭제</string>
   <string name="delete_timetable_dialog_body">정말로 삭제하시겠어요?</string>
 </resources>

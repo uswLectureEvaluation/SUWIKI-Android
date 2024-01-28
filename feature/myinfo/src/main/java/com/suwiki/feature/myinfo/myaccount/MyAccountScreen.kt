@@ -90,7 +90,7 @@ fun MyAccountScreen(
       userInfoValue = uiState.userId,
     )
     UserInfoRowContainer(
-      userInfo = stringResource(R.string.word__authentication_email),
+      userInfo = stringResource(R.string.word_authentication_email),
       userInfoValue = uiState.userEmail,
     )
     Spacer(modifier = Modifier.height(24.dp))
