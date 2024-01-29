@@ -6,6 +6,8 @@ import com.suwiki.core.network.repository.AuthRepository
 import com.suwiki.core.network.retrofit.Json
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Route
@@ -15,11 +17,23 @@ import javax.inject.Inject
 internal class TokenAuthenticator @Inject constructor(
   private val authRepository: AuthRepository,
 ) : Authenticator {
-  override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-    if (response.isTokenExpired.not()) return null
+  private val mutex = Mutex()
+  override fun authenticate(route: Route?, response: okhttp3.Response): Request? = runBlocking {
+    if (response.isTokenExpired.not()) return@runBlocking null
+
+    val accessToken = authRepository.accessToken.first()
+    val alreadyRefreshed = response.request.header(AUTH_HEADER)?.contains(accessToken) == false
+    // if request's header's token is different, then that means the access token has already been refreshed
+    // we return the response with the locally persisted token in the header
+    if (alreadyRefreshed) {
+      return@runBlocking response.request.newBuilder()
+        .header(AUTH_HEADER, accessToken)
+        .build()
+    }
+
 
     Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청")
-    return runBlocking {
+    mutex.withLock {
       if (authRepository.reissueRefreshToken()) {
         Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - authenticate() called / 중단된 API 재요청")
         response.request
