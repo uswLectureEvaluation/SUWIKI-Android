@@ -21,21 +21,21 @@ internal class TokenAuthenticator @Inject constructor(
   override fun authenticate(route: Route?, response: okhttp3.Response): Request? = runBlocking {
     if (response.isTokenExpired.not()) return@runBlocking null
 
-    val accessToken = authRepository.accessToken.first()
-    val alreadyRefreshed = response.request.header(AUTH_HEADER)?.contains(accessToken) == false
-    // if request's header's token is different, then that means the access token has already been refreshed
-    // we return the response with the locally persisted token in the header
-    if (alreadyRefreshed) {
-      return@runBlocking response.request.newBuilder()
-        .header(AUTH_HEADER, accessToken)
-        .build()
-    }
-
-
-    Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청")
     mutex.withLock {
+      val accessToken = authRepository.accessToken.first()
+      val alreadyRefreshed = response.request.header(AUTH_HEADER)?.contains(accessToken) == false
+      // if request's header's token is different, then that means the access token has already been refreshed
+      // we return the response with the locally persisted token in the header
+      if (alreadyRefreshed) {
+        Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - 이미 토큰이 갱신됨 / 중단된 API 재요청")
+
+        return@runBlocking response.request.newBuilder()
+          .header(AUTH_HEADER, accessToken)
+          .build()
+      }
+
       if (authRepository.reissueRefreshToken()) {
-        Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - authenticate() called / 중단된 API 재요청")
+        Timber.tag(RETROFIT_TAG).d("TokenAuthenticator - 토큰 갱신 성공 / 중단된 API 재요청")
         response.request
           .newBuilder()
           .removeHeader(AUTH_HEADER)
