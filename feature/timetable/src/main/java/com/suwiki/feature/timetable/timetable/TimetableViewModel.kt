@@ -6,7 +6,7 @@ import com.suwiki.domain.timetable.usecase.DeleteTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
 import com.suwiki.domain.timetable.usecase.GetTimetableCellTypeUseCase
 import com.suwiki.domain.timetable.usecase.SetTimetableCellTypeUseCase
-import com.suwiki.feature.timetable.navigation.argument.toCellEditorArgument
+import com.suwiki.core.ui.argument.toCellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container

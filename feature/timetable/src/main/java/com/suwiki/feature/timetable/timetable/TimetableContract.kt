@@ -3,7 +3,7 @@ package com.suwiki.feature.timetable.timetable
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.core.ui.argument.CellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 
 data class TimetableState(

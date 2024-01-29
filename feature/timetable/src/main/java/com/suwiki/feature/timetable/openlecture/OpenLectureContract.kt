@@ -6,7 +6,7 @@ import com.suwiki.core.model.timetable.OpenLecture
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
 import com.suwiki.feature.timetable.R
-import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.core.ui.argument.CellEditorArgument
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf

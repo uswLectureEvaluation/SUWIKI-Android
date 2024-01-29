@@ -59,7 +59,7 @@ import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.suwikiClickable
 import com.suwiki.core.ui.util.timetableCellColorHexMap
 import com.suwiki.feature.timetable.R
-import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.core.ui.argument.CellEditorArgument
 import com.suwiki.feature.timetable.openlecture.component.OpenLectureCard
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import kotlinx.collections.immutable.toPersistentList
@@ -73,13 +73,13 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun OpenLectureRoute(
-  viewModel: OpenLectureViewModel = hiltViewModel(),
-  selectedOpenMajor: String,
-  popBackStack: () -> Unit,
-  handleException: (Throwable) -> Unit,
-  onShowToast: (String) -> Unit,
-  navigateOpenMajor: (String) -> Unit,
-  navigateCellEditor: (CellEditorArgument) -> Unit,
+    viewModel: OpenLectureViewModel = hiltViewModel(),
+    selectedOpenMajor: String,
+    popBackStack: () -> Unit,
+    handleException: (Throwable) -> Unit,
+    onShowToast: (String) -> Unit,
+    navigateOpenMajor: (String) -> Unit,
+    navigateCellEditor: (CellEditorArgument) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
 

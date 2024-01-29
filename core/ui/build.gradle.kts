@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.suwiki.android.library)
   alias(libs.plugins.suwiki.android.library.compose)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.kotlin.parcelize)
 }
 
 android {

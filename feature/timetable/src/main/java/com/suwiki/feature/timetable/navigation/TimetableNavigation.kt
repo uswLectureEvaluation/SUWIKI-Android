@@ -9,13 +9,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.suwiki.core.ui.extension.encodeToUri
 import com.suwiki.feature.timetable.celleditor.CellEditorRoute
-import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.core.ui.argument.CellEditorArgument
+import com.suwiki.core.ui.extension.parcelable
+import com.suwiki.core.ui.util.createParcelableNavType
 import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument
 import com.suwiki.feature.timetable.openlecture.OpenLectureRoute
 import com.suwiki.feature.timetable.timetable.TimetableRoute
 import com.suwiki.feature.timetable.timetableeditor.TimetableEditorRoute
 import com.suwiki.feature.timetable.timetablelist.TimetableListRoute
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 
 fun NavController.navigateTimetable(navOptions: NavOptions) {
   navigate(TimetableRoute.route, navOptions)
@@ -34,20 +37,20 @@ fun NavController.navigateOpenLecture() {
 }
 
 fun NavController.navigateCellEditor(argument: CellEditorArgument = CellEditorArgument()) {
-  navigate(TimetableRoute.cellEditorRoute(Json.encodeToUri(argument)))
+  navigate(TimetableRoute.cellEditorRoute("$argument"))
 }
 
 fun NavGraphBuilder.timetableNavGraph(
-  padding: PaddingValues,
-  argumentName: String,
-  popBackStack: () -> Unit,
-  navigateOpenMajor: (String) -> Unit,
-  navigateTimetableEditor: (TimetableEditorArgument) -> Unit,
-  navigateTimetableList: () -> Unit,
-  navigateOpenLecture: () -> Unit,
-  navigateCellEditor: (CellEditorArgument) -> Unit,
-  handleException: (Throwable) -> Unit,
-  onShowToast: (String) -> Unit,
+    padding: PaddingValues,
+    argumentName: String,
+    popBackStack: () -> Unit,
+    navigateOpenMajor: (String) -> Unit,
+    navigateTimetableEditor: (TimetableEditorArgument) -> Unit,
+    navigateTimetableList: () -> Unit,
+    navigateOpenLecture: () -> Unit,
+    navigateCellEditor: (CellEditorArgument) -> Unit,
+    handleException: (Throwable) -> Unit,
+    onShowToast: (String) -> Unit,
 ) {
   composable(route = TimetableRoute.route) {
     TimetableRoute(
@@ -96,8 +99,7 @@ fun NavGraphBuilder.timetableNavGraph(
     route = TimetableRoute.cellEditorRoute("{${TimetableRoute.CELL_EDITOR_ARGUMENT}}"),
     arguments = listOf(
       navArgument(TimetableRoute.CELL_EDITOR_ARGUMENT) {
-        type = NavType.StringType
-        nullable = true
+        type = NavType.ParcelableType(CellEditorArgument::class.java)
       },
     ),
   ) {

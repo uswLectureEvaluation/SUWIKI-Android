@@ -21,7 +21,7 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.feature.timetable.R
-import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.core.ui.argument.CellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.EditTimetableCellBottomSheet
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
@@ -34,14 +34,14 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun TimetableRoute(
-  padding: PaddingValues,
-  viewModel: TimetableViewModel = hiltViewModel(),
-  navigateTimetableEditor: () -> Unit,
-  navigateOpenLecture: () -> Unit,
-  navigateTimetableList: () -> Unit,
-  handleException: (Throwable) -> Unit,
-  onShowToast: (String) -> Unit,
-  navigateCellEditor: (CellEditorArgument) -> Unit,
+    padding: PaddingValues,
+    viewModel: TimetableViewModel = hiltViewModel(),
+    navigateTimetableEditor: () -> Unit,
+    navigateOpenLecture: () -> Unit,
+    navigateTimetableList: () -> Unit,
+    handleException: (Throwable) -> Unit,
+    onShowToast: (String) -> Unit,
+    navigateCellEditor: (CellEditorArgument) -> Unit,
 ) {
   val uiState = viewModel.collectAsState().value
   val context = LocalContext.current

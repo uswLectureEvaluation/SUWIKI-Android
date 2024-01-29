@@ -2,8 +2,8 @@ package com.suwiki.feature.timetable.celleditor
 
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
-import com.suwiki.feature.timetable.navigation.argument.CellArgument
-import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.core.ui.argument.CellArgument
+import com.suwiki.core.ui.argument.CellEditorArgument
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList

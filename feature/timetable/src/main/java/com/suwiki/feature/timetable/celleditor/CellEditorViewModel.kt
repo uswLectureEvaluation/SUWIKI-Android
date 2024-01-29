@@ -7,11 +7,12 @@ import com.suwiki.core.model.exception.TimetableCellPeriodInvalidException
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.core.ui.argument.CellArgument
 import com.suwiki.core.ui.extension.decodeFromUri
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.UpdateTimetableCellUseCase
 import com.suwiki.feature.timetable.navigation.TimetableRoute
-import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
+import com.suwiki.core.ui.argument.CellEditorArgument
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.Container
@@ -31,8 +32,7 @@ class CellEditorViewModel @Inject constructor(
   private val updateTimetableCellUseCase: UpdateTimetableCellUseCase,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel(), ContainerHost<CellEditorState, CellEditorSideEffect> {
-  private val argument = savedStateHandle.get<String>(TimetableRoute.CELL_EDITOR_ARGUMENT)!!
-  private val cellEditorArgument = Json.decodeFromUri<CellEditorArgument>(argument)
+  private val cellEditorArgument = savedStateHandle.get<CellEditorArgument>(TimetableRoute.CELL_EDITOR_ARGUMENT)!!
   private val isEditMode = cellEditorArgument.isEditMode
 
   override val container: Container<CellEditorState, CellEditorSideEffect> = container(

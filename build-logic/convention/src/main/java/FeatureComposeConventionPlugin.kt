@@ -12,6 +12,7 @@ internal class FeatureComposeConventionPlugin : Plugin<Project> {
         apply("suwiki.android.library")
         apply("suwiki.android.library.compose")
         apply("suwiki.android.hilt")
+        apply("kotlin-parcelize")
       }
 
       dependencies {
