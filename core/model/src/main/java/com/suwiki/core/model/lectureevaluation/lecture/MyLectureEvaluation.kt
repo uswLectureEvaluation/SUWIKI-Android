@@ -13,8 +13,8 @@ data class MyLectureEvaluation(
   val satisfaction: Float = 2.5f, // 만족도
   val learning: Float = 2.5f, // 배움지수
   val honey: Float = 2.5f, // 꿀강지수
-  val team: Int = 0, // 조별모임 유무(없음 == 0, 있음 == 1)
-  val difficulty: Int = 1, // 학점 잘주는가? (까다로움 == 0, 보통 == 1, 학점느님 ==2)
-  val homework: Int = 1, // 과제양 (없음 ==0, 보통 == 1, 많음 == 2)
+  val team: Int = 0,
+  val difficulty: Int = 1,
+  val homework: Int = 1,
   val content: String = "",
 )

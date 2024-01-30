@@ -4,16 +4,16 @@ import androidx.compose.runtime.Stable
 
 @Stable
 enum class GradeLevel(val value: Int) {
-  EASY(2),
+  EASY(0),
   NORMAL(1),
-  DIFFICULT(0),
+  DIFFICULT(2),
   ;
 
   companion object {
     fun valueOf(value: Int): GradeLevel = when (value) {
-      0 -> DIFFICULT
+      0 -> EASY
       1 -> NORMAL
-      2 -> EASY
+      2 -> DIFFICULT
       else -> throw IllegalArgumentException("존재하지 않는 GradeLevel 입니다.")
     }
   }
