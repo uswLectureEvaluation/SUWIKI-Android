@@ -35,9 +35,9 @@ import com.suwiki.core.designsystem.component.tabbar.TabTitle
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.enums.LectureEvaluationTab
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.core.ui.enums.LectureEvaluationTab
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.encodeToUri
