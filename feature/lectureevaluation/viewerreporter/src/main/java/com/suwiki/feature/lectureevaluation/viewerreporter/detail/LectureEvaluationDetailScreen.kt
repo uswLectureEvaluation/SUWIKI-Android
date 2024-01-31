@@ -46,7 +46,7 @@ import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.model.enums.LectureEvaluationTab
+import com.suwiki.core.ui.enums.LectureEvaluationTab
 import com.suwiki.core.ui.extension.OnBottomReached
 import com.suwiki.core.ui.extension.collectWithLifecycle
 import com.suwiki.core.ui.extension.suwikiClickable
@@ -181,7 +181,7 @@ fun LectureEvaluationDetailScreen(
             LectureEvaluationTab.entries.forEach { tab ->
               with(tab) {
                 TabTitle(
-                  title = title,
+                  title = stringResource(title),
                   position = position,
                   selected = pagerState.currentPage == position,
                   onClick = { onClickTab(position) },

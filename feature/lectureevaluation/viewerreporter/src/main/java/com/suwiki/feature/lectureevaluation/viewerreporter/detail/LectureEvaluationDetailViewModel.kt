@@ -2,7 +2,7 @@ package com.suwiki.feature.lectureevaluation.viewerreporter.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.enums.LectureEvaluationTab
+import com.suwiki.core.ui.enums.LectureEvaluationTab
 import com.suwiki.core.model.exception.UserPointLackException
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation

@@ -35,7 +35,7 @@ import com.suwiki.core.designsystem.component.tabbar.TabTitle
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.model.enums.LectureEvaluationTab
+import com.suwiki.core.ui.enums.LectureEvaluationTab
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.core.ui.extension.OnBottomReached
@@ -151,7 +151,7 @@ fun MyEvaluationScreen(
       LectureEvaluationTab.entries.forEach { tab ->
         with(tab) {
           TabTitle(
-            title = title,
+            title = stringResource(title),
             position = position,
             selected = pagerState.currentPage == position,
             onClick = { onClickTab(position) },
