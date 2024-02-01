@@ -9,6 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -26,6 +28,8 @@ class LectureEvaluationViewModel @Inject constructor(
 ) : ContainerHost<LectureEvaluationState, LectureEvaluationSideEffect>, ViewModel() {
   override val container: Container<LectureEvaluationState, LectureEvaluationSideEffect> =
     container(LectureEvaluationState())
+
+  private val mutex: Mutex = Mutex()
 
   private val currentState
     get() = container.stateFlow.value
@@ -81,35 +85,37 @@ class LectureEvaluationViewModel @Inject constructor(
     majorType: String = currentState.selectedOpenMajor,
     needClear: Boolean,
   ) = intent {
-    val currentList = if (needClear) {
-      page = 1
-      reduce { state.copy(isLoading = true) }
-      emptyList()
-    } else {
-      state.lectureEvaluationList
-    }
+    mutex.withLock {
+      val currentList = if (needClear) {
+        page = 1
+        reduce { state.copy(isLoading = true) }
+        emptyList()
+      } else {
+        state.lectureEvaluationList
+      }
 
-    getLectureEvaluationListUseCase(
-      RetrieveLectureEvaluationAverageListUseCase.Param(
-        search = search,
-        option = LectureAlign.entries[alignPosition].query,
-        page = page,
-        majorType = majorType,
-      ),
-    ).onSuccess { newList ->
-      handleGetLectureEvaluationListSuccess(
-        alignPosition = alignPosition,
-        majorType = majorType,
-        currentList = currentList,
-        newList = newList,
-      )
-    }.onFailure {
-      postSideEffect(LectureEvaluationSideEffect.HandleException(it))
-    }
+      getLectureEvaluationListUseCase(
+        RetrieveLectureEvaluationAverageListUseCase.Param(
+          search = search,
+          option = LectureAlign.entries[alignPosition].query,
+          page = page,
+          majorType = majorType,
+        ),
+      ).onSuccess { newList ->
+        handleGetLectureEvaluationListSuccess(
+          alignPosition = alignPosition,
+          majorType = majorType,
+          currentList = currentList,
+          newList = newList,
+        )
+      }.onFailure {
+        postSideEffect(LectureEvaluationSideEffect.HandleException(it))
+      }
 
-    if (needClear) {
-      postSideEffect(LectureEvaluationSideEffect.ScrollToTop)
-      reduce { state.copy(isLoading = false) }
+      if (needClear) {
+        postSideEffect(LectureEvaluationSideEffect.ScrollToTop)
+        reduce { state.copy(isLoading = false) }
+      }
     }
   }
 
@@ -146,6 +152,7 @@ class LectureEvaluationViewModel @Inject constructor(
       postSideEffect(LectureEvaluationSideEffect.NavigateLectureEvaluationDetail(id))
     }
   }
+
   private fun showOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = true) } }
   fun hideOnboardingBottomSheet() = intent { reduce { state.copy(showOnboardingBottomSheet = false) } }
 

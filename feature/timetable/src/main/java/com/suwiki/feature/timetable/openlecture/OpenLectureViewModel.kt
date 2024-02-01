@@ -13,6 +13,8 @@ import com.suwiki.feature.timetable.navigation.argument.toCellEditorArgument
 import com.suwiki.feature.timetable.openlecture.model.SchoolLevel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -28,6 +30,8 @@ class OpenLectureViewModel @Inject constructor(
   private val getOpenLectureListUseCase: GetOpenLectureListUseCase,
   private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
 ) : ViewModel(), ContainerHost<OpenLectureState, OpenLectureSideEffect> {
+
+  private val mutex: Mutex = Mutex()
 
   override val container: Container<OpenLectureState, OpenLectureSideEffect> = container(
     OpenLectureState(),
@@ -144,39 +148,41 @@ class OpenLectureViewModel @Inject constructor(
     majorType: String = currentState.selectedOpenMajor,
     needClear: Boolean,
   ) = intent {
-    val currentList = when {
-      needClear -> {
-        reduce { state.copy(isLoading = true) }
-        cursorId = 0
-        isLast = false
-        emptyList()
+    mutex.withLock {
+      val currentList = when {
+        needClear -> {
+          reduce { state.copy(isLoading = true) }
+          cursorId = 0
+          isLast = false
+          emptyList()
+        }
+
+        isLast -> return@intent
+        else -> state.openLectureList
       }
 
-      isLast -> return@intent
-      else -> state.openLectureList
-    }
+      getOpenLectureListUseCase(
+        GetOpenLectureListUseCase.Param(
+          cursorId = cursorId,
+          keyword = search,
+          major = if (majorType == "전체") null else majorType,
+          grade = schoolLevel.query,
+        ),
+      ).onSuccess { newData ->
+        handleGetOpenLectureListSuccess(
+          schoolLevel = schoolLevel,
+          majorType = majorType,
+          currentList = currentList,
+          newData = newData,
+        )
+      }.onFailure {
+        postSideEffect(OpenLectureSideEffect.HandleException(it))
+      }
 
-    getOpenLectureListUseCase(
-      GetOpenLectureListUseCase.Param(
-        cursorId = cursorId,
-        keyword = search,
-        major = if (majorType == "전체") null else majorType,
-        grade = schoolLevel.query,
-      ),
-    ).onSuccess { newData ->
-      handleGetOpenLectureListSuccess(
-        schoolLevel = schoolLevel,
-        majorType = majorType,
-        currentList = currentList,
-        newData = newData,
-      )
-    }.onFailure {
-      postSideEffect(OpenLectureSideEffect.HandleException(it))
-    }
-
-    if (needClear) {
-      postSideEffect(OpenLectureSideEffect.ScrollToTop)
-      reduce { state.copy(isLoading = false) }
+      if (needClear) {
+        postSideEffect(OpenLectureSideEffect.ScrollToTop)
+        reduce { state.copy(isLoading = false) }
+      }
     }
   }
 
