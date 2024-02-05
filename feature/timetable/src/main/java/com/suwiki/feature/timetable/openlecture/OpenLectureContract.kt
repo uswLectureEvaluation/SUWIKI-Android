@@ -37,7 +37,7 @@ fun TimetableDay.toText(context: Context) = when (this) {
   TimetableDay.MON -> context.getString(R.string.word_mon)
   TimetableDay.TUE -> context.getString(R.string.word_tue)
   TimetableDay.WED -> context.getString(R.string.word_wed)
-  TimetableDay.THU -> context.getString(R.string.word_tue)
+  TimetableDay.THU -> context.getString(R.string.word_thu)
   TimetableDay.FRI -> context.getString(R.string.word_fri)
   TimetableDay.SAT -> context.getString(R.string.word_sat)
   TimetableDay.E_LEARNING -> context.getString(R.string.word_elearning)
