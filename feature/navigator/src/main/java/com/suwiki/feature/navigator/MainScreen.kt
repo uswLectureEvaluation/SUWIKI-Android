@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navOptions
 import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
 import com.suwiki.core.designsystem.shadow.bottomNavigationShadow
 import com.suwiki.core.designsystem.theme.GrayDA
@@ -91,7 +92,13 @@ internal fun MainScreen(
           popBackStack = navigator::popBackStackIfNotHome,
           handleException = viewModel::handleException,
           navigateSignupComplete = navigator::navigateSignupComplete,
-          navigateLogin = navigator::navigateLogin,
+          navigateLogin = {
+            navigator.navigateLogin(
+              navOptions {
+                popUpTo(navigator.startDestination)
+              },
+            )
+          },
         )
 
         openMajorNavGraph(
