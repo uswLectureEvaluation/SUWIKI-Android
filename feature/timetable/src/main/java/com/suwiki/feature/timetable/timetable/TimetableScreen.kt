@@ -25,6 +25,7 @@ import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.timetable.component.EditTimetableCellBottomSheet
 import com.suwiki.feature.timetable.timetable.component.TimetableAppbar
 import com.suwiki.feature.timetable.timetable.component.TimetableEmptyColumn
+import com.suwiki.feature.timetable.timetable.component.timetable.DrawTimetable
 import com.suwiki.feature.timetable.timetable.component.timetable.Timetable
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.feature.timetable.widget.sendWidgetUpdateCommand
@@ -131,6 +132,11 @@ fun TimetableScreen(
       enter = fadeIn(),
       exit = fadeOut(),
     ) {
+//      DrawTimetable(
+//        timetable = uiState.timetable ?: com.suwiki.core.model.timetable.Timetable(),
+//        type = uiState.cellType,
+//        onClickTimetableCell = onClickTimetableCell,
+//      )
       Timetable(
         timetable = uiState.timetable ?: com.suwiki.core.model.timetable.Timetable(),
         type = uiState.cellType,
