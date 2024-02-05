@@ -13,8 +13,8 @@ android {
 
   defaultConfig {
     applicationId = "com.kunize.uswtimetable"
-    versionCode = 38
-    versionName = "2.3.4"
+    versionCode = 39
+    versionName = "2.3.5"
   }
 }
 
