@@ -222,9 +222,27 @@ fun OpenLectureScreen(
       },
     ) {
       if (uiState.openLectureList.isEmpty()) {
-        EmptyText(
-          stringResource(R.string.word_empty_result),
-        )
+        Column(
+          modifier = Modifier.fillMaxSize(),
+          horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+          Spacer(modifier = Modifier.size(52.dp))
+
+          Text(
+            text = stringResource(R.string.open_lecture_screen_empty_result_title),
+            style = SuwikiTheme.typography.header4,
+            color = Gray95,
+          )
+
+          Spacer(modifier = Modifier.size(12.dp))
+
+          Text(
+            text = stringResource(R.string.open_lecture_screen_empty_result_description),
+            style = SuwikiTheme.typography.body5,
+            textAlign = TextAlign.Center,
+            color = Gray95,
+          )
+        }
       }
 
       LazyColumn(
@@ -352,21 +370,6 @@ private fun FilterContainer(
       tint = Gray6A,
     )
   }
-}
-
-@Composable
-private fun EmptyText(
-  text: String = "",
-) {
-  Text(
-    modifier = Modifier
-      .padding(52.dp)
-      .fillMaxSize(),
-    textAlign = TextAlign.Center,
-    text = text,
-    style = SuwikiTheme.typography.header4,
-    color = Gray95,
-  )
 }
 
 @Preview
