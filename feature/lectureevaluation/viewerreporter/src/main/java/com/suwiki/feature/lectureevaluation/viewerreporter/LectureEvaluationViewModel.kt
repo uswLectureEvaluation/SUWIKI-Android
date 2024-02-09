@@ -65,7 +65,6 @@ class LectureEvaluationViewModel @Inject constructor(
   }
 
   fun updateAlignItem(position: Int) = intent {
-
     reduce {
       state.copy(
         selectedAlignPosition = position,
@@ -140,7 +139,6 @@ class LectureEvaluationViewModel @Inject constructor(
         .toPersistentList(),
     )
   }
-
 
   private suspend fun checkLoggedIn() {
     isLoggedIn = getUserInfoUseCase().catch { }.lastOrNull()?.isLoggedIn == true

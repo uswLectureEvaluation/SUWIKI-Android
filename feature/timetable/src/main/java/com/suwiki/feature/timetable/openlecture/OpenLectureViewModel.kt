@@ -209,7 +209,6 @@ class OpenLectureViewModel @Inject constructor(
     )
   }
 
-
   fun showGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = true) } }
   fun hideGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = false) } }
   fun popBackStack() = intent { postSideEffect(OpenLectureSideEffect.PopBackStack) }
