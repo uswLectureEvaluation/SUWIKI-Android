@@ -14,6 +14,7 @@ import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -51,15 +52,26 @@ class LectureEvaluationViewModel @Inject constructor(
 
   fun updateSelectedOpenMajor(openMajor: String) = intent {
     if (openMajor == state.selectedOpenMajor) return@intent
+
+    reduce {
+      state.copy(
+        selectedOpenMajor = openMajor,
+      )
+    }
+
     getLectureEvaluationList(
-      majorType = openMajor,
       needClear = true,
     )
   }
 
-  fun updateAlignItem(position: Int) {
+  fun updateAlignItem(position: Int) = intent {
+    reduce {
+      state.copy(
+        selectedAlignPosition = position,
+      )
+    }
+
     getLectureEvaluationList(
-      alignPosition = position,
       needClear = true,
     )
   }
@@ -81,8 +93,6 @@ class LectureEvaluationViewModel @Inject constructor(
 
   fun getLectureEvaluationList(
     search: String = searchQuery,
-    alignPosition: Int = currentState.selectedAlignPosition,
-    majorType: String = currentState.selectedOpenMajor,
     needClear: Boolean,
   ) = intent {
     mutex.withLock {
@@ -97,14 +107,12 @@ class LectureEvaluationViewModel @Inject constructor(
       getLectureEvaluationListUseCase(
         RetrieveLectureEvaluationAverageListUseCase.Param(
           search = search,
-          option = LectureAlign.entries[alignPosition].query,
+          option = LectureAlign.entries[currentState.selectedAlignPosition].query,
           page = page,
-          majorType = majorType,
+          majorType = currentState.selectedOpenMajor,
         ),
       ).onSuccess { newList ->
         handleGetLectureEvaluationListSuccess(
-          alignPosition = alignPosition,
-          majorType = majorType,
           currentList = currentList,
           newList = newList,
         )
@@ -119,23 +127,17 @@ class LectureEvaluationViewModel @Inject constructor(
     }
   }
 
-  private fun handleGetLectureEvaluationListSuccess(
-    alignPosition: Int,
-    majorType: String,
+  private suspend fun SimpleSyntax<LectureEvaluationState, LectureEvaluationSideEffect>.handleGetLectureEvaluationListSuccess(
     currentList: List<LectureEvaluationAverage?>,
     newList: List<LectureEvaluationAverage?>,
-  ) = intent {
-    reduce {
-      page++
-      state.copy(
-        selectedAlignPosition = alignPosition,
-        selectedOpenMajor = majorType,
-        lectureEvaluationList = currentList
-          .plus(newList)
-          .distinctBy { it?.id }
-          .toPersistentList(),
-      )
-    }
+  ) = reduce {
+    page++
+    state.copy(
+      lectureEvaluationList = currentList
+        .plus(newList)
+        .distinctBy { it?.id }
+        .toPersistentList(),
+    )
   }
 
   private suspend fun checkLoggedIn() {

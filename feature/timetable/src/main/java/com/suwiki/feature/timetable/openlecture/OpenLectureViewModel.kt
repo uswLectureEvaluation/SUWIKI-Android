@@ -18,6 +18,7 @@ import kotlinx.coroutines.sync.withLock
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
+import org.orbitmvi.orbit.syntax.simple.SimpleSyntax
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -52,6 +53,7 @@ class OpenLectureViewModel @Inject constructor(
       OpenLectureSideEffect.NavigateCellEditor(openLecture.toCellEditorArgument()),
     )
   }
+
   fun navigateAddCustomCell() = intent { postSideEffect(OpenLectureSideEffect.NavigateAddCustomTimetableCell) }
 
   fun insertTimetable() = intent {
@@ -128,24 +130,33 @@ class OpenLectureViewModel @Inject constructor(
   }
 
   fun updateSchoolLevelPosition(schoolLevel: SchoolLevel) = intent {
+    reduce {
+      state.copy(
+        schoolLevel = schoolLevel,
+      )
+    }
+
     getOpenLectureList(
-      schoolLevel = schoolLevel,
       needClear = true,
     )
   }
 
   fun updateSelectedOpenMajor(openMajor: String) = intent {
     if (openMajor == state.selectedOpenMajor) return@intent
+
+    reduce {
+      state.copy(
+        selectedOpenMajor = openMajor,
+      )
+    }
+
     getOpenLectureList(
-      majorType = openMajor,
       needClear = true,
     )
   }
 
   fun getOpenLectureList(
     search: String = searchQuery,
-    schoolLevel: SchoolLevel = currentState.schoolLevel,
-    majorType: String = currentState.selectedOpenMajor,
     needClear: Boolean,
   ) = intent {
     mutex.withLock {
@@ -165,13 +176,11 @@ class OpenLectureViewModel @Inject constructor(
         GetOpenLectureListUseCase.Param(
           cursorId = cursorId,
           keyword = search,
-          major = if (majorType == "전체") null else majorType,
-          grade = schoolLevel.query,
+          major = if (currentState.selectedOpenMajor == "전체") null else currentState.selectedOpenMajor,
+          grade = currentState.schoolLevel.query,
         ),
       ).onSuccess { newData ->
         handleGetOpenLectureListSuccess(
-          schoolLevel = schoolLevel,
-          majorType = majorType,
           currentList = currentList,
           newData = newData,
         )
@@ -186,24 +195,18 @@ class OpenLectureViewModel @Inject constructor(
     }
   }
 
-  private fun handleGetOpenLectureListSuccess(
-    schoolLevel: SchoolLevel,
-    majorType: String,
+  private suspend fun SimpleSyntax<OpenLectureState, OpenLectureSideEffect>.handleGetOpenLectureListSuccess(
     currentList: List<OpenLecture>,
     newData: OpenLectureData,
-  ) = intent {
-    reduce {
-      isLast = newData.isLast
-      cursorId = newData.content.lastOrNull()?.id ?: 0L
-      state.copy(
-        schoolLevel = schoolLevel,
-        selectedOpenMajor = majorType,
-        openLectureList = currentList
-          .plus(newData.content)
-          .distinctBy { it.id }
-          .toPersistentList(),
-      )
-    }
+  ) = reduce {
+    isLast = newData.isLast
+    cursorId = newData.content.lastOrNull()?.id ?: 0L
+    state.copy(
+      openLectureList = currentList
+        .plus(newData.content)
+        .distinctBy { it.id }
+        .toPersistentList(),
+    )
   }
 
   fun showGradeBottomSheet() = intent { reduce { state.copy(showSchoolLevelBottomSheet = true) } }
