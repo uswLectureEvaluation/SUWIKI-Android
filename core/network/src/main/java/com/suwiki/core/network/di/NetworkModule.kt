@@ -11,6 +11,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,12 +30,13 @@ object NetworkModule {
   fun provideNormalHttpClient(
     loggingInterceptor: HttpLoggingInterceptor,
   ): OkHttpClient {
-    return OkHttpClient.Builder()
-      .readTimeout(10, TimeUnit.SECONDS)
-      .connectTimeout(10, TimeUnit.SECONDS)
-      .writeTimeout(15, TimeUnit.SECONDS)
-      .addInterceptor(loggingInterceptor)
-      .build()
+    return RetrofitUrlManager.getInstance().with(
+      OkHttpClient.Builder()
+        .readTimeout(10, TimeUnit.SECONDS)
+        .connectTimeout(10, TimeUnit.SECONDS)
+        .writeTimeout(15, TimeUnit.SECONDS)
+        .addInterceptor(loggingInterceptor),
+    ).build()
   }
 
   @Singleton
@@ -93,13 +95,15 @@ object NetworkModule {
     authenticationInterceptor: AuthenticationInterceptor,
     loggingInterceptor: HttpLoggingInterceptor,
   ): OkHttpClient {
-    return OkHttpClient.Builder()
-      .readTimeout(10, TimeUnit.SECONDS)
-      .connectTimeout(10, TimeUnit.SECONDS)
-      .writeTimeout(15, TimeUnit.SECONDS)
-      .addInterceptor(loggingInterceptor)
-      .addInterceptor(authenticationInterceptor)
-      .authenticator(authenticator)
+    return RetrofitUrlManager.getInstance().with(
+      OkHttpClient.Builder()
+        .readTimeout(10, TimeUnit.SECONDS)
+        .connectTimeout(10, TimeUnit.SECONDS)
+        .writeTimeout(15, TimeUnit.SECONDS)
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(authenticationInterceptor)
+        .authenticator(authenticator),
+    )
       .build()
   }
 

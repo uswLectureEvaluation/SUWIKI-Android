@@ -32,5 +32,7 @@ dependencies {
   implementation(libs.okhttp.logging)
   androidTestImplementation(libs.junit4)
 
+  implementation("me.jessyan:retrofit-url-manager:1.4.0")
+
   implementation(libs.timber)
 }

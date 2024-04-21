@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.annotation.OrbitExperimental
@@ -167,6 +168,8 @@ class LectureEvaluationViewModel @Inject constructor(
   fun openTermWebSite() = intent { postSideEffect(LectureEvaluationSideEffect.OpenTermWebSite) }
   fun openPersonalPolicyWebSite() = intent { postSideEffect(LectureEvaluationSideEffect.OpenPersonalPolicyWebSite) }
 
-  fun showAlignBottomSheet() = intent { reduce { state.copy(showAlignBottomSheet = true) } }
+  fun showAlignBottomSheet() = intent {
+    RetrofitUrlManager.getInstance().putDomain("suwiki", "https://api.suwiki.kr")
+    reduce { state.copy(showAlignBottomSheet = true) } }
   fun hideAlignBottomSheet() = intent { reduce { state.copy(showAlignBottomSheet = false) } }
 }

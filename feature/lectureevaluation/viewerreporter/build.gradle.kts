@@ -10,6 +10,8 @@ android {
 dependencies {
   implementation(projects.domain.user)
   implementation(projects.domain.lectureevaluation.viewerreporter)
+  implementation("me.jessyan:retrofit-url-manager:1.4.0")
+
 
   implementation(libs.compose.toolbar)
   implementation(libs.kotlinx.serialization.json)

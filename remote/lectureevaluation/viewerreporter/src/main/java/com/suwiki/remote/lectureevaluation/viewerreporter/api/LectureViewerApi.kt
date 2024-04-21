@@ -6,6 +6,7 @@ import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.Lectu
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationExtraAverageResponse
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationListResponse
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface LectureViewerApi {
@@ -22,6 +23,7 @@ interface LectureViewerApi {
   }
 
   // 메인 페이지
+  @Headers("Domain-Name: suwiki")
   @GET("$LECTURE/all/")
   suspend fun getLectureEvaluationAverageList(
     @Query(QUERY_OPTION) option: String,
@@ -30,6 +32,7 @@ interface LectureViewerApi {
   ): ApiResult<DataResponse<List<LectureEvaluationAverageResponse?>>>
 
   // 통합 검색 결과
+  @Headers("Domain-Name: suwiki")
   @GET("$LECTURE/search/")
   suspend fun retrieveLectureEvaluationAverageList(
     @Query(QUERY_SEARCH_VALUE) searchValue: String,
@@ -39,12 +42,14 @@ interface LectureViewerApi {
   ): ApiResult<DataResponse<List<LectureEvaluationAverageResponse?>>>
 
   // 검색결과 자세히 보기 (LECTURE)
+  @Headers("Domain-Name: suwiki")
   @GET("$LECTURE/")
   suspend fun getLectureEvaluationExtraAverage(
     @Query(QUERY_LECTURE_ID) lectureId: Long,
   ): ApiResult<DataResponse<LectureEvaluationExtraAverageResponse>>
 
   // 검색 결과 자세히 보기 (Evaluation)
+  @Headers("Domain-Name: suwiki")
   @GET(EVALUATE_POST)
   suspend fun getLectureEvaluationList(
     @Query(QUERY_LECTURE_ID) lectureId: Long,
