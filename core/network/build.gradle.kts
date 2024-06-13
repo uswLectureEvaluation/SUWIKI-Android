@@ -23,7 +23,7 @@ android {
 
 dependencies {
   implementation(projects.core.model)
-  implementation(projects.core.security)
+  implementation(projects.core.datastore)
 
   implementation(libs.bundles.coroutine)
   implementation(libs.kotlinx.serialization.json)

@@ -12,6 +12,7 @@ android {
 dependencies {
   implementation(projects.core.model)
   implementation(projects.core.android)
+  implementation(projects.core.datastore)
   implementation(projects.core.database)
 
   implementation(projects.data.openmajor)

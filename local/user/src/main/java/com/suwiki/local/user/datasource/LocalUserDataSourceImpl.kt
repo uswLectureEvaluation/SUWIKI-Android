@@ -1,7 +1,7 @@
 package com.suwiki.local.user.datasource
 
 import androidx.datastore.core.DataStore
-import com.suwiki.core.database.UserPreference
+import com.suwiki.core.datastore.UserPreference
 import com.suwiki.core.model.user.DEFAULT_USER_EMAIL
 import com.suwiki.core.model.user.DEFAULT_USER_ID
 import com.suwiki.core.model.user.DEFAULT_USER_POINT

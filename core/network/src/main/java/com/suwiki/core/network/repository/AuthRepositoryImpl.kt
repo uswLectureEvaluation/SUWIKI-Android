@@ -4,7 +4,7 @@ import com.suwiki.core.network.api.AuthApi
 import com.suwiki.core.network.di.RETROFIT_TAG
 import com.suwiki.core.network.retrofit.onFailure
 import com.suwiki.core.network.retrofit.onSuccess
-import com.suwiki.core.security.SecurityPreferences
+import com.suwiki.core.datastore.SecurityPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import timber.log.Timber

@@ -9,6 +9,7 @@ import com.suwiki.remote.user.response.SuccessCheckResponse
 import com.suwiki.remote.user.response.UserResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 // TODO : v2 api로 업그레이드 필요.
@@ -30,6 +31,7 @@ interface UserApi {
   ): ApiResult<SuccessCheckResponse>
 
   // 내 정보 페이지 호출 API
+  @Headers("Domain-Name: suwiki")
   @GET("$USER/my-page")
   suspend fun getUserData(): ApiResult<UserResponse>
 

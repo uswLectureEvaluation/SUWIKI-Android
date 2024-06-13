@@ -3,7 +3,6 @@ plugins {
   alias(libs.plugins.suwiki.android.library)
   alias(libs.plugins.suwiki.android.hilt)
   alias(libs.plugins.ksp)
-  alias(libs.plugins.protobuf)
   alias(libs.plugins.kotlin.serialization)
 }
 
@@ -20,21 +19,6 @@ android {
   }
 }
 
-protobuf {
-  protoc {
-    artifact = libs.protobuf.protoc.get().toString()
-  }
-  generateProtoTasks {
-    all().forEach { task ->
-      task.builtins {
-        register("java") {
-          option("lite")
-        }
-      }
-    }
-  }
-}
-
 dependencies {
   implementation(projects.core.model)
 
@@ -44,9 +28,6 @@ dependencies {
   androidTestImplementation(libs.room.testing)
 
   implementation(libs.bundles.coroutine)
-  implementation(libs.androidx.datastore.core)
-  implementation(libs.androidx.datastore.preferences)
-  implementation(libs.protobuf.kotlin.lite)
 
   implementation(libs.kotlinx.serialization.json)
 

@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.suwiki.core.android.Dispatcher
 import com.suwiki.core.android.SuwikiDispatchers
 import com.suwiki.core.database.database.TimetableDatabase
-import com.suwiki.core.database.di.NormalDataStore
+import com.suwiki.core.datastore.di.NormalDataStore
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.local.timetable.converter.toEntity

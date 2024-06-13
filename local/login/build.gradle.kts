@@ -11,7 +11,7 @@ android {
 dependencies {
   implementation(projects.core.model)
   implementation(projects.data.login)
-  implementation(projects.core.security)
+  implementation(projects.core.datastore)
 
   implementation(libs.bundles.coroutine)
 

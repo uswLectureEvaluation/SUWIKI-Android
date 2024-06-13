@@ -1,7 +1,7 @@
 package com.suwiki.local.login.datasource
 
 import com.suwiki.core.model.user.Token
-import com.suwiki.core.security.SecurityPreferences
+import com.suwiki.core.datastore.SecurityPreferences
 import com.suwiki.data.login.datasource.LocalLoginDataSource
 import javax.inject.Inject
 

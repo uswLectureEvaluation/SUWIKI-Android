@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import com.suwiki.core.android.Dispatcher
 import com.suwiki.core.android.SuwikiDispatchers
 import com.suwiki.core.database.database.OpenMajorDatabase
-import com.suwiki.core.database.di.NormalDataStore
+import com.suwiki.core.datastore.di.NormalDataStore
 import com.suwiki.core.model.openmajor.OpenMajor
 import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
 import com.suwiki.local.openmajor.converter.toEntity
