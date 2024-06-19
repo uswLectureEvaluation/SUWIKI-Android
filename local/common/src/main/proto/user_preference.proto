@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.suwiki.local.common";
+option java_multiple_files = true;
+
+message UserPreference {
+  string user_id = 1;
+  string email = 2;
+  int32 point = 3;
+  int32 written_evaluation = 4;
+  int32 written_exam = 5;
+  int32 view_exam = 6;
+}

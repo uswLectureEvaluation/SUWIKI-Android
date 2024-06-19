@@ -12,7 +12,7 @@ android {
 dependencies {
   implementation(projects.core.model)
   implementation(projects.core.android)
-  implementation(projects.core.database)
+  implementation(projects.local.common)
 
   implementation(projects.data.openmajor)
 

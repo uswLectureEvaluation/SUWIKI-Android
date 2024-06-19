@@ -1,7 +1,7 @@
 package com.suwiki.local.openmajor.converter
 
-import com.suwiki.core.database.model.OpenMajorEntity
 import com.suwiki.core.model.openmajor.OpenMajor
+import com.suwiki.local.common.database.entity.OpenMajorEntity
 
 fun OpenMajorEntity.toModel() = OpenMajor(
   id = id,

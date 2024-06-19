@@ -7,10 +7,10 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.suwiki.core.android.Dispatcher
 import com.suwiki.core.android.SuwikiDispatchers
-import com.suwiki.core.database.database.TimetableDatabase
-import com.suwiki.core.database.di.NormalDataStore
 import com.suwiki.core.model.timetable.Timetable
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
+import com.suwiki.local.common.database.TimetableDatabase
+import com.suwiki.local.common.datastore.di.NormalDataStore
 import com.suwiki.local.timetable.converter.toEntity
 import com.suwiki.local.timetable.converter.toModel
 import kotlinx.coroutines.CoroutineDispatcher
