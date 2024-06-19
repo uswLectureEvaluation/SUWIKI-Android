@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.lectureevaluation.viewerreporter.request.ReportLectureRequest
 import retrofit2.http.Body
 import retrofit2.http.POST

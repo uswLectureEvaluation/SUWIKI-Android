@@ -1,6 +1,6 @@
 package com.suwiki.remote.timetable.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.timetable.response.OpenLectureResponse
 import retrofit2.http.GET
 import retrofit2.http.Query

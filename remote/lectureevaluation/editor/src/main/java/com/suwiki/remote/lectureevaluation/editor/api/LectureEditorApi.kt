@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.editor.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.lectureevaluation.editor.request.PostLectureEvaluationRequest
 import com.suwiki.remote.lectureevaluation.editor.request.UpdateLectureEvaluationRequest
 import retrofit2.http.Body

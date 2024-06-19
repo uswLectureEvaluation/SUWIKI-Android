@@ -1,6 +1,6 @@
 package com.suwiki.remote.notice.di
 
-import com.suwiki.core.network.di.NormalRetrofit
+import com.suwiki.remote.common.di.NoAuthRetrofit
 import com.suwiki.remote.notice.api.NoticeApi
 import dagger.Module
 import dagger.Provides
@@ -15,7 +15,7 @@ object ApiModule {
 
   @Singleton
   @Provides
-  fun provideNoticeApi(@NormalRetrofit retrofit: Retrofit): NoticeApi {
+  fun provideNoticeApi(@NoAuthRetrofit retrofit: Retrofit): NoticeApi {
     return retrofit.create(NoticeApi::class.java)
   }
 }

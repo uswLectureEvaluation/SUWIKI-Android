@@ -1,6 +1,6 @@
 package com.suwiki.remote.openmajor.di
 
-import com.suwiki.core.network.di.AuthRetrofit
+import com.suwiki.remote.common.di.AuthRetrofit
 import com.suwiki.remote.openmajor.api.MajorApi
 import dagger.Module
 import dagger.Provides

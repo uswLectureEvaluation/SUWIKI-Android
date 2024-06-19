@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.DataResponse
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationAverageResponse
 import com.suwiki.remote.lectureevaluation.viewerreporter.response.lecture.LectureEvaluationExtraAverageResponse

@@ -64,6 +64,7 @@ protobuf = "3.24.4"
 espresso-core = "3.5.1"
 junit-ktx = "1.1.5"
 androidx-test-runner = "1.5.2"
+junit = "1.1.5"
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -190,6 +191,7 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 
 [bundles]
 firebase = ["firebase-analytics"]

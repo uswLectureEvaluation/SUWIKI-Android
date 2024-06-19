@@ -1,6 +1,6 @@
 package com.suwiki.remote.openmajor.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.openmajor.request.BookmarkMajorRequest
 import com.suwiki.remote.openmajor.response.OpenMajorListResponse
 import com.suwiki.remote.openmajor.response.OpenMajorVersionResponse

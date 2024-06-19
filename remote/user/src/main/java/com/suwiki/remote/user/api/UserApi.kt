@@ -1,6 +1,6 @@
 package com.suwiki.remote.user.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.user.request.QuitRequest
 import com.suwiki.remote.user.request.ResetPasswordRequest
 import com.suwiki.remote.user.response.BanHistoryResponse

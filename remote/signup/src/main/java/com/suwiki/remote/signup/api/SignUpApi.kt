@@ -1,6 +1,6 @@
 package com.suwiki.remote.signup.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.signup.request.CheckEmailRequest
 import com.suwiki.remote.signup.request.CheckIdRequest
 import com.suwiki.remote.signup.request.SignupRequest
