@@ -1,6 +1,6 @@
 package com.suwiki.remote.login.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.login.request.FindIdRequest
 import com.suwiki.remote.login.request.FindPasswordRequest
 import com.suwiki.remote.login.request.LoginRequest

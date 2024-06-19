@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.viewerreporter.di
 
-import com.suwiki.core.network.di.AuthRetrofit
+import com.suwiki.remote.common.di.AuthRetrofit
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.ExamReportApi
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.ExamViewerApi
 import com.suwiki.remote.lectureevaluation.viewerreporter.api.LectureReportApi

@@ -1,6 +1,6 @@
 package com.suwiki.remote.notice.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.notice.response.DataResponse
 import com.suwiki.remote.notice.response.NoticeDetailResponse
 import com.suwiki.remote.notice.response.NoticeResponse

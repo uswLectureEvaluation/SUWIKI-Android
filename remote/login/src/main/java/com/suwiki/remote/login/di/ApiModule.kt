@@ -1,6 +1,6 @@
 package com.suwiki.remote.login.di
 
-import com.suwiki.core.network.di.AuthRetrofit
+import com.suwiki.remote.common.di.AuthRetrofit
 import com.suwiki.remote.login.api.LoginApi
 import dagger.Module
 import dagger.Provides

@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.my.di
 
-import com.suwiki.core.network.di.AuthRetrofit
+import com.suwiki.remote.common.di.AuthRetrofit
 import com.suwiki.remote.lectureevaluation.my.api.ExamMyApi
 import com.suwiki.remote.lectureevaluation.my.api.LectureMyApi
 import dagger.Module

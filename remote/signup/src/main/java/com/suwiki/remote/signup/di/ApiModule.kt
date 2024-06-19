@@ -1,6 +1,6 @@
 package com.suwiki.remote.signup.di
 
-import com.suwiki.core.network.di.NormalRetrofit
+import com.suwiki.remote.common.di.NoAuthRetrofit
 import com.suwiki.remote.signup.api.SignUpApi
 import dagger.Module
 import dagger.Provides
@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 object ApiModule {
 
   @Provides
-  fun provideSignUpApi(@NormalRetrofit retrofit: Retrofit): SignUpApi {
+  fun provideSignUpApi(@NoAuthRetrofit retrofit: Retrofit): SignUpApi {
     return retrofit.create(SignUpApi::class.java)
   }
 }

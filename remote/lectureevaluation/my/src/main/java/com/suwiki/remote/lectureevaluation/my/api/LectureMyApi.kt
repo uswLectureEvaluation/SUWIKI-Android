@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.my.api
 
-import com.suwiki.core.network.retrofit.ApiResult
+import com.suwiki.remote.common.retrofit.ApiResult
 import com.suwiki.remote.lectureevaluation.my.response.DataResponse
 import com.suwiki.remote.lectureevaluation.my.response.MyLectureEvaluationResponse
 import retrofit2.http.GET

@@ -1,6 +1,6 @@
 package com.suwiki.remote.timetable.di
 
-import com.suwiki.core.network.di.NormalRetrofit
+import com.suwiki.remote.common.di.NoAuthRetrofit
 import com.suwiki.remote.timetable.api.OpenLectureApi
 import dagger.Module
 import dagger.Provides
@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 object ApiModule {
 
   @Provides
-  fun provideOpenLectureApi(@NormalRetrofit retrofit: Retrofit): OpenLectureApi {
+  fun provideOpenLectureApi(@NoAuthRetrofit retrofit: Retrofit): OpenLectureApi {
     return retrofit.create(OpenLectureApi::class.java)
   }
 }

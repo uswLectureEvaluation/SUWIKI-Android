@@ -1,7 +1,6 @@
-package com.suwiki.remote.user.di
+package com.suwiki.remote.common.di
 
-import com.suwiki.remote.common.di.AuthRetrofit
-import com.suwiki.remote.user.api.UserApi
+import com.suwiki.remote.common.api.AuthApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +14,7 @@ object ApiModule {
 
   @Singleton
   @Provides
-  fun provideUserApi(@AuthRetrofit retrofit: Retrofit): UserApi {
-    return retrofit.create(UserApi::class.java)
+  fun provideAuthApi(@NoAuthRetrofit retrofit: Retrofit): AuthApi {
+    return retrofit.create(AuthApi::class.java)
   }
 }
