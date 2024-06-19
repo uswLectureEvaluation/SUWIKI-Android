@@ -6,10 +6,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import com.suwiki.core.android.Dispatcher
 import com.suwiki.core.android.SuwikiDispatchers
-import com.suwiki.core.database.database.OpenMajorDatabase
-import com.suwiki.core.database.di.NormalDataStore
 import com.suwiki.core.model.openmajor.OpenMajor
 import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
+import com.suwiki.local.common.database.OpenMajorDatabase
+import com.suwiki.local.common.datastore.di.NormalDataStore
 import com.suwiki.local.openmajor.converter.toEntity
 import com.suwiki.local.openmajor.converter.toModel
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,7 +1,6 @@
 package com.suwiki.local.user.datasource
 
 import androidx.datastore.core.DataStore
-import com.suwiki.core.database.UserPreference
 import com.suwiki.core.model.user.DEFAULT_USER_EMAIL
 import com.suwiki.core.model.user.DEFAULT_USER_ID
 import com.suwiki.core.model.user.DEFAULT_USER_POINT
@@ -10,6 +9,7 @@ import com.suwiki.core.model.user.DEFAULT_USER_WRITTEN_EVALUATION
 import com.suwiki.core.model.user.DEFAULT_USER_WRITTEN_EXAM
 import com.suwiki.core.model.user.User
 import com.suwiki.data.user.datasource.LocalUserDataSource
+import com.suwiki.local.common.UserPreference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
