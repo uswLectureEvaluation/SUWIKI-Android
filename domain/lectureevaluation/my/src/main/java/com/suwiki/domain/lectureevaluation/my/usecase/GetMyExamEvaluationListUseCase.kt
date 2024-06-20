@@ -1,6 +1,6 @@
 package com.suwiki.domain.lectureevaluation.my.usecase
 
-import com.suwiki.core.common.runCatchingIgnoreCancelled
+import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.domain.lectureevaluation.my.repository.ExamMyRepository
 import javax.inject.Inject

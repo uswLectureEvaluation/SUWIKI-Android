@@ -1,6 +1,6 @@
 package com.suwiki.domain.notice.usecase
 
-import com.suwiki.core.common.runCatchingIgnoreCancelled
+import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.core.model.notice.NoticeDetail
 import com.suwiki.domain.notice.repository.NoticeRepository
 import javax.inject.Inject
