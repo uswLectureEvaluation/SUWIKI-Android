@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-  implementation(projects.core.common)
+  implementation(projects.domain.common)
 
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.hilt.core)
