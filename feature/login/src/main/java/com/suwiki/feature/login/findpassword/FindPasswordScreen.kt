@@ -23,8 +23,8 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.component.textfield.SuwikiRegularTextField
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.util.LaunchedEffectWithLifecycle
-import com.suwiki.core.ui.util.TEXT_FIELD_DEBOUNCE
+import com.suwiki.feature.common.ui.util.LaunchedEffectWithLifecycle
+import com.suwiki.feature.common.ui.util.TEXT_FIELD_DEBOUNCE
 import com.suwiki.feature.login.R
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce

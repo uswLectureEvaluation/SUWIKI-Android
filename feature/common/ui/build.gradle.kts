@@ -6,8 +6,9 @@ plugins {
 }
 
 android {
-  namespace = "com.suwiki.core.ui"
+  namespace = "com.suwiki.feature.common.ui"
 }
+
 dependencies {
   implementation(projects.core.model)
   implementation(libs.kotlinx.immutable)

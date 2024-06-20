@@ -37,7 +37,7 @@ import com.suwiki.core.designsystem.theme.GrayCB
 import com.suwiki.core.designsystem.theme.GrayFB
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 
 @Composable

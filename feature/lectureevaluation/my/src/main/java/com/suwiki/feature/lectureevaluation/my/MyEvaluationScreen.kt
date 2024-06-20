@@ -37,10 +37,10 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
-import com.suwiki.core.ui.enums.LectureEvaluationTab
-import com.suwiki.core.ui.extension.OnBottomReached
-import com.suwiki.core.ui.extension.collectWithLifecycle
-import com.suwiki.core.ui.extension.encodeToUri
+import com.suwiki.feature.common.ui.enums.LectureEvaluationTab
+import com.suwiki.feature.common.ui.extension.OnBottomReached
+import com.suwiki.feature.common.ui.extension.collectWithLifecycle
+import com.suwiki.feature.common.ui.extension.encodeToUri
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.serialization.json.Json
 import org.orbitmvi.orbit.compose.collectAsState

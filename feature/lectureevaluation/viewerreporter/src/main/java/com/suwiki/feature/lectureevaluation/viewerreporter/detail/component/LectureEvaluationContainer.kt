@@ -20,7 +20,7 @@ import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
 import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.R
+import com.suwiki.feature.common.ui.R
 
 @Composable
 fun LectureEvaluationContainer(

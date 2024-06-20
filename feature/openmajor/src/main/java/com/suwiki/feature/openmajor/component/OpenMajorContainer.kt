@@ -26,7 +26,7 @@ import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.openmajor.R
 
 @Composable

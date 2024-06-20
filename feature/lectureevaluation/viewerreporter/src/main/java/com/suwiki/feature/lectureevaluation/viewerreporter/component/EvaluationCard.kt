@@ -37,7 +37,7 @@ import com.suwiki.core.designsystem.theme.GrayDA
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import java.util.Locale
 
 @Composable
@@ -92,7 +92,7 @@ fun EvaluationCard(
             .padding(vertical = 3.dp),
         )
         Text(
-          text = if (professor == "null") stringResource(id = com.suwiki.core.ui.R.string.word_none) else professor,
+          text = if (professor == "null") stringResource(id = com.suwiki.feature.common.ui.R.string.word_none) else professor,
           style = SuwikiTheme.typography.body7,
           color = Gray6A,
         )
@@ -104,7 +104,7 @@ fun EvaluationCard(
         modifier = Modifier.wrapContentWidth(),
       ) {
         Image(
-          painter = painterResource(id = com.suwiki.core.ui.R.drawable.ic_star_filled),
+          painter = painterResource(id = com.suwiki.feature.common.ui.R.drawable.ic_star_filled),
           contentDescription = null,
         )
         Text(

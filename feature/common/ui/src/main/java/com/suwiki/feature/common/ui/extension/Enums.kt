@@ -1,4 +1,4 @@
-package com.suwiki.core.ui.extension
+package com.suwiki.feature.common.ui.extension
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -9,7 +9,7 @@ import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.LectureAlign
 import com.suwiki.core.model.enums.TeamLevel
-import com.suwiki.core.ui.R
+import com.suwiki.feature.common.ui.R
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable

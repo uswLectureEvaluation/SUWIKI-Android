@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 
 @Composable
 fun BasicButton(

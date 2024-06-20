@@ -46,10 +46,10 @@ import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.enums.LectureEvaluationTab
-import com.suwiki.core.ui.extension.OnBottomReached
-import com.suwiki.core.ui.extension.collectWithLifecycle
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.enums.LectureEvaluationTab
+import com.suwiki.feature.common.ui.extension.OnBottomReached
+import com.suwiki.feature.common.ui.extension.collectWithLifecycle
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.ExamEvaluationContainer
 import com.suwiki.feature.lectureevaluation.viewerreporter.detail.component.LectureEvaluationContainer

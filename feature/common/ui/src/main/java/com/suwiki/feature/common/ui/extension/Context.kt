@@ -1,4 +1,4 @@
-package com.suwiki.core.ui.extension
+package com.suwiki.feature.common.ui.extension
 
 import android.app.Activity
 import android.content.Context

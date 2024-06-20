@@ -43,7 +43,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
-import com.suwiki.core.ui.extension.toText
+import com.suwiki.feature.common.ui.extension.toText
 import com.suwiki.feature.lectureevaluation.editor.R
 import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider.SuwikiSlider
 import org.orbitmvi.orbit.compose.collectAsState
@@ -277,7 +277,7 @@ fun LectureEvaluationEditorScreen(
           .fillMaxWidth()
           .height(50.dp)
           .imePadding(),
-        text = stringResource(com.suwiki.core.ui.R.string.word_complete),
+        text = stringResource(com.suwiki.feature.common.ui.R.string.word_complete),
         enabled = uiState.buttonEnabled,
         clickable = uiState.buttonEnabled,
         onClick = onClickLectureEvaluationReviseButton,

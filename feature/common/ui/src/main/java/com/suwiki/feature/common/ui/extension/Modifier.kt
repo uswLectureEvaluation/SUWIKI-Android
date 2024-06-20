@@ -1,4 +1,4 @@
-package com.suwiki.core.ui.extension
+package com.suwiki.feature.common.ui.extension
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -8,8 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
-import com.suwiki.core.ui.util.MultipleEventsCutter
-import com.suwiki.core.ui.util.get
+import com.suwiki.feature.common.ui.util.MultipleEventsCutter
+import com.suwiki.feature.common.ui.util.get
 
 /**
  * Composable 에 clickable 을 설정해주는 [Modifier]

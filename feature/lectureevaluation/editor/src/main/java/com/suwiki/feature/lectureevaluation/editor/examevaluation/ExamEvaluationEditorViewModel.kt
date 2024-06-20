@@ -6,7 +6,7 @@ import com.suwiki.core.model.enums.ExamInfo
 import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.core.ui.extension.decodeFromUri
+import com.suwiki.feature.common.ui.extension.decodeFromUri
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.PostExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.feature.lectureevaluation.editor.navigation.EvaluationEditorRoute

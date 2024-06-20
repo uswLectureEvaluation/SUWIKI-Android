@@ -10,7 +10,7 @@ android {
 
 dependencies {
   implementation(projects.core.model)
-  implementation(projects.core.ui)
+  implementation(projects.feature.common.ui)
 
   implementation(libs.kotlinx.immutable)
   implementation(libs.compose.rating.bar)

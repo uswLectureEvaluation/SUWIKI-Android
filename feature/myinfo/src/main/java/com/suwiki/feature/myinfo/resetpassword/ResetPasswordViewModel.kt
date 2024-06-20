@@ -1,7 +1,7 @@
 package com.suwiki.feature.myinfo.resetpassword
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.ui.util.REGEX
+import com.suwiki.feature.common.ui.util.REGEX
 import com.suwiki.domain.user.usecase.ResetPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container

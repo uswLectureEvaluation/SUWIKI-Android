@@ -24,8 +24,8 @@ import com.suwiki.core.designsystem.component.textfield.SuwikiRegularTextField
 import com.suwiki.core.designsystem.theme.Gray6A
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.suwikiClickable
-import com.suwiki.core.ui.util.LaunchedEffectWithLifecycle
+import com.suwiki.feature.common.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.util.LaunchedEffectWithLifecycle
 import com.suwiki.feature.myinfo.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

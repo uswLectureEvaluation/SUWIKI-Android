@@ -1,4 +1,4 @@
-package com.suwiki.core.ui.util
+package com.suwiki.feature.common.ui.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

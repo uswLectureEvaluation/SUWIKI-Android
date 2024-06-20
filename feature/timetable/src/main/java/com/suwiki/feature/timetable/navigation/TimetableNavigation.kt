@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.suwiki.core.ui.extension.encodeToUri
+import com.suwiki.feature.common.ui.extension.encodeToUri
 import com.suwiki.feature.timetable.celleditor.CellEditorRoute
 import com.suwiki.feature.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.feature.timetable.navigation.argument.TimetableEditorArgument

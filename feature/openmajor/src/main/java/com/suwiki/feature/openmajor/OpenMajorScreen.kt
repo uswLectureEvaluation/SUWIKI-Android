@@ -40,8 +40,8 @@ import com.suwiki.core.designsystem.shadow.suwikiShadow
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.collectWithLifecycle
-import com.suwiki.core.ui.extension.isScrolledToEnd
+import com.suwiki.feature.common.ui.extension.collectWithLifecycle
+import com.suwiki.feature.common.ui.extension.isScrolledToEnd
 import com.suwiki.feature.openmajor.component.OpenMajorContainer
 import com.suwiki.feature.openmajor.model.OpenMajor
 import com.suwiki.feature.openmajor.model.OpenMajorTap

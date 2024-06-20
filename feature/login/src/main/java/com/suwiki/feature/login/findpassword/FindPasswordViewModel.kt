@@ -1,7 +1,7 @@
 package com.suwiki.feature.login.findpassword
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.ui.util.REGEX
+import com.suwiki.feature.common.ui.util.REGEX
 import com.suwiki.domain.login.usecase.FindPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container

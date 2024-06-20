@@ -1,4 +1,4 @@
-package com.suwiki.core.ui.util
+package com.suwiki.feature.common.ui.util
 
 /**
  * 클릭이 지연될 시간을 정의하는 변수

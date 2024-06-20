@@ -30,11 +30,11 @@ import com.suwiki.core.designsystem.component.loading.LoadingScreen
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
-import com.suwiki.core.ui.extension.OnBottomReached
-import com.suwiki.core.ui.extension.lectureAlignList
-import com.suwiki.core.ui.extension.toText
-import com.suwiki.core.ui.util.PRIVACY_POLICY_SITE
-import com.suwiki.core.ui.util.TERMS_SITE
+import com.suwiki.feature.common.ui.extension.OnBottomReached
+import com.suwiki.feature.common.ui.extension.lectureAlignList
+import com.suwiki.feature.common.ui.extension.toText
+import com.suwiki.feature.common.ui.util.PRIVACY_POLICY_SITE
+import com.suwiki.feature.common.ui.util.TERMS_SITE
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.EvaluationAppBar
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.EvaluationCard
 import com.suwiki.feature.lectureevaluation.viewerreporter.component.EvaluationSearchBar

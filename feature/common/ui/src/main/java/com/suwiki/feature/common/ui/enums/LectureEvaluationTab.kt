@@ -1,7 +1,7 @@
-package com.suwiki.core.ui.enums
+package com.suwiki.feature.common.ui.enums
 
 import androidx.annotation.StringRes
-import com.suwiki.core.ui.R
+import com.suwiki.feature.common.ui.R
 
 enum class LectureEvaluationTab(
   val position: Int,

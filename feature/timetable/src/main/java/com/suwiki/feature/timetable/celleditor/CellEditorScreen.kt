@@ -46,8 +46,8 @@ import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
-import com.suwiki.core.ui.extension.suwikiClickable
-import com.suwiki.core.ui.util.timetableCellColorHexMap
+import com.suwiki.feature.common.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.util.timetableCellColorHexMap
 import com.suwiki.feature.timetable.R
 import com.suwiki.feature.timetable.timetable.component.timetable.toText
 import org.orbitmvi.orbit.compose.collectAsState

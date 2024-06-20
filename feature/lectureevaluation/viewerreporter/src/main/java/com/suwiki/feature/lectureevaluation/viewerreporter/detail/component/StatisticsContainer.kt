@@ -50,8 +50,8 @@ import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
-import com.suwiki.core.ui.R
-import com.suwiki.core.ui.extension.toText
+import com.suwiki.feature.common.ui.R
+import com.suwiki.feature.common.ui.extension.toText
 import java.util.Locale
 
 @Composable
@@ -94,7 +94,7 @@ fun SuwikiReviewStatisticsContainer(
           .padding(vertical = 3.dp),
       )
       Text(
-        text = if (data.info.professor == "null") stringResource(id = com.suwiki.core.ui.R.string.word_none) else data.info.professor,
+        text = if (data.info.professor == "null") stringResource(id = com.suwiki.feature.common.ui.R.string.word_none) else data.info.professor,
         style = SuwikiTheme.typography.body7,
         color = Gray6A,
       )
@@ -176,7 +176,7 @@ fun ReviewGradeCard(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       ReviewProgressLine(
-        name = stringResource(id = com.suwiki.core.ui.R.string.word_honey_rating),
+        name = stringResource(id = com.suwiki.feature.common.ui.R.string.word_honey_rating),
         rating = honeyRating,
         textColor = reviewIndicatorColor,
       )

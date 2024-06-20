@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.timetable.timetable.component.timetable.toText
 
 @Composable

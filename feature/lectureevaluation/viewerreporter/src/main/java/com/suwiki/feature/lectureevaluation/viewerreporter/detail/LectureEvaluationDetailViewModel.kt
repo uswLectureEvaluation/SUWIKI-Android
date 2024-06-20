@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.exception.UserPointLackException
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
-import com.suwiki.core.ui.enums.LectureEvaluationTab
-import com.suwiki.core.ui.extension.encodeToUri
+import com.suwiki.feature.common.ui.enums.LectureEvaluationTab
+import com.suwiki.feature.common.ui.extension.encodeToUri
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.BuyExamUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.GetExamEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.ReportExamUseCase

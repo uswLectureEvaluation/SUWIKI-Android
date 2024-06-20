@@ -11,7 +11,7 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.currentState
 import androidx.glance.layout.fillMaxSize
 import com.suwiki.core.model.timetable.Timetable
-import com.suwiki.core.ui.extension.decodeFromUri
+import com.suwiki.feature.common.ui.extension.decodeFromUri
 import com.suwiki.feature.timetable.timetable.component.timetable.Timetable
 import com.suwiki.feature.timetable.widget.timetable.GlanceTimetable
 import kotlinx.serialization.json.Json

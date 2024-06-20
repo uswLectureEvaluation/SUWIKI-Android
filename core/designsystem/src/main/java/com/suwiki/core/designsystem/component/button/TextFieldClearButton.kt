@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.suwiki.core.designsystem.R
 import com.suwiki.core.designsystem.theme.Gray95
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 
 @Composable
 fun TextFieldClearButton(

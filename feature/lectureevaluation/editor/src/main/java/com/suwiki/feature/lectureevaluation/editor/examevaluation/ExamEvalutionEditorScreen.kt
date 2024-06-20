@@ -40,7 +40,7 @@ import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.ExamInfo
 import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
-import com.suwiki.core.ui.extension.toText
+import com.suwiki.feature.common.ui.extension.toText
 import com.suwiki.feature.lectureevaluation.editor.R
 import kotlinx.collections.immutable.toPersistentList
 import org.orbitmvi.orbit.compose.collectAsState
@@ -195,7 +195,7 @@ fun ExamEvaluationEditorScreen(
           .fillMaxWidth()
           .height(50.dp)
           .imePadding(),
-        text = stringResource(com.suwiki.core.ui.R.string.word_complete),
+        text = stringResource(com.suwiki.feature.common.ui.R.string.word_complete),
         enabled = uiState.buttonEnabled,
         clickable = uiState.buttonEnabled,
         onClick = onClickExamEvaluationReviseButton,

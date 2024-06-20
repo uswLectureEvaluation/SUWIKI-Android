@@ -1,4 +1,4 @@
-package com.suwiki.core.ui.extension
+package com.suwiki.feature.common.ui.extension
 
 import android.net.Uri
 import kotlinx.serialization.encodeToString

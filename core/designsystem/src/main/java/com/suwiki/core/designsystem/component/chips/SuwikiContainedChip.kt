@@ -25,7 +25,7 @@ import com.suwiki.core.designsystem.theme.Green100
 import com.suwiki.core.designsystem.theme.Orange10
 import com.suwiki.core.designsystem.theme.Orange100
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 
 enum class ChipColor(
   val backgroundColor: Color,

@@ -1,4 +1,4 @@
-package com.suwiki.core.ui.util
+package com.suwiki.feature.common.ui.util
 
 import com.suwiki.core.model.timetable.TimetableCellColor
 

@@ -25,7 +25,7 @@ import com.suwiki.core.designsystem.theme.Black
 import com.suwiki.core.designsystem.theme.GrayF6
 import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 
 @Composable
 fun SuwikiEditContainer(

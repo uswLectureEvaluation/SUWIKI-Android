@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.theme.GrayFB
 import com.suwiki.core.designsystem.theme.Primary
 import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 
 @Composable

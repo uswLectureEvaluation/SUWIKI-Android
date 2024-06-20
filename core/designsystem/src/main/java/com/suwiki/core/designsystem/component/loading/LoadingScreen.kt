@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
