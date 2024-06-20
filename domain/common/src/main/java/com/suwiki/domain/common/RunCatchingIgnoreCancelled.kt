@@ -1,4 +1,4 @@
-package com.suwiki.core.common
+package com.suwiki.domain.common
 
 import kotlin.coroutines.cancellation.CancellationException
 
