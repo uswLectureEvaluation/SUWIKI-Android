@@ -87,7 +87,7 @@ suwiki-android-library = { id = "suwiki.android.library", version = "unspecified
 suwiki-android-library-compose = { id = "suwiki.android.library.compose", version = "unspecified" }
 suwiki-android-hilt = { id = "suwiki.android.hilt", version = "unspecified" }
 suwiki-java-library = { id = "suwiki.java.library", version = "unspecified" }
-suwiki-android-feature-compose = { id = "suwiki.android.feature.compose", version = "unspecified" }
+suwiki-android-presentation-compose = { id = "suwiki.android.presentation.compose", version = "unspecified" }
 suwiki-android-remote = { id = "suwiki.android.remote", version = "unspecified" }
 suwiki-android-data = { id = "suwiki.android.data", version = "unspecified" }
 
