@@ -21,15 +21,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.button.SuwikiContainedSmallButton
-import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.GrayDA
-import com.suwiki.core.designsystem.theme.GrayF6
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.R
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.designsystem.component.button.SuwikiContainedSmallButton
+import com.suwiki.feature.common.designsystem.theme.Black
+import com.suwiki.feature.common.designsystem.theme.Gray6A
+import com.suwiki.feature.common.designsystem.theme.GrayDA
+import com.suwiki.feature.common.designsystem.theme.GrayF6
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
+import com.suwiki.feature.common.ui.R
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 
 @Composable
 fun OpenLectureCard(

@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.Primary
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
 
 @Composable
 fun SuwikiSliderThumb() {

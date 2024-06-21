@@ -28,22 +28,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
-import com.suwiki.core.designsystem.component.button.SuwikiContainedMediumButton
-import com.suwiki.core.designsystem.component.chips.ChipColor
-import com.suwiki.core.designsystem.component.chips.SuwikiContainedChip
-import com.suwiki.core.designsystem.component.container.SuwikiSelectionContainer
-import com.suwiki.core.designsystem.component.loading.LoadingScreen
-import com.suwiki.core.designsystem.component.ratingbar.SuwikiRatingBar
-import com.suwiki.core.designsystem.component.textfield.SuwikiReviewInputBox
-import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
-import com.suwiki.core.ui.extension.toText
+import com.suwiki.feature.common.designsystem.component.appbar.SuwikiAppBarWithTitle
+import com.suwiki.feature.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
+import com.suwiki.feature.common.designsystem.component.button.SuwikiContainedMediumButton
+import com.suwiki.feature.common.designsystem.component.chip.ChipColor
+import com.suwiki.feature.common.designsystem.component.chip.SuwikiContainedChip
+import com.suwiki.feature.common.designsystem.component.container.SuwikiSelectionContainer
+import com.suwiki.feature.common.designsystem.component.loading.LoadingScreen
+import com.suwiki.feature.common.designsystem.component.ratingbar.SuwikiRatingBar
+import com.suwiki.feature.common.designsystem.component.textfield.SuwikiReviewInputBox
+import com.suwiki.feature.common.designsystem.theme.Primary
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
+import com.suwiki.feature.common.ui.extension.toText
 import com.suwiki.feature.lectureevaluation.editor.R
 import com.suwiki.feature.lectureevaluation.editor.lectureevaluation.component.slider.SuwikiSlider
 import org.orbitmvi.orbit.compose.collectAsState
@@ -277,7 +277,7 @@ fun LectureEvaluationEditorScreen(
           .fillMaxWidth()
           .height(50.dp)
           .imePadding(),
-        text = stringResource(com.suwiki.core.ui.R.string.word_complete),
+        text = stringResource(com.suwiki.feature.common.ui.R.string.word_complete),
         enabled = uiState.buttonEnabled,
         clickable = uiState.buttonEnabled,
         onClick = onClickLectureEvaluationReviseButton,

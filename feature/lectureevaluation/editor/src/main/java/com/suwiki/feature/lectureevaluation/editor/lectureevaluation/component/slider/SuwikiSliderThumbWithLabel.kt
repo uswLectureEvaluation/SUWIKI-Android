@@ -13,8 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.R
-import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.R
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
 
 @Composable
 fun SuwikiSliderThumbWithLabel(

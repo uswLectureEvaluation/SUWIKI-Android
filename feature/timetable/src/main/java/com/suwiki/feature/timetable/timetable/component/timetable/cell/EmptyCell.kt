@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.timetable.cell
+package com.suwiki.feature.common.designsystem.component.timetable.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.GrayF6
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.theme.Gray6A
+import com.suwiki.feature.common.designsystem.theme.GrayF6
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.timetable.timetable.component.timetable.MINUTE60
 import com.suwiki.feature.timetable.timetable.component.timetable.timetableBorderWidth
 import com.suwiki.feature.timetable.timetable.component.timetable.timetableHeightPerHour

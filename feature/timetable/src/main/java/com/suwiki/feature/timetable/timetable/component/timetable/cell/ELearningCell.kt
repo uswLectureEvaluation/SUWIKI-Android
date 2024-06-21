@@ -1,10 +1,10 @@
-package com.suwiki.core.designsystem.component.timetable.cell
+package com.suwiki.feature.common.designsystem.component.timetable.cell
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.timetable.timetable.component.timetable.toText
 
 @Composable

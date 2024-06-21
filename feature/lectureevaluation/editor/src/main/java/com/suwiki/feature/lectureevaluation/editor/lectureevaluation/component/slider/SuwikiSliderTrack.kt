@@ -13,9 +13,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.theme.GrayF6
-import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.GrayF6
+import com.suwiki.feature.common.designsystem.theme.Primary
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
 
 @Composable
 @ExperimentalMaterial3Api

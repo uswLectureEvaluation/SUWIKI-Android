@@ -30,14 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
-import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
-import com.suwiki.core.designsystem.shadow.bottomNavigationShadow
-import com.suwiki.core.designsystem.theme.GrayDA
-import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.designsystem.theme.White
-import com.suwiki.core.ui.extension.suwikiClickable
-import com.suwiki.core.ui.extension.versionCode
-import com.suwiki.core.ui.util.PLAY_STORE_SITE
+import com.suwiki.feature.common.designsystem.component.dialog.SuwikiDialog
+import com.suwiki.feature.common.designsystem.shadow.bottomNavigationShadow
+import com.suwiki.feature.common.designsystem.theme.GrayDA
+import com.suwiki.feature.common.designsystem.theme.Primary
+import com.suwiki.feature.common.designsystem.theme.White
+import com.suwiki.feature.common.ui.extension.suwikiClickable
+import com.suwiki.feature.common.ui.extension.versionCode
+import com.suwiki.feature.common.ui.util.PLAY_STORE_SITE
 import com.suwiki.feature.lectureevaluation.editor.navigation.myEvaluationEditNavGraph
 import com.suwiki.feature.lectureevaluation.my.navigation.myEvaluationNavGraph
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
@@ -182,7 +182,7 @@ internal fun MainScreen(
         SuwikiDialog(
           headerText = stringResource(R.string.dialog_network_header),
           bodyText = stringResource(R.string.dialog_network_body),
-          confirmButtonText = stringResource(id = com.suwiki.core.ui.R.string.word_confirm),
+          confirmButtonText = stringResource(id = com.suwiki.feature.common.ui.R.string.word_confirm),
           onDismissRequest = viewModel::hideNetworkErrorDialog,
           onClickConfirm = viewModel::hideNetworkErrorDialog,
         )
@@ -192,7 +192,7 @@ internal fun MainScreen(
         SuwikiDialog(
           headerText = stringResource(R.string.dialog_update_mandatory_header),
           bodyText = stringResource(R.string.dialog_update_mandatory_body),
-          confirmButtonText = stringResource(id = com.suwiki.core.ui.R.string.word_confirm),
+          confirmButtonText = stringResource(id = com.suwiki.feature.common.ui.R.string.word_confirm),
           onDismissRequest = {},
           onClickConfirm = viewModel::openPlayStoreSite,
         )

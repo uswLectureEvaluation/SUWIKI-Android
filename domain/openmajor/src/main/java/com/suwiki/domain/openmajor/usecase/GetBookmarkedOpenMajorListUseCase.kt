@@ -1,6 +1,6 @@
 package com.suwiki.domain.openmajor.usecase
 
-import com.suwiki.core.common.runCatchingIgnoreCancelled
+import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.domain.openmajor.repository.OpenMajorRepository
 import javax.inject.Inject
 

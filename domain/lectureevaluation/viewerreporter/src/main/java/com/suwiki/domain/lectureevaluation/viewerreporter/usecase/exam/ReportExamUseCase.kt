@@ -1,6 +1,6 @@
 package com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam
 
-import com.suwiki.core.common.runCatchingIgnoreCancelled
+import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.domain.lectureevaluation.viewerreporter.repository.ExamReportRepository
 import javax.inject.Inject
 

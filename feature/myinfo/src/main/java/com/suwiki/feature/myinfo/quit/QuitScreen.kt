@@ -16,11 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.designsystem.component.appbar.SuwikiAppBarWithTitle
-import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
-import com.suwiki.core.designsystem.component.textfield.SuwikiRegularTextField
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.component.appbar.SuwikiAppBarWithTitle
+import com.suwiki.feature.common.designsystem.component.button.SuwikiContainedLargeButton
+import com.suwiki.feature.common.designsystem.component.textfield.SuwikiRegularTextField
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.myinfo.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

@@ -15,13 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.badge.BadgeColor
-import com.suwiki.core.designsystem.component.badge.SuwikiBadge
-import com.suwiki.core.designsystem.component.button.SuwikiContainedSmallButton
-import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray95
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.component.badge.BadgeColor
+import com.suwiki.feature.common.designsystem.component.badge.SuwikiBadge
+import com.suwiki.feature.common.designsystem.component.button.SuwikiContainedSmallButton
+import com.suwiki.feature.common.designsystem.theme.Black
+import com.suwiki.feature.common.designsystem.theme.Gray95
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
 
 @Composable
 fun ExamEvaluationContainer(
@@ -35,10 +35,10 @@ fun ExamEvaluationContainer(
   onClickButton: () -> Unit,
 ) {
   val buttonText = if (isAuthor) {
-    stringResource(id = com.suwiki.core.ui.R.string.word_edit)
+    stringResource(id = com.suwiki.feature.common.ui.R.string.word_edit)
   } else {
     stringResource(
-      id = com.suwiki.core.ui.R.string.word_report,
+      id = com.suwiki.feature.common.ui.R.string.word_report,
     )
   }
 
@@ -54,7 +54,7 @@ fun ExamEvaluationContainer(
       if (isAuthor) {
         SuwikiBadge(
           color = BadgeColor.Blue,
-          text = stringResource(id = com.suwiki.core.ui.R.string.word_my),
+          text = stringResource(id = com.suwiki.feature.common.ui.R.string.word_my),
         )
         Spacer(modifier = Modifier.width(8.dp))
       }
@@ -76,7 +76,7 @@ fun ExamEvaluationContainer(
       horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
       Text(
-        text = stringResource(id = com.suwiki.core.ui.R.string.word_difficulty),
+        text = stringResource(id = com.suwiki.feature.common.ui.R.string.word_difficulty),
         style = SuwikiTheme.typography.caption2,
         color = Gray95,
       )
@@ -92,7 +92,7 @@ fun ExamEvaluationContainer(
       horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
       Text(
-        text = stringResource(id = com.suwiki.core.ui.R.string.word_type_exam),
+        text = stringResource(id = com.suwiki.feature.common.ui.R.string.word_type_exam),
         style = SuwikiTheme.typography.caption2,
         color = Gray95,
       )

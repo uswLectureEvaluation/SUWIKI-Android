@@ -16,11 +16,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
-import com.suwiki.core.designsystem.component.button.SuwikiOutlinedButton
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.ui.util.SCHOOL_HOMEPAGE
+import com.suwiki.feature.common.designsystem.component.button.SuwikiContainedLargeButton
+import com.suwiki.feature.common.designsystem.component.button.SuwikiOutlinedButton
+import com.suwiki.feature.common.designsystem.theme.Gray6A
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.ui.util.SCHOOL_HOMEPAGE
 import com.suwiki.feature.signup.R
 import com.suwiki.feature.signup.complete.SignupCompleteSideEffect
 import org.orbitmvi.orbit.compose.collectSideEffect

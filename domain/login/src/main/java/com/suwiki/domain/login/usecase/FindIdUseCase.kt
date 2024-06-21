@@ -1,6 +1,6 @@
 package com.suwiki.domain.login.usecase
 
-import com.suwiki.core.common.runCatchingIgnoreCancelled
+import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.domain.login.repository.LoginRepository
 import javax.inject.Inject
 

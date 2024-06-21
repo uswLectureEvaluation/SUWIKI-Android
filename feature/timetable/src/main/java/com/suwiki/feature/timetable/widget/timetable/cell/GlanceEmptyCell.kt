@@ -16,9 +16,9 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.GrayF6
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.theme.Gray6A
+import com.suwiki.feature.common.designsystem.theme.GrayF6
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.timetable.timetable.component.timetable.MINUTE60
 import com.suwiki.feature.timetable.widget.timetable.glanceTimetableBorderWidth
 import com.suwiki.feature.timetable.widget.timetable.glanceTimetableHeightPerHour

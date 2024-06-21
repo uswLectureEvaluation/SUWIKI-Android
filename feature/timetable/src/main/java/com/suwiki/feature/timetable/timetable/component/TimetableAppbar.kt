@@ -17,10 +17,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray95
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.ui.extension.suwikiClickable
+import com.suwiki.feature.common.designsystem.theme.Black
+import com.suwiki.feature.common.designsystem.theme.Gray95
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.timetable.R
 
 @Composable
