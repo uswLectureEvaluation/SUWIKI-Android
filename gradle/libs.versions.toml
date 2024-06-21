@@ -1,5 +1,5 @@
 [versions]
-android-gradle-plugin = "8.1.2"
+android-gradle-plugin = "8.5.0"
 material = "1.10.0"
 espresso = "3.4.0"
 ksp = "1.9.10-1.0.13"
@@ -44,7 +44,7 @@ retrofit = "2.9.0"
 retrofit-kotlinx-serialization-json = "1.0.0"
 okhttp = "4.11.0"
 
-hilt = "2.48"
+hilt = "2.50"
 room = "2.5.2"
 
 timber = "5.0.1"
