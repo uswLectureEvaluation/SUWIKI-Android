@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
-import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

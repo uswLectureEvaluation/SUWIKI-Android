@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.designsystem)
+  implementation(projects.feature.common.designsystem)
   implementation(projects.feature.navigator)
 
   implementation(projects.remote.openmajor)

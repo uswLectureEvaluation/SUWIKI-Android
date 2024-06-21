@@ -20,12 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Blue5
-import com.suwiki.core.designsystem.theme.GrayDA
-import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.theme.Black
+import com.suwiki.feature.common.designsystem.theme.Blue5
+import com.suwiki.feature.common.designsystem.theme.GrayDA
+import com.suwiki.feature.common.designsystem.theme.Primary
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.openmajor.R
 

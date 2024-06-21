@@ -18,9 +18,9 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.suwiki.core.designsystem.theme.GrayF6
-import com.suwiki.core.designsystem.theme.White
 import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.feature.common.designsystem.theme.GrayF6
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.toHex
 import com.suwiki.feature.timetable.widget.timetable.glanceTimetableBorderWidth

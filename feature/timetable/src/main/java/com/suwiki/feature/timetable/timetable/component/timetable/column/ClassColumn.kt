@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.suwiki.core.designsystem.component.timetable.cell.EmptyCell
-import com.suwiki.core.designsystem.theme.SuwikiTheme
 import com.suwiki.core.model.timetable.TimetableCell
 import com.suwiki.core.model.timetable.TimetableCellColor
 import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.feature.common.designsystem.component.timetable.cell.EmptyCell
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
 import com.suwiki.feature.timetable.timetable.component.timetable.MINUTE10
 import com.suwiki.feature.timetable.timetable.component.timetable.MINUTE60
 import com.suwiki.feature.timetable.timetable.component.timetable.cell.ClassCell

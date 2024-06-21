@@ -30,11 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
-import com.suwiki.core.designsystem.component.dialog.SuwikiDialog
-import com.suwiki.core.designsystem.shadow.bottomNavigationShadow
-import com.suwiki.core.designsystem.theme.GrayDA
-import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.component.dialog.SuwikiDialog
+import com.suwiki.feature.common.designsystem.shadow.bottomNavigationShadow
+import com.suwiki.feature.common.designsystem.theme.GrayDA
+import com.suwiki.feature.common.designsystem.theme.Primary
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.common.ui.extension.versionCode
 import com.suwiki.feature.common.ui.util.PLAY_STORE_SITE

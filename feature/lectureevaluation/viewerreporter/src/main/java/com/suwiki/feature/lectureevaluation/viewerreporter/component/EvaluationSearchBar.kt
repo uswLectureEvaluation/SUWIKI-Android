@@ -30,13 +30,13 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.searchbar.BasicSearchBar
-import com.suwiki.core.designsystem.shadow.cardShadow
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.GrayCB
-import com.suwiki.core.designsystem.theme.GrayFB
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.component.searchbar.BasicSearchBar
+import com.suwiki.feature.common.designsystem.shadow.cardShadow
+import com.suwiki.feature.common.designsystem.theme.Gray6A
+import com.suwiki.feature.common.designsystem.theme.GrayCB
+import com.suwiki.feature.common.designsystem.theme.GrayFB
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.common.ui.extension.suwikiClickable
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 

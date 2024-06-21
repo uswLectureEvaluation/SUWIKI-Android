@@ -1,7 +1,7 @@
 package com.suwiki.domain.lectureevaluation.my.usecase
 
-import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.domain.lectureevaluation.my.repository.LectureMyRepository
 import javax.inject.Inject
 

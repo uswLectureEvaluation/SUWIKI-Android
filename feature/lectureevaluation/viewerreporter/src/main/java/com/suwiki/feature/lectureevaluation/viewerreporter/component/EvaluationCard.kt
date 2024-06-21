@@ -28,15 +28,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.badge.BadgeColor
-import com.suwiki.core.designsystem.component.badge.SuwikiBadge
-import com.suwiki.core.designsystem.shadow.cardShadow
-import com.suwiki.core.designsystem.theme.Black
-import com.suwiki.core.designsystem.theme.Gray6A
-import com.suwiki.core.designsystem.theme.GrayDA
-import com.suwiki.core.designsystem.theme.Primary
-import com.suwiki.core.designsystem.theme.SuwikiTheme
-import com.suwiki.core.designsystem.theme.White
+import com.suwiki.feature.common.designsystem.component.badge.BadgeColor
+import com.suwiki.feature.common.designsystem.component.badge.SuwikiBadge
+import com.suwiki.feature.common.designsystem.shadow.cardShadow
+import com.suwiki.feature.common.designsystem.theme.Black
+import com.suwiki.feature.common.designsystem.theme.Gray6A
+import com.suwiki.feature.common.designsystem.theme.GrayDA
+import com.suwiki.feature.common.designsystem.theme.Primary
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.theme.White
 import com.suwiki.feature.common.ui.extension.suwikiClickable
 import java.util.Locale
 

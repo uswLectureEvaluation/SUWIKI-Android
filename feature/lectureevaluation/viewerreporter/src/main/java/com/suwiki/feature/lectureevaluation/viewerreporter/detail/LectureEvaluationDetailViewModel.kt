@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.exception.UserPointLackException
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
-import com.suwiki.feature.common.ui.enums.LectureEvaluationTab
-import com.suwiki.feature.common.ui.extension.encodeToUri
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.BuyExamUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.GetExamEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.exam.ReportExamUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationExtraAverageUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.GetLectureEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.ReportLectureUseCase
+import com.suwiki.feature.common.ui.enums.LectureEvaluationTab
+import com.suwiki.feature.common.ui.extension.encodeToUri
 import com.suwiki.feature.lectureevaluation.viewerreporter.navigation.LectureEvaluationRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf

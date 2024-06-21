@@ -18,7 +18,7 @@ internal class FeatureComposeConventionPlugin : Plugin<Project> {
         "implementation"(project(":core:model"))
         "implementation"(project(":core:android"))
         "implementation"(project(":feature:common:ui"))
-        "implementation"(project(":core:designsystem"))
+        "implementation"(project(":feature:common:designsystem"))
 
         "implementation"(libs.findBundle("orbit").get())
 

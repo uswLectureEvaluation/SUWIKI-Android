@@ -1,9 +1,9 @@
 package com.suwiki.feature.signup.signup
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.feature.common.ui.util.REGEX
 import com.suwiki.domain.signup.usecase.CheckIdOverlapUseCase
 import com.suwiki.domain.signup.usecase.SignupUseCase
+import com.suwiki.feature.common.ui.util.REGEX
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost

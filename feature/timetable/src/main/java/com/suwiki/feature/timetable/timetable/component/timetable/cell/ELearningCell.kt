@@ -1,4 +1,4 @@
-package com.suwiki.core.designsystem.component.timetable.cell
+package com.suwiki.feature.common.designsystem.component.timetable.cell
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable

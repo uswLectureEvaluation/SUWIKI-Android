@@ -1,9 +1,9 @@
-package com.suwiki.core.designsystem.component.timetable.column
+package com.suwiki.feature.common.designsystem.component.timetable.column
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.suwiki.core.designsystem.component.timetable.cell.EmptyCell
+import com.suwiki.feature.common.designsystem.component.timetable.cell.EmptyCell
 
 @Composable
 internal fun TimeColumn(

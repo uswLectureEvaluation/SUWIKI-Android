@@ -1,7 +1,7 @@
 package com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture
 
-import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.domain.lectureevaluation.viewerreporter.repository.LectureProviderRepository
 import javax.inject.Inject
 

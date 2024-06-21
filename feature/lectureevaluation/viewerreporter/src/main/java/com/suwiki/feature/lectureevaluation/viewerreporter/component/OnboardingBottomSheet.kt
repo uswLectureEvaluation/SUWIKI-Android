@@ -17,10 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.designsystem.component.bottomsheet.SuwikiBottomSheet
-import com.suwiki.core.designsystem.component.button.SuwikiContainedLargeButton
-import com.suwiki.core.designsystem.component.button.SuwikiOutlinedButton
-import com.suwiki.core.designsystem.theme.SuwikiTheme
+import com.suwiki.feature.common.designsystem.component.bottomsheet.SuwikiBottomSheet
+import com.suwiki.feature.common.designsystem.component.button.SuwikiContainedLargeButton
+import com.suwiki.feature.common.designsystem.component.button.SuwikiOutlinedButton
+import com.suwiki.feature.common.designsystem.theme.SuwikiTheme
 import com.suwiki.feature.lectureevaluation.viewerreporter.LectureEvaluationState
 import com.suwiki.feature.lectureevaluation.viewerreporter.R
 
