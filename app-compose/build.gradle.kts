@@ -19,8 +19,8 @@ android {
 }
 
 dependencies {
-  implementation(projects.feature.common.designsystem)
-  implementation(projects.feature.navigator)
+  implementation(projects.presentation.common.designsystem)
+  implementation(projects.presentation.navigator)
 
   implementation(projects.remote.openmajor)
   implementation(projects.remote.timetable)
