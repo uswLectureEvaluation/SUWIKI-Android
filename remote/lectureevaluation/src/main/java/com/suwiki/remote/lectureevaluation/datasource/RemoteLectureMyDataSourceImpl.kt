@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.datasource
 
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
-import com.suwiki.data.lectureevaluation.my.datasource.RemoteLectureMyDataSource
+import com.suwiki.data.lectureevaluation.datasource.RemoteLectureMyDataSource
 import com.suwiki.remote.lectureevaluation.api.LectureMyApi
 import com.suwiki.remote.lectureevaluation.response.toModel
 import javax.inject.Inject

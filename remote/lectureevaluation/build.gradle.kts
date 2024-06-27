@@ -9,9 +9,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.data.lectureevaluation.editor)
-  implementation(projects.data.lectureevaluation.my)
-  implementation(projects.data.lectureevaluation.viewerreporter)
+  implementation(projects.data.lectureevaluation)
 
   implementation(libs.retrofit.core)
   implementation(libs.kotlinx.serialization.json)

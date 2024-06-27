@@ -1,15 +1,12 @@
-package com.suwiki.remote.lectureevaluation.datasource
+package com.suwiki.data.lectureevaluation.repository
 
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureEditorDataSource
-import com.suwiki.remote.lectureevaluation.api.LectureEditorApi
-import com.suwiki.remote.lectureevaluation.request.PostLectureEvaluationRequest
-import com.suwiki.remote.lectureevaluation.request.UpdateLectureEvaluationRequest
+import com.suwiki.domain.lectureevaluation.editor.repository.LectureEditorRepository
 import javax.inject.Inject
 
-class RemoteLectureEditorDataSourceImpl @Inject constructor(
-  private val lectureApi: LectureEditorApi,
-) : RemoteLectureEditorDataSource {
-
+class LectureEditorRepositoryImpl @Inject constructor(
+  private val lectureEditorDataSource: RemoteLectureEditorDataSource,
+) : LectureEditorRepository {
   override suspend fun postLectureEvaluation(
     lectureId: Long,
     lectureName: String,
@@ -23,7 +20,8 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
     homework: Int,
     content: String,
   ) {
-    val request = PostLectureEvaluationRequest(
+    lectureEditorDataSource.postLectureEvaluation(
+      lectureId = lectureId,
       lectureName = lectureName,
       professor = professor,
       selectedSemester = selectedSemester,
@@ -35,11 +33,6 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
       homework = homework,
       content = content,
     )
-
-    return lectureApi.postLectureEvaluation(
-      lectureId,
-      request,
-    ).getOrThrow()
   }
 
   override suspend fun updateLectureEvaluation(
@@ -53,7 +46,8 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
     homework: Int,
     content: String,
   ) {
-    val request = UpdateLectureEvaluationRequest(
+    lectureEditorDataSource.updateLectureEvaluation(
+      lectureId = lectureId,
       selectedSemester = selectedSemester,
       satisfaction = satisfaction,
       learning = learning,
@@ -63,14 +57,9 @@ class RemoteLectureEditorDataSourceImpl @Inject constructor(
       homework = homework,
       content = content,
     )
-
-    return lectureApi.updateLectureEvaluation(
-      lectureId = lectureId,
-      updateLectureEvaluationRequest = request,
-    ).getOrThrow()
   }
 
   override suspend fun deleteLectureEvaluation(id: Long) {
-    return lectureApi.deleteLectureEvaluation(id = id).getOrThrow()
+    lectureEditorDataSource.deleteLectureEvaluation(id = id)
   }
 }

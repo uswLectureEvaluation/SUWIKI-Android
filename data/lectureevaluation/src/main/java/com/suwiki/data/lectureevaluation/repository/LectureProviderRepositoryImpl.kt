@@ -1,23 +1,21 @@
-package com.suwiki.remote.lectureevaluation.datasource
+package com.suwiki.data.lectureevaluation.repository
 
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureProviderDataSource
-import com.suwiki.remote.lectureevaluation.api.LectureViewerApi
-import com.suwiki.remote.lectureevaluation.response.toModel
+import com.suwiki.domain.lectureevaluation.viewerreporter.repository.LectureProviderRepository
 import javax.inject.Inject
 
-class RemoteLectureProviderDataSourceImpl @Inject constructor(
-  private val lectureApi: LectureViewerApi,
-) : RemoteLectureProviderDataSource {
+class LectureProviderRepositoryImpl @Inject constructor(
+  private val remoteLectureProviderDataSource: RemoteLectureProviderDataSource,
+) : LectureProviderRepository {
 
-  override suspend fun getLectureEvaluationList(
-    lectureId: Long,
-    page: Int,
-  ): LectureEvaluationList {
-    return lectureApi.getLectureEvaluationList(lectureId = lectureId, page = page)
-      .getOrThrow().toModel()
+  override suspend fun getLectureEvaluationList(lectureId: Long, page: Int): LectureEvaluationList {
+    return remoteLectureProviderDataSource.getLectureEvaluationList(
+      lectureId = lectureId,
+      page = page,
+    )
   }
 
   override suspend fun getLectureEvaluationAverageList(
@@ -25,11 +23,11 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
     page: Int,
     majorType: String,
   ): List<LectureEvaluationAverage?> {
-    return lectureApi.getLectureEvaluationAverageList(
+    return remoteLectureProviderDataSource.getLectureEvaluationAverageList(
       option = option,
       page = page,
       majorType = majorType,
-    ).getOrThrow().data.map { it?.toModel() }
+    )
   }
 
   override suspend fun retrieveLectureEvaluationAverageList(
@@ -38,15 +36,17 @@ class RemoteLectureProviderDataSourceImpl @Inject constructor(
     page: Int,
     majorType: String,
   ): List<LectureEvaluationAverage?> {
-    return lectureApi.retrieveLectureEvaluationAverageList(
-      searchValue = search,
+    return remoteLectureProviderDataSource.retrieveLectureEvaluationAverageList(
+      search = search,
       option = option,
       page = page,
       majorType = majorType,
-    ).getOrThrow().data.map { it?.toModel() }
+    )
   }
 
   override suspend fun getLectureEvaluationExtraAverage(lectureId: Long): LectureEvaluationExtraAverage {
-    return lectureApi.getLectureEvaluationExtraAverage(lectureId).getOrThrow().data.toModel()
+    return remoteLectureProviderDataSource.getLectureEvaluationExtraAverage(
+      lectureId = lectureId,
+    )
   }
 }
