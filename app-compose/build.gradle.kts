@@ -24,9 +24,7 @@ dependencies {
 
   implementation(projects.remote.openmajor)
   implementation(projects.remote.timetable)
-  implementation(projects.remote.lectureevaluation.viewerreporter)
-  implementation(projects.remote.lectureevaluation.my)
-  implementation(projects.remote.lectureevaluation.editor)
+  implementation(projects.remote.lectureevaluation)
   implementation(projects.remote.signup)
   implementation(projects.remote.notice)
   implementation(projects.remote.user)
