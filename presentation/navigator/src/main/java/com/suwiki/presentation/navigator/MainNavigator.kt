@@ -9,11 +9,11 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.suwiki.presentation.lectureevaluation.editor.navigation.navigateExamEvaluationEditor
-import com.suwiki.presentation.lectureevaluation.editor.navigation.navigateLectureEvaluationEditor
-import com.suwiki.presentation.lectureevaluation.my.navigation.navigateMyEvaluation
-import com.suwiki.presentation.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluation
-import com.suwiki.presentation.lectureevaluation.viewerreporter.navigation.navigateLectureEvaluationDetail
+import com.suwiki.presentation.lectureevaluation.navigation.navigateExamEvaluationEditor
+import com.suwiki.presentation.lectureevaluation.navigation.navigateLectureEvaluation
+import com.suwiki.presentation.lectureevaluation.navigation.navigateLectureEvaluationDetail
+import com.suwiki.presentation.lectureevaluation.navigation.navigateLectureEvaluationEditor
+import com.suwiki.presentation.lectureevaluation.navigation.navigateMyEvaluation
 import com.suwiki.presentation.login.navigation.navigateFindId
 import com.suwiki.presentation.login.navigation.navigateFindPassword
 import com.suwiki.presentation.login.navigation.navigateLogin

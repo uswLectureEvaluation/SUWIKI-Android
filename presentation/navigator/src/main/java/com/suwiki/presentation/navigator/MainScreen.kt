@@ -38,9 +38,9 @@ import com.suwiki.presentation.common.designsystem.theme.White
 import com.suwiki.presentation.common.ui.extension.suwikiClickable
 import com.suwiki.presentation.common.ui.extension.versionCode
 import com.suwiki.presentation.common.ui.util.PLAY_STORE_SITE
-import com.suwiki.presentation.lectureevaluation.editor.navigation.myEvaluationEditNavGraph
-import com.suwiki.presentation.lectureevaluation.my.navigation.myEvaluationNavGraph
-import com.suwiki.presentation.lectureevaluation.viewerreporter.navigation.lectureEvaluationNavGraph
+import com.suwiki.presentation.lectureevaluation.navigation.lectureEvaluationNavGraph
+import com.suwiki.presentation.lectureevaluation.navigation.myEvaluationEditNavGraph
+import com.suwiki.presentation.lectureevaluation.navigation.myEvaluationNavGraph
 import com.suwiki.presentation.login.navigation.loginNavGraph
 import com.suwiki.presentation.myinfo.navigation.myInfoNavGraph
 import com.suwiki.presentation.navigator.component.SuwikiToast

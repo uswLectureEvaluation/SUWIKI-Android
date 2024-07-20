@@ -10,10 +10,7 @@ android {
 dependencies {
   implementation(projects.domain.notice)
 
-  implementation(projects.presentation.lectureevaluation.editor)
-  implementation(projects.presentation.lectureevaluation.my)
-  implementation(projects.presentation.lectureevaluation.viewerreporter)
-
+  implementation(projects.presentation.lectureevaluation)
   implementation(projects.presentation.login)
   implementation(projects.presentation.myinfo)
   implementation(projects.presentation.notice)

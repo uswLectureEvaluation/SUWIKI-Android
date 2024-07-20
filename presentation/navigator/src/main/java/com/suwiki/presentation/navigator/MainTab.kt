@@ -1,6 +1,6 @@
 package com.suwiki.presentation.navigator
 
-import com.suwiki.presentation.lectureevaluation.viewerreporter.navigation.LectureEvaluationRoute
+import com.suwiki.presentation.lectureevaluation.navigation.LectureEvaluationRoute
 import com.suwiki.presentation.myinfo.navigation.MyInfoRoute
 import com.suwiki.presentation.timetable.navigation.TimetableRoute
 
