@@ -6,8 +6,8 @@ import com.suwiki.core.model.enums.ExamInfo
 import com.suwiki.core.model.enums.ExamLevel
 import com.suwiki.core.model.enums.ExamType
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.domain.lectureevaluation.editor.usecase.exam.PostExamEvaluationUseCase
-import com.suwiki.domain.lectureevaluation.editor.usecase.exam.UpdateExamEvaluationUseCase
+import com.suwiki.domain.lectureevaluation.usecase.exam.PostExamEvaluationUseCase
+import com.suwiki.domain.lectureevaluation.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.presentation.common.ui.extension.decodeFromUri
 import com.suwiki.presentation.lectureevaluation.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel

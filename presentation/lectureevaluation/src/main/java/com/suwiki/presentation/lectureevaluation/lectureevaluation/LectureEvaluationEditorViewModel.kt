@@ -6,8 +6,8 @@ import com.suwiki.core.model.enums.GradeLevel
 import com.suwiki.core.model.enums.HomeworkLevel
 import com.suwiki.core.model.enums.TeamLevel
 import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
-import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.PostLectureEvaluationUseCase
-import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.UpdateLectureEvaluationUseCase
+import com.suwiki.domain.lectureevaluation.usecase.lecture.PostLectureEvaluationUseCase
+import com.suwiki.domain.lectureevaluation.usecase.lecture.UpdateLectureEvaluationUseCase
 import com.suwiki.presentation.common.ui.extension.decodeFromUri
 import com.suwiki.presentation.lectureevaluation.navigation.EvaluationEditorRoute
 import dagger.hilt.android.lifecycle.HiltViewModel

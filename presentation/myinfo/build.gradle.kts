@@ -9,7 +9,7 @@ android {
 
 dependencies {
   implementation(projects.domain.user)
-  implementation(projects.domain.lectureevaluation.my)
+  implementation(projects.domain.lectureevaluation)
 
   implementation(libs.oss.licenses)
 }

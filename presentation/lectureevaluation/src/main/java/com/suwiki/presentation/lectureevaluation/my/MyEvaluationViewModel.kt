@@ -3,10 +3,10 @@ package com.suwiki.presentation.lectureevaluation.my
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suwiki.core.model.user.User
-import com.suwiki.domain.lectureevaluation.editor.usecase.exam.DeleteExamEvaluationUseCase
-import com.suwiki.domain.lectureevaluation.editor.usecase.lecture.DeleteLectureEvaluationUseCase
-import com.suwiki.domain.lectureevaluation.my.usecase.GetMyExamEvaluationListUseCase
-import com.suwiki.domain.lectureevaluation.my.usecase.GetMyLectureEvaluationListUseCase
+import com.suwiki.domain.lectureevaluation.usecase.exam.DeleteExamEvaluationUseCase
+import com.suwiki.domain.lectureevaluation.usecase.exam.GetMyExamEvaluationListUseCase
+import com.suwiki.domain.lectureevaluation.usecase.lecture.DeleteLectureEvaluationUseCase
+import com.suwiki.domain.lectureevaluation.usecase.lecture.GetMyLectureEvaluationListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf

@@ -2,7 +2,7 @@ package com.suwiki.presentation.myinfo.mypoint
 
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.user.User
-import com.suwiki.domain.lectureevaluation.my.usecase.GetPurchaseHistoryUseCase
+import com.suwiki.domain.lectureevaluation.usecase.exam.GetPurchaseHistoryUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList

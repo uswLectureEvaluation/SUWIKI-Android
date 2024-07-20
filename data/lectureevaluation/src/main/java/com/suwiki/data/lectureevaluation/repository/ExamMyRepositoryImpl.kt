@@ -3,7 +3,7 @@ package com.suwiki.data.lectureevaluation.repository
 import com.suwiki.core.model.lectureevaluation.PurchaseHistory
 import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.data.lectureevaluation.datasource.RemoteExamMyDataSource
-import com.suwiki.domain.lectureevaluation.my.repository.ExamMyRepository
+import com.suwiki.domain.lectureevaluation.repository.ExamMyRepository
 import javax.inject.Inject
 
 class ExamMyRepositoryImpl @Inject constructor(

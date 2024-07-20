@@ -1,11 +1,11 @@
 package com.suwiki.remote.lectureevaluation.di
 
 import com.suwiki.data.lectureevaluation.datasource.RemoteExamEditorDataSource
-import com.suwiki.data.lectureevaluation.datasource.RemoteLectureEditorDataSource
 import com.suwiki.data.lectureevaluation.datasource.RemoteExamMyDataSource
-import com.suwiki.data.lectureevaluation.datasource.RemoteLectureMyDataSource
 import com.suwiki.data.lectureevaluation.datasource.RemoteExamProviderDataSource
 import com.suwiki.data.lectureevaluation.datasource.RemoteExamReportDataSource
+import com.suwiki.data.lectureevaluation.datasource.RemoteLectureEditorDataSource
+import com.suwiki.data.lectureevaluation.datasource.RemoteLectureMyDataSource
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureProviderDataSource
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureReportDataSource
 import com.suwiki.remote.lectureevaluation.datasource.RemoteExamEditorDataSourceImpl

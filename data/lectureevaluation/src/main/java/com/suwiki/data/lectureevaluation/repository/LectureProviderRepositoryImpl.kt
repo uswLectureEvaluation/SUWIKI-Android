@@ -4,7 +4,7 @@ import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureProviderDataSource
-import com.suwiki.domain.lectureevaluation.viewerreporter.repository.LectureProviderRepository
+import com.suwiki.domain.lectureevaluation.repository.LectureProviderRepository
 import javax.inject.Inject
 
 class LectureProviderRepositoryImpl @Inject constructor(

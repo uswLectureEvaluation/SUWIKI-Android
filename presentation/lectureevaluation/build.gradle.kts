@@ -9,9 +9,7 @@ android {
 
 dependencies {
   implementation(projects.domain.user)
-  implementation(projects.domain.lectureevaluation.editor)
-  implementation(projects.domain.lectureevaluation.my)
-  implementation(projects.domain.lectureevaluation.viewerreporter)
+  implementation(projects.domain.lectureevaluation)
 
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.compose.toolbar)

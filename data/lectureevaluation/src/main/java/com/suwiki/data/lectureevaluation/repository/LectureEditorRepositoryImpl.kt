@@ -1,7 +1,7 @@
 package com.suwiki.data.lectureevaluation.repository
 
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureEditorDataSource
-import com.suwiki.domain.lectureevaluation.editor.repository.LectureEditorRepository
+import com.suwiki.domain.lectureevaluation.repository.LectureEditorRepository
 import javax.inject.Inject
 
 class LectureEditorRepositoryImpl @Inject constructor(

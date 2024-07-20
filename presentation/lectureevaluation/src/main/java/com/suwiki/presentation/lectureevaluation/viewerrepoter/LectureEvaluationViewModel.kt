@@ -3,7 +3,7 @@ package com.suwiki.presentation.lectureevaluation.viewerrepoter
 import androidx.lifecycle.ViewModel
 import com.suwiki.core.model.enums.LectureAlign
 import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
-import com.suwiki.domain.lectureevaluation.viewerreporter.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
+import com.suwiki.domain.lectureevaluation.usecase.lecture.RetrieveLectureEvaluationAverageListUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toPersistentList
