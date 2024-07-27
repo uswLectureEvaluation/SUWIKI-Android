@@ -1,7 +1,7 @@
 package com.suwiki.domain.timetable.repository
 
-import com.suwiki.core.model.timetable.Timetable
-import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.Timetable
+import com.suwiki.common.model.timetable.TimetableCell
 
 interface TimetableRepository {
   suspend fun getAllTimetable(): List<Timetable>

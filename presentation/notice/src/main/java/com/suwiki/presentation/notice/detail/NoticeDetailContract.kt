@@ -1,6 +1,6 @@
 package com.suwiki.presentation.notice.detail
 
-import com.suwiki.core.model.notice.NoticeDetail
+import com.suwiki.common.model.notice.NoticeDetail
 
 data class NoticeDetailState(
   val isLoading: Boolean = false,

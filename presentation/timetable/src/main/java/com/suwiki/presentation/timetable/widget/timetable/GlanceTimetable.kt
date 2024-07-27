@@ -9,8 +9,8 @@ import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.width
-import com.suwiki.core.model.timetable.Timetable
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.timetable.Timetable
+import com.suwiki.common.model.timetable.TimetableDay
 import com.suwiki.presentation.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.presentation.timetable.timetable.component.timetable.maxPeriod
 import com.suwiki.presentation.timetable.widget.timetable.cell.GlanceELearningCell

@@ -1,6 +1,6 @@
 package com.suwiki.domain.timetable.repository
 
-import com.suwiki.core.model.timetable.OpenLectureData
+import com.suwiki.common.model.timetable.OpenLectureData
 
 interface OpenLectureRepository {
   suspend fun getOpenLectureList(

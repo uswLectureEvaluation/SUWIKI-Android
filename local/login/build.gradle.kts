@@ -9,9 +9,9 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.model)
+  implementation(projects.common.model)
   implementation(projects.data.login)
-  implementation(projects.core.security)
+  implementation(projects.common.security)
 
   implementation(libs.bundles.coroutine)
 

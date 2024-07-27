@@ -1,7 +1,7 @@
 package com.suwiki.remote.lectureevaluation.response
 
-import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluation
-import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluationList
+import com.suwiki.common.model.lectureevaluation.exam.ExamEvaluation
+import com.suwiki.common.model.lectureevaluation.exam.ExamEvaluationList
 import kotlinx.serialization.Serializable
 
 @Serializable

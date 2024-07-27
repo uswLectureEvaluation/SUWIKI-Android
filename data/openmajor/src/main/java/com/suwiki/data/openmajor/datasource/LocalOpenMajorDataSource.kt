@@ -1,6 +1,6 @@
 package com.suwiki.data.openmajor.datasource
 
-import com.suwiki.core.model.openmajor.OpenMajor
+import com.suwiki.common.model.openmajor.OpenMajor
 import kotlinx.coroutines.flow.Flow
 
 interface LocalOpenMajorDataSource {

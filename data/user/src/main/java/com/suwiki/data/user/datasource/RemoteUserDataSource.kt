@@ -1,7 +1,7 @@
 package com.suwiki.data.user.datasource
 
-import com.suwiki.core.model.user.Suspension
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.user.Suspension
+import com.suwiki.common.model.user.User
 
 interface RemoteUserDataSource {
 

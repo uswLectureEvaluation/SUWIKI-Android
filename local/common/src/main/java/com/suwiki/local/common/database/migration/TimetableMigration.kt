@@ -2,9 +2,9 @@ package com.suwiki.local.common.database.migration
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableDay
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

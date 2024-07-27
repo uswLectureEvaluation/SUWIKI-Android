@@ -26,8 +26,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.common.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.common.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.presentation.common.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.presentation.common.designsystem.component.container.SuwikiEditContainer
 import com.suwiki.presentation.common.designsystem.component.dialog.SuwikiDialog

@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.model.notice.Notice
+import com.suwiki.common.model.notice.Notice
 import com.suwiki.presentation.common.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.presentation.common.designsystem.component.container.SuwikiBoardContainer
 import com.suwiki.presentation.common.designsystem.component.loading.LoadingScreen

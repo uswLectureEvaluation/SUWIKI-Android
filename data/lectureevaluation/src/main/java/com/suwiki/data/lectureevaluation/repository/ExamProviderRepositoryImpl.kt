@@ -1,6 +1,6 @@
 package com.suwiki.data.lectureevaluation.repository
 
-import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluationList
+import com.suwiki.common.model.lectureevaluation.exam.ExamEvaluationList
 import com.suwiki.data.lectureevaluation.datasource.RemoteExamProviderDataSource
 import com.suwiki.domain.lectureevaluation.repository.ExamProviderRepository
 import javax.inject.Inject

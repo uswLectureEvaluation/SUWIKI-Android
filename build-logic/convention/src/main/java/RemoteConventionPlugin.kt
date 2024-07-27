@@ -14,7 +14,7 @@ internal class RemoteConventionPlugin : Plugin<Project> {
       }
 
       dependencies {
-        "implementation"(project(":core:model"))
+        "implementation"(project(":common:model"))
         "implementation"(project(":remote:common"))
 
         "implementation"(libs.findBundle("coroutine").get())

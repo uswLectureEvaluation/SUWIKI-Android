@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.model)
+  implementation(projects.common.model)
   implementation(projects.presentation.common.ui)
 
   implementation(libs.kotlinx.immutable)

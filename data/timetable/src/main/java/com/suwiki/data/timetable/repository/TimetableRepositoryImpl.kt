@@ -1,10 +1,10 @@
 package com.suwiki.data.timetable.repository
 
-import com.suwiki.core.model.exception.TimetableCellOverlapException
-import com.suwiki.core.model.exception.TimetableCellPeriodInvalidException
-import com.suwiki.core.model.timetable.Timetable
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.exception.TimetableCellOverlapException
+import com.suwiki.common.model.exception.TimetableCellPeriodInvalidException
+import com.suwiki.common.model.timetable.Timetable
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableDay
 import com.suwiki.data.timetable.datasource.LocalTimetableDataSource
 import com.suwiki.domain.timetable.repository.TimetableRepository
 import kotlinx.coroutines.flow.firstOrNull

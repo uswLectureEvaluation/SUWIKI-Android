@@ -1,8 +1,8 @@
 package com.suwiki.presentation.lectureevaluation.lectureevaluation
 
-import com.suwiki.core.model.enums.GradeLevel
-import com.suwiki.core.model.enums.HomeworkLevel
-import com.suwiki.core.model.enums.TeamLevel
+import com.suwiki.common.model.enums.GradeLevel
+import com.suwiki.common.model.enums.HomeworkLevel
+import com.suwiki.common.model.enums.TeamLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

@@ -1,6 +1,6 @@
 package com.suwiki.domain.timetable.usecase
 
-import com.suwiki.core.model.timetable.OpenLectureData
+import com.suwiki.common.model.timetable.OpenLectureData
 import com.suwiki.domain.common.runCatchingIgnoreCancelled
 import com.suwiki.domain.timetable.repository.OpenLectureRepository
 import javax.inject.Inject

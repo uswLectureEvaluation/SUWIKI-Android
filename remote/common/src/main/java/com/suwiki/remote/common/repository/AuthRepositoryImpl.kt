@@ -1,6 +1,6 @@
 package com.suwiki.remote.common.repository
 
-import com.suwiki.core.security.SecurityPreferences
+import com.suwiki.common.security.SecurityPreferences
 import com.suwiki.remote.common.api.AuthApi
 import com.suwiki.remote.common.di.RETROFIT_TAG
 import com.suwiki.remote.common.retrofit.onFailure

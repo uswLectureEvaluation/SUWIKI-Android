@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-  implementation(projects.core.model)
+  implementation(projects.common.model)
   implementation(projects.domain.common)
 
   implementation(libs.kotlinx.coroutines.core)

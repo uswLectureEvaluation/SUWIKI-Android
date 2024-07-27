@@ -1,8 +1,8 @@
 package com.suwiki.remote.lectureevaluation.datasource
 
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationList
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureProviderDataSource
 import com.suwiki.remote.lectureevaluation.api.LectureViewerApi
 import com.suwiki.remote.lectureevaluation.response.toModel

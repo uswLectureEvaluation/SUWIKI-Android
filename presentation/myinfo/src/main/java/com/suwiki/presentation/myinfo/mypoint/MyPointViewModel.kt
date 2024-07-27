@@ -1,7 +1,7 @@
 package com.suwiki.presentation.myinfo.mypoint
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.user.User
 import com.suwiki.domain.lectureevaluation.usecase.exam.GetPurchaseHistoryUseCase
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

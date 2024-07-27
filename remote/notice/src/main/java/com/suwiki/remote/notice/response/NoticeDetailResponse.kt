@@ -1,6 +1,6 @@
 package com.suwiki.remote.notice.response
 
-import com.suwiki.core.model.notice.NoticeDetail
+import com.suwiki.common.model.notice.NoticeDetail
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.SerialName

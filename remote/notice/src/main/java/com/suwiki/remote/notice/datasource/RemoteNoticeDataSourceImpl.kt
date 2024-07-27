@@ -1,7 +1,7 @@
 package com.suwiki.remote.notice.datasource
 
-import com.suwiki.core.model.notice.Notice
-import com.suwiki.core.model.notice.NoticeDetail
+import com.suwiki.common.model.notice.Notice
+import com.suwiki.common.model.notice.NoticeDetail
 import com.suwiki.data.notice.datasource.RemoteNoticeDataSource
 import com.suwiki.remote.notice.api.NoticeApi
 import com.suwiki.remote.notice.response.toModel

@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCell
 import com.suwiki.presentation.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.presentation.common.designsystem.theme.SuwikiTheme
 import com.suwiki.presentation.common.designsystem.theme.White
@@ -132,7 +132,7 @@ fun TimetableScreen(
       exit = fadeOut(),
     ) {
       Timetable(
-        timetable = uiState.timetable ?: com.suwiki.core.model.timetable.Timetable(),
+        timetable = uiState.timetable ?: com.suwiki.common.model.timetable.Timetable(),
         type = uiState.cellType,
         onClickTimetableCell = onClickTimetableCell,
       )

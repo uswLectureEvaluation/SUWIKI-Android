@@ -1,6 +1,6 @@
 package com.suwiki.data.timetable.repository
 
-import com.suwiki.core.model.timetable.OpenLectureData
+import com.suwiki.common.model.timetable.OpenLectureData
 import com.suwiki.data.timetable.datasource.RemoteOpenLectureDataSource
 import com.suwiki.domain.timetable.repository.OpenLectureRepository
 import javax.inject.Inject

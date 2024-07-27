@@ -1,6 +1,6 @@
 package com.suwiki.presentation.timetable.navigation.argument
 
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.common.model.timetable.Timetable
 import kotlinx.serialization.Serializable
 
 @Serializable

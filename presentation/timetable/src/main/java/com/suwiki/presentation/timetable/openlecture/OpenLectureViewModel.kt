@@ -1,12 +1,12 @@
 package com.suwiki.presentation.timetable.openlecture
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.exception.TimetableCellOverlapException
-import com.suwiki.core.model.timetable.OpenLecture
-import com.suwiki.core.model.timetable.OpenLectureData
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.exception.TimetableCellOverlapException
+import com.suwiki.common.model.timetable.OpenLecture
+import com.suwiki.common.model.timetable.OpenLectureData
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableDay
 import com.suwiki.domain.timetable.usecase.GetOpenLectureListUseCase
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
 import com.suwiki.presentation.timetable.navigation.argument.toCellEditorArgument

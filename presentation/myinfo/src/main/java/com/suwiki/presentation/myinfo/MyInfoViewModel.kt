@@ -1,7 +1,7 @@
 package com.suwiki.presentation.myinfo
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.user.User
 import com.suwiki.domain.user.usecase.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch

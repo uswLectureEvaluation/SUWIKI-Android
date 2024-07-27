@@ -1,6 +1,6 @@
 package com.suwiki.presentation.common.ui.util
 
-import com.suwiki.core.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableCellColor
 
 val timetableCellColorHexMap = mapOf(
   TimetableCellColor.BROWN to 0xFFC28F62,

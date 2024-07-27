@@ -6,8 +6,8 @@ import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.LazyListScope
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableDay
 import com.suwiki.presentation.timetable.timetable.component.timetable.MINUTE60
 import com.suwiki.presentation.timetable.timetable.component.timetable.cell.TimetableCellType
 import com.suwiki.presentation.timetable.timetable.component.timetable.column.endPeriodToMinute

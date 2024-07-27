@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableDay
 import com.suwiki.presentation.common.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.suwiki.presentation.common.designsystem.component.button.SuwikiContainedLargeButton
 import com.suwiki.presentation.common.designsystem.theme.SuwikiTheme

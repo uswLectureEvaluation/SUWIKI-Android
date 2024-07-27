@@ -1,8 +1,8 @@
 package com.suwiki.presentation.lectureevaluation.viewerrepoter.detail
 
-import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.common.model.lectureevaluation.exam.ExamEvaluation
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluation
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

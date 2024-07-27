@@ -1,7 +1,7 @@
 package com.suwiki.presentation.lectureevaluation.viewerrepoter
 
-import com.suwiki.core.model.enums.LectureAlign
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.common.model.enums.LectureAlign
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationAverage
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

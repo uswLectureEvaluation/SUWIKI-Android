@@ -1,9 +1,9 @@
 package com.suwiki.data.user.repository
 
-import com.suwiki.core.model.exception.AuthorizationException
-import com.suwiki.core.model.user.Suspension
-import com.suwiki.core.model.user.User
-import com.suwiki.core.security.SecurityPreferences
+import com.suwiki.common.model.exception.AuthorizationException
+import com.suwiki.common.model.user.Suspension
+import com.suwiki.common.model.user.User
+import com.suwiki.common.security.SecurityPreferences
 import com.suwiki.data.user.datasource.LocalUserDataSource
 import com.suwiki.data.user.datasource.RemoteUserDataSource
 import com.suwiki.domain.user.repository.UserRepository

@@ -18,7 +18,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCell
 import com.suwiki.presentation.common.designsystem.theme.GrayF6
 import com.suwiki.presentation.common.designsystem.theme.White
 import com.suwiki.presentation.timetable.timetable.component.timetable.cell.TimetableCellType

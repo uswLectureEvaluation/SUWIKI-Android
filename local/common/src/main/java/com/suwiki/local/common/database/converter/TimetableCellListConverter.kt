@@ -1,7 +1,7 @@
 package com.suwiki.local.common.database.converter
 
 import androidx.room.TypeConverter
-import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCell
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

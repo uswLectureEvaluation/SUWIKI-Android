@@ -8,6 +8,6 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.security)
+  implementation(projects.common.security)
   implementation(projects.domain.login)
 }

@@ -1,10 +1,10 @@
 package com.suwiki.remote.lectureevaluation.response
 
-import com.suwiki.core.model.enums.GradeLevel
-import com.suwiki.core.model.enums.HomeworkLevel
-import com.suwiki.core.model.enums.TeamLevel
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
-import com.suwiki.core.model.lectureevaluation.lecture.LectureInfo
+import com.suwiki.common.model.enums.GradeLevel
+import com.suwiki.common.model.enums.HomeworkLevel
+import com.suwiki.common.model.enums.TeamLevel
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.common.model.lectureevaluation.lecture.LectureInfo
 import kotlinx.serialization.Serializable
 import kotlin.math.roundToInt
 

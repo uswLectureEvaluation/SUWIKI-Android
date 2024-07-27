@@ -14,7 +14,7 @@ internal class DataConventionPlugin : Plugin<Project> {
       }
 
       dependencies {
-        "implementation"(project(":core:model"))
+        "implementation"(project(":common:model"))
 
         "implementation"(libs.findBundle("coroutine").get())
 

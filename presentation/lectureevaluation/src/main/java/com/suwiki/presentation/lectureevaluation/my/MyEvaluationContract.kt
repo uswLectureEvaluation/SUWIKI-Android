@@ -1,7 +1,7 @@
 package com.suwiki.presentation.lectureevaluation.my
 
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
-import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.common.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.common.model.lectureevaluation.lecture.MyLectureEvaluation
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

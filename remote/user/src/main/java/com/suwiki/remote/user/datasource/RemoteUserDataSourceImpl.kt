@@ -1,8 +1,8 @@
 package com.suwiki.remote.user.datasource
 
-import com.suwiki.core.model.exception.RequestFailException
-import com.suwiki.core.model.user.Suspension
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.exception.RequestFailException
+import com.suwiki.common.model.user.Suspension
+import com.suwiki.common.model.user.User
 import com.suwiki.data.user.datasource.RemoteUserDataSource
 import com.suwiki.remote.user.api.UserApi
 import com.suwiki.remote.user.request.QuitRequest

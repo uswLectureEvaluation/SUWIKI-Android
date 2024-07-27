@@ -28,9 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.model.enums.ExamInfo
-import com.suwiki.core.model.enums.ExamLevel
-import com.suwiki.core.model.enums.ExamType
+import com.suwiki.common.model.enums.ExamInfo
+import com.suwiki.common.model.enums.ExamLevel
+import com.suwiki.common.model.enums.ExamType
 import com.suwiki.presentation.common.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.suwiki.presentation.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.presentation.common.designsystem.component.button.SuwikiContainedMediumButton

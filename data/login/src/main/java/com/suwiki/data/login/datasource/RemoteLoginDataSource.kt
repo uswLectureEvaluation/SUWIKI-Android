@@ -1,6 +1,6 @@
 package com.suwiki.data.login.datasource
 
-import com.suwiki.core.model.user.Token
+import com.suwiki.common.model.user.Token
 
 interface RemoteLoginDataSource {
   suspend fun findId(email: String)

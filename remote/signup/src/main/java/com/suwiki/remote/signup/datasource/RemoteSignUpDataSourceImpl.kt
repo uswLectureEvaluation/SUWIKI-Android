@@ -1,6 +1,6 @@
 package com.suwiki.remote.signup.datasource
 
-import com.suwiki.core.model.exception.RequestFailException
+import com.suwiki.common.model.exception.RequestFailException
 import com.suwiki.data.signup.datasource.RemoteSignUpDataSource
 import com.suwiki.remote.signup.api.SignUpApi
 import com.suwiki.remote.signup.request.CheckEmailRequest

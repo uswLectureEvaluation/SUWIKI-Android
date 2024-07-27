@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCellColor
 import com.suwiki.presentation.common.designsystem.theme.GrayF6
 import com.suwiki.presentation.common.designsystem.theme.SuwikiTheme
 import com.suwiki.presentation.common.designsystem.theme.White
