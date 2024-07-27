@@ -1,7 +1,7 @@
 package com.suwiki.domain.lectureevaluation.repository
 
-import com.suwiki.core.model.lectureevaluation.PurchaseHistory
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.common.model.lectureevaluation.PurchaseHistory
+import com.suwiki.common.model.lectureevaluation.exam.MyExamEvaluation
 
 interface ExamMyRepository {
 

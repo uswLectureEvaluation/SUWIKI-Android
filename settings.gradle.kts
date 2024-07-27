@@ -21,9 +21,9 @@ dependencyResolutionManagement {
 rootProject.name = "uswtimetable"
 include(":app-compose")
 
-include(":core:android")
-include(":core:model")
-include(":core:security")
+include(":common:android")
+include(":common:model")
+include(":common:security")
 
 include(":remote:openmajor")
 include(":remote:timetable")

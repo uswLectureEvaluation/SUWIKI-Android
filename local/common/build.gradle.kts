@@ -36,7 +36,7 @@ protobuf {
 }
 
 dependencies {
-  implementation(projects.core.model)
+  implementation(projects.common.model)
 
   ksp(libs.room.compiler)
   implementation(libs.room.runtime)

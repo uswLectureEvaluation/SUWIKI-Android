@@ -1,6 +1,6 @@
 package com.suwiki.data.user.datasource
 
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface LocalUserDataSource {

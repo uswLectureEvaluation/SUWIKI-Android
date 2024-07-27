@@ -10,7 +10,7 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.appwidget.updateAll
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.common.model.timetable.Timetable
 import com.suwiki.domain.timetable.usecase.GetMainTimetableUseCase
 import com.suwiki.presentation.common.ui.extension.encodeToUri
 import dagger.hilt.android.AndroidEntryPoint

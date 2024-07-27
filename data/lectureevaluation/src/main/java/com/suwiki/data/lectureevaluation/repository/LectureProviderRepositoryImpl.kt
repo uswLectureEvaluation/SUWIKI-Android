@@ -1,8 +1,8 @@
 package com.suwiki.data.lectureevaluation.repository
 
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationList
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationExtraAverage
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationList
 import com.suwiki.data.lectureevaluation.datasource.RemoteLectureProviderDataSource
 import com.suwiki.domain.lectureevaluation.repository.LectureProviderRepository
 import javax.inject.Inject

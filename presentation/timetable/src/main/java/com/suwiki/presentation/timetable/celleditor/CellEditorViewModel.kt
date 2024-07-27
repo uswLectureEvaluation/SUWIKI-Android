@@ -2,11 +2,11 @@ package com.suwiki.presentation.timetable.celleditor
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.exception.TimetableCellOverlapException
-import com.suwiki.core.model.exception.TimetableCellPeriodInvalidException
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.exception.TimetableCellOverlapException
+import com.suwiki.common.model.exception.TimetableCellPeriodInvalidException
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableDay
 import com.suwiki.domain.timetable.usecase.InsertTimetableCellUseCase
 import com.suwiki.domain.timetable.usecase.UpdateTimetableCellUseCase
 import com.suwiki.presentation.common.ui.extension.decodeFromUri

@@ -3,7 +3,7 @@ package com.suwiki.presentation.common.designsystem.component.timetable.cell
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCell
 import com.suwiki.presentation.common.ui.extension.suwikiClickable
 import com.suwiki.presentation.timetable.timetable.component.timetable.toText
 

@@ -1,9 +1,9 @@
 package com.suwiki.presentation.login.login
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.exception.EmailNotAuthedException
-import com.suwiki.core.model.exception.LoginFailedException
-import com.suwiki.core.model.exception.PasswordErrorException
+import com.suwiki.common.model.exception.EmailNotAuthedException
+import com.suwiki.common.model.exception.LoginFailedException
+import com.suwiki.common.model.exception.PasswordErrorException
 import com.suwiki.domain.login.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container

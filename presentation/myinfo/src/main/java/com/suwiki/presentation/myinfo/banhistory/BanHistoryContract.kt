@@ -1,6 +1,6 @@
 package com.suwiki.presentation.myinfo.banhistory
 
-import com.suwiki.core.model.user.Suspension
+import com.suwiki.common.model.user.Suspension
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

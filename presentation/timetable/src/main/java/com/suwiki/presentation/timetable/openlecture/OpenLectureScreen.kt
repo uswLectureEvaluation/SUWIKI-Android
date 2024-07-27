@@ -41,8 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.model.timetable.OpenLecture
-import com.suwiki.core.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.OpenLecture
+import com.suwiki.common.model.timetable.TimetableCellColor
 import com.suwiki.presentation.common.designsystem.component.appbar.SuwikiAppBarWithTextButton
 import com.suwiki.presentation.common.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.suwiki.presentation.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet

@@ -1,6 +1,6 @@
 package com.suwiki.presentation.notice
 
-import com.suwiki.core.model.notice.Notice
+import com.suwiki.common.model.notice.Notice
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

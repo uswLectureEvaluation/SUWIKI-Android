@@ -1,6 +1,6 @@
 package com.suwiki.presentation.myinfo.mypoint
 
-import com.suwiki.core.model.lectureevaluation.PurchaseHistory
+import com.suwiki.common.model.lectureevaluation.PurchaseHistory
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

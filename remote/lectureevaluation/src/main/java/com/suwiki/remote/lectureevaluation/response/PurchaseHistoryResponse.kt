@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.response
 
-import com.suwiki.core.model.lectureevaluation.PurchaseHistory
+import com.suwiki.common.model.lectureevaluation.PurchaseHistory
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.Serializable

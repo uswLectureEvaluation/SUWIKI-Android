@@ -3,7 +3,7 @@ package com.suwiki.presentation.openmajor
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suwiki.core.model.exception.AuthorizationException
+import com.suwiki.common.model.exception.AuthorizationException
 import com.suwiki.domain.openmajor.usecase.GetBookmarkedOpenMajorListUseCase
 import com.suwiki.domain.openmajor.usecase.GetOpenMajorListUseCase
 import com.suwiki.domain.openmajor.usecase.RegisterBookmarkUseCase

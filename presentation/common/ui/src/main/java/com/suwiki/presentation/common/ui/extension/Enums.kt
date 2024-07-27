@@ -2,13 +2,13 @@ package com.suwiki.presentation.common.ui.extension
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.suwiki.core.model.enums.ExamInfo
-import com.suwiki.core.model.enums.ExamLevel
-import com.suwiki.core.model.enums.ExamType
-import com.suwiki.core.model.enums.GradeLevel
-import com.suwiki.core.model.enums.HomeworkLevel
-import com.suwiki.core.model.enums.LectureAlign
-import com.suwiki.core.model.enums.TeamLevel
+import com.suwiki.common.model.enums.ExamInfo
+import com.suwiki.common.model.enums.ExamLevel
+import com.suwiki.common.model.enums.ExamType
+import com.suwiki.common.model.enums.GradeLevel
+import com.suwiki.common.model.enums.HomeworkLevel
+import com.suwiki.common.model.enums.LectureAlign
+import com.suwiki.common.model.enums.TeamLevel
 import com.suwiki.presentation.common.ui.R
 import kotlinx.collections.immutable.toPersistentList
 

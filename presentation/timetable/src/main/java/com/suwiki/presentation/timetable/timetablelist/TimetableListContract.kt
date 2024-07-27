@@ -1,6 +1,6 @@
 package com.suwiki.presentation.timetable.timetablelist
 
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.common.model.timetable.Timetable
 import com.suwiki.presentation.timetable.navigation.argument.TimetableEditorArgument
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf

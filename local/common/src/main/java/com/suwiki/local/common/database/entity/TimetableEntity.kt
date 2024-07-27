@@ -2,7 +2,7 @@ package com.suwiki.local.common.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCell
 
 @Entity
 data class TimetableEntity(

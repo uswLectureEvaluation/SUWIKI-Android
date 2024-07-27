@@ -1,8 +1,8 @@
 package com.suwiki.presentation.timetable.timetable
 
-import com.suwiki.core.model.timetable.Timetable
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.Timetable
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCellColor
 import com.suwiki.presentation.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.presentation.timetable.timetable.component.timetable.cell.TimetableCellType
 

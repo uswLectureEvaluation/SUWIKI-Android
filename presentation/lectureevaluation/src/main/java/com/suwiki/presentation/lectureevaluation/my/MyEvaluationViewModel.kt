@@ -2,7 +2,7 @@ package com.suwiki.presentation.lectureevaluation.my
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.user.User
 import com.suwiki.domain.lectureevaluation.usecase.exam.DeleteExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.usecase.exam.GetMyExamEvaluationListUseCase
 import com.suwiki.domain.lectureevaluation.usecase.lecture.DeleteLectureEvaluationUseCase

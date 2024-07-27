@@ -2,10 +2,10 @@ package com.suwiki.presentation.lectureevaluation.examevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.enums.ExamInfo
-import com.suwiki.core.model.enums.ExamLevel
-import com.suwiki.core.model.enums.ExamType
-import com.suwiki.core.model.lectureevaluation.exam.MyExamEvaluation
+import com.suwiki.common.model.enums.ExamInfo
+import com.suwiki.common.model.enums.ExamLevel
+import com.suwiki.common.model.enums.ExamType
+import com.suwiki.common.model.lectureevaluation.exam.MyExamEvaluation
 import com.suwiki.domain.lectureevaluation.usecase.exam.PostExamEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.usecase.exam.UpdateExamEvaluationUseCase
 import com.suwiki.presentation.common.ui.extension.decodeFromUri

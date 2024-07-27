@@ -2,10 +2,10 @@ package com.suwiki.presentation.lectureevaluation.lectureevaluation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.enums.GradeLevel
-import com.suwiki.core.model.enums.HomeworkLevel
-import com.suwiki.core.model.enums.TeamLevel
-import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.common.model.enums.GradeLevel
+import com.suwiki.common.model.enums.HomeworkLevel
+import com.suwiki.common.model.enums.TeamLevel
+import com.suwiki.common.model.lectureevaluation.lecture.MyLectureEvaluation
 import com.suwiki.domain.lectureevaluation.usecase.lecture.PostLectureEvaluationUseCase
 import com.suwiki.domain.lectureevaluation.usecase.lecture.UpdateLectureEvaluationUseCase
 import com.suwiki.presentation.common.ui.extension.decodeFromUri

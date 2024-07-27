@@ -1,13 +1,13 @@
 package com.suwiki.local.user.datasource
 
 import androidx.datastore.core.DataStore
-import com.suwiki.core.model.user.DEFAULT_USER_EMAIL
-import com.suwiki.core.model.user.DEFAULT_USER_ID
-import com.suwiki.core.model.user.DEFAULT_USER_POINT
-import com.suwiki.core.model.user.DEFAULT_USER_VIEW_EXAM
-import com.suwiki.core.model.user.DEFAULT_USER_WRITTEN_EVALUATION
-import com.suwiki.core.model.user.DEFAULT_USER_WRITTEN_EXAM
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.user.DEFAULT_USER_EMAIL
+import com.suwiki.common.model.user.DEFAULT_USER_ID
+import com.suwiki.common.model.user.DEFAULT_USER_POINT
+import com.suwiki.common.model.user.DEFAULT_USER_VIEW_EXAM
+import com.suwiki.common.model.user.DEFAULT_USER_WRITTEN_EVALUATION
+import com.suwiki.common.model.user.DEFAULT_USER_WRITTEN_EXAM
+import com.suwiki.common.model.user.User
 import com.suwiki.data.user.datasource.LocalUserDataSource
 import com.suwiki.local.common.UserPreference
 import kotlinx.coroutines.flow.Flow

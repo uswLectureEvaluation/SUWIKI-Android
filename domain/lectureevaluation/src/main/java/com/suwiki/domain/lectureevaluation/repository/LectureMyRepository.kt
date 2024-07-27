@@ -1,6 +1,6 @@
 package com.suwiki.domain.lectureevaluation.repository
 
-import com.suwiki.core.model.lectureevaluation.lecture.MyLectureEvaluation
+import com.suwiki.common.model.lectureevaluation.lecture.MyLectureEvaluation
 
 interface LectureMyRepository {
 

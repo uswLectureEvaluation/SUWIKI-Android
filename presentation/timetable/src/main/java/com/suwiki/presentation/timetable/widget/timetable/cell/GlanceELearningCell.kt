@@ -3,7 +3,7 @@ package com.suwiki.presentation.timetable.widget.timetable.cell
 import androidx.compose.runtime.Composable
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
-import com.suwiki.core.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCell
 import com.suwiki.presentation.timetable.widget.timetable.toGlanceText
 
 @Composable

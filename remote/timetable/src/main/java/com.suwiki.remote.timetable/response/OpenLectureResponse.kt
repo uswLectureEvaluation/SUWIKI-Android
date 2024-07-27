@@ -36,10 +36,10 @@ data class Cell(
   val endPeriod: Int,
 )
 
-internal fun OpenLectureResponse.toModel(): com.suwiki.core.model.timetable.OpenLectureData {
+internal fun OpenLectureResponse.toModel(): com.suwiki.common.model.timetable.OpenLectureData {
   val content = this.data.content.map { openLecture ->
     with(openLecture) {
-      com.suwiki.core.model.timetable.OpenLecture(
+      com.suwiki.common.model.timetable.OpenLecture(
         id = id,
         name = name,
         type = type,
@@ -53,22 +53,22 @@ internal fun OpenLectureResponse.toModel(): com.suwiki.core.model.timetable.Open
     }
   }
 
-  return com.suwiki.core.model.timetable.OpenLectureData(
+  return com.suwiki.common.model.timetable.OpenLectureData(
     isLast = data.isLast,
     content = content,
   )
 }
 
-internal fun Cell.toModel() = com.suwiki.core.model.timetable.Cell(
+internal fun Cell.toModel() = com.suwiki.common.model.timetable.Cell(
   location = location,
   day = when (day) {
-    TimetableDay.MON -> com.suwiki.core.model.timetable.TimetableDay.MON
-    TimetableDay.TUE -> com.suwiki.core.model.timetable.TimetableDay.TUE
-    TimetableDay.WED -> com.suwiki.core.model.timetable.TimetableDay.WED
-    TimetableDay.THU -> com.suwiki.core.model.timetable.TimetableDay.THU
-    TimetableDay.FRI -> com.suwiki.core.model.timetable.TimetableDay.FRI
-    TimetableDay.SAT -> com.suwiki.core.model.timetable.TimetableDay.SAT
-    TimetableDay.E_LEARNING -> com.suwiki.core.model.timetable.TimetableDay.E_LEARNING
+    TimetableDay.MON -> com.suwiki.common.model.timetable.TimetableDay.MON
+    TimetableDay.TUE -> com.suwiki.common.model.timetable.TimetableDay.TUE
+    TimetableDay.WED -> com.suwiki.common.model.timetable.TimetableDay.WED
+    TimetableDay.THU -> com.suwiki.common.model.timetable.TimetableDay.THU
+    TimetableDay.FRI -> com.suwiki.common.model.timetable.TimetableDay.FRI
+    TimetableDay.SAT -> com.suwiki.common.model.timetable.TimetableDay.SAT
+    TimetableDay.E_LEARNING -> com.suwiki.common.model.timetable.TimetableDay.E_LEARNING
   },
   startPeriod = startPeriod,
   endPeriod = endPeriod,

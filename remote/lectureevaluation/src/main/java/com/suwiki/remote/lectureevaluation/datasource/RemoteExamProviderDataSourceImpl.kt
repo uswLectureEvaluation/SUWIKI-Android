@@ -1,6 +1,6 @@
 package com.suwiki.remote.lectureevaluation.datasource
 
-import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluationList
+import com.suwiki.common.model.lectureevaluation.exam.ExamEvaluationList
 import com.suwiki.data.lectureevaluation.datasource.RemoteExamProviderDataSource
 import com.suwiki.remote.lectureevaluation.api.ExamViewerApi
 import com.suwiki.remote.lectureevaluation.response.toModel

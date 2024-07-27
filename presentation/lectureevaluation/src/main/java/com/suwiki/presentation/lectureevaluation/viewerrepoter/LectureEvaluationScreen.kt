@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.suwiki.core.model.lectureevaluation.lecture.LectureEvaluationAverage
+import com.suwiki.common.model.lectureevaluation.lecture.LectureEvaluationAverage
 import com.suwiki.presentation.common.designsystem.component.bottomsheet.SuwikiAgreementBottomSheet
 import com.suwiki.presentation.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.suwiki.presentation.common.designsystem.component.loading.LoadingScreen

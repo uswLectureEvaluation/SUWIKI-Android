@@ -1,6 +1,6 @@
 package com.suwiki.remote.user.response
 
-import com.suwiki.core.model.user.User
+import com.suwiki.common.model.user.User
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

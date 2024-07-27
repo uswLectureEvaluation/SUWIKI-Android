@@ -1,6 +1,6 @@
 package com.suwiki.presentation.lectureevaluation.examevaluation
 
-import com.suwiki.core.model.enums.ExamLevel
+import com.suwiki.common.model.enums.ExamLevel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 

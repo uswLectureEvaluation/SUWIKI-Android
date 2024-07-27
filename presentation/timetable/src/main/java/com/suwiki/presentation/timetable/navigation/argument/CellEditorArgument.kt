@@ -1,10 +1,10 @@
 package com.suwiki.presentation.timetable.navigation.argument
 
-import com.suwiki.core.model.timetable.Cell
-import com.suwiki.core.model.timetable.OpenLecture
-import com.suwiki.core.model.timetable.TimetableCell
-import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.timetable.Cell
+import com.suwiki.common.model.timetable.OpenLecture
+import com.suwiki.common.model.timetable.TimetableCell
+import com.suwiki.common.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableDay
 import kotlinx.serialization.Serializable
 
 @Serializable

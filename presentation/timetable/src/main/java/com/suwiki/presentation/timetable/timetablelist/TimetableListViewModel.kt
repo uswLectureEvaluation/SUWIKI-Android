@@ -1,7 +1,7 @@
 package com.suwiki.presentation.timetable.timetablelist
 
 import androidx.lifecycle.ViewModel
-import com.suwiki.core.model.timetable.Timetable
+import com.suwiki.common.model.timetable.Timetable
 import com.suwiki.domain.timetable.usecase.DeleteTimetableUseCase
 import com.suwiki.domain.timetable.usecase.GetAllTimetableUseCase
 import com.suwiki.domain.timetable.usecase.SetMainTimetableCreateTime

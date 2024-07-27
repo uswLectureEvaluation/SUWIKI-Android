@@ -10,7 +10,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.model)
+  implementation(projects.common.model)
   implementation(libs.kotlinx.immutable)
   implementation(libs.kotlinx.serialization.json)
 }

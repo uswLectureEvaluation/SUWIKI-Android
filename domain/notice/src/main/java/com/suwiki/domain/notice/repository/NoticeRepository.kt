@@ -1,7 +1,7 @@
 package com.suwiki.domain.notice.repository
 
-import com.suwiki.core.model.notice.Notice
-import com.suwiki.core.model.notice.NoticeDetail
+import com.suwiki.common.model.notice.Notice
+import com.suwiki.common.model.notice.NoticeDetail
 
 interface NoticeRepository {
 

@@ -1,6 +1,6 @@
 package com.suwiki.remote.common.authenticator
 
-import com.suwiki.core.model.exception.SuwikiServerError
+import com.suwiki.common.model.exception.SuwikiServerError
 import com.suwiki.remote.common.di.AUTH_HEADER
 import com.suwiki.remote.common.di.RETROFIT_TAG
 import com.suwiki.remote.common.repository.AuthRepository

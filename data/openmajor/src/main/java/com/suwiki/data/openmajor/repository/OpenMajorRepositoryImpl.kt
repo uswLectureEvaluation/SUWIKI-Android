@@ -1,6 +1,6 @@
 package com.suwiki.data.openmajor.repository
 
-import com.suwiki.core.model.openmajor.OpenMajor
+import com.suwiki.common.model.openmajor.OpenMajor
 import com.suwiki.data.openmajor.datasource.LocalOpenMajorDataSource
 import com.suwiki.data.openmajor.datasource.RemoteOpenMajorDataSource
 import com.suwiki.domain.openmajor.repository.OpenMajorRepository

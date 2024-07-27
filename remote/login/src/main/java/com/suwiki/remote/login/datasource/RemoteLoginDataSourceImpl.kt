@@ -1,7 +1,7 @@
 package com.suwiki.remote.login.datasource
 
-import com.suwiki.core.model.exception.RequestFailException
-import com.suwiki.core.model.user.Token
+import com.suwiki.common.model.exception.RequestFailException
+import com.suwiki.common.model.user.Token
 import com.suwiki.data.login.datasource.RemoteLoginDataSource
 import com.suwiki.remote.login.api.LoginApi
 import com.suwiki.remote.login.request.FindIdRequest

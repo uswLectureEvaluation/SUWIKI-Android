@@ -1,10 +1,10 @@
 package com.suwiki.presentation.timetable.openlecture
 
 import android.content.Context
-import com.suwiki.core.model.timetable.Cell
-import com.suwiki.core.model.timetable.OpenLecture
-import com.suwiki.core.model.timetable.TimetableCellColor
-import com.suwiki.core.model.timetable.TimetableDay
+import com.suwiki.common.model.timetable.Cell
+import com.suwiki.common.model.timetable.OpenLecture
+import com.suwiki.common.model.timetable.TimetableCellColor
+import com.suwiki.common.model.timetable.TimetableDay
 import com.suwiki.presentation.timetable.R
 import com.suwiki.presentation.timetable.navigation.argument.CellEditorArgument
 import com.suwiki.presentation.timetable.openlecture.model.SchoolLevel

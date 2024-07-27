@@ -15,8 +15,8 @@ internal class PresentationComposeConventionPlugin : Plugin<Project> {
       }
 
       dependencies {
-        "implementation"(project(":core:model"))
-        "implementation"(project(":core:android"))
+        "implementation"(project(":common:model"))
+        "implementation"(project(":common:android"))
         "implementation"(project(":presentation:common:ui"))
         "implementation"(project(":presentation:common:designsystem"))
 

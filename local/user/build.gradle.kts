@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.model)
+  implementation(projects.common.model)
   implementation(projects.data.user)
   implementation(projects.local.common)
 

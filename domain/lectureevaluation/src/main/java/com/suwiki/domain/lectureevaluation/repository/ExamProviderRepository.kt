@@ -1,6 +1,6 @@
 package com.suwiki.domain.lectureevaluation.repository
 
-import com.suwiki.core.model.lectureevaluation.exam.ExamEvaluationList
+import com.suwiki.common.model.lectureevaluation.exam.ExamEvaluationList
 
 interface ExamProviderRepository {
   suspend fun buyExam(lectureId: Long)

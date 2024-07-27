@@ -1,6 +1,6 @@
 package com.suwiki.remote.user.response
 
-import com.suwiki.core.model.user.Suspension
+import com.suwiki.common.model.user.Suspension
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.Serializable

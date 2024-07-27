@@ -1,11 +1,11 @@
 package com.suwiki.remote.common.retrofit
 
-import com.suwiki.core.model.exception.ForbiddenException
-import com.suwiki.core.model.exception.NetworkException
-import com.suwiki.core.model.exception.NotFoundException
-import com.suwiki.core.model.exception.RequestFailException
-import com.suwiki.core.model.exception.SuwikiServerError
-import com.suwiki.core.model.exception.UnknownException
+import com.suwiki.common.model.exception.ForbiddenException
+import com.suwiki.common.model.exception.NetworkException
+import com.suwiki.common.model.exception.NotFoundException
+import com.suwiki.common.model.exception.RequestFailException
+import com.suwiki.common.model.exception.SuwikiServerError
+import com.suwiki.common.model.exception.UnknownException
 
 sealed interface ApiResult<out T> {
   data class Success<T>(val data: T) : ApiResult<T>
